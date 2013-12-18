@@ -9,7 +9,21 @@ NG_DOCS={
       "id": "ui.grid.directive:uiGrid",
       "shortName": "uiGrid",
       "type": "directive",
-      "keywords": "$scope angular api app basic bob ceo controller create data developer directive div frank function grid html index js lowly mainctrl module name ng-controller title ui ui-grid var very"
+      "keywords": "$scope angular api app array basic bob ceo controller create data developer directive display div ea frank function grid html in index js lowly mainctrl module name ng-controller of rows the title to ui ui-grid uigrid var very"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.style.directive:uiGridStyle",
+      "shortName": "uiGridStyle",
+      "type": "directive",
+      "keywords": "$scope allows am angular api app as blah break by can class color controller default directive do doesn elements expressions function grid html ie8 in index interpolate it js mainctrl module mystyle name ng-controller red style this to ui ui-grid-style us var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.util.service:GridUtil",
+      "shortName": "GridUtil",
+      "type": "service",
+      "keywords": "$scope accessor and angular apart api app appropriately array as bob capitalized column columndefs columnname controller data definitions field first firstname for frank function functions getcolumnsfromdata given grid gridutil html id index jones js last lastname list mainctrl method module name names newid ng-bind ng-controller ng-model of readablecolumnname return service set smith split string ui unique util utility var with"
     },
     {
       "section": "tutorial",
@@ -23,7 +37,7 @@ NG_DOCS={
       "id": "basic_grid",
       "shortName": "Basic Grid",
       "type": "overview",
-      "keywords": "$scope angular app basic bob ceo controller create data developer example frank function grid html in index js lowly mainctrl module most name ng-controller our overview possible table the this title tutorial ui ui-grid ui-grid-table-class var we"
+      "keywords": "$scope angular app basic bob ceo controller create data developer example frank function grid html in index js lowly mainctrl module most name ng-controller our overview possible the this title tutorial ui ui-grid var we"
     },
     {
       "section": "tutorial",

@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0 - 2013-12-12
+/*! ui-grid - v2.0.7-g7aeb576 - 2013-12-18
 * Copyright (c) 2013 ; Licensed MIT */
 (function(){
 'use strict';
@@ -99,14 +99,65 @@ app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'GridUtil',
 
 })();
 (function(){
+// 'use strict';
+
+/**
+ * @ngdoc directive
+ * @name ui.grid.style.directive:uiGridStyle
+ * @element style
+ * @restrict A
+ *
+ * @description
+ * Allows us to interpolate expressions in `<style>` elements. Angular doesn't do this by default as it can/will/might? break in IE8.
+ *
+ * @example
+   <example module="app">
+     <file name="app.js">
+       var app = angular.module('app', ['ui.grid']);
+       
+       app.controller('MainCtrl', ['$scope', function ($scope) {
+         $scope.myStyle = '.blah { color: red }';
+       }]);
+     </file>
+     <file name="index.html">
+       <div ng-controller="MainCtrl">
+         <style ui-grid-style>{{ myStyle }}</style>
+         <span class="blah">I am red.</span>
+       </div>
+     </file>
+   </example>
+ */
+
+var app = angular.module('ui.grid.style', []);
+
+app.directive('uiGridStyle', ['$interpolate', '$sce', function($interpolate, $sce) {
+  return {
+    // restrict: 'A',
+    priority: 1000,
+    link: function(scope, element) {
+      var interpolateFn = $interpolate(element.text(), true);
+
+      if (interpolateFn) {
+        scope.$watch(interpolateFn, function(value) {
+          element.text(value);
+        });
+      }
+    }
+  };
+}]);
+
+})();
+(function(){
 'use strict';
 
-var app = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.virtual-repeat']);
+var app = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.grid.style', 'ui.virtual-repeat']);
 
 /**
  *  @ngdoc directive
  *  @name ui.grid.directive:uiGrid
  *  @element div
+ *  @restrict EA
+ *  @param {array} uiGrid Array of rows to display in the grid
  *  
  *  @description Create a very basic grid.
  *
@@ -129,67 +180,55 @@ var app = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.virtu
       </file>
     </example>
  */
-app.directive('uiGrid', ['$compile', '$templateCache', '$log', 'GridUtil', function($compile, $templateCache, $log, GridUtil) {
-  function postLink(scope, elm, attrs, controller) {
-    $log.debug('grid postlink scope', scope.$id);
+app.directive('uiGrid',
+  [
+    '$compile',
+    '$templateCache',
+    '$log',
+    'GridUtil',
+  function(
+    $compile,
+    $templateCache,
+    $log,
+    GridUtil
+  ) {
+
+    function preLink(scope, elm, attrs) {
+      var options = scope.uiGrid;
+
+      // Create an ID for this grid
+      scope.gridId = GridUtil.newId();
+
+      // Get the grid dimensions from the element
+
+      // Initialize the grid
+
+      // Get the column definitions
+        // Put a watch on them
+
+      console.log('gridId', scope.gridId);
+
+      elm.on('$destroy', function() {
+        // Remove columnDefs watch
+      });
+    }
+    
+    return {
+      templateUrl: 'ui-grid/ui-grid',
+      scope: {
+        uiGrid: '='
+      },
+      compile: function () {
+        return {
+          pre: preLink
+        };
+      },
+      controller: function ($scope, $element, $attrs) {
+        
+      }
+    };
   }
-
-  return {
-    restrict: 'EA',
-    // templateUrl: 'ui-grid/ui-grid',
-    // transclude: true,
-    priority: 1000,
-    scope: {
-      uiGrid: '=',
-      tableClass: '@uiGridTableClass',
-      options: '@uiGridOptions'
-    },
-    compile: function (elm, attrs) {
-      // If the contents of the grid element are empty, use the default grid template
-      var tmpl;
-      if (elm.html() === '' || /^\s*$/.test(elm.html())) {
-        tmpl = $templateCache.get('ui-grid/ui-grid');
-      }
-
-      var preLink = function (scope, elm, attrs) {
-        scope.blah = 'test1';
-
-        $log.debug('grid prelink scope', scope.$id);
-
-        if (tmpl) {
-          elm.append(tmpl);
-          $compile(elm.contents())(scope);
-        }
-      };
-
-      return {
-        pre: preLink,
-        post: postLink
-      };
-    },
-    controller: ['$scope','$element','$attrs', function($scope, $element, $attrs) {
-      $log.debug('controller scope', $scope.$id);
-      $log.debug('controller running');
-
-      this.gridData = $scope.uiGrid;
-
-      $scope.gridOptions = {};
-      
-      //use parent scope options if specified
-      if ($scope.options) {
-        if (!$scope.$parent[$scope.options]) {
-          throw new Error($scope.options + ' was not defined in parent scope');
-        }
-        $scope.gridOptions = $scope.$parent[$scope.options];
-      }
-
-      //use gridOptions.columns or ui-grid-columns attribute json or get the columns from the data
-      this.columns = $scope.gridOptions.columnDefs || $scope.$eval($attrs.uiGridColumns) || GridUtil.getColumnsFromData($scope.uiGrid);
-
-      $scope.gridOptions.columnDefs = $scope.gridOptions.columnDefs || this.columns;
-    }]
-  };
-}]);
+]);
 
 })();
 (function(){
@@ -612,13 +651,54 @@ mod.directive('uiVirtualRepeat', ['$log', '$rootElement', function($log, $rootEl
 
 var app = angular.module('ui.grid.util', []);
 
+/**
+ *  @ngdoc service
+ *  @name ui.grid.util.service:GridUtil
+ *  
+ *  @description Grid utility functions
+ */
 app.service('GridUtil', function () {
 
   var s = {
-    // Given a column name, return a readable version of it
+
+    /**
+     * @ngdoc method
+     * @name readableColumnName
+     * @methodOf ui.grid.util.service:GridUtil
+     *
+     * @param {string} columnName Column name as a string
+     * @returns {string} Column name appropriately capitalized and split apart
+     *
+       @example
+       <example module="app">
+        <file name="app.js">
+          var app = angular.module('app', ['ui.grid.util']);
+
+          app.controller('MainCtrl', ['$scope', 'GridUtil', function ($scope, GridUtil) {
+            $scope.name = 'firstName';
+            $scope.columnName = function(name) {
+              return GridUtil.readableColumnName(name);
+            };
+          }]);
+        </file>
+        <file name="index.html">
+          <div ng-controller="MainCtrl">
+            <strong>Column name:</strong> <input ng-model="name" />
+            <br>
+            <strong>Output:</strong> <span ng-bind="columnName(name)"></span>
+          </div>
+        </file>
+      </example>
+     */
     readableColumnName: function (columnName) {
       // Convert underscores to spaces
-      return columnName.replace(/_/g, ' ')
+      if (typeof(columnName) === 'undefined' || columnName === undefined || columnName === null) { return columnName; }
+
+      if (typeof(columnName) !== 'string') {
+        columnName = String(columnName);
+      }
+
+      return columnName.replace(/_+/g, ' ')
         // Replace a completely all-capsed word with a first-letter-capitalized version
         .replace(/^[A-Z]+$/, function (match) {
           return angular.lowercase(angular.uppercase(match.charAt(0)) + match.slice(1));
@@ -628,10 +708,41 @@ app.service('GridUtil', function () {
           return angular.uppercase(match.charAt(0)) + match.slice(1);
         })
         // Put a space in between words that have partial capilizations (i.e. 'firstName' becomes 'First Name')
-        .replace(/([A-Z]|[A-Z]\w+)([A-Z])/g, "$1 $2");
+        // .replace(/([A-Z]|[A-Z]\w+)([A-Z])/g, "$1 $2");
+        // .replace(/(\w+?|\w)([A-Z])/g, "$1 $2");
+        .replace(/(\w+?(?=[A-Z]))/g, '$1 ');
     },
 
-    // Return a list of column names, given a data set
+    /**
+     * @ngdoc method
+     * @name getColumnsFromData
+     * @methodOf ui.grid.util.service:GridUtil
+     * @description Return a list of column names, given a data set
+     *
+     * @param {string} data Data array for grid
+     * @returns {Object} Column definitions with field accessor and column name
+     *
+     * @example
+       <pre>
+         var data = [
+           { firstName: 'Bob', lastName: 'Jones' },
+           { firstName: 'Frank', lastName: 'Smith' }
+         ];
+
+         var columnDefs = GridUtil.getColumnsFromData(data);
+
+         columnDefs == [
+          {
+            field: 'firstName',
+            name: 'First Name'
+          },
+          {
+            field: 'lastName',
+            name: 'Last Name'
+          }
+         ];
+       </pre>
+     */
     getColumnsFromData: function (data) {
       var columnDefs = [];
 
@@ -645,28 +756,32 @@ app.service('GridUtil', function () {
       });
 
       return columnDefs;
-    }
+    },
+
+    /**
+     * @ngdoc method
+     * @name newId
+     * @methodOf ui.grid.util.service:GridUtil
+     * @description Return a unique ID string
+     *
+     * @returns {string} Unique string
+     *
+     * @example
+       <pre>
+        var id = GridUtil.newId();
+
+        # 1387305700482;
+       </pre>
+     */
+    newId: (function() {
+      var seedId = new Date().getTime();
+      return function() {
+          return seedId += 1;
+      };
+    })(),
   };
 
   return s;
 });
 
 })();
-angular.module('ui.grid').run(['$templateCache', function($templateCache) {
-  'use strict';
-
-  $templateCache.put('ui-grid/ui-grid-body',
-    "<div class=\"ui-grid-viewport\"><div><table ng-class=\"tableClass\"><tbody><tr ui-virtual-repeat=\"d in gridData\"><td ng-repeat=\"c in columns\">{{ d[c.field] }}</td></tr></tbody></table></div></div>"
-  );
-
-
-  $templateCache.put('ui-grid/ui-grid-header',
-    "<div><table class=\"ui-grid-header ui-grid-header-table\" ng-class=\"tableClass\"><thead><tr><th ng-repeat=\"col in columns\">{{ col.name }}</th></tr></thead></table></div>"
-  );
-
-
-  $templateCache.put('ui-grid/ui-grid',
-    "<div class=\"ui-grid ui-grid-viewport\"><div ui-grid-header=\"\" ui-grid-table-class=\"tableClass\"></div><div ui-grid-body=\"\" ui-grid-table-class=\"tableClass\"></div></div>"
-  );
-
-}]);
