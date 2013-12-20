@@ -16,7 +16,7 @@ NG_DOCS={
       "id": "ui.grid.style.directive:uiGridStyle",
       "shortName": "uiGridStyle",
       "type": "directive",
-      "keywords": "$scope allows am angular api app as blah break by can class color controller default directive do doesn elements expressions function grid html ie8 in index interpolate it js mainctrl module mystyle name ng-controller red style this to ui ui-grid-style us var"
+      "keywords": "$scope allows am angular api app apply as blah border box break by can class controller css default directive do doesn element elements expect expressions function getcssvalue grid ie8 in interpolate it mainctrl module mystyle ng-controller right should solid style the then this to tocontain ui ui-grid-style us var"
     },
     {
       "section": "api",

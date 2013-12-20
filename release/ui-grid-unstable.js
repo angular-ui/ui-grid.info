@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-025c61b - 2013-12-20
+/*! ui-grid - v2.0.7-0f641c0 - 2013-12-20
 * Copyright (c) 2013 ; Licensed MIT */
 (function(){
 'use strict';
@@ -111,21 +111,30 @@ app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'GridUtil',
  * Allows us to interpolate expressions in `<style>` elements. Angular doesn't do this by default as it can/will/might? break in IE8.
  *
  * @example
-   <example module="app">
-     <file name="app.js">
-       var app = angular.module('app', ['ui.grid']);
+   <doc:example module="app">
+    <doc:source>
+      <script>
+        var app = angular.module('app', ['ui.grid']);
        
-       app.controller('MainCtrl', ['$scope', function ($scope) {
-         $scope.myStyle = '.blah { color: red }';
-       }]);
-     </file>
-     <file name="index.html">
-       <div ng-controller="MainCtrl">
-         <style ui-grid-style>{{ myStyle }}</style>
-         <span class="blah">I am red.</span>
-       </div>
-     </file>
-   </example>
+        app.controller('MainCtrl', ['$scope', function ($scope) {
+          $scope.myStyle = '.blah { border: 1px solid }';
+        }]);
+      </script>
+     
+      <div ng-controller="MainCtrl">
+        <style ui-grid-style>{{ myStyle }}</style>
+        <span class="blah">I am in a box.</span>
+      </div>
+    </doc:source>
+    <doc:scenario>
+      it('should apply the right class to the element', function () {
+        element(by.css('.blah')).getCssValue('border')
+          .then(function(c) {
+            expect(c).toContain('1px solid');
+          });
+      });
+    </doc:scenario>
+   </doc:example>
  */
 
 var app = angular.module('ui.grid.style', []);
