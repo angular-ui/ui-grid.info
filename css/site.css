@@ -1,0 +1,62 @@
+body {
+  padding-top: 50px;
+}
+
+.jumbotron {
+  padding: 30px;
+  margin-bottom: 30px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  /*background-color: #eeeeee;*/
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    right bottom,
+    color-stop(0.38, #D1F1FF),
+    color-stop(1, #EDFCF9)
+  );
+  background-image: -o-linear-gradient(right, #D1F1FF 38%, #EDFCF9 100%);
+  background-image: -moz-linear-gradient(right, #D1F1FF 38%, #EDFCF9 100%);
+  background-image: -webkit-linear-gradient(right, #D1F1FF 38%, #EDFCF9 100%);
+  background-image: -ms-linear-gradient(right, #D1F1FF 38%, #EDFCF9 100%);
+  background-image: linear-gradient(to right, #D1F1FF 38%, #EDFCF9 100%);
+}
+
+.jumbotron h1,
+.jumbotron .h1 {
+  line-height: 1;
+  color: inherit;
+}
+
+.jumbotron p {
+  line-height: 1.4;
+}
+
+.container .jumbotron {
+  border-radius: 6px;
+}
+
+.jumbotron .container {
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .jumbotron {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .container .jumbotron {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  .jumbotron h1,
+  .jumbotron .h1 {
+    font-size: 63px;
+  }
+}
+
+.nav-ghbtn {
+  padding-top: 14px;
+}

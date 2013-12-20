@@ -44,7 +44,7 @@
       
         addTag('script', {src: 'grunt-scripts/marked.js'}, sync);
       
-        addTag('script', {src: 'grunt-scripts/ui-grid.js'}, sync);
+        addTag('script', {src: 'http://ui.grid.info/release/ui-grid.js'}, sync);
       
       addTag('script', {src: 'js/angular-bootstrap.js'}, sync);
       addTag('script', {src: 'js/angular-bootstrap-prettify.js'}, sync);
@@ -96,14 +96,16 @@
         <div class="container">
           
           
-            <a  class="brand">UI Grid</a>
+            <a  href="http://ui.grid.info"  class="brand">UI Grid</a>
           
           <ul class="nav">
             <li ng-repeat="(url, name) in sections" ng-class="{active: isActivePath(url)}">
               <a ng-href="{{url}}"><i class="icon-book icon-white"></i> {{name}}</a>
             </li>
           </ul>
-          
+          <ul class="nav pull-right">
+  <li><a href="github.com">Github</a></li>
+</ul>
         </div>
       </div>
     </div>
