@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-cb659df - 2013-12-30
+/*! ui-grid - v2.0.7-7e95fdb - 2013-12-30
 * Copyright (c) 2013 ; Licensed MIT */
 (function(){
 'use strict';
@@ -27,6 +27,32 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
         // $log.debug('scroll', args.scrollPercentage, scope.options.canvasHeight, args.scrollPercentage * scope.options.canvasHeight);
         var newScrollTop = args.scrollPercentage * (uiGridCtrl.canvas[0].scrollHeight - scope.options.canvasHeight);
         uiGridCtrl.canvas[0].scrollTop = newScrollTop;
+      });
+
+      var unbinders = [];
+      unbinders.push(elm.bind('mousewheel', function(evt) {
+        // use wheelDeltaY
+        evt.preventDefault();
+
+        var scrollAmount = evt.wheelDeltaY * -1;
+
+        // Get the scroll percentage
+        var scrollPercentage = (uiGridCtrl.canvas[0].scrollTop + scrollAmount) / (uiGridCtrl.canvas[0].scrollHeight - scope.options.canvasHeight);
+
+        // $log.debug('new scrolltop', uiGridCtrl.canvas[0].scrollTop + scrollAmount);
+        // uiGridCtrl.canvas[0].scrollTop = uiGridCtrl.canvas[0].scrollTop + scrollAmount;
+        // $log.debug('new scrolltop', uiGridCtrl.canvas[0].scrollTop);
+
+        scope.$broadcast('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: elm });
+      }));
+      unbinders.push(elm.bind('keyDown', function(evt, args) {
+
+      }));
+
+      elm.bind('$destroy', function() {
+        angular.forEach(unbinders, function(u) {
+          u();
+        });
       });
     }
   };
@@ -105,7 +131,7 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
       $log.debug('ui-grid-scrollbar link');
 
       function updateScrollbar(gridScope) {
-        gridScope.scrollbarStyles = '.grid' + gridScope.gridId + ' .ui-grid-scrollbar-vertical { height: ' + (gridScope.options.canvasHeight / 8) + 'px; }';
+        gridScope.scrollbarStyles = '.grid' + gridScope.gridId + ' .ui-grid-scrollbar-vertical { height: ' + (gridScope.options.canvasHeight / 8 || 20) + 'px; }';
       }
 
       if (uiGridCtrl) {
@@ -113,16 +139,19 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
       }
 
       var startY = 0,
-          y = 0,
-          elmHeight = 0,
-          elmBottomBound = 0;
+          y = 0;
+      
+      var elmHeight = GridUtil.elementHeight(elm, 'margin');
+      var elmBottomBound = scope.options.canvasHeight - elmHeight;
+
+      $log.debug(elmBottomBound, scope.options.canvasHeight, elmHeight);
 
       elm.on('mousedown', function(event) {
         // Prevent default dragging of selected content
         event.preventDefault();
-        startY = event.screenY - y;
         elmHeight = GridUtil.elementHeight(elm, 'margin');
         elmBottomBound = scope.options.canvasHeight - elmHeight;
+        startY = event.screenY - y;
 
         $document.on('mousemove', mousemove);
         $document.on('mouseup', mouseup);
@@ -131,16 +160,35 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
       function mousemove(event) {
         y = event.screenY - startY;
 
-        if (y <= 0) { y = 0; }
-        if (y >= elmBottomBound) { y = elmBottomBound; }
+        if (y < 0) { y = 0; }
+        if (y > elmBottomBound) { y = elmBottomBound; }
 
         var scrollPercentage = y / elmBottomBound;
-        scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage });
+        scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: elm });
+        // elm.css({
+        //   top: y + 'px'
+        // });
+      }
+
+      scope.$on('uiGridScrollVertical', function(evt, args) {
+        // $log.debug('scroll', args.scrollPercentage, scope.options.canvasHeight, args.scrollPercentage * scope.options.canvasHeight);
+        if (args.scrollPercentage < 0) { args.scrollPercentage = 0; }
+        if (args.scrollPercentage > 1) { args.scrollPercentage = 1; }
+
+        elmHeight = GridUtil.elementHeight(elm, 'margin');
+        elmBottomBound = scope.options.canvasHeight - elmHeight;
+
+        var newScrollTop = args.scrollPercentage * elmBottomBound;
+
+        // if (newScrollTop < 0) { newScrollTop = 0; }
+        // if (newScrollTop > elmBottomBound) { newScrollTop = elmBottomBound; }
+
+        // $log.debug('newScrollTop', args.scrollPercentage, elmBottomBound);
 
         elm.css({
-          top: y + 'px'
+          top: newScrollTop + 'px'
         });
-      }
+      });
 
       function mouseup() {
         $document.unbind('mousemove', mousemove);
@@ -354,7 +402,22 @@ app.directive('uiGrid',
 
             uiGridCtrl.grid.options.canvasHeight = scope.gridHeight - scope.options.headerRowHeight;
 
-            scope.visibleRowCount = scope.options.data.length;
+            if (typeof(scope.options.data) !== 'undefined' && scope.options.data !== undefined && scope.options.data.length) {
+              scope.visibleRowCount = scope.options.data.length;
+            }
+
+            scope.$watch('uiGrid.data', function(n, o) {
+              if (n !== o) {
+                if (scope.options.columnDefs.length <= 0) {
+                  scope.options.columnDefs = GridUtil.getColumnsFromData(n);
+                }
+
+                scope.options.data = n;
+                scope.renderedRows = scope.options.data;
+
+                uiGridCtrl.buildStyles();
+              }
+            });
 
             // uiGridCtrl.buildStyles();
           }
@@ -808,6 +871,8 @@ function getStyles (elem) {
   return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
 }
 
+var rnumnonpx = new RegExp( "^(" + (/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/).source + ")(?!px)[a-z%]+$", "i" );
+
 function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
   var i = extra === ( isBorderBox ? 'border' : 'content' ) ?
           // If we already have the right measurement, avoid augmentation
@@ -817,33 +882,60 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 
           val = 0;
 
-  angular.forEach(['Top', 'Right', 'Bottom', 'Left'], function (side) {
+  var sides = ['Top', 'Right', 'Bottom', 'Left'];
+  
+  for ( ; i < 4; i += 2 ) {
+    var side = sides[i];
+    // dump('side', side);
+
     // both box models exclude margin, so add it if we want it
     if ( extra === 'margin' ) {
-      val += parseFloat(styles[extra + side]);
+      var marg = parseFloat(styles[extra + side]);
+      if (!isNaN(marg)) {
+        val += marg;
+      }
     }
+    // dump('val1', val);
 
     if ( isBorderBox ) {
       // border-box includes padding, so remove it if we want content
       if ( extra === 'content' ) {
-        val -= parseFloat(styles['padding' + side]);
+        var padd = parseFloat(styles['padding' + side]);
+        if (!isNaN(padd)) {
+          val -= padd;
+          // dump('val2', val);
+        }
       }
 
       // at this point, extra isn't border nor margin, so remove border
       if ( extra !== 'margin' ) {
-        val -= parseFloat(styles['border' + side + 'Width']);
+        var bordermarg = parseFloat(styles['border' + side + 'Width']);
+        if (!isNaN(bordermarg)) {
+          val -= bordermarg;
+          // dump('val3', val);
+        }
       }
     }
     else {
       // at this point, extra isn't content, so add padding
-      val += parseFloat(styles['padding' + side]);
+      var nocontentPad = parseFloat(styles['padding' + side]);
+      if (!isNaN(nocontentPad)) {
+        val += nocontentPad;
+        // dump('val4', val);
+      }
 
       // at this point, extra isn't content nor padding, so add border
       if ( extra !== 'padding') {
-        val += parseFloat(styles['border' + side + 'Width']);
+        var nocontentnopad = parseFloat(styles['border' + side + 'Width']);
+        if (!isNaN(nocontentnopad)) {
+          val += nocontentnopad;
+          // dump('val5', val);
+        }
       }
     }
-  });
+  }
+
+  // dump('augVal', val);
 
   return val;
 }
@@ -858,29 +950,31 @@ function getWidthOrHeight( elem, name, extra ) {
   // some non-html elements return undefined for offsetWidth, so check for null/undefined
   // svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
   // MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
-  // if ( val <= 0 || val == null ) {
-  //         // Fall back to computed then uncomputed css if necessary
-  //         val = curCSS( elem, name, styles );
-  //         if ( val < 0 || val == null ) {
-  //                 val = elem.style[ name ];
-  //         }
+  if ( val <= 0 || val == null ) {
+          // Fall back to computed then uncomputed css if necessary
+          val = styles[name];
+          if ( val < 0 || val == null ) {
+            val = elem.style[ name ];
+          }
 
-  //         // Computed unit is not pixels. Stop here and return.
-  //         if ( rnumnonpx.test(val) ) {
-  //                 return val;
-  //         }
+          // Computed unit is not pixels. Stop here and return.
+          if ( rnumnonpx.test(val) ) {
+            return val;
+          }
 
-  //         // we need the check for style in case a browser which returns unreliable values
-  //         // for getComputedStyle silently falls back to the reliable elem.style
-  //         valueIsBorderBox = isBorderBox &&
-  //                 ( support.boxSizingReliable() || val === elem.style[ name ] );
+          // we need the check for style in case a browser which returns unreliable values
+          // for getComputedStyle silently falls back to the reliable elem.style
+          valueIsBorderBox = isBorderBox &&
+                  ( true || val === elem.style[ name ] ); // use 'true' instead of 'support.boxSizingReliable()'
 
-  //         // Normalize "", auto, and prepare for extra
-  //         val = parseFloat( val ) || 0;
-  // }
+          // Normalize "", auto, and prepare for extra
+          val = parseFloat( val ) || 0;
+  }
+
+  // dump('gworh val', val);
 
   // use the active box-sizing model to add/subtract irrelevant styles
-  return ( val +
+  var ret = ( val +
           augmentWidthOrHeight(
                   elem,
                   name,
@@ -889,6 +983,9 @@ function getWidthOrHeight( elem, name, extra ) {
                   styles
           )
   );
+
+  // dump('ret', ret, val);
+  return ret;
 }
 
 /**
@@ -985,6 +1082,8 @@ app.service('GridUtil', ['$window', function ($window) {
     getColumnsFromData: function (data) {
       var columnDefs = [];
 
+      if (! data || typeof(data[0]) === 'undefined' || data[0] === undefined) { return []; }
+
       var item = data[0];
       
       angular.forEach(item, function (prop, propName) {
@@ -1024,7 +1123,8 @@ app.service('GridUtil', ['$window', function ($window) {
     * @name elementWidth
     * @methodOf ui.grid.util.service:GridUtil
     *
-    * @param {element} DOM element
+    * @param {element} element DOM element
+    * @param {string} [extra] Optional modifier for calculation. Use 'margin' to account for margins on element
     *
     * @returns {number} Element width in pixels, accounting for any borders, etc.
     */
@@ -1037,7 +1137,8 @@ app.service('GridUtil', ['$window', function ($window) {
     * @name elementHeight
     * @methodOf ui.grid.util.service:GridUtil
     *
-    * @param {element} DOM element
+    * @param {element} element DOM element
+    * @param {string} [extra] Optional modifier for calculation. Use 'margin' to account for margins on element
     *
     * @returns {number} Element height in pixels, accounting for any borders, etc.
     */
