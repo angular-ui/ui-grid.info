@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-2362352 - 2013-12-23
+/*! ui-grid - v2.0.7-cb659df - 2013-12-30
 * Copyright (c) 2013 ; Licensed MIT */
 (function(){
 'use strict';
@@ -8,25 +8,26 @@ var app = angular.module('ui.grid.body', []);
 app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
   return {
     replace: true,
-    priority: 1000,
+    // priority: 1000,
     templateUrl: 'ui-grid/ui-grid-body',
     require: '?^uiGrid',
-    scope: {
-      tableClass: '=uiGridTableClass'
-    },
+    scope: false,
     link: function(scope, elm, attrs, uiGridCtrl) {
-      $log.debug('body postlink scope', scope.$id);
-
       if (uiGridCtrl === undefined) {
         $log.warn('[ui-grid-body] uiGridCtrl is undefined!');
       }
 
-      if (uiGridCtrl && typeof(uiGridCtrl.columns) !== 'undefined' && uiGridCtrl.columns) {
-        scope.columns = uiGridCtrl.columns;
-      }
-      if (uiGridCtrl && typeof(uiGridCtrl.gridData) !== 'undefined' && uiGridCtrl.gridData) {
-        scope.gridData = uiGridCtrl.gridData;
-      }
+      $log.debug('ui-grid-body link');
+
+      // Stick the canvas in the controller
+      uiGridCtrl.canvas = angular.element( elm[0].getElementsByClassName('ui-grid-canvas')[0] );
+      uiGridCtrl.viewport = angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
+
+      scope.$on('uiGridScrollVertical', function(evt, args) {
+        // $log.debug('scroll', args.scrollPercentage, scope.options.canvasHeight, args.scrollPercentage * scope.options.canvasHeight);
+        var newScrollTop = args.scrollPercentage * (uiGridCtrl.canvas[0].scrollHeight - scope.options.canvasHeight);
+        uiGridCtrl.canvas[0].scrollTop = newScrollTop;
+      });
     }
   };
 }]);
@@ -40,59 +41,116 @@ var app = angular.module('ui.grid.header', ['ui.grid.util']);
 app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'GridUtil', function($log, $templateCache, $compile, GridUtil) {
   return {
     restrict: 'EA',
-    // templateUrl: 'ui-grid/ui-grid-header',
-    // replace: true,
+    templateUrl: 'ui-grid/ui-grid-header',
+    replace: true,
     priority: 1000,
     require: '?^uiGrid',
-    scope: {
-      tableClass: '=uiGridTableClass'
-    },
-    compile: function (elm, attrs) {
-      $log.debug('header compile');
+    scope: false,
+    link: function (scope, elm, attrs, uiGridCtrl) {
+      if (uiGridCtrl === undefined) {
+        $log.warn('[ui-grid-header] uiGridCtrl is undefined!');
+      }
+      $log.debug('ui-grid-header link');
+    }
+  };
+}]);
 
-      // If the contents of the grid element are empty, use the default grid template
-      var tmpl;
-      if (elm.html() === '' || /^\s*$/.test(elm.html())) {
-        tmpl = $templateCache.get('ui-grid/ui-grid-header');
+})();
+(function(){
+'use strict';
+
+var app = angular.module('ui.grid.row', []);
+
+app.directive('uiGridRow', ['$log', 'GridUtil', function($log, GridUtil) {
+  return {
+    replace: true,
+    priority: 1000,
+    templateUrl: 'ui-grid/ui-grid-row',
+    require: ['?^uiGrid', '?^ngRepeat'],
+    scope: {
+      row: '=uiGridRow',
+      rowIndex: '='
+    },
+    link: function(scope, elm, attrs, controllers) {
+      var uiGridCtrl   = controllers[0];
+      var ngRepeatCtrl = controllers[1];
+
+      if (uiGridCtrl === undefined) {
+        $log.warn('[ui-grid-row] uiGridCtrl is undefined!');
       }
 
-      var preLink = function (scope, elm, attrs) {
-        $log.debug('header prelink scope', scope.$id);
+      scope.options = uiGridCtrl.grid.options;
+    }
+  };
+}]);
 
-        if (tmpl) {
-          elm.append(tmpl);
-        }
-        $compile(elm.contents())(scope);
-      };
+})();
+(function(){
+// 'use strict';
 
-      var postLink = function(scope, elm, attrs, uiGridCtrl) {
-        $log.debug('header postlink scope', scope.$id);
+var app = angular.module('ui.grid.scrollbar', []);
 
-        if (uiGridCtrl === undefined) {
-          $log.warn('[ui-grid-header] uiGridCtrl is undefined!');
-        }
+app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log, $document, GridUtil) {
+  return {
+    replace: true,
+    // priority: 1000,
+    templateUrl: 'ui-grid/ui-grid-scrollbar',
+    require: '?^uiGrid',
+    scope: false,
+    link: function(scope, elm, attrs, uiGridCtrl) {
+      if (uiGridCtrl === undefined) {
+        $log.warn('[ui-grid-scrollbar] uiGridCtrl is undefined!');
+      }
 
-        // Get the column defs from the parent grid controller
-        if (uiGridCtrl && typeof(uiGridCtrl.columns) !== 'undefined' && uiGridCtrl.columns) {
-          scope.columns = uiGridCtrl.columns;
-        }
+      $log.debug('ui-grid-scrollbar link');
 
-        // if (tmpl) {
-        //   elm.append(tmpl);
-        //   $compile(elm.contents())(scope);
-        // }
+      function updateScrollbar(gridScope) {
+        gridScope.scrollbarStyles = '.grid' + gridScope.gridId + ' .ui-grid-scrollbar-vertical { height: ' + (gridScope.options.canvasHeight / 8) + 'px; }';
+      }
 
-        // scope.$watch('columns', function(n, o) {
-        //    $log.debug('columns change', n, o);
-        //    var contents = elm.contents();
-        //    $compile(contents)(scope);
-        // });
-      };
+      if (uiGridCtrl) {
+        uiGridCtrl.styleComputions.push(updateScrollbar);
+      }
 
-      return {
-        pre: preLink,
-        post: postLink
-      };
+      var startY = 0,
+          y = 0,
+          elmHeight = 0,
+          elmBottomBound = 0;
+
+      elm.on('mousedown', function(event) {
+        // Prevent default dragging of selected content
+        event.preventDefault();
+        startY = event.screenY - y;
+        elmHeight = GridUtil.elementHeight(elm, 'margin');
+        elmBottomBound = scope.options.canvasHeight - elmHeight;
+
+        $document.on('mousemove', mousemove);
+        $document.on('mouseup', mouseup);
+      });
+
+      function mousemove(event) {
+        y = event.screenY - startY;
+
+        if (y <= 0) { y = 0; }
+        if (y >= elmBottomBound) { y = elmBottomBound; }
+
+        var scrollPercentage = y / elmBottomBound;
+        scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage });
+
+        elm.css({
+          top: y + 'px'
+        });
+      }
+
+      function mouseup() {
+        $document.unbind('mousemove', mousemove);
+        $document.unbind('mouseup', mouseup);
+      }
+
+      elm.on('$destroy', function() {
+        $document.unbind('mousemove', mousemove);
+        $document.unbind('mouseup', mouseup);
+      });
     }
   };
 }]);
@@ -139,16 +197,48 @@ app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'GridUtil',
 
 var app = angular.module('ui.grid.style', []);
 
-app.directive('uiGridStyle', ['$interpolate', '$sce', function($interpolate, $sce) {
+app.directive('uiGridStyle', ['$log', '$interpolate', function($log, $interpolate) {
   return {
     // restrict: 'A',
-    priority: 1000,
-    link: function(scope, element) {
+    // priority: 1000,
+    require: '?^uiGrid',
+    link: function(scope, element, attrs, uiGridCtrl) {
+      $log.debug('ui-grid-style link');
+
       var interpolateFn = $interpolate(element.text(), true);
 
       if (interpolateFn) {
         scope.$watch(interpolateFn, function(value) {
           element.text(value);
+        });
+      }
+
+      if (uiGridCtrl) {
+        uiGridCtrl.styleComputions.push(function() {
+          var width = uiGridCtrl.grid.gridWidth;
+          var equalWidth = width / scope.options.columnDefs.length;
+
+          var ret = '';
+          var left = 0;
+          angular.forEach(scope.options.columnDefs, function(c, i) {
+            ret = ret + ' .grid' + scope.gridId + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+            left = left + equalWidth;
+          });
+
+          scope.columnStyles = ret;
+        });
+
+        uiGridCtrl.styleComputions.push(function() {
+          var offset = 0;
+          var rowHeight = scope.options.rowHeight;
+
+          var ret = '';
+          for (var i = 1; i < scope.options.maxVisibleRowCount; i++) {
+            ret = ret + ' .grid' + scope.gridId + ' .ui-grid-row:nth-child(' + i + ') { top: ' + offset + 'px; }';
+            offset = offset + rowHeight;
+          }
+
+          scope.rowStyles = ret;
         });
       }
     }
@@ -159,14 +249,14 @@ app.directive('uiGridStyle', ['$interpolate', '$sce', function($interpolate, $sc
 (function(){
 'use strict';
 
-var app = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.grid.style', 'ui.virtual-repeat']);
+var app = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.grid.row', 'ui.grid.style', 'ui.grid.scrollbar']);
 
 /**
  *  @ngdoc directive
  *  @name ui.grid.directive:uiGrid
  *  @element div
  *  @restrict EA
- *  @param {array} uiGrid Array of rows to display in the grid
+ *  @param {Object} uiGrid Options for the grid to use
  *  
  *  @description Create a very basic grid.
  *
@@ -184,38 +274,60 @@ var app = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.grid.
       </file>
       <file name="index.html">
         <div ng-controller="MainCtrl">
-          <div ui-grid="data"></div>
+          <div ui-grid="{ data: data }"></div>
         </div>
       </file>
     </example>
  */
 app.directive('uiGrid',
   [
+    '$log',
     '$compile',
     '$templateCache',
-    '$log',
     'GridUtil',
   function(
+    $log,
     $compile,
     $templateCache,
-    $log,
     GridUtil
   ) {
 
-    function preLink(scope, elm, attrs) {
-      var options = scope.uiGrid;
+    function preLink(scope, elm, attrs, uiGridCtrl) {
+      $log.debug('ui-grid prelink');
+
+      var options = scope.options = {
+        data: [],
+
+        /**
+        * @property {Array} columnDefs
+        */
+        columnDefs: null,
+
+        // Height of the header row in
+        headerRowHeight: 30,
+
+        rowHeight: 30,
+
+        maxVisibleRowCount: 50
+      };
+      uiGridCtrl.grid = { options: scope.options };
+
+      angular.extend(options, scope.uiGrid);
 
       // Create an ID for this grid
       scope.gridId = GridUtil.newId();
 
-      // Get the grid dimensions from the element
-
       // Initialize the grid
 
       // Get the column definitions
-        // Put a watch on them
+      //   If no columnDefs were supplied, generate them ourself
+      if (! options.columnDefs || options.columnDefs.length === 0) {
+        options.columnDefs = GridUtil.getColumnsFromData(options.data);
 
-      console.log('gridId', scope.gridId);
+        // TOD: Put a watch on them
+      }
+
+      scope.renderedRows = options.data;
 
       elm.on('$destroy', function() {
         // Remove columnDefs watch
@@ -227,13 +339,45 @@ app.directive('uiGrid',
       scope: {
         uiGrid: '='
       },
+      replace: true,
       compile: function () {
         return {
-          pre: preLink
+          pre: preLink,
+          post: function (scope, elm, attrs, uiGridCtrl) {
+            $log.debug('ui-grid postlink');
+
+            // Get the grid dimensions from the element
+            // uiGridCtrl.grid.gridWidth = scope.gridWidth = GridUtil.elementWidth(elm);
+            // uiGridCtrl.grid.gridHeight = scope.gridHeight = GridUtil.elementHeight(elm);
+            uiGridCtrl.grid.gridWidth = scope.gridWidth = elm[0].clientWidth;
+            uiGridCtrl.grid.gridHeight = scope.gridHeight = GridUtil.elementHeight(elm);
+
+            uiGridCtrl.grid.options.canvasHeight = scope.gridHeight - scope.options.headerRowHeight;
+
+            scope.visibleRowCount = scope.options.data.length;
+
+            // uiGridCtrl.buildStyles();
+          }
         };
       },
       controller: function ($scope, $element, $attrs) {
-        
+        var self = this;
+        self.styleComputions = [];
+
+        self.buildStyles = function() {
+          // uiGridCtrl.buildColumnStyles();
+          // uiGridCtrl.buildRowStyles();
+
+          angular.forEach(self.styleComputions, function(comp) {
+            comp.call(self, $scope);
+          });
+        };
+
+        $scope.$watch(function () { return self.styleComputions; }, function() {
+          self.buildStyles();
+        });
+
+        $log.debug('ui-grid controller');
       }
     };
   }
@@ -660,14 +804,100 @@ mod.directive('uiVirtualRepeat', ['$log', '$rootElement', function($log, $rootEl
 
 var app = angular.module('ui.grid.util', []);
 
+function getStyles (elem) {
+  return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
+}
+
+function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
+  var i = extra === ( isBorderBox ? 'border' : 'content' ) ?
+          // If we already have the right measurement, avoid augmentation
+          4 :
+          // Otherwise initialize for horizontal or vertical properties
+          name === 'width' ? 1 : 0,
+
+          val = 0;
+
+  angular.forEach(['Top', 'Right', 'Bottom', 'Left'], function (side) {
+    // both box models exclude margin, so add it if we want it
+    if ( extra === 'margin' ) {
+      val += parseFloat(styles[extra + side]);
+    }
+
+    if ( isBorderBox ) {
+      // border-box includes padding, so remove it if we want content
+      if ( extra === 'content' ) {
+        val -= parseFloat(styles['padding' + side]);
+      }
+
+      // at this point, extra isn't border nor margin, so remove border
+      if ( extra !== 'margin' ) {
+        val -= parseFloat(styles['border' + side + 'Width']);
+      }
+    }
+    else {
+      // at this point, extra isn't content, so add padding
+      val += parseFloat(styles['padding' + side]);
+
+      // at this point, extra isn't content nor padding, so add border
+      if ( extra !== 'padding') {
+        val += parseFloat(styles['border' + side + 'Width']);
+      }
+    }
+  });
+
+  return val;
+}
+
+function getWidthOrHeight( elem, name, extra ) {
+  // Start with offset property, which is equivalent to the border-box value
+  var valueIsBorderBox = true,
+          val = name === 'width' ? elem.offsetWidth : elem.offsetHeight,
+          styles = getStyles(elem),
+          isBorderBox = styles['boxSizing'] === 'border-box';
+
+  // some non-html elements return undefined for offsetWidth, so check for null/undefined
+  // svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
+  // MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
+  // if ( val <= 0 || val == null ) {
+  //         // Fall back to computed then uncomputed css if necessary
+  //         val = curCSS( elem, name, styles );
+  //         if ( val < 0 || val == null ) {
+  //                 val = elem.style[ name ];
+  //         }
+
+  //         // Computed unit is not pixels. Stop here and return.
+  //         if ( rnumnonpx.test(val) ) {
+  //                 return val;
+  //         }
+
+  //         // we need the check for style in case a browser which returns unreliable values
+  //         // for getComputedStyle silently falls back to the reliable elem.style
+  //         valueIsBorderBox = isBorderBox &&
+  //                 ( support.boxSizingReliable() || val === elem.style[ name ] );
+
+  //         // Normalize "", auto, and prepare for extra
+  //         val = parseFloat( val ) || 0;
+  // }
+
+  // use the active box-sizing model to add/subtract irrelevant styles
+  return ( val +
+          augmentWidthOrHeight(
+                  elem,
+                  name,
+                  extra || ( isBorderBox ? "border" : "content" ),
+                  valueIsBorderBox,
+                  styles
+          )
+  );
+}
+
 /**
  *  @ngdoc service
  *  @name ui.grid.util.service:GridUtil
  *  
  *  @description Grid utility functions
  */
-app.service('GridUtil', function () {
-
+app.service('GridUtil', ['$window', function ($window) {
   var s = {
 
     /**
@@ -788,9 +1018,47 @@ app.service('GridUtil', function () {
           return seedId += 1;
       };
     })(),
+
+    /**
+    * @ngdoc method
+    * @name elementWidth
+    * @methodOf ui.grid.util.service:GridUtil
+    *
+    * @param {element} DOM element
+    *
+    * @returns {number} Element width in pixels, accounting for any borders, etc.
+    */
+    elementWidth: function (elem) {
+      
+    },
+
+    /**
+    * @ngdoc method
+    * @name elementHeight
+    * @methodOf ui.grid.util.service:GridUtil
+    *
+    * @param {element} DOM element
+    *
+    * @returns {number} Element height in pixels, accounting for any borders, etc.
+    */
+    elementHeight: function (elem) {
+      
+    }
   };
 
+  angular.forEach(['width', 'height'], function(name){
+    var capsName = angular.uppercase(name.charAt(0)) + name.substr(1);
+    s['element' + capsName] = function (elem, extra) {
+      var e = elem;
+      if (typeof(e.length) !== 'undefined' && e.length) {
+        e = elem[0];
+      }
+      
+      return getWidthOrHeight( e, name, extra );
+    };
+  });
+
   return s;
-});
+}]);
 
 })();

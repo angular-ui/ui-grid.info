@@ -6,14 +6,14 @@
 <div class="description"><p>Create a very basic grid.</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage">as element:<pre class="prettyprint linenums">&lt;ui-grid
-       uiGrid="{array}"&gt;
+       uiGrid="{Object}"&gt;
 &lt;/ui-grid&gt;</pre>
-as attribute<pre class="prettyprint linenums">&lt;div ui-grid="{array}"&gt;
+as attribute<pre class="prettyprint linenums">&lt;div ui-grid="{Object}"&gt;
    ...
 &lt;/div&gt;</pre>
 <h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">uiGrid – {array} – </code>
-<p>Array of rows to display in the grid</p></li>
+<ul class="parameters"><li><code ng:non-bindable="">uiGrid – {Object} – </code>
+<p>Options for the grid to use</p></li>
 </ul>
 </div>
 <h2 id="Example">Example</h2>
@@ -23,7 +23,7 @@ as attribute<pre class="prettyprint linenums">&lt;div ui-grid="{array}"&gt;
 <pre class="prettyprint linenums" ng-set-text="index.html-0" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-0">
   <div ng-controller="MainCtrl">
-    <div ui-grid="data"></div>
+    <div ui-grid="{ data: data }"></div>
   </div>
 </script>
 </div>
