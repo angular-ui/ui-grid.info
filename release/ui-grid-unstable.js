@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-7e95fdb - 2013-12-30
+/*! ui-grid - v2.0.7-56b7a6c - 2013-12-31
 * Copyright (c) 2013 ; Licensed MIT */
 (function(){
 'use strict';
@@ -21,16 +21,15 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
 
       // Stick the canvas in the controller
       uiGridCtrl.canvas = angular.element( elm[0].getElementsByClassName('ui-grid-canvas')[0] );
-      uiGridCtrl.viewport = angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
+      uiGridCtrl.viewport = elm; //angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
 
-      scope.$on('uiGridScrollVertical', function(evt, args) {
+      var scrollUnbinder = scope.$on('uiGridScrollVertical', function(evt, args) {
         // $log.debug('scroll', args.scrollPercentage, scope.options.canvasHeight, args.scrollPercentage * scope.options.canvasHeight);
         var newScrollTop = args.scrollPercentage * (uiGridCtrl.canvas[0].scrollHeight - scope.options.canvasHeight);
         uiGridCtrl.canvas[0].scrollTop = newScrollTop;
       });
-
-      var unbinders = [];
-      unbinders.push(elm.bind('mousewheel', function(evt) {
+      
+      elm.bind('mousewheel', function(evt) {
         // use wheelDeltaY
         evt.preventDefault();
 
@@ -44,15 +43,15 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
         // $log.debug('new scrolltop', uiGridCtrl.canvas[0].scrollTop);
 
         scope.$broadcast('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: elm });
-      }));
-      unbinders.push(elm.bind('keyDown', function(evt, args) {
+      });
+      elm.bind('keyDown', function(evt, args) {
 
-      }));
+      });
 
       elm.bind('$destroy', function() {
-        angular.forEach(unbinders, function(u) {
-          u();
-        });
+        scrollUnbinder();
+        elm.unbind('mousewheel');
+        elm.unbind('keyDown');
       });
     }
   };
@@ -69,7 +68,7 @@ app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'GridUtil',
     restrict: 'EA',
     templateUrl: 'ui-grid/ui-grid-header',
     replace: true,
-    priority: 1000,
+    // priority: 1000,
     require: '?^uiGrid',
     scope: false,
     link: function (scope, elm, attrs, uiGridCtrl) {
@@ -77,6 +76,15 @@ app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'GridUtil',
         $log.warn('[ui-grid-header] uiGridCtrl is undefined!');
       }
       $log.debug('ui-grid-header link');
+
+      if (uiGridCtrl) {
+        uiGridCtrl.header = elm;
+      }
+
+      // Need to refresh the canvas size when the columnDefs change
+      scope.$watch('options.columnDefs', function(n, o) {
+        uiGridCtrl.refreshCanvas();
+      });
     }
   };
 }]);
@@ -134,6 +142,10 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
         gridScope.scrollbarStyles = '.grid' + gridScope.gridId + ' .ui-grid-scrollbar-vertical { height: ' + (gridScope.options.canvasHeight / 8 || 20) + 'px; }';
       }
 
+      scope.showScrollbar = function() {
+        return uiGridCtrl.canvas[0].scrollHeight > uiGridCtrl.viewport[0].scrollHeight;
+      };
+
       if (uiGridCtrl) {
         uiGridCtrl.styleComputions.push(updateScrollbar);
       }
@@ -141,12 +153,13 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
       var startY = 0,
           y = 0;
       
+      // Get the height of the scrollbar, including its margins
       var elmHeight = GridUtil.elementHeight(elm, 'margin');
+
+      // Get the "bottom bound" which the scrollbar cannot scroll past
       var elmBottomBound = scope.options.canvasHeight - elmHeight;
-
-      $log.debug(elmBottomBound, scope.options.canvasHeight, elmHeight);
-
-      elm.on('mousedown', function(event) {
+      
+      function mousedown(event) {
         // Prevent default dragging of selected content
         event.preventDefault();
         elmHeight = GridUtil.elementHeight(elm, 'margin');
@@ -155,7 +168,9 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
 
         $document.on('mousemove', mousemove);
         $document.on('mouseup', mouseup);
-      });
+      }
+
+      elm.on('mousedown', mousedown);
 
       function mousemove(event) {
         y = event.screenY - startY;
@@ -164,14 +179,11 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
         if (y > elmBottomBound) { y = elmBottomBound; }
 
         var scrollPercentage = y / elmBottomBound;
+
         scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: elm });
-        // elm.css({
-        //   top: y + 'px'
-        // });
       }
 
-      scope.$on('uiGridScrollVertical', function(evt, args) {
-        // $log.debug('scroll', args.scrollPercentage, scope.options.canvasHeight, args.scrollPercentage * scope.options.canvasHeight);
+      var scrollUnbinder = scope.$on('uiGridScrollVertical', function(evt, args) {
         if (args.scrollPercentage < 0) { args.scrollPercentage = 0; }
         if (args.scrollPercentage > 1) { args.scrollPercentage = 1; }
 
@@ -180,11 +192,7 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
 
         var newScrollTop = args.scrollPercentage * elmBottomBound;
 
-        // if (newScrollTop < 0) { newScrollTop = 0; }
-        // if (newScrollTop > elmBottomBound) { newScrollTop = elmBottomBound; }
-
-        // $log.debug('newScrollTop', args.scrollPercentage, elmBottomBound);
-
+        y = newScrollTop;
         elm.css({
           top: newScrollTop + 'px'
         });
@@ -196,8 +204,10 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
       }
 
       elm.on('$destroy', function() {
+        scrollUnbinder();
         $document.unbind('mousemove', mousemove);
         $document.unbind('mouseup', mouseup);
+        elm.unbind('mousedown');
       });
     }
   };
@@ -356,7 +366,10 @@ app.directive('uiGrid',
 
         rowHeight: 30,
 
-        maxVisibleRowCount: 50
+        maxVisibleRowCount: 200,
+
+        // Turn virtualization on when number of data elements goes over this number
+        virtualizationThreshold: 50
       };
       uiGridCtrl.grid = { options: scope.options };
 
@@ -372,10 +385,16 @@ app.directive('uiGrid',
       if (! options.columnDefs || options.columnDefs.length === 0) {
         options.columnDefs = GridUtil.getColumnsFromData(options.data);
 
-        // TOD: Put a watch on them
+        // TODO(c0bra): Put a watch on them
       }
 
-      scope.renderedRows = options.data;
+      // if (angular.isArray(options.data)) {
+      //   scope.renderedRows = options.data;
+      // }
+
+      // scope.$evalAsync(function() {
+      //   uiGridCtrl.refreshCanvas();
+      // });
 
       elm.on('$destroy', function() {
         // Remove columnDefs watch
@@ -399,15 +418,16 @@ app.directive('uiGrid',
             // uiGridCtrl.grid.gridHeight = scope.gridHeight = GridUtil.elementHeight(elm);
             uiGridCtrl.grid.gridWidth = scope.gridWidth = elm[0].clientWidth;
             uiGridCtrl.grid.gridHeight = scope.gridHeight = GridUtil.elementHeight(elm);
-
-            uiGridCtrl.grid.options.canvasHeight = scope.gridHeight - scope.options.headerRowHeight;
+            
+            uiGridCtrl.refreshCanvas();
 
             if (typeof(scope.options.data) !== 'undefined' && scope.options.data !== undefined && scope.options.data.length) {
               scope.visibleRowCount = scope.options.data.length;
             }
 
-            scope.$watch('uiGrid.data', function(n, o) {
-              if (n !== o) {
+            function watchFunction(n, o) {
+              // $log.debug('watch fired!', n, o);
+              if (n) {
                 if (scope.options.columnDefs.length <= 0) {
                   scope.options.columnDefs = GridUtil.getColumnsFromData(n);
                 }
@@ -416,14 +436,28 @@ app.directive('uiGrid',
                 scope.renderedRows = scope.options.data;
 
                 uiGridCtrl.buildStyles();
-              }
-            });
 
-            // uiGridCtrl.buildStyles();
+                scope.$evalAsync(function() {
+                  uiGridCtrl.refreshCanvas();
+                });
+              }
+            }
+            
+            var dataWatchDereg;
+            if (angular.isString(scope.uiGrid.data)) {
+              dataWatchDereg = scope.$parent.$watch(scope.uiGrid.data, watchFunction);
+            }
+            else {
+              dataWatchDereg = scope.$parent.$watch(function() { return scope.uiGrid.data; }, watchFunction);
+            }
+
+            elm.on('$destroy', dataWatchDereg);
           }
         };
       },
       controller: function ($scope, $element, $attrs) {
+        $log.debug('ui-grid controller');
+
         var self = this;
         self.styleComputions = [];
 
@@ -440,7 +474,24 @@ app.directive('uiGrid',
           self.buildStyles();
         });
 
-        $log.debug('ui-grid controller');
+        // Refresh the canvas drawable size 
+        self.refreshCanvas = function() {
+          // Default to the configured header row height, then calculate it once the header is linked
+          var headerHeight = $scope.options.headerRowHeight;
+
+          if (self.header) {
+            headerHeight = GridUtil.outerElementHeight(self.header);
+          }
+          
+          // TODO(c0bra): account for footer height
+          // NOTE: canvas height drawable height is the height of the grid minus the header row height (including any border)
+          self.grid.options.canvasHeight = $scope.gridHeight - headerHeight;
+
+          // Calculate the height of all the displayable rows
+          if (self.canvas && self.grid.options.data.length) {
+            self.grid.options.totalRowHeight = self.grid.options.rowHeight * self.grid.options.data.length;
+          }
+        }; 
       }
     };
   }
@@ -1147,7 +1198,7 @@ app.service('GridUtil', ['$window', function ($window) {
     }
   };
 
-  angular.forEach(['width', 'height'], function(name){
+  angular.forEach(['width', 'height'], function (name){
     var capsName = angular.uppercase(name.charAt(0)) + name.substr(1);
     s['element' + capsName] = function (elem, extra) {
       var e = elem;
@@ -1155,9 +1206,15 @@ app.service('GridUtil', ['$window', function ($window) {
         e = elem[0];
       }
       
-      return getWidthOrHeight( e, name, extra );
+      return elem ? getWidthOrHeight( e, name, extra ) : null;
+    };
+
+    s['outerElement' + capsName] = function (elem, margin) {
+      return elem ? s['element' + capsName].call(this, elem, margin ? 'margin' : 'border') : null;
     };
   });
+
+
 
   return s;
 }]);

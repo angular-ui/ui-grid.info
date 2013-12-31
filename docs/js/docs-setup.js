@@ -34,24 +34,31 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "basic_grid",
+      "id": "1_basic_grid",
       "shortName": "Basic Grid",
       "type": "overview",
       "keywords": "$scope acium amie angular app austex barber barnett bartlett basic bennett benton berg berger bond boyle brainclip brainquil brandy brittney bush buzzmaker buzzness carney casey celeste cervantes cherry clara class cline cohen cole company comveyer comvoy confrenzy controller cox create cruz css data daugherty david dorsey doyle dunn eargo egypto elnora emma employed enormo example exostream false fernandez ferrell firstname fischer fletcher flexigen fuelton fuentes function gladys glenn gonkle grant gretchen grid hardy harrington hart hazel height holcomb hooper hopper html hull hunt in index intergeek irwin jarvis jefferson joviold js kongene konnect koogle kramer kristine lastname letpro lorraine ludak main mainctrl maldonado marcy maribel marqet mathis mays mccoy mccullough mclean medmex melton memora michael microluxe mindy misty module molina momentia mona morse mosley most mueller multiflex name nancy nettie ng-controller oneill ontagene our overview owens parleynet pauline pickett pittman possible printspan puckett quadeebo ramjob reilly sallie schroeder schwartz shepherd skinner slambda sloganaut slumberia steelfab sultrax sutton tania tanya techmania the this true tutorial ui ui-grid undertap valeria vance vang var vincent vinch violet voipa waab walker waters we width wise xylar zamora zeam zedalis zentix zolavo zomboid"
     },
     {
       "section": "tutorial",
-      "id": "custom_header",
-      "shortName": "Custom Header",
+      "id": "2_swapping_data",
+      "shortName": "Swapping Data",
       "type": "overview",
-      "keywords": "$scope almost angular app as basic bob but ceo class col columns controller create custom data developer frank function grid header html in index js json lowly mainctrl module most name ng-controller ng-repeat one overview same scope table the title tutorial ui ui-grid ui-grid-body ui-grid-header uppercase var virtual-repeat with"
+      "keywords": "$scope acium angular app bond brainquil btn btn-success button by can carney class cline cohen company comveyer controller cox cruz css data data1 data2 different else employed enormo false firstname fuelton function gladys grid gridopts height hopper html if in index jefferson js kongene kramer lastname letpro lorraine main mainctrl maldonado marcy marqet mclean misty module name nancy ng-click ng-controller oneill out overview parleynet pickett providing ramjob reference shepherd simply slambda swap swapdata swapping tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
     },
     {
       "section": "tutorial",
-      "id": "large_dataset",
+      "id": "3_large_dataset",
       "shortName": "Large Dataset",
       "type": "overview",
       "keywords": "$http $scope angular app class controller css data dataset example function get grid gridoptions height html index js json large main mainctrl module name ng-controller of overview records set success this tutorial ui ui-grid uses var width"
+    },
+    {
+      "section": "tutorial",
+      "id": "4_custom_header",
+      "shortName": "Custom Header",
+      "type": "overview",
+      "keywords": "$scope almost angular app as basic bob but ceo class col columns controller create custom data developer frank function grid header html in index js json lowly mainctrl module most name ng-controller ng-repeat one overview same scope table the title tutorial ui ui-grid ui-grid-body ui-grid-header uppercase var virtual-repeat with"
     }
   ],
   "apis": {

@@ -44,6 +44,10 @@
 .ui-grid-row:nth-child(even) .ui-grid-cell {
   background-color: #f3f3f3;
 }
+.ui-grid-row:last-child .ui-grid-cell {
+  border-bottom-color: #d4d4d4;
+  border-bottom-style: solid;
+}
 .ui-grid-cell {
   overflow: hidden;
   position: absolute;

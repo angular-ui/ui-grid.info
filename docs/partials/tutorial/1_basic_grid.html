@@ -1,0 +1,337 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>In this example we create the most basic grid possible. Our </p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-2" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-2" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-2">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="{ data: data }" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', function ($scope) {
+    $scope.data = [
+      {
+          "firstName": "Cox",
+          "lastName": "Carney",
+          "company": "Enormo",
+          "employed": true
+      },
+      {
+          "firstName": "Lorraine",
+          "lastName": "Wise",
+          "company": "Comveyer",
+          "employed": false
+      },
+      {
+          "firstName": "Nancy",
+          "lastName": "Waters",
+          "company": "Fuelton",
+          "employed": false
+      },
+      {
+          "firstName": "Misty",
+          "lastName": "Oneill",
+          "company": "Letpro",
+          "employed": false
+      },
+      {
+          "firstName": "Jefferson",
+          "lastName": "Cohen",
+          "company": "Slambda",
+          "employed": false
+      },
+      {
+          "firstName": "Gladys",
+          "lastName": "Maldonado",
+          "company": "Ramjob",
+          "employed": false
+      },
+      {
+          "firstName": "Glenn",
+          "lastName": "Cole",
+          "company": "Austex",
+          "employed": true
+      },
+      {
+          "firstName": "Waters",
+          "lastName": "Shepherd",
+          "company": "Kongene",
+          "employed": true
+      },
+      {
+          "firstName": "Hopper",
+          "lastName": "Zamora",
+          "company": "Acium",
+          "employed": true
+      },
+      {
+          "firstName": "Marcy",
+          "lastName": "Mclean",
+          "company": "Zomboid",
+          "employed": true
+      },
+      {
+          "firstName": "Tania",
+          "lastName": "Cruz",
+          "company": "Marqet",
+          "employed": true
+      },
+      {
+          "firstName": "Kramer",
+          "lastName": "Cline",
+          "company": "Parleynet",
+          "employed": false
+      },
+      {
+          "firstName": "Bond",
+          "lastName": "Pickett",
+          "company": "Brainquil",
+          "employed": false
+      },
+      {
+          "firstName": "Pauline",
+          "lastName": "Cervantes",
+          "company": "Slumberia",
+          "employed": true
+      },
+      {
+          "firstName": "Pittman",
+          "lastName": "Reilly",
+          "company": "Zolavo",
+          "employed": true
+      },
+      {
+          "firstName": "Bartlett",
+          "lastName": "Schwartz",
+          "company": "Momentia",
+          "employed": false
+      },
+      {
+          "firstName": "Berg",
+          "lastName": "Cherry",
+          "company": "Eargo",
+          "employed": true
+      },
+      {
+          "firstName": "Hazel",
+          "lastName": "Doyle",
+          "company": "Koogle",
+          "employed": false
+      },
+      {
+          "firstName": "Amie",
+          "lastName": "Mathis",
+          "company": "Buzzness",
+          "employed": true
+      },
+      {
+          "firstName": "Walker",
+          "lastName": "Molina",
+          "company": "Medmex",
+          "employed": false
+      },
+      {
+          "firstName": "Elnora",
+          "lastName": "Schroeder",
+          "company": "Undertap",
+          "employed": false
+      },
+      {
+          "firstName": "Grant",
+          "lastName": "Fletcher",
+          "company": "Comvoy",
+          "employed": false
+      },
+      {
+          "firstName": "Violet",
+          "lastName": "Ferrell",
+          "company": "Multiflex",
+          "employed": true
+      },
+      {
+          "firstName": "Nettie",
+          "lastName": "David",
+          "company": "Waab",
+          "employed": true
+      },
+      {
+          "firstName": "Mosley",
+          "lastName": "Dunn",
+          "company": "Sloganaut",
+          "employed": false
+      },
+      {
+          "firstName": "Puckett",
+          "lastName": "Jarvis",
+          "company": "Printspan",
+          "employed": true
+      },
+      {
+          "firstName": "Emma",
+          "lastName": "Holcomb",
+          "company": "Techmania",
+          "employed": false
+      },
+      {
+          "firstName": "Clara",
+          "lastName": "Mueller",
+          "company": "Microluxe",
+          "employed": false
+      },
+      {
+          "firstName": "Tanya",
+          "lastName": "Hull",
+          "company": "Buzzmaker",
+          "employed": true
+      },
+      {
+          "firstName": "Brandy",
+          "lastName": "Berger",
+          "company": "Ludak",
+          "employed": true
+      },
+      {
+          "firstName": "Bennett",
+          "lastName": "Fischer",
+          "company": "Zedalis",
+          "employed": true
+      },
+      {
+          "firstName": "Sallie",
+          "lastName": "Vance",
+          "company": "Voipa",
+          "employed": true
+      },
+      {
+          "firstName": "Celeste",
+          "lastName": "Harrington",
+          "company": "Steelfab",
+          "employed": true
+      },
+      {
+          "firstName": "Dunn",
+          "lastName": "Mccoy",
+          "company": "Ontagene",
+          "employed": true
+      },
+      {
+          "firstName": "Mindy",
+          "lastName": "Vang",
+          "company": "Quadeebo",
+          "employed": false
+      },
+      {
+          "firstName": "Benton",
+          "lastName": "Boyle",
+          "company": "Flexigen",
+          "employed": false
+      },
+      {
+          "firstName": "Kristine",
+          "lastName": "Hunt",
+          "company": "Egypto",
+          "employed": false
+      },
+      {
+          "firstName": "Daugherty",
+          "lastName": "Barber",
+          "company": "Vinch",
+          "employed": false
+      },
+      {
+          "firstName": "Mays",
+          "lastName": "Fuentes",
+          "company": "Memora",
+          "employed": true
+      },
+      {
+          "firstName": "Maribel",
+          "lastName": "Bush",
+          "company": "Brainclip",
+          "employed": true
+      },
+      {
+          "firstName": "Brittney",
+          "lastName": "Morse",
+          "company": "Gonkle",
+          "employed": false
+      },
+      {
+          "firstName": "Fernandez",
+          "lastName": "Sutton",
+          "company": "Zeam",
+          "employed": true
+      },
+      {
+          "firstName": "Valeria",
+          "lastName": "Owens",
+          "company": "Zentix",
+          "employed": false
+      },
+      {
+          "firstName": "Gretchen",
+          "lastName": "Dorsey",
+          "company": "Sultrax",
+          "employed": true
+      },
+      {
+          "firstName": "Mona",
+          "lastName": "Hart",
+          "company": "Exostream",
+          "employed": true
+      },
+      {
+          "firstName": "Skinner",
+          "lastName": "Vincent",
+          "company": "Konnect",
+          "employed": false
+      },
+      {
+          "firstName": "Hardy",
+          "lastName": "Casey",
+          "company": "Xylar",
+          "employed": true
+      },
+      {
+          "firstName": "Mccullough",
+          "lastName": "Irwin",
+          "company": "Joviold",
+          "employed": true
+      },
+      {
+          "firstName": "Barnett",
+          "lastName": "Melton",
+          "company": "Intergeek",
+          "employed": false
+      },
+      {
+          "firstName": "Michael",
+          "lastName": "Hooper",
+          "company": "Confrenzy",
+          "employed": true
+      }
+  ];
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-2" ng-eval-javascript="app.js"></div></div>
+</div>

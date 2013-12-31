@@ -1,0 +1,41 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>This grid example uses a data set of 10,000 records</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-4" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-4" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-4">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="gridOptions" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {  };
+
+    $http.get('/data/500.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-4" ng-eval-javascript="app.js"></div></div>
+</div>
