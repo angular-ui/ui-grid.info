@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-6fe5044 - 2014-01-02
+/*! ui-grid - v2.0.7-1e07d55 - 2014-01-02
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
 'use strict';
@@ -25,6 +25,7 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
       uiGridCtrl.viewportOuterHeight = GridUtil.outerElementHeight(uiGridCtrl.viewport[0]);
 
       uiGridCtrl.prevScrollTop = 0;
+      uiGridCtrl.currentTopRow = 0;
 
       uiGridCtrl.adjustScrollVertical = function (scrollTop, scrollPercentage, force) {
         if (uiGridCtrl.prevScrollTop === scrollTop && !force) {
@@ -111,8 +112,7 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
 
         // Get the scroll percentage
         var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - scope.options.viewportHeight);
-
-        // $log.debug('scrollPercentage', scrollPercentage);
+        $log.debug('scrollPercentage', scrollPercentage);
 
         // $log.debug('new scrolltop', uiGridCtrl.canvas[0].scrollTop + scrollAmount);
         // uiGridCtrl.canvas[0].scrollTop = uiGridCtrl.canvas[0].scrollTop + scrollAmount;
@@ -153,15 +153,25 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
 
         // uiGridCtrl.refreshCanvas();
         // uiGridCtrl.buildStyles();
-        uiGridCtrl.recalcRowStyles();
+        // uiGridCtrl.recalcRowStyles();
       };
 
       // Method for updating the visible rows
       uiGridCtrl.updateViewableRange = function(renderedRange) {
-        // $log.debug('new viewable range', renderedRange);
+        $log.debug('new viewable range', renderedRange);
         var rowArr = scope.options.data.slice(renderedRange[0], renderedRange[1]);
+        uiGridCtrl.currentTopRow = renderedRange[0];
 
         uiGridCtrl.setRenderedRows(rowArr);
+      };
+
+      scope.rowStyle = function (index) {
+        if (index === 0) {
+           var marginTop = uiGridCtrl.currentTopRow * scope.options.rowHeight;
+           return { 'margin-top': marginTop + 'px' };
+        }
+          
+        return null;
       };
     }
   };
@@ -399,21 +409,21 @@ app.directive('uiGridStyle', ['$log', '$interpolate', function($log, $interpolat
           scope.columnStyles = ret;
         });
 
-        uiGridCtrl.recalcRowStyles = function() {
-          var offset = (scope.options.offsetTop || 0) - (scope.options.excessRows * scope.options.rowHeight);
-          var rowHeight = scope.options.rowHeight;
+        // uiGridCtrl.recalcRowStyles = function() {
+        //   var offset = (scope.options.offsetTop || 0) - (scope.options.excessRows * scope.options.rowHeight);
+        //   var rowHeight = scope.options.rowHeight;
 
-          var ret = '';
-          var rowStyleCount = uiGridCtrl.minRowsToRender() + (scope.options.excessRows * 2);
-          for (var i = 1; i <= rowStyleCount; i++) {
-            ret = ret + ' .grid' + scope.gridId + ' .ui-grid-row:nth-child(' + i + ') { top: ' + offset + 'px; }';
-            offset = offset + rowHeight;
-          }
+        //   var ret = '';
+        //   var rowStyleCount = uiGridCtrl.minRowsToRender() + (scope.options.excessRows * 2);
+        //   for (var i = 1; i <= rowStyleCount; i++) {
+        //     ret = ret + ' .grid' + scope.gridId + ' .ui-grid-row:nth-child(' + i + ') { top: ' + offset + 'px; }';
+        //     offset = offset + rowHeight;
+        //   }
 
-          scope.rowStyles = ret;
-        };
+        //   scope.rowStyles = ret;
+        // };
 
-        uiGridCtrl.styleComputions.push(uiGridCtrl.recalcRowStyles);
+        // uiGridCtrl.styleComputions.push(uiGridCtrl.recalcRowStyles);
       }
     }
   };
@@ -600,7 +610,7 @@ app.directive('uiGrid',
         });
 
         self.minRowsToRender = function() {
-          return Math.floor($scope.options.viewportHeight / $scope.options.rowHeight);
+          return Math.ceil($scope.options.viewportHeight / $scope.options.rowHeight);
         };
 
         // Refresh the canvas drawable size 

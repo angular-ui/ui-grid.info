@@ -35,9 +35,6 @@
 .ui-grid-canvas {
   position: relative;
 }
-.ui-grid-row {
-  position: absolute;
-}
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;
 }
@@ -51,8 +48,6 @@
 .ui-grid-cell {
   overflow: hidden;
   position: absolute;
-  top: 0;
-  bottom: 0;
   background-color: inherit;
 }
 .ui-grid-cell-contents {
