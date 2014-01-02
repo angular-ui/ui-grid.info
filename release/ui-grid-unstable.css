@@ -27,13 +27,13 @@
 .ui-grid-viewport {
   min-height: 20px;
   position: relative;
+  overflow: hidden;
 }
 .ui-grid-viewport :focus {
   outline: none;
 }
 .ui-grid-canvas {
   position: relative;
-  overflow: hidden;
 }
 .ui-grid-row {
   position: absolute;
