@@ -1,12 +1,12 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>This grid example uses a data set of 10,000 records</p><h2 id="Example">Example</h2>
+<div><p>This grid example uses a data set of 1000 records</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-4" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-6" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-4" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-4">
+<pre class="prettyprint linenums" ng-set-text="index.html-6" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-6">
   <div ng-controller="MainCtrl">
     <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
     <br>
@@ -20,7 +20,7 @@
 <style type="text/css" id="main.css">
   .grid {
     width: 500px;
-    height: 450px;
+    height: 400px;
   }
 </style>
 </div>
@@ -32,7 +32,7 @@
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {  };
 
-    $http.get('/data/500.json')
+    $http.get('/data/100.json')
       .success(function(data) {
         $scope.gridOptions.data = data;
       });
@@ -40,5 +40,5 @@
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-4" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-6" ng-eval-javascript="app.js"></div></div>
 </div>

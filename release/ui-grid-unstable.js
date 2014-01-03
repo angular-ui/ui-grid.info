@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-1e07d55 - 2014-01-02
+/*! ui-grid - v2.0.7-e706f4c - 2014-01-03
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
 'use strict';
@@ -21,7 +21,8 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
 
       // Stick the canvas in the controller
       uiGridCtrl.canvas = angular.element( elm[0].getElementsByClassName('ui-grid-canvas')[0] );
-      uiGridCtrl.viewport = elm; //angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
+      // uiGridCtrl.viewport = elm; //angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
+      uiGridCtrl.viewport = angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
       uiGridCtrl.viewportOuterHeight = GridUtil.outerElementHeight(uiGridCtrl.viewport[0]);
 
       uiGridCtrl.prevScrollTop = 0;
@@ -43,6 +44,12 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
         // var rowIndex = Math.floor(scope.options.data.length * scrollTop / scope.options.canvasHeight);
         scrollTop = Math.floor(uiGridCtrl.canvas[0].scrollHeight * scrollPercentage);
         var rowIndex = Math.min(scope.options.data.length, scope.options.data.length * scrollPercentage);
+
+        // Define a max row index that we can't scroll past
+        var maxRowIndex = scope.options.data.length - 1 - uiGridCtrl.minRowsToRender();
+        if (rowIndex > maxRowIndex) {
+          rowIndex = maxRowIndex;
+        }
 
         // $log.debug('newScrollTop', scrollTop);
         // $log.debug('rowIndex', rowIndex);
@@ -83,7 +90,8 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
       // Listen for scroll events
       var scrollUnbinder = scope.$on('uiGridScrollVertical', function(evt, args) {
         // $log.debug('scroll', args.scrollPercentage, scope.options.canvasHeight, args.scrollPercentage * scope.options.canvasHeight);
-        var newScrollTop = Math.max(0, args.scrollPercentage * scope.options.canvasHeight);
+        var newScrollTop = Math.max(0, args.scrollPercentage * (scope.options.canvasHeight - scope.options.viewportHeight));
+
         // $log.debug('uiGridCtrl.canvas[0].scrollHeight', uiGridCtrl.canvas[0].scrollHeight);
         // $log.debug('newScrollTop', newScrollTop);
 
@@ -94,10 +102,17 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
 
         var scrollPercentage = args.scrollPercentage * scrollMultiplier;
 
+        $log.debug('newScrollTop', newScrollTop);
+        $log.debug('scrollPercentage', scrollPercentage);
+
         scope.options.offsetTop = newScrollTop;
 
-        uiGridCtrl.adjustScrollVertical(newScrollTop, scrollPercentage);
+        // Prevent scroll top from going over the maximum (canvas height - viewport height)
+        if (newScrollTop > scope.options.canvasHeight - scope.options.viewportHeight) {
+          newScrollTop = scope.options.canvasHeight - scope.options.viewportHeight;
+        }
 
+        uiGridCtrl.adjustScrollVertical(newScrollTop, scrollPercentage);
         uiGridCtrl.viewport[0].scrollTop = newScrollTop;
       });
       
@@ -112,6 +127,9 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
 
         // Get the scroll percentage
         var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - scope.options.viewportHeight);
+
+        // TODO(c0bra): Keep scrollPercentage within the range 0-1.
+
         $log.debug('scrollPercentage', scrollPercentage);
 
         // $log.debug('new scrolltop', uiGridCtrl.canvas[0].scrollTop + scrollAmount);
@@ -165,14 +183,30 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
         uiGridCtrl.setRenderedRows(rowArr);
       };
 
-      scope.rowStyle = function (index) {
-        if (index === 0) {
-           var marginTop = uiGridCtrl.currentTopRow * scope.options.rowHeight;
-           return { 'margin-top': marginTop + 'px' };
-        }
-          
-        return null;
+      // scope.rowStyle = function(index) {
+      //    var offset = (-1 * scope.options.rowHeight * scope.options.excessRows) + (scope.options.offsetTop || 0);
+      //    var ret = { top: offset + (index * scope.options.rowHeight) + 'px' };
+      //    return ret;
+      // };
+
+      scope.rowStyle = function(index) {
+        var offset = Math.max(0, (-1 * scope.options.rowHeight * scope.options.excessRows) + (scope.options.offsetTop || 0));
+        // offset = Math.min(scope.options.canvasHeight - scope.options.viewportHeight, offset);
+        var ret = { top: offset + (index * scope.options.rowHeight) + 'px' };
+        return ret;
       };
+
+      // scope.rowStyle = function (index) {
+      //   if (index === 0) {
+      //     var offset = Math.max(0, (-1 * scope.options.rowHeight * scope.options.excessRows) + (uiGridCtrl.currentTopRow * scope.options.rowHeight));
+      //     // var marginTop = uiGridCtrl.currentTopRow * scope.options.rowHeight;
+      //     var marginTop = offset;
+
+      //      return { 'margin-top': marginTop + 'px' };
+      //   }
+        
+      //   return null;
+      // };
     }
   };
 }]);
@@ -258,15 +292,16 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
 
       $log.debug('ui-grid-scrollbar link');
 
+      // Size the scrollbar according to the amount of data. 35px high minimum, otherwise scale inversely proportinal to canvas vs viewport height
       function updateScrollbar(gridScope) {
         var scrollbarHeight = Math.max(35, gridScope.options.viewportHeight / gridScope.options.canvasHeight * gridScope.options.viewportHeight);
 
         gridScope.scrollbarStyles = '.grid' + gridScope.gridId + ' .ui-grid-scrollbar-vertical { height: ' + scrollbarHeight + 'px; }';
       }
 
+      // Only show the scrollbar when the canvas height is less than the viewport height
       scope.showScrollbar = function() {
-        // return uiGridCtrl.canvas[0].scrollHeight > uiGridCtrl.viewport[0].scrollHeight;
-        return true;
+        return scope.options.canvasHeight > scope.options.viewportHeight;
       };
 
       if (uiGridCtrl) {
@@ -302,6 +337,7 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
         if (y > elmBottomBound) { y = elmBottomBound; }
 
         var scrollPercentage = y / elmBottomBound;
+        // $log.debug('scrollPercentage', scrollPercentage);
 
         scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: elm });
       }
@@ -313,11 +349,27 @@ app.directive('uiGridScrollbar', ['$log', '$document', 'GridUtil', function($log
         elmHeight = GridUtil.elementHeight(elm, 'margin');
         elmBottomBound = scope.options.viewportHeight - elmHeight;
 
-        var newScrollTop = args.scrollPercentage * elmBottomBound;
+        // $log.debug('elmHeight', elmHeight);
+        // $log.debug('elmBottomBound', elmBottomBound);
+
+        var newScrollTop = Math.floor(args.scrollPercentage * elmBottomBound);
+
+        // $log.debug('newScrollTop', newScrollTop);
+        // $log.debug('maxScrollTop', elmBottomBound);
+
+        var newTop = newScrollTop; //(scope.options.offsetTop || 0) + newScrollTop;
+
+        // Prevent scrollbar from going beyond container
+        if (newTop > scope.options.canvasHeight - elmHeight) {
+          $log.debug('newTop too big!', newTop);
+          newTop = scope.options.canvasHeight - elmHeight;
+        }
+
+        // $log.debug('newTop', newTop);
 
         y = newScrollTop;
         elm.css({
-          top: (scope.options.offsetTop || 0) + newScrollTop + 'px'
+          top: newTop + 'px'
         });
       });
 

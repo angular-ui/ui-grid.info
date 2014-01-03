@@ -51,7 +51,7 @@ NG_DOCS={
       "id": "3_large_dataset",
       "shortName": "Large Dataset",
       "type": "overview",
-      "keywords": "$http $scope angular app class controller css data dataset example function get grid gridoptions height html index js json large length main mainctrl module name ng-controller of overview records set success this tutorial ui ui-grid uses var width"
+      "keywords": "$http $scope angular app class controller css data dataset example function get grid gridoptions height html index js json large length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid uses var width"
     },
     {
       "section": "tutorial",
@@ -59,6 +59,13 @@ NG_DOCS={
       "shortName": "Custom Header",
       "type": "overview",
       "keywords": "$scope almost angular app as basic bob but ceo class col columns controller create custom data developer frank function grid header html in index js json lowly mainctrl module most name ng-controller ng-repeat one overview same scope table the title tutorial ui ui-grid ui-grid-body ui-grid-header uppercase var virtual-repeat with"
+    },
+    {
+      "section": "tutorial",
+      "id": "5_100 data points",
+      "shortName": "100 Rows",
+      "type": "overview",
+      "keywords": "$http $scope angular app class controller css data example function get grid gridoptions height html index js json length main mainctrl module name ng-controller number of overview records rows set success this tutorial ui ui-grid uses var width"
     }
   ],
   "apis": {

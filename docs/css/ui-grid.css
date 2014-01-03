@@ -24,6 +24,13 @@
   bottom: 0;
   background-color: inherit;
 }
+.ui-grid-body {
+  position: relative;
+  overflow: hidden;
+}
+.ui-grid-scrollbar-box {
+  position: static;
+}
 .ui-grid-viewport {
   min-height: 20px;
   position: relative;
@@ -34,6 +41,9 @@
 }
 .ui-grid-canvas {
   position: relative;
+}
+.ui-grid-row {
+  position: absolute;
 }
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;
