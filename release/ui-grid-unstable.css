@@ -42,9 +42,6 @@
 .ui-grid-canvas {
   position: relative;
 }
-.ui-grid-row {
-  position: absolute;
-}
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;
 }

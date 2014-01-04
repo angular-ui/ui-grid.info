@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-e706f4c - 2014-01-03
+/*! ui-grid - v2.0.7-f4155b3 - 2014-01-04
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
 'use strict';
@@ -189,24 +189,21 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
       //    return ret;
       // };
 
-      scope.rowStyle = function(index) {
-        var offset = Math.max(0, (-1 * scope.options.rowHeight * scope.options.excessRows) + (scope.options.offsetTop || 0));
-        // offset = Math.min(scope.options.canvasHeight - scope.options.viewportHeight, offset);
-        var ret = { top: offset + (index * scope.options.rowHeight) + 'px' };
-        return ret;
-      };
+//      scope.rowStyle = function(index) {
+//        var offset = Math.max(0, (-1 * scope.options.rowHeight * scope.options.excessRows) + (scope.options.offsetTop || 0));
+//        // offset = Math.min(scope.options.canvasHeight - scope.options.viewportHeight, offset);
+//        var ret = { top: offset + (index * scope.options.rowHeight) + 'px' };
+//        return ret;
+//      };
 
-      // scope.rowStyle = function (index) {
-      //   if (index === 0) {
-      //     var offset = Math.max(0, (-1 * scope.options.rowHeight * scope.options.excessRows) + (uiGridCtrl.currentTopRow * scope.options.rowHeight));
-      //     // var marginTop = uiGridCtrl.currentTopRow * scope.options.rowHeight;
-      //     var marginTop = offset;
-
-      //      return { 'margin-top': marginTop + 'px' };
-      //   }
+      scope.rowStyle = function (index) {
+         if (index === 0 && uiGridCtrl.currentTopRow !== 0) {
+             var offset = (scope.options.offsetTop) - (scope.options.rowHeight * scope.options.excessRows);
+             return { 'margin-top': offset + 'px' };
+         }
         
-      //   return null;
-      // };
+         return null;
+      };
     }
   };
 }]);
