@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-1fe7f81 - 2014-01-06
+/*! ui-grid - v2.0.7-2075bf3 - 2014-01-06
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
 'use strict';
@@ -145,20 +145,26 @@ app.directive('uiGridBody', ['$log', 'GridUtil', function($log, GridUtil) {
       });
       
       // Scroll the viewport when the mousewheel is used
-      elm.bind('mousewheel', function(evt) {
+      elm.bind('wheel mousewheel DomMouseScroll MozMousePixelScroll', function(evt) {
         // use wheelDeltaY
         evt.preventDefault();
 
-        $log.debug('evt.wheelDeltaY', evt.wheelDeltaY);
+        // $log.debug('evt', evt);
+        // $log.debug('evt.wheelDeltaY', evt.wheelDeltaY);
 
-        var scrollAmount = evt.wheelDeltaY * -1;
+        var newEvent = GridUtil.normalizeWheelEvent(evt);
+
+        var scrollAmount = newEvent.deltaY * -120;
 
         // Get the scroll percentage
-        var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - scope.options.viewportHeight);
+        // var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - scope.options.viewportHeight);
+        var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (scope.options.canvasHeight - scope.options.viewportHeight);
 
         // TODO(c0bra): Keep scrollPercentage within the range 0-1.
+        if (scrollPercentage < 0) { scrollPercentage = 0; }
+        if (scrollPercentage > 1) { scrollPercentage = 1; }
 
-        $log.debug('scrollPercentage', scrollPercentage);
+        // $log.debug('scrollPercentage', scrollPercentage);
 
         // $log.debug('new scrolltop', uiGridCtrl.canvas[0].scrollTop + scrollAmount);
         // uiGridCtrl.canvas[0].scrollTop = uiGridCtrl.canvas[0].scrollTop + scrollAmount;
@@ -1461,6 +1467,69 @@ app.service('GridUtil', ['$window', function ($window) {
     */
     elementHeight: function (elem) {
       
+    },
+
+    normalizeWheelEvent: function (event) {
+      // var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'];
+      // var toBind = 'onwheel' in document || document.documentMode >= 9 ? ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'];
+      var lowestDelta, lowestDeltaXY;
+      
+      var orgEvent   = event || window.event,
+          args       = [].slice.call(arguments, 1),
+          delta      = 0,
+          deltaX     = 0,
+          deltaY     = 0,
+          absDelta   = 0,
+          absDeltaXY = 0,
+          fn;
+
+      // event = $.event.fix(orgEvent);
+      // event.type = 'mousewheel';
+
+      // Old school scrollwheel delta
+      if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta; }
+      if ( orgEvent.detail )     { delta = orgEvent.detail * -1; }
+
+      // At a minimum, setup the deltaY to be delta
+      deltaY = delta;
+
+      // Firefox < 17 related to DOMMouseScroll event
+      if ( orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+          deltaY = 0;
+          deltaX = delta * -1;
+      }
+
+      // New school wheel delta (wheel event)
+      if ( orgEvent.deltaY ) {
+          deltaY = orgEvent.deltaY * -1;
+          delta  = deltaY;
+      }
+      if ( orgEvent.deltaX ) {
+          deltaX = orgEvent.deltaX;
+          delta  = deltaX * -1;
+      }
+
+      // Webkit
+      if ( orgEvent.wheelDeltaY !== undefined ) { deltaY = orgEvent.wheelDeltaY; }
+      if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+      // Look for lowest delta to normalize the delta values
+      absDelta = Math.abs(delta);
+      if ( !lowestDelta || absDelta < lowestDelta ) { lowestDelta = absDelta; }
+      absDeltaXY = Math.max(Math.abs(deltaY), Math.abs(deltaX));
+      if ( !lowestDeltaXY || absDeltaXY < lowestDeltaXY ) { lowestDeltaXY = absDeltaXY; }
+
+      // Get a whole value for the deltas
+      fn     = delta > 0 ? 'floor' : 'ceil';
+      delta  = Math[fn](delta  / lowestDelta);
+      deltaX = Math[fn](deltaX / lowestDeltaXY);
+      deltaY = Math[fn](deltaY / lowestDeltaXY);
+
+      return {
+        delta: delta,
+        deltaX: deltaX,
+        deltaY: deltaY
+      };
     }
   };
 
