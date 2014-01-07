@@ -93,11 +93,11 @@ NG_DOCS={
     ],
     "unstable": [
       {
-        "src": "/release/ui-grid.unstable.js",
+        "src": "/release/ui-grid-unstable.js",
         "type": "script"
       },
       {
-        "src": "/release/ui-grid.unstable.css",
+        "src": "/release/ui-grid-unstable.css",
         "type": "css"
       }
     ]
