@@ -75,7 +75,31 @@ NG_DOCS={
   "html5Mode": false,
   "startPage": "/api",
   "scripts": [
-    "angular.js",
-    "ui-grid.js"
+    "angular.js"
   ]
-};
+}; VERSIONED_FILES={
+  "default": "unstable",
+  "waitEval": "(function() { var ret = true; try { angular.module('ui.grid'); } catch (e) { ret = false; } return ret; })()",
+  "versions": {
+    "stable": [
+      {
+        "src": "/release/ui-grid.js",
+        "type": "script"
+      },
+      {
+        "src": "/release/ui-grid.css",
+        "type": "css"
+      }
+    ],
+    "unstable": [
+      {
+        "src": "/release/ui-grid.unstable.js",
+        "type": "script"
+      },
+      {
+        "src": "/release/ui-grid.unstable.css",
+        "type": "css"
+      }
+    ]
+  }
+}; 

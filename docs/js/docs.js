@@ -120,7 +120,7 @@ docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
 };
 
 
-docsApp.serviceFactory.loadedUrls = function($document) {
+docsApp.serviceFactory.loadedUrls = function($document, versionedFiles) {
   var urls = {};
 
   angular.forEach($document.find('script'), function(script) {
@@ -138,9 +138,18 @@ docsApp.serviceFactory.loadedUrls = function($document) {
     }
   });
 
+  angular.forEach(versionedFiles.files, function(file) {
+    urls.base.push(file.src);
+  });
+
   return urls;
 };
 
+docsApp.serviceFactory.versionedFiles = function() {
+  return {
+    files: []
+  };
+};
 
 docsApp.serviceFactory.formPostData = function($document) {
   return function(url, fields) {
@@ -276,7 +285,7 @@ docsApp.serviceFactory.sections = function serviceFactory() {
 };
 
 
-docsApp.controller.DocsController = function($scope, $location, $window, sections) {
+docsApp.controller.DocsController = function($scope, $location, $window, $timeout, sections, versionedFiles) {
   var INDEX_PATH = /^(\/|\/index[^\.]*.html)$/,
       GLOBALS = /^angular\.([^\.]+)$/,
       MODULE = /^([^\.]+)$/,
@@ -320,11 +329,60 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
   $scope.afterPartialLoaded = function() {
     var currentPageId = $location.path();
+    console.log('partial loaded', currentPageId);
     $scope.partialTitle = $scope.currentPage.shortName;
     $window._gaq && $window._gaq.push(['_trackPageview', currentPageId]);
     loadDisqus(currentPageId);
   };
 
+  $scope.versionedFiles = VERSIONED_FILES;
+
+  $scope.setVersion = function (version) {
+    if (!version) {
+      version = $scope.versionedFiles.default;
+    };
+
+    var versionFiles = $scope.versionedFiles.versions[version];
+
+    $scope.versionedScripts = [];
+    $scope.versionedCSS = [];
+
+    angular.forEach(versionFiles, function (file) {
+      if (file.type === 'script') {
+        $scope.versionedScripts.push(file);
+      }
+      else if (file.type === 'css') {
+        $scope.versionedCSS.push(file);
+      }
+    });
+
+    // if ($scope.currentPage) {
+    //   // var b = $location.path();
+    //   // debugger;
+
+    //   var backupUrl = $location.path();
+    //   // console.log('old page', $scope.currentPage.partialUrl, backupUrl);
+
+    //   $location.path('/');
+    //   // console.log('new page', $scope.currentPage.partialUrl, backupUrl);
+
+    //   // $timeout(function() {
+    //   //   $location.path(backupUrl);
+    //   //   // console.log('timeout page', $scope.currentPage.partialUrl, backupUrl);
+    //   // }, 0);
+    // }
+
+    versionedFiles.files = versionFiles;
+  };
+
+  $scope.changeVersion = function(version) {
+    $scope.setVersion(version);
+    // $timeout(function() {
+      $location.path(NG_DOCS.startPage);
+    // }, 0);
+  };
+
+  $scope.setVersion();
 
   /**********************************
    Watches
@@ -335,65 +393,93 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
     $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + url] = section;
   });
   $scope.$watch(function docsPathWatch() {return $location.path(); }, function docsPathWatchAction(path) {
-    var parts = path.split('/'),
-      sectionId = parts[1],
-      partialId = parts[2],
-      page, sectionName = $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + sectionId];
+  // $scope.$on('$locationChangeStart', function (event, path, currentLocation) {
+    // $scope.setVersion();
 
-    if (!sectionName) { return; }
+    console.log('$scope.versionedFiles', $scope.versionedFiles);
 
-    $scope.currentPage = page = sections.getPage(sectionId, partialId);
-
-    if (!$scope.currentPage) {
-      $scope.partialTitle = 'Error: Page Not Found!';
+    if ($scope.versionedFiles.waitEval) {
+      function evaler() {
+        if (! eval($scope.versionedFiles.waitEval)) {
+          $timeout(evaler, 200);
+        }
+        else {
+          update();
+        }
+      };
+      evaler();
+    }
+    else {
+      update();
     }
 
-    updateSearch();
+    function update() {
+      // Set default version
 
+      var parts = path.split('/'),
+        sectionId = parts[1],
+        partialId = parts[2],
+        page, sectionName = $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + sectionId];
 
-    // Update breadcrumbs
-    var breadcrumb = $scope.breadcrumb = [],
-      match, sectionPath = (NG_DOCS.html5Mode ? '' : '#/') +  sectionId;
+      console.log('new path', path);
 
-    if (partialId) {
-      breadcrumb.push({ name: sectionName, url: sectionPath });
-      if (partialId == 'angular.Module') {
-        breadcrumb.push({ name: 'angular.Module' });
-      } else if (match = partialId.match(GLOBALS)) {
-        breadcrumb.push({ name: partialId });
-      } else if (match = partialId.match(MODULE)) {
-        breadcrumb.push({ name: match[1] });
-      } else if (match = partialId.match(MODULE_FILTER)) {
-        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
-        breadcrumb.push({ name: match[2] });
-      } else if (match = partialId.match(MODULE_DIRECTIVE)) {
-        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
-        breadcrumb.push({ name: match[2] });
-      } else if (match = partialId.match(MODULE_DIRECTIVE_INPUT)) {
-        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
-        breadcrumb.push({ name: 'input' });
-        breadcrumb.push({ name: match[2] });
-      } else if (match = partialId.match(MODULE_CUSTOM)) {
-        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
-        breadcrumb.push({ name: match[3] });
-      } else if (match = partialId.match(MODULE_TYPE)) {
-        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
-        breadcrumb.push({ name: match[2] });
-      }  else if (match = partialId.match(MODULE_SERVICE)) {
-        if ( page.type === 'overview') {
-          // module name with dots looks like a service
-          breadcrumb.push({ name: partialId });
-        } else {
-          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
-          breadcrumb.push({ name: match[2] + (match[3] || '') });
-        }
-      } else if (match = partialId.match(MODULE_MOCK)) {
-        breadcrumb.push({ name: 'angular.mock.' + match[1] });
-      } else {
-        breadcrumb.push({ name: page.shortName });
+      if (!sectionName) { return; }
+
+      $scope.currentPage = page = sections.getPage(sectionId, partialId);
+
+      console.log('navigated to new page', $scope.currentPage);
+
+      if (!$scope.currentPage) {
+        $scope.partialTitle = 'Error: Page Not Found!';
       }
-    } else {
-      breadcrumb.push({ name: sectionName });
+
+      updateSearch();
+
+
+      // Update breadcrumbs
+      var breadcrumb = $scope.breadcrumb = [],
+        match, sectionPath = (NG_DOCS.html5Mode ? '' : '#/') +  sectionId;
+
+      if (partialId) {
+        breadcrumb.push({ name: sectionName, url: sectionPath });
+        if (partialId == 'angular.Module') {
+          breadcrumb.push({ name: 'angular.Module' });
+        } else if (match = partialId.match(GLOBALS)) {
+          breadcrumb.push({ name: partialId });
+        } else if (match = partialId.match(MODULE)) {
+          breadcrumb.push({ name: match[1] });
+        } else if (match = partialId.match(MODULE_FILTER)) {
+          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+          breadcrumb.push({ name: match[2] });
+        } else if (match = partialId.match(MODULE_DIRECTIVE)) {
+          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+          breadcrumb.push({ name: match[2] });
+        } else if (match = partialId.match(MODULE_DIRECTIVE_INPUT)) {
+          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+          breadcrumb.push({ name: 'input' });
+          breadcrumb.push({ name: match[2] });
+        } else if (match = partialId.match(MODULE_CUSTOM)) {
+          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+          breadcrumb.push({ name: match[3] });
+        } else if (match = partialId.match(MODULE_TYPE)) {
+          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+          breadcrumb.push({ name: match[2] });
+        }  else if (match = partialId.match(MODULE_SERVICE)) {
+          if ( page.type === 'overview') {
+            // module name with dots looks like a service
+            breadcrumb.push({ name: partialId });
+          } else {
+            breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+            breadcrumb.push({ name: match[2] + (match[3] || '') });
+          }
+        } else if (match = partialId.match(MODULE_MOCK)) {
+          breadcrumb.push({ name: 'angular.mock.' + match[1] });
+        } else {
+          breadcrumb.push({ name: page.shortName });
+        }
+      } else {
+        breadcrumb.push({ name: sectionName });
+      }
     }
   });
 

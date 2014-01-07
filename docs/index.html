@@ -33,12 +33,8 @@
       
          addTag('link', {rel: 'stylesheet', href: 'css/bootstrap-flatly.css', type: 'text/css'}, sync);
       
-         addTag('link', {rel: 'stylesheet', href: 'css/ui-grid.css', type: 'text/css'}, sync);
-      
       
         addTag('script', {src: '//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js'}, sync);
-      
-        addTag('script', {src: '/release/ui-grid.js'}, sync);
       
       
         addTag('script', {src: 'http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.js'}, sync);
@@ -138,6 +134,15 @@
 
     <div class="row">
       <div class="span3">
+        <div ng-show="versionedFiles">
+          <select name="docsVersion" ng-model="currentVersion" ng-init="currentVersion = versionedFiles.default" ng-options="key as key for (key, value) in versionedFiles.versions"  ng-change="changeVersion(currentVersion)"></select>
+          <div id="versionedFiles">
+            <script ng-repeat="s in versionedScripts" ng-src="{{ s.src }}"></script>
+
+            <link ng-repeat="l in versionedCSS" rel="stylesheet" ng-href="{{ l.src }}" />
+          </div>
+        </div>
+        
         <form class="form-search" ng-submit="submitForm()">
           
           <input type="text" ng-model="search" placeholder="search the docs"
@@ -202,8 +207,8 @@
 
         </form>
       </div>
-      <div class="span9">
-
+      <div class="span9"
+>
         <ul class="breadcrumb">
           <li ng-repeat="crumb in breadcrumb">
             <span ng-hide="crumb.url">{{crumb.name}}</span>
