@@ -329,7 +329,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
 
   $scope.afterPartialLoaded = function() {
     var currentPageId = $location.path();
-    console.log('partial loaded', currentPageId);
     $scope.partialTitle = $scope.currentPage.shortName;
     $window._gaq && $window._gaq.push(['_trackPageview', currentPageId]);
     loadDisqus(currentPageId);
@@ -356,22 +355,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
       }
     });
 
-    // if ($scope.currentPage) {
-    //   // var b = $location.path();
-    //   // debugger;
-
-    //   var backupUrl = $location.path();
-    //   // console.log('old page', $scope.currentPage.partialUrl, backupUrl);
-
-    //   $location.path('/');
-    //   // console.log('new page', $scope.currentPage.partialUrl, backupUrl);
-
-    //   // $timeout(function() {
-    //   //   $location.path(backupUrl);
-    //   //   // console.log('timeout page', $scope.currentPage.partialUrl, backupUrl);
-    //   // }, 0);
-    // }
-
     versionedFiles.files = versionFiles;
   };
 
@@ -393,10 +376,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
     $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + url] = section;
   });
   $scope.$watch(function docsPathWatch() {return $location.path(); }, function docsPathWatchAction(path) {
-  // $scope.$on('$locationChangeStart', function (event, path, currentLocation) {
-    // $scope.setVersion();
-
-    console.log('$scope.versionedFiles', $scope.versionedFiles);
 
     if ($scope.versionedFiles.waitEval) {
       function evaler() {
@@ -421,13 +400,9 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
         partialId = parts[2],
         page, sectionName = $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + sectionId];
 
-      console.log('new path', path);
-
       if (!sectionName) { return; }
 
       $scope.currentPage = page = sections.getPage(sectionId, partialId);
-
-      console.log('navigated to new page', $scope.currentPage);
 
       if (!$scope.currentPage) {
         $scope.partialTitle = 'Error: Page Not Found!';

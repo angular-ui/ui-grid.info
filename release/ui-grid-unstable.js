@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-0705c90 - 2014-01-07
+/*! ui-grid - v2.0.7-ccfceb7 - 2014-01-07
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
 'use strict';
@@ -1536,3 +1536,59 @@ app.service('GridUtil', ['$window', function ($window) {
 }]);
 
 })();
+angular.module('ui.grid').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/ui-grid-body',
+    "<div class=\"ui-grid-body\"><div class=\"ui-grid-scrollbar-box\"><div ui-grid-viewport=\"\" class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowStyle($index)\"><div ui-grid-row=\"row\" row-index=\"$index\"></div></div></div></div></div><div ui-grid-scrollbar=\"\"></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/ui-grid-header',
+    "<div class=\"ui-grid-top-panel\"><div class=\"ui-grid-header\"><div ng-repeat=\"col in options.columnDefs\" class=\"ui-grid-header-cell col{{ $index }}\"><!-- ng-style=\"{ height: col.headerRowHeight }\" --><div class=\"ui-grid-vertical-bar\">&nbsp;</div><!-- ng-style=\"{height: col.headerRowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\" --><!-- <div ng-header-cell></div> --><div class=\"ui-grid-cell-contents\">{{ col.name || col.field }}</div></div></div><div ui-grid-menu=\"\"></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/ui-grid-row',
+    "<div><div ng-repeat=\"col in options.columnDefs\" class=\"ui-grid-cell col{{ $index }}\"><!-- ng-style=\"{ 'cursor': row.cursor }\" ng-class=\"col.colIndex()\" class=\"{{col.cellClass}}\" --><div class=\"ui-grid-vertical-bar\">&nbsp;</div><!-- ng-style=\"{height: rowHeight}\" ng-class=\"{ ngVerticalBarVisible: !$last }\" --><div class=\"ui-grid-cell-contents\">{{ row[col.field] }}</div><!-- ng-class=\"col.colIndex()\" --></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/ui-grid-scrollbar',
+    "<div class=\"ui-grid-scrollbar ui-grid-scrollbar-vertical\" ng-show=\"showScrollbar()\"></div>"
+  );
+
+
+  $templateCache.put('ui-grid/ui-grid',
+    "<div class=\"ui-grid grid{{ gridId }}\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style=\"\">.grid{{ gridId }} {\n" +
+    "      /* Styles for the grid */\n" +
+    "    }\n" +
+    "\n" +
+    "    .grid{{ gridId }} .ui-grid-viewport {\n" +
+    "      height: {{ options.viewportHeight }}px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .grid{{ gridId }} .ui-grid-canvas {\n" +
+    "      height: {{ options.canvasHeight }}px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .grid{{ gridId }} .ui-grid-header, .grid{{ gridId }} .ui-grid-header-cell .ui-grid-vertical-bar {\n" +
+    "      height: {{ options.headerRowHeight }}px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .grid{{ gridId }} .ui-grid-row, .grid{{ gridId }} .ui-grid-cell, .grid{{ gridId }} .ui-grid-cell .ui-grid-vertical-bar {\n" +
+    "      height: {{ options.rowHeight }}px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .grid{{ gridId }} .ui-grid-row:last-child .ui-grid-cell {\n" +
+    "      border-bottom-width: {{ ((options.totalRowHeight < options.viewportHeight) && '1') || '0' }}px;\n" +
+    "    }\n" +
+    "\n" +
+    "    {{ rowStyles }}\n" +
+    "\n" +
+    "    {{ columnStyles }}\n" +
+    "\n" +
+    "    {{ scrollbarStyles }}</style><div ui-grid-header=\"\"></div><div ui-grid-body=\"\"></div><div ui-grid-footer=\"\"></div></div>"
+  );
+
+}]);
