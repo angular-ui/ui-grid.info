@@ -75,7 +75,8 @@ NG_DOCS={
   "html5Mode": false,
   "startPage": "/api",
   "scripts": [
-    "angular.js"
+    "angular.js",
+    "angular-touch.js"
   ]
 }; VERSIONED_FILES={
   "default": "unstable",

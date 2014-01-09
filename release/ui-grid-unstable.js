@@ -1,11 +1,11 @@
-/*! ui-grid - v2.0.7-39fde4a - 2014-01-09
+/*! ui-grid - v2.0.7-3c0255f - 2014-01-09
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
 
   var app = angular.module('ui.grid.body', []);
 
-  app.directive('uiGridBody', ['$log', 'gridUtil', function($log, GridUtil) {
+  app.directive('uiGridBody', ['$log', '$document', '$timeout', 'gridUtil', function($log, $document, $timeout, GridUtil) {
     return {
       replace: true,
       // priority: 1000,
@@ -108,8 +108,7 @@
 
         // Listen for scroll events
         var scrollUnbinder = $scope.$on('uiGridScrollVertical', function(evt, args) {
-          // $log.debug('scroll', args.scrollPercentage, uiGridCtrl.grid.options.canvasHeight, args.scrollPercentage * uiGridCtrl.grid.options.canvasHeight);
-
+          // $log.debug('scroll', args.scrollPercentage, uiGridCtrl.grid.getCanvasHeight(), args.scrollPercentage * uiGridCtrl.grid.getCanvasHeight());
           var scrollLength = (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
 
           // $log.debug('scrollLength', scrollLength, scrollLength % uiGridCtrl.grid.options.rowHeight);
@@ -173,17 +172,95 @@
           $scope.$broadcast('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: $elm });
         });
 
+        
+        var startY = 0,
+            startX = 0,
+            scrollTopStart = 0,
+            direction = 1,
+            moveStart;
+        function touchmove(event) {
+          event.preventDefault();
+
+          // $log.debug('touchmove', event);
+
+          var deltaX, deltaY, newX, newY;
+          newX = event.targetTouches[0].pageX;
+          newY = event.targetTouches[0].screenY;
+          deltaX = -(newX - startX);
+          deltaY = -(newY - startY);
+
+          direction = (deltaY < 1) ? -1 : 1;
+
+          deltaY *= 2;
+
+          var scrollPercentage = (scrollTopStart + deltaY) / (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
+
+          $scope.$broadcast('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: event.target });
+        }
+
+        function touchend(event) {
+          // $log.debug('touchend!');
+          event.preventDefault();
+          $document.unbind('touchmove', touchmove);
+          $document.unbind('touchend', touchend);
+          $document.unbind('touchcancel', touchend);
+
+          // Get the distance we moved on the Y axis
+          var scrollTopEnd = uiGridCtrl.viewport[0].scrollTop;
+          var deltaY = Math.abs(scrollTopEnd - scrollTopStart);
+
+          // Get the duration it took to move this far
+          var moveDuration = (new Date()) - moveStart;
+
+          // Scale the amount moved by the time it took to move it (i.e. quicker, longer moves == more scrolling after the move is over)
+          var moveScale = deltaY / moveDuration;
+
+          var decelerateInterval = 125; // 1/8th second
+          var decelerateCount = 4; // == 1/2 second
+          var scrollLength = 60 * direction * moveScale;
+          
+          function decelerate() {
+            $timeout(function() {
+              var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollLength) / (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
+
+              $scope.$broadcast('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: event.target });
+
+              decelerateCount = decelerateCount -1;
+              scrollLength = scrollLength / 2;
+
+              if (decelerateCount > 0) {
+                decelerate();
+              }
+            }, decelerateInterval);
+          }
+          decelerate();
+        }
+
+        if (GridUtil.isTouchEnabled()) {
+          $elm.bind('touchstart', function (event) {
+            event.preventDefault();
+            // $log.debug('touchstart', event);
+
+            moveStart = new Date();
+            startY = event.targetTouches[0].screenY;
+            scrollTopStart = uiGridCtrl.viewport[0].scrollTop;
+            
+            $document.on('touchmove', touchmove);
+            $document.on('touchend touchcancel', touchend);
+          });
+        }
+
         // TODO(c0bra): Scroll the viewport when the up and down arrow keys are used
-        $elm.bind('keyDown', function(evt, args) {
+        $elm.bind('keydown', function(evt, args) {
 
         });
 
         // Unbind all $watches and events on $destroy
         $elm.bind('$destroy', function() {
           scrollUnbinder();
-          $elm.unbind('keyDown');
+          $elm.unbind('keydown');
 
-          ['wheel', 'mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'].forEach(function (eventName) {
+          ['touchstart', 'touchmove', 'touchend','keydown', 'wheel', 'mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'].forEach(function (eventName) {
             $elm.unbind(eventName);
           });
         });
@@ -254,7 +331,7 @@
         $log.debug('ui-grid-header link');
 
         if (uiGridCtrl) {
-          uiGridCtrl.grid.headerHeight = gridUtil.outerElementHeight($elm);
+          uiGridCtrl.header = $elm;
         }
       }
     };
@@ -609,6 +686,7 @@
 
 var module = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.grid.row', 'ui.grid.style', 'ui.grid.scrollbar','ui.grid.util']);
 
+
   module.controller('uiGridController',['$scope', '$element', '$attrs','$log','gridUtil',
     function ($scope, $elm, $attrs,$log,gridUtil) {
       $log.debug('ui-grid controller');
@@ -672,6 +750,10 @@ var module = angular.module('ui.grid', ['ui.grid.header', 'ui.grid.body', 'ui.gr
 
       // Refresh the canvas drawable size
       self.refreshCanvas = function() {
+        if (self.header) {
+          self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
+        }
+
         self.grid.buildStyles($scope);
       };
     }]);
@@ -869,7 +951,7 @@ function getWidthOrHeight( elem, name, extra ) {
  *  
  *  @description Grid utility functions
  */
-module.service('gridUtil', ['$window', function ($window) {
+module.service('gridUtil', ['$window', '$document', function ($window, $document) {
   var s = {
 
     /**
@@ -1082,6 +1164,17 @@ module.service('gridUtil', ['$window', function ($window) {
         deltaX: deltaX,
         deltaY: deltaY
       };
+    },
+
+    // Stolen from Modernizr
+    isTouchEnabled: function() {
+      var bool;
+
+      if (('ontouchstart' in $window) || $window.DocumentTouch && $document instanceof DocumentTouch) {
+        bool = true;
+      }
+
+      return bool;
     }
   };
 
