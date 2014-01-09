@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-4773b16 - 2014-01-09
+/*! ui-grid - v2.0.7-39fde4a - 2014-01-09
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -110,7 +110,7 @@
         var scrollUnbinder = $scope.$on('uiGridScrollVertical', function(evt, args) {
           // $log.debug('scroll', args.scrollPercentage, uiGridCtrl.grid.options.canvasHeight, args.scrollPercentage * uiGridCtrl.grid.options.canvasHeight);
 
-          var scrollLength = (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.viewportHeight);
+          var scrollLength = (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
 
           // $log.debug('scrollLength', scrollLength, scrollLength % uiGridCtrl.grid.options.rowHeight);
           var newScrollTop = Math.max(0, args.scrollPercentage * scrollLength);
