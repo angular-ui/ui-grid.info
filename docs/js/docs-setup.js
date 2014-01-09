@@ -58,7 +58,7 @@ NG_DOCS={
       "id": "4_custom_header",
       "shortName": "Custom Header",
       "type": "overview",
-      "keywords": "$scope almost angular app as basic bob but ceo class col columns controller create custom data developer frank function grid header html in index js json lowly mainctrl module most name ng-controller ng-repeat one overview same scope table the title tutorial ui ui-grid ui-grid-body ui-grid-header uppercase var virtual-repeat with"
+      "keywords": "$scope almost angular app as basic bob but ceo class col columndefs controller create custom data developer frank function grid header html in index js json lowly mainctrl module most name ng-controller ng-repeat one options overview same scope table the title tutorial ui ui-grid ui-grid-body ui-grid-header uppercase var with"
     },
     {
       "section": "tutorial",
