@@ -59,6 +59,18 @@ columnDefs == [
 </pre></div>
 </div>
 </li>
+<li><h3 id="getTemplate">getTemplate()</h3>
+<div class="gettemplate"><p>Get's template from Url</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>a promise resolving to template contents</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+GridUtil.getTemplate(url).then(function (contents) {
+     alert(contents);
+   })
+</pre></div>
+</div>
+</li>
 <li><h3 id="newId">newId()</h3>
 <div class="newid"><p>Return a unique ID string</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{string}</code>

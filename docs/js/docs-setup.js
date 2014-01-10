@@ -23,7 +23,7 @@ NG_DOCS={
       "id": "ui.grid.util.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting and angular any apart api app appropriately array as bob borders calculation capitalized column columndefs columnname controller data definitions dom element elementheight elementwidth etc field first firstname for frank function functions getcolumnsfromdata given grid gridutil height html id in index jones js last lastname list mainctrl margin margins method modifier module name names newid ng-bind ng-controller ng-model of on optional pixels readablecolumnname return service set smith split string to ui unique use util utility var width with"
+      "keywords": "$scope accessor account accounting alert and angular any apart api app appropriately array as bob borders calculation capitalized column columndefs columnname contents controller data definitions dom element elementheight elementwidth etc field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index jones js last lastname list mainctrl margin margins method modifier module name names newid ng-bind ng-controller ng-model of on optional pixels promise readablecolumnname resolving return service set smith split string template then to ui unique url use util utility var width with"
     },
     {
       "section": "tutorial",
@@ -51,7 +51,7 @@ NG_DOCS={
       "id": "3_large_dataset",
       "shortName": "Large Dataset",
       "type": "overview",
-      "keywords": "$http $scope age angular app class columndefs controller css data dataset example function get grid gridoptions height html id index js json large length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid uses var width"
+      "keywords": "$http $scope address age angular app city class columndefs controller css data dataset example function get grid gridoptions height html id index js json large length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid uses var width"
     },
     {
       "section": "tutorial",

@@ -35,7 +35,8 @@
     $scope.gridOptions.columnDefs = [
       {field:'id'},
       {field:'name'},
-      {field:'age'}
+      {field:'age'},
+      {field: 'address.city'}
     ];
 
     $http.get('/data/500_complex.json')
