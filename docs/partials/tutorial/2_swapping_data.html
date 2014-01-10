@@ -9,6 +9,8 @@
 <script type="text/ng-template" id="index.html-3">
   <div ng-controller="MainCtrl">
     <button type="button" class="btn btn-success" ng-click="swapData()">Swap Data</button>
+    <button type="button" class="btn btn-success" ng-click="addData()">Add Data</button>
+    <button type="button" class="btn btn-success" ng-click="removeFirstRow()">Remove First Row</button>
     <br>
     <br>
     <div ui-grid="gridOpts" class="grid"></div>
@@ -39,6 +41,22 @@
       }
     };
 
+    $scope.addData = function() {
+      var n = $scope.gridOpts.data.length + 1;
+      $scope.gridOpts.data.push({
+                  "firstName": "New " + n,
+                  "lastName": "Person " + n,
+                  "company": "abc",
+                  "employed": true
+                });
+    };
+
+    $scope.removeFirstRow = function() {
+      if($scope.gridOpts.data.length > 0){
+         $scope.gridOpts.data.splice(0,1);
+      }
+    };
+
     var data1 = [
       {
         "firstName": "Cox",
@@ -63,18 +81,6 @@
         "lastName": "Oneill",
         "company": "Letpro",
         "employed": false
-      },
-      {
-          "firstName": "Jefferson",
-          "lastName": "Cohen",
-          "company": "Slambda",
-          "employed": false
-      },
-      {
-          "firstName": "Gladys",
-          "lastName": "Maldonado",
-          "company": "Ramjob",
-          "employed": false
       }
     ];
 

@@ -42,9 +42,9 @@ NG_DOCS={
     {
       "section": "tutorial",
       "id": "2_swapping_data",
-      "shortName": "Swapping Data",
+      "shortName": "Add/Delete/Swap",
       "type": "overview",
-      "keywords": "$scope acium angular app bond brainquil btn btn-success button by can carney class cline cohen company comveyer controller cox cruz css data data1 data2 different else employed enormo false firstname fuelton function gladys grid gridopts height hopper html if in index jefferson js kongene kramer lastname letpro lorraine main mainctrl maldonado marcy marqet mclean misty module name nancy ng-click ng-controller oneill out overview parleynet pickett providing ramjob reference shepherd simply slambda swap swapdata swapping tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
+      "keywords": "$scope abc acium add adddata angular app bond brainquil btn btn-success button by can carney class cline company comveyer controller cox cruz css data data1 data2 different else employed enormo false first firstname fuelton function grid gridopts height hopper html if in index js kongene kramer lastname length letpro lorraine main mainctrl marcy marqet mclean misty module name nancy new ng-click ng-controller oneill out overview parleynet person pickett providing push reference removefirstrow row shepherd simply splice swap swapdata tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
     },
     {
       "section": "tutorial",
