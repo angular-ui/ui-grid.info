@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-6b5f4e7 - 2014-01-10
+/*! ui-grid - v2.0.7-40737f8 - 2014-01-10
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -646,11 +646,11 @@
           if(!colDef.field){
             throw new Error('colDef.field property is required');
           }
-          var col = grid.columns[colDef.field];
+          var col = grid.getColumn(colDef.field);
 
           if(!col){
             col = new GridColumn(colDef,index);
-            grid.columns[colDef.field] = col;
+            grid.columns.push(col);
           }
 
           col.headerCellTemplate = colDef.headerCellTemplate || $templateCache.get('ui-grid/uiGridHeaderCell');
@@ -702,8 +702,8 @@
       //these are wrapped references to the actual data rows (options.data)
       this.rows = [];
 
-      //keyValue pair key=colDef.field
-      this.columns = {};
+      //represents the columns on the grid
+      this.columns = [];
 
       //current rows that are rendered on the DOM
       this.renderedRows = [];
@@ -711,6 +711,11 @@
 
     Grid.prototype.registerColumnBuilder = function (columnsProcessor) {
       this.columnBuilders.push(columnsProcessor);
+    };
+
+    Grid.prototype.getColumn = function (field) {
+       var columns = this.columns.filter(function(column){return column.colDef.field === field;});
+       return columns.length > 0 ? columns[0] : null;
     };
 
     Grid.prototype.buildColumns = function () {

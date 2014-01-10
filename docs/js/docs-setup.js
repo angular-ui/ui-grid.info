@@ -51,7 +51,7 @@ NG_DOCS={
       "id": "3_large_dataset",
       "shortName": "Large Dataset",
       "type": "overview",
-      "keywords": "$http $scope address age angular app city class columndefs controller css data dataset example function get grid gridoptions height html id index js json large length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid uses var width"
+      "keywords": "$http $scope address age angular app binding city class column columndefs complex controller css data dataset demonstrates example function get grid gridoptions height html id index js json large length main mainctrl module name ng-controller number of on overview properties records set success this tutorial ui ui-grid uses var width"
     },
     {
       "section": "tutorial",
