@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-3f1288b - 2014-01-10
+/*! ui-grid - v2.0.7-85f4ba6 - 2014-01-13
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -615,14 +615,16 @@
   });
 
 
-  module.service('gridClassFactory', ['gridUtil','$q','$templateCache','uiGridConstants',
-        function (gridUtil,$q,$templateCache,uiGridConstants) {
+  module.service('gridClassFactory', ['gridUtil', '$q', '$templateCache', 'uiGridConstants',
+        function (gridUtil, $q, $templateCache, uiGridConstants) {
 
     var service = {
       /**
-       * @description creates a new grid instnace
-       * @param id {string}
-       * @returns {Grid}
+       * @ngdoc method
+       * @name createGrid
+       * @methodOf ui.grid.directive:uiGrid
+       * @description Creates a new grid instnace
+       * @returns {Grid} grid
        */
       createGrid : function(){
         var grid = new Grid(gridUtil.newId());
@@ -635,20 +637,20 @@
        * @param grid - reference to grid
        * @returns a promise
        */
-      defaultColumnBuilder:function(grid){
-        if(!grid.options.columnDefs && !grid.options.columnDefs.length){
+      defaultColumnBuilder: function (grid) {
+        if (!grid.options.columnDefs && !grid.options.columnDefs.length) {
           throw new Error('argument colDefs is not an array');
         }
 
         var templateGetPromises = [];
 
-        grid.options.columnDefs.forEach(function(colDef,index){
-          if(!colDef.field){
+        grid.options.columnDefs.forEach(function (colDef, index) {
+          if (!colDef.field) {
             throw new Error('colDef.field property is required');
           }
           var col = grid.getColumn(colDef.field);
 
-          if(!col){
+          if (!col) {
             col = new GridColumn(colDef,index);
             grid.columns.push(col);
           }
@@ -659,17 +661,21 @@
             $templateCache.get('ui-grid/uiGridCell')
               .replace(uiGridConstants.CUSTOM_FILTERS, col.cellFilter ? "|" + col.cellFilter : "");
 
-
-
           if (colDef.cellTemplate && !uiGridConstants.TEMPLATE_REGEXP.test(colDef.cellTemplate)) {
             templateGetPromises.push(
-              gridUtil.getTemplate(colDef.cellTemplate).then(function(contents){col.cellTemplate = contents;})
+              gridUtil.getTemplate(colDef.cellTemplate)
+                .then(function (contents) {
+                  col.cellTemplate = contents;
+                })
             );
           }
 
           if (colDef.headerCellTemplate && !uiGridConstants.TEMPLATE_REGEXP.test(colDef.headerCellTemplate)) {
             templateGetPromises.push(
-              gridUtil.getTemplate(colDef.headerCellTemplate).then(function(contents){col.headerCellTemplate = contents;})
+              gridUtil.getTemplate(colDef.headerCellTemplate)
+                .then(function (contents) {
+                  col.headerCellTemplate = contents;
+                })
             );
           }
         });
@@ -727,17 +733,17 @@
       return $q.all(builderPromises);
     };
 
-    Grid.prototype.modifyRows = function(newRawData){
+    Grid.prototype.modifyRows = function(newRawData) {
       var self = this;
 
-      if (self.rows.length === 0 && newRawData.length > 0){
+      if (self.rows.length === 0 && newRawData.length > 0) {
         self.addRows(newRawData);
         return;
       }
 
       //look for new rows
-      var newRows = newRawData.filter(function(newItem){
-         return !self.rows.some(function(oldRow){
+      var newRows = newRawData.filter(function (newItem) {
+         return !self.rows.some(function(oldRow) {
            return self.options.rowEquality(oldRow.entity,newItem);
          });
       });
@@ -759,7 +765,7 @@
 
     };
 
-    Grid.prototype.addRows = function(newRawData){
+    Grid.prototype.addRows = function(newRawData) {
       var self = this;
 
       for(var i=0; i < newRawData.length; i++) {
@@ -767,7 +773,7 @@
       }
     };
 
-    Grid.prototype.processRowBuilders = function(gridRow){
+    Grid.prototype.processRowBuilders = function(gridRow) {
       var self = this;
 
       self.rowBuilders.forEach(function (builder) {
@@ -833,7 +839,7 @@
       this.scrollThreshold = 4;
 
       //rows are compared via reference by default.  This can be overridden to compare on whatever you like
-      this.rowEquality = function(itemA,itemB){
+      this.rowEquality = function(itemA,itemB) {
         return itemA === itemB;
       };
     }
@@ -865,8 +871,7 @@
       self.maxWidth = !colDef.maxWidth ? 9000 : colDef.maxWidth;
 
       // Use colDef.displayName as long as it's not undefined, otherwise default to the field name
-      self.displayName = (colDef.displayName === undefined) ? colDef.field : colDef.displayName;
-
+      self.displayName = (colDef.displayName === undefined) ? gridUtil.readableColumnName(colDef.field) : colDef.displayName;
 
       //self.originalIndex = index;
 
@@ -886,7 +891,7 @@
 
   module.controller('uiGridController',['$scope', '$element', '$attrs','$log','gridUtil','$q','uiGridConstants',
     '$templateCache','gridClassFactory',
-    function ($scope, $elm, $attrs,$log,gridUtil,$q,uiGridConstants,$templateCache,gridClassFactory) {
+    function ($scope, $elm, $attrs, $log, gridUtil, $q, uiGridConstants, $templateCache, gridClassFactory) {
       $log.debug('ui-grid controller');
 
       var self = this;
@@ -899,7 +904,7 @@
       //all properties of grid are available on scope
       $scope.grid = self.grid;
 
-      if($attrs.uiGridColumns){
+      if ($attrs.uiGridColumns) {
         $attrs.$observe('uiGridColumns', function(value) {
           self.grid.options.columnDefs =  value;
           self.grid.buildColumns()
@@ -908,12 +913,11 @@
             });
         });
       }
-      else{
-        if(self.grid.options.columnDefs.length>0){
+      else {
+        if (self.grid.options.columnDefs.length > 0) {
            self.grid.buildColumns();
         }
       }
-
 
 
       var dataWatchCollectionDereg;
@@ -930,18 +934,18 @@
 
         if (n) {
           //load columns if needed
-          if(!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0){
+          if (!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0) {
               self.grid.options.columnDefs =  gridUtil.getColumnsFromData(n);
               promises.push(self.grid.buildColumns());
           }
 
-          $q.all(promises).then(function(){
+          $q.all(promises).then(function() {
             //wrap data in a gridRow
             $log.debug('Modifying rows');
             self.grid.modifyRows(n);
 
             //todo: move this to the ui-body-directive and define how we handle ordered event registration
-            if(self.viewport){
+            if (self.viewport) {
               var scrollTop = self.viewport[0].scrollTop;
               self.adjustScrollVertical(scrollTop, null, true);
             }
@@ -1207,7 +1211,7 @@ function getWidthOrHeight( elem, name, extra ) {
  *  
  *  @description Grid utility functions
  */
-module.service('gridUtil', ['$window', '$document','$http', function ($window, $document,$http) {
+module.service('gridUtil', ['$window', '$document', '$http', function ($window, $document, $http) {
   var s = {
 
     /**
@@ -1382,6 +1386,23 @@ module.service('gridUtil', ['$window', '$document','$http', function ($window, $
       
     },
 
+    /**
+    * @ngdoc method
+    * @name normalizeWheelEvent
+    * @methodOf ui.grid.util.service:GridUtil
+    *
+    * @param {event} event A mouse wheel event
+    *
+    * @returns {event} A normalized event
+    *
+    * @description
+    * Given an event from this list:
+    *
+    * `wheel, mousewheel, DomMouseScroll, MozMousePixelScroll`
+    *
+    * "normalize" it
+    * so that it stays consistent no matter what browser it comes from (i.e. scale it correctl and make sure the direction is right.)
+    */
     normalizeWheelEvent: function (event) {
       // var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'];
       // var toBind = 'onwheel' in document || document.documentMode >= 9 ? ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'];
@@ -1464,7 +1485,7 @@ module.service('gridUtil', ['$window', '$document','$http', function ($window, $
     }
   };
 
-  ['width', 'height'].forEach(function (name){
+  ['width', 'height'].forEach(function (name) {
     var capsName = angular.uppercase(name.charAt(0)) + name.substr(1);
     s['element' + capsName] = function (elem, extra) {
       var e = elem;
@@ -1489,28 +1510,28 @@ module.service('gridUtil', ['$window', '$document','$http', function ($window, $
 (function(){
   'use strict';
 
-  var app = angular.module('ui.grid.header', ['ui.grid']);
+  // var app = angular.module('ui.grid.header', ['ui.grid']);
 
-  app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'gridUtil', function($log, $templateCache, $compile, gridUtil) {
-    return {
-      restrict: 'EA',
-      templateUrl: 'ui-grid/ui-grid-header',
-      replace: true,
-      // priority: 1000,
-      require: '?^uiGrid',
-      scope: false,
-      link: function ($scope, $elm, $attrs, uiGridCtrl) {
-        if (uiGridCtrl === undefined) {
-          throw new Error('[ui-grid-header] uiGridCtrl is undefined!');
-        }
-        $log.debug('ui-grid-header link');
+  // app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'gridUtil', function($log, $templateCache, $compile, gridUtil) {
+  //   return {
+  //     restrict: 'EA',
+  //     templateUrl: 'ui-grid/ui-grid-header',
+  //     replace: true,
+  //     // priority: 1000,
+  //     require: '?^uiGrid',
+  //     scope: false,
+  //     link: function ($scope, $elm, $attrs, uiGridCtrl) {
+  //       if (uiGridCtrl === undefined) {
+  //         throw new Error('[ui-grid-header] uiGridCtrl is undefined!');
+  //       }
+  //       $log.debug('ui-grid-header link');
 
-        if (uiGridCtrl) {
-          uiGridCtrl.header = $elm;
-        }
-      }
-    };
-  }]);
+  //       if (uiGridCtrl) {
+  //         uiGridCtrl.header = $elm;
+  //       }
+  //     }
+  //   };
+  // }]);
 
 })();
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
@@ -1570,7 +1591,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridCell',
-    "<div class=\"ngCellText\" ng-class=\"col.colIndex()\"><span ng-cell-text=\"\">{{COL_FIELD CUSTOM_FILTERS}}</span></div>"
+    "<div class=\"ui-grid-cell-contents\">{{COL_FIELD CUSTOM_FILTERS}}</div>"
   );
 
 

@@ -9,7 +9,7 @@ NG_DOCS={
       "id": "ui.grid.directive:uiGrid",
       "shortName": "uiGrid",
       "type": "directive",
-      "keywords": "$scope angular api app basic bob ceo controller create data developer directive div ea for frank function grid html index js lowly mainctrl module name ng-controller options the title to ui ui-grid uigrid use var very"
+      "keywords": "$scope angular api app basic bob ceo controller create creategrid creates data developer directive div ea for frank function grid html index instnace js lowly mainctrl method module name new ng-controller options the title to ui ui-grid uigrid use var very"
     },
     {
       "section": "api",
@@ -23,7 +23,7 @@ NG_DOCS={
       "id": "ui.grid.util.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert and angular any apart api app appropriately array as bob borders calculation capitalized column columndefs columnname contents controller data definitions dom element elementheight elementwidth etc field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index jones js last lastname list mainctrl margin margins method modifier module name names newid ng-bind ng-controller ng-model of on optional pixels promise readablecolumnname resolving return service set smith split string template then to ui unique url use util utility var width with"
+      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser calculation capitalized column columndefs columnname comes consistent contents controller correctl data definitions direction dom dommousescroll element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional pixels promise readablecolumnname resolving return right scale service set smith so split stays string sure template that the then this to ui unique url use util utility var what wheel width with"
     },
     {
       "section": "tutorial",
