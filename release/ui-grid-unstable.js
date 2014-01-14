@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-86a7213 - 2014-01-14
+/*! ui-grid - v2.0.7-215187f - 2014-01-14
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -24,6 +24,9 @@
         // uiGridCtrl.viewport = elm; //angular.element( elm[0].getElementsByClassName('ui-grid-viewport')[0] );
         uiGridCtrl.viewport = angular.element( $elm[0].getElementsByClassName('ui-grid-viewport')[0] );
         uiGridCtrl.viewportOuterHeight = GridUtil.outerElementHeight(uiGridCtrl.viewport[0]);
+
+        // Explicitly set the viewport scrollTop to 0; Firefox apparently caches it
+        uiGridCtrl.viewport[0].scrollTop = 0;
 
         uiGridCtrl.prevScrollTop = 0;
         uiGridCtrl.currentTopRow = 0;
@@ -133,7 +136,7 @@
           //   $log.debug('too high!');
           //   newScrollTop = uiGridCtrl.grid.options.canvasHeight - uiGridCtrl.grid.options.viewportHeight;
           // }
-
+          
           uiGridCtrl.adjustScrollVertical(newScrollTop, scrollPercentage);
           uiGridCtrl.viewport[0].scrollTop = newScrollTop;
           uiGridCtrl.grid.options.offsetTop = newScrollTop;
@@ -595,7 +598,8 @@
             var ret = '';
             var left = 0;
             uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
-              ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+              // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+              ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
               left = left + equalWidth;
             });
 
@@ -656,7 +660,7 @@
        * @description Creates a new grid instance. Each instance will have a unique id
        * @returns {Grid} grid
        */
-      createGrid : function(){
+      createGrid : function() {
         var grid = new Grid(gridUtil.newId());
         grid.registerColumnBuilder(service.defaultColumnBuilder);
         return grid;
@@ -909,7 +913,9 @@
     // NOTE: viewport drawable height is the height of the grid minus the header row height (including any border)
     // TODO(c0bra): account for footer height
     Grid.prototype.getViewportHeight = function () {
-      return this.gridHeight - this.headerHeight;
+      var viewPortHeight = this.gridHeight - this.headerHeight;
+      $log.debug('viewPortHeight', viewPortHeight);
+      return viewPortHeight;
     };
 
     Grid.prototype.getCanvasHeight = function () {
@@ -1085,7 +1091,7 @@
             //todo: move this to the ui-body-directive and define how we handle ordered event registration
             if (self.viewport) {
               var scrollTop = self.viewport[0].scrollTop;
-              self.adjustScrollVertical(scrollTop, null, true);
+              self.adjustScrollVertical(scrollTop, 0, true);
             }
 
             $scope.$evalAsync(function() {
@@ -1107,6 +1113,7 @@
       $scope.grid.refreshCanvas = self.refreshCanvas = function() {
         if (self.header) {
           self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
+          $log.debug('self.grid.headerHeight', self.grid.headerHeight);
         }
 
         self.grid.buildStyles($scope);
@@ -1171,7 +1178,7 @@ module.directive('uiGrid',
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
               $log.debug('ui-grid postlink');
 
-              uiGridCtrl.grid.gridWidth = $scope.gridWidth = $elm[0].clientWidth;
+              uiGridCtrl.grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
               uiGridCtrl.grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
               uiGridCtrl.refreshCanvas();
@@ -1216,7 +1223,11 @@ function getStyles (elem) {
   return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
 }
 
-var rnumnonpx = new RegExp( "^(" + (/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/).source + ")(?!px)[a-z%]+$", "i" );
+var rnumnonpx = new RegExp( "^(" + (/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/).source + ")(?!px)[a-z%]+$", "i" ),
+    // swappable if display is none or starts with table except "table", "table-cell", or "table-caption"
+    // see here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
+    rdisplayswap = /^(block|none|table(?!-c[ea]).+)/,
+    cssShow = { position: "absolute", visibility: "hidden", display: "block" };
 
 function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
   var i = extra === ( isBorderBox ? 'border' : 'content' ) ?
@@ -1517,6 +1528,41 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
       
     },
 
+    swap: function( elem, options, callback, args ) {
+      var ret, name,
+              old = {};
+
+      // Remember the old values, and insert the new ones
+      for ( name in options ) {
+        old[ name ] = elem.style[ name ];
+        elem.style[ name ] = options[ name ];
+      }
+
+      ret = callback.apply( elem, args || [] );
+
+      // Revert the old values
+      for ( name in options ) {
+        elem.style[ name ] = old[ name ];
+      }
+
+      return ret;
+    },
+
+    fakeElement: function( elem, options, callback, args ) {
+      var ret, name,
+          newElement = angular.element(elem).clone()[0];
+
+      for ( name in options ) {
+        newElement.style[ name ] = options[ name ];
+      }
+
+      angular.element(document.body).append(newElement);
+
+      ret = callback.call( newElement, newElement );
+
+      return ret;
+    },
+
     /**
     * @ngdoc method
     * @name normalizeWheelEvent
@@ -1623,8 +1669,19 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
       if (typeof(e.length) !== 'undefined' && e.length) {
         e = elem[0];
       }
-      
-      return elem ? getWidthOrHeight( e, name, extra ) : null;
+
+      if (e) {
+        // debugger;
+        var styles = getStyles(e);
+        return e.offsetWidth === 0 && rdisplayswap.test(styles.display) ?
+                  s.fakeElement(e, cssShow, function(newElm) {
+                    return getWidthOrHeight( newElm, name, extra );
+                  }) :
+                  getWidthOrHeight( e, name, extra );
+      }
+      else {
+        return null;
+      }
     };
 
     s['outerElement' + capsName] = function (elem, margin) {
@@ -1782,7 +1839,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
 
               var input = $elm.find('input')[0];
 
-              //set focus at start of edit
+              // Set focus at start of edit
               $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
                 input.focus();
               });

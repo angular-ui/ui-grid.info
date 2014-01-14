@@ -107,7 +107,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$http $scope address age angular app city class columndefs controller css data demonstrates displayname edit editable editing enablecelledit example function get grid gridoptions height html id in in-line index js json length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid ui-grid-edit uses var width"
+      "keywords": "$http $scope address age allow angular app be can cell city class click column columndefs controller css data definitions displayname double edit editable enablecelledit field function get grid gridoptions height html id in index it js json length main mainctrl module name ng-controller number options overview success the to true tutorial ui ui-grid ui-grid-edit use var width you your"
     },
     {
       "section": "tutorial",
@@ -128,7 +128,7 @@ NG_DOCS={
       "id": "8_grid_in_modal",
       "shortName": "Grid in a Modal",
       "type": "overview",
-      "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color console controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left log main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
+      "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
     }
   ],
   "apis": {

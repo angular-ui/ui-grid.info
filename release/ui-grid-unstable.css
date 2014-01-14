@@ -24,7 +24,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
 }
 .ui-grid-header-cell {
-  position: absolute;
+  position: relative;
+  float: left;
   top: 0;
   bottom: 0;
   background-color: inherit;
@@ -59,7 +60,8 @@
 }
 .ui-grid-cell {
   overflow: hidden;
-  position: absolute;
+  position: relative;
+  float: left;
   background-color: inherit;
 }
 .ui-grid-cell-contents {

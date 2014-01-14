@@ -1,7 +1,7 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>This grid example uses a data set of 500 records.  Demonstrates in-line editing in grid.</p><h2 id="Example">Example</h2>
+<div><p>You can use the <code>enableCellEdit</code> options in your column definitions to allow a column to be editable. Double click in a cell to edit it.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-7" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -33,10 +33,10 @@
     $scope.gridOptions = {  };
 
     $scope.gridOptions.columnDefs = [
-      {field:'id'},
-      {field:'name',enableCellEdit:true, displayName:'name (editable)'},
-      {field:'age'},
-      {field: 'address.city'}
+      { field: 'id' },
+      { field: 'name', enableCellEdit: true, displayName: 'Name (editable)' },
+      { field: 'age' },
+      { field: 'address.city' }
     ];
 
     $http.get('/data/500_complex.json')
