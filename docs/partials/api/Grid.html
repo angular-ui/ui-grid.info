@@ -1,0 +1,57 @@
+<h1><code ng:non-bindable="">Grid</code>
+<span class="hint"></span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Grid defines a logical grid.  Any non-dom properties and elements needed by the grid should
+be defined in this class</p></div>
+<h2 id="Usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">Grid(id);</pre>
+<h3 id="Parameters">Parameters</h3>
+<ul class="parameters"><li><code ng:non-bindable="">id – {string} – </code>
+<p>id to assign to grid</p></li>
+</ul>
+</div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="buildColumns">buildColumns()</h3>
+<div class="buildcolumns"><p>creates GridColumn objects from the columnDefinition.  Calls each registered
+columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Promise}</code>
+– <p>a promise to load any needed column resources</p></div>
+</div>
+</li>
+<li><h3 id="buildStyles">buildStyles()</h3>
+<div class="buildstyles"><p>calls each styleComputation function</p></div>
+</li>
+<li><h3 id="getColumn">getColumn(field)</h3>
+<div class="getcolumn"><p>returns a grid column for the field name</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">field – {string} – </code>
+<p>field name</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="modifyRows">modifyRows()</h3>
+<div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered
+rowBuilder to further process the row</p>
+
+<p>Rows are identified using the gridOptions.rowEquality function</p></div>
+</li>
+<li><h3 id="processRowBuilders">processRowBuilders()</h3>
+<div class="processrowbuilders"><p>processes all RowBuilders for the gridRow</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{GridRow}</code>
+– <p>the gridRow with all additional behaivor added</p></div>
+</div>
+</li>
+<li><h3 id="registerColumnBuilder">registerColumnBuilder(columnsProcessor)</h3>
+<div class="registercolumnbuilder"><p>When the build creates columns from column definitions, the columnbuilders will be called to add
+additional properties to the column.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">columnsProcessor – {function(colDef, col, gridOptions)} – </code>
+<p>function to be called</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="registerStyleComputation">registerStyleComputation()</h3>
+<div class="registerstylecomputation"><p>registered a styleComputation function</p></div>
+</li>
+</ul>
+</div>
+</div>

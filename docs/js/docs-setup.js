@@ -6,10 +6,45 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
+      "id": "Grid",
+      "shortName": "Grid",
+      "type": "function",
+      "keywords": "add added additional all and any api are array assign be behaivor build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements field for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to using when will with"
+    },
+    {
+      "section": "api",
+      "id": "GridColumn",
+      "shortName": "GridColumn",
+      "type": "function",
+      "keywords": "allows and api array assigned be coldef coldefs column current definition for function functions grid gridcolumn gridoptions in index items needed of position properties the to wrapper"
+    },
+    {
+      "section": "api",
+      "id": "GridOptions",
+      "shortName": "GridOptions",
+      "type": "function",
+      "keywords": "and any api application are array assign be by can class columndef columndefs compare compared complex contain data default defined developer entitya entityb equality field field1 field2 first function grid gridoptions id is item object objects of on only option or over overlaid overridden property rendered required rowequality rows second the this to using var"
+    },
+    {
+      "section": "api",
+      "id": "GridRow",
+      "shortName": "GridRow",
+      "type": "function",
+      "keywords": "allows and api array assigned be current data entity for from function functions grid gridoptions gridrow in index item needed of position properties row rows the to wrapper"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.directive:uiGrid",
       "shortName": "uiGrid",
       "type": "directive",
-      "keywords": "$scope angular api app basic bob ceo controller create creategrid creates data developer directive div ea for frank function grid html index instnace js lowly mainctrl method module name new ng-controller options the title to ui ui-grid uigrid use var very"
+      "keywords": "$scope angular api app basic bob ceo controller create data developer directive div ea for frank function grid html index js lowly mainctrl module name ng-controller options the title to ui ui-grid uigrid use var very"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.service:gridClassFactory",
+      "shortName": "gridClassFactory",
+      "type": "object",
+      "keywords": "and api applies col coldef column core creategrid creates defaultcolumnbuilder definition definitions designtime dom each factory features for function grid gridcol gridoptions have id instance instances method new object of options processes reference return service specific the them to ui unique will"
     },
     {
       "section": "api",
@@ -66,6 +101,13 @@ NG_DOCS={
       "shortName": "100 Rows",
       "type": "overview",
       "keywords": "$http $scope angular app class controller css data example function get grid gridoptions height html index js json length main mainctrl module name ng-controller number of overview records rows set success this tutorial ui ui-grid uses var width"
+    },
+    {
+      "section": "tutorial",
+      "id": "6_editable",
+      "shortName": "Editable Grid",
+      "type": "overview",
+      "keywords": "$http $scope address age angular app city class columndefs controller css data demonstrates edit editable editing enablecelledit example function get grid gridoptions height html id in in-line index js json length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid ui-grid-edit uses var width"
     }
   ],
   "apis": {
