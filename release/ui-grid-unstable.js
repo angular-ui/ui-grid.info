@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-0b8113c - 2014-01-14
+/*! ui-grid - v2.0.7-86a7213 - 2014-01-14
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -137,6 +137,8 @@
           uiGridCtrl.adjustScrollVertical(newScrollTop, scrollPercentage);
           uiGridCtrl.viewport[0].scrollTop = newScrollTop;
           uiGridCtrl.grid.options.offsetTop = newScrollTop;
+
+          uiGridCtrl.fireScrollEvent();
 
           // scope.$evalAsync(function() {
 
@@ -471,6 +473,7 @@
           var scrollPercentage = y / elmBottomBound;
           // $log.debug('scrollPercentage', y, uiGridCtrl.grid.optionsviewportHeight, elmHeight, elmBottomBound, scrollPercentage);
 
+          //TODO: When this is part of ui.grid module, the event name should be a constant
           $scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: $elm });
         }
 
@@ -629,7 +632,10 @@
     CUSTOM_FILTERS: /CUSTOM_FILTERS/g,
     COL_FIELD: /COL_FIELD/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
-    TEMPLATE_REGEXP: /<.+>/
+    TEMPLATE_REGEXP: /<.+>/,
+    events : {
+      GRID_SCROLL: 'uiGridScroll'
+    }
   });
 
   /**
@@ -1106,6 +1112,11 @@
         self.grid.buildStyles($scope);
       };
 
+      //todo: throttle this event?
+      self.fireScrollEvent = function(){
+        $scope.$broadcast(uiGridConstants.events.GRID_SCROLL,'vertical');
+      };
+
     }]);
 
 /**
@@ -1179,36 +1190,15 @@ module.directive('uiGrid',
       compile: function() {
 
         return {
-          pre: function($scope, iElement) {
+          pre: function($scope, $elm) {
             $log.debug('uiGridCell pre-link');
-            var html = $scope.col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
-
-//            if ($scope.col.enableCellEdit) {
-//              html =  $scope.col.cellEditTemplate;
-//              html = html.replace(DISPLAY_CELL_TEMPLATE, cellTemplate);
-//              html = html.replace(EDITABLE_CELL_TEMPLATE, $scope.col.editableCellTemplate.replace(COL_FIELD, 'row.entity.' + $scope.col.field));
-//            } else {
-//              html = cellTemplate;
-//            }
-
+            var html = $scope.col.cellTemplate
+              .replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
             var cellElement = $compile(html)($scope);
-
-//            if ($scope.enableCellSelection && cellElement[0].className.indexOf('ngSelectionCell') === -1) {
-//              cellElement[0].setAttribute('tabindex', 0);
-//              cellElement.addClass('ngCellElement');
-//            }
-
-            iElement.append(cellElement);
+            $elm.append(cellElement);
           },
-          post: function($scope, iElement) {
+          post: function($scope, $elm) {
             $log.debug('uiGridCell post-link');
-//            if ($scope.enableCellSelection) {
-//              $scope.domAccessProvider.selectionHandlers($scope, iElement);
-//            }
-//
-//            $scope.$on('ngGridEventDigestCell', function() {
-//              domUtilityService.digest($scope);
-//            });
           }
         };
       }
@@ -1656,11 +1646,10 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
     EDITABLE_CELL_TEMPLATE: /EDITABLE_CELL_TEMPLATE/g,
     EDITABLE_CELL_DIRECTIVE: /editable_cell_directive/g,
     events: {
-      START_CELL_EDIT: 'ngGridEventStartCellEdit',
+      BEGIN_CELL_EDIT: 'ngGridEventBeginCellEdit',
       END_CELL_EDIT: 'ngGridEventEndCellEdit'
     }
   });
-
 
   module.directive('uiGridEdit', ['$log', '$q', '$templateCache', function ($log, $q, $templateCache) {
     return {
@@ -1712,44 +1701,62 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
           return {
             pre: function ($scope, $elm) {
               $log.debug('gridEdit uiGridCell pre-link');
+
+            },
+            post: function ($scope, $elm) {
+              $log.debug('gridEdit uiGridCell post-link');
               if (!$scope.col.colDef.enableCellEdit) {
                 return;
               }
 
-              //keep original html
               var origHtml;
               var html;
-
               var inEdit = false;
 
               $elm.on('dblclick', function () {
+                beginEdit();
+              });
 
+
+
+              function beginEdit(){
                 origHtml = $scope.col.cellTemplate;
                 origHtml = origHtml.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
 
                 html = $scope.col.editableCellTemplate;
-                html = html.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
                 html = html.replace(uiGridEditConstants.EDITABLE_CELL_DIRECTIVE, $scope.col.editableCellDirective);
 
                 $scope.$apply(function () {
+                    inEdit = true;
                     var cellElement = $compile(html)($scope);
-                    $elm.replaceWith(cellElement);
+                    $elm.find('div').replaceWith(cellElement);
                   }
                 );
-                $scope.$broadcast(uiGridEditConstants.events.START_CELL_EDIT);
 
-              });
+                //stop editing when grid is scrolled
+                var deregOnGridScroll = $scope.$on(uiGridConstants.events.GRID_SCROLL, function () {
+                  endEdit();
+                  deregOnGridScroll();
+                });
 
-              //replace with original display template
-              $scope.$on(uiGridEditConstants.events.END_CELL_EDIT, function () {
-                  var cellElement = $compile(origHtml)($scope);
-                  $elm.replaceWith(cellElement);
-              });
+                //replace with original display template
+                var deregOnEndCellEdit = $scope.$on(uiGridEditConstants.events.END_CELL_EDIT, function () {
+                  endEdit();
+                  deregOnEndCellEdit();
+                });
+
+                $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT);
+              }
+
+              function endEdit(){
+                if(!inEdit){return;}
+                var cellElement = $compile(origHtml)($scope);
+                $elm.find('div').replaceWith(cellElement);
+                $scope.$apply();
+                inEdit = false;
+              }
 
 
-            },
-            post: function ($scope, iElement) {
-              $log.debug('gridEdit uiGridCell post-link');
             }
           };
         }
@@ -1758,26 +1765,31 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
       return ngCell;
     }]);
 
-
-  module.directive('uiGridTextEditor', ['uiGridConstants', 'uiGridEditConstants', '$log',
-    function (uiGridConstants, uiGridEditConstants, $log) {
+  module.directive('uiGridTextEditor',
+    ['uiGridConstants', 'uiGridEditConstants', '$log', '$templateCache', '$compile',
+    function (uiGridConstants, uiGridEditConstants, $log, $templateCache, $compile) {
       return{
-        templateUrl: 'ui-grid/edit/cellTextEditor',
         compile: function () {
           return {
             pre: function ($scope, $elm, $attrs) {
+
+            },
+            post: function ($scope, $elm, $attrs) {
+              var html = $templateCache.get('ui-grid/edit/cellTextEditor');
+              html = html.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
+              var cellElement = $compile(html)($scope);
+              $elm.append(cellElement);
+
               var input = $elm.find('input')[0];
 
               //set focus at start of edit
-              $scope.$on(uiGridEditConstants.events.START_CELL_EDIT, function () {
+              $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
                 input.focus();
               });
 
-              $scope.stopEdit = function(){
+              $scope.stopEdit = function () {
                 $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
               };
-            },
-            post: function ($scope, $elm, $attrs, uiGridCtrl) {
             }
           };
         }

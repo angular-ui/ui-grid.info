@@ -107,7 +107,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$http $scope address age angular app city class columndefs controller css data demonstrates edit editable editing enablecelledit example function get grid gridoptions height html id in in-line index js json length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid ui-grid-edit uses var width"
+      "keywords": "$http $scope address age angular app city class columndefs controller css data demonstrates displayname edit editable editing enablecelledit example function get grid gridoptions height html id in in-line index js json length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid ui-grid-edit uses var width"
     },
     {
       "section": "tutorial",
