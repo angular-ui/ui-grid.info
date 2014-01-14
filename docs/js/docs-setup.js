@@ -93,7 +93,7 @@ NG_DOCS={
       "id": "4_custom_header",
       "shortName": "Custom Header",
       "type": "overview",
-      "keywords": "$scope almost angular app as basic bob but ceo class col columndefs controller create custom data developer frank function grid header html in index js json lowly mainctrl module most name ng-controller ng-repeat one options overview same scope table the title tutorial ui ui-grid ui-grid-body ui-grid-header uppercase var with"
+      "keywords": "$http $scope almost am angular app as basic bob but center ceo class controller create css custom data developer frank function grid gridoptions header header-template headertemplate height html index js lowly main mainctrl module most name ng-controller one overview same style text-align the title tutorial ui ui-grid ui-grid-top-panel var width with"
     },
     {
       "section": "tutorial",
@@ -108,6 +108,27 @@ NG_DOCS={
       "shortName": "Editable Grid",
       "type": "overview",
       "keywords": "$http $scope address age angular app city class columndefs controller css data demonstrates edit editable editing enablecelledit example function get grid gridoptions height html id in in-line index js json length main mainctrl module name ng-controller number of overview records set success this tutorial ui ui-grid ui-grid-edit uses var width"
+    },
+    {
+      "section": "tutorial",
+      "id": "6_hidden_grids",
+      "shortName": "Hidden Grids",
+      "type": "overview",
+      "keywords": "$http $scope angular app btn btn-success button class controller css data function get grid gridoptions grids height hidden hide hidegrid hiding html in index js json main mainctrl modals module name ng-click ng-controller ng-hide or overview show success tabs true tutorial type ui ui-grid var well width"
+    },
+    {
+      "section": "tutorial",
+      "id": "7_multiple_grids",
+      "shortName": "Multiple Grids per Page",
+      "type": "overview",
+      "keywords": "$http $scope angular app class controller css data function get grid gridoptions1 gridoptions2 grids height html index js json main mainctrl module multiple name ng-controller on overview page per row single span4 success tutorial ui ui-grid using var width"
+    },
+    {
+      "section": "tutorial",
+      "id": "8_grid_in_modal",
+      "shortName": "Grid in a Modal",
+      "type": "overview",
+      "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color console controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left log main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
     }
   ],
   "apis": {

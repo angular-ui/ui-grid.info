@@ -13,10 +13,15 @@
 }
 .ui-grid-top-panel {
   position: relative;
-  background-color: #eaeaea;
   border-bottom: 1px solid #d4d4d4;
   overflow: hidden;
   font-weight: bold;
+  background: #f3f3f3;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
+  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
+  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
+  background: -o-linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
 }
 .ui-grid-header-cell {
   position: absolute;

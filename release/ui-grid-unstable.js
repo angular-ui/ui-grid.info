@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-10399c3 - 2014-01-14
+/*! ui-grid - v2.0.7-0b8113c - 2014-01-14
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -317,22 +317,41 @@
   var app = angular.module('ui.grid.header', ['ui.grid']);
 
   app.directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'gridUtil', function($log, $templateCache, $compile, gridUtil) {
+    var defaultTemplate = 'ui-grid/ui-grid-header';
+
     return {
       restrict: 'EA',
-      templateUrl: 'ui-grid/ui-grid-header',
+      // templateUrl: 'ui-grid/ui-grid-header',
       replace: true,
       // priority: 1000,
       require: '?^uiGrid',
       scope: false,
-      link: function ($scope, $elm, $attrs, uiGridCtrl) {
-        if (uiGridCtrl === undefined) {
-          throw new Error('[ui-grid-header] uiGridCtrl is undefined!');
-        }
-        $log.debug('ui-grid-header link');
+      compile: function($elm, $attrs) {
+        return {
+          pre: function ($scope, $elm, $attrs) {
+            var headerTemplate = ($scope.grid.options.headerTemplate) ? $scope.grid.options.headerTemplate : defaultTemplate;
 
-        if (uiGridCtrl) {
-          uiGridCtrl.header = $elm;
-        }
+             gridUtil.getTemplate(headerTemplate)
+              .then(function (contents) {
+                var template = angular.element(contents);
+                
+                var newElm = $compile(template)($scope);
+                $elm.append(newElm);
+              });
+          },
+
+          post: function ($scope, $elm, $attrs, uiGridCtrl) {
+            if (uiGridCtrl === undefined) {
+              throw new Error('[ui-grid-header] uiGridCtrl is undefined!');
+            }
+
+            $log.debug('ui-grid-header link');
+
+            if (uiGridCtrl) {
+              uiGridCtrl.header = $elm;
+            }
+          }
+        };
       }
     };
   }]);
@@ -765,7 +784,7 @@
         self.columnBuilders.forEach(function (builder) {
           builderPromises.push(builder.call(self, colDef, col, self.options));
         });
-
+        
       });
 
       return $q.all(builderPromises);
@@ -791,7 +810,7 @@
       //look for new rows
       var newRows = newRawData.filter(function (newItem) {
          return !self.rows.some(function(oldRow) {
-           return self.options.rowEquality(oldRow.entity,newItem);
+           return self.options.rowEquality(oldRow.entity, newItem);
          });
       });
 
@@ -800,9 +819,9 @@
       }
 
       //look for deleted rows
-      var deletedRows = self.rows.filter(function(oldRow){
-        return !newRawData.some(function(newItem){
-          return self.options.rowEquality(newItem,oldRow.entity);
+      var deletedRows = self.rows.filter(function (oldRow) {
+        return !newRawData.some(function (newItem) {
+          return self.options.rowEquality(newItem, oldRow.entity);
         });
       });
 
@@ -822,8 +841,8 @@
     Grid.prototype.addRows = function(newRawData) {
       var self = this;
 
-      for(var i=0; i < newRawData.length; i++) {
-        self.rows.push( self.processRowBuilders(new GridRow(newRawData[i],i)) );
+      for (var i=0; i < newRawData.length; i++) {
+        self.rows.push( self.processRowBuilders(new GridRow(newRawData[i], i)) );
       }
     };
 
@@ -945,32 +964,35 @@
        * @param {object} entityA First Data Item to compare
        * @param {object} entityB Second Data Item to compare
        */
-      this.rowEquality = function(entityA,entityB) {
+      this.rowEquality = function(entityA, entityB) {
         return entityA === entityB;
       };
+
+      // Custom template for header row
+      this.headerTemplate = null;
     }
 
-   /**
-    * @ngdoc function
-    * @name GridRow
-    * @description Wrapper for the GridOptions.data rows.  Allows for needed properties and functions
-    * to be assigned to a grid row
-    * @param {object} entity the array item from GridOptions.data
-    * @param {number} index the current position of the row in the array
-    */
+    /**
+     * @ngdoc function
+     * @name GridRow
+     * @description Wrapper for the GridOptions.data rows.  Allows for needed properties and functions
+     * to be assigned to a grid row
+     * @param {object} entity the array item from GridOptions.data
+     * @param {number} index the current position of the row in the array
+     */
     function GridRow(entity, index) {
       this.entity = entity;
       this.index = index;
     }
 
-  /**
-   * @ngdoc function
-   * @name GridColumn
-   * @description Wrapper for the GridOptions.colDefs items.  Allows for needed properties and functions
-   * to be assigned to a grid column
-   * @param {ColDef} colDef Column definition
-   * @param {number} index the current position of the column in the array
-   */
+    /**
+     * @ngdoc function
+     * @name GridColumn
+     * @description Wrapper for the GridOptions.colDefs items.  Allows for needed properties and functions
+     * to be assigned to a grid column
+     * @param {ColDef} colDef Column definition
+     * @param {number} index the current position of the column in the array
+     */
     function GridColumn(colDef, index) {
       var self = this;
       self.colDef = colDef;
@@ -992,10 +1014,8 @@
 
       self.visible = gridUtil.isNullOrUndefined(colDef.visible) || colDef.visible;
 
-
       self.headerClass = colDef.headerClass;
       self.cursor = self.sortable ? 'pointer' : 'default';
-
     }
 
     return service;
@@ -1010,7 +1030,7 @@
 
       self.grid = gridClassFactory.createGrid();
 
-      //extend options with ui-grid attribute reference
+      // Extend options with ui-grid attribute reference
       angular.extend(self.grid.options, $scope.uiGrid);
 
       //all properties of grid are available on scope
@@ -1078,7 +1098,7 @@
       });
 
       // Refresh the canvas drawable size
-      self.refreshCanvas = function() {
+      $scope.grid.refreshCanvas = self.refreshCanvas = function() {
         if (self.header) {
           self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
         }
@@ -1327,7 +1347,7 @@ function getWidthOrHeight( elem, name, extra ) {
  *  
  *  @description Grid utility functions
  */
-module.service('gridUtil', ['$window', '$document', '$http', function ($window, $document, $http) {
+module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', function ($window, $document, $http, $templateCache) {
   var s = {
 
     /**
@@ -1468,10 +1488,15 @@ module.service('gridUtil', ['$window', '$document', '$http', function ($window, 
      </pre>
      */
     getTemplate: function (url) {
-      return $http({method: 'GET', url: url, cache: true})
-        .then(function (result) {
-          return result.data;
-        });
+      return $http({ method: 'GET', url: url, cache: $templateCache })
+        .then(
+          function (result) {
+            return result.data.trim();
+          },
+          function (err) {
+            throw "Could not get template " + url + ": " + err;
+          }
+        );
     },
 
     /**
