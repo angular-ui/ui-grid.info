@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-12dbc58 - 2014-01-14
+/*! ui-grid - v2.0.7-8c1a1ba - 2014-01-14
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -610,7 +610,6 @@
     CUSTOM_FILTERS: /CUSTOM_FILTERS/g,
     COL_FIELD: /COL_FIELD/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
-    EDITABLE_CELL_TEMPLATE: /EDITABLE_CELL_TEMPLATE/g,
     TEMPLATE_REGEXP: /<.+>/
   });
 
@@ -1628,15 +1627,25 @@ module.service('gridUtil', ['$window', '$document', '$http', function ($window, 
   'use strict';
   var module = angular.module('ui.grid.edit', ['ui.grid', 'ui.grid.util']);
 
-  module.directive('uiGridEdit', ['$log', '$q', '$templateCache', function($log,$q,$templateCache) {
+  module.constant('uiGridEditConstants', {
+    EDITABLE_CELL_TEMPLATE: /EDITABLE_CELL_TEMPLATE/g,
+    EDITABLE_CELL_DIRECTIVE: /editable_cell_directive/g,
+    events: {
+      START_CELL_EDIT: 'ngGridEventStartCellEdit',
+      END_CELL_EDIT: 'ngGridEventEndCellEdit'
+    }
+  });
+
+
+  module.directive('uiGridEdit', ['$log', '$q', '$templateCache', function ($log, $q, $templateCache) {
     return {
       replace: true,
       priority: 1000,
       require: '?^uiGrid',
       scope: false,
-      compile: function() {
+      compile: function () {
         return {
-          pre: function($scope, $elm, $attrs, uiGridCtrl) {
+          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
             $log.debug('uiGridEdit preLink');
             uiGridCtrl.grid.registerColumnBuilder(editColumnBuilder);
 
@@ -1645,7 +1654,7 @@ module.service('gridUtil', ['$window', '$document', '$http', function ($window, 
              * @param grid - reference to grid
              * @returns a promise
              */
-            function editColumnBuilder(colDef, col, gridOptions){
+            function editColumnBuilder(colDef, col, gridOptions) {
 
               var promises = [];
 
@@ -1654,143 +1663,115 @@ module.service('gridUtil', ['$window', '$document', '$http', function ($window, 
 
               col.cellEditableCondition = colDef.cellEditableCondition || gridOptions.cellEditableCondition || 'true';
 
-              if(col.enableCellEdit) {
-                col.cellEditTemplate = colDef.cellEditTemplate || $templateCache.get('ui-grid/cellEdit');
-                col.editableCellTemplate = colDef.editableCellTemplate || $templateCache.get('ui-grid/editableCellText');
+              if (col.enableCellEdit) {
+                col.editableCellTemplate = colDef.editableCellTemplate || $templateCache.get('ui-grid/edit/editableCell');
+                col.editableCellDirective = colDef.editableCellDirective || 'ui-grid-text-editor';
               }
 
               return $q.all(promises);
             }
           },
-          post: function($scope, $elm, $attrs, uiGridCtrl) {
+          post: function ($scope, $elm, $attrs, uiGridCtrl) {
           }
         };
       }
     };
   }]);
 
-  module.directive('uiGridCell', ['$compile','uiGridConstants', '$log',function ($compile,uiGridConstants,$log) {
-    var ngCell = {
-      priority: 4900,
-      scope: false,
-      compile: function() {
-        return {
-          pre: function($scope, iElement) {
-            $log.debug('gridEdit uiGridCell pre-link');
-            if (!$scope.col.colDef.enableCellEdit) {
-              return;
+  module.directive('uiGridCell', ['$compile', 'uiGridConstants', 'uiGridEditConstants', '$log',
+    function ($compile, uiGridConstants, uiGridEditConstants, $log) {
+      var ngCell = {
+        priority: 4900,
+        scope: false,
+        compile: function () {
+          return {
+            pre: function ($scope, $elm) {
+              $log.debug('gridEdit uiGridCell pre-link');
+              if (!$scope.col.colDef.enableCellEdit) {
+                return;
+              }
+
+              //keep original html
+              var origHtml;
+              var html;
+
+              var inEdit = false;
+
+              $elm.on('dblclick', function () {
+
+                origHtml = $scope.col.cellTemplate;
+                origHtml = origHtml.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
+
+                html = $scope.col.editableCellTemplate;
+                html = html.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
+                html = html.replace(uiGridEditConstants.EDITABLE_CELL_DIRECTIVE, $scope.col.editableCellDirective);
+
+                $scope.$apply(function () {
+                    var cellElement = $compile(html)($scope);
+                    $elm.replaceWith(cellElement);
+                  }
+                );
+                $scope.$broadcast(uiGridEditConstants.events.START_CELL_EDIT);
+
+              });
+
+              //replace with original display template
+              $scope.$on(uiGridEditConstants.events.END_CELL_EDIT, function () {
+                  var cellElement = $compile(origHtml)($scope);
+                  $elm.replaceWith(cellElement);
+              });
+
+
+            },
+            post: function ($scope, iElement) {
+              $log.debug('gridEdit uiGridCell post-link');
             }
+          };
+        }
+      };
 
-          //  iElement[0].children.insertBefore
-
-            var html = $scope.col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
-
-//            if ($scope.col.enableCellEdit) {
-//              html =  $scope.col.cellEditTemplate;
-//              html = html.replace(DISPLAY_CELL_TEMPLATE, cellTemplate);
-//              html = html.replace(EDITABLE_CELL_TEMPLATE, $scope.col.editableCellTemplate.replace(COL_FIELD, 'row.entity.' + $scope.col.field));
-//            } else {
-//              html = cellTemplate;
-//            }
-
-            var cellElement = $compile(html)($scope);
-
-//            if ($scope.enableCellSelection && cellElement[0].className.indexOf('ngSelectionCell') === -1) {
-//              cellElement[0].setAttribute('tabindex', 0);
-//              cellElement.addClass('ngCellElement');
-//            }
-
-            iElement.append(cellElement);
-          },
-          post: function($scope, iElement) {
-            $log.debug('gridEdit uiGridCell post-link');
-//            if ($scope.enableCellSelection) {
-//              $scope.domAccessProvider.selectionHandlers($scope, iElement);
-//            }
-//
-//            $scope.$on('ngGridEventDigestCell', function() {
-//              domUtilityService.digest($scope);
-//            });
-          }
-        };
-      }
-    };
-
-    return ngCell;
-  }]);
+      return ngCell;
+    }]);
 
 
-  module.directive('ngCellHasFocus', [
-    function () {
-        var focusOnInputElement = function($scope, elm) {
-            $scope.isFocused = true;
-           // domUtilityService.digest($scope);
+  module.directive('uiGridTextEditor', ['uiGridConstants', 'uiGridEditConstants', '$log',
+    function (uiGridConstants, uiGridEditConstants, $log) {
+      return{
+        templateUrl: 'ui-grid/edit/cellTextEditor',
+        compile: function () {
+          return {
+            pre: function ($scope, $elm, $attrs) {
+              var input = $elm.find('input')[0];
 
-            $scope.$broadcast('ngGridEventStartCellEdit');
+              //set focus at start of edit
+              $scope.$on(uiGridEditConstants.events.START_CELL_EDIT, function () {
+                input.focus();
+              });
 
-            $scope.$on('ngGridEventEndCellEdit', function() {
-                $scope.isFocused = false;
-             //   domUtilityService.digest($scope);
-            });
-        };
-
-        return function($scope, elm) {
-            var isFocused = false;
-            var isCellEditableOnMouseDown = false;
-
-            $scope.editCell = function() {
-                if(!$scope.col.colDef.enableCellEdit) {
-                    setTimeout(function() {
-                        focusOnInputElement($scope,elm);
-                    }, 0);
-                }
-            };
-            elm.bind('mousedown', function(evt) {
-                if($scope.col.colDef.enableCellEdit) {
-                    isCellEditableOnMouseDown = true;
-                } else {
-                    elm.focus();
-                }
-                return true;
-            });
-            elm.bind('click', function(evt) {
-                if($scope.col.colDef.enableCellEdit) {
-                    evt.preventDefault();
-                    isCellEditableOnMouseDown = false;
-                    focusOnInputElement($scope,elm);
-                }
-            }); 
-            elm.bind('focus', function(evt) {
-                isFocused = true;
-                if($scope.col.colDef.enableCellEdit && !isCellEditableOnMouseDown) {
-                    focusOnInputElement($scope,elm);
-                }
-                return true;
-            });
-            elm.bind('blur', function() {
-                isFocused = false;
-                return true;
-            });
-            elm.bind('keydown', function(evt) {
-                if(!$scope.col.colDef.enableCellEdit) {
-                    if (isFocused && evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39 && evt.keyCode !== 40 && evt.keyCode !== 9 && !evt.shiftKey && evt.keyCode !== 13) {
-                        focusOnInputElement($scope,elm);
-                    }
-                    if (isFocused && evt.shiftKey && (evt.keyCode >= 65 && evt.keyCode <= 90)) {
-                        focusOnInputElement($scope, elm);
-                    }
-                    if (evt.keyCode === 27) {
-                        elm.focus();
-                    }
-                }
-                return true;
-            });
-        };
+              $scope.stopEdit = function(){
+                $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
+              };
+            },
+            post: function ($scope, $elm, $attrs, uiGridCtrl) {
+            }
+          };
+        }
+      };
     }]);
 
 })();
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
+
+  $templateCache.put('ui-grid/edit/cellTextEditor',
+    "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\" ng-blur=\"stopEdit()\">"
+  );
+
+
+  $templateCache.put('ui-grid/edit/editableCell',
+    "<div editable_cell_directive=\"\"></div>"
+  );
+
 
   $templateCache.put('ui-grid/ui-grid-body',
     "<div class=\"ui-grid-body\"><div class=\"ui-grid-scrollbar-box\"><div ui-grid-viewport=\"\" class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in grid.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowStyle($index)\"><div ui-grid-row=\"row\" row-index=\"$index\"></div></div></div></div></div><div ui-grid-scrollbar=\"\"></div></div>"
