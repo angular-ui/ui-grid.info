@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-215187f - 2014-01-14
+/*! ui-grid - v2.0.7-f14b8a8 - 2014-01-15
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -637,8 +637,45 @@
     COL_FIELD: /COL_FIELD/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
     TEMPLATE_REGEXP: /<.+>/,
-    events : {
+    events: {
       GRID_SCROLL: 'uiGridScroll'
+    },
+    // copied from http://www.lsauer.com/2011/08/javascript-keymap-keycodes-in-json.html
+    keymap: {
+      STRG: 17,
+      CTRL: 17,
+      CTRLRIGHT: 18,
+      CTRLR: 18,
+      SHIFT: 16,
+      RETURN: 13,
+      ENTER: 13,
+      BACKSPACE: 8,
+      BCKSP: 8,
+      ALT: 18,
+      ALTR: 17,
+      ALTRIGHT: 17,
+      SPACE: 32,
+      WIN: 91,
+      MAC: 91,
+      FN: null,
+      UP: 38,
+      DOWN: 40,
+      LEFT: 37,
+      RIGHT: 39,
+      ESC: 27,
+      DEL: 46,
+      F1: 112,
+      F2: 113,
+      F3: 114,
+      F4: 115,
+      F5: 116,
+      F6: 117,
+      F7: 118,
+      F8: 119,
+      F9: 120,
+      F10: 121,
+      F11: 122,
+      F12: 123
     }
   });
 
@@ -997,6 +1034,10 @@
       this.index = index;
     }
 
+    GridRow.prototype.getQualifiedColField = function(colDef){
+      return 'row.entity.' + colDef.field;
+    };
+
     /**
      * @ngdoc function
      * @name GridColumn
@@ -1192,7 +1233,7 @@ module.directive('uiGrid',
 
   module.directive('uiGridCell', ['$compile','uiGridConstants','$log', function ($compile,uiGridConstants,$log) {
     var ngCell = {
-      priority: 5000,
+      priority: 0,
       scope: false,
       compile: function() {
 
@@ -1699,20 +1740,60 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
   'use strict';
   var module = angular.module('ui.grid.edit', ['ui.grid', 'ui.grid.util']);
 
+  /**
+   *  @ngdoc object
+   *  @name ui.grid.edit.constant:uiGridEditConstants
+   *
+   *  @description constants available in edit module
+   */
   module.constant('uiGridEditConstants', {
     EDITABLE_CELL_TEMPLATE: /EDITABLE_CELL_TEMPLATE/g,
+    //must be lowercase because template bulder converts to lower
     EDITABLE_CELL_DIRECTIVE: /editable_cell_directive/g,
     events: {
-      BEGIN_CELL_EDIT: 'ngGridEventBeginCellEdit',
-      END_CELL_EDIT: 'ngGridEventEndCellEdit'
+      BEGIN_CELL_EDIT: 'uiGridEventBeginCellEdit',
+      END_CELL_EDIT: 'uiGridEventEndCellEdit',
+      CANCEL_CELL_EDIT: 'uiGridEventCancelCellEdit'
     }
   });
 
+  /**
+  *  @ngdoc directive
+  *  @name ui.grid.edit.directive:uiGridEdit
+  *  @element div
+  *  @restrict EA
+  *
+  *  @description Adds editing features to the ui-grid directive.
+  *
+  *  @example
+  <example module="app">
+    <file name="app.js">
+    var app = angular.module('app', ['ui.grid', 'ui.grid.edit']);
+
+    app.controller('MainCtrl', ['$scope', function ($scope) {
+      $scope.data = [
+        { name: 'Bob', title: 'CEO' },
+            { name: 'Frank', title: 'Lowly Developer' }
+      ];
+
+      $scope.columnDefs = [
+        {field: 'name', enableCellEdit: true},
+        {field: 'title', enableCellEdit: true}
+      ];
+    }]);
+    </file>
+    <file name="index.html">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-edit></div>
+    </div>
+    </file>
+  </example>
+  */
   module.directive('uiGridEdit', ['$log', '$q', '$templateCache', function ($log, $q, $templateCache) {
     return {
       replace: true,
-      priority: 1000,
-      require: '?^uiGrid',
+      priority: 5000,
+      require: '^uiGrid',
       scope: false,
       compile: function () {
         return {
@@ -1749,18 +1830,57 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
     };
   }]);
 
-  module.directive('uiGridCell', ['$compile', 'uiGridConstants', 'uiGridEditConstants', '$log',
-    function ($compile, uiGridConstants, uiGridEditConstants, $log) {
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.edit.directive:uiGridCell
+   *  @element div
+   *  @restrict A
+   *
+   *  @description Stacks on top of ui.grid.uiGridCell to provide in-line editing capabilities to the cell
+   *  Editing Actions.
+   *
+   *  Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is replaced
+   *  with the columnDef.editableCellDirective directive ('ui-grid-text-editor' by default).
+   *
+   *  The editableCellDirective should respond to uiGridEditConstants.events.BEGIN\_CELL\_EDIT angular event
+   *  and do the initial steps needed to edit the cell (setfocus on input element, etc).
+   *
+   *  When the editableCellDirective recognizes that the editing is ended (blur event, Enter key, etc.)
+   *  it should emit the uiGridEditConstants.events.END\_CELL\_EDIT event.
+   *
+   *  If editableCellDirective recognizes that the editing has been cancelled (esc key)
+   *  it should emit the uiGridEditConstants.events.CANCEL\_CELL\_EDIT event.  The original value
+   *  will be set back on the model by the uiGridCell directive.
+   *
+   *  Events that invoke editing:
+   *    - dblclick
+   *    - F2 keydown (when using cell selection)
+   *
+   *  Events that end editing:
+   *    - Dependent on the specific editableCellDirective
+   *    - Standards should be blur and enter keydown
+   *
+   *  Events that cancel editing:
+   *    - Dependent on the specific editableCellDirective
+   *    - Standards should be Esc keydown
+   *
+   *  Grid Events that end editing:
+   *    - scrolling
+   *
+   */
+  module.directive('uiGridCell', ['$compile', 'uiGridConstants', 'uiGridEditConstants', '$log','$parse',
+    function ($compile, uiGridConstants, uiGridEditConstants, $log, $parse) {
       var ngCell = {
-        priority: 4900,
+        priority: -100, // run after default uiGridCell directive
+        restrict: 'A',
         scope: false,
         compile: function () {
           return {
-            pre: function ($scope, $elm) {
+            pre: function ($scope, $elm, $attrs) {
               $log.debug('gridEdit uiGridCell pre-link');
 
             },
-            post: function ($scope, $elm) {
+            post: function ($scope, $elm, $attrs) {
               $log.debug('gridEdit uiGridCell post-link');
               if (!$scope.col.colDef.enableCellEdit) {
                 return;
@@ -1768,24 +1888,48 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
 
               var origHtml;
               var html;
+              var origCellValue;
               var inEdit = false;
+              var cellModel;
 
-              $elm.on('dblclick', function () {
-                beginEdit();
-              });
+              registerBeginEditEvents();
+
+              function registerBeginEditEvents(){
+                $elm.on('dblclick', function () {
+                  beginEdit();
+                });
+                $elm.on('keydown', function (evt) {
+                  switch (evt.keyCode) {
+                    case uiGridConstants.keymap.F2:
+                      evt.stopPropagation();
+                      beginEdit();
+                      break;
+                  }
+                });
+              }
+
+              function cancelBeginEditEvents(){
+                $elm.off('dblclick', 'keydown');
+              }
+
+              function beginEdit() {
+                cellModel = $parse($scope.row.getQualifiedColField($scope.col.colDef));
+                //get original value from the cell
+                origCellValue = cellModel($scope);
 
 
-
-              function beginEdit(){
                 origHtml = $scope.col.cellTemplate;
-                origHtml = origHtml.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
+                origHtml = origHtml.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col.colDef));
 
                 html = $scope.col.editableCellTemplate;
                 html = html.replace(uiGridEditConstants.EDITABLE_CELL_DIRECTIVE, $scope.col.editableCellDirective);
 
+                var cellElement;
                 $scope.$apply(function () {
                     inEdit = true;
-                    var cellElement = $compile(html)($scope);
+                    cancelBeginEditEvents();
+
+                    cellElement = $compile(html)($scope);
                     $elm.find('div').replaceWith(cellElement);
                   }
                 );
@@ -1796,23 +1940,42 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
                   deregOnGridScroll();
                 });
 
-                //replace with original display template
+                //end editing
                 var deregOnEndCellEdit = $scope.$on(uiGridEditConstants.events.END_CELL_EDIT, function () {
                   endEdit();
                   deregOnEndCellEdit();
                 });
 
+                //cancel editing
+                var deregOnCancelCellEdit = $scope.$on(uiGridEditConstants.events.CANCEL_CELL_EDIT, function () {
+                  cancelEdit();
+                  deregOnCancelCellEdit();
+                });
+
                 $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT);
               }
 
-              function endEdit(){
-                if(!inEdit){return;}
+              function endEdit() {
+                if (!inEdit) {
+                  return;
+                }
+                //replace element with original
                 var cellElement = $compile(origHtml)($scope);
                 $elm.find('div').replaceWith(cellElement);
                 $scope.$apply();
                 inEdit = false;
+                registerBeginEditEvents();
               }
 
+              function cancelEdit() {
+                if (!inEdit) {
+                  return;
+                }
+
+                cellModel.assign($scope,origCellValue);
+
+                endEdit();
+              }
 
             }
           };
@@ -1824,34 +1987,49 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
 
   module.directive('uiGridTextEditor',
     ['uiGridConstants', 'uiGridEditConstants', '$log', '$templateCache', '$compile',
-    function (uiGridConstants, uiGridEditConstants, $log, $templateCache, $compile) {
-      return{
-        compile: function () {
-          return {
-            pre: function ($scope, $elm, $attrs) {
+      function (uiGridConstants, uiGridEditConstants, $log, $templateCache, $compile) {
+        return{
+          compile: function () {
+            return {
+              pre: function ($scope, $elm, $attrs) {
 
-            },
-            post: function ($scope, $elm, $attrs) {
-              var html = $templateCache.get('ui-grid/edit/cellTextEditor');
-              html = html.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
-              var cellElement = $compile(html)($scope);
-              $elm.append(cellElement);
+              },
+              post: function ($scope, $elm, $attrs) {
+                var html = $templateCache.get('ui-grid/edit/cellTextEditor');
+                html = html.replace(uiGridConstants.COL_FIELD, 'row.entity.' + $scope.col.colDef.field);
+                var cellElement = $compile(html)($scope);
+                $elm.append(cellElement);
 
-              var input = $elm.find('input')[0];
+                var input = $elm.find('input')[0];
 
-              // Set focus at start of edit
-              $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
-                input.focus();
-              });
+                //set focus at start of edit
+                $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
+                  input.focus();
+                });
 
-              $scope.stopEdit = function () {
-                $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
-              };
-            }
-          };
-        }
-      };
-    }]);
+                $scope.stopEdit = function () {
+                  $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
+                };
+
+                $elm.on('keydown', function(evt) {
+                  switch (evt.keyCode) {
+                    case uiGridConstants.keymap.ESC:
+                      evt.stopPropagation();
+                      $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
+                      break;
+                    case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
+                      evt.stopPropagation();
+                      $scope.stopEdit();
+                      break;
+                  }
+
+                  return true;
+                });
+              }
+            };
+          }
+        };
+      }]);
 
 })();
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {

@@ -41,6 +41,27 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.edit.constant:uiGridEditConstants",
+      "shortName": "uiGridEditConstants",
+      "type": "object",
+      "keywords": "api available constant constants edit grid in module object ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.directive:uiGridCell",
+      "shortName": "uiGridCell",
+      "type": "directive",
+      "keywords": "actions and angular api back be been begin binds blur by cancel cancelled capabilities cell columndef dblclick default dependent directive div do edit editablecelldirective editing element emit end ended enter esc etc event events f2 fire grid gridcell has if in-line initial input invoke is it key keydown model needed of on original provide recognizes replaced respond scrolling selection set should specific stacks standards start steps that the to top ui ui-grid-text-editor uigridcell uigrideditconstants using value when will with"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.directive:uiGridEdit",
+      "shortName": "uiGridEdit",
+      "type": "directive",
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div ea edit editing enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller the title to true ui ui-grid ui-grid-edit var"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.service:gridClassFactory",
       "shortName": "gridClassFactory",
       "type": "object",
