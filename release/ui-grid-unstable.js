@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-41d4bf6 - 2014-01-15
+/*! ui-grid - v2.0.7-f0c17a4 - 2014-01-15
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -1694,6 +1694,8 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
     },
 
     // Stolen from Modernizr
+    // TODO: make this, and everythign that flows from it, robust
+    //http://www.stucox.com/blog/you-cant-detect-a-touchscreen/
     isTouchEnabled: function() {
       var bool;
 
