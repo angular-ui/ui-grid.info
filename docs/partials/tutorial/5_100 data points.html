@@ -1,7 +1,7 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>This grid example uses a data set of 1000 records</p><h2 id="Example">Example</h2>
+<div><p>This grid example uses a data set of 100 records</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-7" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -30,7 +30,7 @@
   var app = angular.module('app', ['ui.grid']);
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.gridOptions = {  };
+    $scope.gridOptions = {};
 
     $http.get('/data/100.json')
       .success(function(data) {

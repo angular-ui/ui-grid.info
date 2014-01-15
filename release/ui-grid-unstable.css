@@ -23,12 +23,26 @@
   background: -o-linear-gradient(#ffffff, #eeeeee);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
 }
+.ui-grid-header:before,
+.ui-grid-header:after {
+  content: "";
+  display: table;
+  line-height: 0;
+}
+.ui-grid-header:after {
+  clear: both;
+}
 .ui-grid-header-cell {
   position: relative;
   float: left;
   top: 0;
   bottom: 0;
   background-color: inherit;
+  width: 0;
+}
+.ui-grid-header .ui-grid-vertical-bar {
+  top: 0;
+  bottom: 0;
 }
 .ui-grid-body {
   position: relative;
