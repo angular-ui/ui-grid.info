@@ -6,31 +6,31 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
-      "id": "Grid",
+      "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all and any api are array assign be behaivor build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements field for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to using when will with"
+      "keywords": "add added additional all and any api are array assign be behaivor build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements field for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
     },
     {
       "section": "api",
-      "id": "GridColumn",
+      "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "allows and api array assigned be coldef coldefs column current definition for function functions grid gridcolumn gridoptions in index items needed of position properties the to wrapper"
+      "keywords": "allows and api array assigned be class coldef coldefs column current definition for function functions grid gridoptions in index items needed of position properties the to ui wrapper"
     },
     {
       "section": "api",
-      "id": "GridOptions",
+      "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "and any api application are array assign be by can class columndef columndefs compare compared complex contain data default defined developer entitya entityb equality field field1 field2 first function grid gridoptions id is item object objects of on only option or over overlaid overridden property rendered required rowequality rows second the this to using var"
+      "keywords": "and any api application are array assign be by can class columndef columndefs compare compared complex contain data default defined developer entitya entityb equality field field1 field2 first function grid gridoptions id is item object objects of on only option or over overlaid overridden property rendered required rowequality rows second the this to ui using var"
     },
     {
       "section": "api",
-      "id": "GridRow",
+      "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "allows and api array assigned be current data entity for from function functions grid gridoptions gridrow in index item needed of position properties row rows the to wrapper"
+      "keywords": "allows and api array as assigned be can class coldef column current data definition entity evaluated exists field fielda for from function functions getqualifiedcolfield grid gridoptions ie in index it item name needed of on position properties qualified resulting returns row rows scope that the to ui wrapper"
     },
     {
       "section": "api",
