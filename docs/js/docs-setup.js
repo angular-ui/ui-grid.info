@@ -9,28 +9,28 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all and any api are array assign be behaivor build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements field for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
+      "keywords": "add added additional all and any api are array assign be behaivor build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "allows and api array assigned be class coldef coldefs column current definition for function functions grid gridoptions in index items needed of position properties the to ui wrapper"
+      "keywords": "add address against allows also and angular api array as assigned be binding city class coldef coldefs column complex current data defaults definition displayed docs element employee evaluates expression expressions field fields for function functions getfulladdress grid gridoptions implementation in index items matures name needed of on optional options other position properties screen that the to ui when wrapper"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "and any api application are array assign be by can class columndef columndefs compare compared complex contain data default defined developer entitya entityb equality field field1 field2 first function grid gridoptions id is item object objects of on only option or over overlaid overridden property rendered required rowequality rows second the this to ui using var"
+      "keywords": "_field and any api application are array assign backwards be by can class columndef columndefs compare compared compatibilty complex contain data default defined developer entitya entityb equality field1 field2 first for function grid gridoptions id in is item name object objects of on only option or over overlaid overridden place property rendered required rowequality rows second the this to ui used using var with x_"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "allows and api array as assigned be can class coldef column current data definition entity evaluated exists field fielda for from function functions getqualifiedcolfield grid gridoptions ie in index it item name needed of on position properties qualified resulting returns row rows scope that the to ui wrapper"
+      "keywords": "allows and api array as assigned be can class col column current data entity evaluated exists field fielda for from function functions getqualifiedcolfield grid gridoptions ie in index instance it item name needed of on position properties qualified resulting returns row rows scope that the to ui wrapper"
     },
     {
       "section": "api",
@@ -121,7 +121,7 @@ NG_DOCS={
       "id": "3_large_dataset",
       "shortName": "Large Dataset",
       "type": "overview",
-      "keywords": "$http $scope address age angular app binding city class column columndefs complex controller css data dataset demonstrates example function get grid gridoptions height html id index js json large length main mainctrl module name ng-controller number of on overview properties records set success this tutorial ui ui-grid uses var width"
+      "keywords": "$http $scope address again age angular app backwards be can city class column columndefs compatibility complex controller css data dataset demonstrates different example field following for function get grid gridoptions height html id in index instead js json large length listed main mainctrl module name ng-controller number of on overview place properties records set showing success the this tutorial twice ui ui-grid use uses var width with you"
     },
     {
       "section": "tutorial",
@@ -142,7 +142,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$http $scope address age allow angular app be can cell city class click column columndefs controller css data definitions displayname double edit editable enablecelledit field function get grid gridoptions height html id in index it js json length main mainctrl module name ng-controller number options overview success the to true tutorial ui ui-grid ui-grid-edit use var width you your"
+      "keywords": "$http $scope address age allow angular app be can cell city class click column columndefs controller css data definitions displayname double edit editable enablecelledit function get grid gridoptions height html id in index it js json length main mainctrl module name ng-controller number options overview success the to true tutorial ui ui-grid ui-grid-edit use var width you your"
     },
     {
       "section": "tutorial",

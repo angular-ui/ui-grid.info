@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-938eff2 - 2014-01-16
+/*! ui-grid - v2.0.7-7a15fe4 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -153,7 +153,7 @@
           // use wheelDeltaY
           evt.preventDefault();
 
-          $log.debug('evt', evt);
+          // $log.debug('evt', evt);
           // $log.debug('evt.wheelDeltaY', evt.wheelDeltaY);
 
           var newEvent = GridUtil.normalizeWheelEvent(evt);
@@ -162,7 +162,6 @@
 
           // Get the scroll percentage
           // var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - uiGridCtrl.grid.options.viewportHeight);
-          // $log.debug(uiGridCtrl.viewport[0].scrollTop, scrollAmount, uiGridCtrl.grid.getCanvasHeight(), uiGridCtrl.grid.getViewportHeight());
           var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
 
           // TODO(c0bra): Keep scrollPercentage within the range 0-1.
@@ -355,24 +354,6 @@
 
             if (uiGridCtrl) {
               uiGridCtrl.header = $elm;
-            }
-
-            //todo: remove this if by injecting gridCtrl into unit tests
-            if (uiGridCtrl) {
-              uiGridCtrl.grid.registerStyleComputation(function() {
-                var width = uiGridCtrl.grid.gridWidth;
-                var equalWidth = width / uiGridCtrl.grid.options.columnDefs.length;
-
-                var ret = '';
-                var left = 0;
-                uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
-                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
-                  ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
-                  left = left + equalWidth;
-                });
-
-                $scope.columnStyles = ret;
-              });
             }
           }
         };
@@ -608,18 +589,36 @@
     return {
       // restrict: 'A',
       // priority: 1000,
-      // require: '?^uiGrid',
+      require: '?^uiGrid',
       link: function($scope, $elm, $attrs, uiGridCtrl) {
-        $log.debug('ui-grid-style link', $elm);
-        // if (uiGridCtrl === undefined) {
-        //    $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
-        // }
+        $log.debug('ui-grid-style link');
+        if (uiGridCtrl === undefined) {
+           $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
+        }
 
         var interpolateFn = $interpolate($elm.text(), true);
 
         if (interpolateFn) {
           $scope.$watch(interpolateFn, function(value) {
             $elm.text(value);
+          });
+        }
+
+        //todo: remove this if by injecting gridCtrl into unit tests
+        if (uiGridCtrl) {
+          uiGridCtrl.grid.registerStyleComputation(function() {
+            var width = uiGridCtrl.grid.gridWidth;
+            var equalWidth = width / uiGridCtrl.grid.options.columnDefs.length;
+
+            var ret = '';
+            var left = 0;
+            uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
+              // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+              ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
+              left = left + equalWidth;
+            });
+
+            $scope.columnStyles = ret;
           });
         }
 
@@ -810,12 +809,12 @@
      * @ngdoc function
      * @name getColumn
      * @methodOf ui.grid.class:Grid
-     * @description returns a grid column for the field name
-     * @param {string} field field name
+     * @description returns a grid column for the column name
+     * @param {string} name column name
      */
-    Grid.prototype.getColumn = function (field) {
+    Grid.prototype.getColumn = function (name) {
       var columns = this.columns.filter(function (column) {
-        return column.colDef.field === field;
+        return column.colDef.name === name;
       });
       return columns.length > 0 ? columns[0] : null;
     };
@@ -834,10 +833,8 @@
       var builderPromises = [];
 
       self.options.columnDefs.forEach(function (colDef, index) {
-        if (!colDef.field) {
-          throw new Error('colDef.field property is required');
-        }
-        var col = self.getColumn(colDef.field);
+        self.preprocessColDef(colDef);
+        var col = self.getColumn(colDef.name);
 
         if (!col) {
           col = new GridColumn(colDef, index);
@@ -851,6 +848,25 @@
       });
 
       return $q.all(builderPromises);
+    };
+
+    /**
+     * undocumented function
+     * @name preprocessColDef
+     * @methodOf ui.grid.class:Grid
+     * @description defaults the name property from field to maintain backwards compatibility with 2.x
+     * validates that name or field is present
+     */
+    Grid.prototype.preprocessColDef = function (colDef) {
+      if (!colDef.field && !colDef.name) {
+        throw new Error('colDef.name or colDef.field property is required');
+      }
+
+      //maintain backwards compatibility with 2.x
+      //field was required in 2.x.  now name is required
+      if (colDef.name === undefined && colDef.field !== undefined) {
+        colDef.name = colDef.field;
+      }
     };
 
     /**
@@ -999,10 +1015,11 @@
        * @ngdoc object
        * @name columnDefs
        * @propertyOf  ui.grid.class:GridOptions
-       * @description (optional) Array of columnDef objects.  Only required property is field
+       * @description (optional) Array of columnDef objects.  Only required property is name.
+       * _field property can be used in place of name for backwards compatibilty with 2.x_
        *  @example
 
-       var columnDefs = [{field:'field1'}, {field:'field2'}]; 
+       var columnDefs = [{name:'field1'}, {name:'field2'}];
 
        */
       this.columnDefs = [];
@@ -1055,11 +1072,11 @@
      * @methodOf ui.grid.class:GridRow
      * @description returns the qualified field name as it exists on scope
      * ie: row.entity.fieldA
-     * @param {ColDef} colDef column definition
+     * @param {GridCol} col column instance
      * @returns {string} resulting name that can be evaluated on scope
      */
-    GridRow.prototype.getQualifiedColField = function(colDef) {
-      return 'row.entity.' + colDef.field;
+    GridRow.prototype.getQualifiedColField = function(col) {
+      return 'row.entity.' + col.field;
     };
 
     /**
@@ -1067,12 +1084,34 @@
      * @name ui.grid.class:GridColumn
      * @description Wrapper for the GridOptions.colDefs items.  Allows for needed properties and functions
      * to be assigned to a grid column
-     * @param {ColDef} colDef Column definition
+     * @param {ColDef} colDef Column definition.
+      <br/>Required properties
+      <ul>
+        <li>
+          name - name of field
+       </li>
+      </ul>
+
+      <br/>Optional properties
+      <ul>
+        <li>
+          field - angular expression that evaluates against grid.options.data array element.
+          <br/>can be complex - employee.address.city
+          <br/>Can also be a function - employee.getFullAddress()
+          <br/>see angular docs on binding expressions
+       </li>
+       <li>displayName - column name when displayed on screen.  defaults to name</li>
+       <li>todo: add other optional fields as implementation matures</li>
+      </ul>
+     *
      * @param {number} index the current position of the column in the array
      */
     function GridColumn(colDef, index) {
       var self = this;
       self.colDef = colDef;
+      if (colDef.name === undefined) {
+        throw new Error('colDef.name is required');
+      }
 
       //position of column
       self.index = index;
@@ -1081,8 +1120,12 @@
       self.minWidth = !colDef.minWidth ? 50 : colDef.minWidth;
       self.maxWidth = !colDef.maxWidth ? 9000 : colDef.maxWidth;
 
+
+      //use field if it is defined; name if it is not
+      self.field = (colDef.field === undefined) ? colDef.name : colDef.field;
+
       // Use colDef.displayName as long as it's not undefined, otherwise default to the field name
-      self.displayName = (colDef.displayName === undefined) ? gridUtil.readableColumnName(colDef.field) : colDef.displayName;
+      self.displayName = (colDef.displayName === undefined) ? gridUtil.readableColumnName(colDef.name) : colDef.displayName;
 
       //self.originalIndex = index;
 
@@ -1092,7 +1135,7 @@
       self.visible = gridUtil.isNullOrUndefined(colDef.visible) || colDef.visible;
 
       self.headerClass = colDef.headerClass;
-      self.cursor = self.sortable ? 'pointer' : 'default';
+      //self.cursor = self.sortable ? 'pointer' : 'default';
     }
 
     return service;
@@ -1264,7 +1307,7 @@ module.directive('uiGrid',
           pre: function($scope, $elm) {
             // $log.debug('uiGridCell pre-link');
             var html = $scope.col.cellTemplate
-              .replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col.colDef));
+              .replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col));
             var cellElement = $compile(html)($scope);
             $elm.append(cellElement);
           },
@@ -1506,8 +1549,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
       
       angular.forEach(item,function (prop, propName) {
         columnDefs.push({
-          field: propName,
-          name: s.readableColumnName(propName)
+          name: propName
         });
       });
 
@@ -1662,11 +1704,6 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
 
       // event = $.event.fix(orgEvent);
       // event.type = 'mousewheel';
-
-      // NOTE: jQuery masks the event and stores it in the event as originalEvent
-      if (orgEvent.originalEvent) {
-        orgEvent = orgEvent.originalEvent;
-      }
 
       // Old school scrollwheel delta
       if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta; }
@@ -1848,8 +1885,8 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
       ];
 
       $scope.columnDefs = [
-        {field: 'name', enableCellEdit: true},
-        {field: 'title', enableCellEdit: true}
+        {name: 'name', enableCellEdit: true},
+        {name: 'title', enableCellEdit: true}
       ];
     }]);
     </file>
@@ -1962,13 +1999,13 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
               }
 
               function beginEdit() {
-                cellModel = $parse($scope.row.getQualifiedColField($scope.col.colDef));
+                cellModel = $parse($scope.row.getQualifiedColField($scope.col));
                 //get original value from the cell
                 origCellValue = cellModel($scope);
 
 
                 origHtml = $scope.col.cellTemplate;
-                origHtml = origHtml.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col.colDef));
+                origHtml = origHtml.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col));
 
                 html = $scope.col.editableCellTemplate;
                 html = html.replace(uiGridEditConstants.EDITABLE_CELL_DIRECTIVE, $scope.col.editableCellDirective);
