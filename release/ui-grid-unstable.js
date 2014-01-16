@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-e8f8606 - 2014-01-16
+/*! ui-grid - v2.0.7-b10be03 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -153,7 +153,7 @@
           // use wheelDeltaY
           evt.preventDefault();
 
-          // $log.debug('evt', evt);
+          $log.debug('evt', evt);
           // $log.debug('evt.wheelDeltaY', evt.wheelDeltaY);
 
           var newEvent = GridUtil.normalizeWheelEvent(evt);
@@ -162,6 +162,7 @@
 
           // Get the scroll percentage
           // var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - uiGridCtrl.grid.options.viewportHeight);
+          // $log.debug(uiGridCtrl.viewport[0].scrollTop, scrollAmount, uiGridCtrl.grid.getCanvasHeight(), uiGridCtrl.grid.getViewportHeight());
           var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
 
           // TODO(c0bra): Keep scrollPercentage within the range 0-1.
@@ -1661,6 +1662,11 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
 
       // event = $.event.fix(orgEvent);
       // event.type = 'mousewheel';
+
+      // NOTE: jQuery masks the event and stores it in the event as originalEvent
+      if (orgEvent.originalEvent) {
+        orgEvent = orgEvent.originalEvent;
+      }
 
       // Old school scrollwheel delta
       if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta; }

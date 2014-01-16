@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/docs/css/bootstrap-flatly.css" />
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/release/ui-grid.css" />
 </head>
 <body>
   <header class="header">
@@ -43,77 +44,67 @@
       </div>
     </div>
   </header>
-  <div class="jumbotron">
-    <div class="container text-center">
-      <h2>Angular UI Grid</h2>
+  
+  <div ng-cloak class="container" ng-app="customizer" ng-controller='Main'>
+    <br>
 
-      <p>A data grid for <strong><a href="http://angularjs.org">AngularJS</a></strong></p>
-      <p>... more stuff ...</p>
+    <h2 class="text-center">Grid Customizer</h2>
+    
+    <br>
 
-      <br>
-
-      <p class="btn-group2">
-
-        <a class="btn btn-success btn-large" href="https://github.com/angular-ui/ng-grid" title="Code on Github">
-          <i class="fa fa-github fa-fw"></i>
-          Code on Github
-        </a>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <a class="btn btn-danger btn-large" href="https://github.com/angular-ui/ui-grid.info/tree/gh-pages/release" title="Download 2.0.7-b10be03">
-          <i class="fa fa-download fa-fw"></i>
-          Download <small>(  / 2.0.7-b10be03 )</small>
-        </a>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <span>
-        <a class="btn btn-success btn-large" href="http://ui-grid.info/docs" title="API Documentation">
-          <i class="fa fa-gears fa-fw"></i>
-          API Documentation
-        </a>
-      </p>
-    </div>
-  </div>
-
-  <div class="container">
     <div class="row">
-      <div class="span4">
-        <div class="text-center">
-          <i class="fa fa-4x fa-wrench"></i>
-        </div>
-        <h4 class="text-center">Configurable</h4>
-        <ul>
-          <li>Customizeable templates</li>
-          <li>Change look and feel with CSS</li>
-          <li>Drop-in plugin system</li>
-        </ul>
-      </div>
-
-      <div class="span4">
-        <div class="text-center">
-          <i class="fa fa-4x fa-gear"></i>
-        </div>
-        <h4>Advanced features</h4>
-        <ul>
-          <li>Virtualization</li>
-          <li>Column pinning</li>
-          <li>Grouping</li>
-        </ul>
-      </div>
-
-      <div class="span4 text-center">
-        <div class="text-center">
-          <i class="fa fa-4x fa-camera"></i>
-        </div>
-        <h4 class="">Cute Kittens</h4>
-        <img class="img-circle" src="http://placekitten.com/180/180" />
+      <div class="span12">
+        <button type="button" class="btn btn-success" ng-click="resetVariables()">Reset Variables</button>
       </div>
     </div>
+
+    <br>
+
+    <div class="row">
+      <form>
+        <div class="span4" ng-repeat="v in variables track by $index">
+          <label for="{{ v.name }}" class="muted">{{ v.name }}</label> <input name="{{ v.name }}" type="text" ng-model="v.value" ng-change="updateCSS()">
+        </div>
+      </form>
+    </div>
+
+    <div class="text-error">{{ cssErr }}</div>
+
+    <br>
+
+    <label for="customLess">Custom Less</label>
+    <textarea class="span12" name="customLess" rows="4" ng-model="customLess" ng-change="updateCSS()" ng-init="customLess = ''"></textarea>
+
+    <br>
+    <br>
+
+    <style>
+      .grid {
+        width: 400px;
+        height: 300px;
+      }
+    </style>
+    
+    <style ui-grid-style>
+      {{ css }}
+    </style>
+    
+    
+    <div class="grid" ui-grid="gridOptions"></div>
+
+    <br>
+    <br>
+    <br>
   </div>
 
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.6.0/less.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js"></script>
+  <script src="/release/ui-grid.js"></script>
+  <script src="/js/customizer.js"></script>
 </body>
 </html>

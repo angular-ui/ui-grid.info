@@ -1,9 +1,11 @@
-/*! ui-grid - v2.0.7-e8f8606 - 2014-01-16
+/*! ui-grid - v2.0.7-b10be03 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
   position: relative;
   overflow: hidden;
+
+  .border-radius(0, @gridBorderRadius, @gridBorderRadius, 0);
 }
 
 .ui-grid-scrollbar-box {
@@ -213,7 +215,9 @@
 
 
 .ui-grid {
-  border: 1px solid @borderColor;
+  border: @gridBorderWidth solid @borderColor;
+
+  .rounded(@gridBorderRadius);
 }
 
 .ui-grid-vertical-bar {
@@ -231,6 +235,8 @@
 //   width: 1px;
 //   background-color: @borderColor;
 // }
+
+@topPanelRadius: @gridBorderRadius - @gridBorderWidth;
 .ui-grid-top-panel {
     position: relative;
     // z-index: 1;
@@ -240,7 +246,9 @@
     overflow: hidden;
     font-weight: bold;
 
-    .gradient(#f3f3f3, #eee, #fff);  
+    .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
+
+    .border-radius(@topPanelRadius, 0, 0, @topPanelRadius);
 }
 
 .ui-grid-header {
@@ -254,6 +262,8 @@
   &:after {
     clear:both;
   }
+
+  // .border-radius(@gridBorderRadius, 0, 0, @gridBorderRadius);
 }
 
 .ui-grid-header-cell {
@@ -298,14 +308,14 @@
   z-index: 10;
   position: absolute;
 
-  background: rgba(0, 0, 0, 0.5);
+  background: @scrollbarBackground;
 
   opacity: 1;
   cursor: pointer;
   // transform: translateZ(0);
 
-  .rounded(@scrollbarWidth);
-  .box-shadow(0 0 1px #fff);
+  .rounded(@scrollbarBorderRadius);
+  .box-shadow(@scrollbarShadow);
   // .transition(300ms, linear);
 
   &-vertical {
@@ -324,39 +334,35 @@
 }
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
-@rowColorEven: @middleGray;
-@rowColorOdd: @lightGray;
+// Grid styles
+@gridBorderWidth: 1px;
+@gridBorderRadius: 0;
 
-@backgroundColor: #fdfdfd;
+// Colors for header gradient
+@headerBackgroundColor: #f3f3f3;
+@headerGradientStart: #eee;
+@headerGradientStop: #fff;
+
+// Colors used for row alternation
+@rowColorEven: #f3f3f3;
+@rowColorOdd: #fdfdfd;
 
 // Gray color for header and footer and panels
-@darkGray: #EAEAEA;
 
-@panelColor: @darkGray;
+// Color for borders
+@borderColor: #d4d4d4;
 
-// Gray colors used for row alternation
-@lightGray: #fdfdfd;
-@middleGray: #f3f3f3;
+// TODO: colors for buttons
 
-// Gray for borders
-@darkAccentGray: #d4d4d4;
-@borderColor: @darkAccentGray;
+// TODO: color for menu background
 
-// Used for columnmenu buton
-@grayGreen: #bdd0cb;
+// TODO: color  for row selections
 
-// Used for column menu background
-@darkGrayGreen: darken(@grayGreen, 10%);
+// TODO: color for cell selections
 
-// Used for row selections
-@grayBlue: #C9DDE1; // #b3c4c7;
-
-// Used for cell selections
-@darkGrayBlue: #b3c4c7;
-
-// Color for buttons
-@buttonColor: lighten(#333, 10%);
-
+@scrollbarBackground: rgba(0, 0, 0, 0.5);
 @scrollbarWidth: 7px;
+@scrollbarBorderRadius: @scrollbarWidth;
+@scrollbarShadow: 0 0 0px #fff;
 
-/*-- END VARIABLES --*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
