@@ -1,5 +1,8 @@
 .ui-grid {
   border: 1px solid #d4d4d4;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
 .ui-grid-vertical-bar {
   position: absolute;
@@ -22,6 +25,21 @@
   background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
   background: -o-linear-gradient(#ffffff, #eeeeee);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+  -webkit-border-top-right-radius: -1px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: -1px;
+  -moz-border-radius-topright: -1px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: -1px;
+  border-top-right-radius: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: -1px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .ui-grid-header:before,
 .ui-grid-header:after {
@@ -47,6 +65,21 @@
 .ui-grid-body {
   position: relative;
   overflow: hidden;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .ui-grid-scrollbar-box {
   position: static;
@@ -99,9 +132,9 @@
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   border-radius: 7px;
-  -webkit-box-shadow: 0 0 1px #ffffff;
-  -moz-box-shadow: 0 0 1px #ffffff;
-  box-shadow: 0 0 1px #ffffff;
+  -webkit-box-shadow: 0 0 0px #ffffff;
+  -moz-box-shadow: 0 0 0px #ffffff;
+  box-shadow: 0 0 0px #ffffff;
 }
 .ui-grid-scrollbar-vertical {
   width: 7px;
@@ -121,3 +154,20 @@
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/

@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-7a15fe4 - 2014-01-16
+/*! ui-grid - v2.0.7-6e72830 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -152,8 +152,7 @@
         $elm.bind('wheel mousewheel DomMouseScroll MozMousePixelScroll', function(evt) {
           // use wheelDeltaY
           evt.preventDefault();
-
-          // $log.debug('evt', evt);
+          
           // $log.debug('evt.wheelDeltaY', evt.wheelDeltaY);
 
           var newEvent = GridUtil.normalizeWheelEvent(evt);
@@ -162,9 +161,10 @@
 
           // Get the scroll percentage
           // var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.viewport[0].scrollHeight - uiGridCtrl.grid.options.viewportHeight);
+          // $log.debug(uiGridCtrl.viewport[0].scrollTop, scrollAmount, uiGridCtrl.grid.getCanvasHeight(), uiGridCtrl.grid.getViewportHeight());
           var scrollPercentage = (uiGridCtrl.viewport[0].scrollTop + scrollAmount) / (uiGridCtrl.grid.getCanvasHeight() - uiGridCtrl.grid.getViewportHeight());
 
-          // TODO(c0bra): Keep scrollPercentage within the range 0-1.
+          // Keep scrollPercentage within the range 0-1.
           if (scrollPercentage < 0) { scrollPercentage = 0; }
           if (scrollPercentage > 1) { scrollPercentage = 1; }
 
@@ -354,6 +354,24 @@
 
             if (uiGridCtrl) {
               uiGridCtrl.header = $elm;
+            }
+
+            //todo: remove this if by injecting gridCtrl into unit tests
+            if (uiGridCtrl) {
+              uiGridCtrl.grid.registerStyleComputation(function() {
+                var width = uiGridCtrl.grid.gridWidth;
+                var equalWidth = width / uiGridCtrl.grid.options.columnDefs.length;
+
+                var ret = '';
+                var left = 0;
+                uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
+                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+                  ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
+                  left = left + equalWidth;
+                });
+
+                $scope.columnStyles = ret;
+              });
             }
           }
         };
@@ -589,36 +607,18 @@
     return {
       // restrict: 'A',
       // priority: 1000,
-      require: '?^uiGrid',
+      // require: '?^uiGrid',
       link: function($scope, $elm, $attrs, uiGridCtrl) {
-        $log.debug('ui-grid-style link');
-        if (uiGridCtrl === undefined) {
-           $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
-        }
+        $log.debug('ui-grid-style link', $elm);
+        // if (uiGridCtrl === undefined) {
+        //    $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
+        // }
 
         var interpolateFn = $interpolate($elm.text(), true);
 
         if (interpolateFn) {
           $scope.$watch(interpolateFn, function(value) {
             $elm.text(value);
-          });
-        }
-
-        //todo: remove this if by injecting gridCtrl into unit tests
-        if (uiGridCtrl) {
-          uiGridCtrl.grid.registerStyleComputation(function() {
-            var width = uiGridCtrl.grid.gridWidth;
-            var equalWidth = width / uiGridCtrl.grid.options.columnDefs.length;
-
-            var ret = '';
-            var left = 0;
-            uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
-              // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
-              ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
-              left = left + equalWidth;
-            });
-
-            $scope.columnStyles = ret;
           });
         }
 
@@ -1704,6 +1704,11 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
 
       // event = $.event.fix(orgEvent);
       // event.type = 'mousewheel';
+
+      // NOTE: jQuery masks the event and stores it in the event as originalEvent
+      if (orgEvent.originalEvent) {
+        orgEvent = orgEvent.originalEvent;
+      }
 
       // Old school scrollwheel delta
       if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta; }
