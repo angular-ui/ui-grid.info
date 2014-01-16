@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-6e72830 - 2014-01-16
+/*! ui-grid - v2.0.7-1060d60 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -1961,7 +1961,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
    */
   module.directive('uiGridCell', ['$compile', 'uiGridConstants', 'uiGridEditConstants', '$log','$parse',
     function ($compile, uiGridConstants, uiGridEditConstants, $log, $parse) {
-      var ngCell = {
+      var uiGridCell = {
         priority: -100, // run after default uiGridCell directive
         restrict: 'A',
         scope: false,
@@ -2073,7 +2073,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
         }
       };
 
-      return ngCell;
+      return uiGridCell;
     }]);
 
   /**
