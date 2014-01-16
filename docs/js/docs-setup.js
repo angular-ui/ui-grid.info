@@ -20,6 +20,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.cellnav.directive:uiGridBody",
+      "shortName": "uiGridBody",
+      "type": "directive",
+      "keywords": "api cell cellnav directive div grid navigation of on provide stacks to top ui uigridbody"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.cellnav.directive:uiGridCell",
       "shortName": "uiGridCell",
       "type": "directive",
@@ -30,7 +37,7 @@ NG_DOCS={
       "id": "ui.grid.cellnav.service:uiGridNavService",
       "shortName": "uiGridNavService",
       "type": "service",
-      "keywords": "api cellnav editing features for grid service services ui"
+      "keywords": "angular api cellnav decorator docs don editing features for grid if key like maps override service services the ui use we with you"
     },
     {
       "section": "api",
@@ -196,7 +203,7 @@ NG_DOCS={
     {
       "section": "tutorial",
       "id": "9_cellnav",
-      "shortName": "Cell Navigation",
+      "shortName": "Cell Navigation (WIP)",
       "type": "overview",
       "keywords": "$http $scope add angular app cell cellnav class controller css data directive example function get grid gridoptions height html index js json length main mainctrl module name navigation ng-controller number overview success the this to tutorial ui ui-grid ui-grid-cellnav uses var width"
     }

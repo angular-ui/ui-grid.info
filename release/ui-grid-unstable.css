@@ -122,6 +122,10 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.ui-grid-cell-contents:focus {
+  outline: 0;
+  background-color: #b3c4c7;
+}
 .ui-grid-scrollbar {
   top: 0;
   z-index: 10;

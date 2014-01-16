@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-467a77d - 2014-01-16
+/*! ui-grid - v2.0.7-c121954 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -62,6 +62,11 @@
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.ui-grid-cell-contents:focus {
+  outline: 0;
+  background-color: @focusedCell;
 }
 .gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
   background: @color;
@@ -366,6 +371,7 @@
 // TODO: color  for row selections
 
 // TODO: color for cell selections
+@focusedCell: #b3c4c7;
 
 /**
 * @section Scrollbar styles
