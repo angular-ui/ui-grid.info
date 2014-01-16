@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-b10be03 - 2014-01-16
+/*! ui-grid - v2.0.7-938eff2 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -227,7 +227,7 @@
 }
 
 .ui-grid-header-cell:not(:last-child) .ui-grid-vertical-bar, .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
-  width: 1px;
+  width: @gridBorderWidth;
   background-color: @borderColor;
 }
 
@@ -334,23 +334,30 @@
 }
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
-// Grid styles
+/**
+* @section Grid styles
+*/
 @gridBorderWidth: 1px;
-@gridBorderRadius: 0;
+@gridBorderRadius: 0px;
+@borderColor: #d4d4d4;
 
-// Colors for header gradient
+
+/**
+* @section Header styles
+*/
+
+/** @description Colors for header gradient */
 @headerBackgroundColor: #f3f3f3;
 @headerGradientStart: #eee;
 @headerGradientStop: #fff;
 
-// Colors used for row alternation
+/**
+* @section Grid body styles
+*/
+
+/** @description Colors used for row alternation */
 @rowColorEven: #f3f3f3;
 @rowColorOdd: #fdfdfd;
-
-// Gray color for header and footer and panels
-
-// Color for borders
-@borderColor: #d4d4d4;
 
 // TODO: colors for buttons
 
@@ -360,6 +367,9 @@
 
 // TODO: color for cell selections
 
+/**
+* @section Scrollbar styles
+*/
 @scrollbarBackground: rgba(0, 0, 0, 0.5);
 @scrollbarWidth: 7px;
 @scrollbarBorderRadius: @scrollbarWidth;

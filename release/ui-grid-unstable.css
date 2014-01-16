@@ -1,8 +1,8 @@
 .ui-grid {
   border: 1px solid #d4d4d4;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
 .ui-grid-vertical-bar {
   position: absolute;
@@ -66,16 +66,16 @@
   position: relative;
   overflow: hidden;
   -webkit-border-top-right-radius: 0;
-  -webkit-border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
   -webkit-border-top-left-radius: 0;
   -moz-border-radius-topright: 0;
-  -moz-border-radius-bottomright: 0;
-  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
   -moz-border-radius-topleft: 0;
   border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
   border-top-left-radius: 0;
   -moz-background-clip: padding-box;
   -webkit-background-clip: padding-box;
@@ -156,4 +156,18 @@
   ---------------------------------------------------*/
 /* This file contains variable declarations (do not remove this line) */
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Scrollbar styles
+*/
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
