@@ -1,0 +1,45 @@
+<h1><code ng:non-bindable="">uiCellNav</code>
+<span class="hint">(directive in module <code ng:non-bindable="">ui.grid.cellnav</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Adds editing features to the ui-grid directive.</p></div>
+<h2 id="Usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;ui-cell-nav&gt;
+&lt;/ui-cell-nav&gt;</pre>
+as attribute<pre class="prettyprint linenums">&lt;div ui-cell-nav&gt;
+   ...
+&lt;/div&gt;</pre>
+</div>
+<h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html" source-edit-css="" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html">
+<div ng-controller="MainCtrl">
+  <div ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-edit></div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+var app = angular.module('app', ['ui.grid', 'ui.grid.cellnav']);
+
+app.controller('MainCtrl', ['$scope', function ($scope) {
+  $scope.data = [
+    { name: 'Bob', title: 'CEO' },
+        { name: 'Frank', title: 'Lowly Developer' }
+  ];
+
+  $scope.columnDefs = [
+    {field: 'name',
+    {field: 'title'}
+  ];
+}]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html" ng-eval-javascript="app.js"></div></div>
+</div>

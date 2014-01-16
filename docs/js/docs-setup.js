@@ -6,6 +6,34 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
+      "id": "ui.grid.cellnav.constant:uiGridEditConstants",
+      "shortName": "uiGridEditConstants",
+      "type": "object",
+      "keywords": "api available cellnav constant constants edit grid in module object ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellnav.directive:uiCellNav",
+      "shortName": "uiCellNav",
+      "type": "directive",
+      "keywords": "$scope adds angular api app bob cellnav ceo columndefs controller data developer directive div ea editing features frank function grid html index js lowly mainctrl module name ng-controller the title to ui ui-grid ui-grid-edit var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellnav.directive:uiGridCell",
+      "shortName": "uiGridCell",
+      "type": "directive",
+      "keywords": "api cell cellnav directive div grid navigation of on provide stacks to top ui uigridcell"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellnav.service:uiGridNavService",
+      "shortName": "uiGridNavService",
+      "type": "service",
+      "keywords": "api cellnav editing features for grid service services ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
@@ -164,6 +192,13 @@ NG_DOCS={
       "shortName": "Grid in a Modal",
       "type": "overview",
       "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
+    },
+    {
+      "section": "tutorial",
+      "id": "9_cellnav",
+      "shortName": "Cell Navigation",
+      "type": "overview",
+      "keywords": "$http $scope add angular app cell cellnav class controller css data directive example function get grid gridoptions height html index js json length main mainctrl module name navigation ng-controller number overview success the this to tutorial ui ui-grid ui-grid-cellnav uses var width"
     }
   ],
   "apis": {
