@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-c97db35 - 2014-01-15
+/*! ui-grid - v2.0.7-e8f8606 - 2014-01-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function(){
   'use strict';
@@ -355,6 +355,24 @@
             if (uiGridCtrl) {
               uiGridCtrl.header = $elm;
             }
+
+            //todo: remove this if by injecting gridCtrl into unit tests
+            if (uiGridCtrl) {
+              uiGridCtrl.grid.registerStyleComputation(function() {
+                var width = uiGridCtrl.grid.gridWidth;
+                var equalWidth = width / uiGridCtrl.grid.options.columnDefs.length;
+
+                var ret = '';
+                var left = 0;
+                uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
+                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+                  ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
+                  left = left + equalWidth;
+                });
+
+                $scope.columnStyles = ret;
+              });
+            }
           }
         };
       }
@@ -589,36 +607,18 @@
     return {
       // restrict: 'A',
       // priority: 1000,
-      require: '?^uiGrid',
+      // require: '?^uiGrid',
       link: function($scope, $elm, $attrs, uiGridCtrl) {
-        $log.debug('ui-grid-style link');
-        if (uiGridCtrl === undefined) {
-           $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
-        }
+        $log.debug('ui-grid-style link', $elm);
+        // if (uiGridCtrl === undefined) {
+        //    $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
+        // }
 
         var interpolateFn = $interpolate($elm.text(), true);
 
         if (interpolateFn) {
           $scope.$watch(interpolateFn, function(value) {
             $elm.text(value);
-          });
-        }
-
-        //todo: remove this if by injecting gridCtrl into unit tests
-        if (uiGridCtrl) {
-          uiGridCtrl.grid.registerStyleComputation(function() {
-            var width = uiGridCtrl.grid.gridWidth;
-            var equalWidth = width / uiGridCtrl.grid.options.columnDefs.length;
-
-            var ret = '';
-            var left = 0;
-            uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
-              // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
-              ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; }';
-              left = left + equalWidth;
-            });
-
-            $scope.columnStyles = ret;
           });
         }
 
@@ -701,8 +701,8 @@
    *  @description factory to return dom specific instances of a grid
    *
    */
-  module.service('gridClassFactory', ['gridUtil','$q','$templateCache','uiGridConstants','$log',
-        function (gridUtil,$q,$templateCache,uiGridConstants,$log) {
+  module.service('gridClassFactory', ['gridUtil', '$q', '$templateCache', 'uiGridConstants', '$log',
+        function (gridUtil, $q, $templateCache, uiGridConstants, $log) {
 
     var service = {
       /**
@@ -838,10 +838,10 @@
         }
         var col = self.getColumn(colDef.field);
 
-        //if (!col) {
+        if (!col) {
           col = new GridColumn(colDef, index);
           self.columns.push(col);
-        //}
+        }
 
         self.columnBuilders.forEach(function (builder) {
           builderPromises.push(builder.call(self, colDef, col, self.options));
@@ -1057,7 +1057,7 @@
      * @param {ColDef} colDef column definition
      * @returns {string} resulting name that can be evaluated on scope
      */
-    GridRow.prototype.getQualifiedColField = function(colDef){
+    GridRow.prototype.getQualifiedColField = function(colDef) {
       return 'row.entity.' + colDef.field;
     };
 
@@ -1097,8 +1097,7 @@
     return service;
   }]);
 
-  module.controller('uiGridController',['$scope', '$element', '$attrs','$log','gridUtil','$q','uiGridConstants',
-    '$templateCache','gridClassFactory',
+  module.controller('uiGridController', ['$scope', '$element', '$attrs', '$log', 'gridUtil', '$q', 'uiGridConstants', '$templateCache', 'gridClassFactory',
     function ($scope, $elm, $attrs, $log, gridUtil, $q, uiGridConstants, $templateCache, gridClassFactory) {
       $log.debug('ui-grid controller');
 
@@ -1183,8 +1182,8 @@
       };
 
       //todo: throttle this event?
-      self.fireScrollEvent = function(){
-        $scope.$broadcast(uiGridConstants.events.GRID_SCROLL,'vertical');
+      self.fireScrollEvent = function() {
+        $scope.$broadcast(uiGridConstants.events.GRID_SCROLL, 'vertical');
       };
 
     }]);
@@ -1255,12 +1254,11 @@ module.directive('uiGrid',
   ]);
 
 
-  module.directive('uiGridCell', ['$compile','uiGridConstants','$log', function ($compile,uiGridConstants,$log) {
+  module.directive('uiGridCell', ['$compile', 'uiGridConstants', '$log', function ($compile, uiGridConstants, $log) {
     var ngCell = {
       priority: 0,
       scope: false,
       compile: function() {
-
         return {
           pre: function($scope, $elm) {
             // $log.debug('uiGridCell pre-link');
@@ -1786,6 +1784,45 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
   });
 
   /**
+   *  @ngdoc service
+   *  @name ui.grid.edit.service:uiGridEditService
+   *
+   *  @description Services for editing features
+   */
+  module.service('uiGridEditService', ['$log', '$q', '$templateCache',
+    function ($log, $q, $templateCache) {
+
+      var service = {
+        /**
+         * @ngdoc service
+         * @name editColumnBuilder
+         * @methodOf ui.grid.edit.service:uiGridEditService
+         * @description columnBuilder function that adds edit properties to grid column
+         * @returns {promise} promise that will load any needed templates when resolved
+         */
+        editColumnBuilder: function (colDef, col, gridOptions) {
+
+          var promises = [];
+
+          col.enableCellEdit = colDef.enableCellEdit !== undefined ?
+            colDef.enableCellEdit : gridOptions.enableCellEdit;
+
+          col.cellEditableCondition = colDef.cellEditableCondition || gridOptions.cellEditableCondition || 'true';
+
+          if (col.enableCellEdit) {
+            col.editableCellTemplate = colDef.editableCellTemplate || $templateCache.get('ui-grid/edit/editableCell');
+            col.editableCellDirective = colDef.editableCellDirective || 'ui-grid-text-editor';
+          }
+
+          return $q.all(promises);
+        }
+      };
+
+      return service;
+
+    }]);
+
+  /**
   *  @ngdoc directive
   *  @name ui.grid.edit.directive:uiGridEdit
   *  @element div
@@ -1817,7 +1854,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
     </file>
   </example>
   */
-  module.directive('uiGridEdit', ['$log', '$q', '$templateCache', function ($log, $q, $templateCache) {
+  module.directive('uiGridEdit', ['$log', 'uiGridEditService', function ($log, uiGridEditService) {
     return {
       replace: true,
       priority: 5000,
@@ -1827,29 +1864,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
         return {
           pre: function ($scope, $elm, $attrs, uiGridCtrl) {
             $log.debug('uiGridEdit preLink');
-            uiGridCtrl.grid.registerColumnBuilder(editColumnBuilder);
-
-            /**
-             * Processes designTime column definitions and creates runtime column properties
-             * @param grid - reference to grid
-             * @returns a promise
-             */
-            function editColumnBuilder(colDef, col, gridOptions) {
-
-              var promises = [];
-
-              col.enableCellEdit = colDef.enableCellEdit !== undefined ?
-                colDef.enableCellEdit : gridOptions.enableCellEdit;
-
-              col.cellEditableCondition = colDef.cellEditableCondition || gridOptions.cellEditableCondition || 'true';
-
-              if (col.enableCellEdit) {
-                col.editableCellTemplate = colDef.editableCellTemplate || $templateCache.get('ui-grid/edit/editableCell');
-                col.editableCellDirective = colDef.editableCellDirective || 'ui-grid-text-editor';
-              }
-
-              return $q.all(promises);
-            }
+            uiGridCtrl.grid.registerColumnBuilder(uiGridEditService.editColumnBuilder);
           },
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
           }
@@ -1893,7 +1908,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
    *    - Standards should be Esc keydown
    *
    *  Grid Events that end editing:
-   *    - scrolling
+   *    - uiGridConstants.events.GRID_SCROLL
    *
    */
   module.directive('uiGridCell', ['$compile', 'uiGridConstants', 'uiGridEditConstants', '$log','$parse',
@@ -2013,6 +2028,21 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', f
       return ngCell;
     }]);
 
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.edit.directive:uiGridTextEditor
+   *  @element div
+   *  @restrict A
+   *
+   *  @description input editor component for text fields.  Can be used as a template to develop other editors
+   *
+   *  Events that end editing:
+   *     blur and enter keydown
+   *
+   *  Events that cancel editing:
+   *    - Esc keydown
+   *
+   */
   module.directive('uiGridTextEditor',
     ['uiGridConstants', 'uiGridEditConstants', '$log', '$templateCache', '$compile',
       function (uiGridConstants, uiGridEditConstants, $log, $templateCache, $compile) {

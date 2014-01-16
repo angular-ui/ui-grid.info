@@ -51,7 +51,7 @@ NG_DOCS={
       "id": "ui.grid.edit.directive:uiGridCell",
       "shortName": "uiGridCell",
       "type": "directive",
-      "keywords": "actions and angular api back be been begin binds blur by cancel cancelled capabilities cell columndef dblclick default dependent directive div do edit editablecelldirective editing element emit end ended enter esc etc event events f2 fire grid gridcell has if in-line initial input invoke is it key keydown model needed of on original provide recognizes replaced respond scrolling selection set should specific stacks standards start steps that the to top ui ui-grid-text-editor uigridcell uigrideditconstants using value when will with"
+      "keywords": "actions and angular api back be been begin binds blur by cancel cancelled capabilities cell columndef dblclick default dependent directive div do edit editablecelldirective editing element emit end ended enter esc etc event events f2 fire grid grid_scroll gridcell has if in-line initial input invoke is it key keydown model needed of on original provide recognizes replaced respond selection set should specific stacks standards start steps that the to top ui ui-grid-text-editor uigridcell uigridconstants uigrideditconstants using value when will with"
     },
     {
       "section": "api",
@@ -59,6 +59,20 @@ NG_DOCS={
       "shortName": "uiGridEdit",
       "type": "directive",
       "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div ea edit editing enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller the title to true ui ui-grid ui-grid-edit var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.directive:uiGridTextEditor",
+      "shortName": "uiGridTextEditor",
+      "type": "directive",
+      "keywords": "and api as be blur can cancel component develop directive div edit editing editor editors end enter esc events fields for grid input keydown other template text that to ui used"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.service:uiGridEditService",
+      "shortName": "uiGridEditService",
+      "type": "service",
+      "keywords": "adds any api column columnbuilder edit editcolumnbuilder editing features for function grid load needed promise properties resolved service services templates that to ui when will"
     },
     {
       "section": "api",
