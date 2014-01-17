@@ -135,29 +135,29 @@
   top: 0;
   z-index: 10;
   position: absolute;
-  background: rgba(0, 0, 0, 0.5);
+  background: #cdcdcd;
   opacity: 1;
   cursor: pointer;
-  border: none;
-  -webkit-border-radius: 14px;
-  -moz-border-radius: 14px;
-  border-radius: 14px;
+  border: 1px solid #a6a6a6;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   -webkit-box-shadow: 0 0 0px #ffffff;
   -moz-box-shadow: 0 0 0px #ffffff;
   box-shadow: 0 0 0px #ffffff;
 }
 .ui-grid-scrollbar-vertical {
-  width: 14px;
+  width: 10px;
   margin-top: 4px;
   margin-bottom: 4px;
   right: 4px;
 }
 .ui-grid-scrollbar:hover {
-  background: rgba(0, 0, 0, 0.55);
+  background: #a6a6a6;
 }
-.ui-grid-scrollbar.ui-scrolling {
-  background: rgba(0, 0, 0, 0.6);
-  border: none;
+.ui-grid-scrollbar.ui-grid-scrolling {
+  background: #808080;
+  border: 1px solid #5a5a5a;
 }
 .ui-grid-pinned.left {
   float: left;
