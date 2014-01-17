@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-5da009f - 2014-01-17
+/*! ui-grid - v2.0.7-fa87b4c - 2014-01-17
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -1179,6 +1179,18 @@
 
     /**
      * @ngdoc function
+     * @name registerRowBuilder
+     * @methodOf ui.grid.class:Grid
+     * @description When the build creates rows from gridOptions.data, the rowBuilders will be called to add
+     * additional properties to the row.
+     * @param {function(colDef, col, gridOptions)} columnsProcessor function to be called
+     */
+    Grid.prototype.registerRowBuilder = function (rowBuilder) {
+      this.rowBuilders.push(rowBuilder);
+    };
+
+    /**
+     * @ngdoc function
      * @name getColumn
      * @methodOf ui.grid.class:Grid
      * @description returns a grid column for the column name
@@ -1287,7 +1299,7 @@
     * @name addRows
     * @methodOf ui.grid.class:Grid
     * @description adds the newRawData array of rows to the grid and calls all registered
-    * rowBuilders
+    * rowBuilders. this keyword will reference the grid
     */
     Grid.prototype.addRows = function(newRawData) {
       var self = this;
@@ -1309,7 +1321,7 @@
       var self = this;
 
       self.rowBuilders.forEach(function (builder) {
-        builder.call(self,gridRow);
+        builder.call(self,gridRow, self.gridOptions);
       });
 
       return gridRow;
@@ -2289,7 +2301,7 @@ module.filter('px', function() {
   module.directive('uiGridEdit', ['$log', 'uiGridEditService', function ($log, uiGridEditService) {
     return {
       replace: true,
-      priority: 5000,
+      priority: 0,
       require: '^uiGrid',
       scope: false,
       compile: function () {
