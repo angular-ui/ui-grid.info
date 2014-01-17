@@ -133,18 +133,21 @@
   background: rgba(0, 0, 0, 0.5);
   opacity: 1;
   cursor: pointer;
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
   -webkit-box-shadow: 0 0 0px #ffffff;
   -moz-box-shadow: 0 0 0px #ffffff;
   box-shadow: 0 0 0px #ffffff;
 }
 .ui-grid-scrollbar-vertical {
-  width: 7px;
+  width: 14px;
   margin-top: 4px;
   margin-bottom: 4px;
   right: 4px;
+}
+.ui-grid-scrollbar:hover {
+  background: rgba(0, 0, 0, 0.6);
 }
 .ui-grid-pinned.left {
   float: left;
