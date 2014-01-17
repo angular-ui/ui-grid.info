@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-885b293 - 2014-01-17
+/*! ui-grid - v2.0.7-64e01c1 - 2014-01-17
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -753,26 +753,53 @@
       // priority: 1000,
       templateUrl: 'ui-grid/ui-grid-scrollbar',
       require: '?^uiGrid',
-      scope: false,
+      scope: {
+        'type': '@'
+      },
       link: function($scope, $elm, $attrs, uiGridCtrl) {
         if (uiGridCtrl === undefined) {
           throw new Error('[ui-grid-scrollbar] uiGridCtrl is undefined!');
         }
 
-        $log.debug('ui-grid-scrollbar link');
+        $log.debug('ui-grid-scrollbar link', $scope.type);
 
         /**
          * Link stuff
          */
 
+        if ($scope.type === 'vertical') {
+          $elm.addClass('ui-grid-scrollbar-vertical');
+        }
+        else if ($scope.type === 'horizontal') {
+          $elm.addClass('ui-grid-scrollbar-horizontal');
+        }
+
         // Get the scrolling class from the "scrolling-class" attribute
         var scrollingClass;
         $attrs.$observe('scrollingClass', function(n, o) {
-          $log.debug('scrollingClass', n);
           if (n) {
             scrollingClass = n;
           }
         });
+
+        // Show the scrollbar when the mouse hovers the grid, hide it when it leaves UNLESS we're currently scrolling.
+        //   record when we're in or outside the grid for the mouseup event handler
+        var mouseInGrid;
+        function gridMouseEnter() {
+          mouseInGrid = true;
+          $elm.addClass('ui-grid-scrollbar-visible');
+
+          $document.on('mouseup', mouseup);
+        }
+        uiGridCtrl.grid.element.on('mouseenter', gridMouseEnter);
+
+        function gridMouseLeave() {
+          mouseInGrid = false;
+          if (! uiGridCtrl.grid.isScrolling()) {
+            $elm.removeClass('ui-grid-scrollbar-visible');
+          }
+        }
+        uiGridCtrl.grid.element.on('mouseleave', gridMouseLeave);
 
         /**
          *
@@ -781,18 +808,51 @@
          */
 
         // Size the scrollbar according to the amount of data. 35px high minimum, otherwise scale inversely proportinal to canvas vs viewport height
-        function updateScrollbar(gridScope) {
+        function updateVerticalScrollbar(gridScope) {
           var scrollbarHeight = Math.floor(Math.max(35, uiGridCtrl.grid.getViewportHeight() / uiGridCtrl.grid.getCanvasHeight() * uiGridCtrl.grid.getViewportHeight()));
+          uiGridCtrl.grid.verticalScrollbarStyles = '.grid' + uiGridCtrl.grid.id + ' .ui-grid-scrollbar-vertical { height: ' + scrollbarHeight + 'px; }';
+        }
 
-          $scope.scrollbarStyles = '.grid' + uiGridCtrl.grid.id + ' .ui-grid-scrollbar-vertical { height: ' + scrollbarHeight + 'px; }';
+        function updateHorizontalScrollbar(gridScope) {
+          var scrollbarWidth = Math.floor(Math.max(35, uiGridCtrl.grid.getViewportWidth() / uiGridCtrl.grid.getCanvasWidth() * uiGridCtrl.grid.getViewportWidth()));
+          uiGridCtrl.grid.horizontalScrollbarStyles = '.grid' + uiGridCtrl.grid.id + ' .ui-grid-scrollbar-horizontal { width: ' + scrollbarWidth + 'px; }';
+        }
+
+        if ($scope.type === 'vertical') {
+          uiGridCtrl.grid.registerStyleComputation(updateVerticalScrollbar);
+        }
+        else if ($scope.type === 'horizontal') {
+          uiGridCtrl.grid.registerStyleComputation(updateHorizontalScrollbar);
         }
 
         // Only show the scrollbar when the canvas height is less than the viewport height
         $scope.showScrollbar = function() {
-          return uiGridCtrl.grid.getCanvasHeight() > uiGridCtrl.grid.getViewportHeight();
+          // TODO: handle type
+          if ($scope.type === 'vertical') {
+            return uiGridCtrl.grid.getCanvasHeight() > uiGridCtrl.grid.getViewportHeight();
+          }
+          else if ($scope.type === 'horizontal') {
+            return uiGridCtrl.grid.getCanvasWidth() > uiGridCtrl.grid.getViewportWidth(); 
+          }
         };
 
-        uiGridCtrl.grid.registerStyleComputation(updateScrollbar);
+        function getElmSize() {
+          if ($scope.type === 'vertical') {
+            return gridUtil.elementHeight($elm, 'margin');
+          }
+          else if ($scope.type === 'horizontal') {
+            return gridUtil.elementWidth($elm, 'margin');
+          }
+        }
+
+        function getElmMaxBound() {
+          if ($scope.type === 'vertical') {
+            return uiGridCtrl.grid.getViewportHeight() - getElmSize();
+          }
+          else if ($scope.type === 'horizontal') {
+            return uiGridCtrl.grid.getViewportWidth() - getElmSize();
+          }
+        }
 
 
         /**
@@ -802,29 +862,40 @@
          */
 
         var startY = 0,
-            y = 0;
+            startX = 0,
+            y = 0,
+            x = 0;
 
         // Get the height of the scrollbar, including its margins
-        var elmHeight = gridUtil.elementHeight($elm, 'margin');
+        // var elmHeight = gridUtil.elementHeight($elm, 'margin');
+        
 
         // Get the "bottom boundary" which the scrollbar cannot scroll past (which is the viewport height minus the height of the scrollbar)
-        var elmBottomBound = uiGridCtrl.grid.getViewportHeight() - elmHeight;
+        // var elmBottomBound = uiGridCtrl.grid.getViewportHeight() - elmHeight;
+        // var elmSize = getElmSize();
+        var elmMaxBound = getElmMaxBound();
+        
 
         // On mousedown on the scrollbar, listen for mousemove events to scroll and mouseup events to unbind the move and mouseup event
         function mousedown(event) {
           // Prevent default dragging of selected content
           event.preventDefault();
 
+          uiGridCtrl.grid.setScrolling(true);
+
           $elm.addClass(scrollingClass);
 
           // Get the height of the element in case it changed (due to canvas/viewport resizing)
-          elmHeight = gridUtil.elementHeight($elm, 'margin');
+          // elmHeight = gridUtil.elementHeight($elm, 'margin');
+          // elmSize = getElmSize();
 
           // Get the bottom boundary again
-          elmBottomBound = uiGridCtrl.grid.getViewportHeight() - elmHeight;
+          // elmBottomBound = uiGridCtrl.grid.getViewportHeight() - elmHeight;
+          elmMaxBound = getElmMaxBound();
 
           // Store the Y value of where we're starting
           startY = event.screenY - y;
+          startX = event.screenX - x;
 
           $document.on('mousemove', mousemove);
           $document.on('mouseup', mouseup);
@@ -837,16 +908,32 @@
         function mousemove(event) {
           // The delta along the Y axis
           y = event.screenY - startY;
+          x = event.screenX - startX;
 
           // Make sure the value does not go above the grid or below the bottom boundary
-          if (y < 0) { y = 0; }
-          if (y > elmBottomBound) { y = elmBottomBound; }
+
+          var scrollArgs = { target: $elm };
+          if ($scope.type === 'vertical') {
+            if (y < 0) { y = 0; }
+            if (y > elmMaxBound) { y = elmMaxBound; }
+            
+            var scrollPercentageY = y / elmMaxBound;
+
+            scrollArgs.y = { percentage: scrollPercentageY, pixels: y };
+          }
+          else if ($scope.type === 'horizontal') {
+            if (x < 0) { x = 0; }
+            if (x > elmMaxBound) { x = elmMaxBound; }
+            
+            var scrollPercentageX = x / elmMaxBound;
+
+            scrollArgs.x = { percentage: scrollPercentageX, pixels: x };
+          }
 
           // The percentage that we've scrolled is the y axis delta divided by the total scrollable distance (which is the same as the bottom boundary)
-          var scrollPercentage = y / elmBottomBound;
 
           //TODO: When this is part of ui.grid module, the event name should be a constant
-          $scope.$emit('uiGridScrollVertical', { scrollPercentage: scrollPercentage, target: $elm });
+          $scope.$emit('uiGridScrollVertical', scrollArgs);
         }
 
         // Bind to the scroll event which can come from the body (mouse wheel/touch events), or other places
@@ -856,20 +943,20 @@
           if (args.scrollPercentage > 1) { args.scrollPercentage = 1; }
 
           // Get the height of the element in case it changed (due to canvas/viewport resizing)
-          elmHeight = gridUtil.elementHeight($elm, 'margin');
+          // elmSize = getElmSize();
 
           // Get the bottom bound again
-          elmBottomBound = uiGridCtrl.grid.getViewportHeight() - elmHeight;
+          elmMaxBound = getElmMaxBound();
 
           // The new top value for the scrollbar is the percentage of scroll multiplied by the bottom boundary
-          var newScrollTop = args.scrollPercentage * elmBottomBound;
+          var newScrollTop = args.scrollPercentage * elmMaxBound;
 
           var newTop = newScrollTop; //(uiGridCtrl.grid.optionsoffsetTop || 0) + newScrollTop;
 
           // Prevent scrollbar from going beyond container
-          if (newTop > uiGridCtrl.grid.getCanvasHeight() - elmHeight) {
-            newTop = uiGridCtrl.grid.getCanvasHeight() - elmHeight;
-          }
+          // if (newTop > uiGridCtrl.grid.getCanvasHeight() - elmHeight) {
+          //   newTop = uiGridCtrl.grid.getCanvasHeight() - elmHeight;
+          // }
 
           // Store the new top in the y value
           y = newScrollTop;
@@ -884,6 +971,12 @@
         function mouseup() {
           // Remove the "scrolling" class, if any
           $elm.removeClass(scrollingClass);
+
+          if (! mouseInGrid) {
+            $elm.removeClass('ui-grid-scrollbar-visible');
+          }
+
+          uiGridCtrl.grid.setScrolling(false);
 
           // Unbind the events we bound to the document
           $document.off('mousemove', mousemove);
@@ -920,9 +1013,11 @@
 
         $elm.on('$destroy', function() {
           scrollDereg();
-          $document.unbind('mousemove', mousemove);
-          $document.unbind('mouseup', mouseup);
+          $document.off('mousemove', mousemove);
+          $document.off('mouseup', mouseup);
           $elm.unbind('mousedown');
+          uiGridCtrl.grid.element.off('mouseenter', gridMouseEnter);
+          uiGridCtrl.grid.element.off('mouseleave', gridMouseLeave);
 
           // For fancy slide-in effect above
           // $scope.grid.element.unbind('mouseenter');
@@ -1179,18 +1274,6 @@
 
     /**
      * @ngdoc function
-     * @name registerRowBuilder
-     * @methodOf ui.grid.class:Grid
-     * @description When the build creates rows from gridOptions.data, the rowBuilders will be called to add
-     * additional properties to the row.
-     * @param {function(colDef, col, gridOptions)} columnsProcessor function to be called
-     */
-    Grid.prototype.registerRowBuilder = function (rowBuilder) {
-      this.rowBuilders.push(rowBuilder);
-    };
-
-    /**
-     * @ngdoc function
      * @name getColumn
      * @methodOf ui.grid.class:Grid
      * @description returns a grid column for the column name
@@ -1230,6 +1313,8 @@
         });
         
       });
+
+      debugger;
 
       return $q.all(builderPromises);
     };
@@ -1299,7 +1384,7 @@
     * @name addRows
     * @methodOf ui.grid.class:Grid
     * @description adds the newRawData array of rows to the grid and calls all registered
-    * rowBuilders. this keyword will reference the grid
+    * rowBuilders
     */
     Grid.prototype.addRows = function(newRawData) {
       var self = this;
@@ -1321,7 +1406,7 @@
       var self = this;
 
       self.rowBuilders.forEach(function (builder) {
-        builder.call(self,gridRow, self.gridOptions);
+        builder.call(self,gridRow);
       });
 
       return gridRow;
@@ -1370,12 +1455,30 @@
       return viewPortHeight;
     };
 
+    Grid.prototype.getViewportWidth = function () {
+      var viewPortWidth = this.gridWidth;
+      return viewPortWidth;
+    };
+
     Grid.prototype.getCanvasHeight = function () {
       return this.options.rowHeight * this.rows.length;
     };
 
+    Grid.prototype.getCanvasWidth = function () {
+      return this.canvasWidth;
+    };
+
     Grid.prototype.getTotalRowHeight = function () {
       return this.options.rowHeight * this.rows.length;
+    };
+
+    // Is the grid currently scrolling?
+    Grid.prototype.isScrolling = function() {
+      return this.scrolling ? true : false;
+    };
+
+    Grid.prototype.setScrolling = function(scrolling) {
+      this.scrolling = scrolling;
     };
 
 
@@ -2301,7 +2404,7 @@ module.filter('px', function() {
   module.directive('uiGridEdit', ['$log', 'uiGridEditService', function ($log, uiGridEditService) {
     return {
       replace: true,
-      priority: 0,
+      priority: 5000,
       require: '^uiGrid',
       scope: false,
       compile: function () {
@@ -2537,7 +2640,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-body',
-    "<div class=\"ui-grid-body\"><div class=\"ui-grid-scrollbar-box\"><div ui-grid-viewport=\"\" class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in grid.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowStyle($index)\"><div ui-grid-row=\"row\" row-index=\"$index\"></div></div></div></div></div><div ui-grid-scrollbar=\"\" scrolling-class=\"ui-grid-scrolling\"></div></div>"
+    "<div class=\"ui-grid-body\"><div class=\"ui-grid-scrollbar-box\"><div ui-grid-viewport=\"\" class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in grid.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowStyle($index)\"><div ui-grid-row=\"row\" row-index=\"$index\"></div></div></div></div></div><div ui-grid-scrollbar=\"\" type=\"vertical\" scrolling-class=\"ui-grid-scrolling\"></div><div ui-grid-scrollbar=\"\" type=\"horizontal\" scrolling-class=\"ui-grid-scrolling\"></div></div>"
   );
 
 
@@ -2552,7 +2655,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-scrollbar',
-    "<div class=\"ui-grid-scrollbar ui-grid-scrollbar-vertical\" ng-show=\"showScrollbar()\"></div>"
+    "<div class=\"ui-grid-scrollbar\" ng-show=\"showScrollbar()\"></div>"
   );
 
 
@@ -2581,7 +2684,8 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "\n" +
     "    {{ columnStyles }}\n" +
     "\n" +
-    "    {{ scrollbarStyles }}</style><div ui-grid-header=\"\"></div><div ui-grid-body=\"\"></div><div ui-grid-footer=\"\"></div></div>"
+    "    {{ grid.verticalScrollbarStyles }}\n" +
+    "    {{ grid.horizontalScrollbarStyles }}</style><div ui-grid-header=\"\"></div><div ui-grid-body=\"\"></div><div ui-grid-footer=\"\"></div></div>"
   );
 
 
