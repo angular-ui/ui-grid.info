@@ -36,10 +36,14 @@ rowBuilder to further process the row</p>
 
 <p>Rows are identified using the gridOptions.rowEquality function</p></div>
 </li>
-<li><h3 id="processRowBuilders">processRowBuilders()</h3>
-<div class="processrowbuilders"><p>processes all RowBuilders for the gridRow</p><h4 id="Returns">Returns</h4>
+<li><h3 id="processRowBuilders">processRowBuilders(gridRow)</h3>
+<div class="processrowbuilders"><p>processes all RowBuilders for the gridRow</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>reference to gridRow</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{GridRow}</code>
-– <p>the gridRow with all additional behaivor added</p></div>
+– <p>the gridRow with all additional behavior added</p></div>
 </div>
 </li>
 <li><h3 id="registerColumnBuilder">registerColumnBuilder(columnsProcessor)</h3>
@@ -50,8 +54,12 @@ additional properties to the column.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
-<li><h3 id="registerStyleComputation">registerStyleComputation()</h3>
-<div class="registerstylecomputation"><p>registered a styleComputation function</p></div>
+<li><h3 id="registerStyleComputation">registerStyleComputation(styleComputation)</h3>
+<div class="registerstylecomputation"><p>registered a styleComputation function</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">styleComputation – {function($scope)} – </code>
+<p>function</p></li>
+</ul>
+</div>
 </li>
 </ul>
 </div>

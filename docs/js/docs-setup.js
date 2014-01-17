@@ -6,8 +6,8 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
-      "id": "ui.grid.cellNav.constant:uiGridEditConstants",
-      "shortName": "uiGridEditConstants",
+      "id": "ui.grid.cellNav.constant:uiGridCellNavConstants",
+      "shortName": "uiGridCellNavConstants",
       "type": "object",
       "keywords": "api available cellnav constant constants grid in object ui"
     },
@@ -16,7 +16,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.directive:uiCellNav",
       "shortName": "uiCellNav",
       "type": "directive",
-      "keywords": "$scope adds angular api app bob cellnav ceo columndefs controller data developer directive div ea editing features frank function grid html index js lowly mainctrl module name ng-controller the title to ui ui-grid ui-grid-edit var"
+      "keywords": "$scope adds angular api app bob cell cellnav ceo columndefs columns controller data developer directive div ea features frank function grid html index js lowly mainctrl module name navigation ng-controller the title to ui ui-grid ui-grid-cellnav var"
     },
     {
       "section": "api",
@@ -27,17 +27,17 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.cellNav.service:uiGridNavService",
-      "shortName": "uiGridNavService",
+      "id": "ui.grid.cellNav.service:uiGridCellNavService",
+      "shortName": "uiGridCellNavService",
       "type": "service",
-      "keywords": "angular api cellnav decorator docs don editing features for grid if key like maps override service services the ui use we with you"
+      "keywords": "adds and angular any api are cell cellnav cellnavcolumnbuilder cells column columnbuilder columns curcol current currow decorator determines direction docs don event features focusable for function getdirection getnextrowcol given grid gridcol gridrow if key keydown like load maps navigation needed next not object or override promise properties resolved returns row rowcol service services skipped templates that the to ui use we when which will with you"
     },
     {
       "section": "api",
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all and any api are array assign be behaivor build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
+      "keywords": "add added additional all and any api are array assign be behavior build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
     },
     {
       "section": "api",
@@ -100,7 +100,7 @@ NG_DOCS={
       "id": "ui.grid.edit.service:uiGridEditService",
       "shortName": "uiGridEditService",
       "type": "service",
-      "keywords": "adds any api cell cellnavcolumnbuilder column columnbuilder edit editcolumnbuilder editing features for function grid load navigation needed promise properties resolved service services templates that to ui when will"
+      "keywords": "adds any api column columnbuilder edit editcolumnbuilder editing features for function grid load needed promise properties resolved service services templates that to ui when will"
     },
     {
       "section": "api",
@@ -198,7 +198,7 @@ NG_DOCS={
       "id": "9_cellnav",
       "shortName": "Cell Navigation (WIP)",
       "type": "overview",
-      "keywords": "$http $scope add angular app cell cellnav class controller css data directive example function get grid gridoptions height html index js json length main mainctrl module name navigation ng-controller number overview success the this to tutorial ui ui-grid ui-grid-cellnav uses var width"
+      "keywords": "$http $scope add address age allowcellfocus angular app cell cellnav city class columndefs controller css data directive displayname example false focusable function get grid gridoptions height html id index js json length main mainctrl module name navigation ng-controller number overview success the this to tutorial ui ui-grid ui-grid-cellnav uses var width"
     }
   ],
   "apis": {

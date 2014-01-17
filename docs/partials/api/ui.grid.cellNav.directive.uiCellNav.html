@@ -3,7 +3,7 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>Adds editing features to the ui-grid directive.</p></div>
+<div class="description"><p>Adds cell navigation features to the grid columns</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage">as element:<pre class="prettyprint linenums">&lt;ui-cell-nav&gt;
 &lt;/ui-cell-nav&gt;</pre>
@@ -17,10 +17,10 @@ as attribute<pre class="prettyprint linenums">&lt;div ui-cell-nav&gt;
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html">
- <div ng-controller="MainCtrl">
-   <div ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-edit></div>
- </div>
- </script>
+<div ng-controller="MainCtrl">
+<div ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-cellnav></div>
+</div>
+</script>
 </div>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
@@ -34,11 +34,11 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
    ];
 
    $scope.columnDefs = [
-     {field: 'name',
-     {field: 'title'}
+     {name: 'name'},
+     {name: 'title'}
    ];
  }]);
- </script>
+</script>
 </div>
 </div><h4>Demo</h4>
 <div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html" ng-eval-javascript="app.js"></div></div>
