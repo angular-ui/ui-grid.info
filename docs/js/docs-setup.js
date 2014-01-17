@@ -195,6 +195,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "91_column_row_customization",
+      "shortName": "Column and Row Customization",
+      "type": "overview",
+      "keywords": "$http $scope address age and angular app cellnav city class column columndefs columns controller css customization customize data field function get grid gridoptions height html id index js json main mainctrl module name ng-controller overview row rows success tutorial ui ui-grid var width"
+    },
+    {
+      "section": "tutorial",
       "id": "9_cellnav",
       "shortName": "Cell Navigation (WIP)",
       "type": "overview",
