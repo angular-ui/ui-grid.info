@@ -1,7 +1,7 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>This grid example uses the ui-grid-cellnav directive to add cell navigation</p><h2 id="Example">Example</h2>
+<div><p>This grid example uses the ui-grid-cellNav directive to add cell navigation</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-13" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -11,7 +11,7 @@
     <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
     <br>
     <br>
-    <div ui-grid="gridOptions" ui-grid-cellnav class="grid"></div>
+    <div ui-grid="gridOptions" ui-grid-cellNav class="grid"></div>
   </div>
 </script>
 </div>
@@ -27,7 +27,7 @@
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid', 'ui.grid.cellnav']);
+  var app = angular.module('app', ['ui.grid', 'ui.grid.cellNav']);
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {};

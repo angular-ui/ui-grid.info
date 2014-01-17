@@ -6,35 +6,28 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
-      "id": "ui.grid.cellnav.constant:uiGridEditConstants",
+      "id": "ui.grid.cellNav.constant:uiGridEditConstants",
       "shortName": "uiGridEditConstants",
       "type": "object",
-      "keywords": "api available cellnav constant constants edit grid in module object ui"
+      "keywords": "api available cellnav constant constants grid in object ui"
     },
     {
       "section": "api",
-      "id": "ui.grid.cellnav.directive:uiCellNav",
+      "id": "ui.grid.cellNav.directive:uiCellNav",
       "shortName": "uiCellNav",
       "type": "directive",
       "keywords": "$scope adds angular api app bob cellnav ceo columndefs controller data developer directive div ea editing features frank function grid html index js lowly mainctrl module name ng-controller the title to ui ui-grid ui-grid-edit var"
     },
     {
       "section": "api",
-      "id": "ui.grid.cellnav.directive:uiGridBody",
-      "shortName": "uiGridBody",
-      "type": "directive",
-      "keywords": "api cell cellnav directive div grid navigation of on provide stacks to top ui uigridbody"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.cellnav.directive:uiGridCell",
+      "id": "ui.grid.cellNav.directive:uiGridCell",
       "shortName": "uiGridCell",
       "type": "directive",
       "keywords": "api cell cellnav directive div grid navigation of on provide stacks to top ui uigridcell"
     },
     {
       "section": "api",
-      "id": "ui.grid.cellnav.service:uiGridNavService",
+      "id": "ui.grid.cellNav.service:uiGridNavService",
       "shortName": "uiGridNavService",
       "type": "service",
       "keywords": "angular api cellnav decorator docs don editing features for grid if key like maps override service services the ui use we with you"
@@ -107,7 +100,7 @@ NG_DOCS={
       "id": "ui.grid.edit.service:uiGridEditService",
       "shortName": "uiGridEditService",
       "type": "service",
-      "keywords": "adds any api column columnbuilder edit editcolumnbuilder editing features for function grid load needed promise properties resolved service services templates that to ui when will"
+      "keywords": "adds any api cell cellnavcolumnbuilder column columnbuilder edit editcolumnbuilder editing features for function grid load navigation needed promise properties resolved service services templates that to ui when will"
     },
     {
       "section": "api",
