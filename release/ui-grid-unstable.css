@@ -133,6 +133,7 @@
   background: rgba(0, 0, 0, 0.5);
   opacity: 1;
   cursor: pointer;
+  border: none;
   -webkit-border-radius: 14px;
   -moz-border-radius: 14px;
   border-radius: 14px;
@@ -147,7 +148,11 @@
   right: 4px;
 }
 .ui-grid-scrollbar:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+.ui-grid-scrollbar.ui-scrolling {
   background: rgba(0, 0, 0, 0.6);
+  border: none;
 }
 .ui-grid-pinned.left {
   float: left;

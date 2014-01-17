@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-13f3714 - 2014-01-17
+/*! ui-grid - v2.0.7-fdadea4 - 2014-01-17
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -724,8 +724,8 @@
         });
 
         function mouseup() {
-          $document.unbind('mousemove', mousemove);
-          $document.unbind('mouseup', mouseup);
+          $document.off('mousemove', mousemove);
+          $document.off('mouseup', mouseup);
         }
         
         // if (! gridUtil.isTouchEnabled()) {
@@ -802,7 +802,7 @@
       // priority: 1000,
       // require: '?^uiGrid',
       link: function($scope, $elm, $attrs, uiGridCtrl) {
-        $log.debug('ui-grid-style link', $elm);
+        $log.debug('ui-grid-style link');
         // if (uiGridCtrl === undefined) {
         //    $log.warn('[ui-grid-style link] uiGridCtrl is undefined!');
         // }
@@ -2349,7 +2349,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-scrollbar',
-    "<div class=\"ui-grid-scrollbar ui-grid-scrollbar-vertical\" ng-show=\"showScrollbar()\"></div>"
+    "<div class=\"ui-grid-scrollbar ui-grid-scrollbar-vertical\" ng-show=\"showScrollbar()\" ng-mousedown=\"className='ui-scrolling'\" ng-mouseup=\"className=''\" ng-class=\"className\"></div>"
   );
 
 

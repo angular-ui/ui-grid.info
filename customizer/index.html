@@ -10,12 +10,35 @@
   <link rel="stylesheet" href="/docs/css/bootstrap-flatly.css" />
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/site.css" />
-  <link rel="stylesheet" href="/release/ui-grid.css" />
+  <!--<link rel="stylesheet" href="/release/ui-grid-unstable.css" />-->
   <style>
     .compiled-css {
       height: 280px;
     }
   </style>
+  <script>
+    function outerHTML(node){
+        // if IE, Chrome take the internal method otherwise build one
+        return node.outerHTML || (
+          function(n){
+              var div = document.createElement('div'), h;
+              div.appendChild(n);
+              h = div.innerHTML;
+              div = null;
+              return h;
+          })(node);
+    }
+
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    if (window.location.href.match('ui-grid.info')) {
+      l.href = '/release/ui-grid-unstable.css';
+    }
+    else {
+      l.href = '/release/ui-grid.css';
+    }
+    document.write(outerHTML(l));
+  </script>
 </head>
 <body>
   <header class="header">
@@ -139,7 +162,7 @@
   </div>
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.6.0/less.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
 
   <!--
   <script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.2.3/ZeroClipboard.js"></script>
@@ -153,23 +176,12 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.js"></script>
 
   <script>
-    function outerHTML(node){
-        // if IE, Chrome take the internal method otherwise build one
-        return node.outerHTML || (
-          function(n){
-              var div = document.createElement('div'), h;
-              div.appendChild(n);
-              h = div.innerHTML;
-              div = null;
-              return h;
-          })(node);
-    }
-
     var s = document.createElement('script');
     if (window.location.href.match('ui-grid.info')) {
       s.src = '/release/ui-grid-unstable.js';
     }
     else {
+      // s.src = 'http://ui-grid.info/release/ui-grid-unstable.js';// '/release/ui-grid.js';
       s.src = '/release/ui-grid.js';
     }
     document.write(outerHTML(s));
