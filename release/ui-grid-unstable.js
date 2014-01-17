@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-d41d725 - 2014-01-17
+/*! ui-grid - v2.0.7-9fb4cfc - 2014-01-17
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -270,8 +270,8 @@
    *  @restrict A
    *  @description Stacks on top of ui.grid.uiGridCell to provide cell navigation
    */
-  module.directive('uiGridCell', ['uiGridCellNavService',
-    function (uiGridCellNavService) {
+  module.directive('uiGridCell', ['uiGridCellNavService', '$log',
+    function (uiGridCellNavService, $log) {
       return {
         priority: -150, // run after default uiGridCell directive and ui.grid.edit uiGridCell
         restrict: 'A',
@@ -292,6 +292,7 @@
 
             //todo: issue # 926
             //uiGridCtrl.setFocus(rowCol.row, rowCol.col);
+            $log.debug('next row ' + rowCol.row.index + ' next Col ' + rowCol.col.colDef.name );
 
             return false;
           });
@@ -958,6 +959,7 @@
     },
     // copied from http://www.lsauer.com/2011/08/javascript-keymap-keycodes-in-json.html
     keymap: {
+      TAB: 9,
       STRG: 17,
       CTRL: 17,
       CTRLRIGHT: 18,
