@@ -37,7 +37,7 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all and any api are array assign be behavior build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
+      "keywords": "add added additional all and any api are array assign be behavior build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates data defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerrowbuilder registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
     },
     {
       "section": "api",
@@ -178,6 +178,13 @@ NG_DOCS={
       "shortName": "Hidden Grids",
       "type": "overview",
       "keywords": "$http $scope angular app btn btn-success button class controller css data function get grid gridoptions grids height hidden hide hidegrid hiding html in index js json main mainctrl modals module name ng-click ng-controller ng-hide or overview show success tabs true tutorial type ui ui-grid var well width"
+    },
+    {
+      "section": "tutorial",
+      "id": "6a_editableOnFocus",
+      "shortName": "Edit On Focus",
+      "type": "overview",
+      "keywords": "$http $scope address age angular app be can cell cellnav city class columndefs combinine controller css data displayname edit editing enable enablecelledit enablecelleditonfocus focus function get gets grid gridoptions height html id index js json length main mainctrl module must name ng-controller number on options overview set success the to true tutorial ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
     },
     {
       "section": "tutorial",

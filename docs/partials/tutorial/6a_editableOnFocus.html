@@ -1,0 +1,53 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Combinine ui.grid.edit with ui.grid.cellNav, you can enable editing when the cell gets focus.
+grid.options.enableCellEditOnFocus must be set to true.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-11" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-11" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-11">
+  <div ng-controller="MainCtrl">
+    <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+    <br>
+    <br>
+    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.cellNav']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {  };
+    $scope.gridOptions.enableCellEditOnFocus = true;
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id' },
+      { name: 'name', enableCellEdit: true, displayName: 'Name (editOnFocus)'},
+      { name: 'age', enableCellEdit: true,enableCellEditOnFocus:false, displayName:'age (f2/dblClick edit)'  },
+      { name: 'address.city' }
+    ];
+
+    $http.get('/data/500_complex.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-11" ng-eval-javascript="app.js"></div></div>
+</div>
