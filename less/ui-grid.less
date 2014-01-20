@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-bdf183d - 2014-01-20
+/*! ui-grid - v2.0.7-781762d - 2014-01-20
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -361,6 +361,19 @@
   background: @scrollbarBackgroundScrolling;
   border: @scrollbarBorderScrolling;
 }
+.ui-grid-sortarrow {
+  fill: @sortArrowBackgroundColor; 
+  stroke: @sortArrowBorderColor; 
+  stroke-linejoin:miter;
+}
+.ui-grid-sortarrow.down {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); 
+}
+
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
 /**
@@ -391,6 +404,20 @@
 @rowColorOdd: #fdfdfd;
 
 // TODO: colors for buttons
+
+/**
+* @section Sort arrow colors
+*/
+
+@sortArrowBackgroundColor: #aaaaaa;
+@sortArrowBorderColor: #777777;
+
+
+/** @description Colors for header gradient */
+@headerBackgroundColor: #f3f3f3;
+@headerGradientStart: #eee;
+@headerGradientStop: #fff;
+@headerVerticalBarColor: @borderColor;
 
 // TODO: color for menu background
 
