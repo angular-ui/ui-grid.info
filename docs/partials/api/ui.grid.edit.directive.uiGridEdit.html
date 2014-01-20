@@ -18,7 +18,7 @@ as attribute<pre class="prettyprint linenums">&lt;div ui-grid-edit&gt;
 <pre class="prettyprint linenums" ng-set-text="index.html-3" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-3">
 <div ng-controller="MainCtrl">
-<div ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-edit></div>
+  <div ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-edit></div>
 </div>
 </script>
 </div>
@@ -28,16 +28,16 @@ as attribute<pre class="prettyprint linenums">&lt;div ui-grid-edit&gt;
 var app = angular.module('app', ['ui.grid', 'ui.grid.edit']);
 
 app.controller('MainCtrl', ['$scope', function ($scope) {
-   $scope.data = [
-     { name: 'Bob', title: 'CEO' },
-         { name: 'Frank', title: 'Lowly Developer' }
-   ];
+  $scope.data = [
+    { name: 'Bob', title: 'CEO' },
+        { name: 'Frank', title: 'Lowly Developer' }
+  ];
 
-   $scope.columnDefs = [
-     {name: 'name', enableCellEdit: true},
-     {name: 'title', enableCellEdit: true}
-   ];
- }]);
+  $scope.columnDefs = [
+    {name: 'name', enableCellEdit: true},
+    {name: 'title', enableCellEdit: true}
+  ];
+}]);
 </script>
 </div>
 </div><h4>Demo</h4>

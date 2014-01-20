@@ -1,12 +1,12 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>Customize rows and columns.</p><h2 id="Example">Example</h2>
+<div><p>Demonstrating scrolling with large amount of columns</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-13" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-14" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-13" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-13">
+<pre class="prettyprint linenums" ng-set-text="index.html-14" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-14">
   <div ng-controller="MainCtrl">
     <div ui-grid="gridOptions" class="grid"></div>
   </div>
@@ -24,19 +24,13 @@
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid', 'ui.grid.cellNav']);
+  var app = angular.module('app', ['ui.grid']);
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {};
 
-    $scope.gridOptions.columnDefs = [
-      { field: 'id', width: '40' },
-      { field: 'name' },
-      { field: 'age', width: '40' },
-      { field: 'address.city' }
-    ];
-
-    $http.get('/data/500_complex.json')
+    $http.get('/data/100_columns.json')
+    // $http.get('/data/100.json')
       .success(function(data) {
         $scope.gridOptions.data = data;
       });
@@ -44,5 +38,5 @@
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-13" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-14" ng-eval-javascript="app.js"></div></div>
 </div>
