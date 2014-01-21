@@ -37,7 +37,7 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all and any api are array assign be behavior build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
+      "keywords": "add added additional all and any api are array assign be behavior build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates data defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerrowbuilder registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
     },
     {
       "section": "api",
@@ -181,6 +181,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "6a_editableOnFocus",
+      "shortName": "Edit On Focus",
+      "type": "overview",
+      "keywords": "$http $scope address age angular app be can cell cellnav city class columndefs combinine controller css data displayname edit editing enable enablecelledit enablecelleditonfocus focus function get gets grid gridoptions height html id index js json length main mainctrl module must name ng-controller number on options overview set success the to true tutorial ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
+    },
+    {
+      "section": "tutorial",
       "id": "7_multiple_grids",
       "shortName": "Multiple Grids per Page",
       "type": "overview",
@@ -199,13 +206,6 @@ NG_DOCS={
       "shortName": "Column and Row Customization",
       "type": "overview",
       "keywords": "$http $scope address age and angular app cellnav city class column columndefs columns controller css customization customize data field function get grid gridoptions height html id index js json main mainctrl module name ng-controller overview row rows success tutorial ui ui-grid var width"
-    },
-    {
-      "section": "tutorial",
-      "id": "92_horizontal_scrolling",
-      "shortName": "Horizontal Scrolling",
-      "type": "overview",
-      "keywords": "$http $scope amount angular app class columns controller css data demonstrating function get grid gridoptions height horizontal html index js json large main mainctrl module name ng-controller of overview scrolling success tutorial ui ui-grid var width with"
     },
     {
       "section": "tutorial",

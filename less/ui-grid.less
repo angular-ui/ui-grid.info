@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-844b82d - 2014-01-20
+/*! ui-grid - v2.0.7-781762d - 2014-01-21
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -62,6 +62,13 @@
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.ui-grid-cell-contents-hidden {
+  visibility: hidden;
+  width: 0;
+  height:0;
+  display: none;
 }
 
 .ui-grid-cell-contents:focus {
@@ -161,11 +168,11 @@
 .scale(@ratio:1.5){
   .transform(scale(@ratio));
 }
-.transition(@type:all, @duration:0.2s, @ease:ease-out) {
-  -webkit-transition: @type @duration @ease;
-  -moz-transition: @type @duration @ease;
-  -o-transition: @type @duration @ease;
-  transition: @type @duration @ease;
+.transition(@duration:0.2s, @ease:ease-out) {
+  -webkit-transition: all @duration @ease;
+  -moz-transition: all @duration @ease;
+  -o-transition: all @duration @ease;
+  transition: all @duration @ease;
 }
 .inner-shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4) {
   -webkit-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
@@ -263,13 +270,7 @@
     .border-radius(@topPanelRadius, 0, 0, @topPanelRadius);
 }
 
-.ui-grid-header-viewport {
-  overflow: hidden;
-}
-
-.ui-grid-header-canvas {
-  position: relative;
-
+.ui-grid-header {
   // Clearfix for floating header cells
   &:before, &:after {
     content: "";
@@ -322,50 +323,32 @@
   float: right;
 }
 .ui-grid-scrollbar {
+  top: 0;
   z-index: 10;
   position: absolute;
-  .opacity(0);
-  .transition(opacity, 0.25s, ease-out);
 
   background: @scrollbarBackground;
 
+  opacity: 1;
   cursor: pointer;
   // transform: translateZ(0);
 
   border: @scrollbarBorder;
   .rounded(@scrollbarBorderRadius);
   .box-shadow(@scrollbarShadow);
-  // .transition(all, 300ms, linear);
+  // .transition(300ms, linear);
 
   &-vertical {
     width: @scrollbarWidth;
     margin-top: 4px;
     margin-bottom: 4px;
     right: 4px;
-    top: 0
     // right: @scrollbarWidth;
     // .transition();
   }
 
-  &-horizontal {
-    height: @scrollbarWidth;
-    margin-right: 4px;
-    margin-left: 4px;
-    bottom: 4px;
-    left: 0px;
-    width: 45px;
-  }
-
-  &-visible {
-    .opacity(1);
-    // -webkit-transition: opacity 0.5s ease-out;
-    // -moz-transition: opacity 0.5s ease-out;
-    // -o-transition: opacity 0.5s ease-out;
-    // transition: opacity 0.5s ease-out;
-  }
-
   // &-vertical.in {
-  //   .transition(all);
+  //   .transition();
   //   right: 4px;
   // }
 }
@@ -375,10 +358,22 @@
 }
 
 .ui-grid-scrollbar.ui-grid-scrolling {
-  display: block;
   background: @scrollbarBackgroundScrolling;
   border: @scrollbarBorderScrolling;
 }
+.ui-grid-sortarrow {
+  fill: @sortArrowBackgroundColor; 
+  stroke: @sortArrowBorderColor; 
+  stroke-linejoin:miter;
+}
+.ui-grid-sortarrow.down {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); 
+}
+
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
 /**
@@ -409,6 +404,20 @@
 @rowColorOdd: #fdfdfd;
 
 // TODO: colors for buttons
+
+/**
+* @section Sort arrow colors
+*/
+
+@sortArrowBackgroundColor: #aaaaaa;
+@sortArrowBorderColor: #777777;
+
+
+/** @description Colors for header gradient */
+@headerBackgroundColor: #f3f3f3;
+@headerGradientStart: #eee;
+@headerGradientStop: #fff;
+@headerVerticalBarColor: @borderColor;
 
 // TODO: color for menu background
 
