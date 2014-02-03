@@ -69,6 +69,20 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.directive:uiGridStyle",
+      "shortName": "uiGridStyle",
+      "type": "directive",
+      "keywords": "$scope allows am angular api app apply as blah border box break by can class controller css default directive do doesn element elements expect expressions function getcssvalue grid ie8 in interpolate it mainctrl module mystyle ng-controller right should solid style the then this to tocontain ui ui-grid-style us var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit",
+      "shortName": "edit",
+      "type": "overview",
+      "keywords": "allow and api arrow be below beside capability cell cellnav cells data doc-module-components edit editing emulate enter entry full get goal grid in key keyboard keying module or overview provides really should spreadsheet spreadsheet-like tab the then this to ui used user via was will"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.edit.constant:uiGridEditConstants",
       "shortName": "uiGridEditConstants",
       "type": "object",
@@ -100,7 +114,7 @@ NG_DOCS={
       "id": "ui.grid.edit.service:uiGridEditService",
       "shortName": "uiGridEditService",
       "type": "service",
-      "keywords": "adds any api column columnbuilder edit editcolumnbuilder editing features for function grid load needed promise properties resolved service services templates that to ui when will"
+      "keywords": "adds an angular any api column columnbuilder decorate decorator determines docs edit editcolumnbuilder editing event events evt features for function grid if in isstarteditkey key keydown keypress load needed override own promise properties resolved see service services should start templates that this to true ui when will with your"
     },
     {
       "section": "api",
@@ -111,17 +125,10 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.style.directive:uiGridStyle",
-      "shortName": "uiGridStyle",
-      "type": "directive",
-      "keywords": "$scope allows am angular api app apply as blah border box break by can class controller css default directive do doesn element elements expect expressions function getcssvalue grid ie8 in interpolate it mainctrl module mystyle ng-controller right should solid style the then this to tocontain ui ui-grid-style us var"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.util.service:GridUtil",
+      "id": "ui.grid.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser calculation capitalized column columndefs columnname comes consistent contents controller correctl data definitions direction dom dommousescroll element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional pixels promise readablecolumnname resolving return right scale service set smith so split stays string sure template that the then this to ui unique url use util utility var what wheel width with"
+      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser calculation capitalized column columndefs columnname comes consistent contents controller correctl data definitions direction dom dommousescroll element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional pixels promise readablecolumnname resolving return right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
     },
     {
       "section": "tutorial",
@@ -184,7 +191,7 @@ NG_DOCS={
       "id": "6a_editableOnFocus",
       "shortName": "Edit On Focus",
       "type": "overview",
-      "keywords": "$http $scope address age angular app be can cell cellnav city class columndefs combinine controller css data displayname edit editing enable enablecelledit enablecelleditonfocus focus function get gets grid gridoptions height html id index js json length main mainctrl module must name ng-controller number on options overview set success the to true tutorial ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
+      "keywords": "$http $scope address age and angular api app be can cell cellnav city class columndefs combine controller css data default displayname docs edit editing enable enablecelledit enablecelleditonfocus focus for function get gets grid gridoptions height how html id index js json keys length main mainctrl module must name navigation ng-controller number on options override overview see set success the to true tutorial ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
     },
     {
       "section": "tutorial",
@@ -209,6 +216,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "92_horizontal_scrolling",
+      "shortName": "Horizontal Scrolling",
+      "type": "overview",
+      "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling tutorial ui ui-grid var width widths with"
+    },
+    {
+      "section": "tutorial",
       "id": "9_cellnav",
       "shortName": "Cell Navigation (WIP)",
       "type": "overview",
@@ -222,6 +236,7 @@ NG_DOCS={
   "html5Mode": false,
   "startPage": "/api",
   "scripts": [
+    "jquery.min.js",
     "angular.js",
     "angular-touch.js"
   ]

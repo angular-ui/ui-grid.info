@@ -1,0 +1,141 @@
+<h1><code ng:non-bindable="">GridUtil</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Grid utility functions</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="elementHeight">elementHeight(element, [extra])</h3>
+<div class="elementheight"><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
+<p>DOM element</p></li>
+<li><code ng:non-bindable="">[extra] – {string} – </code>
+<p>Optional modifier for calculation. Use 'margin' to account for margins on element</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>Element height in pixels, accounting for any borders, etc.</p></div>
+</div>
+</li>
+<li><h3 id="elementWidth">elementWidth(element, [extra])</h3>
+<div class="elementwidth"><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
+<p>DOM element</p></li>
+<li><code ng:non-bindable="">[extra] – {string} – </code>
+<p>Optional modifier for calculation. Use 'margin' to account for margins on element</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>Element width in pixels, accounting for any borders, etc.</p></div>
+</div>
+</li>
+<li><h3 id="getColumnsFromData">getColumnsFromData(data)</h3>
+<div class="getcolumnsfromdata"><p>Return a list of column names, given a data set</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">data – {string} – </code>
+<p>Data array for grid</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Object}</code>
+– <p>Column definitions with field accessor and column name</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+var data = [
+  { firstName: 'Bob', lastName: 'Jones' },
+  { firstName: 'Frank', lastName: 'Smith' }
+];
+
+var columnDefs = GridUtil.getColumnsFromData(data);
+
+columnDefs == [
+ {
+   field: 'firstName',
+   name: 'First Name'
+ },
+ {
+   field: 'lastName',
+   name: 'Last Name'
+ }
+];
+</pre></div>
+</div>
+</li>
+<li><h3 id="getTemplate">getTemplate()</h3>
+<div class="gettemplate"><p>Get's template from Url</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>a promise resolving to template contents</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+GridUtil.getTemplate(url).then(function (contents) {
+     alert(contents);
+   })
+</pre></div>
+</div>
+</li>
+<li><h3 id="newId">newId()</h3>
+<div class="newid"><p>Return a unique ID string</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>Unique string</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+var id = GridUtil.newId();
+
+# 1387305700482;
+</pre></div>
+</div>
+</li>
+<li><h3 id="normalizeWheelEvent">normalizeWheelEvent(event)</h3>
+<div class="normalizewheelevent"><p>Given an event from this list:</p>
+
+<p><code>wheel, mousewheel, DomMouseScroll, MozMousePixelScroll</code></p>
+
+<p>"normalize" it
+so that it stays consistent no matter what browser it comes from (i.e. scale it correctl and make sure the direction is right.)</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">event – {event} – </code>
+<p>A mouse wheel event</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{event}</code>
+– <p>A normalized event</p></div>
+</div>
+</li>
+<li><h3 id="readableColumnName">readableColumnName(columnName)</h3>
+<div class="readablecolumnname"><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
+<p>Column name as a string</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>Column name appropriately capitalized and split apart</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><h6>Source</h6>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-2" source-edit-css="" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-2" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-2">
+   <div ng-controller="MainCtrl">
+     <strong>Column name:</strong> <input ng-model="name" />
+     <br>
+     <strong>Output:</strong> <span ng-bind="columnName(name)"></span>
+   </div>
+ </script>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+   var app = angular.module('app', ['ui.grid']);
+
+   app.controller('MainCtrl', ['$scope', 'GridUtil', function ($scope, GridUtil) {
+     $scope.name = 'firstName';
+     $scope.columnName = function(name) {
+       return GridUtil.readableColumnName(name);
+     };
+   }]);
+ </script>
+</div>
+</div><h6>Demo</h6>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-2" ng-eval-javascript="app.js"></div></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
