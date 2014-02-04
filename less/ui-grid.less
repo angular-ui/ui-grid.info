@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-2cad92e - 2014-02-04
+/*! ui-grid - v2.0.7-4565b0b - 2014-02-04
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -343,6 +343,22 @@
 .ui-grid-header .ui-grid-vertical-bar {
   top: 0;
   bottom: 0;
+}
+
+.ui-grid-column-resizer {
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  position: absolute;
+  cursor: pointer;
+
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
 }
 
 
