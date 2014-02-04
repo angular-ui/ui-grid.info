@@ -1,8 +1,384 @@
-/*! ui-grid - v2.0.7-bb342f7 - 2014-02-03
+/*! ui-grid - v2.0.7-2cad92e - 2014-02-04
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
    angular.module('ui.grid', ['ui.i18n']);
+})();
+(function(deepExtend){
+    'use strict';
+    var MISSING = '[MISSING]: ',
+        UPDATE_EVENT = '$uiI18n',
+        FILTER_ALIASES = ['t', 'translate'],
+        DIRECTIVE_ALIASES = ['uiT', 'uiTranslate'],
+        LOCALE_DIRECTIVE_ALIAS = 'uiI18n',
+    // default to english
+        DEFAULT_LANG = 'en-US',
+        langCache = {
+            _langs: {},
+            current: null
+        },
+        uiI18n = angular.module('ui.i18n', []);
+
+    langCache.get = function(lang){
+        return langCache._langs[lang.toLowerCase()];
+    };
+    langCache.add = function(lang, strings){
+        var lower = lang.toLowerCase();
+        var cache = langCache._langs;
+        cache[lower] = deepExtend(cache[lower] || {}, strings);
+    };
+    langCache.setCurrent = function(lang){
+        langCache.current = lang.toLowerCase();
+    };
+    langCache.getCurrent = function(){
+        return langCache.get(langCache.current);
+    };
+
+    uiI18n._cache = langCache;
+    uiI18n.$broadcast = function(lang){
+        if (lang && this.$root){
+            uiI18n.$root.$broadcast(UPDATE_EVENT, lang);
+        }
+    };
+    uiI18n.add =  function(langs, strings){
+        if (typeof(langs) === 'object'){
+            angular.forEach(langs, function(lang){
+                if (lang){
+                    langCache.add(lang, strings);
+                }
+            });
+        } else {
+            langCache.add(langs, strings);
+        }
+    };
+    uiI18n.set = function(lang){
+        if (lang){
+            langCache.setCurrent(lang);
+            uiI18n.$broadcast(lang);
+        }
+    };
+
+    var localeDirective = function() {
+        return {
+            compile: function(){
+                return {
+                    pre: function($scope, $elm, $attrs) {
+                        var alias = LOCALE_DIRECTIVE_ALIAS;
+                        if (!uiI18n.$root){
+                            uiI18n.$root = $scope.$root;
+                        }
+                        // check for watchable property
+                        var lang = $scope.$eval($attrs[alias]);
+                        if (lang){
+                            $scope.$watch($attrs[alias], uiI18n.set);
+                        } else if ($attrs.$$observers){
+                            $scope.$on('$destroy', $attrs.$observe(alias, uiI18n.set));
+                        } else {
+                            // fall back to the string value
+                            lang = $attrs[alias];
+                        }
+                        uiI18n.set(lang || DEFAULT_LANG);
+                    }
+                };
+            }
+        };
+    };
+    uiI18n.directive(LOCALE_DIRECTIVE_ALIAS, localeDirective);
+
+    // directive syntax
+    var uitDirective = function($parse) {
+        return {
+            restrict: 'EA',
+            compile: function(){
+                return {
+                    pre: function($scope, $elm, $attrs) {
+                        if (!uiI18n.$root){
+                            uiI18n.$root = $scope.$root;
+                        }
+                        var alias1 = DIRECTIVE_ALIASES[0],
+                            alias2 = DIRECTIVE_ALIASES[1];
+                        var token = $attrs[alias1] || $attrs[alias2] || $elm.html();
+                        var missing = MISSING + token;
+                        var observer;
+                        if ($attrs.$$observers){
+                            var prop = $attrs[alias1] ? alias1 : alias2;
+                            observer = $attrs.$observe(prop, function(result){
+                                if (result){
+                                    $elm.html($parse(result)(langCache.getCurrent()) || missing);
+                                }
+                            });
+                        }
+                        var getter = $parse(token);
+                        var listener = $scope.$on(UPDATE_EVENT, function(evt, lang){
+                            if (observer){
+                                observer($attrs[alias1] || $attrs[alias2]);
+                            } else {
+                                // set text based on i18n current language
+                                $elm.html(getter(langCache.get(lang)) || missing);
+                            }
+                        });
+                        $scope.$on('$destroy', listener);
+                    }
+                };
+            }
+        };
+    };
+
+    // optional filter syntax
+    var uitFilter = function($parse) {
+        return function(data) {
+            var getter = $parse(data);
+            // set text based on i18n current language
+            return getter(langCache.getCurrent()) || MISSING + data;
+        };
+    };
+
+    angular.forEach(DIRECTIVE_ALIASES, function(alias){
+        uiI18n.directive(alias,['$parse', uitDirective]);
+    });
+    angular.forEach(FILTER_ALIASES, function(alias){
+        uiI18n.filter(alias,['$parse', uitFilter]);
+    });
+})(function deepExtend(destination, source) {
+    'use strict';
+    // adding deep copy method until angularjs supports deep copy like everyone else.
+    // https://github.com/angular/angular.js/pull/5059
+    for (var property in source) {
+        if (source[property] && source[property].constructor &&
+            source[property].constructor === Object) {
+            destination[property] = destination[property] || {};
+            deepExtend(destination[property], source[property]);
+        } else {
+            destination[property] = source[property];
+        }
+    }
+    return destination;
+});
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('da',{
+        aggregate:{
+            label: 'artikler'
+        },
+        groupPanel:{
+            description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
+        },
+        search:{
+            placeholder: 'Søg...',
+            showingItems: 'Viste rækker:',
+            selectedItems: 'Valgte rækker:',
+            totalItems: 'Rækker totalt:',
+            size: 'Side størrelse:',
+            first: 'Første side',
+            next: 'Næste side',
+            previous: 'Forrige side',
+            last: 'Sidste side'
+        },
+        menu:{
+            text: 'Vælg kolonner:',
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add("de",{
+        aggregate:{
+            label: 'eintrag'
+        },
+        groupPanel:{
+            description: 'Ziehen Sie eine Spaltenüberschrift hierhin um nach dieser Spalte zu gruppieren.'
+        },
+        search:{
+            placeholder: 'Suche...',
+            showingItems: 'Zeige Einträge:',
+            selectedItems: 'Ausgewählte Einträge:',
+            totalItems: 'Einträge gesamt:',
+            size: 'Einträge pro Seite:',
+            first: 'Erste Seite',
+            next: 'Nächste Seite',
+            previous: 'Vorherige Seite',
+            last: 'Letzte Seite'
+        },
+        menu:{
+            text: 'Spalten auswählen:'
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add(["en", "en-us"],{
+        aggregate:{
+            label: 'items'
+        },
+        groupPanel:{
+            description: 'Drag a column header here and drop it to group by that column.'
+        },
+        search:{
+            placeholder: 'Search...',
+            showingItems: 'Showing Items:',
+            selectedItems: 'Selected Items:',
+            totalItems: 'Total Items:',
+            size: 'Page Size:',
+            first: 'First Page',
+            next: 'Next Page',
+            previous: 'Previous Page',
+            last: 'Last Page'
+        },
+        menu:{
+            text: 'Choose Columns:'
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('es',{
+        aggregate:{
+            label: 'Artículos'
+        },
+        groupPanel:{
+            description: 'Arrastre un encabezado de columna aquí y soltarlo para agrupar por esa columna.'
+        },
+        search:{
+            placeholder: 'Buscar...',
+            showingItems: 'Artículos Mostrando:',
+            selectedItems: 'Artículos Seleccionados:',
+            totalItems: 'Artículos Totales:',
+            size: 'Tamaño de Página:',
+            first: 'Primera Página',
+            next: 'Página Siguiente',
+            previous: 'Página Anterior',
+            last: 'Última Página'
+        },
+        menu:{
+            text: 'Elegir columnas:',
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('fa',{
+        aggregate:{
+            label:  'موردها'
+        },
+        groupPanel:{
+            description:  'یک عنوان ستون اینجا را بردار و به گروهی از آن ستون بیانداز.'
+        },
+        search:{
+            placeholder: 'جستجو...',
+            showingItems: 'نمایش موردها:',
+            selectedItems: 'موردهای انتخاب\u200cشده:',
+            totalItems: 'همهٔ موردها:',
+            size: 'اندازهٔ صفحه:',
+            first: 'صفحهٔ اول',
+            next: 'صفحهٔ بعد',
+            previous: 'صفحهٔ قبل',
+            last: 'آخرین صفحه'
+        },
+        menu:{
+            text:  'انتخاب ستون\u200cها:'
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('fr',{
+        aggregate:{
+            label: 'articles'
+        },
+        groupPanel:{
+            description: 'Faites glisser un en-tête de colonne ici et déposez-le vers un groupe par cette colonne.'
+        },
+        search:{
+            placeholder: 'Recherche...',
+            showingItems:  'Articles Affichage des:',
+            selectedItems:'Éléments Articles:',
+            totalItems: 'Nombre total d\'articles:',
+            size: 'Taille de page:',
+            first: 'Première page',
+            next: 'Page Suivante',
+            previous: 'Page précédente',
+            last: 'Dernière page'
+        },
+        menu:{
+            text: 'Choisir des colonnes:'
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('pt-br',{
+        aggregate:{
+            label: 'itens'
+        },
+        groupPanel:{
+            description: 'Arraste e solte uma coluna aqui para agrupar por essa coluna'
+        },
+        search:{
+            placeholder: 'Procurar...',
+            showingItems: 'Mostrando os Itens:',
+            selectedItems: 'Items Selecionados:',
+            totalItems: 'Total de Itens:',
+            size: 'Tamanho da Página:',
+            first: 'Primeira Página',
+            next: 'Próxima Página',
+            previous: 'Página Anterior',
+            last: 'Última Página'
+        },
+        menu:{
+            text: 'Selecione as colunas:'
+        }
+    });
+})();
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('zh-cn',{
+        aggregate:{
+            label: '条目'
+        },
+        groupPanel:{
+            description: '拖曳表头到此处以进行分组'
+        },
+        search:{
+            placeholder: '搜索...',
+            showingItems: '当前显示条目：',
+            selectedItems: '选中条目：',
+            totalItems: '条目总数：',
+            size: '每页显示数：',
+            first: '回到首页',
+            next: '下一页',
+            previous: '上一页',
+            last: '前往尾页'
+        },
+        menu:{
+            text: '数据分组与选择列：'
+        }
+    });
+})();
+
+(function(){
+    var uiI18n = angular.module('ui.i18n');
+    uiI18n.add('zh-tw',{
+        aggregate:{
+            label: '筆'
+        },
+        groupPanel:{
+            description: '拖拉表頭到此處以進行分組'
+        },
+        search:{
+            placeholder: '搜尋...',
+            showingItems: '目前顯示筆數：',
+            selectedItems:  '選取筆數：',
+            totalItems:  '總筆數：',
+            size:  '每頁顯示：',
+            first: '第一頁',
+            next: '下一頁',
+            previous: '上一頁',
+            last: '最後頁'
+        },
+        menu:{
+            text: '選擇欄位：'
+        }
+    });
 })();
 (function () {
   'use strict';
@@ -799,42 +1175,6 @@
 (function(){
   'use strict';
 
-  angular.module('ui.grid').directive('uiGridGroupPanel', ["$compile", "uiGridConstants", "gridUtil", function($compile, uiGridConstants, gridUtil) {
-    var defaultTemplate = 'ui-grid/ui-grid-group-panel';
-
-    return {
-      restrict: 'EA',
-      replace: true,
-      require: '?^uiGrid',
-      scope: false,
-      compile: function($elm, $attrs) {
-        return {
-          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            var groupPanelTemplate = $scope.grid.options.groupPanelTemplate  || defaultTemplate;
-
-             gridUtil.getTemplate(groupPanelTemplate)
-              .then(function (contents) {
-                var template = angular.element(contents);
-                
-                var newElm = $compile(template)($scope);
-                $elm.append(newElm);
-              });
-          },
-
-          post: function ($scope, $elm, $attrs, uiGridCtrl) {
-            $elm.bind('$destroy', function() {
-              // scrollUnbinder();
-            });
-          }
-        };
-      }
-    };
-  }]);
-
-})();
-(function(){
-  'use strict';
-
   angular.module('ui.grid').directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'uiGridConstants', 'gridUtil', '$timeout', function($log, $templateCache, $compile, uiGridConstants, gridUtil, $timeout) {
     var defaultTemplate = 'ui-grid/ui-grid-header';
 
@@ -1491,11 +1831,6 @@
           col.compiledElementFn = compiledElementFn;
         });
       }
-
-      //TODO: Move this.
-      $scope.groupings = [];
-
-
       if ($attrs.uiGridColumns) {
         $attrs.$observe('uiGridColumns', function(value) {
           self.grid.options.columnDefs = value;
@@ -1723,96 +2058,6 @@ angular.module('ui.grid').directive('uiGrid',
     return uiGridCell;
   }]);
 
-})();
-(function(){
-    'use strict';
-    var MISSING = "[MISSING]: ";
-    var uiI18n = angular.module('ui.i18n', []);
-    uiI18n.value('uiI18n.packs', {
-        i18n: {},
-        lang: null
-    });
-    var getPack = function(){
-        return angular.injector(['ng','ui.i18n']).get('uiI18n.packs');
-    };
-    uiI18n.i18n = {
-        add: function(langs, strings){
-            var packs = getPack();
-            if (typeof(langs) === "object"){
-                angular.forEach(langs, function(lang){
-                    if (lang){
-                        var lower = lang.toLowerCase();
-                        var combined = angular.extend(packs.i18n[lang] || {}, strings);
-                        packs.i18n[lower] = combined;
-                    }
-                });
-            } else {
-                var lower = langs.toLowerCase();
-                var combined = angular.extend(packs.i18n[langs] || {}, strings);
-                packs.i18n[lower] = combined;
-            }
-            uiI18n.value('uiI18n.packs', packs);
-        },
-        set: function(lang){
-            if (lang){
-                var pack = getPack();
-                pack.lang = lang;
-                uiI18n.value('uiI18n.packs', pack);
-            }
-        }
-    };
-
-    uiI18n.directive('uiI18n',['uiI18n.packs', function(packs) {
-        return {
-            link: function($scope, $elm, $attrs) {
-                // check for watchable property
-                var lang = $scope.$eval($attrs.uiI18n);
-                if (lang){
-                    $scope.$watch($attrs.uiI18n, function(newLang){
-                        uiI18n.i18n.set(newLang);
-                        $scope.$broadcast("$uiI18n", newLang);
-                    });
-                } else {
-                    // fall back to the string value
-                    lang = $attrs.uiI18n;
-                }
-                uiI18n.i18n.set(lang);
-            }
-        };
-    }]);
-
-    var uitDirective = function($parse, packs) {
-        return {
-            restrict: 'EA',
-            compile: function(){
-                return function($scope, $elm, $attrs) {
-                    var token = $attrs.uiT || $attrs.uiTranslate || $elm.html();
-                    var getter = $parse(token);
-                    var missing = MISSING + token;
-
-                    var listener = $scope.$on("$uiI18n", function(evt, lang){
-                        // set text based on i18n current language
-                        $elm.html(getter(packs.i18n[lang]) || missing);
-                    });
-                    $scope.$on('$destroy', listener);
-                };
-            }
-        };
-    };
-    // directive syntax
-    uiI18n.directive('uiT',['$parse', 'uiI18n.packs', uitDirective]);
-    uiI18n.directive('uiTranslate',['$parse', 'uiI18n.packs', uitDirective]);
-
-    var uitFilter = function($parse, packs) {
-        return function(data) {
-            var getter = $parse(data);
-            // set text based on i18n current language
-            return getter(packs.i18n[packs.lang]) || MISSING + data;
-        };
-    };
-    // optional syntax
-    uiI18n.filter('t', ['$parse', 'uiI18n.packs', uitFilter]);
-    uiI18n.filter('translate', ['$parse', 'uiI18n.packs', uitFilter]);
 })();
 (function () {
   'use strict';
@@ -3271,230 +3516,160 @@ module.filter('px', function() {
       }]);
 
 })();
+// constant for sorting direction
 (function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('da',{
-        aggregate:{
-            label: 'artikler'
-        },
-        groupPanel:{
-            description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
-        },
-        search:{
-            placeholder: 'Søg...',
-            showingItems: 'Viste rækker:',
-            selectedItems: 'Valgte rækker:',
-            totalItems: 'Rækker totalt:',
-            size: 'Side størrelse:',
-            first: 'Første side',
-            next: 'Næste side',
-            previous: 'Forrige side',
-            last: 'Sidste side'
-        },
-        menu:{
-            text: 'Vælg kolonner:',
-        }
+    angular.module('ui.grid.grouping', ['ui.grid']).constant('groupConstants', {
+        FIELD: '_ui_field_',
+        DEPTH: '_ui_depth_',
+        HIDDEN: '_ui_hidden_',
+        COLUMN: '_ui_column_'
     });
 })();
 (function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add("de",{
-        aggregate:{
-            label: 'eintrag'
-        },
-        groupPanel:{
-            description: 'Ziehen Sie eine Spaltenüberschrift hierhin um nach dieser Spalte zu gruppieren.'
-        },
-        search:{
-            placeholder: 'Suche...',
-            showingItems: 'Zeige Einträge:',
-            selectedItems: 'Ausgewählte Einträge:',
-            totalItems: 'Einträge gesamt:',
-            size: 'Einträge pro Seite:',
-            first: 'Erste Seite',
-            next: 'Nächste Seite',
-            previous: 'Vorherige Seite',
-            last: 'Letzte Seite'
-        },
-        menu:{
-            text: 'Spalten auswählen:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add(["en", "en-us"],{
-        aggregate:{
-            label: 'items'
-        },
-        groupPanel:{
-            description: 'Drag a column header here and drop it to group by that column.'
-        },
-        search:{
-            placeholder: 'Search...',
-            showingItems: 'Showing Items:',
-            selectedItems: 'Selected Items:',
-            totalItems: 'Total Items:',
-            size: 'Page Size:',
-            first: 'First Page',
-            next: 'Next Page',
-            previous: 'Previous Page',
-            last: 'Last Page'
-        },
-        menu:{
-            text: 'Choose Columns:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('es',{
-        aggregate:{
-            label: 'Artículos'
-        },
-        groupPanel:{
-            description: 'Arrastre un encabezado de columna aquí y soltarlo para agrupar por esa columna.'
-        },
-        search:{
-            placeholder: 'Buscar...',
-            showingItems: 'Artículos Mostrando:',
-            selectedItems: 'Artículos Seleccionados:',
-            totalItems: 'Artículos Totales:',
-            size: 'Tamaño de Página:',
-            first: 'Primera Página',
-            next: 'Página Siguiente',
-            previous: 'Página Anterior',
-            last: 'Última Página'
-        },
-        menu:{
-            text: 'Elegir columnas:',
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('fa',{
-        aggregate:{
-            label:  'موردها'
-        },
-        groupPanel:{
-            description:  'یک عنوان ستون اینجا را بردار و به گروهی از آن ستون بیانداز.'
-        },
-        search:{
-            placeholder: 'جستجو...',
-            showingItems: 'نمایش موردها:',
-            selectedItems: 'موردهای انتخاب\u200cشده:',
-            totalItems: 'همهٔ موردها:',
-            size: 'اندازهٔ صفحه:',
-            first: 'صفحهٔ اول',
-            next: 'صفحهٔ بعد',
-            previous: 'صفحهٔ قبل',
-            last: 'آخرین صفحه'
-        },
-        menu:{
-            text:  'انتخاب ستون\u200cها:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('fr',{
-        aggregate:{
-            label: 'articles'
-        },
-        groupPanel:{
-            description: 'Faites glisser un en-tête de colonne ici et déposez-le vers un groupe par cette colonne.'
-        },
-        search:{
-            placeholder: 'Recherche...',
-            showingItems:  'Articles Affichage des:',
-            selectedItems:'Éléments Articles:',
-            totalItems: 'Nombre total d\'articles:',
-            size: 'Taille de page:',
-            first: 'Première page',
-            next: 'Page Suivante',
-            previous: 'Page précédente',
-            last: 'Dernière page'
-        },
-        menu:{
-            text: 'Choisir des colonnes:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('pt-br',{
-        aggregate:{
-            label: 'itens',
-        },
-        groupPanel:{
-            description: 'Arraste e solte uma coluna aqui para agrupar por essa coluna'
-        },
-        search:{
-            placeholder: 'Procurar...',
-            showingItems: 'Mostrando os Itens:',
-            selectedItems: 'Items Selecionados:',
-            totalItems: 'Total de Itens:',
-            size: 'Tamanho da Página:',
-            first: 'Primeira Página',
-            next: 'Próxima Página',
-            previous: 'Página Anterior',
-            last: 'Última Página'
-        },
-        menu:{
-            text: 'Selecione as colunas:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('zh-cn',{
-        aggregate:{
-            label: '条目'
-        },
-        groupPanel:{
-            description: '拖曳表头到此处以进行分组'
-        },
-        search:{
-            placeholder: '搜索...',
-            showingItems: '当前显示条目：',
-            selectedItems: '选中条目：',
-            totalItems: '条目总数：',
-            size: '每页显示数：',
-            first: '回到首页',
-            next: '下一页',
-            previous: '上一页',
-            last: '前往尾页'
-        },
-        menu:{
-            text: '数据分组与选择列：'
-        }
-    });
-})();
+  'use strict';
 
+  angular.module('ui.grid.grouping').directive('uiGridGroupPanel', ["$compile", "gridUtil", function($compile, gridUtil) {
+    var defaultTemplate = 'ui-grid/ui-grid-group-panel';
+
+    return {
+      restrict: 'EA',
+      replace: true,
+      require: '?^uiGrid',
+      scope: false,
+      compile: function() {
+        return {
+          pre: function ($scope, $elm) {
+              var groupPanelTemplate = $scope.grid.options.groupPanelTemplate  || defaultTemplate;
+
+              $scope.groupings = [];
+
+              gridUtil.getTemplate(groupPanelTemplate).then(function (contents) {
+                  var template = angular.element(contents);
+
+                  var newElm = $compile(template)($scope);
+                  $elm.append(newElm);
+              });
+          },
+
+          post: function ($scope, $elm) {
+            $elm.bind('$destroy', function() {
+            });
+          }
+        };
+      }
+    };
+  }]);
+})();
 (function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('zh-tw',{
-        aggregate:{
-            label: '筆'
-        },
-        groupPanel:{
-            description: '拖拉表頭到此處以進行分組'
-        },
-        search:{
-            placeholder: '搜尋...',
-            showingItems: '目前顯示筆數：',
-            selectedItems:  '選取筆數：',
-            totalItems:  '總筆數：',
-            size:  '每頁顯示：',
-            first: '第一頁',
-            next: '下一頁',
-            previous: '上一頁',
-            last: '最後頁'
-        },
-        menu:{
-            text: '選擇欄位：'
-        }
+    'use strict';
+
+    angular.module('ui.grid.grouping').factory('uiGridAggregationService', ['groupConstants', '$parse'], function(constants, $parse){
+        var service = {};
+        var parsedData = [];
+        var parentCache = [];
+        var numberOfAggregates = 0;
+
+        //magical recursion. it works. I swear it. I figured it out in the shower one day.
+        var parseGroupData = function(g) {
+            if (g.values) {
+                for (var x = 0; x < g.values.length; x++){
+                    // get the last parent in the array because that's where our children want to be
+                    parentCache[parentCache.length - 1].children.push(g.values[x]);
+                    //add the row to our return array
+                    parsedData.push(g.values[x]);
+                }
+            } else {
+                for (var prop in g) {
+                    // exclude the meta properties.
+                    if (prop === constants.FIELD || prop === constants.DEPTH || prop === constants.COLUMN) {
+                        continue;
+                    } else if (g.hasOwnProperty(prop)) {
+                        //build the aggregate row
+                        var agg = {
+                            gField: g[constants.FIELD],
+                            gLabel: prop,
+                            gDepth: g[constants.DEPTH],
+                            isAggRow: true,
+                            '_ng_hidden_': false,
+                            children: [],
+                            aggChildren: [],
+                            aggIndex: numberOfAggregates,
+                            aggLabelFilter: g[constants.COLUMN].aggLabelFilter
+                        };
+                        numberOfAggregates++;
+                        //set the aggregate parent to the parent in the array that is one less deep.
+                        agg.parent = parentCache[agg.depth - 1];
+                        // if we have a parent, set the parent to not be collapsed and append the current agg to its children
+                        if (agg.parent) {
+                            agg.parent.collapsed = false;
+                            agg.parent.aggChildren.push(agg);
+                        }
+                        // add the aggregate row to the parsed data.
+                        parsedData.push(agg);
+                        // the current aggregate now the parent of the current depth
+                        parentCache[agg.depth] = agg;
+                        // dig deeper for more aggregates or children.
+                        parseGroupData(g[prop]);
+                    }
+                }
+            }
+        };
+        //Shuffle the data into their respective groupings.
+        var getGrouping = function(groups, rows, cols, autoCollapse) {
+            numberOfAggregates = 0;
+            var groupedData = {};
+
+            function filterCols(cols, group) {
+                return cols.filter(function(c) {
+                    return c.field === group;
+                });
+            }
+
+            for (var x = 0; x < rows.length; x++) {
+                var model = rows[x]; //just the row or row.entity?
+                if (!model) {
+                    return groupedData;
+                }
+                rows[x][constants.HIDDEN] = autoCollapse;
+                var ptr = groupedData;
+
+                for (var y = 0; y < groups.length; y++) {
+                    var group = groups[y];
+
+                    var col = filterCols(cols, group)[0];
+
+                    var val = $parse(group)(model);
+                    val = val ? val.toString() : 'null';
+                    if (!ptr[val]) {
+                        ptr[val] = {};
+                    }
+                    if (!ptr[constants.FIELD]) {
+                        ptr[constants.FIELD] = group;
+                    }
+                    if (!ptr[constants.DEPTH]) {
+                        ptr[constants.DEPTH] = y;
+                    }
+                    if (!ptr[constants.COLUMN]) {
+                        ptr[constants.COLUMN] = col;
+                    }
+                    ptr = ptr[val];
+                }
+                if (!ptr.values) {
+                    ptr.values = [];
+                }
+                ptr.values.push(rows[x]);
+            }
+            return groupedData;
+        };
+
+        service.getAggregates = function(groups, filteredRows, columns, autoCollapse){
+            if (groups.length > 0) {
+                var g = getGrouping(groups, filteredRows, columns, autoCollapse);
+                parseGroupData(g);
+                return parsedData;
+            }
+        };
+        return service;
     });
 })();
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
@@ -3510,18 +3685,18 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('ui-grid/grouping/ui-grid-group-panel',
+    "<!--  <div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div>--><div class=\"ui-grid-group-panel\"><div ui-t=\"groupPanel.description\" class=\"description\" ng-show=\"groupings.length == 0\"></div><ul ng-show=\"groupings.length > 0\" class=\"ngGroupList\"><li class=\"ngGroupItem\" ng-repeat=\"group in configGroups\"><span class=\"ngGroupElement\"><span class=\"ngGroupName\">{{group.displayName}} <span ng-click=\"removeGroup($index)\" class=\"ngRemoveGroup\">x</span></span> <span ng-hide=\"$last\" class=\"ngGroupArrow\"></span></span></li></ul></div>"
+  );
+
+
   $templateCache.put('ui-grid/ui-grid-body',
     "<div class=\"ui-grid-body\"><div class=\"ui-grid-scrollbar-box\"><div ui-grid-viewport=\"\" class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in grid.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowStyle($index)\"><div ui-grid-row=\"row\" row-index=\"row.index\"></div></div></div></div></div><div ui-grid-scrollbar=\"\" type=\"vertical\" scrolling-class=\"ui-grid-scrolling\"></div><div ui-grid-scrollbar=\"\" type=\"horizontal\" scrolling-class=\"ui-grid-scrolling\"></div></div>"
   );
 
 
-  $templateCache.put('ui-grid/ui-grid-group-panel',
-    "<div class=\"ui-grid-group-panel\"><div ui-t=\"groupPanel.description\" class=\"description\" ng-show=\"groupings.length == 0\"></div><ul ng-show=\"groupings.length > 0\" class=\"ngGroupList\"><li class=\"ngGroupItem\" ng-repeat=\"group in configGroups\"><span class=\"ngGroupElement\"><span class=\"ngGroupName\">{{group.displayName}} <span ng-click=\"removeGroup($index)\" class=\"ngRemoveGroup\">x</span></span> <span ng-hide=\"$last\" class=\"ngGroupArrow\"></span></span></li></ul></div>"
-  );
-
-
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</div></div></div></div><div ui-grid-menu=\"\"></div></div>"
+    "<div class=\"ui-grid-top-panel\"><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</div></div></div></div><div ui-grid-menu=\"\"></div></div>"
   );
 
 
