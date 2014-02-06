@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-4565b0b - 2014-02-04
+/*! ui-grid - v2.0.7-ca41ed8 - 2014-02-06
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -254,6 +254,10 @@
   .rounded(@gridBorderRadius);
 
   .transform(translateZ(0));
+
+  &.column-resizing {
+  	cursor: pointer;
+  }
 }
 
 .ui-grid-vertical-bar {
@@ -359,6 +363,15 @@
   &.right {
     right: 0;
   }
+}
+
+.ui-grid-resize-overlay {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: @gridBorderWidth;
+  // background-color: @verticalBarColor;
+  background-color: red;
 }
 
 

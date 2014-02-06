@@ -9,6 +9,9 @@
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
+.ui-grid.column-resizing {
+  cursor: pointer;
+}
 .ui-grid-vertical-bar {
   position: absolute;
   right: 0;
@@ -118,6 +121,13 @@
 }
 .ui-grid-column-resizer.right {
   right: 0;
+}
+.ui-grid-resize-overlay {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: red;
 }
 .ui-grid-body {
   position: relative;
