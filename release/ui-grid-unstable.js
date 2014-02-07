@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-b9fb4e5 - 2014-02-07
+/*! ui-grid - v2.0.7-54601bd - 2014-02-07
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -805,7 +805,8 @@
       priority: 0,
       scope: {
         col: '=',
-        position: '@'
+        position: '@',
+        renderIndex: '=',
       },
       require: '?^uiGrid',
       link: function ($scope, $elm, $attrs, uiGridCtrl) {
@@ -844,8 +845,27 @@
           x = event.clientX - gridLeft;
           var xDiff = x - startX;
 
-          var leftCol, rightCol;
-          // if (true) {}
+          // The other column to resize (the one next to this one)
+          var otherCol, multiplier;
+          if ($scope.position === 'left') {
+            // Get the column to the left of this one
+            otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex - 1];
+            multiplier = 1;
+          }
+          else if ($scope.position === 'right') {
+            otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex + 1];
+            multiplier = -1;
+          }
+          
+          $scope.col.colDef.width = $scope.col.drawnWidth - xDiff * multiplier;
+          otherCol.colDef.width = otherCol.drawnWidth + xDiff * multiplier;
+
+          $log.debug($scope.col, otherCol);
+
+          uiGridCtrl.grid.buildColumns()
+            .then(function() {
+              uiGridCtrl.refreshCanvas(true);
+            });
 
           $document.off('mouseup', mouseup);
           $document.off('mousemove', mousemove);
@@ -1001,7 +1021,7 @@
                 var canvasWidth = 0;
 
                 var ret = '';
-                // debugger;
+                debugger;
                 uiGridCtrl.grid.columns.forEach(function(column, i) {
                   // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
                   //var colWidth = (typeof(c.width) !== 'undefined' && c.width !== undefined) ? c.width : equalWidth;
@@ -1040,7 +1060,7 @@
                 if (percentArray.length > 0) {
                   percentArray.forEach(function(column) {
                     var percent = parseFloat(column.width) / 100;
-                    var colWidth = percent * availableWidth;
+                    var colWidth = percent * remainingWidth;
 
                     canvasWidth = colWidth;
 
@@ -1052,7 +1072,7 @@
 
                 if (asterisksArray.length > 0) {
                   // Calculate the weight of each asterisk
-                  var asteriskVal = availableWidth / asteriskNum;
+                  var asteriskVal = remainingWidth / asteriskNum;
 
                   asterisksArray.forEach(function(column) {
                     var colWidth = asteriskVal * column.width.length;
@@ -1771,6 +1791,7 @@ angular.module('ui.grid').directive('uiGrid',
 
               // Default canvasWidth to the grid width, in case we don't get any column definitions to calculate it from
               uiGridCtrl.grid.canvasWidth = uiGridCtrl.grid.gridWidth;
+              $log.debug('setting canvasWidth', uiGridCtrl.grid.canvasWidth);
 
               uiGridCtrl.grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
@@ -2261,6 +2282,7 @@ angular.module('ui.grid').directive('uiGrid',
       };
 
       Grid.prototype.getCanvasWidth = function () {
+        $log.debug('canvasWidth', this.canvasWidth);
         return this.canvasWidth;
       };
 
@@ -3620,7 +3642,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\"><div ng-if=\"grid.options.enableColumnResizing && col.index != 0\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer=\"\" col=\"col\" position=\"left\">&nbsp;</div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</div><div ng-if=\"grid.options.enableColumnResizing && col.index != grid.renderedColumns.length - 1\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer=\"\" col=\"col\" position=\"right\">&nbsp;</div></div></div></div><div ui-grid-menu=\"\"></div></div>"
+    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\"><div ng-if=\"grid.options.enableColumnResizing && col.index != 0\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer=\"\" col=\"col\" position=\"left\" render-index=\"$index\">&nbsp;</div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</div><div ng-if=\"grid.options.enableColumnResizing && col.index != grid.renderedColumns.length - 1\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer=\"\" col=\"col\" position=\"right\" render-index=\"$index\">&nbsp;</div></div></div></div><div ui-grid-menu=\"\"></div></div>"
   );
 
 

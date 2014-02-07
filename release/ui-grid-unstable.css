@@ -127,7 +127,7 @@
   top: 0;
   height: 100%;
   width: 1px;
-  background-color: red;
+  background-color: #aeaeae;
 }
 .ui-grid-body {
   position: relative;
