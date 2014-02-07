@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-ca41ed8 - 2014-02-06
+/*! ui-grid - v2.0.7-b9fb4e5 - 2014-02-07
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -804,13 +804,21 @@
     var resizer = {
       priority: 0,
       scope: {
-        col: '='
+        col: '=',
+        position: '@'
       },
       require: '?^uiGrid',
       link: function ($scope, $elm, $attrs, uiGridCtrl) {
         var startX = 0,
             x = 0,
             gridLeft = 0;
+
+        if ($scope.position === 'left') {
+          $elm.addClass('left');
+        }
+        else if ($scope.position === 'right') {
+          $elm.addClass('right');
+        }
 
         function mousemove(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
@@ -833,6 +841,11 @@
           resizeOverlay.remove();
 
           // Resize the column
+          x = event.clientX - gridLeft;
+          var xDiff = x - startX;
+
+          var leftCol, rightCol;
+          // if (true) {}
 
           $document.off('mouseup', mouseup);
           $document.off('mousemove', mousemove);
@@ -3607,7 +3620,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\"><div ng-if=\"grid.options.enableColumnResizing && col.index != 0\" class=\"ui-grid-column-resizer left\" ui-grid-column-resizer=\"\" col=\"col\">&nbsp;</div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</div><div ng-if=\"grid.options.enableColumnResizing && col.index != grid.renderedColumns.length - 1\" class=\"ui-grid-column-resizer right\" ui-grid-column-resizer=\"\" col=\"col\">&nbsp;</div></div></div></div><div ui-grid-menu=\"\"></div></div>"
+    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\"><div ng-if=\"grid.options.enableColumnResizing && col.index != 0\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer=\"\" col=\"col\" position=\"left\">&nbsp;</div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</div><div ng-if=\"grid.options.enableColumnResizing && col.index != grid.renderedColumns.length - 1\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer=\"\" col=\"col\" position=\"right\">&nbsp;</div></div></div></div><div ui-grid-menu=\"\"></div></div>"
   );
 
 
