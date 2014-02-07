@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-7b6311a - 2014-02-07
+/*! ui-grid - v2.0.7-da14063 - 2014-02-07
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -841,9 +841,10 @@
             .then(function() {
               uiGridCtrl.refreshCanvas(true);
 
-              var args = uiGridCtrl.prevScrollArgs ? uiGridCtrl.prevScrollArgs : { x: 0 };
+              var args = uiGridCtrl.prevScrollArgs ? uiGridCtrl.prevScrollArgs : { x: { percentage: 0 } };
 
-              $scope.$emit(uiGridConstants.events.GRID_SCROLL, args);
+              // $scope.$emit(uiGridConstants.events.GRID_SCROLL, args);
+              // uiGridCtrl.fireScrollingEvent(args);
             });
         }
 
@@ -1495,6 +1496,8 @@
 
           // Store the new top in the y value
 
+          $log.debug('newScrollPosition', newScrollPosition);
+
           if ($scope.type === 'vertical') {
             y = newScrollPosition;
 
@@ -1800,8 +1803,8 @@
       };
 
       //todo: throttle this event?
-      self.fireScrollingEvent = function() {
-        $scope.$broadcast(uiGridConstants.events.GRID_SCROLLING);
+      self.fireScrollingEvent = function(args) {
+        $scope.$broadcast(uiGridConstants.events.GRID_SCROLLING, args);
       };
 
     }]);
