@@ -122,7 +122,7 @@
 .ui-grid-column-resizer.right {
   right: 0;
 }
-.ui-grid-resize-overlay {
+.ui-grid.column-resizing .ui-grid-resize-overlay {
   position: absolute;
   top: 0;
   height: 100%;

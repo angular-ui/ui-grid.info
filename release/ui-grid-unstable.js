@@ -1,8 +1,8 @@
-/*! ui-grid - v2.0.7-54601bd - 2014-02-07
+/*! ui-grid - v2.0.7-7b6311a - 2014-02-07
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
-   angular.module('ui.grid', ['ui.i18n']);
+   angular.module('ui.grid', []);
 })();
 (function () {
   'use strict';
@@ -519,6 +519,8 @@
               uiGridCtrl.grid.options.offsetLeft = newScrollLeft;
             }
 
+            uiGridCtrl.prevScrollArgs = args;
+
             uiGridCtrl.fireScrollingEvent();
           // });
         });
@@ -798,7 +800,7 @@
 (function(){
   'use strict';
 
-  angular.module('ui.grid').directive('uiGridColumnResizer', ['$log', '$document', function ($log, $document) {
+  angular.module('ui.grid').directive('uiGridColumnResizer', ['$log', '$document', 'gridUtil', 'uiGridConstants', function ($log, $document, gridUtil, uiGridConstants) {
     var resizeOverlay = angular.element('<div class="ui-grid-resize-overlay"></div>');
 
     var resizer = {
@@ -821,9 +823,37 @@
           $elm.addClass('right');
         }
 
+        // Resize all the other columns around col
+        function resizeAroundColumn(col) {
+          uiGridCtrl.grid.columns.forEach(function (column) {
+            // Skip the column we just resized
+            if (column.index === col.index) { return; }
+            
+            var colDef = column.colDef;
+            if (!colDef.width || (angular.isString(colDef.width) && (colDef.width.indexOf('*') !== -1 || colDef.width.indexOf('%') !== -1))) {
+              colDef.width = column.drawnWidth;
+            }
+          });
+        }
+
+        function buildColumnsAndRefresh() {
+          uiGridCtrl.grid.buildColumns()
+            .then(function() {
+              uiGridCtrl.refreshCanvas(true);
+
+              var args = uiGridCtrl.prevScrollArgs ? uiGridCtrl.prevScrollArgs : { x: 0 };
+
+              $scope.$emit(uiGridConstants.events.GRID_SCROLL, args);
+            });
+        }
+
         function mousemove(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
           event.preventDefault();
+
+          if (!uiGridCtrl.grid.element.hasClass('column-resizing')) {
+            uiGridCtrl.grid.element.addClass('column-resizing');
+          }
 
           x = event.clientX - gridLeft;
 
@@ -845,27 +875,34 @@
           x = event.clientX - gridLeft;
           var xDiff = x - startX;
 
+          if (xDiff === 0) {
+            $document.off('mouseup', mouseup);
+            $document.off('mousemove', mousemove);
+            return;
+          }
+
           // The other column to resize (the one next to this one)
+          var col = $scope.col;
           var otherCol, multiplier;
           if ($scope.position === 'left') {
             // Get the column to the left of this one
-            otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex - 1];
-            multiplier = 1;
+            col = uiGridCtrl.grid.renderedColumns[$scope.renderIndex - 1];
+            // otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex - 1];
+            otherCol = $scope.col;
+            // multiplier = 1;
           }
           else if ($scope.position === 'right') {
             otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex + 1];
-            multiplier = -1;
+            // multiplier = -1;
           }
           
-          $scope.col.colDef.width = $scope.col.drawnWidth - xDiff * multiplier;
-          otherCol.colDef.width = otherCol.drawnWidth + xDiff * multiplier;
+          col.colDef.width = col.drawnWidth + xDiff;
+          // otherCol.colDef.width = otherCol.drawnWidth + xDiff * -1;
 
-          $log.debug($scope.col, otherCol);
+          // All other columns because fixed to their drawn width, if they aren't already
+          resizeAroundColumn(col);
 
-          uiGridCtrl.grid.buildColumns()
-            .then(function() {
-              uiGridCtrl.refreshCanvas(true);
-            });
+          buildColumnsAndRefresh();
 
           $document.off('mouseup', mouseup);
           $document.off('mousemove', mousemove);
@@ -874,8 +911,6 @@
         $elm.on('mousedown', function(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
           event.preventDefault();
-
-          uiGridCtrl.grid.element.addClass('column-resizing');
 
           // Get the left offset of the grid
           gridLeft = uiGridCtrl.grid.element[0].offsetLeft;
@@ -896,7 +931,42 @@
 
         // On doubleclick, resize to fit all rendered cells
         $elm.on('dblclick', function() {
+          
+          var col = $scope.col;
+          var otherCol, multiplier;
 
+          // If we're the left-positioned resizer then we need to resize the column to the left of our column, and not our column itself
+          if ($scope.position === 'left') {
+            col = uiGridCtrl.grid.renderedColumns[$scope.renderIndex - 1];
+            otherCol = $scope.col;
+            multiplier = 1;
+          }
+          else if ($scope.position === 'right') {
+            otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex + 1];
+            multiplier = -1;
+          }
+
+          // Go through the rendered rows and find out the max size for the data in this column
+          var maxWidth = 0;
+          var cells = uiGridCtrl.grid.element[0].querySelectorAll('.col' + col.index);
+          Array.prototype.forEach.call(cells, function (cell) {
+              // Get the cell width
+              // $log.debug('width', gridUtil.elementWidth(cell));
+
+              gridUtil.fakeElement(cell, {}, function(newElm) {
+                var width = gridUtil.elementWidth(newElm);
+                if (width > maxWidth) {
+                  maxWidth = width;
+                }
+              });
+            });
+
+          col.colDef.width = maxWidth;
+          
+          // All other columns because fixed to their drawn width, if they aren't already
+          resizeAroundColumn(col);
+
+          buildColumnsAndRefresh();
         });
 
         $elm.on('$destroy', function() {
@@ -991,6 +1061,112 @@
 
             $log.debug('ui-grid-header link');
 
+            function updateColumnWidths() {
+              var asterisksArray = [],
+                  percentArray = [],
+                  manualArray = [],
+                  asteriskNum = 0,
+                  totalWidth = 0;
+
+              // Get the width of the viewport
+              var availableWidth = uiGridCtrl.grid.getViewportWidth();
+
+              // The total number of columns
+              // var equalWidthColumnCount = columnCount = uiGridCtrl.grid.options.columnDefs.length;
+              // var equalWidth = availableWidth / equalWidthColumnCount;
+
+              // The last column we processed
+              var lastColumn;
+
+              var manualWidthSum = 0;
+
+              var canvasWidth = 0;
+
+              var ret = '';
+              uiGridCtrl.grid.columns.forEach(function(column, i) {
+                // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+                //var colWidth = (typeof(c.width) !== 'undefined' && c.width !== undefined) ? c.width : equalWidth;
+
+                // Skip hidden columns
+                if (! column.visible) { return; }
+
+                var colWidth,
+                    isPercent = false;
+
+                if (! angular.isNumber(column.width)) {
+                  isPercent = isNaN(column.width) ? gridUtil.endsWith(column.width, "%") : false;
+                }
+
+                if (angular.isString(column.width) && column.width.indexOf('*') !== -1) { //  we need to save it until the end to do the calulations on the remaining width.
+                  asteriskNum = parseInt(asteriskNum + column.width.length, 10);
+                  
+                  asterisksArray.push(column);
+                }
+                else if (isPercent) { // If the width is a percentage, save it until the very last.
+                  percentArray.push(column);
+                }
+                else if (angular.isNumber(column.width)) {
+                  manualWidthSum = parseInt(manualWidthSum + column.width, 10);
+                  canvasWidth = parseInt(canvasWidth + column.width, 10);
+
+                  column.drawnWidth = column.width;
+
+                  ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + column.width + 'px; }';
+
+                  lastColumn = column;
+                }
+              });
+
+              // Get the remaining width (available width subtracted by the manual widths sum)
+              var remainingWidth = availableWidth - manualWidthSum;
+
+              if (percentArray.length > 0) {
+                percentArray.forEach(function(column) {
+                  var percent = parseInt(parseFloat(column.width) / 100, 10);
+                  var colWidth = percent * remainingWidth;
+
+                  canvasWidth = colWidth;
+
+                  column.drawnWidth = colWidth;
+
+                  ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+
+                  lastColumn = column;
+                });
+              }
+
+              if (asterisksArray.length > 0) {
+                // Calculate the weight of each asterisk
+                var asteriskVal = parseInt(remainingWidth / asteriskNum, 10);
+
+                asterisksArray.forEach(function(column) {
+                  var colWidth = parseInt(asteriskVal * column.width.length, 10);
+
+                  canvasWidth += colWidth;
+
+                  column.drawnWidth = colWidth;
+
+                  ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+
+                  lastColumn = column;
+                });
+              }
+
+              // // If the total canvas width is less than the viewport width, the final column needs to 
+              // if (canvasWidth < uiGridCtrl.grid.getViewportWidth()) {
+              //   var diff = uiGridCtrl.grid.getViewportWidth() - canvasWidth;
+
+              //   column.width = column.width + diff;
+              //   column.drawnWidth = column.width +;
+              // }
+
+              $scope.columnStyles = ret;
+
+              uiGridCtrl.grid.canvasWidth = parseInt(canvasWidth, 10);
+
+              uiGridCtrl.fireScrollingEvent();
+            }
+
             if (uiGridCtrl) {
               uiGridCtrl.header = $elm;
               
@@ -1002,120 +1178,11 @@
 
             //todo: remove this if by injecting gridCtrl into unit tests
             if (uiGridCtrl) {
-              uiGridCtrl.grid.registerStyleComputation(function() {
-                var asterisksArray = [],
-                    percentArray = [],
-                    manualArray = [],
-                    asteriskNum = 0,
-                    totalWidth = 0;
-
-                // Get the width of the viewport
-                var availableWidth = uiGridCtrl.grid.getViewportWidth();
-
-                // The total number of columns
-                // var equalWidthColumnCount = columnCount = uiGridCtrl.grid.options.columnDefs.length;
-                // var equalWidth = availableWidth / equalWidthColumnCount;
-
-                var manualWidthSum = 0;
-
-                var canvasWidth = 0;
-
-                var ret = '';
-                debugger;
-                uiGridCtrl.grid.columns.forEach(function(column, i) {
-                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
-                  //var colWidth = (typeof(c.width) !== 'undefined' && c.width !== undefined) ? c.width : equalWidth;
-
-                  // Skip hidden columns
-                  if (! column.visible) { return; }
-
-                  var colWidth,
-                      isPercent = false;
-
-                  if (! angular.isNumber(column.width)) {
-                    isPercent = isNaN(column.width) ? gridUtil.endsWith(column.width, "%") : false;
-                  }
-
-                  if (angular.isString(column.width) && column.width.indexOf('*') !== -1) { //  we need to save it until the end to do the calulations on the remaining width.
-                    asteriskNum += column.width.length;
-                    
-                    asterisksArray.push(column);
-                  }
-                  else if (isPercent) { // If the width is a percentage, save it until the very last.
-                    percentArray.push(column);
-                  }
-                  else if (angular.isNumber(column.width)) {
-                    manualWidthSum += column.width;
-                    canvasWidth += column.width;
-
-                    column.drawnWidth = column.width;
-
-                    ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + column.width + 'px; }';
-                  }
-                });
-  
-                // Get the remaining width (available width subtracted by the manual widths sum)
-                var remainingWidth = availableWidth - manualWidthSum;
-
-                if (percentArray.length > 0) {
-                  percentArray.forEach(function(column) {
-                    var percent = parseFloat(column.width) / 100;
-                    var colWidth = percent * remainingWidth;
-
-                    canvasWidth = colWidth;
-
-                    column.drawnWidth = colWidth;
-
-                    ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
-                  });
-                }
-
-                if (asterisksArray.length > 0) {
-                  // Calculate the weight of each asterisk
-                  var asteriskVal = remainingWidth / asteriskNum;
-
-                  asterisksArray.forEach(function(column) {
-                    var colWidth = asteriskVal * column.width.length;
-
-                    canvasWidth += colWidth;
-
-                    column.drawnWidth = colWidth;
-
-                    ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
-                  });
-                }
-                
-                // uiGridCtrl.grid.options.columnDefs.forEach(function(c, i) {
-                //   if (typeof(c.width) !== 'undefined' && c.width !== undefined) {
-                //     availableWidth = availableWidth - c.width;
-                //     equalWidthColumnCount = equalWidthColumnCount - 1;
-                //   }
-                // });
-
-                $scope.columnStyles = ret;
-
-                uiGridCtrl.grid.canvasWidth = canvasWidth;
+              uiGridCtrl.grid.registerStyleComputation({
+                priority: 0,
+                func: updateColumnWidths
               });
             }
-
-            // Scroll the header horizontally with the grid body
-            // var scrollUnbinder = $scope.$on(uiGridConstants.events.GRID_SCROLL, function(evt, args) {
-            //   // Horizontal scroll
-            //   if (args.x) {
-            //     var scrollWidth = (uiGridCtrl.grid.getCanvasWidth() - uiGridCtrl.grid.getViewportWidth());
-
-            //     var scrollXPercentage = args.x.percentage;
-            //     var newScrollLeft = Math.max(0, scrollXPercentage * scrollWidth);
-                
-            //     uiGridCtrl.headerViewport.scrollLeft = newScrollLeft;
-
-            //     $log.debug('header viewport scrollLeft', newScrollLeft);
-            //   }
-            // });
-
-            $elm.bind('$destroy', function() {
-              // scrollUnbinder();
-            });
           }
         };
       }
@@ -1265,10 +1332,16 @@
         }
 
         if ($scope.type === 'vertical') {
-          uiGridCtrl.grid.registerStyleComputation(updateVerticalScrollbar);
+          uiGridCtrl.grid.registerStyleComputation({
+            priority: 10,
+            func: updateVerticalScrollbar
+          });
         }
         else if ($scope.type === 'horizontal') {
-          uiGridCtrl.grid.registerStyleComputation(updateHorizontalScrollbar);
+          uiGridCtrl.grid.registerStyleComputation({
+            priority: 10,
+            func: updateHorizontalScrollbar
+          });
         }
 
         // Only show the scrollbar when the canvas height is less than the viewport height
@@ -1791,7 +1864,6 @@ angular.module('ui.grid').directive('uiGrid',
 
               // Default canvasWidth to the grid width, in case we don't get any column definitions to calculate it from
               uiGridCtrl.grid.canvasWidth = uiGridCtrl.grid.gridWidth;
-              $log.debug('setting canvasWidth', uiGridCtrl.grid.canvasWidth);
 
               uiGridCtrl.grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
@@ -2205,8 +2277,8 @@ angular.module('ui.grid').directive('uiGrid',
        * @description registered a styleComputation function
        * @param {function($scope)} styleComputation function
        */
-      Grid.prototype.registerStyleComputation = function (styleComputation) {
-        this.styleComputations.push(styleComputation);
+      Grid.prototype.registerStyleComputation = function (styleComputationInfo) {
+        this.styleComputations.push(styleComputationInfo);
       };
 
       Grid.prototype.setRenderedRows = function (newRows) {
@@ -2231,9 +2303,16 @@ angular.module('ui.grid').directive('uiGrid',
        */
       Grid.prototype.buildStyles = function ($scope) {
         var self = this;
-        self.styleComputations.forEach(function (comp) {
-          comp.call(self, $scope);
-        });
+        self.styleComputations
+          .sort(function(a, b) {
+            if (a.priority === null) { return 1; }
+            if (b.priority === null) { return -1; }
+            if (a.priority === null && b.priority === null) { return 0; }
+            return a.priority - b.priority;
+          })
+          .forEach(function (compInfo) {
+            compInfo.func.call(self, $scope);
+          });
       };
 
       Grid.prototype.minRowsToRender = function () {
@@ -2282,7 +2361,6 @@ angular.module('ui.grid').directive('uiGrid',
       };
 
       Grid.prototype.getCanvasWidth = function () {
-        $log.debug('canvasWidth', this.canvasWidth);
         return this.canvasWidth;
       };
 
@@ -2351,6 +2429,9 @@ angular.module('ui.grid').directive('uiGrid',
 
         // Resizing columns, off by default
         this.enableColumnResizing = false;
+
+        // Columns can't be smaller than 10 pixels
+        this.minimumColumnSize = 10;
 
         /**
          * @ngdoc function
@@ -2459,14 +2540,14 @@ angular.module('ui.grid').directive('uiGrid',
             if (gridUtil.endsWith(colDef.width, '%')) {
               // If so we should be able to parse the non-percent-sign part to a number
               var percentStr = colDef.width.replace(/%/g, '');
-              var percent = parseFloat(percentStr);
+              var percent = parseInt(percentStr, 10);
               if (isNaN(percent)) {
                 throw new Error(parseErrorMsg);
               }
             }
             // And see if it's a number string
             else if (colDef.width.match(/^(\d+)$/)) {
-              self.width = parseFloat(colDef.width.match(/^(\d+)$/)[1]);
+              self.width = parseInt(colDef.width.match(/^(\d+)$/)[1], 10);
             }
             // Otherwise it should be a string of asterisks
             else if (! colDef.width.match(/^\*+$/)) {
@@ -2972,7 +3053,14 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', '
                            $window.webkitRequestAnimationFrame && $window.webkitRequestAnimationFrame.bind($window) ||
                            function(fn) {
                              return $timeout(fn, 10, false);
-                           }
+                           },
+
+    numericAndNullSort: function (a, b) {
+      if (a === null) { return 1; }
+      if (b === null) { return -1; }
+      if (a === null && b === null) { return 0; }
+      return a - b;
+    }
   };
 
   ['width', 'height'].forEach(function (name) {
@@ -3391,232 +3479,6 @@ module.filter('px', function() {
         };
       }]);
 
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('da',{
-        aggregate:{
-            label: 'artikler'
-        },
-        groupPanel:{
-            description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
-        },
-        search:{
-            placeholder: 'Søg...',
-            showingItems: 'Viste rækker:',
-            selectedItems: 'Valgte rækker:',
-            totalItems: 'Rækker totalt:',
-            size: 'Side størrelse:',
-            first: 'Første side',
-            next: 'Næste side',
-            previous: 'Forrige side',
-            last: 'Sidste side'
-        },
-        menu:{
-            text: 'Vælg kolonner:',
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add("de",{
-        aggregate:{
-            label: 'eintrag'
-        },
-        groupPanel:{
-            description: 'Ziehen Sie eine Spaltenüberschrift hierhin um nach dieser Spalte zu gruppieren.'
-        },
-        search:{
-            placeholder: 'Suche...',
-            showingItems: 'Zeige Einträge:',
-            selectedItems: 'Ausgewählte Einträge:',
-            totalItems: 'Einträge gesamt:',
-            size: 'Einträge pro Seite:',
-            first: 'Erste Seite',
-            next: 'Nächste Seite',
-            previous: 'Vorherige Seite',
-            last: 'Letzte Seite'
-        },
-        menu:{
-            text: 'Spalten auswählen:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add(["en", "en-us"],{
-        aggregate:{
-            label: 'items'
-        },
-        groupPanel:{
-            description: 'Drag a column header here and drop it to group by that column.'
-        },
-        search:{
-            placeholder: 'Search...',
-            showingItems: 'Showing Items:',
-            selectedItems: 'Selected Items:',
-            totalItems: 'Total Items:',
-            size: 'Page Size:',
-            first: 'First Page',
-            next: 'Next Page',
-            previous: 'Previous Page',
-            last: 'Last Page'
-        },
-        menu:{
-            text: 'Choose Columns:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('es',{
-        aggregate:{
-            label: 'Artículos'
-        },
-        groupPanel:{
-            description: 'Arrastre un encabezado de columna aquí y soltarlo para agrupar por esa columna.'
-        },
-        search:{
-            placeholder: 'Buscar...',
-            showingItems: 'Artículos Mostrando:',
-            selectedItems: 'Artículos Seleccionados:',
-            totalItems: 'Artículos Totales:',
-            size: 'Tamaño de Página:',
-            first: 'Primera Página',
-            next: 'Página Siguiente',
-            previous: 'Página Anterior',
-            last: 'Última Página'
-        },
-        menu:{
-            text: 'Elegir columnas:',
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('fa',{
-        aggregate:{
-            label:  'موردها'
-        },
-        groupPanel:{
-            description:  'یک عنوان ستون اینجا را بردار و به گروهی از آن ستون بیانداز.'
-        },
-        search:{
-            placeholder: 'جستجو...',
-            showingItems: 'نمایش موردها:',
-            selectedItems: 'موردهای انتخاب\u200cشده:',
-            totalItems: 'همهٔ موردها:',
-            size: 'اندازهٔ صفحه:',
-            first: 'صفحهٔ اول',
-            next: 'صفحهٔ بعد',
-            previous: 'صفحهٔ قبل',
-            last: 'آخرین صفحه'
-        },
-        menu:{
-            text:  'انتخاب ستون\u200cها:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('fr',{
-        aggregate:{
-            label: 'articles'
-        },
-        groupPanel:{
-            description: 'Faites glisser un en-tête de colonne ici et déposez-le vers un groupe par cette colonne.'
-        },
-        search:{
-            placeholder: 'Recherche...',
-            showingItems:  'Articles Affichage des:',
-            selectedItems:'Éléments Articles:',
-            totalItems: 'Nombre total d\'articles:',
-            size: 'Taille de page:',
-            first: 'Première page',
-            next: 'Page Suivante',
-            previous: 'Page précédente',
-            last: 'Dernière page'
-        },
-        menu:{
-            text: 'Choisir des colonnes:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('pt-br',{
-        aggregate:{
-            label: 'itens',
-        },
-        groupPanel:{
-            description: 'Arraste e solte uma coluna aqui para agrupar por essa coluna'
-        },
-        search:{
-            placeholder: 'Procurar...',
-            showingItems: 'Mostrando os Itens:',
-            selectedItems: 'Items Selecionados:',
-            totalItems: 'Total de Itens:',
-            size: 'Tamanho da Página:',
-            first: 'Primeira Página',
-            next: 'Próxima Página',
-            previous: 'Página Anterior',
-            last: 'Última Página'
-        },
-        menu:{
-            text: 'Selecione as colunas:'
-        }
-    });
-})();
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('zh-cn',{
-        aggregate:{
-            label: '条目'
-        },
-        groupPanel:{
-            description: '拖曳表头到此处以进行分组'
-        },
-        search:{
-            placeholder: '搜索...',
-            showingItems: '当前显示条目：',
-            selectedItems: '选中条目：',
-            totalItems: '条目总数：',
-            size: '每页显示数：',
-            first: '回到首页',
-            next: '下一页',
-            previous: '上一页',
-            last: '前往尾页'
-        },
-        menu:{
-            text: '数据分组与选择列：'
-        }
-    });
-})();
-
-(function(){
-    var uiI18n = angular.module('ui.i18n');
-    uiI18n.i18n.add('zh-tw',{
-        aggregate:{
-            label: '筆'
-        },
-        groupPanel:{
-            description: '拖拉表頭到此處以進行分組'
-        },
-        search:{
-            placeholder: '搜尋...',
-            showingItems: '目前顯示筆數：',
-            selectedItems:  '選取筆數：',
-            totalItems:  '總筆數：',
-            size:  '每頁顯示：',
-            first: '第一頁',
-            next: '下一頁',
-            previous: '上一頁',
-            last: '最後頁'
-        },
-        menu:{
-            text: '選擇欄位：'
-        }
-    });
 })();
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
