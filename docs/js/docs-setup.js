@@ -223,13 +223,6 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "93_column_resizing",
-      "shortName": "Column Resizing",
-      "type": "overview",
-      "keywords": "$http $scope angular app by class column columns controller css data drag dragging enablecolumnresizing function get grid gridoptions height html index js json main mainctrl module name ng-controller on overview resize resizing separator separators success the to true tutorial ui ui-grid var width"
-    },
-    {
-      "section": "tutorial",
       "id": "9_cellnav",
       "shortName": "Cell Navigation (WIP)",
       "type": "overview",

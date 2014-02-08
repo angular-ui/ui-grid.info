@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-da14063 - 2014-02-07
+/*! ui-grid - v2.0.7-6d8acb5 - 2014-02-08
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -254,10 +254,6 @@
   .rounded(@gridBorderRadius);
 
   .transform(translateZ(0));
-
-  &.column-resizing {
-  	cursor: pointer;
-  }
 }
 
 .ui-grid-vertical-bar {
@@ -347,31 +343,6 @@
 .ui-grid-header .ui-grid-vertical-bar {
   top: 0;
   bottom: 0;
-}
-
-.ui-grid-column-resizer {
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  position: absolute;
-  cursor: pointer;
-
-  &.left {
-    left: 0;
-  }
-
-  &.right {
-    right: 0;
-  }
-}
-
-.ui-grid.column-resizing .ui-grid-resize-overlay {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: @gridBorderWidth;
-  background-color: darken(@verticalBarColor, 15%);
-  // background-color: red;
 }
 
 
