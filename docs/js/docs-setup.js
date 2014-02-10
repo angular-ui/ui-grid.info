@@ -139,6 +139,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "12_i18n",
+      "shortName": "i18n",
+      "type": "overview",
+      "keywords": "$scope angular app attribute controller css description en filter function grid grouppanel height html i18n index js main mainctrl module name ng-controller overview tutorial ui ui-i18n ui-t var width"
+    },
+    {
+      "section": "tutorial",
       "id": "1_basic_grid",
       "shortName": "Basic Grid",
       "type": "overview",
@@ -220,13 +227,6 @@ NG_DOCS={
       "shortName": "Horizontal Scrolling",
       "type": "overview",
       "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling tutorial ui ui-grid var width widths with"
-    },
-    {
-      "section": "tutorial",
-      "id": "93_column_resizing",
-      "shortName": "Column Resizing",
-      "type": "overview",
-      "keywords": "$http $scope angular app by class column columns controller css data drag dragging enablecolumnresizing function get grid gridoptions height html index js json main mainctrl module name ng-controller on overview resize resizing separator separators success the to true tutorial ui ui-grid var width"
     },
     {
       "section": "tutorial",
