@@ -24,6 +24,11 @@
 .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
   background-color: #d4d4d4;
 }
+.ui-grid-header-cell:last-child .ui-grid-vertical-bar {
+  right: -1px;
+  width: 1px;
+  background-color: #d4d4d4;
+}
 .ui-grid-top-panel {
   position: relative;
   border-bottom: 1px solid #d4d4d4;
