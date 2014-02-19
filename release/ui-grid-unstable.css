@@ -177,10 +177,6 @@
   height: 0;
   display: none;
 }
-.ui-grid-cell-contents:focus {
-  outline: 0;
-  background-color: #b3c4c7;
-}
 .ui-grid-scrollbar {
   z-index: 10;
   position: absolute;
@@ -267,6 +263,31 @@
 * @section Scrollbar styles
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.ui-grid-cell-contents:focus {
+  outline: 0;
+  background-color: #b3c4c7;
+}
 
 /* This file contains variable declarations (do not remove this line) */
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
