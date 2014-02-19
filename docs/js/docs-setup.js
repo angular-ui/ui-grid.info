@@ -149,7 +149,7 @@ NG_DOCS={
       "id": "12_i18n",
       "shortName": "i18n",
       "type": "overview",
-      "keywords": "$scope angular app attribute controller css description en filter function grid grouppanel height html i18n index js main mainctrl module name ng-controller overview tutorial ui ui-i18n ui-t var width"
+      "keywords": "$scope angular app attribute controller css description en filter for function getalllangs grid grouppanel height html i18n i18nservice in index js lang langs main mainctrl module name ng-controller ng-model ng-options overview tutorial ui ui-i18n ui-t var width"
     },
     {
       "section": "tutorial",

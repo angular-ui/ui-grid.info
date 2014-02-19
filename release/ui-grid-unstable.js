@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-2d661cf - 2014-02-18
+/*! ui-grid - v2.0.7-e83818f - 2014-02-19
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -3548,6 +3548,18 @@ module.filter('px', function() {
           var cache = this._langs;
           cache[lower] = angular.copy(strings);
         },
+        getAllLangs: function () {
+          var langs = [];
+          if(!this._langs){
+            return langs;
+          }
+
+          for (var key in this._langs) {
+             langs.push(key);
+          }
+
+          return langs;
+        },
         setCurrent: function (lang) {
           this.current = lang.toLowerCase();
         },
@@ -3584,6 +3596,10 @@ module.filter('px', function() {
           } else {
             langCache.add(langs, strings);
           }
+        },
+
+        getAllLangs: function () {
+          return langCache.getAllLangs();
         },
 
         get: function (lang) {
@@ -3624,14 +3640,14 @@ module.filter('px', function() {
             // check for watchable property
             var lang = $scope.$eval($attrs[alias]);
             if (lang) {
-              // $scope.$watch($attrs[alias], i18nService.set);
+               $scope.$watch($attrs[alias], function(){
+                 i18nService.setCurrentLang(lang);
+               });
             } else if ($attrs.$$observers) {
-              // $scope.$on('$destroy', $attrs.$observe(alias, i18nService.set));
-            } else {
-              // fall back to the string value
-              lang = $attrs[alias];
+               $attrs.$observe(alias, function(){
+                 i18nService.setCurrentLang($attrs[alias] || i18nConstants.DEFAULT_LANG);
+               });
             }
-            i18nService.setCurrentLang(lang || i18nConstants.DEFAULT_LANG);
           }
         };
       }
@@ -4171,7 +4187,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid',
-    "<div class=\"ui-grid grid{{ grid.id }}\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style=\"\">.grid{{ grid.id }} {\n" +
+    "<div class=\"ui-grid ui-i18n='en' grid{{ grid.id }}\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style=\"\">.grid{{ grid.id }} {\n" +
     "      /* Styles for the grid */\n" +
     "    }\n" +
     "\n" +
