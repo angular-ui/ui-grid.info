@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-1e9ae7f - 2014-02-19
+/*! ui-grid - v2.0.7-ffcd9ff - 2014-02-20
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -3115,6 +3115,7 @@ module.filter('px', function() {
    *  @description constants available in cellNav
    */
   module.constant('uiGridCellNavConstants', {
+    CELL_NAV_EVENT: 'uiGridCellNav',
     direction: {LEFT: 0, RIGHT: 1, UP: 2, DOWN: 3}
   });
 
@@ -3265,7 +3266,7 @@ module.filter('px', function() {
 
 
           if (curRow.index === 0) {
-            return new RowCol(curRow,  cols[colIndex]); //return same row
+            return new RowCol(curRow, cols[colIndex]); //return same row
           }
           else {
             //up one row
@@ -3340,9 +3341,9 @@ module.filter('px', function() {
    </div>
    </file>
    </example>
-  */
-  module.directive('uiGridCellnav', ['$log', 'uiGridCellNavService',
-    function ($log, uiGridCellNavService) {
+   */
+  module.directive('uiGridCellnav', ['$log', 'uiGridCellNavService', 'uiGridCellNavConstants',
+    function ($log, uiGridCellNavService, uiGridCellNavConstants) {
       return {
         replace: true,
         priority: -150,
@@ -3354,6 +3355,10 @@ module.filter('px', function() {
               //  $log.debug('uiGridEdit preLink');
               uiGridCtrl.grid.registerColumnBuilder(uiGridCellNavService.cellNavColumnBuilder);
 
+              uiGridCtrl.broadcastCellNav = function(rowCol){
+                 $scope.$broadcast(uiGridCellNavConstants.CELL_NAV_EVENT, rowCol);
+              };
+
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
             }
@@ -3362,6 +3367,7 @@ module.filter('px', function() {
       };
     }]);
 
+
   /**
    *  @ngdoc directive
    *  @name ui.grid.cellNav.directive:uiGridCell
@@ -3369,17 +3375,19 @@ module.filter('px', function() {
    *  @restrict A
    *  @description Stacks on top of ui.grid.uiGridCell to provide cell navigation
    */
-  module.directive('uiGridCell', ['uiGridCellNavService', '$log',
-    function (uiGridCellNavService, $log) {
+  module.directive('uiGridCell', ['uiGridCellNavService', '$log', 'uiGridCellNavConstants',
+    function (uiGridCellNavService, $log, uiGridCellNavConstants) {
       return {
         priority: -150, // run after default uiGridCell directive and ui.grid.edit uiGridCell
         restrict: 'A',
         require: '^uiGrid',
         scope: false,
         link: function ($scope, $elm, $attrs, uiGridCtrl) {
-          if ($scope.col.allowCellFocus) {
-            $elm.find('div').attr("tabindex", 0);
+          if (!$scope.col.allowCellFocus) {
+             return;
           }
+
+          setTabEnabled();
 
           $elm.on('keydown', function (evt) {
             var direction = uiGridCellNavService.getDirection(evt);
@@ -3389,12 +3397,30 @@ module.filter('px', function() {
 
             var rowCol = uiGridCellNavService.getNextRowCol(direction, $scope.grid, $scope.row, $scope.col);
 
-            //todo: issue # 926
-            //uiGridCtrl.setFocus(rowCol.row, rowCol.col);
-            $log.debug('next row ' + rowCol.row.index + ' next Col ' + rowCol.col.colDef.name );
+            $log.debug('next row ' + rowCol.row.index + ' next Col ' + rowCol.col.colDef.name);
+            uiGridCtrl.broadcastCellNav(rowCol);
+            setTabEnabled();
 
             return false;
           });
+
+          $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, function(evt,rowCol){
+             if(rowCol.row === $scope.row &&
+                rowCol.col === $scope.col){
+               $log.debug('Setting focus on Row ' + rowCol.row.index + ' Col ' + rowCol.col.colDef.name);
+               setFocused();
+             }
+          });
+
+          function setTabEnabled(){
+            $elm.find('div').attr("tabindex", -1);
+          }
+
+          function setFocused(){
+            var div = $elm.find('div');
+            div.focus();
+            div.attr("tabindex", 0);
+          }
 
         }
       };
