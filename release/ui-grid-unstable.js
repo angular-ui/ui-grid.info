@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-0a1250e - 2014-02-20
+/*! ui-grid - v2.0.7-bb3e729 - 2014-02-20
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -4203,7 +4203,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid',
-    "<div class=\"ui-grid grid{{ grid.id }}\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style=\"\">.grid{{ grid.id }} {\n" +
+    "<div ui-i18n=\"en\" class=\"ui-grid grid{{ grid.id }}\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style=\"\">.grid{{ grid.id }} {\n" +
     "      /* Styles for the grid */\n" +
     "    }\n" +
     "\n" +
