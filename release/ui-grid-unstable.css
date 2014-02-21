@@ -237,6 +237,21 @@
 .ui-grid-pinned.right {
   float: right;
 }
+/*
+* RTL Styles
+*/
+.grid[dir=rtl] .ui-grid-header-cell,
+.grid[dir=rtl] .ui-grid-cell {
+  float: right !important;
+}
+.grid[dir=rtl] .ui-grid-scrollbar-vertical {
+  right: inherit;
+  left: 4px;
+}
+.grid[dir=rtl] .ui-grid-scrollbar-horizontal {
+  left: inherit;
+  right: 0;
+}
 /*---------------------------------------------------
     LESS Elements 0.9
   ---------------------------------------------------
