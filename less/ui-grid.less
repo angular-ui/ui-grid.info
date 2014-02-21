@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-bb3e729 - 2014-02-20
+/*! ui-grid - v2.0.7-fd78e78 - 2014-02-21
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -365,6 +365,20 @@
 
 .ui-grid-pinned.right {
   float: right;
+}
+.grid[dir=rtl] .ui-grid-header-cell,
+.grid[dir=rtl] .ui-grid-cell{
+  float:right !important;
+} 
+
+.grid[dir=rtl] .ui-grid-scrollbar-vertical {
+  right:inherit;
+  left: 4px;
+
+}
+.grid[dir=rtl] .ui-grid-scrollbar-horizontal {
+  left: inherit;
+  right:0;
 }
 .ui-grid-scrollbar {
   z-index: 10;
