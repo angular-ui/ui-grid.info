@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-a6870f4 - 2014-03-20
+/*! ui-grid - v2.0.7-e85e532 - 2014-03-20
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -828,8 +828,6 @@ angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$parse', funct
               var leftoverWidth = availableWidth - parseInt(canvasWidth, 10);
 
               if (leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
-                debugger;
-                
                 var variableColumn = false;
                 uiGridCtrl.grid.columns.forEach(function(col) {
                   if (col.width && ! angular.isNumber(col.width)) {
