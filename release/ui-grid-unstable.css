@@ -231,6 +231,24 @@
   background: #808080;
   border: 1px solid #5a5a5a;
 }
+.ui-grid-native-scrollbar {
+  position: absolute;
+  overflow: scroll;
+}
+.ui-grid-native-scrollbar.vertical {
+  top: 0;
+  right: 0;
+  height: 100%;
+  overflow-x: hidden;
+  width: 17px;
+}
+.ui-grid-native-scrollbar.horizontal {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow-y: hidden;
+  height: 17px;
+}
 .ui-grid-pinned.left {
   float: left;
 }

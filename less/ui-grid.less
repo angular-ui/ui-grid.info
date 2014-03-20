@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-2b55324 - 2014-02-21
+/*! ui-grid - v2.0.7-a6870f4 - 2014-03-20
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -359,6 +359,31 @@
 
 
 
+
+.ui-grid-native-scrollbar {
+  position: absolute;;
+  overflow: scroll;
+
+  &.vertical {
+    top: 0;
+    right: 0;
+    height: 100%;
+    overflow-x: hidden;
+
+    // Default width, will update in code
+    width: 17px;
+  }
+
+  &.horizontal {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow-y: hidden;
+
+    // Default height, will update in code
+    height: 17px;
+  }
+}
 
 .ui-grid-pinned.left {
   float: left;
