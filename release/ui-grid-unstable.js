@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-1f7f4fc - 2014-04-16
+/*! ui-grid - v2.0.7-44cb79a - 2014-04-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -5474,63 +5474,8 @@ module.filter('px', function() {
 (function(){
   'use strict';
 
-  var module = angular.module('ui.grid.resizeColumns', ['ui.grid']);
-
-  module.constant('columnBounds', {
-    minWidth: 35
-  });
-
-
-  module.service('uiGridColumnResizingService', ['$log','$q',
-    function ($log,$q) {
-
-      var service = {
-
-
-        colResizerColumnBuilder: function (colDef, col, gridOptions) {
-
-          var promises = [];
-
-          //legacy support
-          //use old name if it is present and true
-          //todo: probably not the best place for this since it is called with each colDef
-          if(gridOptions.enableColumnResize){
-            gridOptions.enableColumnResizing = true;
-          }
-
-          //legacy support of old option name
-          if(colDef.enableColumnResize){
-            colDef.enableColumnResizing = true;
-          }
-
-          return $q.all(promises);
-        }
-      };
-
-      return service;
-
-    }]);
-
-  module.directive('uiGridResizeColumns', ['$log', 'uiGridColumnResizingService', function ($log, uiGridColumnResizingService) {
-    return {
-      replace: true,
-      priority: 0,
-      require: '^uiGrid',
-      scope: false,
-      compile: function () {
-        return {
-          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            uiGridCtrl.grid.registerColumnBuilder( uiGridColumnResizingService.colResizerColumnBuilder);
-          },
-          post: function ($scope, $elm, $attrs, uiGridCtrl) {
-          }
-        };
-      }
-    };
-  }]);
-
   // Extend the uiGridHeaderCell directive
-  module.directive('uiGridHeaderCell', ['$log', '$templateCache', '$compile', '$q', function ($log, $templateCache, $compile, $q) {
+  angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$templateCache', '$compile', '$q', function ($log, $templateCache, $compile, $q) {
     return {
       // Run after the original uiGridHeaderCell
       priority: -10,
@@ -5539,7 +5484,7 @@ module.filter('px', function() {
       compile: function() {
         return {
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
-           if (uiGridCtrl.grid.options.enableColumnResizing) {
+            if (uiGridCtrl.grid.options.enableColumnResizing) {
               var renderIndexDefer = $q.defer();
 
               $attrs.$observe('renderIndex', function (n, o) {
@@ -5583,7 +5528,11 @@ module.filter('px', function() {
     };
   }]);
 
+  var module = angular.module('ui.grid.resizeColumns', ['ui.grid']);
 
+  module.constant('columnBounds', {
+    minWidth: 35
+  });
   
   /**
    * @ngdoc directive

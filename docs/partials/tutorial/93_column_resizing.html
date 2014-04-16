@@ -5,12 +5,6 @@
 <pre class="prettyprint linenums">
 angular.module('yourApp', ['ui.grid', 'ui.grid.resizeColumns']);
 </pre>
-
-<p>Also, you must add the directive to your grid element.  We do this so that you can have several grids on a
-page and only pay the resizing overhead if the grid is actually using resizing.
-<pre class="prettyprint linenums">
-&lt;div ui-grid="gridOptions" class="grid" ui-grid-resize-columns&gt;&lt;/div&gt;
-</pre>
 <br>
 <br>
 The <code>enableColumnResizing</code> option on your grid will enable resizing and turn it on for all columns by default.
@@ -44,7 +38,7 @@ $scope.gridOptions = {
     The column will obey any <i>minWidth</i> or <i>maxWidth</i> constraints you give it.
     <br>
     <br>
-    <div ui-grid="gridOptions" class="grid" ui-grid-resize-columns></div>
+    <div ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
 </div>
