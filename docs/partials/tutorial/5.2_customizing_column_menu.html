@@ -1,0 +1,92 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>You can customize a column's menu and provide your own functionality.</p>
+
+<p>By default, the <code>action</code> and <code>shown</code>'s' contexts will have a reference to the grid added as the property <code>grid</code> (accessible through <code>this.grid</code>.
+You can pass in your own context by supplying the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</p>
+
+<p>The column menu will add the column's <code>GridColumn</code> object to the context as <code>this.context.col</code>. You can then show/hide the the menu item based
+on conditions that use the grid and column.  You could also use a custom column builder to add some item to the every column definition.</p>
+
+<p>You can supply an icon class with the <code>icon</code> property.</p>
+
+<p>See the example below for usage.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-16" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-16" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-16">
+  <div ng-controller="MainCtrl">
+    Click on the third column header to test custom menu items.
+    <br>
+    <br>
+    <div ui-grid="gridOptions" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngAnimate', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.blargh = function() {
+      alert("I'm in the outer scope!");
+    };
+
+    $scope.gridOptions = {
+      enableSorting: true,
+      columnDefs: [
+        { field: 'name' },
+        { field: 'gender' },
+        {
+          field: 'company',
+          menuItems: [
+            {
+              title: 'Outer Scope Alert',
+              icon: 'ui-grid-icon-info-circled',
+              action: function($event) {
+                this.context.blargh(); // $scope.blargh() would work too, this is just an example
+              },
+              context: $scope
+            },
+            {
+              title: 'Grid ID',
+              action: function() {
+                alert('Grid ID: ' + this.grid.id);
+              }
+            },
+            {
+              title: 'Column Title Alert',
+              shown: function () {
+                return this.context.col.displayName === 'Company';
+              },
+              action: function() {
+                alert(this.context.col.displayName);
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    $http.get('/data/100.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-16" ng-eval-javascript="app.js"></div></div>
+</div>

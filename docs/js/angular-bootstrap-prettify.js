@@ -215,17 +215,20 @@ directive.ngEmbedApp = ['$templateCache', '$browser', '$rootScope', '$location',
           }];
           this.html5Mode = angular.noop;
         });
-        $provide.decorator('$timeout', ['$rootScope', '$delegate', function($rootScope, $delegate) {
-          return angular.extend(function(fn, delay) {
-            if (delay && delay > 50) {
-              return setTimeout(function() {
-                $rootScope.$apply(fn);
-              }, delay);
-            } else {
-              return $delegate.apply(this, arguments);
-            }
-          }, $delegate);
-        }]);
+
+        // NOTE(c0bra): Why the hell is it doing this???
+        // $provide.decorator('$timeout', ['$rootScope', '$delegate', function($rootScope, $delegate) {
+        //   return angular.extend(function(fn, delay) {
+        //     if (delay && delay > 50) {
+        //       return setTimeout(function() {
+        //         $rootScope.$apply(fn);
+        //       }, delay);
+        //     } else {
+        //       return $delegate.apply(this, arguments);
+        //     }
+        //   }, $delegate);
+        // }]);
+        
         $provide.decorator('$rootScope', ['$delegate', function($delegate) {
           embedRootScope = $delegate;
 

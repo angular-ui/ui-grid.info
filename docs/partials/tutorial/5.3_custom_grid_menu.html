@@ -1,0 +1,107 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-17" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-17" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-17">
+  <div ng-controller="MainCtrl">
+    <button type="button" class="btn btn-info" ng-click="openMyMenu()">Open Menu</button>
+    <br>
+    <br>
+    <div ui-grid="gridOptions" class="grid">
+      <div class="my-custom-menu" my-custom-menu ui-grid-menu menu-items="menuItems"></div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+
+  .my-custom-menu {
+    position: absolute;
+  }
+
+  .my-custom-menu .ui-grid-menu {
+    padding: 0px;
+  }
+
+  .my-custom-menu .ui-grid-menu-inner {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngAnimate', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {};
+
+    $scope.menuItems = [
+      {
+        title: 'Rotate Grid',
+        action: function ($event) {
+          this.grid.element.toggleClass('rotated');
+        }
+      }
+    ];
+
+    $scope.openMyMenu = function () {
+      $scope.$broadcast('openMyMenu');
+    };
+
+    $http.get('/data/100.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+
+  app.directive('myCustomMenu', function ($timeout, gridUtil) {
+    return {
+      restrict: 'A',
+      scope: true,
+      require: ['^uiGrid', 'uiGridMenu'],
+      link: function ($scope, $elm, $attr, controllers) {
+        var uiGridCtrl = controllers[0];
+        var uiGridMenuCtrl = controllers[1];
+
+        $scope.$on('openMyMenu', function () {
+          uiGridMenuCtrl.showMenu();
+
+          $timeout(function () {
+            var grid = uiGridCtrl.grid.element
+            var width = gridUtil.elementWidth(grid, true);
+
+            // Put the menu just to the right of the grid
+            $elm.css('left', width + 'px');
+
+            // Put the menu at the top of the grid but adjust for the border
+            $elm.css('top', '-1px');
+          });
+        });
+      }
+    };
+  });
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-17" ng-eval-javascript="app.js"></div></div>
+</div>

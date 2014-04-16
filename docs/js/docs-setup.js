@@ -37,14 +37,14 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all and any api are array assign be behavior build buildcolumns buildstyles by called calls class col column columnbuilder columnbuilders columndefinition columns columnsprocessor creates data defined defines definitions each elements for from function further getcolumn grid gridcolumn gridoptions gridrow id identified in load logical modifyrows name needed newrawdata non-dom objects or process processes processrowbuilders promise properties reference registercolumnbuilder registered registerrowbuilder registerstylecomputation removes resources returns row rowbuilder rowbuilders rowequality rows should stylecomputation the this to ui using when will with"
+      "keywords": "add added additional all alter an and any api are array as asc ascending assign be behavior being build buildcolumns buildstyles by called calls chance class col column columnbuilder columnbuilders columndefinition columns columnsprocessor count creates currently data defined defines definitions desc descending direction directions each eached either elements etc exclude existing false for from function further getcolumn getcolumnsorting given grid gridcolumn gridoptions gridrow has having id identified if in is iterate its load logical long modified modifyrows name needed newrawdata non-dom not objects of on only optional optionally or process processes processor processrowbuilders promise properties provided reference register registercolumnbuilder registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowequality rows set should sort sortcolumn sorted sorting stylecomputation supplies that the this through to ui unsorted updated using when which will with"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "add address against allows also and angular api array as assigned be binding city class coldef coldefs column complex current data defaults definition displayed docs element employee evaluates expression expressions field fields for function functions getfulladdress grid gridoptions implementation in index items matures name needed of on optional options other position properties screen that the to ui when wrapper"
+      "keywords": "add address against algorithm allows also and angular any api array as assigned be binding city class coldef coldefs column complex current data defaults definition displayed docs element employee evaluates expression expressions field fields for function functions getfulladdress grid gridoptions implementation in index items like matures name needed normal of on optional options other parameters position properties screen sorting takes that the this to ui use when wrapper"
     },
     {
       "section": "api",
@@ -66,6 +66,13 @@ NG_DOCS={
       "shortName": "uiGrid",
       "type": "directive",
       "keywords": "$scope angular api app basic bob ceo controller create data developer directive div ea for frank function grid html index js lowly mainctrl module name ng-controller options the title to ui ui-grid uigrid use var very"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridColumnMenu",
+      "shortName": "uiGridColumnMenu",
+      "type": "directive",
+      "keywords": "$scope allows angular api app apply as blah border break by can class controller css default directive do doesn element elements expect expressions function getcssvalue grid ie8 in interpolate it mainctrl module ng-controller right should shown solid style the then this to tocontain true ui ui-grid-menu us var"
     },
     {
       "section": "api",
@@ -181,6 +188,27 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "5.1_sorting",
+      "shortName": "Sorting",
+      "type": "overview",
+      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def disabled enablesorting example false field flag for function gender get grid gridoptions header height html if in include index it js json just last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then to true tutorial ui ui-grid up var want width you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "5.2_customizing_column_menu",
+      "shortName": "Customizing Column Menu",
+      "type": "overview",
+      "keywords": "$http $scope accessible action add added alert also an and angular app as based be below blargh builder by can class click col column columndefs company conditions context contexts controller could css custom customize customizing data default definition displayname enablesorting every example field for function functionality gender get grid gridcolumn gridoptions have header height html icon id in index is it item items js json just main mainctrl menu menuitems module name ng-controller nganimate object on outer overview own pass property provide reference return scope see show shown some success supply supplying test that the then third this through title to too true tutorial ui ui-grid ui-grid-icon-info-circled usage use var width will with work would you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "5.3_custom_grid_menu",
+      "shortName": "Custom Grid Menu",
+      "type": "overview",
+      "keywords": "$attr $broadcast $elm $http $on $scope $timeout absolute action adjust angular app at border box-shadow btn btn-info but button class controller controllers css custom data directive element elementwidth for function get grid gridoptions gridutil height html index js json just left link main mainctrl menu menu-items menuitems module my-custom-menu mycustommenu name ng-click ng-controller nganimate none of openmymenu overview padding position put px require restrict return right rotate rotated scope showmenu success the this title to toggleclass top transform true tutorial type ui ui-grid ui-grid-menu ui-grid-menu-inner uigridctrl uigridmenu uigridmenuctrl var width"
+    },
+    {
+      "section": "tutorial",
       "id": "5_100 data points",
       "shortName": "100 Rows",
       "type": "overview",
@@ -233,14 +261,14 @@ NG_DOCS={
       "id": "92_horizontal_scrolling",
       "shortName": "Horizontal Scrolling",
       "type": "overview",
-      "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling tutorial ui ui-grid var width widths with"
+      "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating enablesorting floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling true tutorial ui ui-grid var width widths with"
     },
     {
       "section": "tutorial",
       "id": "93_column_resizing",
       "shortName": "Column Resizing",
       "type": "overview",
-      "keywords": "$http $scope according add all and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies disable enable enablecolumnresizing false feature field for function gender get give grid gridoptions height html in including index it its js json main mainctrl minwidth module name ng-controller obey on option or overview property rendered resize resizecolumns resizing separator setting size success the to true turn tutorial ui ui-grid var width will you your yourapp"
+      "keywords": "$http $scope according add all and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies disable enable enablecolumnresizing enablesorting false feature field for function gender get give grid gridoptions height html in including index it its js json main mainctrl minwidth module name ng-controller obey on option or overview property rendered resize resizecolumns resizing separator setting size success the to true turn tutorial ui ui-grid var width will you your yourapp"
     },
     {
       "section": "tutorial",
@@ -259,7 +287,8 @@ NG_DOCS={
   "scripts": [
     "jquery.min.js",
     "angular.js",
-    "angular-touch.js"
+    "angular-touch.js",
+    "angular-animate.js"
   ]
 }; VERSIONED_FILES={
   "default": "unstable",

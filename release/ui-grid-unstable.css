@@ -29,6 +29,14 @@
   width: 1px;
   background-color: #d4d4d4;
 }
+.ui-grid-clearfix:before,
+.ui-grid-clearfix:after {
+  content: "";
+  display: table;
+}
+.ui-grid-clearfix:after {
+  clear: both;
+}
 .ui-grid-top-panel {
   position: relative;
   border-bottom: 1px solid #d4d4d4;
@@ -105,11 +113,55 @@
   top: 0;
   bottom: 0;
   background-color: inherit;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   width: 0;
+}
+.ui-grid-header-cell.sortable {
+  cursor: pointer;
 }
 .ui-grid-header .ui-grid-vertical-bar {
   top: 0;
   bottom: 0;
+}
+.ui-grid-column-menu-button {
+  position: absolute;
+  right: 1px;
+  top: 0;
+  bottom: 0;
+}
+.ui-grid-column-menu-button .ui-grid-icon-angle-down {
+  vertical-align: sub;
+}
+.ui-grid-column-menu {
+  position: absolute;
+}
+/* Slide up/down animations */
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-add,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-remove {
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+  display: block !important;
+}
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-add.ng-hide-add-active,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-remove {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-add,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -o-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
 }
 .ui-grid-body {
   position: relative;
@@ -249,11 +301,109 @@
   overflow-y: hidden;
   height: 17px;
 }
+.ui-grid-menu {
+  z-index: 2;
+  position: absolute;
+  overflow: hidden;
+  padding: 0 10px 20px 10px;
+  cursor: default;
+}
+.ui-grid-menu .ui-grid-menu-inner {
+  background: #f3f3f3;
+  border: 1px solid #d4d4d4;
+  position: relative;
+  white-space: nowrap;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 12px 12px -14px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 12px 12px -14px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 12px 12px -14px rgba(0, 0, 0, 0.2);
+}
+.ui-grid-menu .ui-grid-menu-inner ul {
+  margin: 0;
+  list-style-type: none;
+}
+.ui-grid-menu .ui-grid-menu-inner ul li {
+  padding: 8px;
+  cursor: pointer;
+}
+.ui-grid-menu .ui-grid-menu-inner ul li:hover {
+  -webkit-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+}
+.ui-grid-menu .ui-grid-menu-inner ul li.ui-grid-menu-item-active {
+  -webkit-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+  background-color: #cecece;
+}
+.ui-grid-menu .ui-grid-menu-inner ul li:not(:last-child) {
+  border-bottom: 1px solid #d4d4d4;
+}
+.ui-grid-sortarrow {
+  right: 5px;
+  position: absolute;
+  width: 20px;
+  top: 0;
+  bottom: 0;
+  background-position: center;
+}
+.ui-grid-sortarrow.down {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 .ui-grid-pinned.left {
   float: left;
 }
 .ui-grid-pinned.right {
   float: right;
+}
+@font-face {
+  font-family: 'ui-grid';
+  src: url('ui-grid.eot');
+  src: url('ui-grid.eot#iefix') format('embedded-opentype'), url('ui-grid.woff') format('woff'), url('ui-grid.ttf?') format('truetype'), url('ui-grid.svg?#ui-grid') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'ui-grid';
+    src: url('../font/ui-grid.svg?12312827#ui-grid') format('svg');
+  }
+}
+*/
+[class^="ui-grid-icon"]:before,
+[class*=" ui-grid-icon"]:before {
+  font-family: "ui-grid";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 /*
 * RTL Styles
@@ -365,3 +515,64 @@
   width: 1px;
   background-color: #aeaeae;
 }
+
+.ui-grid-icon-cancel:before {
+  content: '\e808';
+}
+/* '' */
+.ui-grid-icon-sort-alt-down:before {
+  content: '\e802';
+}
+/* '' */
+.ui-grid-icon-lock:before {
+  content: '\e803';
+}
+/* '' */
+.ui-grid-icon-lock-open:before {
+  content: '\e804';
+}
+/* '' */
+.ui-grid-icon-pencil:before {
+  content: '\e809';
+}
+/* '' */
+.ui-grid-icon-down-dir:before {
+  content: '\e80b';
+}
+/* '' */
+.ui-grid-icon-up-dir:before {
+  content: '\e80a';
+}
+/* '' */
+.ui-grid-icon-info-circled:before {
+  content: '\e80e';
+}
+/* '' */
+.ui-grid-icon-right-dir:before {
+  content: '\e80d';
+}
+/* '' */
+.ui-grid-icon-left-open:before {
+  content: '\e806';
+}
+/* '' */
+.ui-grid-icon-right-open:before {
+  content: '\e805';
+}
+/* '' */
+.ui-grid-icon-angle-down:before {
+  content: '\e80c';
+}
+/* '' */
+.ui-grid-icon-filter:before {
+  content: '\e800';
+}
+/* '' */
+.ui-grid-icon-sort-alt-up:before {
+  content: '\e801';
+}
+/* '' */
+.ui-grid-icon-left-dir:before {
+  content: '\e807';
+}
+/* '' */

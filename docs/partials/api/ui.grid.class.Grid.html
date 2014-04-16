@@ -30,6 +30,12 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 </ul>
 </div>
 </li>
+<li><h3 id="getColumnSorting">getColumnSorting()</h3>
+<div class="getcolumnsorting"><p>Return the columns that the grid is currently being sorted by</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Array[GridColumn]}</code>
+– <p>An array of GridColumn objects</p></div>
+</div>
+</li>
 <li><h3 id="modifyRows">modifyRows()</h3>
 <div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered
 rowBuilder to further process the row</p>
@@ -62,11 +68,54 @@ additional properties to the row.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
+<li><h3 id="registerRowsProcessor">registerRowsProcessor(rows)</h3>
+<div class="registerrowsprocessor"><p>Register a "rows processor" function. When the rows are updated,
+the grid calls eached registered "rows processor", which has a chance
+to alter the set of rows (sorting, etc) as long as the count is not
+modified.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rows – {function(renderableRows)} – </code>
+<p>processor function</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Array[GridRow]}</code>
+– <p>Updated renderable rows</p></div>
+</div>
+</li>
 <li><h3 id="registerStyleComputation">registerStyleComputation(styleComputation)</h3>
 <div class="registerstylecomputation"><p>registered a styleComputation function</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">styleComputation – {function($scope)} – </code>
 <p>function</p></li>
 </ul>
+</div>
+</li>
+<li><h3 id="removeRowsProcessor">removeRowsProcessor(rows)</h3>
+<div class="removerowsprocessor"><p>Remove a registered rows processor</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rows – {function(renderableRows)} – </code>
+<p>processor function</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="resetColumnSorting">resetColumnSorting([excludedColumn])</h3>
+<div class="resetcolumnsorting"><p>Return the columns that the grid is currently being sorted by</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">[excludedColumn] – {GridColumn} – </code>
+<p>Optional GridColumn to exclude from having its sorting reset</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="sortColumn">sortColumn(column, [direction], [add])</h3>
+<div class="sortcolumn"><p>Set the sorting on a given column, optionally resetting any existing sorting on the Grid.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">column – {GridColumn} – </code>
+<p>Column to set the sorting on</p></li>
+<li><code ng:non-bindable="">[direction] – {uiGridConstants.ASC|uiGridConstants.DESC} – </code>
+<p>Direction to sort by, either descending or ascending.
+If not provided, the column will iterate through the sort directions: ascending, descending, unsorted.</p></li>
+<li><code ng:non-bindable="">[add] – {boolean} – </code>
+<p>Add this column to the sorting. If not provided or set to <code>false</code>, the Grid will reset any existing sorting and sort
+by this column only</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Promise}</code>
+– <p>A resolved promise that supplies the column.</p></div>
 </div>
 </li>
 </ul>

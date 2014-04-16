@@ -1,0 +1,48 @@
+<h1><code ng:non-bindable="">uiGridColumnMenu</code>
+<span class="hint">(directive in module <code ng:non-bindable="">ui.grid</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Allows us to interpolate expressions in <code>&lt;style&gt;</code> elements. Angular doesn't do this by default as it can/will/might? break in IE8.</p></div>
+<h2 id="Usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;style ui-grid-column-menu&gt;
+   ...
+&lt;/style&gt;</pre>
+</div>
+<h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js script.js" source-edit-html="index.html-3" source-edit-css="" source-edit-js="script.js-2" source-edit-unit="" source-edit-scenario="scenario.js-4"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-3" ng-html-wrap-loaded="app angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-3">
+
+
+<div ng-controller="MainCtrl">
+  <div ui-grid-menu shown="true"  ></div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-2"></pre>
+<script type="text/ng-template" id="script.js-2">
+var app = angular.module('app', ['ui.grid']);
+
+app.controller('MainCtrl', ['$scope', function ($scope) {
+  
+}]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-4"></pre>
+<script type="text/ng-template" id="scenario.js-4">
+it('should apply the right class to the element', function () {
+     element(by.css('.blah')).getCssValue('border')
+       .then(function(c) {
+         expect(c).toContain('1px solid');
+       });
+   });
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-3" ng-eval-javascript="script.js-2"></div></div>
+</div>

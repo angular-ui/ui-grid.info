@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-e85e532 - 2014-03-20
+/*! ui-grid - v2.0.7-ce33097 - 2014-04-16
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -273,7 +273,7 @@
 }
 
 .ui-grid-header-cell:last-child .ui-grid-vertical-bar {
-  right: -1px;
+  right: -1px; // TODO(c0bra): Should this be grid width? Test column resizing with custom grid border width
   width: @gridBorderWidth;
   background-color: @headerVerticalBarColor;
 }
@@ -283,6 +283,17 @@
 //   background-color: @borderColor;
 // }
 
+.ui-grid-clearfix {
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear:both;
+  }
+}
+
 @topPanelRadius: @gridBorderRadius - @gridBorderWidth;
 .ui-grid-top-panel {
     position: relative;
@@ -290,7 +301,7 @@
     // background-color: @darkGray; // #EAEAEA
     border-bottom: 1px solid @borderColor; // #D4D4D4
 
-    overflow: hidden;
+    overflow: hidden;  // Disable so menus show up
     font-weight: bold;
 
     .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
@@ -309,7 +320,7 @@
   }
 
 .ui-grid-header-viewport {
-  overflow: hidden;
+  overflow: hidden; // Disable so menus show up
 }
 
 .ui-grid-header-canvas {
@@ -336,11 +347,17 @@
   bottom: 0;
   background-color: inherit;
 
+  .user-select(none);
+
   // Default to width 0 so header height can calculate right. Otherwise
   //  the header cells will flow onto the next line of the header container
   //  and cause the header height to be calculated as twice the height
   //  it should be. The column widths are calculated dynamically
   width: 0;
+
+  &.sortable {
+    cursor: pointer;
+  }
 }
 
 // Make vertical bar in header row fill the height of the cell completely
@@ -349,6 +366,89 @@
   bottom: 0;
 }
 
+.ui-grid-column-menu-button {
+  position: absolute;
+  right: @gridBorderWidth; // So it doesn't overlay the vertical bar
+  top: 0;
+  bottom: 0;
+
+  .ui-grid-icon-angle-down {
+    vertical-align: sub;
+  }
+}
+
+.ui-grid-column-menu {
+  position: absolute;
+}
+
+/* Slide up/down animations */
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner {
+  &.ng-hide-add, &.ng-hide-remove {
+    .transition(all, 0.05s, linear);
+    display: block !important;
+  }
+  
+  &.ng-hide-add.ng-hide-add-active,
+  &.ng-hide-remove {
+    .transform(translateY(-100%));
+  }
+   
+  &.ng-hide-add,
+  &.ng-hide-remove.ng-hide-remove-active {
+    .transform(translateY(0));
+  }
+}
+@font-face {
+  font-family: 'ui-grid';
+  src: url('ui-grid.eot');
+  src: url('ui-grid.eot#iefix') format('embedded-opentype'),
+       url('ui-grid.woff') format('woff'),
+       url('ui-grid.ttf?') format('truetype'),
+       url('ui-grid.svg?#ui-grid') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'ui-grid';
+    src: url('../font/ui-grid.svg?12312827#ui-grid') format('svg');
+  }
+}
+*/
+ 
+ [class^="ui-grid-icon"]:before, [class*=" ui-grid-icon"]:before {
+  font-family: "ui-grid";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+     
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
 
 
 
@@ -360,6 +460,53 @@
 
 
 
+
+
+
+
+.ui-grid-menu {
+  z-index: 2; // So it shows up over grid canvas
+  position: absolute;
+  overflow: hidden;
+  padding: 0 10px 20px 10px;
+  cursor: default; // Parent element can have pointer cursor
+}
+
+.ui-grid-menu .ui-grid-menu-inner {
+  background: @headerBackgroundColor;
+  border: @gridBorderWidth solid @borderColor;
+  position: relative;
+  white-space: nowrap;
+
+  .rounded(@gridBorderRadius);
+  .box-shadow(e("0 10px 20px rgba(0, 0, 0, 0.2), inset 0 12px 12px -14px rgba(0, 0, 0, 0.2)"));
+}
+
+.ui-grid-menu .ui-grid-menu-inner ul {
+  margin: 0;
+  list-style-type: none;
+
+  li {
+    padding: 8px;
+    cursor: pointer;
+
+    // Show a shadow when hovering over a menu item
+    &:hover {
+      // background-color: negation(@headerBackgroundColor, #fff);
+      .inner-shadow(@vertical: 0, @blur: 14px, @alpha: 0.2);
+    }
+
+    &.ui-grid-menu-item-active {
+      .inner-shadow(@vertical: 0, @blur: 14px, @alpha: 0.2);
+      background-color: @selectedColor;
+    }
+  }
+
+  // Show a bottom border on all but the last menu item
+  li:not(:last-child) {
+    border-bottom: @gridBorderWidth solid @borderColor;
+  }
+}
 .ui-grid-native-scrollbar {
   position: absolute;;
   overflow: scroll;
@@ -464,19 +611,35 @@
   background: @scrollbarBackgroundScrolling;
   border: @scrollbarBorderScrolling;
 }
-.ui-grid-sortarrow {
-  fill: @sortArrowBackgroundColor; 
-  stroke: @sortArrowBorderColor; 
-  stroke-linejoin:miter;
-}
-.ui-grid-sortarrow.down {
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-  transform: rotate(180deg); 
-}
+// .ui-grid-sortarrow {
+//   fill: @sortArrowBackgroundColor; 
+//   stroke: @sortArrowBorderColor; 
+//   stroke-linejoin:miter;
+// }
 
+// .ui-grid-sortarrow.down {
+//   -webkit-transform: rotate(180deg);
+//   -moz-transform: rotate(180deg);
+//   -ms-transform: rotate(180deg);
+//   -o-transform: rotate(180deg);
+//   transform: rotate(180deg); 
+// }
+
+
+@sortArrowWidth: 20px;
+
+.ui-grid-sortarrow {
+  right: 5px;
+  position: absolute;
+  width: @sortArrowWidth;
+  top: 0;
+  bottom: 0;
+  background-position: center;
+
+  &.down {
+    .transform(rotate(180deg));
+  }
+}
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
 /**
@@ -522,6 +685,9 @@
 
 // TODO: color for cell selections
 @focusedCell: #b3c4c7;
+
+// Color to use for enabled or selected settings/items/cells, etc. Should probably override the one above
+@selectedColor: #cecece;
 
 /**
 * @section Scrollbar styles
