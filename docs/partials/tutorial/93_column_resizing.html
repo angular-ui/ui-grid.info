@@ -5,23 +5,29 @@
 <pre class="prettyprint linenums">
 angular.module('yourApp', ['ui.grid', 'ui.grid.resizeColumns']);
 </pre>
+
+<p>Also, you must add the directive to your grid element.  We do this so that you can have several grids on a
+page and only pay the resizing overhead if the grid is actually using resizing.
+<pre class="prettyprint linenums">
+&lt;div ui-grid="gridOptions" class="grid" ui-grid-resize-columns&gt;&lt;/div&gt;
+</pre>
 <br>
 <br>
-The <code>enableColumnResize</code> option on your grid will enable resizing and turn it on for all columns by default.
+The <code>enableColumnResizing</code> option on your grid will enable resizing and turn it on for all columns by default.
 <pre class="prettyprint linenums">
 $scope.gridOptions = {
-  enableColumnResize: true
+  enableColumnResizing: true
 };
 </pre>
 <br>
 <br>
-You can disable it on a column by setting the <code>enableColumnResize</code> property to false in its column definition.
+You can disable it on a column by setting the <code>enableColumnResizing</code> property to false in its column definition.
 <pre class="prettyprint linenums">
 $scope.gridOptions = {
-  enableColumnResize: true,
+  enableColumnResizing: true,
   columnDefs: [
     { field: 'name' },
-    { field: 'gender', enableColumnResize: false },
+    { field: 'gender', enableColumnResizing: false },
     { field: 'company' }
   ]
 };
@@ -38,7 +44,7 @@ $scope.gridOptions = {
     The column will obey any <i>minWidth</i> or <i>maxWidth</i> constraints you give it.
     <br>
     <br>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div ui-grid="gridOptions" class="grid" ui-grid-resize-columns></div>
   </div>
 </script>
 </div>
@@ -58,11 +64,11 @@ $scope.gridOptions = {
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {
-      enableColumnResize: true,
+      enableColumnResizing: true,
       enableSorting: true,
       columnDefs: [
         { field: 'name', minWidth: 200, width: '50%' },
-        { field: 'gender', width: '30%', enableColumnResize: false },
+        { field: 'gender', width: '30%', enableColumnResizing: false },
         { field: 'company', width: '20%' }
       ]
     };

@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-c715e0f - 2014-04-16
+/*! ui-grid - v2.0.7-1f7f4fc - 2014-04-16
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -3301,7 +3301,7 @@ angular.module('ui.grid')
     this.enableVirtualScrolling = false;
 
     // Resizing columns, off by default
-    this.enableColumnResize = false;
+    this.enableColumnResizing = false;
 
     // Columns can't be smaller than 10 pixels
     this.minimumColumnSize = 10;
@@ -5474,8 +5474,63 @@ module.filter('px', function() {
 (function(){
   'use strict';
 
+  var module = angular.module('ui.grid.resizeColumns', ['ui.grid']);
+
+  module.constant('columnBounds', {
+    minWidth: 35
+  });
+
+
+  module.service('uiGridColumnResizingService', ['$log','$q',
+    function ($log,$q) {
+
+      var service = {
+
+
+        colResizerColumnBuilder: function (colDef, col, gridOptions) {
+
+          var promises = [];
+
+          //legacy support
+          //use old name if it is present and true
+          //todo: probably not the best place for this since it is called with each colDef
+          if(gridOptions.enableColumnResize){
+            gridOptions.enableColumnResizing = true;
+          }
+
+          //legacy support of old option name
+          if(colDef.enableColumnResize){
+            colDef.enableColumnResizing = true;
+          }
+
+          return $q.all(promises);
+        }
+      };
+
+      return service;
+
+    }]);
+
+  module.directive('uiGridResizeColumns', ['$log', 'uiGridColumnResizingService', function ($log, uiGridColumnResizingService) {
+    return {
+      replace: true,
+      priority: 0,
+      require: '^uiGrid',
+      scope: false,
+      compile: function () {
+        return {
+          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+            uiGridCtrl.grid.registerColumnBuilder( uiGridColumnResizingService.colResizerColumnBuilder);
+          },
+          post: function ($scope, $elm, $attrs, uiGridCtrl) {
+          }
+        };
+      }
+    };
+  }]);
+
   // Extend the uiGridHeaderCell directive
-  angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$templateCache', '$compile', '$q', function ($log, $templateCache, $compile, $q) {
+  module.directive('uiGridHeaderCell', ['$log', '$templateCache', '$compile', '$q', function ($log, $templateCache, $compile, $q) {
     return {
       // Run after the original uiGridHeaderCell
       priority: -10,
@@ -5484,7 +5539,7 @@ module.filter('px', function() {
       compile: function() {
         return {
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
-            if (uiGridCtrl.grid.options.enableColumnResize) {
+           if (uiGridCtrl.grid.options.enableColumnResizing) {
               var renderIndexDefer = $q.defer();
 
               $attrs.$observe('renderIndex', function (n, o) {
@@ -5508,13 +5563,13 @@ module.filter('px', function() {
                 var otherCol = uiGridCtrl.grid.renderedColumns[$scope.renderIndex - 1];
 
                 // Don't append the left resizer if this is the first column or the column to the left of this one has resizing disabled
-                if ($scope.col.index !== 0 && otherCol.colDef.enableColumnResize !== false) {
+                if ($scope.col.index !== 0 && otherCol.colDef.enableColumnResizing !== false) {
                   $elm.prepend(resizerLeft);
                 }
                 
                 // Don't append the right resizer if this column has resizing disabled
-                //if ($scope.col.index !== $scope.grid.renderedColumns.length - 1 && $scope.col.colDef.enableColumnResize !== false) {
-                if ($scope.col.colDef.enableColumnResize !== false) {
+                //if ($scope.col.index !== $scope.grid.renderedColumns.length - 1 && $scope.col.colDef.enableColumnResizing !== false) {
+                if ($scope.col.colDef.enableColumnResizing !== false) {
                   $elm.append(resizerRight);
                 }
 
@@ -5528,11 +5583,7 @@ module.filter('px', function() {
     };
   }]);
 
-  var module = angular.module('ui.grid.resizeColumns', ['ui.grid']);
 
-  module.constant('columnBounds', {
-    minWidth: 35
-  });
   
   /**
    * @ngdoc directive
@@ -5551,7 +5602,7 @@ module.filter('px', function() {
 
         app.controller('MainCtrl', ['$scope', function ($scope) {
           $scope.gridOpts = {
-            enableColumnResize: true,
+            enableColumnResizing: true,
             data: [
               { "name": "Ethel Price", "gender": "female", "company": "Enersol" },
               { "name": "Claudine Neal", "gender": "female", "company": "Sealoud" },
@@ -5666,7 +5717,7 @@ module.filter('px', function() {
           }
 
           // Don't resize if it's disabled on this column
-          if (col.colDef.enableColumnResize === false) {
+          if (col.colDef.enableColumnResizing === false) {
             return;
           }
 
@@ -5727,7 +5778,7 @@ module.filter('px', function() {
           }
 
           // Don't resize if it's disabled on this column
-          if (col.colDef.enableColumnResize === false) {
+          if (col.colDef.enableColumnResizing === false) {
             return;
           }
 
@@ -5864,12 +5915,12 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" ui-grid-header-cell=\"\" col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && columnStyle($index)\"><!-- class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\" --><!-- <div ng-if=\"grid.options.enableColumnResize && col.index != 0\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer col=\"col\" position=\"left\" render-index=\"$index\">&nbsp;</div>\n" +
+    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel=\"\" ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in grid.renderedColumns track by $index\" ui-grid-header-cell=\"\" col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && columnStyle($index)\"><!-- class=\"ui-grid-header-cell col{{ col.index }}\" ng-style=\"$index === 0 && columnStyle($index)\" --><!-- <div ng-if=\"grid.options.enableColumnResizing && col.index != 0\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer col=\"col\" position=\"left\" render-index=\"$index\">&nbsp;</div>\n" +
     "\n" +
     "          <div class=\"ui-grid-vertical-bar\">&nbsp;</div>\n" +
     "          <div class=\"ui-grid-cell-contents\" col-index=\"$index\">{{ col.displayName }}</span></div>\n" +
     "\n" +
-    "          <div ng-if=\"grid.options.enableColumnResize && col.index != grid.renderedColumns.length - 1\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer col=\"col\" position=\"right\"  render-index=\"$index\">&nbsp;</div> --></div></div></div><div ui-grid-menu=\"\"></div></div>"
+    "          <div ng-if=\"grid.options.enableColumnResizing && col.index != grid.renderedColumns.length - 1\" class=\"ui-grid-column-resizer\" ui-grid-column-resizer col=\"col\" position=\"right\"  render-index=\"$index\">&nbsp;</div> --></div></div></div><div ui-grid-menu=\"\"></div></div>"
   );
 
 
@@ -5984,7 +6035,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/columnResizer',
-    "<div ui-grid-column-resizer=\"\" ng-if=\"grid.options.enableColumnResize\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\"></div>"
+    "<div ui-grid-column-resizer=\"\" ng-if=\"grid.options.enableColumnResizing\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\"></div>"
   );
 
 }]);
