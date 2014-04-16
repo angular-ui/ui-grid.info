@@ -128,7 +128,7 @@ NG_DOCS={
       "id": "ui.grid.resizeColumns.directive:uiGridColumnResizer",
       "shortName": "uiGridColumnResizer",
       "type": "directive",
-      "keywords": "$scope and angular api app be beryl class claudine column company controller controls data directive div draggable e2e enablecolumnresizing enersol ethel event female fired function geekko gender gonzales grid gridopts handle horizontal mainctrl male maxwidth minwidth module name neal ng-controller obey post-resize price resizecolumns resizing rice scroll sealoud should specs testgrid that todo true ui ui-grid var velity wilder"
+      "keywords": "$scope and angular api app be beryl class claudine column company controller controls data directive div draggable e2e enablecolumnresize enersol ethel event female fired function geekko gender gonzales grid gridopts handle horizontal mainctrl male maxwidth minwidth module name neal ng-controller obey post-resize price resizecolumns resizing rice scroll sealoud should specs testgrid that todo true ui ui-grid var velity wilder"
     },
     {
       "section": "api",
@@ -268,7 +268,7 @@ NG_DOCS={
       "id": "93_column_resizing",
       "shortName": "Column Resizing",
       "type": "overview",
-      "keywords": "$http $scope according add all and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies disable enable enablecolumnresizing enablesorting false feature field for function gender get give grid gridoptions height html in including index it its js json main mainctrl minwidth module name ng-controller obey on option or overview property rendered resize resizecolumns resizing separator setting size success the to true turn tutorial ui ui-grid var width will you your yourapp"
+      "keywords": "$http $scope according add all and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies disable enable enablecolumnresize enablesorting false feature field for function gender get give grid gridoptions height html in including index it its js json main mainctrl minwidth module name ng-controller obey on option or overview property rendered resize resizecolumns resizing separator setting size success the to true turn tutorial ui ui-grid var width will you your yourapp"
     },
     {
       "section": "tutorial",

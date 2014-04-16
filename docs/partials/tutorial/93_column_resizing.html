@@ -7,21 +7,21 @@ angular.module('yourApp', ['ui.grid', 'ui.grid.resizeColumns']);
 </pre>
 <br>
 <br>
-The <code>enableColumnResizing</code> option on your grid will enable resizing and turn it on for all columns by default.
+The <code>enableColumnResize</code> option on your grid will enable resizing and turn it on for all columns by default.
 <pre class="prettyprint linenums">
 $scope.gridOptions = {
-  enableColumnResizing: true
+  enableColumnResize: true
 };
 </pre>
 <br>
 <br>
-You can disable it on a column by setting the <code>enableColumnResizing</code> property to false in its column definition.
+You can disable it on a column by setting the <code>enableColumnResize</code> property to false in its column definition.
 <pre class="prettyprint linenums">
 $scope.gridOptions = {
-  enableColumnResizing: true,
+  enableColumnResize: true,
   columnDefs: [
     { field: 'name' },
-    { field: 'gender', enableColumnResizing: false },
+    { field: 'gender', enableColumnResize: false },
     { field: 'company' }
   ]
 };
@@ -58,11 +58,11 @@ $scope.gridOptions = {
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {
-      enableColumnResizing: true,
+      enableColumnResize: true,
       enableSorting: true,
       columnDefs: [
         { field: 'name', minWidth: 200, width: '50%' },
-        { field: 'gender', width: '30%', enableColumnResizing: false },
+        { field: 'gender', width: '30%', enableColumnResize: false },
         { field: 'company', width: '20%' }
       ]
     };
