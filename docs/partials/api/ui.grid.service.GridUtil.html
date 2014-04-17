@@ -89,7 +89,7 @@ var id = GridUtil.newId();
 <p><code>wheel, mousewheel, DomMouseScroll, MozMousePixelScroll</code></p>
 
 <p>"normalize" it
-so that it stays consistent no matter what browser it comes from (i.e. scale it correctl and make sure the direction is right.)</p><h4 id="Parameters">Parameters</h4>
+so that it stays consistent no matter what browser it comes from (i.e. scale it correctly and make sure the direction is right.)</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">event – {event} – </code>
 <p>A mouse wheel event</p></li>
 </ul>
@@ -124,10 +124,10 @@ so that it stays consistent no matter what browser it comes from (i.e. scale it 
 <script type="text/ng-template" id="app.js">
    var app = angular.module('app', ['ui.grid']);
 
-   app.controller('MainCtrl', ['$scope', 'GridUtil', function ($scope, GridUtil) {
+   app.controller('MainCtrl', ['$scope', 'gridUtil', function ($scope, gridUtil) {
      $scope.name = 'firstName';
      $scope.columnName = function(name) {
-       return GridUtil.readableColumnName(name);
+       return gridUtil.readableColumnName(name);
      };
    }]);
  </script>

@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-44cb79a - 2014-04-16
+/*! ui-grid - v2.0.7-366bc89 - 2014-04-17
 * Copyright (c) 2014 ; Licensed MIT */
 
 .ui-grid-body {
@@ -294,6 +294,14 @@
   }
 }
 
+.ui-grid-invisible {
+  visibility: hidden;;
+}
+
+.ui-grid-top-panel-background {
+  .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
+}
+
 @topPanelRadius: @gridBorderRadius - @gridBorderWidth;
 .ui-grid-top-panel {
     position: relative;
@@ -304,7 +312,8 @@
     overflow: hidden;  // Disable so menus show up
     font-weight: bold;
 
-    .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
+    // .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
+    .ui-grid-top-panel-background;
 
     .border-radius(@topPanelRadius, 0, 0, @topPanelRadius);
 }
@@ -371,6 +380,8 @@
   right: @gridBorderWidth; // So it doesn't overlay the vertical bar
   top: 0;
   bottom: 0;
+
+  .ui-grid-top-panel-background;
 
   .ui-grid-icon-angle-down {
     vertical-align: sub;
@@ -448,6 +459,11 @@
  
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.ui-grid-icon-blank::before {
+  width: 1em;
+  content: ' ';
 }
 
 

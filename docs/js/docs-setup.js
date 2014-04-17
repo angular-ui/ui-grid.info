@@ -37,7 +37,7 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all alter an and any api are array as asc ascending assign be behavior being build buildcolumns buildstyles by called calls chance class col column columnbuilder columnbuilders columndefinition columns columnsprocessor count creates currently data defined defines definitions desc descending direction directions each eached either elements etc exclude existing false for from function further getcolumn getcolumnsorting given grid gridcolumn gridoptions gridrow has having id identified if in is iterate its load logical long modified modifyrows name needed newrawdata non-dom not objects of on only optional optionally or process processes processor processrowbuilders promise properties provided reference register registercolumnbuilder registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowequality rows set should sort sortcolumn sorted sorting stylecomputation supplies that the this through to ui unsorted updated using when which will with"
+      "keywords": "add added additional all alter an and any api are array as asc ascending be behavior being build buildcolumns buildstyles by called calls chance class col column columnbuilder columnbuilders columndefinition columns columnsprocessor count creates currently data defined defines definitions desc descending direction directions each eached either elements etc exclude existing expected false for from function further getcolumn getcolumnsorting given grid gridcolumn gridoptions gridrow has having id identified if in into is iterate its load logical long map modified modifyrows name needed newrawdata non-dom not object objects of on only optional optionally options or pass process processes processor processrowbuilders promise properties property provided reference register registercolumnbuilder registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowequality rows set should sort sortcolumn sorted sorting stylecomputation supplies that the this through to ui unsorted updated using when which will with"
     },
     {
       "section": "api",
@@ -51,7 +51,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "_field and any api application are array assign backwards be by can class columndef columndefs compare compared compatibilty complex contain data default defined developer entitya entityb equality field1 field2 first for function grid gridoptions id in is item name object objects of on only option or over overlaid overridden place property rendered required rowequality rows second the this to ui used using var with x_"
+      "keywords": "_field and any api application are array backwards be by can class columndef columndefs compare compared compatibilty complex contain data default defined developer entitya entityb equality field1 field2 first for function grid gridoptions in is item name object objects of on only option or over overlaid overridden place property rendered required rowequality rows second the this to ui used using var with x_"
     },
     {
       "section": "api",
@@ -135,14 +135,14 @@ NG_DOCS={
       "id": "ui.grid.service:gridClassFactory",
       "shortName": "gridClassFactory",
       "type": "object",
-      "keywords": "and api applies col coldef column core creategrid creates defaultcolumnbuilder definition definitions designtime dom each factory features for function grid gridcol gridoptions have id instance instances method new object of options processes reference return service specific the them to ui unique will"
+      "keywords": "an and api applies col coldef column core created creategrid creates defaultcolumnbuilder definition definitions designtime dom each factory features for function grid gridcol gridoptions have id instance instances into map method new object of options pass processes reference return service specific the them to ui unique will"
     },
     {
       "section": "api",
       "id": "ui.grid.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser calculation capitalized column columndefs columnname comes consistent contents controller correctl data definitions direction dom dommousescroll element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional pixels promise readablecolumnname resolving return right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
+      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional pixels promise readablecolumnname resolving return right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
     },
     {
       "section": "tutorial",
@@ -191,7 +191,7 @@ NG_DOCS={
       "id": "5.1_sorting",
       "shortName": "Sorting",
       "type": "overview",
-      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def disabled enablesorting example false field flag for function gender get grid gridoptions header height html if in include index it js json just last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then to true tutorial ui ui-grid up var want width you your"
+      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def disabled enablesorting example false field flag for function gender get grid gridoptions has header height html if in include index it js json just last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then third to true tutorial ui ui-grid up var want width you your"
     },
     {
       "section": "tutorial",
@@ -268,7 +268,7 @@ NG_DOCS={
       "id": "93_column_resizing",
       "shortName": "Column Resizing",
       "type": "overview",
-      "keywords": "$http $scope according add all and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies disable enable enablecolumnresizing enablesorting false feature field for function gender get give grid gridoptions height html in including index it its js json main mainctrl minwidth module name ng-controller obey on option or overview property rendered resize resizecolumns resizing separator setting size success the to true turn tutorial ui ui-grid var width will you your yourapp"
+      "keywords": "$http $scope according actually add all also and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies directive disable do element enable enablecolumnresizing enablesorting false feature field for function gender get give grid gridoptions grids have height html if in including index is it its js json main mainctrl minwidth module must name ng-controller obey on only option or overhead overview page pay property rendered resize resizecolumns resizing separator setting several size so success that the this to true turn tutorial ui ui-grid ui-grid-resize-columns using var we width will you your yourapp"
     },
     {
       "section": "tutorial",

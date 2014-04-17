@@ -37,6 +37,17 @@
 .ui-grid-clearfix:after {
   clear: both;
 }
+.ui-grid-invisible {
+  visibility: hidden;
+}
+.ui-grid-top-panel-background {
+  background: #f3f3f3;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
+  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
+  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
+  background: -o-linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+}
 .ui-grid-top-panel {
   position: relative;
   border-bottom: 1px solid #d4d4d4;
@@ -131,6 +142,12 @@
   right: 1px;
   top: 0;
   bottom: 0;
+  background: #f3f3f3;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
+  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
+  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
+  background: -o-linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
 }
 .ui-grid-column-menu-button .ui-grid-icon-angle-down {
   vertical-align: sub;
@@ -404,6 +421,10 @@
   /* font-size: 120%; */
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+.ui-grid-icon-blank::before {
+  width: 1em;
+  content: ' ';
 }
 /*
 * RTL Styles

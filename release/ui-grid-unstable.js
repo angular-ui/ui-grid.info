@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-44cb79a - 2014-04-16
+/*! ui-grid - v2.0.7-366bc89 - 2014-04-17
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -574,7 +574,7 @@
 })();
 (function(){
 
-angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$window', '$document', '$injector', 'gridUtil', 'uiGridConstants', function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstants) {
+angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$window', '$document', '$injector', 'gridUtil', 'uiGridConstants', 'i18nService', function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstants, i18nService) {
 
   var uiGridColumnMenu = {
     priority: 0,
@@ -599,6 +599,8 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       $scope.asc = uiGridConstants.ASC;
       $scope.desc = uiGridConstants.DESC;
 
+      // $scope.i18n = i18nService;
+
       // Get the grid menu element. We'll use it to calculate positioning
       var menu = $elm[0].querySelectorAll('.ui-grid-menu');
 
@@ -616,7 +618,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       
       var defaultMenuItems = [
         {
-          title: 'Sort Ascending',
+          title: i18nService.get().sort.ascending,
           icon: 'ui-grid-icon-sort-alt-up',
           action: function($event) {
             $event.stopPropagation();
@@ -630,7 +632,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
           }
         },
         {
-          title: 'Sort Descending',
+          title: i18nService.get().sort.descending,
           icon: 'ui-grid-icon-sort-alt-down',
           action: function($event) {
             $event.stopPropagation();
@@ -644,7 +646,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
           }
         },
         {
-          title: 'Remove Sort',
+          title: i18nService.get().sort.remove,
           icon: 'ui-grid-icon-cancel',
           action: function ($event) {
             $event.stopPropagation();
@@ -2137,6 +2139,19 @@ angular.module('ui.grid')
   ]);
 
 })();
+(function() {
+
+angular.module('ui.grid')
+.directive('uiGridVisible', function uiGridVisibleAction() {
+  return function ($scope, $elm, $attr) {
+    $scope.$watch($attr.uiGridVisible, function (visible) {
+        // $elm.css('visibility', visible ? 'visible' : 'hidden');
+        $elm[visible ? 'removeClass' : 'addClass']('ui-grid-invisible');
+    });
+  };
+});
+
+})();
 (function () {
   'use strict';
 
@@ -2442,7 +2457,7 @@ angular.module('ui.grid')
    * @name ui.grid.class:Grid
    * @description Grid defines a logical grid.  Any non-dom properties and elements needed by the grid should
    *              be defined in this class
-   * @param {string} id id to assign to grid
+   * @param {object} options Object map of options to pass into the grid. An 'id' property is expected.
    */
   var Grid = function (options) {
     // Get the id out of the options, then remove it
@@ -3244,7 +3259,6 @@ angular.module('ui.grid')
    * @name ui.grid.class:GridOptions
    * @description Default GridOptions class.  GridOptions are defined by the application developer and overlaid
    * over this object.
-   * @param {string} id id to assign to grid
    */
   function GridOptions() {
     /**
@@ -3388,6 +3402,7 @@ angular.module('ui.grid')
          * @name createGrid
          * @methodOf ui.grid.service:gridClassFactory
          * @description Creates a new grid instance. Each instance will have a unique id
+         * @param {object} options An object map of options to pass into the created grid instance.
          * @returns {Grid} grid
          */
         createGrid : function(options) {
@@ -3891,10 +3906,10 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', '
         <file name="app.js">
           var app = angular.module('app', ['ui.grid']);
 
-          app.controller('MainCtrl', ['$scope', 'GridUtil', function ($scope, GridUtil) {
+          app.controller('MainCtrl', ['$scope', 'gridUtil', function ($scope, gridUtil) {
             $scope.name = 'firstName';
             $scope.columnName = function(name) {
-              return GridUtil.readableColumnName(name);
+              return gridUtil.readableColumnName(name);
             };
           }]);
         </file>
@@ -4132,7 +4147,7 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', '
     * `wheel, mousewheel, DomMouseScroll, MozMousePixelScroll`
     *
     * "normalize" it
-    * so that it stays consistent no matter what browser it comes from (i.e. scale it correctl and make sure the direction is right.)
+    * so that it stays consistent no matter what browser it comes from (i.e. scale it correctly and make sure the direction is right.)
     */
     normalizeWheelEvent: function (event) {
       // var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'];
@@ -4389,6 +4404,11 @@ module.filter('px', function() {
         },
         menu: {
           text: 'Choose Columns:'
+        },
+        sort: {
+          ascending: 'Sort Ascending',
+          descending: 'Sort Descending',
+          remove: 'Remove Sort'
         }
       });
       return $delegate;
@@ -5474,8 +5494,63 @@ module.filter('px', function() {
 (function(){
   'use strict';
 
+  var module = angular.module('ui.grid.resizeColumns', ['ui.grid']);
+
+  module.constant('columnBounds', {
+    minWidth: 35
+  });
+
+
+  module.service('uiGridColumnResizingService', ['$log','$q',
+    function ($log,$q) {
+
+      var service = {
+
+
+        colResizerColumnBuilder: function (colDef, col, gridOptions) {
+
+          var promises = [];
+
+          //legacy support
+          //use old name if it is present and true
+          //todo: probably not the best place for this since it is called with each colDef
+          if(gridOptions.enableColumnResize){
+            gridOptions.enableColumnResizing = true;
+          }
+
+          //legacy support of old option name
+          if(colDef.enableColumnResize){
+            colDef.enableColumnResizing = true;
+          }
+
+          return $q.all(promises);
+        }
+      };
+
+      return service;
+
+    }]);
+
+  module.directive('uiGridResizeColumns', ['$log', 'uiGridColumnResizingService', function ($log, uiGridColumnResizingService) {
+    return {
+      replace: true,
+      priority: 0,
+      require: '^uiGrid',
+      scope: false,
+      compile: function () {
+        return {
+          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+            uiGridCtrl.grid.registerColumnBuilder( uiGridColumnResizingService.colResizerColumnBuilder);
+          },
+          post: function ($scope, $elm, $attrs, uiGridCtrl) {
+          }
+        };
+      }
+    };
+  }]);
+
   // Extend the uiGridHeaderCell directive
-  angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$templateCache', '$compile', '$q', function ($log, $templateCache, $compile, $q) {
+  module.directive('uiGridHeaderCell', ['$log', '$templateCache', '$compile', '$q', function ($log, $templateCache, $compile, $q) {
     return {
       // Run after the original uiGridHeaderCell
       priority: -10,
@@ -5484,7 +5559,7 @@ module.filter('px', function() {
       compile: function() {
         return {
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
-            if (uiGridCtrl.grid.options.enableColumnResizing) {
+           if (uiGridCtrl.grid.options.enableColumnResizing) {
               var renderIndexDefer = $q.defer();
 
               $attrs.$observe('renderIndex', function (n, o) {
@@ -5528,11 +5603,7 @@ module.filter('px', function() {
     };
   }]);
 
-  var module = angular.module('ui.grid.resizeColumns', ['ui.grid']);
 
-  module.constant('columnBounds', {
-    minWidth: 35
-  });
   
   /**
    * @ngdoc directive
@@ -5799,16 +5870,29 @@ module.filter('px', function() {
           // Go through the rendered rows and find out the max size for the data in this column
           var maxWidth = 0;
           var xDiff = 0;
-          var cells = uiGridCtrl.grid.element[0].querySelectorAll('.col' + col.index);
+          // Get the cell contents so we measure correctly. For the header cell we have to account for the sort icon and the menu buttons, if present
+          var cells = uiGridCtrl.grid.element[0].querySelectorAll('.col' + col.index + ' .ui-grid-cell-contents');
           Array.prototype.forEach.call(cells, function (cell) {
               // Get the cell width
               // $log.debug('width', gridUtil.elementWidth(cell));
 
+              // Account for the menu button if it exists
+              var menuButton;
+              if (angular.element(cell).parent().hasClass('ui-grid-header-cell')) {
+                menuButton = angular.element(cell).parent()[0].querySelectorAll('.ui-grid-column-menu-button');
+              }
+
               gridUtil.fakeElement(cell, {}, function(newElm) {
                 // Make the element float since it's a div and can expand to fill its container
-                angular.element(newElm).attr('style', 'float: left');
+                var e = angular.element(newElm);
+                e.attr('style', 'float: left');
 
-                var width = gridUtil.elementWidth(newElm);
+                var width = gridUtil.elementWidth(e);
+
+                if (menuButton) {
+                  var menuButtonWidth = gridUtil.elementWidth(menuButton);
+                  width = width + menuButtonWidth;
+                }
 
                 if (width > maxWidth) {
                   maxWidth = width;
@@ -5959,7 +6043,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div class=\"ui-grid-header-cell col{{ col.index }} clearfix\" ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName }} <span ng-show=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc }\"></span></div><div ng-if=\"grid.options.enableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><span class=\"ui-grid-icon-angle-down\">&nbsp;<span></span></span></div></div>"
+    "<div class=\"ui-grid-header-cell col{{ col.index }} clearfix\" ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div></div>"
   );
 
 
