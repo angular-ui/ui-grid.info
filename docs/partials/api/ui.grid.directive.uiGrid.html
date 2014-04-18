@@ -6,14 +6,19 @@
 <div class="description"><p>Create a very basic grid.</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage">as element:<pre class="prettyprint linenums">&lt;ui-grid
-       uiGrid="{Object}"&gt;
+       uiGrid="{Object}"
+       [external-scopes="{Object}"]&gt;
 &lt;/ui-grid&gt;</pre>
-as attribute<pre class="prettyprint linenums">&lt;div ui-grid="{Object}"&gt;
+as attribute<pre class="prettyprint linenums">&lt;div ui-grid="{Object}"
+     [external-scopes="{Object}"]&gt;
    ...
 &lt;/div&gt;</pre>
 <h3 id="Parameters">Parameters</h3>
 <ul class="parameters"><li><code ng:non-bindable="">uiGrid – {Object} – </code>
 <p>Options for the grid to use</p></li>
+<li><code ng:non-bindable="">external-scopes<i>(optional)</i> – {Object=} – </code>
+<p>Add external-scopes='someScopeObjectYouNeed' attribute so you can access
+your scopes from within any custom templatedirective.  You access by $scope.getExternalScopes() function</p></li>
 </ul>
 </div>
 <h2 id="Example">Example</h2>

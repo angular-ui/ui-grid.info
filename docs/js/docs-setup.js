@@ -65,7 +65,7 @@ NG_DOCS={
       "id": "ui.grid.directive:uiGrid",
       "shortName": "uiGrid",
       "type": "directive",
-      "keywords": "$scope angular api app basic bob ceo controller create data developer directive div ea for frank function grid html index js lowly mainctrl module name ng-controller options the title to ui ui-grid uigrid use var very"
+      "keywords": "$scope access add angular any api app attribute basic bob by can ceo controller create custom data developer directive div ea external-scopes for frank from function getexternalscopes grid html index js lowly mainctrl module name ng-controller options scopes so somescopeobjectyouneed templatedirective the title to ui ui-grid uigrid use var very within you your"
     },
     {
       "section": "api",
@@ -100,7 +100,7 @@ NG_DOCS={
       "id": "ui.grid.edit.directive:uiGridCell",
       "shortName": "uiGridCell",
       "type": "directive",
-      "keywords": "actions and angular api back be been begin binds blur by cancel cancelled capabilities cell columndef dblclick default dependent directive div do edit editablecelldirective editing element emit end ended enter esc etc event events f2 fire grid grid_scroll gridcell has if in-line initial input invoke is it key keydown model needed of on original provide recognizes replaced respond selection set should specific stacks standards start steps that the to top ui ui-grid-text-editor uigridcell uigridconstants uigrideditconstants using value when will with"
+      "keywords": "actions and angular api appended back be been begin binds blur by cancel cancelled capabilities cell celltexteditor columndef dblclick default dependent directive div do edit editablecelltemplate editing element emit end ended enter esc etc event events f2 fire grid grid_scroll gridcell has html if in-line initial input invoke is it key keydown model needed of on original provide recognizes respond selection set should specific stacks standards start steps that the to top ui uigridcell uigridconstants uigrideditconstants using value when will with"
     },
     {
       "section": "api",
@@ -114,7 +114,7 @@ NG_DOCS={
       "id": "ui.grid.edit.directive:uiGridTextEditor",
       "shortName": "uiGridTextEditor",
       "type": "directive",
-      "keywords": "and api as be blur can cancel component develop directive div edit editing editor editors end enter esc events fields for grid input keydown other template text that to ui used"
+      "keywords": "and api as be blur can cancel canceledit develop directive div edit editing editor editors end endedit enter esc events fields for grid input keydown other provides template text that to ui used"
     },
     {
       "section": "api",
@@ -163,7 +163,7 @@ NG_DOCS={
       "id": "1_basic_grid",
       "shortName": "Basic Grid",
       "type": "overview",
-      "keywords": "$scope acium amie angular app austex barber barnett bartlett basic bennett benton berg berger bond boyle brainclip brainquil brandy brittney bush buzzmaker buzzness carney casey celeste cervantes cherry clara class cline cohen cole company comveyer comvoy confrenzy controller cox create cruz css data daugherty david dorsey doyle dunn eargo egypto elnora emma employed enormo example exostream false fernandez ferrell firstname fischer fletcher flexigen fuelton fuentes function gladys glenn gonkle grant gretchen grid hardy harrington hart hazel height holcomb hooper hopper html hull hunt in index intergeek irwin jarvis jefferson joviold js kongene konnect koogle kramer kristine lastname letpro lorraine ludak main mainctrl maldonado marcy maribel marqet mathis mays mccoy mccullough mclean medmex melton memora michael microluxe mindy misty module molina momentia mona morse mosley most mueller multiflex name nancy nettie ng-controller oneill ontagene our overview owens parleynet pauline pickett pittman possible printspan puckett quadeebo ramjob reilly sallie schroeder schwartz shepherd skinner slambda sloganaut slumberia steelfab sultrax sutton tania tanya techmania the this true tutorial ui ui-grid undertap valeria vance vang var vincent vinch violet voipa waab walker waters we width wise xylar zamora zeam zedalis zentix zolavo zomboid"
+      "keywords": "$scope abc access acium amie angular app are attribute austex barber barnett bartlett basic bennett benton berg berger bond boyle brainclip brainquil brandy brittney bush buzzmaker buzzness carney casey celeste cervantes cherry clara class cline cohen cole company comveyer comvoy confrenzy controller cox create cruz css data daugherty david dorsey doyle dunn eargo egypto elnora emma employed enormo example exostream external-scopes false fernandez ferrell firstname fischer fletcher flexigen fuelton fuentes function getexternalscopes give gladys glenn gonkle grant gretchen grid hardy harrington hart hazel height holcomb hooper hopper html hull hunt in index intergeek irwin jarvis jefferson joviold js kongene konnect koogle kramer kristine lastname letpro lorraine ludak main mainctrl maldonado marcy maribel marqet mathis mays mccoy mccullough mclean medmex melton memora michael microluxe mindy misty model module molina momentia mona morse mosley most mueller multiflex myviewmodel name nancy nettie ng-controller oneill ontagene optional overview owens parleynet pauline pickett pittman possible printspan puckett quadeebo ramjob reilly sallie schroeder schwartz shepherd skinner slambda sloganaut slumberia steelfab sultrax sutton tania tanya techmania the this to true tutorial ui ui-grid undertap us using valeria vance vang var via view vincent vinch violet voipa waab walker waters we width wise xylar zamora zeam zedalis zentix zolavo zomboid"
     },
     {
       "section": "tutorial",
@@ -219,7 +219,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$http $scope address age allow angular app be can cell city class click column columndefs controller css data definitions displayname double edit editable enablecelledit function get grid gridoptions height html id in index it js json length main mainctrl module name ng-controller number options overview success the to true tutorial ui ui-grid ui-grid-edit use var width you your"
+      "keywords": "$http $scope address age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate editablecelltemplateurl editing editor enablecelledit f2 false feature focus following for function get grid gridoptions has height html id if in index invoke invoked is js json key length main mainctrl mode module name ng-controller non-navigable number only option options or other overrides overview returns rowindex rows set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit undefined url use used using valid var via when width will with you your"
     },
     {
       "section": "tutorial",

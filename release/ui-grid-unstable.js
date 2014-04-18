@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-366bc89 - 2014-04-17
+/*! ui-grid - v2.0.7-6a90246 - 2014-04-18
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -572,6 +572,41 @@
   }]);
 
 })();
+angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse', 'gridUtil', 'uiGridConstants', function ($compile, $log, $parse, gridUtil, uiGridConstants) {
+  var uiGridCell = {
+    priority: 0,
+    scope: false,
+    require: '?^uiGrid',
+    compile: function() {
+      return {
+        pre: function($scope, $elm, $attrs, uiGridCtrl) {
+          // If the grid controller is present, use it to get the compiled cell template function
+          if (uiGridCtrl) {
+            var compiledElementFn = $scope.col.compiledElementFn;
+
+            $scope.getCellValue = uiGridCtrl.getCellValue;
+
+            compiledElementFn($scope, function(clonedElement, scope) {
+              $elm.append(clonedElement);
+            });
+          }
+          // No controller, compile the element manually
+          else {
+            var html = $scope.col.cellTemplate
+              .replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
+            var cellElement = $compile(html)($scope);
+            $elm.append(cellElement);
+          }
+        }
+        //post: function($scope, $elm, $attrs) {}
+      };
+    }
+  };
+
+  return uiGridCell;
+}]);
+
+
 (function(){
 
 angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$window', '$document', '$injector', 'gridUtil', 'uiGridConstants', 'i18nService', function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstants, i18nService) {
@@ -1655,6 +1690,10 @@ angular.module('ui.grid')
             }
 
             $scope.grid = uiGridCtrl.grid;
+
+            //add optional reference to externalScopes function to scope
+            //so it can be retrieved in lower elements
+            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
             $scope.getCellValue = uiGridCtrl.getCellValue;
 
             // $attrs.$observe('rowIndex', function(n, o) {
@@ -2165,6 +2204,11 @@ angular.module('ui.grid')
 
       // Extend options with ui-grid attribute reference
       self.grid = gridClassFactory.createGrid($scope.uiGrid);
+
+
+      //add optional reference to externalScopes function to controller
+      //so it can be retrieved in lower elements that have isolate scope
+      self.getExternalScopes = $scope.getExternalScopes;
       
       // angular.extend(self.grid.options, );
 
@@ -2214,7 +2258,9 @@ angular.module('ui.grid')
         dataWatchCollectionDereg = $scope.$parent.$watchCollection(function() { return $scope.uiGrid.data; }, dataWatchFunction);
       }
 
-      var columnDefWatchDereg = $scope.$parent.$watchCollection(function() { return $scope.uiGrid.columnDefs; }, function(n, o) {
+      var columnDefWatchCollectionDereg = $scope.$parent.$watchCollection(function() { return $scope.uiGrid.columnDefs; }, columnDefsWatchFunction);
+
+      function columnDefsWatchFunction(n, o) {
         if (n && n !== o) {
           self.grid.options.columnDefs = n;
           self.grid.buildColumns()
@@ -2227,7 +2273,7 @@ angular.module('ui.grid')
               self.refreshCanvas(true);
             });
         }
-      });
+      }
 
       function dataWatchFunction(n) {
         $log.debug('dataWatch fired');
@@ -2266,7 +2312,7 @@ angular.module('ui.grid')
 
       $scope.$on('$destroy', function() {
         dataWatchCollectionDereg();
-        columnDefWatchDereg();
+        columnDefWatchCollectionDereg();
       });
 
       // TODO(c0bra): Do we need to destroy this watch on $destroy?
@@ -2345,6 +2391,8 @@ angular.module('ui.grid')
  *  @element div
  *  @restrict EA
  *  @param {Object} uiGrid Options for the grid to use
+ *  @param {Object=} external-scopes Add external-scopes='someScopeObjectYouNeed' attribute so you can access
+ *            your scopes from within any custom templatedirective.  You access by $scope.getExternalScopes() function
  *  
  *  @description Create a very basic grid.
  *
@@ -2382,7 +2430,8 @@ angular.module('ui.grid').directive('uiGrid',
       return {
         templateUrl: 'ui-grid/ui-grid',
         scope: {
-          uiGrid: '='
+          uiGrid: '=',
+          getExternalScopes: '&?externalScopes' //optional functionwrapper around any needed external scope instances
         },
         replace: true,
         transclude: true,
@@ -2410,41 +2459,6 @@ angular.module('ui.grid').directive('uiGrid',
       };
     }
   ]);
-
-  //todo: move to separate file once Brian has finished committed work in progress
-  angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse', 'gridUtil', 'uiGridConstants', function ($compile, $log, $parse, gridUtil, uiGridConstants) {
-    var uiGridCell = {
-      priority: 0,
-      scope: false,
-      require: '?^uiGrid',
-      compile: function() {
-        return {
-          pre: function($scope, $elm, $attrs, uiGridCtrl) {
-            // If the grid controller is present, use it to get the compiled cell template function
-            if (uiGridCtrl) {
-              var compiledElementFn = $scope.col.compiledElementFn;
-
-              $scope.getCellValue = uiGridCtrl.getCellValue;
-              
-              compiledElementFn($scope, function(clonedElement, scope) {
-                $elm.append(clonedElement);
-              });
-            }
-            // No controller, compile the element manually
-            else {
-              var html = $scope.col.cellTemplate
-                .replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
-              var cellElement = $compile(html)($scope);
-              $elm.append(cellElement);
-            }
-          }
-          //post: function($scope, $elm, $attrs) {}
-        };
-      }
-    };
-
-    return uiGridCell;
-  }]);
 
 })();
 (function(){
@@ -5161,8 +5175,8 @@ module.filter('px', function() {
    *
    *  @description Services for editing features
    */
-  module.service('uiGridEditService', ['$log', '$q', '$templateCache', 'uiGridConstants',
-    function ($log, $q, $templateCache, uiGridConstants) {
+  module.service('uiGridEditService', ['$log', '$q', '$templateCache', 'uiGridConstants', 'gridUtil',
+    function ($log, $q, $templateCache, uiGridConstants, gridUtil) {
 
       var service = {
 
@@ -5209,9 +5223,18 @@ module.filter('px', function() {
 
           col.cellEditableCondition = colDef.cellEditableCondition || gridOptions.cellEditableCondition || 'true';
 
+          // allow for editableCellTemplate html or editableCellTemplateUrl
           if (col.enableCellEdit) {
-            col.editableCellTemplate = colDef.editableCellTemplate || $templateCache.get('ui-grid/editableCell');
-            col.editableCellDirective = colDef.editableCellDirective || 'ui-grid-text-editor';
+            if (colDef.editableCellTemplate) {
+              col.editableCellTemplate = colDef.editableCellTemplate;
+            }
+            else {
+              var promise = colDef.editableCellTemplateUrl ? gridUtil.getTemplate(colDef.editableCellTemplateUrl)
+                : gridUtil.getTemplate('ui-grid/cellTextEditor');
+              promise.then(function (html) {
+                col.editableCellTemplate = html;
+              });
+            }
           }
 
           //enableCellEditOnFocus can only be used if cellnav module is used
@@ -5285,16 +5308,16 @@ module.filter('px', function() {
    *  @description Stacks on top of ui.grid.uiGridCell to provide in-line editing capabilities to the cell
    *  Editing Actions.
    *
-   *  Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is replaced
-   *  with the columnDef.editableCellDirective directive ('ui-grid-text-editor' by default).
+   *  Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is appended
+   *  with the columnDef.editableCellTemplate element ('cellTextEditor.html' by default).
    *
-   *  The editableCellDirective should respond to uiGridEditConstants.events.BEGIN\_CELL\_EDIT angular event
+   *  The editableCellTemplate should respond to uiGridEditConstants.events.BEGIN\_CELL\_EDIT angular event
    *  and do the initial steps needed to edit the cell (setfocus on input element, etc).
    *
-   *  When the editableCellDirective recognizes that the editing is ended (blur event, Enter key, etc.)
+   *  When the editableCellTemplate recognizes that the editing is ended (blur event, Enter key, etc.)
    *  it should emit the uiGridEditConstants.events.END\_CELL\_EDIT event.
    *
-   *  If editableCellDirective recognizes that the editing has been cancelled (esc key)
+   *  If editableCellTemplate recognizes that the editing has been cancelled (esc key)
    *  it should emit the uiGridEditConstants.events.CANCEL\_CELL\_EDIT event.  The original value
    *  will be set back on the model by the uiGridCell directive.
    *
@@ -5303,11 +5326,11 @@ module.filter('px', function() {
    *    - F2 keydown (when using cell selection)
    *
    *  Events that end editing:
-   *    - Dependent on the specific editableCellDirective
+   *    - Dependent on the specific editableCellTemplate
    *    - Standards should be blur and enter keydown
    *
    *  Events that cancel editing:
-   *    - Dependent on the specific editableCellDirective
+   *    - Dependent on the specific editableCellTemplate
    *    - Standards should be Esc keydown
    *
    *  Grid Events that end editing:
@@ -5361,13 +5384,23 @@ module.filter('px', function() {
               }
             }
 
+            function shouldEdit(col) {
+              return angular.isFunction(col.cellEditableCondition) ?
+                  col.cellEditableCondition($scope) :
+                  col.cellEditableCondition;
+            }
+
             function beginEdit() {
+              if(!shouldEdit($scope.col)){
+                return;
+              }
+
               cellModel = $parse($scope.row.getQualifiedColField($scope.col));
               //get original value from the cell
               origCellValue = cellModel($scope);
 
               html = $scope.col.editableCellTemplate;
-              html = html.replace(uiGridEditConstants.EDITABLE_CELL_DIRECTIVE, $scope.col.editableCellDirective);
+              html = html.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col));
 
               var cellElement;
               $scope.$apply(function () {
@@ -5430,7 +5463,9 @@ module.filter('px', function() {
    *  @element div
    *  @restrict A
    *
-   *  @description input editor component for text fields.  Can be used as a template to develop other editors
+   *  @description input editor directive for text fields.
+   *  Provides EndEdit and CancelEdit events
+   *  Can be used as a template to develop other editors
    *
    *  Events that end editing:
    *     blur and enter keydown
@@ -5451,18 +5486,11 @@ module.filter('px', function() {
               },
               post: function ($scope, $elm, $attrs) {
 
-                var html = $templateCache.get('ui-grid/cellTextEditor');
-                html = html.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col));
-                var cellElement = $compile(html)($scope);
-                $elm.append(cellElement);
-
-                var inputElm = $elm.find('input');
-
                 //set focus at start of edit
                 $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
-                  inputElm[0].focus();
-                  inputElm[0].select();
-                  inputElm.on('blur', function (evt) {
+                  $elm[0].focus();
+                  $elm[0].select();
+                  $elm.on('blur', function (evt) {
                     $scope.stopEdit();
                   });
                 });
@@ -6058,12 +6086,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/cellTextEditor',
-    "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\">"
-  );
-
-
-  $templateCache.put('ui-grid/editableCell',
-    "<div editable_cell_directive=\"\"></div>"
+    "<div><input ng-class=\"'colt' + col.index\" ui-grid-text-editor=\"\" ng-model=\"COL_FIELD\"></div>"
   );
 
 

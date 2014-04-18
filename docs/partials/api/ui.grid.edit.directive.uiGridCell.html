@@ -6,16 +6,16 @@
 <div class="description"><p>Stacks on top of ui.grid.uiGridCell to provide in-line editing capabilities to the cell
 Editing Actions.</p>
 
-<p>Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is replaced
-with the columnDef.editableCellDirective directive ('ui-grid-text-editor' by default).</p>
+<p>Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is appended
+with the columnDef.editableCellTemplate element ('cellTextEditor.html' by default).</p>
 
-<p>The editableCellDirective should respond to uiGridEditConstants.events.BEGIN_CELL_EDIT angular event
+<p>The editableCellTemplate should respond to uiGridEditConstants.events.BEGIN_CELL_EDIT angular event
 and do the initial steps needed to edit the cell (setfocus on input element, etc).</p>
 
-<p>When the editableCellDirective recognizes that the editing is ended (blur event, Enter key, etc.)
+<p>When the editableCellTemplate recognizes that the editing is ended (blur event, Enter key, etc.)
 it should emit the uiGridEditConstants.events.END_CELL_EDIT event.</p>
 
-<p>If editableCellDirective recognizes that the editing has been cancelled (esc key)
+<p>If editableCellTemplate recognizes that the editing has been cancelled (esc key)
 it should emit the uiGridEditConstants.events.CANCEL_CELL_EDIT event.  The original value
 will be set back on the model by the uiGridCell directive.</p>
 
@@ -24,11 +24,11 @@ will be set back on the model by the uiGridCell directive.</p>
   - F2 keydown (when using cell selection)</p>
 
 <p>Events that end editing:
-  - Dependent on the specific editableCellDirective
+  - Dependent on the specific editableCellTemplate
   - Standards should be blur and enter keydown</p>
 
 <p>Events that cancel editing:
-  - Dependent on the specific editableCellDirective
+  - Dependent on the specific editableCellTemplate
   - Standards should be Esc keydown</p>
 
 <p>Grid Events that end editing:

@@ -1,7 +1,26 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>You can use the <code>enableCellEdit</code> options in your column definitions to allow a column to be editable. Double click in a cell to edit it.</p><h2 id="Example">Example</h2>
+<div><p>You can use the <code>enableCellEdit</code> options in your column definitions to allow a column to be editable.</p>
+
+<p>Editing is invoked via double-click, f2, or start typing any non-navigable key. Custom edit templates should be used for any editor other than the default text editor.</p>
+
+<p>ColumnDef Options:
+<br/><code>editableCellTemplate</code> (default: undefined) - valid html to be compiled when edit mode is invoked. Overrides editableCellTemplateUrl
+<br/><code>enableCellEdit</code> (default: false) - true to edit a column.
+<br/><code>editableCellTemplateUrl</code> (default: 'ui-grid/cellTextEditor') - templateCache Id or valid url that returns html content to be compiled when edit mode is invoked
+<br/><code>cellEditableCondition</code>  (default: true)  Can be set to a boolean or a function that will be called with the cellScope to determine if the cell should be invoked in edit mode.
+<br/>
+The following option is available only if using cellNav feature
+<br/><code>enableCellEditOnFocus</code> - true to invoke editor as soon as cell has focus</p>
+
+<pre class="prettyprint linenums">
+$scope.gridOptions.columnDefs = [
+   { name: 'name', enableCellEdit: true, editableCellTemplate },
+   { name: 'address.city', enableCellEdit: true, displayName: 'Address (even rows editable)',
+                cellEditableCondition: function($scope){return $scope.rowIndex%2} }
+]
+</pre><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-19" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -19,7 +38,7 @@
 <pre class="prettyprint linenums" ng-set-text="main.css"></pre>
 <style type="text/css" id="main.css">
   .grid {
-    width: 500px;
+    width: 600px;
     height: 450px;
   }
 </style>
@@ -36,7 +55,8 @@
       { name: 'id' },
       { name: 'name', enableCellEdit: true, displayName: 'Name (editable)' },
       { name: 'age' },
-      { name: 'address.city' }
+      { name: 'address.city',enableCellEdit: true, displayName: 'Address (even rows editable)',
+           cellEditableCondition: function($scope){return $scope.rowIndex%2} }
     ];
 
     $http.get('/data/500_complex.json')
