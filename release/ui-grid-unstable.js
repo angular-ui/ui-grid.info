@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-6a90246 - 2014-04-18
+/*! ui-grid - v2.0.7-1fad1ff - 2014-04-21
 * Copyright (c) 2014 ; Licensed MIT */
 (function () {
   'use strict';
@@ -1672,57 +1672,35 @@ angular.module('ui.grid')
     return {
       replace: true,
       // priority: 2001,
-      templateUrl: 'ui-grid/ui-grid-row',
-      require: '?^uiGrid',
+      // templateUrl: 'ui-grid/ui-grid-row',
+      require: '^uiGrid',
       scope: {
          row: '=uiGridRow',
          rowIndex: '='
       },
       compile: function() {
         return {
-          pre: function($scope, $elm, $attrs) {
-            // Bring the columnstyle function down into our isolate scope
-            // $scope.columnStyle = $scope.$parent.columnStyle;
+          pre: function($scope, $elm, $attrs, uiGridCtrl) {
+            var grid = uiGridCtrl.grid;
+
+            grid.getRowTemplateFn.then(function (templateFn) {
+              templateFn($scope, function(clonedElement, scope) {
+                $elm.replaceWith(clonedElement);
+              });
+            });
           },
           post: function($scope, $elm, $attrs, uiGridCtrl) {
-            if (uiGridCtrl === undefined) {
-              throw new Error('[ui-grid-row] uiGridCtrl is undefined!');
-            }
-
             $scope.grid = uiGridCtrl.grid;
 
             //add optional reference to externalScopes function to scope
             //so it can be retrieved in lower elements
             $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
             $scope.getCellValue = uiGridCtrl.getCellValue;
-
-            // $attrs.$observe('rowIndex', function(n, o) {
-            //   if (n) {
-            //     $scope.rowIndex = $scope.$eval(n);
-            //   }
-            // });
           }
         };
       }
     };
   }]);
-
-// app.directive('rowStyler', function($log, $compile) {
-//   return {
-//     scope: {
-//       rowIndex: '='
-//     },
-//     link: function(scope, elm, attrs) {
-//       // $log.debug('scope.rowIndex', scope.rowIndex);
-
-//       if (scope.rowIndex === 0) {
-//         elm.attr('ng-style', "rowStyle($index)");
-//         $log.debug(elm[0].outerHTML);
-//         // $compile(elm)(scope);
-//       }
-//     }
-//   };
-// });
 
 })();
 (function(){
@@ -2280,15 +2258,17 @@ angular.module('ui.grid')
         var promises = [];
 
         if (n) {
-          //load columns if needed
-          if (!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0) {
+          if(self.grid.columns.length === 0){
+            $log.debug('loading cols in dataWatchFunction');
+            if (!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0) {
               self.grid.options.columnDefs =  gridUtil.getColumnsFromData(n);
+            }
+            promises.push(self.grid.buildColumns()
+              .then(function() {
+                preCompileCellTemplates($scope.grid.columns);}
+            ));
           }
-          promises.push(self.grid.buildColumns());
-
           $q.all(promises).then(function() {
-            preCompileCellTemplates($scope.grid.columns);
-
             //wrap data in a gridRow
             $log.debug('Modifying rows');
             self.grid.modifyRows(n)
@@ -2494,6 +2474,9 @@ angular.module('ui.grid')
     this.visibleRowCache = [];
 
     this.cellValueGetterCache = {};
+
+    // Cached function to use with custom row templates
+    this.getRowTemplateFn = null;
 
     // Validate options
     if (!this.options.enableNativeScrolling && !this.options.enableVirtualScrolling) {
@@ -3349,6 +3332,9 @@ angular.module('ui.grid')
 
     // Custom template for header row
     this.headerTemplate = null;
+
+    // Template for rows
+    this.rowTemplate = 'ui-grid/ui-grid-row';
   }
 
   return GridOptions;
@@ -3407,8 +3393,8 @@ angular.module('ui.grid')
    *  @description factory to return dom specific instances of a grid
    *
    */
-  angular.module('ui.grid').service('gridClassFactory', ['gridUtil', '$q', '$templateCache', 'uiGridConstants', '$log', 'Grid', 'GridColumn', 'GridRow',
-    function (gridUtil, $q, $templateCache, uiGridConstants, $log, Grid, GridColumn, GridRow) {
+  angular.module('ui.grid').service('gridClassFactory', ['gridUtil', '$q', '$compile', '$templateCache', 'uiGridConstants', '$log', 'Grid', 'GridColumn', 'GridRow',
+    function (gridUtil, $q, $compile, $templateCache, uiGridConstants, $log, Grid, GridColumn, GridRow) {
 
       var service = {
         /**
@@ -3423,6 +3409,23 @@ angular.module('ui.grid')
           options = (typeof(options) !== 'undefined') ? options: {};
           options.id = gridUtil.newId();
           var grid = new Grid(options);
+
+          // NOTE/TODO: rowTemplate should always be defined...
+          if (grid.options.rowTemplate) {
+            var rowTemplateFnPromise = $q.defer();
+            grid.getRowTemplateFn = rowTemplateFnPromise.promise;
+            
+            gridUtil.getTemplate(grid.options.rowTemplate)
+              .then(
+                function (template) {
+                  var rowTemplateFn = $compile(template);
+                  rowTemplateFnPromise.resolve(rowTemplateFn);
+                },
+                function (res) {
+                  // Todo handle response error here?
+                  throw new Error("Couldn't fetch/use row template '" + grid.options.rowTemplate + "'");
+                });
+          }
 
           grid.registerColumnBuilder(service.defaultColumnBuilder);
 
@@ -3904,7 +3907,7 @@ function getWidthOrHeight( elem, name, extra ) {
  *  
  *  @description Grid utility functions
  */
-module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', '$timeout', '$injector', function ($window, $document, $http, $templateCache, $timeout, $injector) {
+module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateCache', '$timeout', '$injector', '$q', function ($log, $window, $document, $http, $templateCache, $timeout, $injector, $q) {
   var s = {
 
     /**
@@ -4032,8 +4035,10 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', '
      * @ngdoc method
      * @name getTemplate
      * @methodOf ui.grid.service:GridUtil
-     * @description Get's template from Url
+     * @description Get's template from cache / element / url
      *
+     * @param {string|element|promise} Either a string representing the template id, a string representing the template url,
+     *   an jQuery/Angualr element, or a promise that returns the template contents to use.
      * @returns {object} a promise resolving to template contents
      *
      * @example
@@ -4043,14 +4048,32 @@ module.service('gridUtil', ['$window', '$document', '$http', '$templateCache', '
         })
      </pre>
      */
-    getTemplate: function (url) {
-      return $http({ method: 'GET', url: url, cache: $templateCache })
+    getTemplate: function (template) {
+      // Try to fetch the template out of the templateCache
+      if ($templateCache.get(template)) {
+        return $q.when( $templateCache.get(template) );
+      }
+
+      // See if the template is itself a promise
+      if (template.hasOwnProperty('then')) {
+        return template;
+      }
+
+      // If the template is an element, return the element
+      if (angular.isElement(template)) {
+        return $q.when(template);
+      }
+
+      $log.debug('Fetching url', template);
+
+      // Default to trying to fetch the template as a url with $http
+      return $http({ method: 'GET', url: template, cache: $templateCache })
         .then(
           function (result) {
             return result.data.trim();
           },
           function (err) {
-            throw "Could not get template " + url + ": " + err;
+            throw new Error("Could not get template " + template + ": " + err);
           }
         );
     },
@@ -5219,22 +5242,25 @@ module.filter('px', function() {
           var promises = [];
 
           col.enableCellEdit = colDef.enableCellEdit !== undefined ?
-            colDef.enableCellEdit : gridOptions.enableCellEdit;
+            colDef.enableCellEdit : gridOptions.enableCellEdit; 
 
           col.cellEditableCondition = colDef.cellEditableCondition || gridOptions.cellEditableCondition || 'true';
 
           // allow for editableCellTemplate html or editableCellTemplateUrl
           if (col.enableCellEdit) {
-            if (colDef.editableCellTemplate) {
-              col.editableCellTemplate = colDef.editableCellTemplate;
+            if (!colDef.editableCellTemplate) {
+              colDef.editableCellTemplate = 'ui-grid/cellTextEditor';
             }
-            else {
-              var promise = colDef.editableCellTemplateUrl ? gridUtil.getTemplate(colDef.editableCellTemplateUrl)
-                : gridUtil.getTemplate('ui-grid/cellTextEditor');
-              promise.then(function (html) {
-                col.editableCellTemplate = html;
+
+            gridUtil.getTemplate(colDef.editableCellTemplate)
+              .then(
+              function (template) {
+                col.editableCellTemplate = template;
+              },
+              function (res) {
+                // Todo handle response error here?
+                throw new Error("Couldn't fetch/use colDef.editableCellTemplate '" + colDef.editableCellTemplate + "'");
               });
-            }
           }
 
           //enableCellEditOnFocus can only be used if cellnav module is used

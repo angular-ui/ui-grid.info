@@ -142,7 +142,7 @@ NG_DOCS={
       "id": "ui.grid.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional pixels promise readablecolumnname resolving return right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
+      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser cache calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll either element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional or pixels promise readablecolumnname representing resolving return returns right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
     },
     {
       "section": "tutorial",
@@ -178,6 +178,13 @@ NG_DOCS={
       "shortName": "Large Dataset",
       "type": "overview",
       "keywords": "$http $scope address again age angular app backwards be can city class column columndefs compatibility complex controller css data dataset demonstrates different example field following for function get grid gridoptions height html id in index instead js json large length listed main mainctrl module name ng-controller number of on overview place properties records set showing success the this tutorial twice ui ui-grid use uses var width with you"
+    },
+    {
+      "section": "tutorial",
+      "id": "4.1_custom_row_template",
+      "shortName": "Custom Row Template",
+      "type": "overview",
+      "keywords": "$http $index $interval $scope $timeout almost angular app aquamarine as background-color basic but by cancel class col col-index coldef controller create css custom data date done for function get grid gridoptions height html in index js json main mainctrl module most name new ng-bind ng-controller ng-repeat one overview parseint renderedcolumns return row row-index rowtemplate same sec start style success template the track tutorial ui ui-grid ui-grid-cell ui-grid-vertical-bar var wait waiting width with"
     },
     {
       "section": "tutorial",
@@ -219,7 +226,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$http $scope address age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate editablecelltemplateurl editing editor enablecelledit f2 false feature focus following for function get grid gridoptions has height html id if in index invoke invoked is js json key length main mainctrl mode module name ng-controller non-navigable number only option options or other overrides overview returns rowindex rows set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit undefined url use used using valid var via when width will with you your"
+      "keywords": "$http $scope address age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate editing editor enablecelledit f2 false feature focus following for function get grid gridoptions has height html id if in index invoke invoked is js json key length main mainctrl mode module name ng-controller non-navigable number only option options or other overview returns rowindex rows set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
     },
     {
       "section": "tutorial",

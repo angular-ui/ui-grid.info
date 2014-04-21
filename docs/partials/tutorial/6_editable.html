@@ -6,9 +6,8 @@
 <p>Editing is invoked via double-click, f2, or start typing any non-navigable key. Custom edit templates should be used for any editor other than the default text editor.</p>
 
 <p>ColumnDef Options:
-<br/><code>editableCellTemplate</code> (default: undefined) - valid html to be compiled when edit mode is invoked. Overrides editableCellTemplateUrl
+<br/><code>editableCellTemplate</code> (default: 'ui-grid/cellTextEditor') - Valid html, templateCache Id,  or url that returns html content to be compiled when edit mode is invoked.
 <br/><code>enableCellEdit</code> (default: false) - true to edit a column.
-<br/><code>editableCellTemplateUrl</code> (default: 'ui-grid/cellTextEditor') - templateCache Id or valid url that returns html content to be compiled when edit mode is invoked
 <br/><code>cellEditableCondition</code>  (default: true)  Can be set to a boolean or a function that will be called with the cellScope to determine if the cell should be invoked in edit mode.
 <br/>
 The following option is available only if using cellNav feature
@@ -22,10 +21,10 @@ $scope.gridOptions.columnDefs = [
 ]
 </pre><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-19" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-19" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-19">
+<pre class="prettyprint linenums" ng-set-text="index.html-20" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-20">
   <div ng-controller="MainCtrl">
     <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
     <br>
@@ -67,5 +66,5 @@ $scope.gridOptions.columnDefs = [
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-19" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-20" ng-eval-javascript="app.js"></div></div>
 </div>
