@@ -141,13 +141,6 @@
   position: absolute;
   right: 1px;
   top: 0;
-  bottom: 0;
-  background: #f3f3f3;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
-  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
-  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
-  background: -o-linear-gradient(#ffffff, #eeeeee);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
 }
 .ui-grid-column-menu-button .ui-grid-icon-angle-down {
   vertical-align: sub;
@@ -179,6 +172,52 @@
   -o-transform: translateY(0);
   -ms-transform: translateY(0);
   transform: translateY(0);
+}
+.ui-grid-filter-container {
+  padding: 4px 10px;
+  position: relative;
+}
+.ui-grid-filter-container .ui-grid-filter-button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"].right {
+  position: absolute;
+  top: 50%;
+  line-height: 32px;
+  margin-top: -16px;
+  right: 10px;
+  opacity: 0.66;
+}
+.ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"].right:hover {
+  opacity: 1;
+}
+input[type="text"].ui-grid-filter-input {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+input[type="text"].ui-grid-filter-input:hover {
+  border: 1px solid #d4d4d4;
 }
 .ui-grid-body {
   position: relative;
@@ -222,6 +261,49 @@
 .ui-grid-row:last-child .ui-grid-cell {
   border-bottom-color: #d4d4d4;
   border-bottom-style: solid;
+}
+.ui-grid-no-row-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 10%;
+  background: #f3f3f3;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
+  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
+  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
+  background: -o-linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #d4d4d4;
+  font-size: 2em;
+  text-align: center;
+}
+.ui-grid-no-row-overlay > * {
+  position: absolute;
+  display: table;
+  margin: auto 0;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.66;
 }
 .ui-grid-cell {
   overflow: hidden;
@@ -537,14 +619,18 @@
   background-color: #aeaeae;
 }
 
-.ui-grid-icon-cancel:before {
-  content: '\e808';
+.ui-grid-icon-search:before {
+  content: '\e80f';
 }
-/* '' */
+/* '' */
 .ui-grid-icon-sort-alt-down:before {
   content: '\e802';
 }
 /* '' */
+.ui-grid-icon-info-circled:before {
+  content: '\e80e';
+}
+/* '' */
 .ui-grid-icon-lock:before {
   content: '\e803';
 }
@@ -565,10 +651,10 @@
   content: '\e80a';
 }
 /* '' */
-.ui-grid-icon-info-circled:before {
-  content: '\e80e';
+.ui-grid-icon-cancel:before {
+  content: '\e808';
 }
-/* '' */
+/* '' */
 .ui-grid-icon-right-dir:before {
   content: '\e80d';
 }

@@ -1,0 +1,69 @@
+<h1><code ng:non-bindable="">rowSearcher</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Service for searching/filtering rows based on column value conditions.</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="getTerm">getTerm(filter)</h3>
+<div class="getterm"><p>Get the term from a filter
+Trims leading and trailing whitespace</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">filter – {object} – </code>
+<p>object to use</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>Parsed term</p></div>
+</div>
+</li>
+<li><h3 id="guessCondition">guessCondition(filter)</h3>
+<div class="guesscondition"><p>Guess the condition for a filter based on its term
+<br>
+Defaults to STARTS<em>WITH. Uses CONTAINS for strings beginning and ending with *s (*bob*).
+Uses STARTS</em>WITH for strings ending with * (bo<em>). Uses ENDS_WITH for strings starting with * (</em>ob).</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">filter – {object} – </code>
+<p>object to use</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{uiGridConstants.filter&lt;int&gt;}</code>
+– <p>Value representing the condition constant value</p></div>
+</div>
+</li>
+<li><h3 id="search">search(grid, rows, columns)</h3>
+<div class="search"><p>Run a search across</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>Grid instance to search inside</p></li>
+<li><code ng:non-bindable="">rows – {Array[GridRow]} – </code>
+<p>GridRows to filter</p></li>
+<li><code ng:non-bindable="">columns – {Array[GridColumn]} – </code>
+<p>GridColumns with filters to process</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="searchColumn">searchColumn(grid, row, column)</h3>
+<div class="searchcolumn"><p>Process filters on a given column against a given row. If the row meets the conditions on all the filters, return true.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>Grid to search in</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>Row to search on</p></li>
+<li><code ng:non-bindable="">column – {GridCol} – </code>
+<p>Column with the filters to use</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{boolean}</code>
+– <p>Whether the column matches or not.</p></div>
+</div>
+</li>
+<li><h3 id="stripTerm">stripTerm(filter)</h3>
+<div class="stripterm"><p>Remove leading and trailing asterisk (*) from the filter's term</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">filter – {object} – </code>
+<p>object to use</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{uiGridConstants.filter&lt;int&gt;}</code>
+– <p>Value representing the condition constant value</p></div>
+</div>
+</li>
+</ul>
+</div>
+</div>

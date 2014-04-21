@@ -1,5 +1,5 @@
-/*! ui-grid - v2.0.7-1fad1ff - 2014-04-21
-* Copyright (c) 2014 ; Licensed MIT */
+/*! ui-grid - v2.0.7-1616164 - 2014-04-21
+* Copyright (c) 2014 ; License: MIT */
 
 .ui-grid-body {
   position: relative;
@@ -42,6 +42,34 @@
   &:last-child .ui-grid-cell {
     border-bottom-color: @borderColor;
     border-bottom-style: solid;
+  }
+}
+
+.ui-grid-no-row-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 10%;
+
+  .ui-grid-top-panel-background;
+  .border-radius(@gridBorderRadius);
+  border: @gridBorderWidth solid @borderColor;
+
+  font-size: 2em;
+  text-align: center;
+
+  > * {
+    position: absolute;
+    display: table;
+    margin: auto 0;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.66;
   }
 }
 .ui-grid-cell {
@@ -379,9 +407,8 @@
   position: absolute;
   right: @gridBorderWidth; // So it doesn't overlay the vertical bar
   top: 0;
-  bottom: 0;
-
-  .ui-grid-top-panel-background;
+  // bottom: 0;
+  // .ui-grid-top-panel-background;
 
   .ui-grid-icon-angle-down {
     vertical-align: sub;
@@ -407,6 +434,82 @@
   &.ng-hide-add,
   &.ng-hide-remove.ng-hide-remove-active {
     .transform(translateY(0));
+  }
+}
+
+// NOTE: not used currently (TODO(c0bra): Remove or use down the road?)
+// .ui-grid-column-filter {
+//   display: table;
+
+//   .input-container {
+//     position: relative;
+//     display: table-cell;
+
+//     .column-filter-input {
+//       margin: 0;
+//     }
+
+//     .column-filter-cancel-icon-container {
+//       position: absolute;
+//       top: 0;
+//       bottom: 0;
+//       right: 0;
+
+//       .column-filter-cancel-icon {
+//         position: absolute;
+//         top: 50%;
+//         line-height: 32px;
+//         margin-top: -16px;
+//         right: 2px;
+//       }
+//     }
+//   }
+
+//   .button-container {
+//     display: table-cell;
+
+//     .ui-grid-button {
+//       margin-left: 4px;
+//     }
+//   }
+// }
+
+.ui-grid-filter-container {
+  padding: 4px 10px;
+  position: relative;
+
+  .ui-grid-filter-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    [class^="ui-grid-icon"].right {
+      position: absolute;
+      top: 50%;
+      line-height: 32px;
+      margin-top: -16px;
+      right: 10px;
+      opacity: 0.66;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+input[type="text"].ui-grid-filter-input {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 100%;
+
+  border: @gridBorderWidth solid  @borderColor;
+  .border-radius(@gridBorderRadius);
+
+  &:hover {
+    border: @gridBorderWidth solid  @borderColor;
   }
 }
 @font-face {

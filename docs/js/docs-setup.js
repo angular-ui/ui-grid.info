@@ -145,6 +145,13 @@ NG_DOCS={
       "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser cache calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll either element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional or pixels promise readablecolumnname representing resolving return returns right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
     },
     {
+      "section": "api",
+      "id": "ui.grid.service:rowSearcher",
+      "shortName": "rowSearcher",
+      "type": "service",
+      "keywords": "across against all and api asterisk based beginning column columns condition conditions constant contains defaults ending ends_with filter filters for from function get getterm given grid gridcolumns gridrows guess guesscondition if in inside instance its leading matches meets not object on or parsed process remove representing return row rows run search searchcolumn searching service starting starts_with strings stripterm term the to trailing trims true ui use uses value whether whitespace with"
+    },
+    {
       "section": "tutorial",
       "id": "index",
       "shortName": "Index",
@@ -195,10 +202,17 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "5.1.1_Filtering",
+      "shortName": "Filtering",
+      "type": "overview",
+      "keywords": "$http $scope allows an and angular app at be below by can class click column columndefs company controller css data def default disabled enablefiltering example false field filter filtering flag for function gender get grid gridoptions has header height html in index is js json just last level main mainctrl menu module name ng-controller nganimate off on open options overview rows see set setting sorting success that the then third to true tutorial ui ui-grid var width you your"
+    },
+    {
+      "section": "tutorial",
       "id": "5.1_sorting",
       "shortName": "Sorting",
       "type": "overview",
-      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def disabled enablesorting example false field flag for function gender get grid gridoptions has header height html if in include index it js json just last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then third to true tutorial ui ui-grid up var want width you your"
+      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def default disabled enable enablesorting example false feature field flag for function gender get grid gridoptions has header height html if in include index is it js json last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then third to true tutorial ui ui-grid up var want width you your"
     },
     {
       "section": "tutorial",
