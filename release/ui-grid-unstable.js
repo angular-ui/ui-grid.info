@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-d6a7f18 - 2014-04-22
+/*! ui-grid - v2.0.7-ea2bd0f - 2014-04-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4559,7 +4559,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     getTemplate: function (template) {
       // Try to fetch the template out of the templateCache
       if ($templateCache.get(template)) {
-        return $q.when( $templateCache.get(template) );
+        return $q.when($templateCache.get(template));
       }
 
       // See if the template is itself a promise
@@ -4568,17 +4568,20 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       }
 
       // If the template is an element, return the element
-      if (angular.isElement(template)) {
+      if (angular.element(template).length > 0) {
         return $q.when(template);
       }
 
       $log.debug('Fetching url', template);
 
       // Default to trying to fetch the template as a url with $http
-      return $http({ method: 'GET', url: template, cache: $templateCache })
+      return $http({ method: 'GET', url: template})
         .then(
           function (result) {
-            return result.data.trim();
+            var templateHtml = result.data.trim();
+            //put in templateCache for next call
+            $templateCache.put(template, templateHtml);
+            return templateHtml;
           },
           function (err) {
             throw new Error("Could not get template " + template + ": " + err);
