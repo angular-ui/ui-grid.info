@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-ea2bd0f - 2014-04-22
+/*! ui-grid - v2.0.7-31e3d9c - 2014-04-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4568,8 +4568,13 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       }
 
       // If the template is an element, return the element
-      if (angular.element(template).length > 0) {
-        return $q.when(template);
+      try{
+        if (angular.element(template).length > 0) {
+          return $q.when(template);
+        }
+      }
+      catch(err){
+        //do nothing; not valid html
       }
 
       $log.debug('Fetching url', template);
@@ -5889,6 +5894,7 @@ module.filter('px', function() {
             var html;
             var origCellValue;
             var inEdit = false;
+            var isFocusedBeforeEdit = false;
             var cellModel;
 
             registerBeginEditEvents();
@@ -5944,20 +5950,22 @@ module.filter('px', function() {
                   inEdit = true;
                   cancelBeginEditEvents();
                   cellElement = $compile(html)($scope.$new());
-                  angular.element($elm.children()[0]).addClass('ui-grid-cell-contents-hidden');
+                  var gridCellContentsEl = angular.element($elm.children()[0]);
+                  isFocusedBeforeEdit = gridCellContentsEl.is(':focus');
+                  gridCellContentsEl.addClass('ui-grid-cell-contents-hidden');
                   $elm.append(cellElement);
                 }
               );
 
               //stop editing when grid is scrolled
               var deregOnGridScroll = $scope.$on(uiGridConstants.events.GRID_SCROLL, function () {
-                endEdit();
+                endEdit(true);
                 deregOnGridScroll();
               });
 
               //end editing
-              var deregOnEndCellEdit = $scope.$on(uiGridEditConstants.events.END_CELL_EDIT, function () {
-                endEdit();
+              var deregOnEndCellEdit = $scope.$on(uiGridEditConstants.events.END_CELL_EDIT, function (evt,retainFocus) {
+                endEdit(retainFocus);
                 deregOnEndCellEdit();
               });
 
@@ -5970,12 +5978,18 @@ module.filter('px', function() {
               $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT);
             }
 
-            function endEdit() {
+            function endEdit(retainFocus) {
               if (!inEdit) {
                 return;
               }
+              var gridCellContentsEl = angular.element($elm.children()[0]);
+              //remove edit element
               angular.element($elm.children()[1]).remove();
-              angular.element($elm.children()[0]).removeClass('ui-grid-cell-contents-hidden');
+              gridCellContentsEl.removeClass('ui-grid-cell-contents-hidden');
+              if(retainFocus && isFocusedBeforeEdit){
+                gridCellContentsEl.focus();
+              }
+              isFocusedBeforeEdit = false;
               inEdit = false;
               registerBeginEditEvents();
             }
@@ -5987,7 +6001,7 @@ module.filter('px', function() {
               cellModel.assign($scope, origCellValue);
               $scope.$apply();
 
-              endEdit();
+              endEdit(true);
             }
 
           }
@@ -6012,8 +6026,8 @@ module.filter('px', function() {
    *
    */
   module.directive('uiGridTextEditor',
-    ['uiGridConstants', 'uiGridEditConstants', '$log', '$templateCache', '$compile',
-      function (uiGridConstants, uiGridEditConstants, $log, $templateCache, $compile) {
+    ['uiGridConstants', 'uiGridEditConstants',
+      function (uiGridConstants, uiGridEditConstants) {
         return{
           scope: true,
           compile: function () {
@@ -6032,7 +6046,7 @@ module.filter('px', function() {
                   });
                 });
 
-                $scope.stopEdit = function () {
+                $scope.stopEdit = function() {
                   $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
                 };
 
