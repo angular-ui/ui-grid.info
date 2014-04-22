@@ -311,6 +311,10 @@ input[type="text"].ui-grid-filter-input:hover {
   float: left;
   background-color: inherit;
 }
+.ui-grid-inner-cell-contents {
+  height: 100%;
+  width: 100%;
+}
 .ui-grid-cell-contents {
   padding: 5px;
   -moz-box-sizing: border-box;
@@ -321,6 +325,8 @@ input[type="text"].ui-grid-filter-input:hover {
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 .ui-grid-cell-contents-hidden {
   visibility: hidden;

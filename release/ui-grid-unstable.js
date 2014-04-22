@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.7-1616164 - 2014-04-21
+/*! ui-grid - v2.0.7-d6a7f18 - 2014-04-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -6520,7 +6520,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-row',
-    "<div><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-cell col{{ col.index }}\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div ui-grid-cell=\"\" col=\"col\" row=\"row\" row-index=\"row.index\" col-index=\"col.colDef.index\"></div></div>"
+    "<div><div ng-repeat=\"col in grid.renderedColumns track by $index\" class=\"ui-grid-cell col{{ col.index }}\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-inner-cell-contents\" ui-grid-cell=\"\" col=\"col\" row=\"row\" row-index=\"row.index\" col-index=\"col.colDef.index\"></div></div>"
   );
 
 
