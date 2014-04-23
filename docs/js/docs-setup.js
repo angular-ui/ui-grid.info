@@ -174,6 +174,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "2.1_appending_data",
+      "shortName": "Kitchen Sink",
+      "type": "overview",
+      "keywords": "$http $interval $scope $timeout about address age all also an angular app appends are btn btn-success button cancel cellnav city class columndefs company controller css data date displayname edit email emulates enablecelledit enablecolumnresizing enabled every example features for foreach friend friends from function get grid gridoptions height html id idea index it iter js json kitchen length loading main mainctrl module mydata name new ng-click ng-controller object of on overview pages parseint performance phone push refreshdata resizecolumns row rows scope sec seconds server setting sink specifies start state street string success that the this to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit ui-grid-resize-columns value var wait watch width your zip"
+    },
+    {
+      "section": "tutorial",
       "id": "2_swapping_data",
       "shortName": "Add/Delete/Swap",
       "type": "overview",
