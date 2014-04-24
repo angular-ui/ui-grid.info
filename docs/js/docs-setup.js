@@ -107,7 +107,7 @@ NG_DOCS={
       "id": "ui.grid.edit.directive:uiGridEdit",
       "shortName": "uiGridEdit",
       "type": "directive",
-      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div ea edit editing enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller the title to true ui ui-grid ui-grid-edit var"
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div edit editing enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller the title to true ui ui-grid ui-grid-edit var"
     },
     {
       "section": "api",
@@ -129,6 +129,13 @@ NG_DOCS={
       "shortName": "uiGridColumnResizer",
       "type": "directive",
       "keywords": "$scope and angular api app be beryl class claudine column company controller controls data directive div draggable e2e enablecolumnresizing enersol ethel event female fired function geekko gender gonzales grid gridopts handle horizontal mainctrl male maxwidth minwidth module name neal ng-controller obey post-resize price resizecolumns resizing rice scroll sealoud should specs testgrid that todo true ui ui-grid var velity wilder"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.resizeColumns.directive:uiGridResizeColumns",
+      "shortName": "uiGridResizeColumns",
+      "type": "directive",
+      "keywords": "$scope all allow angular api app beryl but can class claudine coldef column columns company controller data directive div enables enersol entire ethel explicitly false female for function geekko gender gonzales grid gridopts if individual mainctrl male module name neal ng-controller not of on option options prevents price reason regardless resizecolumns resizing rice sealoud set some testgrid the this to ui ui-grid ui-grid-resize-columns use var velity want wilder you"
     },
     {
       "section": "api",
@@ -296,7 +303,7 @@ NG_DOCS={
       "id": "93_column_resizing",
       "shortName": "Column Resizing",
       "type": "overview",
-      "keywords": "$http $scope according actually add all also and angular any app application by can class column columndefs columns company constraints contents controller css data default definition dependencies directive disable do element enable enablecolumnresizing enablesorting false feature field for function gender get give grid gridoptions grids have height html if in including index is it its js json main mainctrl minwidth module must name ng-controller obey on only option or overhead overview page pay property rendered resize resizecolumns resizing separator setting several size so success that the this to true turn tutorial ui ui-grid ui-grid-resize-columns using var we width will you your yourapp"
+      "keywords": "$http $scope according actually add all allow also and angular any app application automatically but by can class coldef column columndefs columns company constraints contents controller css data definition dependencies directive disable do element enablecolumnresizing enablesorting entire explicitly false feature field for function gender get give grid gridoptions grids have height html if in including index individual is it its js json main mainctrl minwidth module must name ng-controller not obey of on once only option options or overhead overview page pay prevents property reason regardless rendered resize resizecolumns resizing separator set setting several size so some success that the this to true tutorial ui ui-grid ui-grid-resize-columns use using var want we width will you your yourapp"
     },
     {
       "section": "tutorial",

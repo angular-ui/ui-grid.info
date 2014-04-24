@@ -7,16 +7,18 @@ angular.module('yourApp', ['ui.grid', 'ui.grid.resizeColumns']);
 </pre>
 
 <p>Also, you must add the directive to your grid element.  We do this so that you can have several grids on a
-page and only pay the resizing overhead if the grid is actually using resizing.
+page and only pay the resizing overhead if the grid is actually using resizing.  Once you use this directive, all
+columns automatically allow resizing
 <pre class="prettyprint linenums">
 &lt;div ui-grid="gridOptions" class="grid" ui-grid-resize-columns&gt;&lt;/div&gt;
 </pre>
 <br>
 <br>
-The <code>enableColumnResizing</code> option on your grid will enable resizing and turn it on for all columns by default.
+If, for some reason, you want to use the ui-grid-resize-columns directive, but not allow column resizing, you can explicitly set the
+option to false. This prevents resizing for the entire grid, regardless of individual colDef options.
 <pre class="prettyprint linenums">
 $scope.gridOptions = {
-  enableColumnResizing: true
+  enableColumnResizing: false
 };
 </pre>
 <br>
@@ -33,10 +35,10 @@ $scope.gridOptions = {
 };
 </pre><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-29" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-32" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-29" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-29">
+<pre class="prettyprint linenums" ng-set-text="index.html-32" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-32">
   <div ng-controller="MainCtrl">
     <strong>Drag</strong> a the column separator to resize; <strong>double-click</strong> to size according to rendered column contents.
     <br>
@@ -64,7 +66,6 @@ $scope.gridOptions = {
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {
-      enableColumnResizing: true,
       enableSorting: true,
       columnDefs: [
         { field: 'name', minWidth: 200, width: '50%' },
@@ -81,5 +82,5 @@ $scope.gridOptions = {
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-29" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-32" ng-eval-javascript="app.js"></div></div>
 </div>

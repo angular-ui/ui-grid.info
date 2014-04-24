@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.8-g04c1848-6912d14 - 2014-04-23
+/*! ui-grid - v2.0.8-g04c1848-99f76eb - 2014-04-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3430,9 +3430,6 @@ angular.module('ui.grid')
     // Virtual scrolling off by default, overrides enableNativeScrolling if set
     this.enableVirtualScrolling = false;
 
-    // Resizing columns, off by default
-    this.enableColumnResizing = false;
-
     // Columns can't be smaller than 10 pixels
     this.minimumColumnSize = 10;
 
@@ -5795,7 +5792,7 @@ module.filter('px', function() {
    *  @ngdoc directive
    *  @name ui.grid.edit.directive:uiGridEdit
    *  @element div
-   *  @restrict EA
+   *  @restrict A
    *
    *  @description Adds editing features to the ui-grid directive.
    *
@@ -6080,26 +6077,32 @@ module.filter('px', function() {
   });
 
 
-  module.service('uiGridColumnResizingService', ['$log','$q',
+  module.service('uiGridResizeColumnsService', ['$log','$q',
     function ($log,$q) {
 
       var service = {
+        defaultGridOptions: function(gridOptions){
+          //default option to true unless it was explicitly set to false
+          gridOptions.enableColumnResizing = gridOptions.enableColumnResizing !== false;
 
+          //legacy support
+          //use old name if it is explicitly false
+          if(gridOptions.enableColumnResize === false){
+            gridOptions.enableColumnResizing = false;
+          }
+        },
 
         colResizerColumnBuilder: function (colDef, col, gridOptions) {
 
           var promises = [];
 
-          //legacy support
-          //use old name if it is present and true
-          //todo: probably not the best place for this since it is called with each colDef
-          if(gridOptions.enableColumnResize){
-            gridOptions.enableColumnResizing = true;
-          }
+          //default to true unless gridOptions or colDef is explicitly false
+          colDef.enableColumnResizing = gridOptions.enableColumnResizing && colDef.enableColumnResizing !== false;
+
 
           //legacy support of old option name
-          if(colDef.enableColumnResize){
-            colDef.enableColumnResizing = true;
+          if(colDef.enableColumnResize === false){
+            colDef.enableColumnResizing = false;
           }
 
           return $q.all(promises);
@@ -6110,7 +6113,44 @@ module.filter('px', function() {
 
     }]);
 
-  module.directive('uiGridResizeColumns', ['$log', 'uiGridColumnResizingService', function ($log, uiGridColumnResizingService) {
+
+  /**
+   * @ngdoc directive
+   * @name ui.grid.resizeColumns.directive:uiGridResizeColumns
+   * @element div
+   * @restrict A
+   * @description
+   * Enables resizing for all columns on the grid. If, for some reason, you want to use the ui-grid-resize-columns directive, but not allow column resizing, you can explicitly set the
+   * option to false. This prevents resizing for the entire grid, regardless of individual colDef options.
+   *
+   * @example
+   <doc:example module="app">
+   <doc:source>
+   <script>
+   var app = angular.module('app', ['ui.grid', 'ui.grid.resizeColumns']);
+
+   app.controller('MainCtrl', ['$scope', function ($scope) {
+          $scope.gridOpts = {
+            data: [
+              { "name": "Ethel Price", "gender": "female", "company": "Enersol" },
+              { "name": "Claudine Neal", "gender": "female", "company": "Sealoud" },
+              { "name": "Beryl Rice", "gender": "female", "company": "Velity" },
+              { "name": "Wilder Gonzales", "gender": "male", "company": "Geekko" }
+            ]
+          };
+        }]);
+   </script>
+
+   <div ng-controller="MainCtrl">
+   <div class="testGrid" ui-grid="gridOpts" ui-grid-resize-columns ></div>
+   </div>
+   </doc:source>
+   <doc:scenario>
+
+   </doc:scenario>
+   </doc:example>
+   */
+  module.directive('uiGridResizeColumns', ['$log', 'uiGridResizeColumnsService', function ($log, uiGridResizeColumnsService) {
     return {
       replace: true,
       priority: 0,
@@ -6119,7 +6159,10 @@ module.filter('px', function() {
       compile: function () {
         return {
           pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            uiGridCtrl.grid.registerColumnBuilder( uiGridColumnResizingService.colResizerColumnBuilder);
+
+            uiGridResizeColumnsService.defaultGridOptions(uiGridCtrl.grid.options);
+            uiGridCtrl.grid.registerColumnBuilder( uiGridResizeColumnsService.colResizerColumnBuilder);
+
           },
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
           }
