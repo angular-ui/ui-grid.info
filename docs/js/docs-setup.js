@@ -48,6 +48,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.class:GridEvents",
+      "shortName": "GridEvents",
+      "type": "function",
+      "keywords": "ability allow allowed and api be class components event eventname eventnameone eventnametwo eventobjectmap events feature featurename features for format from function given grid gridevents in inside map must name names new objectmap of on other owns provides public raises register registerevent registereventsfromobject registers simple subscribe that the these this to ui via"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
@@ -310,7 +317,7 @@ NG_DOCS={
       "id": "9_cellnav",
       "shortName": "Cell Navigation (WIP)",
       "type": "overview",
-      "keywords": "$http $scope add address age allowcellfocus angular app cell cellnav city class columndefs controller css data directive displayname example false focusable function get grid gridoptions height html id index js json length main mainctrl module name navigation ng-controller number overview success the this to tutorial ui ui-grid ui-grid-cellnav uses var width"
+      "keywords": "$http $log $scope add address age allowcellfocus and angular app callback cell cellnav city class col coldef columndefs controller css data directive displayname event example false focusable function get grid gridcellnav gridevents gridoptions height html id if index info is js json length log main mainctrl module msg name navigated navigation new newrowcol ng-controller number old oldrowcol on on_cellnav onregisterevents overview register row rowcol success the this to tojson tutorial ui ui-grid ui-grid-cellnav uses var when width"
     }
   ],
   "apis": {

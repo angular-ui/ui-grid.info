@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.8-g04c1848-99f76eb - 2014-04-24
+/*! ui-grid - v2.0.8-g04c1848-3f3a00c - 2014-04-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2500,6 +2500,9 @@ angular.module('ui.grid').directive('uiGrid',
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
               $log.debug('ui-grid postlink');
 
+              //todo: assume it is ok to communicate that rendering is complete??
+              uiGridCtrl.grid.renderingComplete();
+
               uiGridCtrl.grid.element = $elm;
 
               uiGridCtrl.grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
@@ -2523,7 +2526,8 @@ angular.module('ui.grid').directive('uiGrid',
 (function(){
 
 angular.module('ui.grid')
-.factory('Grid', ['$log', '$q', '$parse', 'gridUtil', 'uiGridConstants', 'GridOptions', 'GridColumn', 'GridRow', 'rowSorter', 'rowSearcher', function($log, $q, $parse, gridUtil, uiGridConstants, GridOptions, GridColumn, GridRow, rowSorter, rowSearcher) {
+.factory('Grid', ['$log', '$q', '$parse', 'gridUtil', 'uiGridConstants', 'GridOptions', 'GridColumn', 'GridRow', 'GridEvents', 'rowSorter', 'rowSearcher',
+    function($log, $q, $parse, gridUtil, uiGridConstants, GridOptions, GridColumn, GridRow, GridEvents, rowSorter, rowSearcher) {
 
 /**
    * @ngdoc function
@@ -2579,6 +2583,8 @@ angular.module('ui.grid')
     //current rows that are rendered on the DOM
     this.renderedRows = [];
     this.renderedColumns = [];
+
+    this.events = new GridEvents(this);
   };
 
   /**
@@ -3196,6 +3202,15 @@ angular.module('ui.grid')
     return $q.when(column);
   };
 
+      /**
+       * communicate to outside world that we are done with initial rendering
+       */
+  Grid.prototype.renderingComplete = function(){
+    if(angular.isFunction(this.options.onRegisterEvents)){
+      this.options.onRegisterEvents(this.events);
+    }
+  };
+
   return Grid;
 
 }]);
@@ -3360,6 +3375,96 @@ angular.module('ui.grid')
 
   return GridColumn;
 }]);
+
+})();
+(function () {
+
+  angular.module('ui.grid')
+    .factory('GridEvents', ['$log', '$q', '$rootScope', 'gridUtil', 'uiGridConstants',
+      function ($log, $q, $rootScope, gridUtil, uiGridConstants) {
+
+        /**
+         * @ngdoc function
+         * @name ui.grid.class:GridEvents
+         * @description GridEvents provides the ability to register public events inside the grid and allow
+         * for other components to subscribe to these events via featureName.on.eventName(function(args){}
+         * @param {object} grid grid that owns these events
+         */
+        var GridEvents = function GridEvents(grid) {
+          this.grid = grid;
+        };
+
+        /**
+         * @ngdoc function
+         * @name registerEvent
+         * @methodOf ui.grid.class:GridEvents
+         * @description Registers a new event for the given feature
+         * @param {string} featureName name of the feature that raises the event
+         * @param {string} eventName  name of the event
+         */
+        GridEvents.prototype.registerEvent = function (featureName, eventName) {
+          if (!this[featureName]) {
+            this[featureName] = {};
+          }
+
+          var feature = this[featureName];
+          if (!feature.on) {
+            feature.on = {};
+          }
+
+          var eventId = this.grid.id + featureName + eventName;
+
+          $log.log('Creating raise event method ' + featureName + '.' + eventName);
+          feature[eventName] = function () {
+            $rootScope.$broadcast.apply($rootScope, [eventId].concat(Array.prototype.slice.call(arguments)));
+          };
+
+          $log.log('Creating on event method ' + featureName + '.on.' + eventName);
+          feature.on[eventName] = function (scope, handler) {
+            scope.$on(eventId, function (event) {
+              var args = Array.prototype.slice.call(arguments);
+              args.splice(0, 1); //remove evt argument
+              handler.apply(this.grid, args);
+            });
+          };
+        };
+
+        /**
+         * @ngdoc function
+         * @name registerEventsFromObject
+         * @methodOf ui.grid.class:GridEvents
+         * @description Registers features and events from a simple objectMap.
+         * eventObjectMap must be in this format (multiple features allowed)
+         * <br>
+         * {featureName:
+         *        {
+         *          eventNameOne:function(args){},
+         *          eventNameTwo:function(args){}
+         *        }
+         * @param {object} eventObjectMap map of feature/event names
+         */
+        GridEvents.prototype.registerEventsFromObject = function (eventObjectMap) {
+          var self = this;
+          var features = [];
+          angular.forEach(eventObjectMap, function (featProp, featPropName) {
+            var feature = {name: featPropName, events: []};
+            angular.forEach(featProp, function (prop, propName) {
+              feature.events.push(propName);
+            });
+            features.push(feature);
+          });
+
+          features.forEach(function (feature) {
+            feature.events.forEach(function (event) {
+              self.registerEvent(feature.name, event);
+            });
+          });
+
+        };
+
+        return GridEvents;
+
+      }]);
 
 })();
 (function(){
@@ -5355,8 +5460,15 @@ module.filter('px', function() {
    *  @description constants available in cellNav
    */
   module.constant('uiGridCellNavConstants', {
-    CELL_NAV_EVENT: 'uiGridCellNav',
-    direction: {LEFT: 0, RIGHT: 1, UP: 2, DOWN: 3}
+    FEATURE_NAME : 'gridCellNav',
+    CELL_NAV_EVENT: 'cellNav',
+    direction: {LEFT: 0, RIGHT: 1, UP: 2, DOWN: 3},
+    //available public events; listed here for convenience and IDE's use it for smart completion
+    publicEvents: {
+      gridCellNav : {
+        cellNav : function(scope, newRowCol, oldRowCol){}
+      }
+    }
   });
 
   /**
@@ -5595,8 +5707,20 @@ module.filter('px', function() {
               //  $log.debug('uiGridEdit preLink');
               uiGridCtrl.grid.registerColumnBuilder(uiGridCellNavService.cellNavColumnBuilder);
 
-              uiGridCtrl.broadcastCellNav = function(rowCol){
-                 $scope.$broadcast(uiGridCellNavConstants.CELL_NAV_EVENT, rowCol);
+              uiGridCtrl.grid.events.registerEventsFromObject(uiGridCellNavConstants.publicEvents);
+
+              var oldRowCol = null;
+              uiGridCtrl.broadcastCellNav = function (newRowCol) {
+                $scope.$broadcast(uiGridCellNavConstants.CELL_NAV_EVENT, newRowCol);
+                uiGridCtrl.broadcastFocus(newRowCol.row, newRowCol.col);
+              };
+
+              uiGridCtrl.broadcastFocus = function (row, col) {
+                if (oldRowCol === null || (oldRowCol.row !== row || oldRowCol.col !== col)) {
+                  var newRowCol = new RowCol(row, col);
+                  uiGridCtrl.grid.events.gridCellNav.cellNav(newRowCol, oldRowCol);
+                  oldRowCol = newRowCol;
+                }
               };
 
             },
@@ -5644,11 +5768,15 @@ module.filter('px', function() {
             return false;
           });
 
+          $elm.find('div').on('focus', function (evt) {
+            uiGridCtrl.broadcastFocus($scope.row, $scope.col);
+          });
+
           $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, function(evt,rowCol){
              if(rowCol.row === $scope.row &&
-                rowCol.col === $scope.col){
-               $log.debug('Setting focus on Row ' + rowCol.row.index + ' Col ' + rowCol.col.colDef.name);
-               setFocused();
+               rowCol.col === $scope.col){
+                $log.debug('Setting focus on Row ' + rowCol.row.index + ' Col ' + rowCol.col.colDef.name);
+                setFocused();
              }
           });
 

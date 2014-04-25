@@ -1,7 +1,9 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>This grid example uses the ui-grid-cellNav directive to add cell navigation</p><h2 id="Example">Example</h2>
+<div><p>This grid example uses the ui-grid-cellNav directive to add cell navigation.</p>
+
+<p>Uses the gridOptions.onRegisterEvents callback to register the on_cellNav event and log when the cell is navigated.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-33" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -29,7 +31,7 @@
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ui.grid', 'ui.grid.cellNav']);
 
-  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+  app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.gridOptions = {};
 
     $scope.gridOptions.columnDefs = [
@@ -43,6 +45,20 @@
       .success(function(data) {
         $scope.gridOptions.data = data;
       });
+
+      $scope.info = {};
+
+      $scope.gridOptions.onRegisterEvents = function(gridEvents){
+       gridEvents.gridCellNav.on.cellNav($scope,function(newRowCol, oldRowCol){
+                var rowCol = {row: newRowCol.row.index, col:newRowCol.col.colDef.name};
+                var msg = 'New RowCol is ' + angular.toJson(rowCol);
+                if(oldRowCol){
+                   rowCol = {row: oldRowCol.row.index, col:oldRowCol.col.colDef.name};
+                   msg += ' Old RowCol is ' + angular.toJson(rowCol);
+                }
+                $log.log(msg);
+              });
+      };
   }]);
 </script>
 </div>
