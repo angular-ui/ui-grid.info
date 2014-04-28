@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.8-g04c1848-3f3a00c - 2014-04-25
+/*! ui-grid - v2.0.10-7485e6e - 2014-04-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -591,14 +591,24 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
     compile: function() {
       return {
         pre: function($scope, $elm, $attrs, uiGridCtrl) {
-          // If the grid controller is present, use it to get the compiled cell template function
-          if (uiGridCtrl) {
+          function compileTemplate() {
             var compiledElementFn = $scope.col.compiledElementFn;
 
+            compiledElementFn($scope, function(clonedElement, scope) {
+              $elm.empty().append(clonedElement);
+            });
+          }
+
+          // If the grid controller is present, use it to get the compiled cell template function
+          if (uiGridCtrl) {
             $scope.getCellValue = uiGridCtrl.getCellValue;
 
-            compiledElementFn($scope, function(clonedElement, scope) {
-              $elm.append(clonedElement);
+            compileTemplate();
+
+            $scope.$watch('col.cellTemplate', function (n, o) {
+              if (n !== o) {
+                compileTemplate();
+              }
             });
           }
           // No controller, compile the element manually
@@ -2274,6 +2284,7 @@ angular.module('ui.grid')
 
       // Function to pre-compile all the cell templates when the column definitions change
       function preCompileCellTemplates(columns) {
+        $log.info('pre-compiling cell templates');
         columns.forEach(function (col) {
           var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
           
@@ -3688,29 +3699,33 @@ angular.module('ui.grid')
 
           var templateGetPromises = [];
 
-          col.headerCellTemplate = colDef.headerCellTemplate || $templateCache.get('ui-grid/uiGridHeaderCell');
-
-          col.cellTemplate = colDef.cellTemplate ||
-            $templateCache.get('ui-grid/uiGridCell')
-              .replace(uiGridConstants.CUSTOM_FILTERS, col.cellFilter ? "|" + col.cellFilter : "");
-
-          if (colDef.cellTemplate && !uiGridConstants.TEMPLATE_REGEXP.test(colDef.cellTemplate)) {
-            templateGetPromises.push(
-              gridUtil.getTemplate(colDef.cellTemplate)
-                .then(function (contents) {
-                  col.cellTemplate = contents;
-                })
-            );
+          if (!colDef.headerCellTemplate) {
+            colDef.headerCellTemplate = 'ui-grid/uiGridHeaderCell';
           }
 
-          if (colDef.headerCellTemplate && !uiGridConstants.TEMPLATE_REGEXP.test(colDef.headerCellTemplate)) {
-            templateGetPromises.push(
-              gridUtil.getTemplate(colDef.headerCellTemplate)
-                .then(function (contents) {
-                  col.headerCellTemplate = contents;
-                })
-            );
+          if (!colDef.cellTemplate) {
+            colDef.cellTemplate = 'ui-grid/uiGridCell';
           }
+
+          templateGetPromises.push(gridUtil.getTemplate(colDef.cellTemplate)
+            .then(
+              function (template) {
+                col.cellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.cellFilter ? "|" + col.cellFilter : "");
+              },
+              function (res) {
+                throw new Error("Couldn't fetch/use colDef.cellTemplate '" + colDef.cellTemplate + "'");
+              })
+          );
+
+          templateGetPromises.push(gridUtil.getTemplate(colDef.headerCellTemplate)
+              .then(
+              function (template) {
+                col.headerCellTemplate = template;
+              },
+              function (res) {
+                throw new Error("Couldn't fetch/use colDef.headerCellTemplate '" + colDef.headerCellTemplate + "'");
+              })
+          );
 
           return $q.all(templateGetPromises);
         }
@@ -5893,7 +5908,7 @@ module.filter('px', function() {
               colDef.editableCellTemplate = 'ui-grid/cellTextEditor';
             }
 
-            gridUtil.getTemplate(colDef.editableCellTemplate)
+            promises.push(gridUtil.getTemplate(colDef.editableCellTemplate)
               .then(
               function (template) {
                 col.editableCellTemplate = template;
@@ -5901,7 +5916,7 @@ module.filter('px', function() {
               function (res) {
                 // Todo handle response error here?
                 throw new Error("Couldn't fetch/use colDef.editableCellTemplate '" + colDef.editableCellTemplate + "'");
-              });
+              }));
           }
 
           //enableCellEditOnFocus can only be used if cellnav module is used
