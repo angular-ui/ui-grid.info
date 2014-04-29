@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.11-da87ff9 - 2014-04-29
+/*! ui-grid - v2.0.11-e999e2c - 2014-04-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -859,12 +859,12 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
       $scope.$on('$destroy', $scope.$on(uiGridConstants.events.GRID_SCROLL, function(evt, args) {
         self.hideMenu();
-        // if (! $scope.$$phase) { $scope.$apply(); }
+        // if (!$scope.$$phase) { $scope.$apply(); }
       }));
 
       $scope.$on('$destroy', $scope.$on(uiGridConstants.events.ITEM_DRAGGING, function(evt, args) {
         self.hideMenu();
-        // if (! $scope.$$phase) { $scope.$apply(); }
+        // if (!$scope.$$phase) { $scope.$apply(); }
       }));
 
       $scope.$on('$destroy', function() {
@@ -1164,12 +1164,12 @@ angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$timeout', '$w
                 //var colWidth = (typeof(c.width) !== 'undefined' && c.width !== undefined) ? c.width : equalWidth;
 
                 // Skip hidden columns
-                if (! column.visible) { return; }
+                if (!column.visible) { return; }
 
                 var colWidth,
                     isPercent = false;
 
-                if (! angular.isNumber(column.width)) {
+                if (!angular.isNumber(column.width)) {
                   isPercent = isNaN(column.width) ? gridUtil.endsWith(column.width, "%") : false;
                 }
 
@@ -1307,7 +1307,7 @@ angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$timeout', '$w
               if (leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
                 var variableColumn = false;
                 uiGridCtrl.grid.columns.forEach(function(col) {
-                  if (col.width && ! angular.isNumber(col.width)) {
+                  if (col.width && !angular.isNumber(col.width)) {
                     variableColumn = true;
                   }
                 });
@@ -1853,7 +1853,7 @@ angular.module('ui.grid')
 
         function gridMouseLeave() {
           mouseInGrid = false;
-          if (! uiGridCtrl.grid.isScrolling()) {
+          if (!uiGridCtrl.grid.isScrolling()) {
             $elm.removeClass('ui-grid-scrollbar-visible');
           }
         }
@@ -2014,14 +2014,14 @@ angular.module('ui.grid')
           var scrollPercentage;
           if ($scope.type === 'vertical') {
             // Skip if no scroll on Y axis
-            if (! args.y) {
+            if (!args.y) {
               return;
             }
             scrollPercentage = args.y.percentage;
           }
           else if ($scope.type === 'horizontal') {
             // Skip if no scroll on X axis
-            if (! args.x) {
+            if (!args.x) {
               return;
             }
             scrollPercentage = args.x.percentage;
@@ -2066,7 +2066,7 @@ angular.module('ui.grid')
           // Remove the "scrolling" class, if any
           $elm.removeClass(scrollingClass);
 
-          if (! mouseInGrid) {
+          if (!mouseInGrid) {
             $elm.removeClass('ui-grid-scrollbar-visible');
           }
 
@@ -2084,7 +2084,7 @@ angular.module('ui.grid')
          *
          */
         
-        // if (! gridUtil.isTouchEnabled()) {
+        // if (!gridUtil.isTouchEnabled()) {
         //   $scope.grid.element.on('mouseenter mouseleave', function() {
         //     $elm.toggleClass('in');
         //   });
@@ -2558,7 +2558,7 @@ angular.module('ui.grid')
   var Grid = function Grid(options) {
     // Get the id out of the options, then remove it
     if (typeof(options.id) !== 'undefined' && options.id) {
-      if (! /^[_a-zA-Z0-9-]+$/.test(options.id)) {
+      if (!/^[_a-zA-Z0-9-]+$/.test(options.id)) {
         throw new Error("Grid id '" + options.id + '" is invalid. It must follow CSS selector syntax rules.');
       }
     }
@@ -2779,7 +2779,7 @@ angular.module('ui.grid')
 
           // Flag this row as needing to be manually found if it didn't come in with a $$hashKey
           var mustFind = false;
-          if (! self.options.getRowIdentity(newRow)) {
+          if (!self.options.getRowIdentity(newRow)) {
             mustFind = true;
           }
 
@@ -2960,7 +2960,7 @@ angular.module('ui.grid')
      modified.
    */
   Grid.prototype.registerRowsProcessor = function registerRowsProcessor(processor) {
-    if (! angular.isFunction(processor)) {
+    if (!angular.isFunction(processor)) {
       throw 'Attempt to register non-function rows processor: ' + processor;
     }
 
@@ -2999,7 +2999,7 @@ angular.module('ui.grid')
     // self.rowsProcessors.forEach(function (processor) {
     //   myRenderableRows = processor.call(self, myRenderableRows, self.columns);
 
-    //   if (! renderableRows) {
+    //   if (!renderableRows) {
     //     throw "Processor at index " + i + " did not return a set of renderable rows";
     //   }
 
@@ -3036,7 +3036,7 @@ angular.module('ui.grid')
       return $q.when( processor.call(self, renderedRowsToProcess, self.columns) )
         .then(function handleProcessedRows(processedRows) {
           // Check for errors
-          if (! processedRows) {
+          if (!processedRows) {
             throw "Processor at index " + i + " did not return a set of renderable rows";
           }
 
@@ -3241,7 +3241,7 @@ angular.module('ui.grid')
   Grid.prototype.getCellValue = function getCellValue(row, col){
     var self = this;
 
-    if (! self.cellValueGetterCache[col.colDef.name]) {
+    if (!self.cellValueGetterCache[col.colDef.name]) {
       self.cellValueGetterCache[col.colDef.name] = $parse(row.getEntityQualifiedColField(col));
     }
 
@@ -3490,7 +3490,7 @@ angular.module('ui.grid')
     }
     else {
       // If the width is not a number
-      if (! angular.isNumber(colDef.width)) {
+      if (!angular.isNumber(colDef.width)) {
         // See if it ends with a percent
         if (gridUtil.endsWith(colDef.width, '%')) {
           // If so we should be able to parse the non-percent-sign part to a number
@@ -3506,7 +3506,7 @@ angular.module('ui.grid')
           self.width = parseInt(colDef.width.match(/^(\d+)$/)[1], 10);
         }
         // Otherwise it should be a string of asterisks
-        else if (! colDef.width.match(/^\*+$/)) {
+        else if (!colDef.width.match(/^\*+$/)) {
           throw new Error(parseErrorMsg);
         }
       }
@@ -4149,35 +4149,35 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
 
     // If the filter's condition is a RegExp, then use it
     if (filter.condition instanceof RegExp) {
-      if (! filter.condition.test(value)) {
+      if (!filter.condition.test(value)) {
         return false;
       }
     }
     else if (filter.condition === uiGridConstants.filter.STARTS_WITH) {
       var startswithRE = termCache(cacheId) ? termCache(cacheId) : termCache(cacheId, new RegExp('^' + term, regexpFlags));
 
-      if (! startswithRE.test(value)) {
+      if (!startswithRE.test(value)) {
         return false;
       }
     }
     else if (filter.condition === uiGridConstants.filter.ENDS_WITH) {
       var endswithRE = termCache(cacheId) ? termCache(cacheId) : termCache(cacheId, new RegExp(term + '$', regexpFlags));
 
-      if (! endswithRE.test(value)) {
+      if (!endswithRE.test(value)) {
         return false;
       }
     }
     else if (filter.condition === uiGridConstants.filter.CONTAINS) {
       var containsRE = termCache(cacheId) ? termCache(cacheId) : termCache(cacheId, new RegExp(term, regexpFlags));
 
-      if (! containsRE.test(value)) {
+      if (!containsRE.test(value)) {
         return false;
       }
     }
     else if (filter.condition === uiGridConstants.filter.EXACT) {
       var exactRE = termCache(cacheId) ? termCache(cacheId) : termCache(cacheId,  new RegExp('^' + term + '$', regexpFlags));
 
-      if (! exactRE.test(value)) {
+      if (!exactRE.test(value)) {
         return false;
       }
     }
@@ -4202,7 +4202,7 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
       }
     }
     else if (filter.condition === uiGridConstants.filter.NOT_EQUAL) {
-      if (! angular.equals(value, term)) {
+      if (!angular.equals(value, term)) {
         return false;
       }
     }
@@ -4254,7 +4254,7 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
       */
 
       var ret = rowSearcher.runColumnFilter(grid, row, column, termCache, i, filter);
-      if (! ret) {
+      if (!ret) {
         return false;
       }
     }
@@ -4299,7 +4299,7 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
     if (filterCols.length > 0) {
       filterCols.forEach(function foreachFilterCol(col) {
         rows.forEach(function foreachRow(row) {
-          if (! rowSearcher.searchColumn(grid, row, col, termCache)) {
+          if (!rowSearcher.searchColumn(grid, row, col, termCache)) {
             row.visible = false;
           }
         });
@@ -4311,7 +4311,7 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
       //   for (var i in filterCols) {
       //     var col = filterCols[i];
 
-      //     if (! rowSearcher.searchColumn(grid, row, col, termCache)) {
+      //     if (!rowSearcher.searchColumn(grid, row, col, termCache)) {
       //       matchesAllColumns = false;
 
       //       // Stop processing other terms
@@ -4846,7 +4846,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     getColumnsFromData: function (data) {
       var columnDefs = [];
 
-      if (! data || typeof(data[0]) === 'undefined' || data[0] === undefined) { return []; }
+      if (!data || typeof(data[0]) === 'undefined' || data[0] === undefined) { return []; }
 
       var item = data[0];
       
@@ -4911,12 +4911,12 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       }
 
       // If the template is an element, return the element
-      try{
+      try {
         if (angular.element(template).length > 0) {
           return $q.when(template);
         }
       }
-      catch(err){
+      catch (err){
         //do nothing; not valid html
       }
 
@@ -5178,7 +5178,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       var index = uid.length;
       var digit;
 
-      while(index) {
+      while (index) {
         index--;
         digit = uid[index].charCodeAt(0);
         if (digit === 57 /*'9'*/) {
@@ -5519,7 +5519,7 @@ module.filter('px', function() {
         },
         getAllLangs: function () {
           var langs = [];
-          if(!this._langs){
+          if (!this._langs){
             return langs;
           }
 
@@ -5585,7 +5585,7 @@ module.filter('px', function() {
 
         getCurrentLang: function () {
           var lang = langCache.getCurrentLang();
-          if(!lang){
+          if (!lang){
             lang = i18nConstants.DEFAULT_LANG;
             langCache.setCurrent(lang);
           }
@@ -6409,7 +6409,7 @@ module.filter('px', function() {
               //remove edit element
               angular.element($elm.children()[1]).remove();
               gridCellContentsEl.removeClass('ui-grid-cell-contents-hidden');
-              if(retainFocus && isFocusedBeforeEdit){
+              if (retainFocus && isFocusedBeforeEdit){
                 gridCellContentsEl.focus();
               }
               isFocusedBeforeEdit = false;
@@ -6513,7 +6513,7 @@ module.filter('px', function() {
 
           //legacy support
           //use old name if it is explicitly false
-          if(gridOptions.enableColumnResize === false){
+          if (gridOptions.enableColumnResize === false){
             gridOptions.enableColumnResizing = false;
           }
         },
@@ -6527,7 +6527,7 @@ module.filter('px', function() {
 
 
           //legacy support of old option name
-          if(colDef.enableColumnResize === false){
+          if (colDef.enableColumnResize === false){
             colDef.enableColumnResizing = false;
           }
 
@@ -6803,7 +6803,7 @@ module.filter('px', function() {
           if (col.colDef.minWidth && newWidth < col.colDef.minWidth) {
             x = x + (col.colDef.minWidth - newWidth);
           }
-          else if (! col.colDef.minWidth && columnBounds.minWidth && newWidth < columnBounds.minWidth) {
+          else if (!col.colDef.minWidth && columnBounds.minWidth && newWidth < columnBounds.minWidth) {
             x = x + (col.colDef.minWidth - newWidth);
           }
           else if (col.colDef.maxWidth && newWidth > col.colDef.maxWidth) {
@@ -6857,7 +6857,7 @@ module.filter('px', function() {
           if (col.colDef.minWidth && newWidth < col.colDef.minWidth) {
             newWidth = col.colDef.minWidth;
           }
-          else if (! col.colDef.minWidth && columnBounds.minWidth && newWidth < columnBounds.minWidth) {
+          else if (!col.colDef.minWidth && columnBounds.minWidth && newWidth < columnBounds.minWidth) {
             newWidth = columnBounds.minWidth;
           }
           // 
@@ -6953,7 +6953,7 @@ module.filter('px', function() {
           if (col.colDef.minWidth && maxWidth < col.colDef.minWidth) {
             maxWidth = col.colDef.minWidth;
           }
-          else if (! col.colDef.minWidth && columnBounds.minWidth && maxWidth < columnBounds.minWidth) {
+          else if (!col.colDef.minWidth && columnBounds.minWidth && maxWidth < columnBounds.minWidth) {
             maxWidth = columnBounds.minWidth;
           }
           // 
