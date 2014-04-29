@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.10-7485e6e - 2014-04-28
+/*! ui-grid - v2.0.11-da87ff9 - 2014-04-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -121,13 +121,14 @@
             return;
           }
 
-          // scrollTop = uiGridCtrl.canvas[0].scrollHeight * scrollPercentage;
           scrollTop = uiGridCtrl.grid.getCanvasHeight() * scrollPercentage;
 
           uiGridCtrl.adjustRows(scrollTop, scrollPercentage);
 
           uiGridCtrl.prevScrollTop = scrollTop;
           uiGridCtrl.prevScrolltopPercentage = scrollPercentage;
+
+          $scope.grid.refreshCanvas();
         };
 
         uiGridCtrl.adjustRows = function(scrollTop, scrollPercentage) {
@@ -137,6 +138,11 @@
           uiGridCtrl.maxRowIndex = maxRowIndex;
 
           var curRowIndex = uiGridCtrl.prevRowScrollIndex;
+
+          // Calculate the scroll percentage according to the scrollTop location, if no percentage was provided
+          if ((typeof(scrollPercentage) === 'undefined' || scrollPercentage === null) && scrollTop) {
+            scrollPercentage = scrollTop / uiGridCtrl.grid.getCanvasHeight();
+          }
           
           var rowIndex = Math.ceil(Math.min(maxRowIndex, maxRowIndex * scrollPercentage));
 
@@ -168,17 +174,16 @@
           
           updateViewableRowRange(newRange);
           uiGridCtrl.prevRowScrollIndex = rowIndex;
-
-          // uiGridCtrl.firePostScrollEvent({
-          //   rows: {
-          //     prevIndex: curRowIndex,
-          //     curIndex: uiGridCtrl.prevRowScrollIndex
-          //   }
-          // });
         };
 
-        uiGridCtrl.redrawRows = function() {
+        uiGridCtrl.redrawRows = function redrawRows() {
           uiGridCtrl.adjustRows(uiGridCtrl.prevScrollTop, uiGridCtrl.prevScrolltopPercentage);
+        };
+
+        // Redraw the rows and columns based on our current scroll position
+        uiGridCtrl.redrawInPlace = function redrawInPlace() {
+          uiGridCtrl.adjustRows(uiGridCtrl.prevScrollTop, null);
+          uiGridCtrl.adjustColumns(uiGridCtrl.prevScrollLeft, null);
         };
 
         // Virtualization for horizontal scrolling
@@ -193,13 +198,20 @@
           uiGridCtrl.adjustColumns(scrollLeft, scrollPercentage);
 
           uiGridCtrl.prevScrollLeft = scrollLeft;
+
+          $scope.grid.refreshCanvas();
         };
 
         uiGridCtrl.adjustColumns = function(scrollLeft, scrollPercentage) {
           var minCols = uiGridCtrl.grid.minColumnsToRender();
           var maxColumnIndex = uiGridCtrl.grid.columns.length - minCols;
           uiGridCtrl.maxColumnIndex = maxColumnIndex;
-          
+
+          // Calculate the scroll percentage according to the scrollTop location, if no percentage was provided
+          if ((typeof(scrollPercentage) === 'undefined' || scrollPercentage === null) && scrollLeft) {
+            scrollPercentage = scrollLeft / uiGridCtrl.grid.getCanvasWidth();
+          }
+
           var colIndex = Math.ceil(Math.min(maxColumnIndex, maxColumnIndex * scrollPercentage));
 
           // Define a max row index that we can't scroll past
@@ -501,20 +513,12 @@
 
 
         var setRenderedRows = function (newRows) {
-          // NOTE: without the $evalAsync the new rows don't show up
-          // $scope.$evalAsync(function() {
-            uiGridCtrl.grid.setRenderedRows(newRows);
-            $scope.grid.refreshCanvas();
-          // });
+          uiGridCtrl.grid.setRenderedRows(newRows);
         };
 
         var setRenderedColumns = function (newColumns) {
-          // NOTE: without the $evalAsync the new rows don't show up
-          // $timeout(function() {
-            uiGridCtrl.grid.setRenderedColumns(newColumns);
-            updateColumnOffset();
-            $scope.grid.refreshCanvas();
-          // });
+          uiGridCtrl.grid.setRenderedColumns(newColumns);
+          updateColumnOffset();
         };
 
         // Method for updating the visible rows
@@ -595,7 +599,7 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
             var compiledElementFn = $scope.col.compiledElementFn;
 
             compiledElementFn($scope, function(clonedElement, scope) {
-              $elm.empty().append(clonedElement);
+              $elm.html(clonedElement);
             });
           }
 
@@ -2344,7 +2348,7 @@ angular.module('ui.grid')
       }
 
       function dataWatchFunction(n) {
-        $log.debug('dataWatch fired');
+        // $log.debug('dataWatch fired');
         var promises = [];
 
         if (n) {
@@ -2360,15 +2364,19 @@ angular.module('ui.grid')
           }
           $q.all(promises).then(function() {
             //wrap data in a gridRow
-            $log.debug('Modifying rows');
+            // $log.debug('Modifying rows');
             self.grid.modifyRows(n)
               .then(function () {
                 //todo: move this to the ui-body-directive and define how we handle ordered event registration
+                
                 if (self.viewport) {
-                  var scrollTop = self.viewport[0].scrollTop;
-                  var scrollLeft = self.viewport[0].scrollLeft;
-                  self.adjustScrollVertical(scrollTop, 0, true);
-                  self.adjustScrollHorizontal(scrollLeft, 0, true);
+                  // Re-draw our rows but stay in the same scrollTop location
+                  // self.redrawRowsByScrolltop();
+
+                  // Adjust the horizontal scroll back to 0 (TODO(c0bra): Do we need this??)
+                  // self.adjustScrollHorizontal(self.prevScollLeft, 0, true);
+
+                  self.redrawInPlace();
                 }
 
                 $scope.$evalAsync(function() {
@@ -2689,6 +2697,30 @@ angular.module('ui.grid')
     }
   };
 
+  // Return a list of items that exist in the `n` array but not the `o` array. Uses optional property accessors passed as third & fourth parameters
+  Grid.prototype.newInN = function newInN(o, n, oAccessor, nAccessor) {
+    var self = this;
+
+    var t = [];
+    for (var i=0; i<n.length; i++) {
+      var nV = nAccessor ? n[i][nAccessor] : n[i];
+      
+      var found = false;
+      for (var j=0; j<o.length; j++) {
+        var oV = oAccessor ? o[j][oAccessor] : o[j];
+        if (self.options.rowEquality(nV, oV)) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        t.push(nV);
+      }
+    }
+    
+    return t;
+  };
+
   /**
    * @ngdoc function
    * @name modifyRows
@@ -2699,39 +2731,142 @@ angular.module('ui.grid')
    * Rows are identified using the gridOptions.rowEquality function
    */
   Grid.prototype.modifyRows = function modifyRows(newRawData) {
-    var self = this;
+    var self = this,
+        i,
+        newRow;
 
     if (self.rows.length === 0 && newRawData.length > 0) {
+      if (self.options.enableRowHashing) {
+        if (!self.rowHashMap) {
+          self.createRowHashMap();
+        }
+
+        for (i=0; i<newRawData.length; i++) {
+          newRow = newRawData[i];
+
+          self.rowHashMap.put(newRow, {
+            i: i,
+            entity: newRow
+          });
+        }
+      }
+
       self.addRows(newRawData);
     }
+    else if (newRawData.length > 0) {
+      var unfoundNewRows, unfoundOldRows, unfoundNewRowsToFind;
+
+      // If row hashing is turned on
+      if (self.options.enableRowHashing) {
+        // Array of new rows that haven't been found in the old rowset
+        unfoundNewRows = [];
+        // Array of new rows that we explicitly HAVE to search for manually in the old row set. They cannot be looked up by their identity (because it doesn't exist).
+        unfoundNewRowsToFind = [];
+        // Map of rows that have been found in the new rowset
+        var foundOldRows = {};
+        // Array of old rows that have NOT been found in the new rowset
+        unfoundOldRows = [];
+
+        // Create the row HashMap if it doesn't exist already
+        if (!self.rowHashMap) {
+          self.createRowHashMap();
+        }
+        var rowhash = self.rowHashMap;
+        
+        // Make sure every new row has a hash
+        for (i = 0; i < newRawData.length; i++) {
+          newRow = newRawData[i];
+
+          // Flag this row as needing to be manually found if it didn't come in with a $$hashKey
+          var mustFind = false;
+          if (! self.options.getRowIdentity(newRow)) {
+            mustFind = true;
+          }
+
+          // See if the new row is already in the rowhash
+          var found = rowhash.get(newRow);
+          // If so...
+          if (found) {
+            // See if it's already being used by as GridRow
+            if (found.row) {
+              // If so, mark this new row as being found
+              foundOldRows[self.options.rowIdentity(newRow)] = true;
+            }
+          }
+          else {
+            // Put the row in the hashmap with the index it corresponds to
+            rowhash.put(newRow, {
+              i: i,
+              entity: newRow
+            });
+            
+            // This row has to be searched for manually in the old row set
+            if (mustFind) {
+              unfoundNewRowsToFind.push(newRow);
+            }
+            else {
+              unfoundNewRows.push(newRow);
+            }
+          }
+        }
+
+        // Build the list of unfound old rows
+        for (i = 0; i < self.rows.length; i++) {
+          var row = self.rows[i];
+          var hash = self.options.rowIdentity(row.entity);
+          if (!foundOldRows[hash]) {
+            unfoundOldRows.push(row);
+          }
+        }
+      }
+
+      // Look for new rows
+      var newRows = unfoundNewRows || [];
+
+      // The unfound new rows is either `unfoundNewRowsToFind`, if row hashing is turned on, or straight `newRawData` if it isn't
+      var unfoundNew = (unfoundNewRowsToFind || newRawData);
+
+      // Search for real new rows in `unfoundNew` and concat them onto `newRows`
+      newRows = newRows.concat(self.newInN(self.rows, unfoundNew, 'entity'));
+      
+      self.addRows(newRows);
+      
+      var deletedRows = self.getDeletedRows((unfoundOldRows || self.rows), newRawData);
+
+      for (i = 0; i < deletedRows.length; i++) {
+        if (self.options.enableRowHashing) {
+          self.rowHashMap.remove(deletedRows[i].entity);
+        }
+
+        self.rows.splice( self.rows.indexOf(deletedRows[i]), 1 );
+      }
+    }
+    // Empty data set
     else {
-      //look for new rows
-      var newRows = newRawData.filter(function (newItem) {
-        return !self.rows.some(function(oldRow) {
-          return self.options.rowEquality(oldRow.entity, newItem);
-        });
-      });
+      // Reset the row HashMap
+      self.createRowHashMap();
 
-      for (i = 0; i < newRows.length; i++) {
-        self.addRows([newRows[i]]);
-      }
-
-      //look for deleted rows
-      var deletedRows = self.rows.filter(function (oldRow) {
-        return !newRawData.some(function (newItem) {
-          return self.options.rowEquality(newItem, oldRow.entity);
-        });
-      });
-
-      for (var i = 0; i < deletedRows.length; i++) {
-        self.rows.splice( self.rows.indexOf(deletedRows[i] ), 1 );
-      }
+      // Reset the rows length!
+      self.rows.length = 0;
     }
     
     return $q.when(self.processRowsProcessors(self.rows))
       .then(function (renderableRows) {
         return self.setVisibleRows(renderableRows);
       });
+  };
+
+  Grid.prototype.getDeletedRows = function(oldRows, newRows) {
+    var self = this;
+
+    var olds = oldRows.filter(function (oldRow) {
+      return !newRows.some(function (newItem) {
+        return self.options.rowEquality(newItem, oldRow.entity);
+      });
+    });
+    // var olds = self.newInN(newRows, oldRows, null, 'entity');
+    // dump('olds', olds);
+    return olds;
   };
 
   /**
@@ -2745,7 +2880,16 @@ angular.module('ui.grid')
     var self = this;
 
     for (var i=0; i < newRawData.length; i++) {
-      self.rows.push( self.processRowBuilders(new GridRow(newRawData[i], i)) );
+      var newRow = self.processRowBuilders(new GridRow(newRawData[i], i));
+
+      if (self.options.enableRowHashing) {
+        var found = self.rowHashMap.get(newRow.entity);
+        if (found) {
+          found.row = newRow;
+        }
+      }
+
+      self.rows.push(newRow);
     }
   };
 
@@ -3212,13 +3356,54 @@ angular.module('ui.grid')
 
     return $q.when(column);
   };
-
-      /**
-       * communicate to outside world that we are done with initial rendering
-       */
+  
+  /**
+   * communicate to outside world that we are done with initial rendering
+   */
   Grid.prototype.renderingComplete = function(){
     if(angular.isFunction(this.options.onRegisterEvents)){
       this.options.onRegisterEvents(this.events);
+    }
+  };
+
+  Grid.prototype.createRowHashMap = function createRowHashMap() {
+    var self = this;
+
+    var hashMap = new RowHashMap();
+    hashMap.grid = self;
+
+    self.rowHashMap = hashMap;
+  };
+
+  // Blatantly stolen from Angular as it isn't exposed (yet? 2.0?)
+  function RowHashMap() {}
+
+  RowHashMap.prototype = {
+    /**
+     * Store key value pair
+     * @param key key to store can be any type
+     * @param value value to store can be any type
+     */
+    put: function(key, value) {
+      this[this.grid.options.rowIdentity(key)] = value;
+    },
+
+    /**
+     * @param key
+     * @returns {Object} the value for the key
+     */
+    get: function(key) {
+      return this[this.grid.options.rowIdentity(key)];
+    },
+
+    /**
+     * Remove the key/value pair
+     * @param key
+     */
+    remove: function(key) {
+      var value = this[key = this.grid.options.rowIdentity(key)];
+      delete this[key];
+      return value;
     }
   };
 
@@ -3481,7 +3666,7 @@ angular.module('ui.grid')
 (function(){
 
 angular.module('ui.grid')
-.factory('GridOptions', [function() {
+.factory('GridOptions', ['gridUtil', function(gridUtil) {
 
   /**
    * @ngdoc function
@@ -3510,6 +3695,44 @@ angular.module('ui.grid')
 
      */
     this.columnDefs = [];
+
+    /**
+     * @ngdoc boolean
+     * @name enableRowHashing
+     * @propertyOf ui.grid.class:GridOptions
+     * @description (optional) True by default. When enabled, this setting allows uiGrid to add
+     * `$$hashKey`-type properties (similar to Angular) to elements in the `data` array. This allows
+     * the grid to maintain state while vastly speeding up the process of altering `data` by adding/moving/removing rows.
+     * 
+     * Note that this DOES add properties to your data that you may not want, but they are stripped out when using `angular.toJson()`. IF
+     * you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
+     * and are altering the data set often.
+     */
+    this.enableRowHashing = true;
+
+    /**
+     * @ngdoc function
+     * @name rowIdentity
+     * @propertyOf ui.grid.class:GridOptions
+     * @description (optional) This function is used to get and, if necessary, set the value uniquely identifying this row.
+     * 
+     * By default it returns the `$$hashKey` property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one
+     */
+    this.rowIdentity = function rowIdentity(row) {
+        return gridUtil.hashKey(row);
+    };
+
+    /**
+     * @ngdoc function
+     * @name getRowIdentity
+     * @propertyOf ui.grid.class:GridOptions
+     * @description (optional) This function returns the identity value uniquely identifying this row.
+     * 
+     * By default it returns the `$$hashKey` property but can be overridden to use any property or set of properties you want.
+     */
+    this.getRowIdentity = function rowIdentity(row) {
+        return row.$$hashKey;
+    };
 
     this.headerRowHeight = 30;
     this.rowHeight = 30;
@@ -4526,6 +4749,9 @@ function getWidthOrHeight( elem, name, extra ) {
   return ret;
 }
 
+var uid = ['0', '0', '0'];
+var uidPrefix = 'uiGrid-';
+
 /**
  *  @ngdoc service
  *  @name ui.grid.service:GridUtil
@@ -4945,7 +5171,64 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         $animate.enabled(true, element);
       }
       catch (e) {}
+    },
+
+    // Blatantly stolen from Angular as it isn't exposed (yet. 2.0 maybe?)
+    nextUid: function nextUid() {
+      var index = uid.length;
+      var digit;
+
+      while(index) {
+        index--;
+        digit = uid[index].charCodeAt(0);
+        if (digit === 57 /*'9'*/) {
+          uid[index] = 'A';
+          return uid.join('');
+        }
+        if (digit === 90  /*'Z'*/) {
+          uid[index] = '0';
+        } else {
+          uid[index] = String.fromCharCode(digit + 1);
+          return uid.join('');
+        }
+      }
+      uid.unshift('0');
+
+      return uidPrefix + uid.join('');
+    },
+
+    // Blatantly stolen from Angular as it isn't exposed (yet. 2.0 maybe?)
+    hashKey: function hashKey(obj) {
+      var objType = typeof obj,
+          key;
+
+      if (objType === 'object' && obj !== null) {
+        if (typeof (key = obj.$$hashKey) === 'function') {
+          // must invoke on object to keep the right this
+          key = obj.$$hashKey();
+        }
+        else if (typeof(obj.$$hashKey) !== 'undefined' && obj.$$hashKey) {
+          key = obj.$$hashKey;
+        }
+        else if (key === undefined) {
+          key = obj.$$hashKey = s.nextUid();
+        }
+      }
+      else {
+        key = obj;
+      }
+
+      return objType + ':' + key;
     }
+
+    // setHashKey: function setHashKey(obj, h) {
+    //   if (h) {
+    //     obj.$$hashKey = h;
+    //   }
+    //   else {
+    //     delete obj.$$hashKey;
+    //   }
+    // }
   };
 
   ['width', 'height'].forEach(function (name) {

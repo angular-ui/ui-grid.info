@@ -58,7 +58,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "_field and any api application are array backwards be by can class columndef columndefs compare compared compatibilty complex contain data default defined developer entitya entityb equality field1 field2 first for function grid gridoptions in is item name object objects of on only option or over overlaid overridden place property rendered required rowequality rows second the this to ui used using var with x_"
+      "keywords": "_field add adding all allows altering and angular any api application are array at backwards be boolean but by can class columndef columndefs compare compared compatibilty complex contain data default defined developer disable do does doesn elements enabled enablerowhashing entitya entityb equality exists field1 field2 first for function generate get getrowidentity grid gridoptions gridutil hit identifying identity if in is it item large maintain may name necessary nextuid not note numbers object objects of often on one only option or out over overlaid overridden performance place process properties property rendered required returns row rowequality rowidentity rows second set setting speeding state stripped take that the they this to tojson true ui uigrid uniquely up use used uses using value var vastly want when while will with x_ you your"
     },
     {
       "section": "api",
@@ -191,14 +191,14 @@ NG_DOCS={
       "id": "2.1_appending_data",
       "shortName": "Kitchen Sink",
       "type": "overview",
-      "keywords": "$http $interval $scope $timeout about address age agetemplate all also an angular app appends are btn btn-success button cancel cellnav celltemplate city class columndefs company controller css data date displayname edit email emulates enablecelledit enablecolumnresizing enabled every example features field for foreach friend friends from function get grid gridoptions height html id idea index it iter js json kitchen length loading main mainctrl module mydata name new ng-click ng-controller object of on overview pages parseint performance phone push refreshdata resizecolumns row rows scope sec seconds server setting sink specifies start state street string success that the this to true tutorial type ui ui-grid ui-grid-cell-contents ui-grid-cellnav ui-grid-edit ui-grid-resize-columns value var wait watch width your zip"
+      "keywords": "$http $interval $scope $timeout about address age agetemplate all also an angular app appends are btn btn-success button callspending callspending-- cancel cellnav celltemplate city class columndefs company controller css data date displayname edit email emulates enablecelledit enablecolumnresizing enabled error every example features field for foreach friend friends from function get getrowidentity grid gridoptions height html id idea index it iter js json kitchen left length loading main mainctrl module mydata name new ng-bind ng-click ng-controller object of on overview pages pending performance phone push refreshdata resizecolumns return row rowidentity rows scope sec seconds server setting sink specifies start state street string success that the this to true tutorial type ui ui-grid ui-grid-cell-contents ui-grid-cellnav ui-grid-edit ui-grid-resize-columns value var watch width your zip"
     },
     {
       "section": "tutorial",
       "id": "2_swapping_data",
       "shortName": "Add/Delete/Swap",
       "type": "overview",
-      "keywords": "$scope abc acium add adddata angular app bond brainquil btn btn-success button by can carney class cline company comveyer controller cox cruz css data data1 data2 different else employed enormo false first firstname fuelton function grid gridopts height hopper html if in index js kongene kramer lastname length letpro lorraine main mainctrl marcy marqet mclean misty module name nancy new ng-click ng-controller oneill out overview parleynet person pickett providing push reference removefirstrow row shepherd simply splice swap swapdata tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
+      "keywords": "$scope abc acium add adddata angular app bond brainquil btn btn-success button by can carney class cline company comveyer controller copy cox cruz css data data1 data2 different else employed enormo false first firstname fuelton function grid gridopts height hopper html if in index js kongene kramer lastname length letpro lorraine main mainctrl marcy marqet mclean misty module name nancy new ng-click ng-controller oneill origdata1 origdata2 out overview parleynet person pickett providing push reference removefirstrow reset row shepherd simply splice swap swapdata tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
     },
     {
       "section": "tutorial",
