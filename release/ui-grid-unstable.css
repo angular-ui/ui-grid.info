@@ -425,6 +425,7 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 .ui-grid-menu .ui-grid-menu-inner ul {
   margin: 0;
+  padding: 0;
   list-style-type: none;
 }
 .ui-grid-menu .ui-grid-menu-inner ul li {

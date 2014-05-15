@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.11-98a8a1c - 2014-04-30
+/*! ui-grid - v2.0.11-9c39fe6 - 2014-05-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1271,7 +1271,7 @@ angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$timeout', '$w
                     // Remove this element from the percent array so it's not processed below
                     asterisksArray.splice(i, 1);
                   }
-                  else  if (column.colDef.maxWidth && colWidth > column.colDef.maxWidth) {
+                  else if (column.colDef.maxWidth && colWidth > column.colDef.maxWidth) {
                     colWidth = column.colDef.maxWidth;
 
                     remainingWidth = remainingWidth - colWidth;
@@ -2352,7 +2352,7 @@ angular.module('ui.grid')
         var promises = [];
 
         if (n) {
-          if(self.grid.columns.length === 0){
+          if (self.grid.columns.length === 0) {
             $log.debug('loading cols in dataWatchFunction');
             if (!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0) {
               self.grid.options.columnDefs =  gridUtil.getColumnsFromData(n);
@@ -3361,7 +3361,7 @@ angular.module('ui.grid')
    * communicate to outside world that we are done with initial rendering
    */
   Grid.prototype.renderingComplete = function(){
-    if(angular.isFunction(this.options.onRegisterEvents)){
+    if (angular.isFunction(this.options.onRegisterEvents)) {
       this.options.onRegisterEvents(this.events);
     }
   };
@@ -5799,12 +5799,12 @@ module.filter('px', function() {
 
           if (evt.keyCode === uiGridConstants.keymap.UP ||
             (evt.keyCode === uiGridConstants.keymap.ENTER && evt.shiftKey)) {
-            return  uiGridCellNavConstants.direction.UP;
+            return uiGridCellNavConstants.direction.UP;
           }
 
           if (evt.keyCode === uiGridConstants.keymap.DOWN ||
             evt.keyCode === uiGridConstants.keymap.ENTER) {
-            return  uiGridCellNavConstants.direction.DOWN;
+            return uiGridCellNavConstants.direction.DOWN;
           }
 
           return null;
@@ -6071,8 +6071,7 @@ module.filter('px', function() {
           });
 
           $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, function(evt,rowCol){
-             if(rowCol.row === $scope.row &&
-               rowCol.col === $scope.col){
+             if (rowCol.row === $scope.row && rowCol.col === $scope.col) {
                 $log.debug('Setting focus on Row ' + rowCol.row.index + ' Col ' + rowCol.col.colDef.name);
                 setFocused();
              }
@@ -6357,7 +6356,7 @@ module.filter('px', function() {
             }
 
             function beginEdit() {
-              if(!shouldEdit($scope.col)){
+              if (!shouldEdit($scope.col)) {
                 return;
               }
 
@@ -6451,7 +6450,7 @@ module.filter('px', function() {
   module.directive('uiGridTextEditor',
     ['uiGridConstants', 'uiGridEditConstants',
       function (uiGridConstants, uiGridEditConstants) {
-        return{
+        return {
           scope: true,
           compile: function () {
             return {
