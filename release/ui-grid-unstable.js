@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.11-9c39fe6 - 2014-05-15
+/*! ui-grid - v2.0.11-4dc95ab - 2014-05-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1441,7 +1441,7 @@ angular.module('ui.grid')
         angular.element($window).off('resize', $scope.hideMenu);
       });
     },
-    controller: function ($scope, $element, $attrs) {
+    controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
       var self = this;
 
       self.hideMenu = $scope.hideMenu = function() {
@@ -1470,7 +1470,7 @@ angular.module('ui.grid')
       $scope.$on('$destroy', function () {
         angular.element(document).off('click', documentClick);
       });
-    }
+    }]
   };
 
   return uiGridMenu;
