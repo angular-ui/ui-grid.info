@@ -394,7 +394,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$apply $http $scope address aftercelledit age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class coldef column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate edited editing editor enablecelledit f2 false feature focus following for function get grid gridapi gridoptions has height html id if in index invoke invoked is js json key lastcelledited length main mainctrl mode module msg name newvalue ng-controller non-navigable number oldvalue on only onregisterapi option options or other overview returns row rowentity rows scope set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
+      "keywords": "$apply $http $scope address aftercelledit age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class coldef column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate edited editing editor enablecelledit f2 false feature focus following for function get grid gridapi gridoptions has height html id if in index invoke invoked is js json key lastcelledited length main mainctrl mode module msg name newvalue ng-controller non-navigable not number oldvalue on only onregisterapi option options or other overview returns row rowentity rows scope set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
     },
     {
       "section": "tutorial",
@@ -408,7 +408,7 @@ NG_DOCS={
       "id": "6a_editableOnFocus",
       "shortName": "Edit On Focus",
       "type": "overview",
-      "keywords": "$http $scope address age and angular api app be btn btn-success button can cell cellnav city class col coldef columndefs combine controller css current currentfocused data default displayname docs edit editing enable enablecelledit enablecelleditonfocus entity focus focused for function get getcurrentfocus getfocusedcell gets grid gridapi gridoptions height how html id if index js json keys main mainctrl module must name navigation ng-bind ng-click ng-controller null on onregisterapi options override overview row rowcol see set success the to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
+      "keywords": "$http $scope address age and angular api app be btn btn-success button can cell cellnav city class col coldef columndefs combine controller css current currentfocused data default displayname docs edit editing enable enablecelledit enablecelleditonfocus entity false focus focused for function get getcurrentfocus getfocusedcell gets grid gridapi gridoptions height how html id if index js json keys main mainctrl module must name navigation ng-bind ng-click ng-controller null on onregisterapi options override overview row rowcol see set success the to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
     },
     {
       "section": "tutorial",
