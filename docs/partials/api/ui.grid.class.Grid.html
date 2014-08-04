@@ -3,8 +3,8 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>Grid defines a logical grid.  Any non-dom properties and elements needed by the grid should
-be defined in this class</p></div>
+<div class="description"><p>Grid is the main viewModel.  Any properties or methods needed to maintain state are defined in
+* this prototype.  One instance of Grid is created per Grid directive instance.</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">Grid(options);</pre>
 <h3 id="Parameters">Parameters</h3>
@@ -36,6 +36,13 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 – <p>An array of GridColumn objects</p></div>
 </div>
 </li>
+<li><h3 id="getRow">getRow(rowEntity)</h3>
+<div class="getrow"><p>returns the GridRow that contains the rowEntity</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the gridOptions.data array element instance</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="modifyRows">modifyRows()</h3>
 <div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered
 rowBuilder to further process the row</p>
@@ -60,10 +67,10 @@ additional properties to the column.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
-<li><h3 id="registerRowBuilder">registerRowBuilder(columnsProcessor)</h3>
+<li><h3 id="registerRowBuilder">registerRowBuilder(rowBuilder)</h3>
 <div class="registerrowbuilder"><p>When the build creates rows from gridOptions.data, the rowBuilders will be called to add
 additional properties to the row.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnsProcessor – {function(colDef, col, gridOptions)} – </code>
+<ul class="parameters"><li><code ng:non-bindable="">rowBuilder – {function(colDef, col, gridOptions)} – </code>
 <p>function to be called</p></li>
 </ul>
 </div>
@@ -82,7 +89,9 @@ modified.</p><h4 id="Parameters">Parameters</h4>
 </div>
 </li>
 <li><h3 id="registerStyleComputation">registerStyleComputation(styleComputation)</h3>
-<div class="registerstylecomputation"><p>registered a styleComputation function</p><h4 id="Parameters">Parameters</h4>
+<div class="registerstylecomputation"><p>registered a styleComputation function</p>
+
+<p>If the function returns a value it will be appended into the grid's <code>&lt;style&gt;</code> block</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">styleComputation – {function($scope)} – </code>
 <p>function</p></li>
 </ul>

@@ -6,6 +6,20 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
+      "id": "ui.grid.cellNav.api:ColDef",
+      "shortName": "ColDef",
+      "type": "object",
+      "keywords": "allowcellfocus api cell cellnav column definitions enable feature focus for grid object on to true ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellNav.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "and api array brings cellnav coldef column current data does feature focus focused for function getfocusedcell grid gridoptions has have if instance into is last make no not null object occurred public returns row rowentity scrollto selection the to ui value view visible"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.cellNav.constant:uiGridCellNavConstants",
       "shortName": "uiGridCellNavConstants",
       "type": "object",
@@ -37,35 +51,35 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all alter an and any api are array as asc ascending be behavior being build buildcolumns buildstyles by called calls chance class col column columnbuilder columnbuilders columndefinition columns columnsprocessor count creates currently data defined defines definitions desc descending direction directions each eached either elements etc exclude existing expected false for from function further getcolumn getcolumnsorting given grid gridcolumn gridoptions gridrow has having id identified if in into is iterate its load logical long map modified modifyrows name needed newrawdata non-dom not object objects of on only optional optionally options or pass process processes processor processrowbuilders promise properties property provided reference register registercolumnbuilder registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowequality rows set should sort sortcolumn sorted sorting stylecomputation supplies that the this through to ui unsorted updated using when which will with"
+      "keywords": "add added additional all alter an and any api appended are array as asc ascending be behavior being block build buildcolumns buildstyles by called calls chance class col column columnbuilder columnbuilders columndefinition columns columnsprocessor contains count created creates currently data defined definitions desc descending direction directions directive each eached either element etc exclude existing expected false for from function further getcolumn getcolumnsorting getrow given grid gridcolumn gridoptions gridrow has having id identified if in instance into is it iterate its load long main maintain map methods modified modifyrows name needed newrawdata not object objects of on one only optional optionally options or pass per process processes processor processrowbuilders promise properties property prototype provided reference register registercolumnbuilder registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowentity rowequality rows set sort sortcolumn sorted sorting state stylecomputation supplies that the this through to ui unsorted updated using value viewmodel when which will with"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.class:GridApi",
+      "shortName": "GridApi",
+      "type": "function",
+      "keywords": "ability acol again allow allowed and api array be callbackfn cellnav class components disables disabling enables event eventname eventnameone eventnametwo eventobjectmap events execute executes feature featurename features for format from function functions given grid gridapi in inside listener listenerfunc listenerfuncs listenerfunctions listeners map method methodname methodnameone methodnametwo methods must name names navigate new objectmap of oldrowcol on or other our owns provides public raise raises register registerevent registereventsfromobject registermethod registermethodsfromobject registers same scrollto simple something specified still suppress suppressevents that the then these this to ui use used var via were while will"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "add address against algorithm allows also and angular any api array as assigned be binding city class coldef coldefs column complex current data defaults definition displayed docs element employee evaluates expression expressions field fields for function functions getfulladdress grid gridoptions implementation in index items like matures name needed normal of on optional options other parameters position properties screen sorting takes that the this to ui use when wrapper"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.class:GridEvents",
-      "shortName": "GridEvents",
-      "type": "function",
-      "keywords": "ability allow allowed and api be class components event eventname eventnameone eventnametwo eventobjectmap events feature featurename features for format from function given grid gridevents in inside map must name names new objectmap of on other owns provides public raises register registerevent registereventsfromobject registers simple subscribe that the these this to ui via"
+      "keywords": "add address against algorithm also and angular any api are array as be binding city class classname coldef column complex current data defaults defined definition displayed docs each element employee evaluates expression expressions field fields for function getcolclass getcolclassdefinition getfulladdress grid if implementation in index instead like matures methods name needed normal of on optional options or other parameters position prefixdot properties prototype reference represents return returns screen sorting state takes th that the this to true ui use viewmodel when will"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "_field add adding all allows altering and angular any api application are array at backwards be boolean but by can class columndef columndefs compare compared compatibilty complex contain data default defined developer disable do does doesn elements enabled enablerowhashing entitya entityb equality exists field1 field2 first for function generate get getrowidentity grid gridoptions gridutil hit identifying identity if in is it item large maintain may name necessary nextuid not note numbers object objects of often on one only option or out over overlaid overridden performance place process properties property rendered required returns row rowequality rowidentity rows second set setting speeding state stripped take that the they this to tojson true ui uigrid uniquely up use used uses using value var vastly want when while will with x_ you your"
+      "keywords": "$delegate $provide _field add adding all allows altering an and angular any api application are array at auto-generating backwards be boolean but by can class column columndef columndefs compare compared compatibilty complex config contain data decorator default defaultoptions defaults defined developer disable do does doesn elements enabled enablerowhashing entitya entityb equality excludeproperties exists factory field1 field2 first for function generate get getrowidentity grid gridoptions grids gridutil hit id identifying identity if ignore ignored in is it item large maintain may modify name names necessary new nextuid not note numbers object objects of often on one only option options or out over overlaid overridden performance place process properties property provide rendered required return returns row rowequality rowidentity rows second set setting speeding state stripped take that the they this to tojson true ui uigrid uniquely up use used uses using value var vastly want when while will with within x_ you your"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "allows and api array as assigned be can class col column current data entity evaluated exists field fielda for from function functions getqualifiedcolfield grid gridoptions ie in index instance it item name needed of on position properties qualified resulting returns row rows scope that the to ui wrapper"
+      "keywords": "against always an and api array as be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one path position qualified reference relation rendered resulting returns row scope should that the to true ui unique viewmodel visible will"
     },
     {
       "section": "api",
@@ -94,6 +108,27 @@ NG_DOCS={
       "shortName": "edit",
       "type": "overview",
       "keywords": "allow and api arrow be below beside capability cell cellnav cells data doc-module-components edit editing emulate enter entry full get goal grid in key keyboard keying module or overview provides really should spreadsheet spreadsheet-like tab the then this to ui used user via was will"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.api:ColDef",
+      "shortName": "ColDef",
+      "type": "object",
+      "keywords": "$scope allowed and api as be before can cell celleditablecondition cellnav col coldef column default definitions determine edit editablecelltemplate editing editor either enable enablecelledit enablecelleditonfocus entity evaluated false falsy feature focus for function grid gridoptions if invoked is not object of on or receives requires return row soon specified template text then this to true ui url used value when"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "$scope all allowed and api as be before by cell celleditablecondition cellnav celltemplate col coldef coldefs columns default defaults determine edit editablecelltemplate editing editor either enablecelledit enablecelleditonfocus entity false falsy feature focus for function grid if invoked is not object of options or receives requires return row soon specified take that the their then to true ui ui-grid undefined use used value will"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "api edit feature for grid object public ui"
     },
     {
       "section": "api",
@@ -132,6 +167,41 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.pinning",
+      "shortName": "pinning",
+      "type": "overview",
+      "keywords": "api column doc-module-components grid module overview pinning provides this ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.pinning.api:ColDef",
+      "shortName": "ColDef",
+      "type": "object",
+      "keywords": "api coldef enable enablepinning feature for grid object pinning to true ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.pinning.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api enable enablerowselection feature for grid gridoptions object pinning to true ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.resizeColumns.api:ColDef",
+      "shortName": "ColDef",
+      "type": "object",
+      "keywords": "api coldef column enable enablecolumnresizing feature for grid gridoptions object resizecolumns resizing to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.resizeColumns.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api column enable enablecolumnresizing feature for grid gridoptions object resizecolumns resizing to true ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.resizeColumns.directive:uiGridColumnResizer",
       "shortName": "uiGridColumnResizer",
       "type": "directive",
@@ -146,6 +216,62 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.selection",
+      "shortName": "selection",
+      "type": "overview",
+      "keywords": "api doc-module-components grid module overview provides row selection this ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api enable enablerowselection feature for grid gridoptions multiple multiselect object row selection to true ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "all allow api array as clearselectedrows current data does entity false feature for function getselectedrows grid gridoption gridoptions if instance multiple multiselect nothing object or public references returns row rowentity rows select selectallrows selected selectedrow selection selectrow selects setmultiselect sets the to togglerowselection toggles true ui unselect unselected unselectrow unselects"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.constant:uiGridSelectionConstants",
+      "shortName": "uiGridSelectionConstants",
+      "type": "object",
+      "keywords": "api available constant constants grid in module object selection ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.directive:uiGridCell",
+      "shortName": "uiGridCell",
+      "type": "directive",
+      "keywords": "api directive div feature grid of on provide selection stacks to top ui uigridcell"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.directive:uiGridSelection",
+      "shortName": "uiGridSelection",
+      "type": "directive",
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div edit enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller selection title to true ui ui-grid ui-grid-selection var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.directive:uiGridViewport",
+      "shortName": "uiGridViewport",
+      "type": "directive",
+      "keywords": "alter api attributes directive div for grid of on row selection stacks the to top ui uigridviewport used"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.service:uiGridSelectionService",
+      "shortName": "uiGridSelectionService",
+      "type": "service",
+      "keywords": "all api as at be can clears clearselectedrows deselect false features for function getselectedrows grid if multiselect object one only or returns row rows select selected selection service services the time to togglerowselection toggles ui unselected"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.service:gridClassFactory",
       "shortName": "gridClassFactory",
       "type": "object",
@@ -156,7 +282,7 @@ NG_DOCS={
       "id": "ui.grid.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser cache calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll either element elementheight elementwidth etc event field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional or pixels promise readablecolumnname representing resolving return returns right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
+      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser cache calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll either element elementheight elementwidth etc event excludeproperties field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional or pixels promise readablecolumnname representing resolving return returns right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
     },
     {
       "section": "api",
@@ -171,6 +297,13 @@ NG_DOCS={
       "shortName": "Index",
       "type": "overview",
       "keywords": "and answer ask case channel common don for help here if in index irc lot of on overview particular provide see set should the then this to tutorial tutorials ui-grid use-cases using way you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "10_pinning",
+      "shortName": "Pinning",
+      "type": "overview",
+      "keywords": "$http $log $scope about address age angular app city class columndefs company controller css data displayname email friend friends function get grid gridoptions height html id index js json main mainctrl module name ng-controller overview phone pinning state street success tutorial ui ui-grid ui-grid-pinning var width zip"
     },
     {
       "section": "tutorial",
@@ -261,7 +394,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$http $scope address age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate editing editor enablecelledit f2 false feature focus following for function get grid gridoptions has height html id if in index invoke invoked is js json key length main mainctrl mode module name ng-controller non-navigable number only option options or other overview returns rowindex rows set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
+      "keywords": "$apply $http $scope address aftercelledit age allow angular any app as available be boolean called can cell celleditablecondition cellnav cellscope city class coldef column columndef columndefs compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate edited editing editor enablecelledit f2 false feature focus following for function get grid gridapi gridoptions has height html id if in index invoke invoked is js json key lastcelledited length main mainctrl mode module msg name newvalue ng-controller non-navigable number oldvalue on only onregisterapi option options or other overview returns row rowentity rows scope set should soon start success templatecache templates text than that the to true tutorial typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
     },
     {
       "section": "tutorial",
@@ -275,7 +408,7 @@ NG_DOCS={
       "id": "6a_editableOnFocus",
       "shortName": "Edit On Focus",
       "type": "overview",
-      "keywords": "$http $scope address age and angular api app be can cell cellnav city class columndefs combine controller css data default displayname docs edit editing enable enablecelledit enablecelleditonfocus focus for function get gets grid gridoptions height how html id index js json keys length main mainctrl module must name navigation ng-controller number on options override overview see set success the to true tutorial ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
+      "keywords": "$http $scope address age and angular api app be btn btn-success button can cell cellnav city class col coldef columndefs combine controller css current currentfocused data default displayname docs edit editing enable enablecelledit enablecelleditonfocus entity focus focused for function get getcurrentfocus getfocusedcell gets grid gridapi gridoptions height how html id if index js json keys main mainctrl module must name navigation ng-bind ng-click ng-controller null on onregisterapi options override overview row rowcol see set success the to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
     },
     {
       "section": "tutorial",
@@ -290,6 +423,13 @@ NG_DOCS={
       "shortName": "Grid in a Modal",
       "type": "overview",
       "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
+    },
+    {
+      "section": "tutorial",
+      "id": "9.1_selection",
+      "shortName": "Selection",
+      "type": "overview",
+      "keywords": "$http $log $scope address age all allowcellfocus and angular app btn btn-success button callback city class clearall clearselectedrows columndefs controller css data directive displayname event example false focusable function get grid gridapi gridoptions height html id index info is isselected js json log main mainctrl module msg multiselect name ng-bind ng-click ng-controller ng-disabled on onregisterapi options overview register row rowselectionchanged scope selectall selectallrows selected selection setmultiselect success the this to togglemultiselect togglerow1 togglerowselection true tutorial type ui ui-grid ui-grid-selection uses var when width"
     },
     {
       "section": "tutorial",
@@ -317,7 +457,7 @@ NG_DOCS={
       "id": "9_cellnav",
       "shortName": "Cell Navigation (WIP)",
       "type": "overview",
-      "keywords": "$http $log $scope add address age allowcellfocus and angular app callback cell cellnav city class col coldef columndefs controller css data directive displayname event example false focusable function get grid gridcellnav gridevents gridoptions height html id if index info is js json length log main mainctrl module msg name navigated navigation new newrowcol ng-controller number old oldrowcol on on_cellnav onregisterevents overview register row rowcol success the this to tojson tutorial ui ui-grid ui-grid-cellnav uses var when width"
+      "keywords": "$http $log $scope add address age allowcellfocus and angular app btn btn-success button callback cell cellnav city class col coldef columndefs controller css current currentfocused data directive displayname entity event example false focusable focused function get getcurrentfocus getfocusedcell grid gridapi gridoptions height html id if index info is js json log main mainctrl module msg name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null old oldrowcol on on_cellnav onregisterapi overview register row rowcol success the this to tojson tutorial type ui ui-grid ui-grid-cellnav uses var when width"
     }
   ],
   "apis": {

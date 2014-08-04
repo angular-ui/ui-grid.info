@@ -3,8 +3,8 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>Wrapper for the GridOptions.data rows.  Allows for needed properties and functions
-to be assigned to a grid row</p></div>
+<div class="description"><p>GridRow is the viewModel for one logical row on the grid.  A grid Row is not necessarily a one-to-one
+relation to gridOptions.data.</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridRow(entity, index);</pre>
 <h3 id="Parameters">Parameters</h3>
@@ -15,7 +15,18 @@ to be assigned to a grid row</p></div>
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getQualifiedColField">getQualifiedColField(col)</h3>
+<ul class="methods"><li><h3 id="getEntityQualifiedColField">getEntityQualifiedColField(col)</h3>
+<div class="getentityqualifiedcolfield"><p>returns the qualified field name minus the row path
+ie: entity.fieldA</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">col – {GridCol} – </code>
+<p>column instance</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>resulting name that can be evaluated against a row</p></div>
+</div>
+</li>
+<li><h3 id="getQualifiedColField">getQualifiedColField(col)</h3>
 <div class="getqualifiedcolfield"><p>returns the qualified field name as it exists on scope
 ie: row.entity.fieldA</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">col – {GridCol} – </code>
@@ -25,6 +36,18 @@ ie: row.entity.fieldA</p><h4 id="Parameters">Parameters</h4>
 <div class="returns"><code ng:non-bindable="">{string}</code>
 – <p>resulting name that can be evaluated on scope</p></div>
 </div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="entity">entity</h3>
+<div class="entity"><p>A reference to an item in gridOptions.data[]</p></div>
+</li>
+<li><h3 id="index">index</h3>
+<div class="index"><p>the index of the GridRow. It should always be unique and immutable</p></div>
+</li>
+<li><h3 id="visible">visible</h3>
+<div class="visible"><p>If true, the row will be rendered</p></div>
 </li>
 </ul>
 </div>

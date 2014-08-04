@@ -3,13 +3,17 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>Wrapper for the GridOptions.colDefs items.  Allows for needed properties and functions
-to be assigned to a grid column</p></div>
+<div class="description"><p>Represents the viewModel for each column.  Any state or methods needed for a Grid Column
+are defined on this prototype</p></div>
 <h2 id="Usage">Usage</h2>
-<div class="usage"><pre class="prettyprint linenums">GridColumn(colDef, index);</pre>
+<div class="usage"><pre class="prettyprint linenums">GridColumn(colDef, index, grid);</pre>
 <h3 id="Parameters">Parameters</h3>
 <ul class="parameters"><li><code ng:non-bindable="">colDef – {ColDef} – </code>
-<p>Column definition.
+<p>Column definition.</p></li>
+<li><code ng:non-bindable="">index – {number} – </code>
+<p>the current position of the column in the array</p></li>
+<li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>reference to the grid
 <br/>Required properties</p>
 
 <ul>
@@ -31,8 +35,19 @@ field - angular expression that evaluates against grid.options.data array elemen
 <li>sortingAlgorithm - Algorithm to use for sorting this column. Takes 'a' and 'b' parameters like any normal sorting function.</li>
 <li>todo: add other optional fields as implementation matures</li>
 </ul></li>
-<li><code ng:non-bindable="">index – {number} – </code>
-<p>the current position of the column in the array</p></li>
+</ul>
+</div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="getColClass">getColClass(prefixDot)</h3>
+<div class="getcolclass"><p>Returns the class name for the column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">prefixDot – {bool} – </code>
+<p>if true, will return .className instead of className</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="getColClassDefinition">getColClassDefinition()</h3>
+<div class="getcolclassdefinition"><p>Returns the class definition for th column</p></div>
+</li>
 </ul>
 </div>
 </div>

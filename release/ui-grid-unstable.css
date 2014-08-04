@@ -219,9 +219,8 @@ input[type="text"].ui-grid-filter-input {
 input[type="text"].ui-grid-filter-input:hover {
   border: 1px solid #d4d4d4;
 }
-.ui-grid-body {
+.ui-grid-render-container {
   position: relative;
-  overflow: hidden;
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0px;
   -webkit-border-bottom-left-radius: 0px;
@@ -307,13 +306,14 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 .ui-grid-cell {
   overflow: hidden;
-  position: relative;
   float: left;
   background-color: inherit;
+  border-right: 1px solid;
+  border-color: #d4d4d4;
+  box-sizing: border-box;
 }
-.ui-grid-inner-cell-contents {
-  height: 100%;
-  width: 100%;
+.ui-grid-cell:last-child {
+  border-right: 0;
 }
 .ui-grid-cell-contents {
   padding: 5px;
@@ -461,12 +461,6 @@ input[type="text"].ui-grid-filter-input:hover {
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-.ui-grid-pinned.left {
-  float: left;
-}
-.ui-grid-pinned.right {
-  float: right;
-}
 @font-face {
   font-family: 'ui-grid';
   src: url('ui-grid.eot');
@@ -600,6 +594,60 @@ input[type="text"].ui-grid-filter-input:hover {
 * @section Scrollbar styles
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.ui-grid-pinned-container {
+  float: left;
+}
+.ui-grid-pinned-container.left .ui-grid-header-cell:last-child {
+  box-sizing: border-box;
+  border-right: 1px solid;
+  border-width: 1px;
+  border-color: #aeaeae;
+}
+.ui-grid-pinned-container.left .ui-grid-cell:last-child {
+  box-sizing: border-box;
+  border-right: 1px solid;
+  border-width: 1px;
+  border-color: #aeaeae;
+}
+.ui-grid-pinned-container.left .ui-grid-header-cell:not(:last-child) .ui-grid-vertical-bar,
+.ui-grid-pinned-container .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
+  width: 1px;
+}
+.ui-grid-pinned-container.left .ui-grid-header-cell:not(:last-child) .ui-grid-vertical-bar {
+  background-color: #d4d4d4;
+}
+.ui-grid-pinned-container.left .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
+  background-color: #aeaeae;
+}
+.ui-grid-pinned-container.left .ui-grid-header-cell:last-child .ui-grid-vertical-bar {
+  right: -1px;
+  width: 1px;
+  background-color: #aeaeae;
+}
+.ui-grid-render-container-body {
+  float: left;
+}
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-column-resizer {
   top: 0;
   bottom: 0;
@@ -624,58 +672,30 @@ input[type="text"].ui-grid-filter-input:hover {
   background-color: #aeaeae;
 }
 
-.ui-grid-icon-search:before {
-  content: '\e80f';
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.ui-grid-row-selected .ui-grid-cell {
+  background-color: #c9dde1;
 }
-/* '' */
-.ui-grid-icon-sort-alt-down:before {
-  content: '\e802';
-}
-/* '' */
-.ui-grid-icon-info-circled:before {
-  content: '\e80e';
-}
-/* '' */
-.ui-grid-icon-lock:before {
-  content: '\e803';
-}
-/* '' */
-.ui-grid-icon-lock-open:before {
-  content: '\e804';
-}
-/* '' */
-.ui-grid-icon-pencil:before {
-  content: '\e809';
-}
-/* '' */
-.ui-grid-icon-down-dir:before {
-  content: '\e80b';
-}
-/* '' */
-.ui-grid-icon-up-dir:before {
-  content: '\e80a';
-}
-/* '' */
-.ui-grid-icon-cancel:before {
-  content: '\e808';
-}
-/* '' */
-.ui-grid-icon-right-dir:before {
-  content: '\e80d';
-}
-/* '' */
-.ui-grid-icon-left-open:before {
-  content: '\e806';
-}
-/* '' */
-.ui-grid-icon-right-open:before {
-  content: '\e805';
-}
-/* '' */
-.ui-grid-icon-angle-down:before {
-  content: '\e80c';
-}
-/* '' */
+
 .ui-grid-icon-filter:before {
   content: '\e800';
 }
@@ -684,7 +704,59 @@ input[type="text"].ui-grid-filter-input:hover {
   content: '\e801';
 }
 /* '' */
+.ui-grid-icon-sort-alt-down:before {
+  content: '\e802';
+}
+/* '' */
+.ui-grid-icon-lock:before {
+  content: '\e803';
+}
+/* '' */
+.ui-grid-icon-lock-open:before {
+  content: '\e804';
+}
+/* '' */
+.ui-grid-icon-right-open:before {
+  content: '\e805';
+}
+/* '' */
+.ui-grid-icon-left-open:before {
+  content: '\e806';
+}
+/* '' */
 .ui-grid-icon-left-dir:before {
   content: '\e807';
 }
 /* '' */
+.ui-grid-icon-cancel:before {
+  content: '\e808';
+}
+/* '' */
+.ui-grid-icon-pencil:before {
+  content: '\e809';
+}
+/* '' */
+.ui-grid-icon-up-dir:before {
+  content: '\e80a';
+}
+/* '' */
+.ui-grid-icon-down-dir:before {
+  content: '\e80b';
+}
+/* '' */
+.ui-grid-icon-angle-down:before {
+  content: '\e80c';
+}
+/* '' */
+.ui-grid-icon-right-dir:before {
+  content: '\e80d';
+}
+/* '' */
+.ui-grid-icon-info-circled:before {
+  content: '\e80e';
+}
+/* '' */
+.ui-grid-icon-search:before {
+  content: '\e80f';
+}
+/* '' */

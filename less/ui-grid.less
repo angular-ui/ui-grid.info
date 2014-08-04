@@ -1,9 +1,9 @@
-/*! ui-grid - v2.0.11-4dc95ab - 2014-05-28
+/*! ui-grid - v2.0.11-71e4f2a - 2014-08-04
 * Copyright (c) 2014 ; License: MIT */
 
-.ui-grid-body {
+.ui-grid-render-container {
   position: relative;
-  overflow: hidden;
+  // overflow: hidden;
 
   .border-radius(0, @gridBorderRadius, @gridBorderRadius, 0);
 }
@@ -42,6 +42,7 @@
   &:last-child .ui-grid-cell {
     border-bottom-color: @borderColor;
     border-bottom-style: solid;
+
   }
 }
 
@@ -75,14 +76,16 @@
 .ui-grid-cell {
   overflow: hidden;
   // position: absolute;
-  position: relative;
+  // position: relative; // NOTE: removing so border is visible
   float: left;
   background-color: inherit;
-}
+  border-right: @gridBorderWidth solid;
+  border-color: @borderColor;
+  box-sizing: border-box;
 
-.ui-grid-inner-cell-contents {
-  height:100%;
-  width:100%;
+  &:last-child {
+    border-right: 0;
+  }
 }
 
 .ui-grid-cell-contents {
@@ -589,7 +592,6 @@ input[type="text"].ui-grid-filter-input {
 
 
 
-
 .ui-grid-menu {
   z-index: 2; // So it shows up over grid canvas
   position: absolute;
@@ -636,7 +638,7 @@ input[type="text"].ui-grid-filter-input {
 }
 
 .ui-grid-native-scrollbar {
-  position: absolute;;
+  position: absolute;
   overflow: scroll;
 
   &.vertical {
@@ -658,14 +660,6 @@ input[type="text"].ui-grid-filter-input {
     // Default height, will update in code
     height: 17px;
   }
-}
-
-.ui-grid-pinned.left {
-  float: left;
-}
-
-.ui-grid-pinned.right {
-  float: right;
 }
 .grid[dir=rtl] .ui-grid-header-cell,
 .grid[dir=rtl] .ui-grid-cell{
@@ -809,7 +803,7 @@ input[type="text"].ui-grid-filter-input {
 
 // TODO: color for menu background
 
-// TODO: color  for row selections
+@rowSelected: #C9DDE1;
 
 // TODO: color for cell selections
 @focusedCell: #b3c4c7;

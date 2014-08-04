@@ -120,7 +120,7 @@ docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
 };
 
 
-docsApp.serviceFactory.loadedUrls = function($document, $window, versionedFiles) {
+docsApp.serviceFactory.loadedUrls = function($document, versionedFiles) {
   var urls = {};
 
   angular.forEach($document.find('script'), function(script) {
@@ -139,7 +139,7 @@ docsApp.serviceFactory.loadedUrls = function($document, $window, versionedFiles)
   });
 
   angular.forEach(versionedFiles.files, function(file) {
-    urls.base.push(file.src.indexOf('/') === 0 ? $window.location.origin + file.src : file.src);
+    urls.base.push(file.src);
   });
 
   return urls;

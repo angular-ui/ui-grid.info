@@ -40,6 +40,10 @@ the grid to maintain state while vastly speeding up the process of altering <cod
 you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
 and are altering the data set often.</p></div>
 </li>
+<li><h3 id="excludeProperties">excludeProperties</h3>
+<div class="excludeproperties"><p>(optional) Array of property names in data to ignore when auto-generating column names. defaults to ['$$hashKey']
+If columnDefs is defined, this will be ignored.</p></div>
+</li>
 <li><h3 id="getRowIdentity">getRowIdentity</h3>
 <div class="getrowidentity"><p>(optional) This function returns the identity value uniquely identifying this row.</p>
 
@@ -52,4 +56,16 @@ and are altering the data set often.</p></div>
 </li>
 </ul>
 </div>
+<h2 id="Example">Example</h2>
+<div class="example"><p>To provide default options for all of the grids within your application, use an angular
+decorator to modify the GridOptions factory.
+<pre class="prettyprint linenums">app.config(function($provide){
+   $provide.decorator('GridOptions',function($delegate){
+     return function(){
+       var defaultOptions = new $delegate();
+       defaultOptions.excludeProperties = ['id' ,'$$hashKey'];
+       return defaultOptions;
+     };
+   })
+ })</pre></div>
 </div>
