@@ -1,0 +1,114 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Ui-Grid 3.0 (formerly ng-grid), is a 100% angular grid written with no dependencies other than AngularJS. It is designed around
+a core grid module and features are layered on as angular modules and directives.  This keeps the core small and focused
+while executing very complex features only when you need them.</p>
+
+<p>In the core module, you get:</p>
+
+<ul>
+ <li>Virtualized rows and columns - only the rows and columns visible in the viewport (+ some extra margin) are actually rendered</li>
+ <li>Bind cells to complex properties and functions</li>
+ <li>Column sorting with three states: Asc, Desc, None</li>
+ <li>Column filtering</li>
+ <li>Ability to change header and cell contents with custom templates</li>
+</ul>
+
+<p>In this example we create the most basic grid possible.</p>
+
+<p>Steps:</p>
+
+<ul>
+ <li>Include uiGrid in your script and css
+  <pre class="prettyprint linenums">
+      &lt;link rel="styleSheet" href="release/ui-grid-unstable.css"/&gt;
+      &lt;script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"&gt;&lt;/script&gt;
+      &lt;script src="/release/ui-grid-unstable.js"&gt;&lt;/script&gt;
+  </pre>
+ </li>
+ <li>Include ui.grid module as a dependency in your app
+   <pre class="prettyprint linenums">
+       var app = angular.module('app', ['ui.grid']);
+   </pre>
+ </li>
+ <li>
+   Add a css style to your app css so the grid knows it's dimensions
+   <pre class="prettyprint linenums">
+     .myGrid {
+         width: 500px;
+         height: 250px;
+       }
+   </pre>
+ </li>
+ <li>
+  Add an array of data to a property on your $scope
+     <pre class="prettyprint linenums">
+     $scope.myData = [
+             {
+                 "firstName": "Cox",
+                 "lastName": "Carney"...
+     </pre>
+ </li>
+ <li>
+ Use the ui-grid directive and specify a json object with a data property referencing your $scope.myData property.
+ <pre class="prettyprint linenums">
+     &lt;div ng-controller="MainCtrl"&gt;
+       &lt;div ui-grid="{ data: myData }" class="myGrid"&gt;&lt;/div&gt;
+     &lt;/div&gt;
+ </pre>
+
+ </li>
+</ul><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-14" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-14" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-14">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="{ data: myData }" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', function ($scope) {
+
+    $scope.myData = [
+      {
+          "firstName": "Cox",
+          "lastName": "Carney",
+          "company": "Enormo",
+          "employed": true
+      },
+      {
+          "firstName": "Lorraine",
+          "lastName": "Wise",
+          "company": "Comveyer",
+          "employed": false
+      },
+      {
+          "firstName": "Nancy",
+          "lastName": "Waters",
+          "company": "Fuelton",
+          "employed": false
+      }
+  ];
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-14" ng-eval-javascript="app.js"></div></div>
+</div>

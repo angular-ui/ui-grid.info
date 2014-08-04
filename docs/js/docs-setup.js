@@ -300,6 +300,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "001_start",
+      "shortName": "Step 1 Start",
+      "type": "overview",
+      "keywords": "$scope actually add an and angular angularjs app are around array as asc basic carney cell cells change class columns com company complex comveyer contents controller core cox create css custom data dependencies dependency desc designed dimensions directive directives employed enormo example executing extra false features filtering firstname focused fuelton function functions get googleapis grid header height href html http in index is it js json keeps knows lastname layered lorraine main mainctrl margin module modules most mydata mygrid name nancy need ng-controller ng-grid no none object of on only other overview possible properties property referencing rel release rendered rows script small so some sorting specify src start states step steps style stylesheet templates than the them this three to true tutorial ui ui-grid uigrid use var very viewport visible waters we when while width wise with written you your"
+    },
+    {
+      "section": "tutorial",
       "id": "10_pinning",
       "shortName": "Pinning",
       "type": "overview",
@@ -311,13 +318,6 @@ NG_DOCS={
       "shortName": "i18n",
       "type": "overview",
       "keywords": "$scope angular app attribute controller css description en filter for function getalllangs grid grouppanel height html i18n i18nservice in index js lang langs main mainctrl module name ng-controller ng-model ng-options overview tutorial ui ui-i18n ui-t var width"
-    },
-    {
-      "section": "tutorial",
-      "id": "1_basic_grid",
-      "shortName": "Basic Grid",
-      "type": "overview",
-      "keywords": "$scope abc access acium amie angular app are attribute austex barber barnett bartlett basic bennett benton berg berger bond boyle brainclip brainquil brandy brittney bush buzzmaker buzzness carney casey celeste cervantes cherry clara class cline cohen cole company comveyer comvoy confrenzy controller cox create cruz css data daugherty david dorsey doyle dunn eargo egypto elnora emma employed enormo example exostream external-scopes false fernandez ferrell firstname fischer fletcher flexigen fuelton fuentes function getexternalscopes give gladys glenn gonkle grant gretchen grid hardy harrington hart hazel height holcomb hooper hopper html hull hunt in index intergeek irwin jarvis jefferson joviold js kongene konnect koogle kramer kristine lastname letpro lorraine ludak main mainctrl maldonado marcy maribel marqet mathis mays mccoy mccullough mclean medmex melton memora michael microluxe mindy misty model module molina momentia mona morse mosley most mueller multiflex myviewmodel name nancy nettie ng-controller oneill ontagene optional overview owens parleynet pauline pickett pittman possible printspan puckett quadeebo ramjob reilly sallie schroeder schwartz shepherd skinner slambda sloganaut slumberia steelfab sultrax sutton tania tanya techmania the this to true tutorial ui ui-grid undertap us using valeria vance vang var via view vincent vinch violet voipa waab walker waters we width wise xylar zamora zeam zedalis zentix zolavo zomboid"
     },
     {
       "section": "tutorial",
