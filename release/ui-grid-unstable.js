@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-a7b584b - 2014-08-05
+/*! ui-grid - v2.0.12-2054f30 - 2014-08-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8191,7 +8191,7 @@ module.filter('px', function() {
                   cancelBeginEditEvents();
                   cellElement = $compile(html)($scope.$new());
                   var gridCellContentsEl = angular.element($elm.children()[0]);
-                  isFocusedBeforeEdit = gridCellContentsEl.is(':focus');
+                  isFocusedBeforeEdit = gridCellContentsEl.hasClass(':focus');
                   gridCellContentsEl.addClass('ui-grid-cell-contents-hidden');
                   $elm.append(cellElement);
                 }
@@ -8312,6 +8312,7 @@ module.filter('px', function() {
       }]);
 
 })();
+
 (function () {
   'use strict';
 
