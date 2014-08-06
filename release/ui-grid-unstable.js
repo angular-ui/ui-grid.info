@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-0a92336 - 2014-08-06
+/*! ui-grid - v2.0.12-cba0813 - 2014-08-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4896,13 +4896,11 @@ angular.module('ui.grid')
       return;
     }
 
-    this.prevScrollTop = scrollTop;
-
     scrollTop = this.getCanvasHeight() * scrollPercentage;
 
     this.adjustRows(scrollTop, scrollPercentage);
 
-    // this.prevScrollTop = scrollTop;
+    this.prevScrollTop = scrollTop;
     this.prevScrolltopPercentage = scrollPercentage;
 
     this.grid.queueRefresh();
@@ -4913,8 +4911,6 @@ angular.module('ui.grid')
       return;
     }
 
-    this.prevScrollLeft = scrollLeft;
-
     // scrollLeft = uiGridCtrl.canvas[0].scrollWidth * scrollPercentage;
     scrollLeft = this.getCanvasWidth() * scrollPercentage;
 
@@ -4922,7 +4918,7 @@ angular.module('ui.grid')
 
     this.adjustColumns(scrollLeft, scrollPercentage);
 
-    // this.prevScrollLeft = scrollLeft;
+    this.prevScrollLeft = scrollLeft;
     this.prevScrollleftPercentage = scrollPercentage;
 
     this.grid.queueRefresh();
@@ -4972,7 +4968,7 @@ angular.module('ui.grid')
       var maxLen = self.visibleRowCache.length;
       newRange = [0, Math.max(maxLen, minRows + self.grid.options.excessRows)];
     }
-    
+
     self.updateViewableRowRange(newRange);
 
     self.prevRowScrollIndex = rowIndex;
