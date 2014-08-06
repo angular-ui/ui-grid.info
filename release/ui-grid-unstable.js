@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-2054f30 - 2014-08-06
+/*! ui-grid - v2.0.12-dc58aea - 2014-08-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2971,10 +2971,13 @@ angular.module('ui.grid')
    */
   var Grid = function Grid(options) {
     // Get the id out of the options, then remove it
-    if (typeof(options.id) !== 'undefined' && options.id) {
+    if (options !== undefined && typeof(options.id) !== 'undefined' && options.id) {
       if (!/^[_a-zA-Z0-9-]+$/.test(options.id)) {
         throw new Error("Grid id '" + options.id + '" is invalid. It must follow CSS selector syntax rules.');
       }
+    }
+    else {
+      throw new Error('No ID provided. An ID must be given when creating a grid.');
     }
 
     this.id = options.id;
@@ -4477,6 +4480,25 @@ angular.module('ui.grid')
       return ' .grid' + this.grid.id + ' ' + this.getColClass(true) + ' { width: ' + this.drawnWidth + 'px; }';
     };
 
+    /**
+     * @ngdoc function
+     * @name getRenderContainer
+     * @methodOf ui.grid.class:GridColumn
+     * @description Returns the render container object that this column belongs to.
+     *
+     * Columns will be default be in the `body` render container if they aren't allocated to one specifically.
+     */
+    GridColumn.prototype.getRenderContainer = function getRenderContainer() {
+      var self = this;
+
+      var containerId = self.renderContainer;
+
+      if (containerId === null || containerId === '' || containerId === undefined) {
+        containerId = 'body';
+      }
+
+      return self.grid.renderContainers[containerId];
+    };
 
     return GridColumn;
 }]);
@@ -4647,6 +4669,10 @@ angular.module('ui.grid')
 .factory('GridRenderContainer', ['$log', 'gridUtil', function($log, gridUtil) {
   function GridRenderContainer(name, grid, options) {
     var self = this;
+
+    if (gridUtil.type(grid) !== 'Grid') {
+      throw new Error('Grid argument is not a Grid object');
+    }
 
     self.name = name;
 
@@ -6816,6 +6842,11 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     return null;
   };
 
+  s.type = function (obj) {
+    var text = Function.prototype.toString.call(obj.constructor);
+    return text.match(/function (.*?)\(/)[1];
+  };
+
   s.getBorderSize = function getBorderSize(elem, borderType) {
     if (typeof(elem.length) !== 'undefined' && elem.length) {
       elem = elem[0];
@@ -8811,7 +8842,10 @@ module.filter('px', function() {
 
         // Resize all the other columns around col
         function resizeAroundColumn(col) {
-          uiGridCtrl.grid.columns.forEach(function (column) {
+          // Get this column's render container
+          var renderContainer = col.getRenderContainer();
+
+          renderContainer.visibleColumnCache.forEach(function (column) {
             // Skip the column we just resized
             if (column.index === col.index) { return; }
             
@@ -9011,8 +9045,12 @@ module.filter('px', function() {
           // Go through the rendered rows and find out the max size for the data in this column
           var maxWidth = 0;
           var xDiff = 0;
+
+          // Get the parent render container element
+          var renderContainerElm = gridUtil.closestElm($elm, '.ui-grid-render-container');
+
           // Get the cell contents so we measure correctly. For the header cell we have to account for the sort icon and the menu buttons, if present
-          var cells = uiGridCtrl.grid.element[0].querySelectorAll('.col' + col.index + ' .ui-grid-cell-contents');
+          var cells = renderContainerElm.querySelectorAll('.uiGridCol' + col.index + ' .ui-grid-cell-contents');
           Array.prototype.forEach.call(cells, function (cell) {
               // Get the cell width
               // $log.debug('width', gridUtil.elementWidth(cell));
