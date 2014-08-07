@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-7f57044 - 2014-08-07
+/*! ui-grid - v2.0.12-a225cef - 2014-08-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2019,10 +2019,7 @@ angular.module('ui.grid')
 
                 args.x = { percentage: scrollXPercentage, pixels: scrollXAmount };
               }
-
-              // $scope.$broadcast(uiGridConstants.events.GRID_SCROLL, args);
-
-              $log.debug(containerCtrl.containerId, 'firing scroll');
+              
               uiGridCtrl.fireScrollingEvent(args);
             });
             
@@ -9690,7 +9687,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridViewport',
-    "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in rowContainer.renderedRows track by row.index\" class=\"ui-grid-row\" ng-style=\"containerCtrl.rowStyle($index)\"><div ui-grid-row=\"row\"></div></div></div></div>"
+    "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in rowContainer.renderedRows track by row.index\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle($index)\"><div ui-grid-row=\"row\"></div></div></div></div>"
   );
 
 
