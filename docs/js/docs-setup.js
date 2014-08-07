@@ -167,6 +167,27 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.i18n",
+      "shortName": "i18n",
+      "type": "overview",
+      "keywords": "and any api application doc-module-components functions grid i18n it module overview provides that this to ui use wants"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.i18n.constant:i18nConstants",
+      "shortName": "i18nConstants",
+      "type": "object",
+      "keywords": "api available constant constants grid i18n in module object ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.i18n.service:i18nService",
+      "shortName": "i18nService",
+      "type": "service",
+      "keywords": "$broadcasts $rootscope add adds aggregate all and api application ascending by cache column current currently decorate description drag drop en for found fr from get getalllangs getcurrentlang getsafetext grid group grouped grouppanel header here i18n i18nservice if in is it items label1 label2 lang language languages loaded map maps missing more names not of on or path property retrieving return returns service services set setcurrentlang sets some sort specified string stringmaps strings text that the this to translation ui update_event use used"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.pinning",
       "shortName": "pinning",
       "type": "overview",
@@ -300,10 +321,31 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "001_start",
-      "shortName": "Step 1 Start",
+      "id": "101_intro",
+      "shortName": "101 Intro to Ui-Grid",
       "type": "overview",
-      "keywords": "$scope actually add an and angular angularjs app are around array as asc basic carney cell cells change class columns com company complex comveyer contents controller core cox create css custom data dependencies dependency desc designed dimensions directive directives employed enormo example executing extra false features filtering firstname focused fuelton function functions get googleapis grid header height href html http in index is it js json keeps knows lastname layered lorraine main mainctrl margin module modules most mydata mygrid name nancy need ng-controller ng-grid no none object of on only other overview possible properties property referencing rel release rendered rows script small so some sorting specify src start states step steps style stylesheet templates than the them this three to true tutorial ui ui-grid uigrid use var very viewport visible waters we when while width wise with written you your"
+      "keywords": "$scope actually add allows an and angular angularjs app are around array as asc basic carney cell cells change class columns com company complex comveyer contents controller core cox create css custom data dependencies dependency desc designed dimensions directive directives employed enormo example executing extra false features filtering firstname focused fuelton function functions get googleapis grid header height href html http in index intro is it js json keeps knows label lastname layered lorraine main mainctrl margin module modules most mydata mygrid name nancy need ng-controller ng-grid no none object of on only other overview possible properties property referencing rel release rendered rows script small so some sorting specify src states steps style stylesheet templates than the them this three to translations true tutorial ui ui-grid uigrid use var very viewport visible waters we when while width wise with written you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "102_sorting",
+      "shortName": "102 Sorting",
+      "type": "overview",
+      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def default disabled enable enablesorting example false feature field flag for function gender get grid gridoptions has header height html if in include index is it js json last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then third to true tutorial ui ui-grid up var want width you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "103_filtering",
+      "shortName": "103 Filtering",
+      "type": "overview",
+      "keywords": "$http $scope allows an and angular app at be below by can class click column columndefs company controller css data def default disabled enablefiltering example false field filter filtering flag for function gender get grid gridoptions has header height html in index is js json just last level main mainctrl menu module name ng-controller nganimate off on open options overview rows see set setting success that the then third to true tutorial ui ui-grid var width you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "104_i18n",
+      "shortName": "104 i18n",
+      "type": "overview",
+      "keywords": "$http $scope add after allowed an and angular another app attribute can change class columndefs company contains controller css current currently data default description directive div does easiest enablefiltering existing false field filter for fr function gender get getalllangs grid gridoptions grouppanel have header height html i18n i18nservice in index is js json lang langs language main mainctrl menu method module more name ng-controller ng-model ng-options nl no not note one only option or overview per provides rendered see service set setcurrentlang setting so stored success text than that the there to todo translations tutorial ui ui-grid ui-i18n ui-t use var way width you"
     },
     {
       "section": "tutorial",
@@ -311,13 +353,6 @@ NG_DOCS={
       "shortName": "Pinning",
       "type": "overview",
       "keywords": "$http $log $scope about address age angular app city class columndefs company controller css data displayname email friend friends function get grid gridoptions height html id index js json main mainctrl module name ng-controller overview phone pinning state street success tutorial ui ui-grid ui-grid-pinning var width zip"
-    },
-    {
-      "section": "tutorial",
-      "id": "12_i18n",
-      "shortName": "i18n",
-      "type": "overview",
-      "keywords": "$scope angular app attribute controller css description en filter for function getalllangs grid grouppanel height html i18n i18nservice in index js lang langs main mainctrl module name ng-controller ng-model ng-options overview tutorial ui ui-i18n ui-t var width"
     },
     {
       "section": "tutorial",
@@ -353,20 +388,6 @@ NG_DOCS={
       "shortName": "Custom Header",
       "type": "overview",
       "keywords": "$http $scope almost am angular app as basic bob but center ceo class controller create css custom data developer frank function grid gridoptions header header-template headertemplate height html index js lowly main mainctrl module most name ng-controller one overview same style text-align the title tutorial ui ui-grid ui-grid-top-panel var width with"
-    },
-    {
-      "section": "tutorial",
-      "id": "5.1.1_Filtering",
-      "shortName": "Filtering",
-      "type": "overview",
-      "keywords": "$http $scope allows an and angular app at be below by can class click column columndefs company controller css data def default disabled enablefiltering example false field filter filtering flag for function gender get grid gridoptions has header height html in index is js json just last level main mainctrl menu module name ng-controller nganimate off on open options overview rows see set setting sorting success that the then third to true tutorial ui ui-grid var width you your"
-    },
-    {
-      "section": "tutorial",
-      "id": "5.1_sorting",
-      "shortName": "Sorting",
-      "type": "overview",
-      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def default disabled enable enablesorting example false feature field flag for function gender get grid gridoptions has header height html if in include index is it js json last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then third to true tutorial ui ui-grid up var want width you your"
     },
     {
       "section": "tutorial",

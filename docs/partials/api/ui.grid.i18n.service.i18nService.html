@@ -1,0 +1,80 @@
+<h1><code ng:non-bindable="">i18nService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid.i18n</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Services for i18n</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="add">add(lang, stringMaps)</h3>
+<div class="add"><p>Adds the languages and strings to the cache. Decorate this service to
+add more translation strings</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">lang – {string} – </code>
+<p>language to add</p></li>
+<li><code ng:non-bindable="">stringMaps – {object} – </code>
+<p>of strings to add grouped by property names</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+i18nService.add('en', {
+   aggregate: {
+           label1: 'items',
+           label2: 'some more items'
+           }
+   },
+   groupPanel: {
+        description: 'Drag a column header here and drop it to group by that column.'
+     }
+}
+</pre></div>
+</div>
+</li>
+<li><h3 id="get">get(lang)</h3>
+<div class="get"><p>return all currently loaded languages</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">lang – {string} – </code>
+<p>to return.  If not specified, returns current language</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the translation string maps for the language</p></div>
+</div>
+</li>
+<li><h3 id="getAllLangs">getAllLangs()</h3>
+<div class="getalllangs"><p>return all currently loaded languages</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>string</p></div>
+</div>
+</li>
+<li><h3 id="getCurrentLang">getCurrentLang()</h3>
+<div class="getcurrentlang"><p>returns the current language used in the application</p></div>
+</li>
+<li><h3 id="getSafeText">getSafeText(path, lang)</h3>
+<div class="getsafetext"><p>returns the text specified in the path or a Missing text if text is not found</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">path – {string} – </code>
+<p>property path to use for retrieving text from string map</p></li>
+<li><code ng:non-bindable="">lang – {string} – </code>
+<p>to return.  If not specified, returns current language</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the translation for the path</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+i18nService.getSafeText('sort.ascending')
+</pre></div>
+</div>
+</li>
+<li><h3 id="setCurrentLang">setCurrentLang(lang)</h3>
+<div class="setcurrentlang"><p>sets the current language to use in the application
+$broadcasts the Update_Event on the $rootScope</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">lang – {string} – </code>
+<p>to set</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+i18nService.setCurrentLang('fr');
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
