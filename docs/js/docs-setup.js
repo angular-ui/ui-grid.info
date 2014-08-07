@@ -370,6 +370,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "299_RTL",
+      "shortName": "299 RTL Support",
+      "type": "overview",
+      "keywords": "$http $scope angular app class columndefs company controller css data dir field function gender get grid gridoptions height html index js json languages main mainctrl module name ng-controller overview rtl success support supports the tutorial ui ui-grid ui-grid-pinning var width"
+    },
+    {
+      "section": "tutorial",
       "id": "2_swapping_data",
       "shortName": "Add/Delete/Swap",
       "type": "overview",

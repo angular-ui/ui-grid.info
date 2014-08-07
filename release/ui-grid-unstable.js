@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-f1f7861 - 2014-08-07
+/*! ui-grid - v2.0.12-70019da - 2014-08-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9662,6 +9662,10 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "\n" +
     "    .grid{{ grid.id }} .ui-grid-native-scrollbar.vertical {\n" +
     "      height: {{ grid.getViewportHeight() }}px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .ui-grid[dir=rtl] .ui-grid-viewport {\n" +
+    "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
     "    {{ grid.customStyles }}</style><!-- <div ui-grid-header></div>\n" +
