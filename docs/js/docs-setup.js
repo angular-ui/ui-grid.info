@@ -321,8 +321,15 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "100_preReqs",
+      "shortName": "100 Prerequisites",
+      "type": "overview",
+      "keywords": "_blank browsers com current href https labs list of overview prerequisites target tested tutorial"
+    },
+    {
+      "section": "tutorial",
       "id": "101_intro",
-      "shortName": "101 Intro to Ui-Grid",
+      "shortName": "101 Intro to UI-Grid",
       "type": "overview",
       "keywords": "$scope actually add allows an and angular angularjs app are around array as asc basic carney cell cells change class columns com company complex comveyer contents controller core cox create css custom data dependencies dependency desc designed dimensions directive directives employed enormo example executing extra false features filtering firstname focused fuelton function functions get googleapis grid header height href html http in index intro is it js json keeps knows label lastname layered lorraine main mainctrl margin module modules most mydata mygrid name nancy need ng-controller ng-grid no none object of on only other overview possible properties property referencing rel release rendered rows script small so some sorting specify src states steps style stylesheet templates than the them this three to translations true tutorial ui ui-grid uigrid use var very viewport visible waters we when while width wise with written you your"
     },
