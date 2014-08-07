@@ -303,7 +303,7 @@ NG_DOCS={
       "id": "ui.grid.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser cache calculation capitalized column columndefs columnname comes consistent contents controller correctly data definitions direction dom dommousescroll either element elementheight elementwidth etc event excludeproperties field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil height html id in index is it jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizewheelevent of on optional or pixels promise readablecolumnname representing resolving return returns right scale service set smith so split stays string sure template that the then this to ui unique url use utility var what wheel width with"
+      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately array as bob borders browser browsers cache calculation capitalized column columndefs columnname comes consistent contents controller correctly current currently data definitions denormalize denormalizes different direction dom dommousescroll either element elementheight elementwidth etc event excludeproperties field first firstname for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil handle height html id in inconsistent index is it jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizes normalizescrollleft normalizewheelevent of on optional or pixels promise readablecolumnname representing resolving resulting return returns right rtl scale scrollleft service set smith so split stays string sure template that the them then this to ui unique url use utility value values var ways what wheel width with"
     },
     {
       "section": "api",
@@ -380,7 +380,7 @@ NG_DOCS={
       "id": "299_RTL",
       "shortName": "299 RTL Support",
       "type": "overview",
-      "keywords": "$http $scope angular app class columndefs company controller css data dir field function gender get grid gridoptions height html index js json languages main mainctrl module name ng-controller overview rtl success support supports the tutorial ui ui-grid ui-grid-pinning var width"
+      "keywords": "$http $scope angular app class columndefs company controller css data dir field field1 field10 field11 field12 field13 field14 field15 field2 field3 field4 field5 field6 field7 field8 field9 function gender get grid gridoptions height html index js json languages main mainctrl module name ng-controller overview rtl success support supports the tutorial ui ui-grid ui-grid-pinning var width"
     },
     {
       "section": "tutorial",

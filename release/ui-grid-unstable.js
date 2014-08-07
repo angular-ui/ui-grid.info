@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-d062ed5 - 2014-08-07
+/*! ui-grid - v2.0.12-d5a9982 - 2014-08-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1668,7 +1668,7 @@ angular.module('ui.grid')
           rowContainer.horizontalScrollbarHeight = scrollBarWidth;
 
           // Save the initial scroll position for use in scroll events
-          previousScrollPosition = $elm[0].scrollLeft;
+          previousScrollPosition = gridUtil.normalizeScrollLeft($elm);
         }
 
         // Save the contents elm inside the scrollbar elm so it sizes correctly
@@ -1774,14 +1774,13 @@ angular.module('ui.grid')
             previousScrollPosition = newScrollTop;
           }
           else if ($scope.type === 'horizontal') {
-            var newScrollLeft = $elm[0].scrollLeft;
+            // var newScrollLeft = $elm[0].scrollLeft;
+            var newScrollLeft = gridUtil.normalizeScrollLeft($elm);
 
             var xDiff = previousScrollPosition - newScrollLeft;
 
             var horizScrollLength = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
             var horizScrollPercentage = newScrollLeft / horizScrollLength;
-
-            $log.debug('horizScrollPercentage', horizScrollPercentage);
 
             var xArgs = {
               target: $elm,
@@ -1833,7 +1832,8 @@ angular.module('ui.grid')
 
               var newScrollLeft = Math.max(0, args.x.percentage * horizScrollLength);
               
-              $elm[0].scrollLeft = newScrollLeft;
+              // $elm[0].scrollLeft = newScrollLeft;
+              $elm[0].scrollLeft = gridUtil.denormalizeScrollLeft($elm, newScrollLeft);
             }
           }
         }
@@ -1957,7 +1957,8 @@ angular.module('ui.grid')
 
                 var scrollWidth = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
 
-                var oldScrollLeft = containerCtrl.viewport[0].scrollLeft;
+                // var oldScrollLeft = containerCtrl.viewport[0].scrollLeft;
+                var oldScrollLeft = GridUtil.normalizeScrollLeft(containerCtrl.viewport);
 
                 var scrollXPercentage;
                 if (typeof(args.x.percentage) !== 'undefined' && args.x.percentage !== undefined) {
@@ -1974,11 +1975,14 @@ angular.module('ui.grid')
                 
                 // uiGridCtrl.adjustScrollHorizontal(newScrollLeft, scrollXPercentage);
 
-                containerCtrl.viewport[0].scrollLeft = newScrollLeft;
+                // containerCtrl.viewport[0].scrollLeft = newScrollLeft;
+                containerCtrl.viewport[0].scrollLeft = GridUtil.denormalizeScrollLeft(containerCtrl.viewport, newScrollLeft);
+
                 containerCtrl.prevScrollLeft = newScrollLeft;
 
                 if (containerCtrl.headerViewport) {
-                  containerCtrl.headerViewport.scrollLeft = newScrollLeft;
+                  // containerCtrl.headerViewport.scrollLeft = newScrollLeft;
+                  containerCtrl.headerViewport.scrollLeft = GridUtil.denormalizeScrollLeft(containerCtrl.headerViewport, newScrollLeft);
                 }
 
                 // uiGridCtrl.grid.options.offsetLeft = newScrollLeft;
@@ -2011,7 +2015,8 @@ angular.module('ui.grid')
                 var scrollXAmount = newEvent.deltaX * -120;
 
                 // Get the scroll percentage
-                var scrollXPercentage = (containerCtrl.viewport[0].scrollLeft + scrollXAmount) / (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
+                var scrollLeft = GridUtil.normalizeScrollLeft(containerCtrl.viewport);
+                var scrollXPercentage = (scrollLeft + scrollXAmount) / (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
 
                 // Keep scrollPercentage within the range 0-1.
                 if (scrollXPercentage < 0) { scrollXPercentage = 0; }
@@ -2075,7 +2080,12 @@ angular.module('ui.grid')
       }
       
       if (!$scope.disableColumnOffset && $scope.colContainer.currentFirstColumn !== 0) {
-        styles['margin-left'] = $scope.colContainer.columnOffset + 'px';
+        if ($scope.grid.isRTL()) {
+          styles['margin-right'] = $scope.colContainer.columnOffset + 'px';
+        }
+        else {
+          styles['margin-left'] = $scope.colContainer.columnOffset + 'px';
+        }
       }
 
       return styles;
@@ -2088,7 +2098,12 @@ angular.module('ui.grid')
         if (index === 0 && $scope.colContainer.currentFirstColumn !== 0) {
           var offset = $scope.colContainer.columnOffset;
 
-          return { 'margin-left': offset + 'px' };
+          if ($scope.grid.isRTL()) {
+            return { 'margin-right': offset + 'px' };
+          }
+          else {
+            return { 'margin-left': offset + 'px' }; 
+          }
         }
       }
 
@@ -2551,8 +2566,8 @@ angular.module('ui.grid')
 (function(){
   'use strict';
 
-  angular.module('ui.grid').directive('uiGridViewport', ['$log',
-    function($log) {
+  angular.module('ui.grid').directive('uiGridViewport', ['$log', 'gridUtil',
+    function($log, gridUtil) {
       return {
         replace: true,
         scope: {},
@@ -2580,7 +2595,10 @@ angular.module('ui.grid')
 
           $elm.on('scroll', function (evt) {
             var newScrollTop = $elm[0].scrollTop;
-            var newScrollLeft = $elm[0].scrollLeft;
+            // var newScrollLeft = $elm[0].scrollLeft;
+            var newScrollLeft = gridUtil.normalizeScrollLeft($elm);
+
+            // Handle RTL here
 
             if (newScrollLeft !== colContainer.prevScrollLeft) {
               var xDiff = newScrollLeft - colContainer.prevScrollLeft;
@@ -2868,8 +2886,12 @@ angular.module('ui.grid')
         $scope.$broadcast(eventName, args);
       };
 
-      self.innerCompile = function (elm) {
+      self.innerCompile = function innerCompile(elm) {
         $compile(elm)($scope);
+      };
+
+      $scope.grid.isRTL = self.isRTL = function isRTL() {
+        return $elm.css('direction') === 'rtl';
       };
     }]);
 
@@ -3912,7 +3934,7 @@ angular.module('ui.grid')
     return self.cellValueGetterCache[col.colDef.name](row);
   };
 
-  // Reset all sorting on the grid
+  
   Grid.prototype.getNextColumnSortPriority = function getNextColumnSortPriority() {
     var self = this,
         p = 0;
@@ -5057,7 +5079,12 @@ angular.module('ui.grid')
     }
 
     if (self.currentFirstColumn !== 0) {
-      styles['margin-left'] = self.columnOffset + 'px';
+      if (self.grid.isRTL()) {
+        styles['margin-right'] = self.columnOffset + 'px';
+      }
+      else {
+        styles['margin-left'] = self.columnOffset + 'px';
+      }
     }
 
     return styles;
@@ -5069,7 +5096,12 @@ angular.module('ui.grid')
     if (index === 0 && self.currentFirstColumn !== 0) {
       var offset = self.columnOffset;
 
-      return { 'margin-left': offset + 'px' };
+      if (self.grid.isRTL()) {
+        return { 'margin-right': offset + 'px' };
+      }
+      else {
+        return { 'margin-left': offset + 'px' };
+      }
     }
 
     return null;
@@ -6861,6 +6893,121 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     }
     else {
       return val;
+    }
+  };
+
+  // http://stackoverflow.com/a/22948274/888165
+  // TODO: Opera? Mobile?
+  s.detectBrowser = function detectBrowser() {
+    var userAgent = $window.navigator.userAgent;
+
+    var browsers = {chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i};
+
+    for (var key in browsers) {
+      if (browsers[key].test(userAgent)) {
+        return key;
+      }
+    }
+
+    return 'unknown';
+  };
+
+  /**
+    * @ngdoc method
+    * @name normalizeScrollLeft
+    * @methodOf ui.grid.service:GridUtil
+    *
+    * @param {element} element The element to get the `scrollLeft` from.
+    *
+    * @returns {int} A normalized scrollLeft value for the current browser.
+    *
+    * @description
+    * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them
+    */
+  s.normalizeScrollLeft = function normalizeScrollLeft(element) {
+    if (typeof(element.length) !== 'undefined' && element.length) {
+      element = element[0];
+    }
+
+    var browser = s.detectBrowser();
+
+    var scrollLeft = element.scrollLeft;
+
+    var dir = angular.element(element).css('direction');
+
+    // IE stays normal in RTL
+    if (browser === 'ie') {
+      return scrollLeft;
+    }
+    // Chrome doesn't alter the scrollLeft value. So with RTL on a 400px-wide grid, the right-most position will still be 400 and the left-most will still be 0;
+    else if (browser === 'chrome') {
+      if (dir === 'rtl') {
+        // Get the max scroll for the element
+        var maxScrollLeft = element.scrollWidth - element.clientWidth;
+
+        // Subtract the current scroll amount from the max scroll
+        return maxScrollLeft - scrollLeft;
+      }
+      else {
+        return scrollLeft;
+      }
+    }
+    // Firefox goes negative!
+    else if (browser === 'firefox') {
+      return Math.abs(scrollLeft);
+    }
+    else {
+      // TODO(c0bra): Handle other browsers? Android? iOS? Opera?
+      return scrollLeft;
+    }
+  };
+
+  /**
+  * @ngdoc method
+  * @name normalizeScrollLeft
+  * @methodOf ui.grid.service:GridUtil
+  *
+  * @param {element} element The element to normalize the `scrollLeft` value for
+  * @param {int} scrollLeft The `scrollLeft` value to denormalize.
+  *
+  * @returns {int} A normalized scrollLeft value for the current browser.
+  *
+  * @description
+  * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.
+  */
+  s.denormalizeScrollLeft = function denormalizeScrollLeft(element, scrollLeft) {
+    if (typeof(element.length) !== 'undefined' && element.length) {
+      element = element[0];
+    }
+
+    var browser = s.detectBrowser();
+
+    var dir = angular.element(element).css('direction');
+
+    // IE stays normal in RTL
+    if (browser === 'ie') {
+      return scrollLeft;
+    }
+    // Chrome doesn't alter the scrollLeft value. So with RTL on a 400px-wide grid, the right-most position will still be 400 and the left-most will still be 0;
+    else if (browser === 'chrome') {
+      if (dir === 'rtl') {
+        // Get the max scroll for the element
+        var maxScrollLeft = element.scrollWidth - element.clientWidth;
+
+        // Subtract the current scroll amount from the max scroll
+        return maxScrollLeft - scrollLeft;
+      }
+      else {
+        return scrollLeft;
+      }
+    }
+    // Firefox goes negative!
+    else if (browser === 'firefox') {
+      return scrollLeft * -1;
+    }
+    else {
+      // TODO(c0bra): Handle other browsers? Android? iOS? Opera?
+      return scrollLeft;
     }
   };
 
@@ -9616,28 +9763,6 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      /* Styles for the grid */\n" +
     "    }\n" +
     "\n" +
-    "    /*.grid{{ grid.id }} .ui-grid-header {\n" +
-    "      width: {{ grid.getHeaderViewportWidth() }}px;\n" +
-    "    }*/\n" +
-    "\n" +
-    "    /*.grid{{ grid.id }} .ui-grid-header-canvas {\n" +
-    "      width: {{ grid.getCanvasWidth() }}px;\n" +
-    "    }*/\n" +
-    "\n" +
-    "    /*.grid{{ grid.id }} .ui-grid-body {\n" +
-    "      height: {{ grid.getBodyHeight() }}px;\n" +
-    "    }\n" +
-    "\n" +
-    "    .grid{{ grid.id }} .ui-grid-viewport {\n" +
-    "      height: {{ grid.getViewportHeight() }}px;\n" +
-    "      width: {{ grid.getViewportWidth() }}px;\n" +
-    "    }\n" +
-    "\n" +
-    "    .grid{{ grid.id }} .ui-grid-canvas {\n" +
-    "      height: {{ grid.getCanvasHeight() }}px;\n" +
-    "      width: {{ grid.getCanvasWidth() }}px;\n" +
-    "    }*/\n" +
-    "\n" +
     "    .grid{{ grid.id }} .ui-grid-row, .grid{{ grid.id }} .ui-grid-cell, .grid{{ grid.id }} .ui-grid-cell .ui-grid-vertical-bar {\n" +
     "      height: {{ grid.options.rowHeight }}px;\n" +
     "    }\n" +
@@ -9645,14 +9770,6 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "    .grid{{ grid.id }} .ui-grid-row:last-child .ui-grid-cell {\n" +
     "      border-bottom-width: {{ ((grid.getTotalRowHeight() < grid.getViewportHeight()) && '1') || '0' }}px;\n" +
     "    }\n" +
-    "\n" +
-    "    /*{{ rowStyles }}\n" +
-    "\n" +
-    "    {{ columnStyles }}*/\n" +
-    "\n" +
-    "    /*.grid{{ grid.id }} .ui-grid-body .ui-grid-cell:first-child, .grid{{ grid.id }} .ui-grid-header .ui-grid-header-cell:first-child {\n" +
-    "      margin-left: {{ grid.columnOffset || 0 }}px;\n" +
-    "    }*/\n" +
     "\n" +
     "    {{ grid.verticalScrollbarStyles }}\n" +
     "    {{ grid.horizontalScrollbarStyles }}\n" +
@@ -9668,13 +9785,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
-    "    {{ grid.customStyles }}</style><!-- <div ui-grid-header></div>\n" +
-    "\n" +
-    "  <div ui-grid-body>\n" +
-    "    <div class=\"ui-grid-no-row-overlay\" ng-show=\"!grid.renderedRows.length\">\n" +
-    "      <span>No Rows</span>\n" +
-    "    </div>\n" +
-    "  </div> --><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"true\"></div><div ui-grid-footer></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
+    "    {{ grid.customStyles }}</style><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"true\"></div><div ui-grid-footer></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
   );
 
 
