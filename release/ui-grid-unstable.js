@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-12dea30 - 2014-08-07
+/*! ui-grid - v2.0.12-f1f7861 - 2014-08-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7058,6 +7058,43 @@ module.filter('px', function() {
       return $delegate;
     }]);
 }]);
+})();
+/**
+ * Created by Ran Rosenmann on 07/08/2014.
+ */
+(function () {
+  angular.module('ui.grid').config(['$provide', function($provide) {
+    $provide.decorator('i18nService', ['$delegate', function($delegate) {
+      $delegate.add('he', {
+        aggregate: {
+          label: '������'
+        },
+        groupPanel: {
+          description: '���� ����� ����� ���� �� ��� ���� ��� ����� ��'
+        },
+        search: {
+          placeholder: '���...',
+          showingItems: '����:',
+          selectedItems: '��"� �����:',
+          totalItems: '��"� ������:',
+          size: '������ ���:',
+          first: '�� �����',
+          next: '�� ���',
+          previous: '�� ����',
+          last: '�� �����'
+        },
+        menu: {
+          text: '��� ������:'
+        },
+        sort: {
+          ascending: '��� ����',
+          descending: '��� ����',
+          remove: '���'
+        }
+      });
+      return $delegate;
+    }]);
+  }]);
 })();
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
