@@ -370,6 +370,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "202_externalScopes",
+      "shortName": "202 External Scopes",
+      "type": "overview",
+      "keywords": "$log $scope abc access alert angular app application attribute btn carney cell celltemplate class columndefs company comveyer controller cox css data employed enormo exists external external-scopes false firstname from fuelton function getexternalscopes give grid gridoptions height html in index is isolate js lastname lorraine main mainctrl me module mydata myviewmodel name nancy ng-click ng-controller no on or overview primary property row scope scopes show showme so someprop template that the then there to true tutorial ui ui-grid use uses using var variables waters width wise within you your"
+    },
+    {
+      "section": "tutorial",
       "id": "299_RTL",
       "shortName": "299 RTL Support",
       "type": "overview",
@@ -416,13 +423,6 @@ NG_DOCS={
       "shortName": "Custom Grid Menu",
       "type": "overview",
       "keywords": "$attr $broadcast $elm $http $on $scope $timeout absolute action adjust angular app at border box-shadow btn btn-info but button class controller controllers css custom data directive element elementwidth for function get grid gridoptions gridutil height html index js json just left link main mainctrl menu menu-items menuitems module my-custom-menu mycustommenu name ng-click ng-controller nganimate none of openmymenu overview padding position put px require restrict return right rotate rotated scope showmenu success the this title to toggleclass top transform true tutorial type ui ui-grid ui-grid-menu ui-grid-menu-inner uigridctrl uigridmenu uigridmenuctrl var width"
-    },
-    {
-      "section": "tutorial",
-      "id": "5_100 data points",
-      "shortName": "100 Rows",
-      "type": "overview",
-      "keywords": "$http $scope angular app class controller css data example function get grid gridoptions height html index js json length main mainctrl module name ng-controller number of overview records rows set success this tutorial ui ui-grid uses var width"
     },
     {
       "section": "tutorial",
