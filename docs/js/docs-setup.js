@@ -338,7 +338,7 @@ NG_DOCS={
       "id": "102_sorting",
       "shortName": "102 Sorting",
       "type": "overview",
-      "keywords": "$http $scope action alert alert-warning allows an angular app application at be below but by can class click column columndefs columns company controller css data def default disabled enable enablesorting example false feature field flag for function gender get grid gridoptions has header height html if in include index is it js json last level main mainctrl menu module multiple must name ng-controller nganimate not on options overview required rows see set setting shift-click shift-clicking slide sort sorted sorting span8 success that the then third to true tutorial ui ui-grid up var want width you your"
+      "keywords": "$http $scope accessing action alert alert-warning allows an and angular app app2 application asc at be below but by can class click column columndefs columns company controller css data def default defining definitions desc direction disabled enable enablesorting example false feature field first flag for function gender get gets grid gridoptions has header height html id if in include index index2 inital-sort initial is it js json last level main main2 mainctrl menu module multiple must name ng-controller nganimate not on options order overview priority property required rows says see set setting shift-click shift-clicking slide sort sorted sorting span8 state sub-property success that the then third to true tutorial ui ui-grid up var want way what which width you your"
     },
     {
       "section": "tutorial",
