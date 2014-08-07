@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-c71053e - 2014-08-07
+/*! ui-grid - v2.0.12-5e075f3 - 2014-08-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7206,42 +7206,39 @@ module.filter('px', function() {
     }]);
 }]);
 })();
-/**
- * Created by Ran Rosenmann on 07/08/2014.
- */
 (function () {
-  angular.module('ui.grid').config(['$provide', function($provide) {
-    $provide.decorator('i18nService', ['$delegate', function($delegate) {
-      $delegate.add('he', {
-        aggregate: {
-          label: '������'
-        },
-        groupPanel: {
-          description: '���� ����� ����� ���� �� ��� ���� ��� ����� ��'
-        },
-        search: {
-          placeholder: '���...',
-          showingItems: '����:',
-          selectedItems: '��"� �����:',
-          totalItems: '��"� ������:',
-          size: '������ ���:',
-          first: '�� �����',
-          next: '�� ���',
-          previous: '�� ����',
-          last: '�� �����'
-        },
-        menu: {
-          text: '��� ������:'
-        },
-        sort: {
-          ascending: '��� ����',
-          descending: '��� ����',
-          remove: '���'
-        }
-      });
-      return $delegate;
+    angular.module('ui.grid').config(['$provide', function ($provide) {
+        $provide.decorator('i18nService', ['$delegate', function ($delegate) {
+            $delegate.add('he', {
+                aggregate: {
+                    label: 'items'
+                },
+                groupPanel: {
+                    description: 'גרור עמודה לכאן ושחרר בכדי לקבץ עמודה זו.'
+                },
+                search: {
+                    placeholder: 'חפש...',
+                    showingItems: 'מציג:',
+                    selectedItems: 'סה"כ נבחרו:',
+                    totalItems: 'סה"כ רשומות:',
+                    size: 'תוצאות בדף:',
+                    first: 'דף ראשון',
+                    next: 'דף הבא',
+                    previous: 'דף קודם',
+                    last: 'דף אחרון'
+                },
+                menu: {
+                    text: 'בחר עמודות:'
+                },
+                sort: {
+                    ascending: 'סדר עולה',
+                    descending: 'סדר יורד',
+                    remove: 'בטל'
+                }
+            });
+            return $delegate;
+        }]);
     }]);
-  }]);
 })();
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
