@@ -13,7 +13,14 @@
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="buildColumns">buildColumns()</h3>
+<ul class="methods"><li><h3 id="buildColumnDefsFromData">buildColumnDefsFromData(rowBuilder)</h3>
+<div class="buildcolumndefsfromdata"><p>Populates columnDefs from the provided data</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowBuilder – {function(colDef, col, gridOptions)} – </code>
+<p>function to be called</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="buildColumns">buildColumns()</h3>
 <div class="buildcolumns"><p>creates GridColumn objects from the columnDefinition.  Calls each registered
 columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{Promise}</code>

@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-63235d8 - 2014-08-08
+/*! ui-grid - v2.0.12-4aa0f8e - 2014-08-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2736,7 +2736,7 @@ angular.module('ui.grid')
           if (self.grid.columns.length === 0) {
             $log.debug('loading cols in dataWatchFunction');
             if (!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0) {
-              self.grid.options.columnDefs =  gridUtil.getColumnsFromData(n, self.grid.options.excludeProperties);
+              self.grid.buildColumnDefsFromData(n);
             }
             promises.push(self.grid.buildColumns()
               .then(function() {
@@ -3065,6 +3065,17 @@ angular.module('ui.grid')
 
   /**
    * @ngdoc function
+   * @name buildColumnDefsFromData
+   * @methodOf ui.grid.class:Grid
+   * @description Populates columnDefs from the provided data
+   * @param {function(colDef, col, gridOptions)} rowBuilder function to be called
+   */
+  Grid.prototype.buildColumnDefsFromData = function (dataRows){
+    this.options.columnDefs =  gridUtil.getColumnsFromData(dataRows,  this.options.excludeProperties);
+  };
+
+  /**
+   * @ngdoc function
    * @name registerRowBuilder
    * @methodOf ui.grid.class:Grid
    * @description When the build creates rows from gridOptions.data, the rowBuilders will be called to add
@@ -3114,6 +3125,14 @@ angular.module('ui.grid')
         col.updateColumnDef(colDef, col.index);
       }
 
+      //Assign colDef type if not specified
+      if (!colDef.type){
+        var firstRow = self.rows.length > 0 ? self.rows[0] : null;
+        if (firstRow) {
+          colDef.type = gridUtil.guessType(self.getCellValue(firstRow, col));
+        }
+      }
+
       self.columnBuilders.forEach(function (builder) {
         builderPromises.push(builder.call(self, colDef, col, self.options));
       });
@@ -3140,6 +3159,7 @@ angular.module('ui.grid')
     if (colDef.name === undefined && colDef.field !== undefined) {
       colDef.name = colDef.field;
     }
+
   };
 
   // Return a list of items that exist in the `n` array but not the `o` array. Uses optional property accessors passed as third & fourth parameters
@@ -5939,8 +5959,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
   };
 
   // Guess which sort function to use on this item
-  rowSorter.guessSortFn = function guessSortFn(item) {
-    var itemType = typeof(item);
+  rowSorter.guessSortFn = function guessSortFn(itemType) {
 
     // Check for numbers and booleans
     switch (itemType) {
@@ -5949,17 +5968,13 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       case "boolean":
         return rowSorter.sortBool;
       case "string":
-        // if number string return number string sort fn. else return the str
-        return item.match(numberStrRegex) ? rowSorter.sortNumberStr : rowSorter.sortAlpha;
+        return rowSorter.sortAlpha;
+      case "date":
+        return rowSorter.sortDate;
+      case "object":
+        return rowSorter.basicSort;
       default:
-        // Check if the item is a valid Date TODO(c0bra): Can we use angular.isDate() ?
-        if (Object.prototype.toString.call(item) === '[object Date]') {
-          return rowSorter.sortDate;
-        }
-        else {
-          //finally just sort the basic sort...
-          return rowSorter.basicSort;
-        }
+        throw new Error('No sorting function found for type:' + itemType);
     }
   };
 
@@ -6061,20 +6076,8 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     }
     // Try and guess what sort function to use
     else {
-      // Get the first row
-      var row = rows[0];
-
-      // No first row, can't guess so return null
-      if (!row) {
-        return null;
-      }
-
-      // TODO(c0bra): need to use that function from the grid class here
-      // Get the value of this column for the row
-      var fieldValue = grid.getCellValue(row, col); // $parse(col.field)(row);
-
       // Guess the sort function
-      sortFn = rowSorter.guessSortFn(fieldValue);
+      sortFn = rowSorter.guessSortFn(col.colDef.type);
 
       // If we found a sort function, cache it
       if (sortFn) {
@@ -6518,6 +6521,38 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     },
 
     /**
+     * @ngdoc method
+     * @name guessType
+     * @methodOf ui.grid.service:GridUtil
+     * @description guesses the type of an argument
+     *
+     * @param {string/number/bool/object} item variable to examine
+     * @returns {string} one of the following
+     * 'string'
+     * 'boolean'
+     * 'number'
+     * 'date'
+     * 'object'
+     */
+    guessType : function (item) {
+      var itemType = typeof(item);
+
+      // Check for numbers and booleans
+      switch (itemType) {
+        case "number":
+        case "boolean":
+        case "string":
+          return itemType;
+        default:
+          if (angular.isDate(item)) {
+            return "date";
+          }
+          return "object";
+      }
+    },
+
+
+  /**
     * @ngdoc method
     * @name elementWidth
     * @methodOf ui.grid.service:GridUtil
