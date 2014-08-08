@@ -401,7 +401,7 @@ NG_DOCS={
       "id": "4.1_custom_row_template",
       "shortName": "Custom Row Template",
       "type": "overview",
-      "keywords": "$http $interval $scope $timeout almost angular app aquamarine as background-color basic but by cancel class col colcontainer coldef controller create css custom data date done for function get grid gridoptions height html in index js json main mainctrl module most name new ng-bind ng-controller ng-repeat one overview parseint renderedcolumns return row rowtemplate same sec start style success template the track tutorial ui ui-grid ui-grid-cell var wait waiting width with"
+      "keywords": "$http $interval $scope $timeout allow almost angular app aquamarine as attribute background-color basic but by cancel class col colcontainer coldef console controller create css custom data date done external-scopes externalscopes fnone for from function functions get getexternalscopes grid gridoptions height html in index js json like log main mainctrl method module most mynewmodel name new ng-bind ng-click ng-controller ng-repeat one outside overview parseint reach renderedcolumns return row rowtemplate same scope sec set so start style success sure template the to track tutorial ui ui-grid ui-grid-cell up var variable wait waiting width will with you"
     },
     {
       "section": "tutorial",
