@@ -79,7 +79,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "against always an and api array as be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one path position qualified reference relation rendered resulting returns row scope should that the to true ui unique viewmodel visible will"
+      "keywords": "against always an and api array as back be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one path position qualified reference relation rendered resulting returns row scope should that the to true ui unique viewmodel visible will"
     },
     {
       "section": "api",

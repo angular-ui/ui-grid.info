@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-4aa0f8e - 2014-08-08
+/*! ui-grid - v2.0.12-c616492 - 2014-08-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3368,7 +3368,7 @@ angular.module('ui.grid')
 
     var existingRowCount = self.rows.length;
     for (var i=0; i < newRawData.length; i++) {
-      var newRow = self.processRowBuilders(new GridRow(newRawData[i], i + existingRowCount));
+      var newRow = self.processRowBuilders(new GridRow(newRawData[i], i + existingRowCount, self));
 
       if (self.options.enableRowHashing) {
         var found = self.rowHashMap.get(newRow.entity);
@@ -5370,7 +5370,15 @@ angular.module('ui.grid')
    * @param {object} entity the array item from GridOptions.data
    * @param {number} index the current position of the row in the array
    */
-  function GridRow(entity, index) {
+  function GridRow(entity, index, grid) {
+
+     /**
+      *  @ngdoc object
+      *  @name grid
+      *  @propertyOf  ui.grid.class:GridRow
+      *  @description A reference back to the grid
+      */
+     this.grid = grid;
 
      /**
       *  @ngdoc object
