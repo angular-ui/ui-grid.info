@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-1125cf1 - 2014-08-11
+/*! ui-grid - v2.0.12-9b935d0 - 2014-08-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8272,7 +8272,6 @@ module.filter('px', function() {
            *  @description If specified, cellTemplate to use as the editor for all columns.
            *  <br/> default to 'ui-grid/cellTextEditor'
            */
-          gridOptions.editableCellTemplate = gridOptions.editableCellTemplate || 'ui-grid/cellTextEditor';
 
           /**
            *  @ngdoc object
@@ -8335,6 +8334,15 @@ module.filter('px', function() {
            */
           if (colDef.enableCellEdit) {
             colDef.editableCellTemplate = colDef.editableCellTemplate || gridOptions.editableCellTemplate;
+
+            if (!colDef.editableCellTemplate) {
+              if (colDef.type && colDef.type === 'boolean') {
+                colDef.editableCellTemplate = 'ui-grid/cellBooleanEditor';
+              }
+              else {
+                colDef.editableCellTemplate = 'ui-grid/cellTextEditor';
+              }
+            }
 
             promises.push(gridUtil.getTemplate(colDef.editableCellTemplate)
               .then(
