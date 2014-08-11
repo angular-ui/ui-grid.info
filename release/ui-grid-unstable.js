@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-c616492 - 2014-08-08
+/*! ui-grid - v2.0.12-1125cf1 - 2014-08-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2687,9 +2687,6 @@ angular.module('ui.grid')
           self.grid.options.columnDefs = value;
           self.grid.buildColumns()
             .then(function(){
-              // self.columnSizeCalculated = false;
-              // self.renderedColumns = self.grid.columns;
-
               preCompileCellTemplates($scope.grid.columns);
 
               self.refreshCanvas(true);
@@ -2718,8 +2715,6 @@ angular.module('ui.grid')
           self.grid.options.columnDefs = n;
           self.grid.buildColumns()
             .then(function(){
-              // self.columnSizeCalculated = false;
-              // self.renderedColumns = self.grid.columns;
 
               preCompileCellTemplates($scope.grid.columns);
 
@@ -3102,6 +3097,31 @@ angular.module('ui.grid')
 
   /**
    * @ngdoc function
+   * @name assignTypes
+   * @methodOf ui.grid.class:Grid
+   * @description uses the first row of data to assign colDef.type for any types not defined.
+   */
+  Grid.prototype.assignTypes = function(){
+    var self = this;
+    self.options.columnDefs.forEach(function (colDef, index) {
+
+      //Assign colDef type if not specified
+      if (!colDef.type) {
+        var col = new GridColumn(colDef, index, self);
+        var firstRow = self.rows.length > 0 ? self.rows[0] : null;
+        if (firstRow) {
+          colDef.type = gridUtil.guessType(self.getCellValue(firstRow, col));
+        }
+        else {
+          $log.log('Unable to assign type from data, so defaulting to string');
+          colDef.type = 'string';
+        }
+      }
+    });
+  };
+
+  /**
+   * @ngdoc function
    * @name buildColumns
    * @methodOf ui.grid.class:Grid
    * @description creates GridColumn objects from the columnDefinition.  Calls each registered
@@ -3123,14 +3143,6 @@ angular.module('ui.grid')
       }
       else {
         col.updateColumnDef(colDef, col.index);
-      }
-
-      //Assign colDef type if not specified
-      if (!colDef.type){
-        var firstRow = self.rows.length > 0 ? self.rows[0] : null;
-        if (firstRow) {
-          colDef.type = gridUtil.guessType(self.getCellValue(firstRow, col));
-        }
       }
 
       self.columnBuilders.forEach(function (builder) {
@@ -3232,6 +3244,8 @@ angular.module('ui.grid')
       }
 
       self.addRows(newRawData);
+      //now that we have data, it is save to assign types to colDefs
+      self.assignTypes();
     }
     else if (newRawData.length > 0) {
       var unfoundNewRows, unfoundOldRows, unfoundNewRowsToFind;
