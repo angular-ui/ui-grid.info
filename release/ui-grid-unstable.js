@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-0c90acd - 2014-08-11
+/*! ui-grid - v2.0.12-5bb2d07 - 2014-08-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9902,6 +9902,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('ui-grid/uiGridViewport',
     "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in rowContainer.renderedRows track by row.index\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle($index)\"><div ui-grid-row=\"row\"></div></div></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/cellBooleanEditor',
+    "<div><input type=\"checkbox\" class=\"ui-grid-edit-checkbox\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
   );
 
 

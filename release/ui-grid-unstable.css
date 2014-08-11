@@ -593,6 +593,11 @@ input[type="text"].ui-grid-filter-input:hover {
   background-color: #b3c4c7;
 }
 
+input[type="checkbox"].ui-grid-edit-checkbox {
+  margin-top: 9px;
+  margin-left: 6px;
+}
+
 /* This file contains variable declarations (do not remove this line) */
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 /**
