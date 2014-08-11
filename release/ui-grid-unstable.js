@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-9b935d0 - 2014-08-11
+/*! ui-grid - v2.0.12-0c90acd - 2014-08-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3323,7 +3323,7 @@ angular.module('ui.grid')
       // Search for real new rows in `unfoundNew` and concat them onto `newRows`
       newRows = newRows.concat(self.newInN(self.rows, unfoundNew, 'entity'));
       
-      self.addRows(newRows);
+      self.addRows(newRows); 
       
       var deletedRows = self.getDeletedRows((unfoundOldRows || self.rows), newRawData);
 
