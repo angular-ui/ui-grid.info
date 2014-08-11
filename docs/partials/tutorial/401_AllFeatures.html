@@ -1,0 +1,108 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Appends data to the grid every .2 seconds for 15 seconds.  This emulates loading pages of data from the server. It's also an example
+of setting gridOptions.data to a string value that specifies an object on your scope to watch.
+<br></p>
+
+<p>All features are enabled to get an idea of performance</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-24" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-24" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-24">
+  <div ng-controller="MainCtrl">
+    <button type="button" class="btn btn-success" ng-click="refreshData()">Refresh Data</button>  <strong>Calls Pending:</strong> <span ng-bind="callsPending"></span>
+    <br>
+    <br>
+    <strong>{{ myData.length }} rows</strong>
+    <br>
+    <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-resize-columns ui-grid-pinning class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 500px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.cellNav', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.pinning']);
+
+  app.controller('MainCtrl',  ['$scope', '$http', '$timeout', '$interval', function ($scope, $http, $timeout, $interval) {
+
+    $scope.gridOptions = {};
+    $scope.gridOptions.data = 'myData';
+    $scope.gridOptions.enableColumnResizing = true;
+    
+    $scope.gridOptions.rowIdentity = function(row) {
+      return row.id;
+    };
+    $scope.gridOptions.getRowIdentity = function(row) {
+      return row.id;
+    };
+
+    $scope.gridOptions.columnDefs = [
+      { name:'id', width:50 },
+      { name:'name', width:100 },
+      { name:'age', width:100, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Age:{{COL_FIELD}}</span></div>'   },
+      { name:'address.street', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Street:{{COL_FIELD}}</span></div>'   },
+      { name:'address.city', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>City:{{COL_FIELD}}</span></div>'  },
+      { name:'address.state', width:50, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>State:{{COL_FIELD}}</span></div>'  },
+      { name:'address.zip', width:50, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Zip:{{COL_FIELD}}</span></div>'  },
+      { name:'company', width:100, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Company:{{COL_FIELD}}</span></div>'  },
+      { name:'email', width:100, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Email:{{COL_FIELD}}</span></div>'  },
+      { name:'phone', width:200, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Phone:{{COL_FIELD}}</span></div>'  },
+      { name:'about', width:300, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>AAbout:{{COL_FIELD}}</span></div>'  },
+      { name:'friends[0].name', displayName:'1st friend', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Friend0:{{COL_FIELD}}</span></div>'  },
+      { name:'friends[1].name', displayName:'2nd friend', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Friend1:{{COL_FIELD}}</span></div>'  },
+      { name:'friends[2].name', displayName:'3rd friend', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Friend2:{{COL_FIELD}}</span></div>'  },
+      { name:'agetemplate',field:'age', width:100, cellTemplate: '<div class="ui-grid-cell-contents"><span>Age 2:{{COL_FIELD}}</span></div>' }
+    ];
+
+    $scope.callsPending = 0;
+
+    var i = 0;
+    $scope.refreshData = function(){
+      $scope.myData = [];
+
+      var start = new Date();
+      var sec = $interval(function () {
+        $scope.callsPending++;
+        
+        $http.get('/data/500_complex.json')
+          .success(function(data) {
+            $scope.callsPending--;
+
+            data.forEach(function(row){
+              row.name = row.name + ' iter ' + i;
+              row.id = i;
+              i++;
+              $scope.myData.push(row);
+            });
+          })
+          .error(function() {
+            $scope.callsPending--
+          });
+      }, 200);
+
+
+      $timeout(function() {
+         $interval.cancel(sec);
+         $scope.left = '';
+      }, 2000);
+
+    };
+
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-24" ng-eval-javascript="app.js"></div></div>
+</div>

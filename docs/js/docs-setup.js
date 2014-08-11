@@ -363,13 +363,6 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "2.1_appending_data",
-      "shortName": "Kitchen Sink",
-      "type": "overview",
-      "keywords": "$http $interval $scope $timeout about address age agetemplate all also an angular app appends are btn btn-success button callspending callspending-- cancel cellnav celltemplate city class columndefs company controller css data date displayname edit email emulates enablecelledit enablecolumnresizing enabled error every example features field for foreach friend friends from function get getrowidentity grid gridoptions height html id idea index it iter js json kitchen left length loading main mainctrl module mydata name new ng-bind ng-click ng-controller object of on overview pages pending performance phone push refreshdata resizecolumns return row rowidentity rows scope sec seconds server setting sink specifies start state street string success that the this to true tutorial type ui ui-grid ui-grid-cell-contents ui-grid-cellnav ui-grid-edit ui-grid-resize-columns value var watch width your zip"
-    },
-    {
-      "section": "tutorial",
       "id": "202_externalScopes",
       "shortName": "202 External Scopes",
       "type": "overview",
@@ -402,6 +395,13 @@ NG_DOCS={
       "shortName": "Custom Row Template",
       "type": "overview",
       "keywords": "$http $interval $scope $timeout allow almost angular app aquamarine as attribute background-color basic but by cancel class col colcontainer coldef console controller create css custom data date done external-scopes externalscopes fnone for from function functions get getexternalscopes grid gridoptions height html in index js json like log main mainctrl method module most mynewmodel name new ng-bind ng-click ng-controller ng-repeat one outside overview parseint reach renderedcolumns return row rowtemplate same scope sec set so start style success sure template the to track tutorial ui ui-grid ui-grid-cell up var variable wait waiting width will with you"
+    },
+    {
+      "section": "tutorial",
+      "id": "401_AllFeatures",
+      "shortName": "401 All Features",
+      "type": "overview",
+      "keywords": "$http $interval $scope $timeout about address age agetemplate all also an angular app appends are btn btn-success button callspending callspending-- cancel cellnav celltemplate city class columndefs company controller css data date displayname edit email emulates enablecelledit enablecolumnresizing enabled error every example features field for foreach friend friends from function get getrowidentity grid gridoptions height html id idea index it iter js json left length loading main mainctrl module mydata name new ng-bind ng-click ng-controller object of on overview pages pending performance phone pinning push refreshdata resizecolumns return row rowidentity rows scope sec seconds server setting specifies start state street string success that the this to true tutorial type ui ui-grid ui-grid-cell-contents ui-grid-cellnav ui-grid-edit ui-grid-pinning ui-grid-resize-columns value var watch width your zip"
     },
     {
       "section": "tutorial",
