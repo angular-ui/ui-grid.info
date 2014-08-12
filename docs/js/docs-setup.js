@@ -366,7 +366,7 @@ NG_DOCS={
       "id": "202_externalScopes",
       "shortName": "202 External Scopes",
       "type": "overview",
-      "keywords": "$log $scope abc access alert angular app application attribute btn carney cell celltemplate class columndefs company comveyer controller cox css data employed enormo exists external external-scopes false firstname from fuelton function getexternalscopes give grid gridoptions height html in index is isolate js lastname lorraine main mainctrl me module mydata myviewmodel name nancy ng-click ng-controller no on or overview primary property row scope scopes show showme so someprop template that the then there to true tutorial ui ui-grid use uses using var variables waters width wise within you your"
+      "keywords": "$log $scope abc access alert angular app application attribute btn carney cell celltemplate class columndefs company comveyer controller cox css data employed enormo exists external external-scopes false firstname from fuelton function getexternalscopes give grid gridoptions height html in index is isolate js lastname lorraine main mainctrl me module mydata myviewmodel name nancy ng-click ng-controller no on or overview primary property row scope scopes showme showscope so someprop template that the then there to true tutorial ui ui-grid use uses using var variables waters width wise within you your"
     },
     {
       "section": "tutorial",
