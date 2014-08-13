@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-1b6b87f - 2014-08-12
+/*! ui-grid - v2.0.12-29c6139 - 2014-08-13
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9516,6 +9516,13 @@ module.filter('px', function() {
           var publicApi = {
             events: {
               selection: {
+                /**
+                 * @ngdoc event
+                 * @name rowSelectionChanged
+                 * @eventOf  ui.grid.selection.api:PublicApi
+                 * @description  is raised after the row.isSelected state is changed
+                 * @param {GridRow} row the row that was selected/deselected
+                 */
                 rowSelectionChanged: function (scope, row) {
                 }
               }
