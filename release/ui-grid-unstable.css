@@ -593,9 +593,48 @@ input[type="text"].ui-grid-filter-input:hover {
   background-color: #b3c4c7;
 }
 
-input[type="checkbox"].ui-grid-edit-checkbox {
-  margin-top: 9px;
-  margin-left: 6px;
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+div.ui-grid-cell input {
+  border-radius: inherit;
+  padding: 0;
+  width: 100%;
+  color: inherit;
+  height: auto;
+  font: inherit;
+  outline: none;
+}
+div.ui-grid-cell input:focus {
+  color: inherit;
+  outline: none;
+}
+div.ui-grid-cell input[type="checkbox"] {
+  margin: 9px 0 0 6px;
+  width: auto;
+}
+div.ui-grid-cell input.ng-invalid {
+  border: 1px solid #fc8f8f;
+}
+div.ui-grid-cell input.ng-valid {
+  border: 1px solid #d4d4d4;
 }
 
 /* This file contains variable declarations (do not remove this line) */

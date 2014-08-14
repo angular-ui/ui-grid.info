@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-29c6139 - 2014-08-13
+/*! ui-grid - v2.0.12-ce7c6f3 - 2014-08-14
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8345,16 +8345,18 @@ module.filter('px', function() {
            *  <br/>Defaults to gridOptions.editableCellTemplate
            */
           if (colDef.enableCellEdit) {
-            colDef.editableCellTemplate = colDef.editableCellTemplate || gridOptions.editableCellTemplate;
-
-            if (!colDef.editableCellTemplate) {
-              if (colDef.type && colDef.type === 'boolean') {
-                colDef.editableCellTemplate = 'ui-grid/cellBooleanEditor';
-              }
-              else {
-                colDef.editableCellTemplate = 'ui-grid/cellTextEditor';
-              }
-            }
+            colDef.editableCellTemplate = colDef.editableCellTemplate || gridOptions.editableCellTemplate ||
+              (function(){
+                if (colDef.type) {
+                  switch (colDef.type) {
+                    case 'boolean' :
+                      return 'ui-grid/cellBooleanEditor';
+                    case 'number' :
+                      return 'ui-grid/cellNumberEditor';
+                  }
+                }
+              })() ||
+              'ui-grid/cellTextEditor';
 
             promises.push(gridUtil.getTemplate(colDef.editableCellTemplate)
               .then(
@@ -8667,12 +8669,18 @@ module.filter('px', function() {
                   $elm[0].focus();
                   $elm[0].select();
                   $elm.on('blur', function (evt) {
-                    $scope.stopEdit();
+                    $scope.stopEdit(evt);
                   });
                 });
 
-                $scope.stopEdit = function () {
-                  $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
+                $scope.stopEdit = function (evt) {
+                  if ($scope.inputForm && !$scope.inputForm.$valid) {
+                    evt.stopPropagation();
+                    $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
+                  }
+                  else {
+                    $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
+                  }
                 };
 
                 $elm.on('keydown', function (evt) {
@@ -8682,7 +8690,7 @@ module.filter('px', function() {
                       $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
                       break;
                     case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
-                      $scope.stopEdit();
+                      $scope.stopEdit(evt);
                       break;
                   }
 
@@ -9925,12 +9933,17 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/cellBooleanEditor',
-    "<div><input type=\"checkbox\" class=\"ui-grid-edit-checkbox\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
+    "<div><input type=\"checkbox\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
+  );
+
+
+  $templateCache.put('ui-grid/cellNumberEditor',
+    "<div><form name=\"inputForm\"><input type=\"number\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></form></div>"
   );
 
 
   $templateCache.put('ui-grid/cellTextEditor',
-    "<div><input ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
+    "<div><input type=\"text\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
   );
 
 
