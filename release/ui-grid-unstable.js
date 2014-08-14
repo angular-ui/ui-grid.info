@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-355467c - 2014-08-14
+/*! ui-grid - v2.0.12-b88e616 - 2014-08-14
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2667,16 +2667,6 @@ angular.module('ui.grid')
       //all properties of grid are available on scope
       $scope.grid = self.grid;
 
-      // Function to pre-compile all the cell templates when the column definitions change
-      function preCompileCellTemplates(columns) {
-        $log.info('pre-compiling cell templates');
-        columns.forEach(function (col) {
-          var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
-
-          var compiledElementFn = $compile(html);
-          col.compiledElementFn = compiledElementFn;
-        });
-      }
 
       //TODO: Move this.
       $scope.groupings = [];
@@ -2687,7 +2677,7 @@ angular.module('ui.grid')
           self.grid.options.columnDefs = value;
           self.grid.buildColumns()
             .then(function(){
-              preCompileCellTemplates($scope.grid.columns);
+              self.grid.preCompileCellTemplates();
 
               self.refreshCanvas(true);
             });
@@ -2716,7 +2706,7 @@ angular.module('ui.grid')
           self.grid.buildColumns()
             .then(function(){
 
-              preCompileCellTemplates($scope.grid.columns);
+              self.grid.preCompileCellTemplates();
 
               self.refreshCanvas(true);
             });
@@ -2735,7 +2725,7 @@ angular.module('ui.grid')
             }
             promises.push(self.grid.buildColumns()
               .then(function() {
-                preCompileCellTemplates($scope.grid.columns);}
+                self.grid.preCompileCellTemplates();}
             ));
           }
           $q.all(promises).then(function() {
@@ -2973,8 +2963,8 @@ angular.module('ui.grid').directive('uiGrid',
 (function(){
 
 angular.module('ui.grid')
-.factory('Grid', ['$log', '$q', '$parse', 'gridUtil', 'uiGridConstants', 'GridOptions', 'GridColumn', 'GridRow', 'GridApi', 'rowSorter', 'rowSearcher', 'GridRenderContainer',
-    function($log, $q, $parse, gridUtil, uiGridConstants, GridOptions, GridColumn, GridRow, GridApi, rowSorter, rowSearcher, GridRenderContainer) {
+.factory('Grid', ['$log', '$q', '$compile', '$parse', 'gridUtil', 'uiGridConstants', 'GridOptions', 'GridColumn', 'GridRow', 'GridApi', 'rowSorter', 'rowSearcher', 'GridRenderContainer',
+    function($log, $q, $compile, $parse, gridUtil, uiGridConstants, GridOptions, GridColumn, GridRow, GridApi, rowSorter, rowSearcher, GridRenderContainer) {
 
 /**
    * @ngdoc function
@@ -3154,6 +3144,22 @@ angular.module('ui.grid')
     });
 
     return $q.all(builderPromises);
+  };
+
+/**
+ * @ngdoc function
+ * @name preCompileCellTemplates
+ * @methodOf ui.grid.class:Grid
+ * @description precompiles all cell templates
+ */
+  Grid.prototype.preCompileCellTemplates = function() {
+        $log.info('pre-compiling cell templates');
+        this.columns.forEach(function (col) {
+          var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
+
+          var compiledElementFn = $compile(html);
+          col.compiledElementFn = compiledElementFn;
+        });
   };
 
   /**
@@ -8675,15 +8681,25 @@ module.filter('px', function() {
                   });
                 });
 
-                $scope.stopEdit = function (evt) {
+               
+               $scope.deepEdit = false;
+               
+               $scope.stopEdit = function (evt) {
                   if ($scope.inputForm && !$scope.inputForm.$valid) {
+               
+
                     evt.stopPropagation();
                     $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
                   }
                   else {
                     $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
                   }
+                  $scope.deepEdit = false;
                 };
+
+                $elm.on('click', function (evt) {
+                  $scope.deepEdit = true;
+                });
 
                 $elm.on('keydown', function (evt) {
                   switch (evt.keyCode) {
@@ -8694,6 +8710,23 @@ module.filter('px', function() {
                     case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
                       $scope.stopEdit(evt);
                       break;
+                  }
+
+                  if ($scope.deepEdit) {
+                    switch (evt.keyCode) {
+                      case uiGridConstants.keymap.LEFT:
+                        evt.stopPropagation();
+                        break;
+                      case uiGridConstants.keymap.RIGHT:
+                        evt.stopPropagation();
+                        break;
+                      case uiGridConstants.keymap.UP:
+                        evt.stopPropagation();
+                        break;
+                      case uiGridConstants.keymap.DOWN:
+                        evt.stopPropagation();
+                        break;
+                    }
                   }
 
                   return true;
