@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-ce7c6f3 - 2014-08-14
+/*! ui-grid - v2.0.12-55aa85e - 2014-08-14
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12,7 +12,7 @@
     COL_FIELD: /COL_FIELD/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
     TEMPLATE_REGEXP: /<.+>/,
-    COL_CLASS_PREFIX: 'uiGridCol',
+    COL_CLASS_PREFIX: 'ui-grid-col',
     events: {
       GRID_SCROLL: 'uiGridScroll',
       GRID_SCROLLING: 'uiGridScrolling',
@@ -9410,7 +9410,7 @@ module.filter('px', function() {
           var renderContainerElm = gridUtil.closestElm($elm, '.ui-grid-render-container');
 
           // Get the cell contents so we measure correctly. For the header cell we have to account for the sort icon and the menu buttons, if present
-          var cells = renderContainerElm.querySelectorAll('.uiGridCol' + col.index + ' .ui-grid-cell-contents');
+          var cells = renderContainerElm.querySelectorAll('.' + uiGridConstants.COL_CLASS_PREFIX + col.index + ' .ui-grid-cell-contents');
           Array.prototype.forEach.call(cells, function (cell) {
               // Get the cell width
               // $log.debug('width', gridUtil.elementWidth(cell));
