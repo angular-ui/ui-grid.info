@@ -758,6 +758,15 @@ div.ui-grid-cell input.ng-valid {
 .ui-grid-row-selected .ui-grid-cell {
   background-color: #c9dde1;
 }
+.ui-grid-disable-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
 
 .ui-grid-icon-filter:before {
   content: '\e800';

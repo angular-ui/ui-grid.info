@@ -289,7 +289,7 @@ NG_DOCS={
       "id": "ui.grid.selection.service:uiGridSelectionService",
       "shortName": "uiGridSelectionService",
       "type": "service",
-      "keywords": "all api as at be can clears clearselectedrows deselect false features for function getselectedrows grid if multiselect object one only or returns row rows select selected selection service services the time to togglerowselection toggles ui unselected"
+      "keywords": "all api as at be can clears clearselectedrows clicked deselect does false features for from function getselectedrows grid group if is key last multiselect nothing object of one only or returns row rows select selected selection selects service services shift shiftselect the this time to togglerowselection toggles ui unselected using"
     },
     {
       "section": "api",
