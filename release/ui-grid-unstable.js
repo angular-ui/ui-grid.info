@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-b88e616 - 2014-08-14
+/*! ui-grid - v2.0.12-a2f2a7f - 2014-08-14
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1586,7 +1586,7 @@ angular.module('ui.grid')
             return $scope.shown.call(context);
           };
 
-          $scope.itemAction = function($event) {
+          $scope.itemAction = function($event,title) {
             $log.debug('itemAction');
             $event.stopPropagation();
 
@@ -1602,7 +1602,7 @@ angular.module('ui.grid')
                 context.grid = uiGridCtrl.grid;
               }
 
-              $scope.action.call(context, $event);
+              $scope.action.call(context, $event, title);
 
               uiGridMenuCtrl.hideMenu();
             }
@@ -4573,6 +4573,26 @@ angular.module('ui.grid')
       return self.grid.renderContainers[containerId];
     };
 
+    /**
+     * @ngdoc function
+     * @name showColumn
+     * @methodOf ui.grid.class:GridColumn
+     * @description Makes the column visible by setting colDef.visible = true
+     */
+    GridColumn.prototype.showColumn = function() {
+        this.colDef.visible = true;
+    };
+
+    /**
+     * @ngdoc function
+     * @name hideColumn
+     * @methodOf ui.grid.class:GridColumn
+     * @description Hides the column by setting colDef.visible = false
+     */
+    GridColumn.prototype.hideColumn = function() {
+        this.colDef.visible = false;
+    };
+
     return GridColumn;
 }]);
 
@@ -5531,6 +5551,18 @@ angular.module('ui.grid')
 
             return columns;
           });
+
+          grid.registerColumnsProcessor(function(renderableColumns) {
+              renderableColumns.forEach(function (column) {
+                  if (column.colDef.visible === false) {
+                      column.visible = false;
+                  }
+              });
+
+              return renderableColumns;
+          });
+
+
 
           if (grid.options.enableFiltering) {
             grid.registerRowsProcessor(grid.searchRows);
@@ -9991,7 +10023,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridMenuItem',
-    "<li class=\"ui-grid-menu-item\" ng-click=\"itemAction($event)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active' : active() }\"><i ng-class=\"icon\"></i> {{ title }}</li>"
+    "<li class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active' : active() }\"><i ng-class=\"icon\"></i> {{ title }}</li>"
   );
 
 

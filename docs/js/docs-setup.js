@@ -65,7 +65,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "add address against algorithm allocated also and angular any api are aren array as be belongs binding body city class classname coldef column columns complex container current data default defaults defined definition displayed docs each element employee evaluates expression expressions field fields for function getcolclass getcolclassdefinition getfulladdress getrendercontainer grid if implementation in index instead like matures methods name needed normal object of on one optional options or other parameters position prefixdot properties prototype reference render represents return returns screen sorting specifically state takes th that the they this to true ui use viewmodel when will"
+      "keywords": "add address against algorithm allocated also and angular any api are aren array as be belongs binding body by city class classname coldef column columns complex container current data default defaults defined definition displayed docs each element employee evaluates expression expressions false field fields for function getcolclass getcolclassdefinition getfulladdress getrendercontainer grid hidecolumn hides if implementation in index instead like makes matures methods name needed normal object of on one optional options or other parameters position prefixdot properties prototype reference render represents return returns screen setting showcolumn sorting specifically state takes th that the they this to true ui use viewmodel visible when will"
     },
     {
       "section": "api",
