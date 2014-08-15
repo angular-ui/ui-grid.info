@@ -520,10 +520,10 @@ input[type="text"].ui-grid-filter-input:hover {
   right: 0;
 }
 .ui-grid[dir=rtl] .ui-grid-native-scrollbar.vertical {
-  left: 0px;
+  left: 0;
   right: inherit;
 }
-.grid[dir=rtl] .ui-grid-column-menu-button {
+.ui-grid[dir=rtl] .ui-grid-column-menu-button {
   position: absolute;
   left: 1px;
   top: 0;
@@ -537,8 +537,8 @@ input[type="text"].ui-grid-filter-input:hover {
   border-right: 1px solid;
   border-color: #d4d4d4;
 }
-.ui-grid-header-cell:first-child .ui-grid-vertical-bar,
-.ui-grid-cell:first-child .ui-grid-vertical-bar {
+.ui-grid[dir=rtl] .ui-grid-header-cell:first-child .ui-grid-vertical-bar,
+.ui-grid[dir=rtl] .ui-grid-cell:first-child .ui-grid-vertical-bar {
   width: 0;
 }
 /*---------------------------------------------------
