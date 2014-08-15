@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-8cca4c9 - 2014-08-15
+/*! ui-grid - v2.0.12-43842a4 - 2014-08-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3129,7 +3129,7 @@ angular.module('ui.grid')
 
       if (!col) {
         col = new GridColumn(colDef, index, self);
-        self.columns.push(col);
+        self.columns.splice(index, 0, col);
       }
       else {
         col.updateColumnDef(colDef, col.index);
