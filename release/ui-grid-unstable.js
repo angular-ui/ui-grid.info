@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-2edf010 - 2014-08-15
+/*! ui-grid - v2.0.12-b39ec0a - 2014-08-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1593,8 +1593,9 @@ angular.module('ui.grid')
       // templateUrl: 'ui-grid/ui-grid-row',
       require: ['^uiGrid', '^uiGridRenderContainer'],
       scope: {
-         row: '=uiGridRow'
-         //rowIndex: '='
+         row: '=uiGridRow',
+         //rowRenderIndex is added to scope to give the true visual index of the row to any directives that need it
+         rowRenderIndex: '='
       },
       compile: function() {
         return {
@@ -4892,6 +4893,7 @@ angular.module('ui.grid')
    * relation to gridOptions.data.
    * @param {object} entity the array item from GridOptions.data
    * @param {number} index the current position of the row in the array
+   * @param {Grid} reference to the parent grid
    */
   function GridRow(entity, index, grid) {
 
@@ -4918,6 +4920,15 @@ angular.module('ui.grid')
       *  @description the index of the GridRow. It should always be unique and immutable
       */
     this.index = index;
+
+
+     /**
+      *  @ngdoc object
+      *  @name uid
+      *  @propertyOf  ui.grid.class:GridRow
+      *  @description  UniqueId of row
+      */
+     this.uid = gridUtil.nextUid();
 
      /**
       *  @ngdoc object
@@ -9416,7 +9427,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-row',
-    "<div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ui-grid-cell></div>"
+    "<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ui-grid-cell></div>"
   );
 
 
@@ -9497,16 +9508,12 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><!-- <div ui-grid-render-canvas class=\"ui-grid-canvas\">\n" +
-    "      <div ng-repeat=\"row in container.visibleRowCache track by $index\" class=\"ui-grid-row\">\n" +
-    "        <div ui-grid-row=\"row\" row-index=\"row.index\" render-container=\"container\"></div>\n" +
-    "      </div>\n" +
-    "    </div> --><!-- native scrolling --><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"vertical\"></div><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"horizontal\"></div></div>"
+    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><!-- native scrolling --><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"vertical\"></div><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"horizontal\"></div></div>"
   );
 
 
   $templateCache.put('ui-grid/uiGridViewport',
-    "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"row in rowContainer.renderedRows track by row.index\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle($index)\"><div ui-grid-row=\"row\"></div></div></div></div>"
+    "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by row.uid\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle(rowIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
   );
 
 

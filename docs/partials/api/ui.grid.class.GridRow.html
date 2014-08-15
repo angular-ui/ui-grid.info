@@ -6,12 +6,14 @@
 <div class="description"><p>GridRow is the viewModel for one logical row on the grid.  A grid Row is not necessarily a one-to-one
 relation to gridOptions.data.</p></div>
 <h2 id="Usage">Usage</h2>
-<div class="usage"><pre class="prettyprint linenums">GridRow(entity, index);</pre>
+<div class="usage"><pre class="prettyprint linenums">GridRow(entity, index, reference);</pre>
 <h3 id="Parameters">Parameters</h3>
 <ul class="parameters"><li><code ng:non-bindable="">entity – {object} – </code>
 <p>the array item from GridOptions.data</p></li>
 <li><code ng:non-bindable="">index – {number} – </code>
 <p>the current position of the row in the array</p></li>
+<li><code ng:non-bindable="">reference – {Grid} – </code>
+<p>to the parent grid</p></li>
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
@@ -48,6 +50,9 @@ ie: row.entity.fieldA</p><h4 id="Parameters">Parameters</h4>
 </li>
 <li><h3 id="index">index</h3>
 <div class="index"><p>the index of the GridRow. It should always be unique and immutable</p></div>
+</li>
+<li><h3 id="uid">uid</h3>
+<div class="uid"><p>UniqueId of row</p></div>
 </li>
 <li><h3 id="visible">visible</h3>
 <div class="visible"><p>If true, the row will be rendered</p></div>

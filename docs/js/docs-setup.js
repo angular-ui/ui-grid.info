@@ -79,7 +79,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "against always an and api array as back be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one path position qualified reference relation rendered resulting returns row scope should that the to true ui unique viewmodel visible will"
+      "keywords": "against always an and api array as back be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one parent path position qualified reference relation rendered resulting returns row scope should that the to true ui uid unique uniqueid viewmodel visible will"
     },
     {
       "section": "api",
@@ -429,7 +429,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$apply $http $scope active address aftercelledit age all allow and angular any app as available be boolean by called can cell celleditablecondition cellnav cellscope city class coldef column columndef columndefs columns compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate edited editing editor editors enablecelledit f2 false feature fields focus following for function get grid gridapi gridoptions has height html id if in index invoke invoked is isactive js json key lastcelledited length main mainctrl mode module msg name newvalue ng-controller non-navigable not null number numeric oldvalue on only onregisterapi option options or other others overview provided respectively returns row rowentity rows scope set should simple soon start success templatecache templates text than that the to true tutorial type typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
+      "keywords": "$apply $http $scope active address aftercelledit age all allow and angular any app as available be boolean by called can cell celleditablecondition cellnav cellscope city class coldef column columndef columndefs columns compiled content controller css custom data default definitions determine displayname double-click edit editable editablecelltemplate edited editing editor editors enablecelledit f2 false feature fields focus following for function get grid gridapi gridoptions has height html id if in index invoke invoked is isactive js json key lastcelledited length main mainctrl mode module msg name newvalue ng-controller non-navigable not null number numeric oldvalue on only onregisterapi option options or other others overview provided respectively return returns row rowentity rowrenderindex rows scope set should simple soon start success templatecache templates text than that the to true tutorial type typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your"
     },
     {
       "section": "tutorial",
