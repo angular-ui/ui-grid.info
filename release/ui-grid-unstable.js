@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-b8f181a - 2014-08-18
+/*! ui-grid - v2.0.12-8d43128 - 2014-08-18
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -6891,6 +6891,40 @@ module.filter('px', function() {
       return $delegate;
     }]);
 }]);
+})();
+(function () {
+  angular.module('ui.grid').config(['$provide', function($provide) {
+    $provide.decorator('i18nService', ['$delegate', function($delegate) {
+      $delegate.add('ru', {
+        aggregate: {
+          label: 'элементы'
+        },
+        groupPanel: {
+          description: 'Для группировки по столбцу перетащите сюда его название.'
+        },
+        search: {
+          placeholder: 'Поиск...',
+          showingItems: 'Показать элементы:',
+          selectedItems: 'Выбранные элементы:',
+          totalItems: 'Всего элементов:',
+          size: 'Размер страницы:',
+          first: 'Первая страница',
+          next: 'Следующая страница',
+          previous: 'Предыдущая страница',
+          last: 'Последняя страница'
+        },
+        menu: {
+          text: 'Выбрать столбцы:'
+        },
+        sort: {
+          ascending: 'По возрастанию',
+          descending: 'По убыванию',
+          remove: 'Убрать сортировку'
+        }
+      });
+      return $delegate;
+    }]);
+  }]);
 })();
 /**
  * @ngdoc overview
