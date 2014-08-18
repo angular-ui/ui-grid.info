@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-15c4aa6 - 2014-08-18
+/*! ui-grid - v2.0.12-b8f181a - 2014-08-18
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4233,9 +4233,9 @@ angular.module('ui.grid')
   function GridRenderContainer(name, grid, options) {
     var self = this;
 
-    if (gridUtil.type(grid) !== 'Grid') {
-      throw new Error('Grid argument is not a Grid object');
-    }
+    // if (gridUtil.type(grid) !== 'Grid') {
+    //   throw new Error('Grid argument is not a Grid object');
+    // }
 
     self.name = name;
 
