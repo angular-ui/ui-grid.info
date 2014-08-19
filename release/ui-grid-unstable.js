@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-5791a99 - 2014-08-19
+/*! ui-grid - v2.0.12-5a157f4 - 2014-08-19
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1538,9 +1538,11 @@ angular.module('ui.grid')
     var self = this;
 
     self.rowStyle = function (index) {
+      var renderContainer = $scope.grid.renderContainers[$scope.containerId];
+
       var styles = {};
       
-      if (!$scope.disableRowOffset) {
+      if (!renderContainer.disableRowOffset) {
         if (index === 0 && self.currentTopRow !== 0) {
           // The row offset-top is just the height of the rows above the current top-most row, which are no longer rendered
           var hiddenRowWidth = ($scope.rowContainer.currentTopRow) * $scope.grid.options.rowHeight;
@@ -1550,7 +1552,7 @@ angular.module('ui.grid')
         }
       }
       
-      if (!$scope.disableColumnOffset && $scope.colContainer.currentFirstColumn !== 0) {
+      if (!renderContainer.disableColumnOffset && $scope.colContainer.currentFirstColumn !== 0) {
         if ($scope.grid.isRTL()) {
           styles['margin-right'] = $scope.colContainer.columnOffset + 'px';
         }
@@ -1563,9 +1565,11 @@ angular.module('ui.grid')
     };
 
     self.columnStyle = function (index) {
+      var renderContainer = $scope.grid.renderContainers[$scope.containerId];
+
       var self = this;
-      
-      if (!$scope.disableColumnOffset) {
+
+      if (!renderContainer.disableColumnOffset) {
         if (index === 0 && $scope.colContainer.currentFirstColumn !== 0) {
           var offset = $scope.colContainer.columnOffset;
 
@@ -2058,7 +2062,7 @@ angular.module('ui.grid')
 
           var grid = uiGridCtrl.grid;
 
-          // Put the container sin scope so we can get rows and columns from them
+          // Put the containers in scope so we can get rows and columns from them
           $scope.rowContainer = containerCtrl.rowContainer;
           $scope.colContainer = containerCtrl.colContainer;
 
@@ -9547,7 +9551,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridViewport',
-    "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by row.uid\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+    "<div class=\"ui-grid-viewport\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by row.uid\" class=\"ui-grid-row\" ng-style=\"containerCtrl.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
   );
 
 
