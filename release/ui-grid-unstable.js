@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-e046a3c - 2014-08-18
+/*! ui-grid - v2.0.12-5791a99 - 2014-08-19
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7812,10 +7812,9 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name enableCellEdit
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @description Default value that colDefs will take if their enableCellEdit is undefined. Defaults to true.
+           *  @description If defined, it will be the default value that colDefs will take if their enableCellEdit is
+           *  not defined. Defaults to undefined.
            */
-            //default option to true unless it was explicitly set to false
-          gridOptions.enableCellEdit = gridOptions.enableCellEdit !== false;
 
           /**
            *  @ngdoc object
@@ -7875,7 +7874,8 @@ module.filter('px', function() {
            *  @propertyOf  ui.grid.edit.api:ColDef
            *  @description enable editing on column
            */
-          colDef.enableCellEdit = colDef.enableCellEdit === undefined ? gridOptions.enableCellEdit : colDef.enableCellEdit;
+          colDef.enableCellEdit = colDef.enableCellEdit === undefined ? (gridOptions.enableCellEdit === undefined ?
+            (colDef.type !== 'object'):gridOptions.enableCellEdit) : colDef.enableCellEdit;
 
           /**
            *  @ngdoc object
