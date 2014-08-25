@@ -9,7 +9,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:ColDef",
       "shortName": "ColDef",
       "type": "object",
-      "keywords": "allowcellfocus api cell cellnav column definitions enable feature focus for grid object on to true ui"
+      "keywords": "api cellnav column definitions feature for grid object ui"
     },
     {
       "section": "api",
@@ -65,14 +65,21 @@ NG_DOCS={
       "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "add address against algorithm allocated also and angular any api are aren array as be belongs binding body by city class classname coldef column columns complex container current data default defaults defined definition displayed docs each element employee evaluates expression expressions false field fields for function getcolclass getcolclassdefinition getfulladdress getrendercontainer grid hidecolumn hides if implementation in index instead like makes matures methods name needed normal object of on one optional options or other parameters position prefixdot properties prototype reference render represents return returns screen setting showcolumn sorting specifically state takes th that the they this to true ui use viewmodel visible when will"
+      "keywords": "allocated any api are aren array be belongs body by class classname coldef column columns container current default defined definition each false for function getcolclass getcolclassdefinition getrendercontainer grid hidecolumn hides if in index instead makes methods name needed object of on one or position prefixdot prototype reference render represents return returns setting showcolumn specifically state th that the they this to true ui viewmodel visible will"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "$delegate $provide _field add adding all allows altering an and angular any api application are array at auto-generating backwards be boolean but by can class column columndef columndefs compare compared compatibilty complex config contain data decorator default defaultoptions defaults defined developer disable do does doesn elements enabled enablerowhashing entitya entityb equality excludeproperties exists factory field1 field2 first for function generate get getrowidentity grid gridoptions grids gridutil hit id identifying identity if ignore ignored in is it item large maintain may modify name names necessary new nextuid not note numbers object objects of often on one only option options or out over overlaid overridden performance place process properties property provide rendered required return returns row rowequality rowidentity rows second set setting speeding state stripped take that the they this to tojson true ui uigrid uniquely up use used uses using value var vastly want when while will with within x_ you your"
+      "keywords": "$delegate $provide $scope _field add adding adds all allowed allowing allows altering am an and angular any api application aquamarine are array as at auto-generating background-color backwards be before boolean boxes but by can cell celleditablecondition cellnav celltemplate center class col colcontainer coldef coldefs column columndef columndefs columns compare compared compatibilty complex config contain custom data decorator default defaultoptions defaults defined determine developer disable displays do does doesn each edit editablecelltemplate editing editor either elements enable enablecelledit enablecelleditonfocus enablecolumnmenu enablecolumnresizing enabled enablefiltering enablerowhashing enablerowselection enablesorting entire entity entitya entityb equality excludeproperties exists factory false falsy feature field1 field2 file filter filtering first fnone focus for function generate get getexternalscopes getrowidentity grid gridoptions grids gridutil header header_template headers headertemplate hit html id identifying identity if ignore ignored in information inline invoked is it item large maintain may menu modify more multiple multiselect name names necessary new nextuid ng-click ng-repeat not note null numbers object objects of often on one only option options or out over overlaid overridden performance pinning place precompiled process properties property provide provided receives refer rendered renderedcolumns required requires resizecolumns resizing return returns row row_template rowequality rowidentity rows rowtemplate second selection set setting soon sort sorting specified speeding state stripped style take template text-align that the their then they this to tojson track true tutorial ui ui-grid ui-grid-cell ui-grid-top-panel uigrid undefined uniquely up use used uses using value var vastly want when while widgets will with within x_ you your"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.class:GridOptions.columnDef",
+      "shortName": "columnDef",
+      "type": "object",
+      "keywords": "$scope action add address adds against alert algorithm allowcellfocus allowed allowing although an and angular any api are array as asc auto backward be before bind binding blargh boolean but by can cell celleditablecondition cellnav city class clear col coldef column columndef columndefs compatibility complex constant context data default definition definitions desc determine direction displayname docs does each edit editablecelltemplate editing editor either element enable enablecelledit enablecelleditonfocus enablecolumnresizing enabled enablefiltering enablepinning enablesorting entity evaluated evaluates example expression expressions false falsy feature field field1 field2 field3 filter filtering filters focus for format function functionality getfulladdress grid gridoptions have header how icon id if in individual insert invoked is it items just like many maximum maxwidth menu menuitems minimum minwidth must name nav normal not number object of omitted on one options or outer parameters percentage pinning present property provided receives refer requires resizecolumns resizing return row scope see set sets setting should something soon sort sorting sortingalgorithm source specified standard takes template term text that the then this title to too true tutorial typically ui ui-grid-icon-info-circled uigridconstants unclear url use used value values visible what when whether which widgets width will wish with within work would xxx you"
     },
     {
       "section": "api",
@@ -114,14 +121,14 @@ NG_DOCS={
       "id": "ui.grid.edit.api:ColDef",
       "shortName": "ColDef",
       "type": "object",
-      "keywords": "$scope allowed and api as be before can cell celleditablecondition cellnav col coldef column default definitions determine edit editablecelltemplate editing editor either enable enablecelledit enablecelleditonfocus entity evaluated false falsy feature focus for function grid gridoptions if invoked is not object of on or receives requires return row soon specified template text then this to true ui url used value when"
+      "keywords": "api column definitions edit feature for grid object ui"
     },
     {
       "section": "api",
       "id": "ui.grid.edit.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "$scope all allowed and api as be before by cell celleditablecondition cellnav celltemplate col coldef coldefs columns default defaults defined determine edit editablecelltemplate editing editor either enablecelledit enablecelleditonfocus entity false falsy feature focus for function grid if invoked is it not object of options or receives requires return row soon specified take that the their then to true ui ui-grid undefined use used value will"
+      "keywords": "api edit feature for grid object options ui"
     },
     {
       "section": "api",
@@ -198,28 +205,28 @@ NG_DOCS={
       "id": "ui.grid.pinning.api:ColDef",
       "shortName": "ColDef",
       "type": "object",
-      "keywords": "api coldef enable enablepinning feature for grid object pinning to true ui"
+      "keywords": "api coldef feature for grid object pinning ui"
     },
     {
       "section": "api",
       "id": "ui.grid.pinning.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api enable enablerowselection feature for grid gridoptions object pinning to true ui"
+      "keywords": "api feature for grid gridoptions object pinning ui"
     },
     {
       "section": "api",
       "id": "ui.grid.resizeColumns.api:ColDef",
       "shortName": "ColDef",
       "type": "object",
-      "keywords": "api coldef column enable enablecolumnresizing feature for grid gridoptions object resizecolumns resizing to ui"
+      "keywords": "api coldef feature for grid object resizecolumns ui"
     },
     {
       "section": "api",
       "id": "ui.grid.resizeColumns.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api column enable enablecolumnresizing feature for grid gridoptions object resizecolumns resizing to true ui"
+      "keywords": "api feature for grid gridoptions object resizecolumns ui"
     },
     {
       "section": "api",
@@ -247,7 +254,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api enable enablerowselection feature for grid gridoptions multiple multiselect object row selection to true ui"
+      "keywords": "api feature for grid gridoptions object selection ui"
     },
     {
       "section": "api",
@@ -345,7 +352,7 @@ NG_DOCS={
       "id": "103_filtering",
       "shortName": "103 Filtering",
       "type": "overview",
-      "keywords": "$http $scope allows an and angular app at be below by can class click column columndefs company controller css data def default disabled enablefiltering example false field filter filtering flag for function gender get grid gridoptions has header height html in index is js json just last level main mainctrl menu module name ng-controller nganimate off on open options overview rows see set setting success that the then third to true tutorial ui ui-grid var width you your"
+      "keywords": "$http $scope allows an and angular app at be below by can class click column columndefs company controller css data def default disabled enablefiltering example false field filter filtering filters flag for function gender get grid gridoptions has header height html in index is js json just last level main mainctrl male menu module name ng-controller nganimate off on open options overview programmatically rows second see set setting success term that the then third to true tutorial ui ui-grid var width xxx you your"
     },
     {
       "section": "tutorial",

@@ -4,27 +4,4 @@
 </h1>
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Column Definitions for edit feature</p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="cellEditableCondition">cellEditableCondition</h3>
-<div class="celleditablecondition"><p>If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed
-<pre class="prettyprint linenums">
-function($scope){
-  //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
-  return true;
-}
-</pre></div>
-</li>
-<li><h3 id="editableCellTemplate">editableCellTemplate</h3>
-<div class="editablecelltemplate"><p>cell template to used when editing this column. can be Url or text template
-<br/>Defaults to gridOptions.editableCellTemplate</p></div>
-</li>
-<li><h3 id="enableCellEdit">enableCellEdit</h3>
-<div class="enablecelledit"><p>enable editing on column</p></div>
-</li>
-<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
-<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false
-<br>!! requires cellNav feature !!</p></div>
-</li>
-</ul>
-</div>
 </div>

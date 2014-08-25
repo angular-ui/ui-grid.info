@@ -9,7 +9,12 @@ over this object.</p></div>
 <div class="usage"><pre class="prettyprint linenums">GridOptions();</pre>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="rowEquality">rowEquality(entityA, entityB)</h3>
+<ul class="methods"><li><h3 id="getRowIdentity">getRowIdentity()</h3>
+<div class="getrowidentity"><p>(optional) This function returns the identity value uniquely identifying this row.</p>
+
+<p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p></div>
+</li>
+<li><h3 id="rowEquality">rowEquality(entityA, entityB)</h3>
 <div class="rowequality"><p>By default, rows are compared using object equality.  This option can be overridden
 to compare on any data item property or function</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">entityA – {object} – </code>
@@ -19,17 +24,68 @@ to compare on any data item property or function</p><h4 id="Parameters">Paramete
 </ul>
 </div>
 </li>
+<li><h3 id="rowIdentity">rowIdentity()</h3>
+<div class="rowidentity"><p>(optional) This function is used to get and, if necessary, set the value uniquely identifying this row.</p>
+
+<p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one</p></div>
+</li>
 </ul>
 </div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="columnDefs">columnDefs</h3>
-<div class="columndefs"><p>(optional) Array of columnDef objects.  Only required property is name.
-<em>field property can be used in place of name for backwards compatibilty with 2.x</em></p><h4 id="Example">Example</h4>
-<div class="example"><p>var columnDefs = [{name:'field1'}, {name:'field2'}];</p></div>
-</div>
+<ul class="properties"><li><h3 id="cellEditableCondition">cellEditableCondition</h3>
+<div class="celleditablecondition"><p>If specified, either a value or function to be used by all columns before editing.  If falsy, then editing of cell is not allowed.
+Requires the edit feature to be enabled
+<pre class="prettyprint linenums">
+function($scope){
+  //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
+  return true;
+}
+</pre></div>
 </li>
 <li><h3 id="data">data</h3>
 <div class="data"><p>Array of data to be rendered to grid.  Array can contain complex objects</p></div>
+</li>
+<li><h3 id="editableCellTemplate">editableCellTemplate</h3>
+<div class="editablecelltemplate"><p>If specified, cellTemplate to use as the editor for all columns.  Requires the edit feature to be enabled
+<br/> default to 'ui-grid/cellTextEditor'</p></div>
+</li>
+<li><h3 id="enableCellEdit">enableCellEdit</h3>
+<div class="enablecelledit"><p>If defined, it will be the default value that colDefs will take if their enableCellEdit is
+not defined. Defaults to undefined.  Requires the edit feature to be enabled</p></div>
+</li>
+<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
+<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.  Requires the edit feature to be enabled
+<br>!! requires cellNav feature !!</p></div>
+</li>
+<li><h3 id="enableColumnResizing">enableColumnResizing</h3>
+<div class="enablecolumnresizing"><p>Enable column resizing on the entire grid.  Requires the column resizing feature to be enabled. 
+<br/>Defaults to true</p></div>
+</li>
+<li><h3 id="enableRowSelection">enableRowSelection</h3>
+<div class="enablerowselection"><p>Enable pinning for the entire grid. Requires the pinning feature to be enabled. 
+<br/>Defaults to true</p></div>
+</li>
+<li><h3 id="enableRowSelection">enableRowSelection</h3>
+<div class="enablerowselection"><p>Enable row selection for entire grid.  Requires row selection feature to be enabled.
+<br/>Defaults to true</p></div>
+</li>
+<li><h3 id="multiSelect">multiSelect</h3>
+<div class="multiselect"><p>Enable multiple row selection for entire grid.  Requires row selection feature to be enabled.
+<br/>Defaults to true</p></div>
+</li>
+<li><h3 id="columnDefs">columnDefs</h3>
+<div class="columndefs"><p>(optional) Array of columnDef objects.  Only required property is name.
+<em>field property can be used in place of name for backwards compatibilty with 2.x</em></p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre></div>
+</div>
+</li>
+<li><h3 id="enableColumnMenu">enableColumnMenu</h3>
+<div class="enablecolumnmenu"><p>(optional) True by default. When enabled, this setting displays a column
+menu within each column.</p></div>
+</li>
+<li><h3 id="enableFiltering">enableFiltering</h3>
+<div class="enablefiltering"><p>(optional) False by default. When enabled, this setting adds filter 
+boxes to each column header, allowing filtering within the column.</p></div>
 </li>
 <li><h3 id="enableRowHashing">enableRowHashing</h3>
 <div class="enablerowhashing"><p>(optional) True by default. When enabled, this setting allows uiGrid to add
@@ -40,19 +96,25 @@ the grid to maintain state while vastly speeding up the process of altering <cod
 you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
 and are altering the data set often.</p></div>
 </li>
+<li><h3 id="enableSorting">enableSorting</h3>
+<div class="enablesorting"><p>(optional) True by default. When enabled, this setting adds sort
+widgets to the column headers, allowing sorting of the data.</p></div>
+</li>
 <li><h3 id="excludeProperties">excludeProperties</h3>
 <div class="excludeproperties"><p>(optional) Array of property names in data to ignore when auto-generating column names. defaults to ['$$hashKey']
 If columnDefs is defined, this will be ignored.</p></div>
 </li>
-<li><h3 id="getRowIdentity">getRowIdentity</h3>
-<div class="getrowidentity"><p>(optional) This function returns the identity value uniquely identifying this row.</p>
-
-<p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p></div>
+<li><h3 id="headerTemplate">headerTemplate</h3>
+<div class="headertemplate"><p>(optional) Null by default. When provided, this setting uses a custom header
+template. Can be set to either the name of a template file 'header_template.html', inline html 
+<pre class="prettyprint linenums">'&lt;div class="ui-grid-top-panel" style="text-align: center"&gt;I am a Custom Grid Header&lt;/div&gt;'</pre>, or the id
+of a precompiled template '??'.  Refer to the custom header tutorial for more information.</p></div>
 </li>
-<li><h3 id="rowIdentity">rowIdentity</h3>
-<div class="rowidentity"><p>(optional) This function is used to get and, if necessary, set the value uniquely identifying this row.</p>
-
-<p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one</p></div>
+<li><h3 id="rowTemplate">rowTemplate</h3>
+<div class="rowtemplate"><p>(optional) 'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
+custom row template.  Can be set to either the name of a template file 'row_template.html', inline html 
+<pre class="prettyprint linenums">'&lt;div style="background-color: aquamarine" ng-click="getExternalScopes().fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;'</pre>, or the id
+of a precompiled template '??' can be provided.  Refer to the custom row template tutorial for more information.</p></div>
 </li>
 </ul>
 </div>
