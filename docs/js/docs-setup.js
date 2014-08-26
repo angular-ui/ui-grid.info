@@ -51,7 +51,7 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all alter an and any api appended are array as asc ascending assign assigntypes be behavior being block build buildcolumndefsfromdata buildcolumns buildstyles by called calls cell chance class col coldef column columnbuilder columnbuilders columndefinition columndefs columns columnsprocessor contains count created creates currently data defined definitions desc descending direction directions directive each either element etc exclude existing expected false first for from function further getcolumn getcolumnsorting getrow given grid gridcolumn gridoptions gridrow has having id identified if in instance into is it iterate its load long main maintain map methods modified modifyrows name needed newrawdata not object objects of on one only optional optionally options or pass per populates precompilecelltemplates precompiles process processes processor processrowbuilders promise properties property prototype provided reference register registercolumnbuilder registercolumnsprocessor registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowentity rowequality rows set sort sortcolumn sorted sorting state stylecomputation supplies templates that the this through to type types ui unsorted updated uses using value viewmodel when which will with"
+      "keywords": "add added additional all alter an and any api appended are array as asc ascending assign assigntypes be behavior being block build buildcolumndefsfromdata buildcolumns buildstyles by called calls cell chance class col coldef column columnbuilder columnbuilders columndefinition columndefs columns columnsprocessor contains count created creates currently data defined definitions desc descending direction directions directive each either element etc exclude existing expected false field first for from function further getcoldef getcolumn getcolumnsorting getrow given grid gridcolumn gridoptions gridrow has having id identified if in instance into is it iterate its load long main maintain map methods modified modifyrows name needed newrawdata not object objects of on one only optional optionally options or pass per populates precompilecelltemplates precompiles process processes processor processrowbuilders promise properties property prototype provided reference register registercolumnbuilder registercolumnsprocessor registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes renderable reset resetcolumnsorting resetting resolved resources return returns row rowbuilder rowbuilders rowentity rowequality rows set sort sortcolumn sorted sorting state stylecomputation supplies templates that the this through to type types ui unsorted updated uses using value viewmodel when which will with"
     },
     {
       "section": "api",
@@ -72,7 +72,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "$delegate $provide $scope _field add adding adds all allowed allowing allows altering am an and angular any api application aquamarine are array as at auto-generating background-color backwards be before boolean boxes but by can cell celleditablecondition cellnav celltemplate center class col colcontainer coldef coldefs column columndef columndefs columns compare compared compatibilty complex config contain custom data decorator default defaultoptions defaults defined determine developer disable displays do does doesn each edit editablecelltemplate editing editor either elements enable enablecelledit enablecelleditonfocus enablecolumnmenu enablecolumnresizing enabled enablefiltering enablerowhashing enablerowselection enablesorting entire entity entitya entityb equality excludeproperties exists factory false falsy feature field1 field2 file filter filtering first fnone focus for function generate get getexternalscopes getrowidentity grid gridoptions grids gridutil header header_template headers headertemplate hit html id identifying identity if ignore ignored in information inline invoked is it item large maintain may menu modify more multiple multiselect name names necessary new nextuid ng-click ng-repeat not note null numbers object objects of often on one only option options or out over overlaid overridden performance pinning place precompiled process properties property provide provided receives refer rendered renderedcolumns required requires resizecolumns resizing return returns row row_template rowequality rowidentity rows rowtemplate second selection set setting soon sort sorting specified speeding state stripped style take template text-align that the their then they this to tojson track true tutorial ui ui-grid ui-grid-cell ui-grid-top-panel uigrid undefined uniquely up use used uses using value var vastly want when while widgets will with within x_ you your"
+      "keywords": "$delegate $provide $scope _field add adding adds all allowed allowing allows altering am an and angular any api application aquamarine are array as at auto-generating background-color backwards be before boolean boxes but by can cell celleditablecondition cellnav center class col colcontainer coldef coldefs column columndef columndefs columns compare compared compatibilty complex config contain custom data decorator default defaultoptions defaults defined determine developer disable displays do does doesn each edit editing editor either elements enable enablecelledit enablecelleditonfocus enablecolumnmenu enablecolumnresizing enabled enablefiltering enablerowhashing enablerowselection enablesorting entire entity entitya entityb equality excludeproperties exists factory false falsy feature field1 field2 file filter filtering first fnone focus for function generate get getexternalscopes getrowidentity grid gridoptions grids gridutil header header_template headers headertemplate hit html id identifying identity if ignore ignored in information inline invoked is it item large maintain may menu modify more multiple multiselect name names necessary new nextuid ng-click ng-repeat not note null numbers object objects of often on one only option options or out over overlaid overridden performance pinning place precompiled process properties property provide provided receives refer rendered renderedcolumns required requires resizecolumns resizing return returns row row_template rowequality rowidentity rows rowtemplate second selection set setting soon sort sorting specified speeding state stripped style take template text-align that the their then they this to tojson track true tutorial ui ui-grid ui-grid-cell ui-grid-top-panel uigrid undefined uniquely up use used uses using value var vastly want when while widgets will with within x_ you your"
     },
     {
       "section": "api",
@@ -128,7 +128,7 @@ NG_DOCS={
       "id": "ui.grid.edit.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api edit feature for grid object options ui"
+      "keywords": "all api as celltemplate columns default edit editablecelltemplate editor feature for grid if object options specified the to ui ui-grid use"
     },
     {
       "section": "api",
@@ -146,10 +146,17 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.edit.directive:input",
+      "shortName": "input",
+      "type": "directive",
+      "keywords": "$valid and angular api between binding date directive edit element enclosing entered false for form format grid if input invalid is it model ng-model of or property provide set similar supported the to ui value will wrong yyyy-mm-dd"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.edit.directive:uiGridCell",
       "shortName": "uiGridCell",
       "type": "directive",
-      "keywords": "actions and angular api appended back be been begin binds blur by cancel cancelled capabilities cell celltexteditor columndef dblclick default dependent directive div do edit editablecelltemplate editing element emit end ended enter esc etc event events f2 fire grid grid_scroll gridcell has html if in-line initial input invoke is it key keydown model needed of on original provide recognizes respond selection set should specific stacks standards start steps that the to top ui uigridcell uigridconstants uigrideditconstants using value when will with"
+      "keywords": "actions and angular api appended back be been begin binds blur by cancel cancelled capabilities cell celleditor columndef dblclick default dependent directive div do edit editablecelltemplate editing element emit end ended enter esc etc event events f2 fire grid grid_scroll gridcell has html if in-line initial input invoke is it key keydown model needed of on original provide recognizes respond selection set should specific stacks standards start steps that the to top ui uigridcell uigridconstants uigrideditconstants using value when will with"
     },
     {
       "section": "api",
@@ -163,7 +170,7 @@ NG_DOCS={
       "id": "ui.grid.edit.directive:uiGridTextEditor",
       "shortName": "uiGridTextEditor",
       "type": "directive",
-      "keywords": "and api as be blur can cancel canceledit develop directive div edit editing editor editors end endedit enter esc events fields for grid input keydown other provides template text that to ui used"
+      "keywords": "and api blur cancel canceledit directive div edit editable editing editor end endedit enter esc events fields for grid input keydown provides that ui"
     },
     {
       "section": "api",
@@ -436,7 +443,7 @@ NG_DOCS={
       "id": "6_editable",
       "shortName": "Editable Grid",
       "type": "overview",
-      "keywords": "$apply $http $scope active address addressformatter aftercelledit age all allow and angular any app as available be boolean by called can cell celleditablecondition cellfilter cellnav cellscope city class coldef column columndef columndefs columns compiled content controller css custom data default definitions determine disable displayname double-click edit editable editablecelltemplate edited editing editor editors enable enablecelledit f2 false feature fields filter focus following for function get grid gridapi gridoptions has height html id if in index input invoke invoked is isactive it js json key lastcelledited length main mainctrl mode module msg name newvalue ng-controller non-navigable not null number numeric object of oldvalue on only onregisterapi option options or other others overview provided respectively return returns row rowentity rowrenderindex rows scope set should simple soon start state street success templatecache templates text than that the to true tutorial type typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your zip"
+      "keywords": "$apply $http $scope active address addressformatter aftercelledit age all allow and angular any app are as available be boolean by called can cell celleditablecondition cellfilter cellnav cellscope checkbox city class coldef column columndef columndefs columns compiled content controller css custom data date default definitions determine disable displayname double-click edit editable editablecelltemplate edited editing editor editors enable enablecelledit f2 false feature fields filter focus following for function get grid gridapi gridoptions has height html id if in index input invoke invoked is isactive it js json key lastcelledited length main mainctrl mode module msg name new newvalue ng-controller non-navigable not number numeric object of oldvalue on only onregisterapi option options or other overview provided registered respectively return returns row rowentity rowrenderindex rows scope set should simple soon specified start state street string success templatecache templates text than that the to true tutorial type types typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your yyyy-mm-dd zip"
     },
     {
       "section": "tutorial",

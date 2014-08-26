@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-ee1f59c - 2014-08-25
+/*! ui-grid - v2.0.12-9f68d84 - 2014-08-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2577,6 +2577,20 @@ angular.module('ui.grid')
 
   /**
    * @ngdoc function
+   * @name getColDef
+   * @methodOf ui.grid.class:Grid
+   * @description returns a grid colDef for the column name
+   * @param {string} name column.field
+   */
+  Grid.prototype.getColDef = function getColDef(name) {
+    var colDefs = this.options.columnDefs.filter(function (colDef) {
+      return colDef.name === name;
+    });
+    return colDefs.length > 0 ? colDefs[0] : null;
+  };
+
+  /**
+   * @ngdoc function
    * @name assignTypes
    * @methodOf ui.grid.class:Grid
    * @description uses the first row of data to assign colDef.type for any types not defined.
@@ -2612,6 +2626,15 @@ angular.module('ui.grid')
     $log.debug('buildColumns');
     var self = this;
     var builderPromises = [];
+
+    // Synchronize self.columns with self.options.columnDefs so that columns can also be removed.
+    if (self.columns.length > self.options.columnDefs.length) {
+        self.columns.forEach(function (column, index) {
+            if (!self.getColDef(column.name)) {
+                self.columns.splice(index, 1);
+            }
+        });
+    }
 
     self.options.columnDefs.forEach(function (colDef, index) {
       self.preprocessColDef(colDef);
@@ -6562,13 +6585,13 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         digit = uid[index].charCodeAt(0);
         if (digit === 57 /*'9'*/) {
           uid[index] = 'A';
-          return uid.join('');
+          return uidPrefix + uid.join('');
         }
         if (digit === 90  /*'Z'*/) {
           uid[index] = '0';
         } else {
           uid[index] = String.fromCharCode(digit + 1);
-          return uid.join('');
+          return uidPrefix + uid.join('');
         }
       }
       uid.unshift('0');
@@ -6826,6 +6849,7 @@ module.filter('px', function() {
 });
 
 })();
+
 (function(){
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -8049,9 +8073,8 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name editableCellTemplate
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
-           *  @description If specified, cellTemplate to use as the editor for all columns.  Requires the edit feature to be enabled
-           *  <br/> default to 'ui-grid/cellTextEditor'
+           *  @description If specified, cellTemplate to use as the editor for all columns.
+           *  <br/> default to 'ui-grid/cellEditor'
            */
 
           /**
@@ -8121,18 +8144,7 @@ module.filter('px', function() {
            *  Requires the edit feature to be enabled
            */
           if (colDef.enableCellEdit) {
-            colDef.editableCellTemplate = colDef.editableCellTemplate || gridOptions.editableCellTemplate ||
-              (function(){
-                if (colDef.type) {
-                  switch (colDef.type) {
-                    case 'boolean' :
-                      return 'ui-grid/cellBooleanEditor';
-                    case 'number' :
-                      return 'ui-grid/cellNumberEditor';
-                  }
-                }
-              })() ||
-              'ui-grid/cellTextEditor';
+            colDef.editableCellTemplate = colDef.editableCellTemplate || gridOptions.editableCellTemplate || 'ui-grid/cellEditor';
 
             promises.push(gridUtil.getTemplate(colDef.editableCellTemplate)
               .then(
@@ -8254,7 +8266,7 @@ module.filter('px', function() {
    *  Editing Actions.
    *
    *  Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is appended
-   *  with the columnDef.editableCellTemplate element ('cellTextEditor.html' by default).
+   *  with the columnDef.editableCellTemplate element ('cellEditor.html' by default).
    *
    *  The editableCellTemplate should respond to uiGridEditConstants.events.BEGIN\_CELL\_EDIT angular event
    *  and do the initial steps needed to edit the cell (setfocus on input element, etc).
@@ -8347,6 +8359,19 @@ module.filter('px', function() {
               html = $scope.col.editableCellTemplate;
               html = html.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col));
 
+              $scope.inputType = 'text';
+              switch ($scope.col.colDef.type){
+                case 'boolean':
+                  $scope.inputType = 'checkbox';
+                  break;
+                case 'number':
+                  $scope.inputType = 'number';
+                  break;
+                case 'date':
+                  $scope.inputType = 'date';
+                  break;
+              }
+
               var cellElement;
               $scope.$apply(function () {
                   inEdit = true;
@@ -8418,9 +8443,8 @@ module.filter('px', function() {
    *  @element div
    *  @restrict A
    *
-   *  @description input editor directive for text fields.
+   *  @description input editor directive for editable fields.
    *  Provides EndEdit and CancelEdit events
-   *  Can be used as a template to develop other editors
    *
    *  Events that end editing:
    *     blur and enter keydown
@@ -8429,7 +8453,7 @@ module.filter('px', function() {
    *    - Esc keydown
    *
    */
-  module.directive('uiGridTextEditor',
+  module.directive('uiGridEditor',
     ['uiGridConstants', 'uiGridEditConstants',
       function (uiGridConstants, uiGridEditConstants) {
         return {
@@ -8455,8 +8479,6 @@ module.filter('px', function() {
                
                $scope.stopEdit = function (evt) {
                   if ($scope.inputForm && !$scope.inputForm.$valid) {
-               
-
                     evt.stopPropagation();
                     $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
                   }
@@ -8505,6 +8527,43 @@ module.filter('px', function() {
           }
         };
       }]);
+
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.edit.directive:input
+   *  @element input
+   *  @restrict E
+   *
+   *  @description directive to provide binding between input[date] value and ng-model for angular 1.2
+   *  It is similar to input[date] directive of angular 1.3
+   *
+   *  Supported date format for input is 'yyyy-MM-dd'
+   *  The directive will set the $valid property of input element and the enclosing form to false if
+   *  model is invalid date or value of input is entered wrong.
+   *
+   */
+    module.directive('input', ['$filter', function ($filter) {
+      return {
+        restrict: 'E',
+        require: '?ngModel',
+        link: function (scope, element, attrs, ngModel) {
+
+          if (angular.version.minor === 2 && attrs.type && 'date' === attrs.type && ngModel) {
+
+            ngModel.$formatters.push(function (modelValue) {
+              ngModel.$setValidity(null, (!modelValue || !isNaN(modelValue.getTime())));
+              return $filter('date')(modelValue, 'yyyy-MM-dd');
+            });
+
+            ngModel.$parsers.push(function (viewValue) {
+              var dateValue = new Date(viewValue);
+              ngModel.$setValidity(null, (!dateValue || !isNaN(dateValue.getTime())));
+              return dateValue;
+            });
+          }
+        }
+      };
+    }]);
 
 })();
 
@@ -9786,18 +9845,8 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('ui-grid/cellBooleanEditor',
-    "<div><input type=\"checkbox\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
-  );
-
-
-  $templateCache.put('ui-grid/cellNumberEditor',
-    "<div><form name=\"inputForm\"><input type=\"number\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></form></div>"
-  );
-
-
-  $templateCache.put('ui-grid/cellTextEditor',
-    "<div><input type=\"text\" ng-class=\"'colt' + col.index\" ui-grid-text-editor ng-model=\"COL_FIELD\"></div>"
+  $templateCache.put('ui-grid/cellEditor',
+    "<div><form name=\"inputForm\"><input type=\"{{inputType}}\" ng-class=\"'colt' + col.index\" ui-grid-editor ng-model=\"COL_FIELD\"></form></div>"
   );
 
 
