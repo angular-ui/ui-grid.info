@@ -317,7 +317,7 @@ NG_DOCS={
       "id": "ui.grid.service:GridUtil",
       "shortName": "GridUtil",
       "type": "service",
-      "keywords": "$scope accessor account accounting alert an and angular any apart api app appropriately argument array as bob boolean borders browser browsers cache calculation capitalized column columndefs columnname comes consistent contents controller correctly current currently data date definitions denormalize denormalizes different direction dom dommousescroll either element elementheight elementwidth etc event examine excludeproperties field first firstname following for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil guesses guesstype handle height html id in inconsistent index is it item jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names newid ng-bind ng-controller ng-model no normalize normalized normalizes normalizescrollleft normalizewheelevent number object of on one optional or pixels promise readablecolumnname representing resolving resulting return returns right rtl scale scrollleft service set smith so split stays string sure template that the them then this to type ui unique url use utility value values var variable ways what wheel width with"
+      "keywords": "$scope accessor account accounting alert allow an and angular any apart api app appropriately argument array as bob boolean borders bracket browser browsers cache calculation capitalized characters column columndefs columnname comes consistent contents controller converts correctly current currently data date deep definitions denormalize denormalizes different direction dom dommousescroll either element elementheight elementwidth etc evaluate event examine excludeproperties field first firstname following for frank from function functions get getcolumnsfromdata gettemplate given grid gridutil guesses guesstype handle height html id in inconsistent index is it item jones jquery js last lastname list mainctrl make margin margins matter method modifier module mouse mousewheel mozmousepixelscroll name names nested newid ng-bind ng-controller ng-model no normalize normalized normalizes normalizescrollleft normalizewheelevent notation number object of on one optional or path pixels preeval promise prop-erty property readablecolumnname representing resolving resulting return returns right rtl scale scrollleft service set smith so special split stays string sure takes template that the them then this to type ui unique url use utility value values var variable ways what wheel width with"
     },
     {
       "section": "api",
@@ -367,6 +367,13 @@ NG_DOCS={
       "shortName": "104 i18n",
       "type": "overview",
       "keywords": "$http $scope add after allowed an and angular another app attribute can change class columndefs company contains controller css current currently data default description directive div does easiest enablefiltering existing false field filter for fr function gender get getalllangs grid gridoptions grouppanel have header height html i18n i18nservice in index is js json lang langs language main mainctrl menu method module more name ng-controller ng-model ng-options nl no not note one only option or overview per provides rendered see service set setcurrentlang setting so stored success text than that the there to todo translations tutorial ui ui-grid ui-i18n ui-t use var way width you"
+    },
+    {
+      "section": "tutorial",
+      "id": "106_binding",
+      "shortName": "106 Binding examples",
+      "type": "overview",
+      "keywords": "$scope address and angular app array ave be binding can characters city class coldef columndefs complex controller cox css data dove edit edited element enablecelledit enablesorting examples field first-name fistname friend0 friends function getzip grid gridoptions height html in index js laurel main mainctrl module name nested ng-controller not note object overview properties property shows special supports that the this to true tutorial two-way ui ui-grid ui-grid-edit var width with zip"
     },
     {
       "section": "tutorial",

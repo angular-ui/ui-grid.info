@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-83935c9 - 2014-08-27
+/*! ui-grid - v2.0.12-fc02c60 - 2014-08-27
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12,6 +12,10 @@
     COL_FIELD: /COL_FIELD/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
     TEMPLATE_REGEXP: /<.+>/,
+    FUNC_REGEXP: /(\([^)]*\))?$/,
+    DOT_REGEXP: /\./g,
+    APOS_REGEXP: /'/g,
+    BRACKET_REGEXP: /^(.*)((?:\s*\[\s*\d+\s*\]\s*)|(?:\s*\[\s*"(?:[^"\\]|\\.)*"\s*\]\s*)|(?:\s*\[\s*'(?:[^'\\]|\\.)*'\s*\]\s*))(.*)$/,
     COL_CLASS_PREFIX: 'ui-grid-col',
     events: {
       GRID_SCROLL: 'uiGridScroll',
@@ -5196,7 +5200,7 @@ angular.module('ui.grid')
    * @returns {string} resulting name that can be evaluated on scope
    */
   GridRow.prototype.getQualifiedColField = function(col) {
-    return 'row.entity.' + col.field;
+    return 'row.' + this.getEntityQualifiedColField(col);
   };
 
     /**
@@ -5209,7 +5213,7 @@ angular.module('ui.grid')
      * @returns {string} resulting name that can be evaluated against a row
      */
   GridRow.prototype.getEntityQualifiedColField = function(col) {
-    return 'entity.' + col.field;
+    return gridUtil.preEval('entity.' + col.field);
   };
 
   return GridRow;
@@ -5866,13 +5870,13 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     var sortFn, item;
 
     // See if we already figured out what to use to sort the column and have it in the cache
-    if (rowSorter.colSortFnCache[col.field]) {
-      sortFn = rowSorter.colSortFnCache[col.field];
+    if (rowSorter.colSortFnCache[col.colDef.name]) {
+      sortFn = rowSorter.colSortFnCache[col.colDef.name];
     }
     // If the column has its OWN sorting algorithm, use that
     else if (col.sortingAlgorithm !== undefined) {
       sortFn = col.sortingAlgorithm;
-      rowSorter.colSortFnCache[col.field] = col.sortingAlgorithm;
+      rowSorter.colSortFnCache[col.colDef.name] = col.sortingAlgorithm;
     }
     // Try and guess what sort function to use
     else {
@@ -5881,7 +5885,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
       // If we found a sort function, cache it
       if (sortFn) {
-        rowSorter.colSortFnCache[col.field] = sortFn;
+        rowSorter.colSortFnCache[col.colDef.name] = sortFn;
       }
       else {
         // We assign the alpha sort because anything that is null/undefined will never get passed to
@@ -5966,8 +5970,8 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
         sortFn = rowSorter.getSortFn(grid, col, r);
         
-        var propA = grid.getCellValue(rowA, col); // $parse(col.field)(rowA);
-        var propB = grid.getCellValue(rowB, col); // $parse(col.field)(rowB);
+        var propA = grid.getCellValue(rowA, col);
+        var propB = grid.getCellValue(rowB, col);
 
         // We want to allow zero values to be evaluated in the sort function
         if ((!propA && propA !== 0) || (!propB && propB !== 0)) {
@@ -6138,7 +6142,8 @@ var uidPrefix = 'uiGrid-';
  *  
  *  @description Grid utility functions
  */
-module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateCache', '$timeout', '$injector', '$q', function ($log, $window, $document, $http, $templateCache, $timeout, $injector, $q) {
+module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateCache', '$timeout', '$injector', '$q', 'uiGridConstants',
+  function ($log, $window, $document, $http, $templateCache, $timeout, $injector, $q, uiGridConstants) {
   var s = {
 
     /**
@@ -6843,6 +6848,38 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     else {
       // TODO(c0bra): Handle other browsers? Android? iOS? Opera?
       return scrollLeft;
+    }
+  };
+
+    /**
+     * @ngdoc method
+     * @name preEval
+     * @methodOf ui.grid.service:GridUtil
+     *
+     * @param {string} path Path to evaluate
+     *
+     * @returns {string} A path that is normalized.
+     *
+     * @description
+     * Takes a field path and converts it to bracket notation to allow for special characters in path
+     * @example
+     * <pre>
+     * gridUtil.preEval('property') == 'property'
+     * gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
+     * </pre>
+     */
+  s.preEval = function (path) {
+    var m = uiGridConstants.BRACKET_REGEXP.exec(path);
+    if (m) {
+      return (m[1] ? s.preEval(m[1]) : m[1]) + m[2] + (m[3] ? s.preEval(m[3]) : m[3]);
+    } else {
+      path = path.replace(uiGridConstants.APOS_REGEXP, '\\\'');
+      var parts = path.split(uiGridConstants.DOT_REGEXP);
+      var preparsed = [parts.shift()];    // first item must be var notation, thus skip
+      angular.forEach(parts, function (part) {
+        preparsed.push(part.replace(uiGridConstants.FUNC_REGEXP, '\']$1'));
+      });
+      return preparsed.join('[\'');
     }
   };
 
