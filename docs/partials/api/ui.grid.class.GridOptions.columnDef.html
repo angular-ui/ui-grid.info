@@ -3,55 +3,60 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>(optional) Definition of an individual column, which would typically be
+<div class="description"><p>Definition / configuration of an individual column, which would typically be
 one of many column definitions within the gridOptions.columnDefs array</p></div>
 <div class="member property"><h2 id="Properties">Properties</h2>
 <ul class="properties"><li><h3 id="allowCellFocus">allowCellFocus</h3>
-<div class="allowcellfocus"><p>Enable focus on a cell.  Requires the cell nav feature to be enabled.
-<br/>Defaults to true</p></div>
+<div class="allowcellfocus"><p>Enable focus on a cell. <br />
+<br/>Defaults to true
+<br/><em>Requires the cell nav feature to be enabled.</em></p></div>
 </li>
 <li><h3 id="cellEditableCondition">cellEditableCondition</h3>
 <div class="celleditablecondition"><p>If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.
-Requires the edit feature to be enabled. 
-<pre class="prettyprint linenums">
+<br/><em>requires the edit feature to be enabled</em></p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
 function($scope){
   //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
   return true;
 }
 </pre></div>
+</div>
 </li>
 <li><h3 id="editableCellTemplate">editableCellTemplate</h3>
-<div class="editablecelltemplate"><p>cell template to used when editing this column. can be Url or text template
+<div class="editablecelltemplate"><p>cell template to be used when editing this column. Can be Url or text template
 <br/>Defaults to gridOptions.editableCellTemplate
-Requires the edit feature to be enabled</p></div>
+<br/><em>requires the edit feature to be enabled</em></p></div>
 </li>
 <li><h3 id="enableCellEdit">enableCellEdit</h3>
-<div class="enablecelledit"><p>enable editing on column, requires the edit feature to be enabled.</p></div>
+<div class="enablecelledit"><p>enable editing on column
+<br/><em>requires the edit feature to be enabled</em></p></div>
 </li>
 <li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
-<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.  Requires the edit feature to be enabled.
-<br>!! requires cellNav feature !!</p></div>
+<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
+<br><em>requires both the cellNav feature and the edit feature to be enabled</em></p></div>
 </li>
 <li><h3 id="enableColumnResizing">enableColumnResizing</h3>
-<div class="enablecolumnresizing"><p>Enable column resizing on an individual column.  Requires column resizing feature to be enabled.
-<br/>Defaults to GridOptions.enableColumnResizing</p></div>
+<div class="enablecolumnresizing"><p>Enable column resizing on an individual column
+<br/>Defaults to GridOptions.enableColumnResizing
+<br/><em>requires column resizing feature to be enabled</em></p></div>
 </li>
 <li><h3 id="enablePinning">enablePinning</h3>
-<div class="enablepinning"><p>Enable pinning for the individual column. Requires the pinning feature to be enabled. 
-<br/>Defaults to true</p></div>
+<div class="enablepinning"><p>Enable pinning for the individual column. <br />
+<br/>Defaults to true
+<br/><em>requires the pinning feature to be enabled</em></p></div>
 </li>
 <li><h3 id="displayName">displayName</h3>
-<div class="displayname"><p>(optional) name is used if displayName if displayName is not
+<div class="displayname"><p>name is used for displayName if displayName is not
 provided.  If provided then displayName is used in the header.</p></div>
 </li>
 <li><h3 id="field">field</h3>
-<div class="field"><p>(optional) field must be provided if you wish to bind to a 
-column in the data source.  Should be an angular expression that evaluates against grid.options.data 
+<div class="field"><p>field must be provided if you wish to bind to a 
+property in the data source.  Should be an angular expression that evaluates against grid.options.data 
 array element.  Can be a complex expression: <code>employee.address.city</code>, or can be a function: <code>employee.getFullAddress()</code>.
 See the angular docs on binding expressions.</p></div>
 </li>
 <li><h3 id="filter">filter</h3>
-<div class="filter"><p>(optional)  Filter to insert against this column.  </p><h4 id="Example">Example</h4>
+<div class="filter"><p>Filter to insert against this column.  </p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">{ term: 'text' }</pre></div>
 </div>
 </li>
@@ -60,7 +65,7 @@ See the angular docs on binding expressions.</p></div>
 compatibility with 2.x name can be omitted if field is present</p></div>
 </li>
 <li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>
-<div class="sortingalgorithm"><p>(optional)  Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
+<div class="sortingalgorithm"><p>Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
 like any normal sorting function.</p></div>
 </li>
 <li><h3 id="enableFiltering">enableFiltering</h3>
@@ -72,15 +77,15 @@ widgets to the column header, allowing filtering of the data in the individual c
 widgets to the column header, allowing sorting of the data in the individual column.</p></div>
 </li>
 <li><h3 id="filters">filters</h3>
-<div class="filters"><p>(optional) unclear what this does or how it's used, but it does something.</p></div>
+<div class="filters"><p>unclear what this does or how it's used, but it does something.</p></div>
 </li>
 <li><h3 id="maxWidth">maxWidth</h3>
-<div class="maxwidth"><p>(optional) sets the maximum column width.  Should be a number.</p><h4 id="Example">Example</h4>
+<div class="maxwidth"><p>sets the maximum column width.  Should be a number.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', maxWidth: 100}]; </pre></div>
 </div>
 </li>
 <li><h3 id="menuItems">menuItems</h3>
-<div class="menuitems"><p>(optional) used to add menu items to a column.  Refer to the tutorial on this 
+<div class="menuitems"><p>used to add menu items to a column.  Refer to the tutorial on this 
 functionality.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ 
 { field: 'field1', menuItems: [
@@ -102,32 +107,27 @@ functionality.</p><h4 id="Example">Example</h4>
 </div>
 </li>
 <li><h3 id="minWidth">minWidth</h3>
-<div class="minwidth"><p>(optional) sets the minimum column width.  Should be a number.</p><h4 id="Example">Example</h4>
+<div class="minwidth"><p>sets the minimum column width.  Should be a number.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', minWidth: 100}]; </pre></div>
 </div>
 </li>
 <li><h3 id="sort">sort</h3>
-<div class="sort"><p>(optional) not clear what this does, but it can be set</p></div>
-</li>
-<li><h3 id="sort">sort</h3>
-<div class="sort"><p>(optional) Can be used to set the sort direction for the column, values are
+<div class="sort"><p>Can be used to set the sort direction for the column, values are
 uiGridConstants.ASC or uiGridConstants.DESC</p><h4 id="Example">Example</h4>
-<div class="example"><p><pre>  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC }}]</p></div>
+<div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC }}] </pre></div>
 </div>
 </li>
-<li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>
-<div class="sortingalgorithm"><p>(optional) a function that will be used for sorting the column, in standard
-a b format.</p></div>
-</li>
 <li><h3 id="visible">visible</h3>
-<div class="visible"><p>(optional) sets whether or not the column is visible
+<div class="visible"><p>sets whether or not the column is visible
 </br>Default is true</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', visible: true},
-{ field: 'field2', visible: false }]; </pre></div>
+<div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ 
+{ field: 'field1', visible: true},
+{ field: 'field2', visible: false }
+]; </pre></div>
 </div>
 </li>
 <li><h3 id="width">width</h3>
-<div class="width"><p>(optional) sets the column width.  Can be either 
+<div class="width"><p>sets the column width.  Can be either 
 a number or a percentage, or an * for auto.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', width: 100},
 { field: 'field2', width: '20%'},

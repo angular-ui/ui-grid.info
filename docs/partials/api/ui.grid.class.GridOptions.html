@@ -4,13 +4,14 @@
 </h1>
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Default GridOptions class.  GridOptions are defined by the application developer and overlaid
-over this object.</p></div>
+over this object.  Setting gridOptions within your controller is the most common method for an application 
+developer to configure the behaviour of their ui-grid</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridOptions();</pre>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="getRowIdentity">getRowIdentity()</h3>
-<div class="getrowidentity"><p>(optional) This function returns the identity value uniquely identifying this row.</p>
+<div class="getrowidentity"><p>This function returns the identity value uniquely identifying this row.</p>
 
 <p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p></div>
 </li>
@@ -25,7 +26,7 @@ to compare on any data item property or function</p><h4 id="Parameters">Paramete
 </div>
 </li>
 <li><h3 id="rowIdentity">rowIdentity()</h3>
-<div class="rowidentity"><p>(optional) This function is used to get and, if necessary, set the value uniquely identifying this row.</p>
+<div class="rowidentity"><p>This function is used to get and, if necessary, set the value uniquely identifying this row.</p>
 
 <p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one</p></div>
 </li>
@@ -33,58 +34,53 @@ to compare on any data item property or function</p><h4 id="Parameters">Paramete
 </div>
 <div class="member property"><h2 id="Properties">Properties</h2>
 <ul class="properties"><li><h3 id="cellEditableCondition">cellEditableCondition</h3>
-<div class="celleditablecondition"><p>If specified, either a value or function to be used by all columns before editing.  If falsy, then editing of cell is not allowed.
-Requires the edit feature to be enabled
-<pre class="prettyprint linenums">
+<div class="celleditablecondition"><p>If specified, either a value or function to be used by all columns before editing. <br />
+If falsy, then editing of cell is not allowed.
+</br><em>requires the edit feature to be enabled</em></p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
 function($scope){
   //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
   return true;
 }
 </pre></div>
-</li>
-<li><h3 id="data">data</h3>
-<div class="data"><p>Array of data to be rendered to grid.  Array can contain complex objects</p></div>
-</li>
-<li><h3 id="enableCellEdit">enableCellEdit</h3>
-<div class="enablecelledit"><p>If defined, it will be the default value that colDefs will take if their enableCellEdit is
-not defined. Defaults to undefined.  Requires the edit feature to be enabled</p></div>
-</li>
-<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
-<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.  Requires the edit feature to be enabled
-<br>!! requires cellNav feature !!</p></div>
-</li>
-<li><h3 id="enableColumnResizing">enableColumnResizing</h3>
-<div class="enablecolumnresizing"><p>Enable column resizing on the entire grid.  Requires the column resizing feature to be enabled. 
-<br/>Defaults to true</p></div>
-</li>
-<li><h3 id="enableRowSelection">enableRowSelection</h3>
-<div class="enablerowselection"><p>Enable pinning for the entire grid. Requires the pinning feature to be enabled. 
-<br/>Defaults to true</p></div>
-</li>
-<li><h3 id="enableRowSelection">enableRowSelection</h3>
-<div class="enablerowselection"><p>Enable row selection for entire grid.  Requires row selection feature to be enabled.
-<br/>Defaults to true</p></div>
-</li>
-<li><h3 id="multiSelect">multiSelect</h3>
-<div class="multiselect"><p>Enable multiple row selection for entire grid.  Requires row selection feature to be enabled.
-<br/>Defaults to true</p></div>
+</div>
 </li>
 <li><h3 id="columnDefs">columnDefs</h3>
-<div class="columndefs"><p>(optional) Array of columnDef objects.  Only required property is name.
-<em>field property can be used in place of name for backwards compatibilty with 2.x</em></p><h4 id="Example">Example</h4>
+<div class="columndefs"><p>Array of columnDef objects.  Only required property is name.
+</br><em>field property can be used in place of name for backwards compatibility with 2.x</em>
+</br>The individual options available in columnDefs are documented in the <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a> section</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre></div>
 </div>
 </li>
+<li><h3 id="data">data</h3>
+<div class="data"><p>(mandatory) Array of data to be rendered into the grid, providing the data source or data binding for 
+the grid.  The most common case is an array of objects, where each object has a number of attributes.
+Each attribute automatically becomes a column in your grid.  The array can also contain complex objects.</p></div>
+</li>
+<li><h3 id="enableCellEdit">enableCellEdit</h3>
+<div class="enablecelledit"><p>If defined, sets the default value for the editable flag on each individual colDefs 
+if their individual enableCellEdit configuration is not defined. Defaults to undefined. <br />
+</br><em>requires the edit feature to be enabled</em></p></div>
+</li>
+<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
+<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
+<br/><em>requires cellNav feature and the edit feature to be enabled</em></p></div>
+</li>
 <li><h3 id="enableColumnMenu">enableColumnMenu</h3>
-<div class="enablecolumnmenu"><p>(optional) True by default. When enabled, this setting displays a column
+<div class="enablecolumnmenu"><p>True by default. When enabled, this setting displays a column
 menu within each column.</p></div>
 </li>
+<li><h3 id="enableColumnResizing">enableColumnResizing</h3>
+<div class="enablecolumnresizing"><p>Enable column resizing on the entire grid 
+<br/>Defaults to true
+<br/><em>requires the column resizing feature to be enabled</em></p></div>
+</li>
 <li><h3 id="enableFiltering">enableFiltering</h3>
-<div class="enablefiltering"><p>(optional) False by default. When enabled, this setting adds filter 
+<div class="enablefiltering"><p>False by default. When enabled, this setting adds filter 
 boxes to each column header, allowing filtering within the column.</p></div>
 </li>
 <li><h3 id="enableRowHashing">enableRowHashing</h3>
-<div class="enablerowhashing"><p>(optional) True by default. When enabled, this setting allows uiGrid to add
+<div class="enablerowhashing"><p>True by default. When enabled, this setting allows uiGrid to add
 <code>$$hashKey</code>-type properties (similar to Angular) to elements in the <code>data</code> array. This allows
 the grid to maintain state while vastly speeding up the process of altering <code>data</code> by adding/moving/removing rows.</p>
 
@@ -92,30 +88,68 @@ the grid to maintain state while vastly speeding up the process of altering <cod
 you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
 and are altering the data set often.</p></div>
 </li>
+<li><h3 id="enableRowSelection">enableRowSelection</h3>
+<div class="enablerowselection"><p>Enable pinning for the entire grid. <br />
+<br/>Defaults to true
+<br/><em>requires the pinning feature to be enabled</em></p></div>
+</li>
+<li><h3 id="enableRowSelection">enableRowSelection</h3>
+<div class="enablerowselection"><p>Enable row selection for entire grid.
+<br/>Defaults to true
+<br/><em>requires row selection feature to be enabled</em></p></div>
+</li>
 <li><h3 id="enableSorting">enableSorting</h3>
-<div class="enablesorting"><p>(optional) True by default. When enabled, this setting adds sort
+<div class="enablesorting"><p>True by default. When enabled, this setting adds sort
 widgets to the column headers, allowing sorting of the data.</p></div>
 </li>
 <li><h3 id="excludeProperties">excludeProperties</h3>
-<div class="excludeproperties"><p>(optional) Array of property names in data to ignore when auto-generating column names. defaults to ['$$hashKey']
-If columnDefs is defined, this will be ignored.</p></div>
+<div class="excludeproperties"><p>Array of property names in data to ignore when auto-generating column names.  Provides the
+inverse of columnDefs - columnDefs is a list of columns to include, excludeProperties is a list of columns
+to exclude. </p>
+
+<p>If columnDefs is defined, this will be ignored.</p>
+
+<p>Defaults to ['$$hashKey']</p></div>
 </li>
 <li><h3 id="headerTemplate">headerTemplate</h3>
-<div class="headertemplate"><p>(optional) Null by default. When provided, this setting uses a custom header
-template. Can be set to either the name of a template file 'header_template.html', inline html 
-<pre class="prettyprint linenums">'&lt;div class="ui-grid-top-panel" style="text-align: center"&gt;I am a Custom Grid Header&lt;/div&gt;'</pre>, or the id
-of a precompiled template '??'.  Refer to the custom header tutorial for more information.</p></div>
+<div class="headertemplate"><p>Null by default. When provided, this setting uses a custom header
+template. Can be set to either the name of a template file:
+<pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = 'header_template.html';</pre>
+inline html 
+<pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div class="ui-grid-top-panel" style="text-align: center"&gt;I am a Custom Grid Header&lt;/div&gt;'</pre>
+or the id of a precompiled template (TBD how to use this). <br />
+</br>Refer to the custom header tutorial for more information.</p></div>
+</li>
+<li><h3 id="multiSelect">multiSelect</h3>
+<div class="multiselect"><p>Enable multiple row selection for entire grid
+<br/>Defaults to true
+<br/><em>requires row selection feature to be enabled</em></p></div>
 </li>
 <li><h3 id="rowTemplate">rowTemplate</h3>
-<div class="rowtemplate"><p>(optional) 'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
-custom row template.  Can be set to either the name of a template file 'row_template.html', inline html 
-<pre class="prettyprint linenums">'&lt;div style="background-color: aquamarine" ng-click="getExternalScopes().fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;'</pre>, or the id
-of a precompiled template '??' can be provided.  Refer to the custom row template tutorial for more information.</p></div>
+<div class="rowtemplate"><p>'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
+custom row template.  Can be set to either the name of a template file:
+<pre class="prettyprint linenums"> $scope.gridOptions.rowTemplate = 'row_template.html';</pre>
+inline html 
+<pre class="prettyprint linenums">  $scope.gridOptions.rowTemplate = '&lt;div style="background-color: aquamarine" ng-click="getExternalScopes().fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;';</pre>
+or the id of a precompiled template (TBD how to use this) can be provided. <br />
+</br>Refer to the custom row template tutorial for more information.</p></div>
 </li>
 </ul>
 </div>
 <h2 id="Example">Example</h2>
-<div class="example"><p>To provide default options for all of the grids within your application, use an angular
+<div class="example"><p>To define your gridOptions within your controller:
+<pre class="prettyprint linenums">$scope.gridOptions = {
+  data: $scope.myData,
+  columnDefs: [ 
+    { name: 'field1', displayName: 'pretty display name' },
+    { name: 'field2', visible: false }
+ ]
+};</pre>
+
+<p>You can then use this within your html template, when you define your grid:
+<pre class="prettyprint linenums">&lt;div ui-grid="gridOptions"&gt;&lt;/div&gt;</pre>
+
+<p>To provide default options for all of the grids within your application, use an angular
 decorator to modify the GridOptions factory.
 <pre class="prettyprint linenums">app.config(function($provide){
    $provide.decorator('GridOptions',function($delegate){
