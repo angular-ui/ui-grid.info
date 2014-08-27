@@ -331,7 +331,7 @@ NG_DOCS={
       "id": "index",
       "shortName": "Index",
       "type": "overview",
-      "keywords": "and answer ask case channel common don for help here if in index irc lot of on overview particular provide see set should the then this to tutorial tutorials ui-grid use-cases using way you your"
+      "keywords": "according advanced and answer any are ask basic case combined common complexity developers do don encouraged features for grid help here href https if im in index lot needed numbered of on overview particular pr provide real see set should submit the then this to tutorial tutorials ui-grid use-cases using way what world you your"
     },
     {
       "section": "tutorial",
@@ -377,45 +377,136 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "10_pinning",
-      "shortName": "Pinning",
+      "id": "108_hidden_grids",
+      "shortName": "108 Hidden Grids",
       "type": "overview",
-      "keywords": "$http $log $scope about address age angular app city class columndefs company controller css data displayname email friend friends function get grid gridoptions height html id index js json main mainctrl module name ng-controller overview phone pinning state street success tutorial ui ui-grid ui-grid-pinning var width zip"
+      "keywords": "$http $scope angular app btn btn-success button class controller css data function get grid gridoptions grids height hidden hide hidegrid hiding html in index js json main mainctrl modals module name ng-click ng-controller ng-hide or overview show success tabs true tutorial type ui ui-grid var well width"
     },
     {
       "section": "tutorial",
-      "id": "202_externalScopes",
-      "shortName": "202 External Scopes",
+      "id": "109_multiple_grids",
+      "shortName": "109 Multiple Grids per Page",
       "type": "overview",
-      "keywords": "$log $scope abc access alert angular app application attribute btn carney cell celltemplate class columndefs company comveyer controller cox css data employed enormo exists external external-scopes false firstname from fuelton function getexternalscopes give grid gridoptions height html in index is isolate js lastname lorraine main mainctrl me module mydata myviewmodel name nancy ng-click ng-controller no on or overview primary property row scope scopes showme showscope so someprop template that the then there to true tutorial ui ui-grid use uses using var variables waters width wise within you your"
+      "keywords": "$http $scope angular app class controller css data function get grid gridoptions1 gridoptions2 grids height html index js json main mainctrl module multiple name ng-controller on overview page per row single span4 success tutorial ui ui-grid using var width"
     },
     {
       "section": "tutorial",
-      "id": "299_RTL",
-      "shortName": "299 RTL Support",
+      "id": "110_grid_in_modal",
+      "shortName": "110 Grid in a Modal",
+      "type": "overview",
+      "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
+    },
+    {
+      "section": "tutorial",
+      "id": "120_RTL",
+      "shortName": "120 RTL Support",
       "type": "overview",
       "keywords": "$http $scope angular app class columndefs company controller css data dir field field1 field10 field11 field12 field13 field14 field15 field2 field3 field4 field5 field6 field7 field8 field9 function gender get grid gridoptions height html index js json languages main mainctrl module name ng-controller overview rtl success support supports the tutorial ui ui-grid ui-grid-pinning var width"
     },
     {
       "section": "tutorial",
-      "id": "2_swapping_data",
-      "shortName": "Add/Delete/Swap",
-      "type": "overview",
-      "keywords": "$scope abc acium add adddata angular app bond brainquil btn btn-success button by can carney class cline company comveyer controller copy cox cruz css data data1 data2 different else employed enormo false first firstname fuelton function grid gridopts height hopper html if in index js kongene kramer lastname length letpro lorraine main mainctrl marcy marqet mclean misty module name nancy new ng-click ng-controller oneill origdata1 origdata2 out overview parleynet person pickett providing push reference removefirstrow reset row shepherd simply splice swap swapdata tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
-    },
-    {
-      "section": "tutorial",
-      "id": "3_large_dataset",
-      "shortName": "Large Dataset",
+      "id": "190_large_dataset",
+      "shortName": "190 Large Dataset",
       "type": "overview",
       "keywords": "$http $scope address again age angular app backwards be can city class column columndefs compatibility complex controller css data dataset demonstrates different example field following for function get grid gridoptions height html id in index instead js json large length listed main mainctrl module name ng-controller number of on overview place properties records set showing success the this tutorial twice ui ui-grid use uses var width with you"
     },
     {
       "section": "tutorial",
-      "id": "4.1_custom_row_template",
-      "shortName": "Custom Row Template",
+      "id": "190_swapping_data",
+      "shortName": "190 Add/Delete/Swap Data",
+      "type": "overview",
+      "keywords": "$scope abc acium add adddata angular app bond brainquil btn btn-success button by can carney class cline company comveyer controller copy cox cruz css data data1 data2 different else employed enormo false first firstname fuelton function grid gridopts height hopper html if in index js kongene kramer lastname length letpro lorraine main mainctrl marcy marqet mclean misty module name nancy new ng-click ng-controller oneill origdata1 origdata2 out overview parleynet person pickett providing push reference removefirstrow reset row shepherd simply splice swap swapdata tania the true tutorial type ui ui-grid var waters width wise you zamora zomboid"
+    },
+    {
+      "section": "tutorial",
+      "id": "191_horizontal_scrolling",
+      "shortName": "191 Horizontal Scrolling",
+      "type": "overview",
+      "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating enablesorting floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling true tutorial ui ui-grid var width widths with"
+    },
+    {
+      "section": "tutorial",
+      "id": "200_features",
+      "shortName": "200 Features",
+      "type": "overview",
+      "keywords": "allows alongside also an and angular application are as be certain class complex contains core dependency directive each enable feature feature1 feature2 features for grid gridoptions grids have in include included instance into many module modules more must needed only overview separated the this to tutorial ui ui-grid ui-grid-feature1 ui-grid-feature2 you your yourapp"
+    },
+    {
+      "section": "tutorial",
+      "id": "201_editable",
+      "shortName": "201 Edit Feature",
+      "type": "overview",
+      "keywords": "$apply $http $scope active address addressformatter aftercelledit age all allow allows and angular any app are as available be boolean by called can cell celleditablecondition cellfilter cellnav cellscope checkbox city class coldef column columndef columndefs columns compiled content controller css custom data date default definitions determine directive disable displayname double-click edit editable editablecelltemplate edited editing editor editors element enable enablecelledit f2 false feature fields filter focus following for function get grid gridapi gridoptions has height html id if in include index inline input invoke invoked is isactive it js json key lastcelledited length main mainctrl mode module msg must name new newvalue ng-controller non-navigable not number numeric object of oldvalue on only onregisterapi option options or other overview provided registered respectively return returns row rowentity rowrenderindex rows scope set should simple soon specified start state street string success templatecache templates text than that the to true tutorial type types typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your yyyy-mm-dd zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "202_cellnav",
+      "shortName": "202 Cell Navigation",
+      "type": "overview",
+      "keywords": "$http $log $scope add address age allowcellfocus and angular app btn btn-success button callback cell cellnav city class col coldef columndefs controller css current currentfocused data directive displayname element enable entity event example false focusable focused function get getcurrentfocus getfocusedcell grid gridapi gridoptions height html id if include index info is js json log main mainctrl module msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null old oldrowcol on on_cellnav onregisterapi overview register row rowcol success the this to tojson tutorial type ui ui-grid ui-grid-cellnav uses var when width you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "203_pinning",
+      "shortName": "203 Pinning",
+      "type": "overview",
+      "keywords": "$http $log $scope about address age allows and angular app city class column columndefs company controller css data directive displayname element email enable feature friend friends function get grid gridoptions height html id include index js json left main mainctrl module must name ng-controller on or overview phone pin pinning right state street success the to tutorial ui ui-grid ui-grid-pinning user var width you your zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "204_column_resizing",
+      "shortName": "204 Column Resizing",
+      "type": "overview",
+      "keywords": "$http $scope according allow allows and angular any app be but by can class coldef column columndefs columns company constraints contents controller css data definition directive disable each element enable enablecolumnresizing enablesorting entire explicitly false feature field for function gender get give grid gridoptions height html if in include index individual it its js json main mainctrl minwidth module must name ng-controller not obey of on option options or overview prevents property reason regardless rendered resize resizecolumns resized resizing separator set setting size some success the this to true tutorial ui ui-grid ui-grid-resize-columns use var want width will you your yourapp"
+    },
+    {
+      "section": "tutorial",
+      "id": "210_selection",
+      "shortName": "210 Selection",
+      "type": "overview",
+      "keywords": "$http $log $scope address age all allowcellfocus and angular app btn btn-success button callback city class clearall clearselectedrows columndefs controller css data directive displayname element enable event example false focusable function get grid gridapi gridoptions height html id include index info is isselected js json log main mainctrl module msg multiselect must name ng-bind ng-click ng-controller ng-disabled on onregisterapi options overview register row rowselectionchanged scope selectall selectallrows selected selection setmultiselect success the this to togglemultiselect togglerow1 togglerowselection true tutorial type ui ui-grid ui-grid-selection uses var when width you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "301_custom_row_template",
+      "shortName": "301 Custom Row Template",
       "type": "overview",
       "keywords": "$http $interval $scope $timeout access allow almost angular app aquamarine are as attribute background-color basic but by calling can cancel class col colcontainer coldef console controller create css custom data date details done elements expose external-scopes externalscopes fnone for from function functions get getexternalscopes grid gridoptions height html in index isolate js json like log main mainctrl method module more most mynewmodel name new ng-bind ng-click ng-controller ng-repeat on one outside overview parseint property reach renderedcolumns return row rowtemplate same scope scopes sec set so start style success sure template that the then to track tutorial ui ui-grid ui-grid-cell up use var variable wait waiting width will with you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "301_editableOnFocus",
+      "shortName": "301 Edit On Focus",
+      "type": "overview",
+      "keywords": "$http $scope address age and angular api app be btn btn-success button can cell cellnav city class col coldef columndefs combine controller css current currentfocused data default displayname docs edit editing enable enablecelledit enablecelleditonfocus entity false focus focused for function get getcurrentfocus getfocusedcell gets grid gridapi gridoptions height how html id if index js json keys main mainctrl module must name navigation ng-bind ng-click ng-controller null on onregisterapi options override overview row rowcol see set success the to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
+    },
+    {
+      "section": "tutorial",
+      "id": "302_custom_header",
+      "shortName": "302 Custom Header",
+      "type": "overview",
+      "keywords": "$http $scope almost am angular app as basic bob but center ceo class controller create css custom data developer frank function grid gridoptions header header-template headertemplate height html index js lowly main mainctrl module most name ng-controller one overview same style text-align the title tutorial ui ui-grid ui-grid-top-panel var width with"
+    },
+    {
+      "section": "tutorial",
+      "id": "303_customizing_column_menu",
+      "shortName": "303 Customizing Column Menu",
+      "type": "overview",
+      "keywords": "$http $scope accessible action add added alert also an and angular app as based be below blargh builder by can class click col column columndefs company conditions context contexts controller could css custom customize customizing data default definition displayname enablesorting every example field for function functionality gender get grid gridcolumn gridoptions have header height html icon id in index is it item items js json just main mainctrl menu menuitems module name ng-controller nganimate object on outer overview own pass property provide reference return scope see show shown some success supply supplying test that the then third this through title to too true tutorial ui ui-grid ui-grid-icon-info-circled usage use var width will with work would you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "304_custom_grid_menu",
+      "shortName": "304 Custom Grid Menu",
+      "type": "overview",
+      "keywords": "$attr $broadcast $elm $http $on $scope $timeout absolute action adjust angular app at border box-shadow btn btn-info but button class controller controllers css custom data directive element elementwidth for function get grid gridoptions gridutil height html index js json just left link main mainctrl menu menu-items menuitems module my-custom-menu mycustommenu name ng-click ng-controller nganimate none of openmymenu overview padding position put px require restrict return right rotate rotated scope showmenu success the this title to toggleclass top transform true tutorial type ui ui-grid ui-grid-menu ui-grid-menu-inner uigridctrl uigridmenu uigridmenuctrl var width"
+    },
+    {
+      "section": "tutorial",
+      "id": "305_externalScopes",
+      "shortName": "305 External Scopes",
+      "type": "overview",
+      "keywords": "$log $scope abc access alert angular app application attribute btn carney cell celltemplate class columndefs company comveyer controller cox css data employed enormo exists external external-scopes false firstname from fuelton function getexternalscopes give grid gridoptions height html in index is isolate js lastname lorraine main mainctrl me module mydata myviewmodel name nancy ng-click ng-controller no on or overview primary property row scope scopes showme showscope so someprop template that the then there to true tutorial ui ui-grid use uses using var variables waters width wise within you your"
     },
     {
       "section": "tutorial",
@@ -423,97 +514,6 @@ NG_DOCS={
       "shortName": "401 All Features",
       "type": "overview",
       "keywords": "$http $interval $scope $timeout about address age agetemplate all also an angular app appends are btn btn-success button callspending callspending-- cancel cellnav celltemplate city class columndefs company controller css data date displayname edit email emulates enablecelledit enablecolumnresizing enabled error every example features field for foreach friend friends from function get getrowidentity grid gridoptions height html id idea index it iter js json left length loading main mainctrl module mydata name new ng-bind ng-click ng-controller object of on overview pages pending performance phone pinning push refreshdata resizecolumns return row rowidentity rows scope sec seconds server setting specifies start state street string success that the this to true tutorial type ui ui-grid ui-grid-cell-contents ui-grid-cellnav ui-grid-edit ui-grid-pinning ui-grid-resize-columns value var watch width your zip"
-    },
-    {
-      "section": "tutorial",
-      "id": "4_custom_header",
-      "shortName": "Custom Header",
-      "type": "overview",
-      "keywords": "$http $scope almost am angular app as basic bob but center ceo class controller create css custom data developer frank function grid gridoptions header header-template headertemplate height html index js lowly main mainctrl module most name ng-controller one overview same style text-align the title tutorial ui ui-grid ui-grid-top-panel var width with"
-    },
-    {
-      "section": "tutorial",
-      "id": "5.2_customizing_column_menu",
-      "shortName": "Customizing Column Menu",
-      "type": "overview",
-      "keywords": "$http $scope accessible action add added alert also an and angular app as based be below blargh builder by can class click col column columndefs company conditions context contexts controller could css custom customize customizing data default definition displayname enablesorting every example field for function functionality gender get grid gridcolumn gridoptions have header height html icon id in index is it item items js json just main mainctrl menu menuitems module name ng-controller nganimate object on outer overview own pass property provide reference return scope see show shown some success supply supplying test that the then third this through title to too true tutorial ui ui-grid ui-grid-icon-info-circled usage use var width will with work would you your"
-    },
-    {
-      "section": "tutorial",
-      "id": "5.3_custom_grid_menu",
-      "shortName": "Custom Grid Menu",
-      "type": "overview",
-      "keywords": "$attr $broadcast $elm $http $on $scope $timeout absolute action adjust angular app at border box-shadow btn btn-info but button class controller controllers css custom data directive element elementwidth for function get grid gridoptions gridutil height html index js json just left link main mainctrl menu menu-items menuitems module my-custom-menu mycustommenu name ng-click ng-controller nganimate none of openmymenu overview padding position put px require restrict return right rotate rotated scope showmenu success the this title to toggleclass top transform true tutorial type ui ui-grid ui-grid-menu ui-grid-menu-inner uigridctrl uigridmenu uigridmenuctrl var width"
-    },
-    {
-      "section": "tutorial",
-      "id": "6_editable",
-      "shortName": "Editable Grid",
-      "type": "overview",
-      "keywords": "$apply $http $scope active address addressformatter aftercelledit age all allow and angular any app are as available be boolean by called can cell celleditablecondition cellfilter cellnav cellscope checkbox city class coldef column columndef columndefs columns compiled content controller css custom data date default definitions determine disable displayname double-click edit editable editablecelltemplate edited editing editor editors enable enablecelledit f2 false feature fields filter focus following for function get grid gridapi gridoptions has height html id if in index input invoke invoked is isactive it js json key lastcelledited length main mainctrl mode module msg name new newvalue ng-controller non-navigable not number numeric object of oldvalue on only onregisterapi option options or other overview provided registered respectively return returns row rowentity rowrenderindex rows scope set should simple soon specified start state street string success templatecache templates text than that the to true tutorial type types typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your yyyy-mm-dd zip"
-    },
-    {
-      "section": "tutorial",
-      "id": "6_hidden_grids",
-      "shortName": "Hidden Grids",
-      "type": "overview",
-      "keywords": "$http $scope angular app btn btn-success button class controller css data function get grid gridoptions grids height hidden hide hidegrid hiding html in index js json main mainctrl modals module name ng-click ng-controller ng-hide or overview show success tabs true tutorial type ui ui-grid var well width"
-    },
-    {
-      "section": "tutorial",
-      "id": "6a_editableOnFocus",
-      "shortName": "Edit On Focus",
-      "type": "overview",
-      "keywords": "$http $scope address age and angular api app be btn btn-success button can cell cellnav city class col coldef columndefs combine controller css current currentfocused data default displayname docs edit editing enable enablecelledit enablecelleditonfocus entity false focus focused for function get getcurrentfocus getfocusedcell gets grid gridapi gridoptions height how html id if index js json keys main mainctrl module must name navigation ng-bind ng-click ng-controller null on onregisterapi options override overview row rowcol see set success the to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var when width with you"
-    },
-    {
-      "section": "tutorial",
-      "id": "7_multiple_grids",
-      "shortName": "Multiple Grids per Page",
-      "type": "overview",
-      "keywords": "$http $scope angular app class controller css data function get grid gridoptions1 gridoptions2 grids height html index js json main mainctrl module multiple name ng-controller on overview page per row single span4 success tutorial ui ui-grid using var width"
-    },
-    {
-      "section": "tutorial",
-      "id": "8_grid_in_modal",
-      "shortName": "Grid in a Modal",
-      "type": "overview",
-      "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
-    },
-    {
-      "section": "tutorial",
-      "id": "9.1_selection",
-      "shortName": "Selection",
-      "type": "overview",
-      "keywords": "$http $log $scope address age all allowcellfocus and angular app btn btn-success button callback city class clearall clearselectedrows columndefs controller css data directive displayname event example false focusable function get grid gridapi gridoptions height html id index info is isselected js json log main mainctrl module msg multiselect name ng-bind ng-click ng-controller ng-disabled on onregisterapi options overview register row rowselectionchanged scope selectall selectallrows selected selection setmultiselect success the this to togglemultiselect togglerow1 togglerowselection true tutorial type ui ui-grid ui-grid-selection uses var when width"
-    },
-    {
-      "section": "tutorial",
-      "id": "91_column_row_customization",
-      "shortName": "Column and Row Customization",
-      "type": "overview",
-      "keywords": "$http $scope address age and angular app cellnav city class column columndefs columns controller css customization customize data field function get grid gridoptions height html id index js json main mainctrl module name ng-controller overview row rows success tutorial ui ui-grid var width"
-    },
-    {
-      "section": "tutorial",
-      "id": "92_horizontal_scrolling",
-      "shortName": "Horizontal Scrolling",
-      "type": "overview",
-      "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating enablesorting floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling true tutorial ui ui-grid var width widths with"
-    },
-    {
-      "section": "tutorial",
-      "id": "93_column_resizing",
-      "shortName": "Column Resizing",
-      "type": "overview",
-      "keywords": "$http $scope according actually add all allow also and angular any app application automatically but by can class coldef column columndefs columns company constraints contents controller css data definition dependencies directive disable do element enablecolumnresizing enablesorting entire explicitly false feature field for function gender get give grid gridoptions grids have height html if in including index individual is it its js json main mainctrl minwidth module must name ng-controller not obey of on once only option options or overhead overview page pay prevents property reason regardless rendered resize resizecolumns resizing separator set setting several size so some success that the this to true tutorial ui ui-grid ui-grid-resize-columns use using var want we width will you your yourapp"
-    },
-    {
-      "section": "tutorial",
-      "id": "9_cellnav",
-      "shortName": "Cell Navigation (WIP)",
-      "type": "overview",
-      "keywords": "$http $log $scope add address age allowcellfocus and angular app btn btn-success button callback cell cellnav city class col coldef columndefs controller css current currentfocused data directive displayname entity event example false focusable focused function get getcurrentfocus getfocusedcell grid gridapi gridoptions height html id if index info is js json log main mainctrl module msg name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null old oldrowcol on on_cellnav onregisterapi overview register row rowcol success the this to tojson tutorial type ui ui-grid ui-grid-cellnav uses var when width"
     }
   ],
   "apis": {

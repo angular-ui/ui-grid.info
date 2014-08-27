@@ -1,0 +1,108 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The ui.grid.edit feature allows inline editing of grid data.  To enable, you must include the 'ui.grid.edit' module and you must include the ui-grid-edit directive on your grid element.</p>
+
+<p>You can use the <code>enableCellEdit</code> options in your column definitions to allow a column to be editable.</p>
+
+<p>Editing is invoked via double-click, f2, or start typing any non-navigable key. By default numeric, date and checkbox editors are
+provided for fields specified as number, date and boolean types, for all other fields a simple text editor is provided.
+Custom edit templates should be used for any editor other than the default editors.</p>
+
+<p>ColumnDef Options:
+<br/><code>editableCellTemplate</code> (default: 'ui-grid/cellEditor') - Valid html, templateCache Id,  or url that returns html content to be compiled when edit mode is invoked.
+<br/><code>enableCellEdit</code> (default: false for columns of type 'object', true for all other columns) - true will enable editing and false will disable it.
+<br/><code>cellEditableCondition</code>  (default: true)  Can be set to a boolean or a function that will be called with the cellScope to determine if the cell should be invoked in edit mode.
+<br/><code>type</code> (default: 'string') If set to 'number', 'boolean' or 'date' the default editor provided for editing will be numeric or boolean or date editor respectively.
+If set to 'object' the column will not be editable by default.
+<br/>
+The following option is available only if using cellNav feature
+<br/><code>enableCellEditOnFocus</code> - true to invoke editor as soon as cell has focus</p>
+
+<pre class="prettyprint linenums">
+$scope.gridOptions.columnDefs = [
+   { name: 'name', enableCellEdit: true, editableCellTemplate },
+   { name: 'age', enableCellEdit: true, type: 'number'},
+   { name: 'registered', displayName: 'Registered' , type: 'date'},
+   { name: 'address', displayName: 'Address', type: 'object'},
+   { name: 'address.city', enableCellEdit: true, displayName: 'Address (even rows editable)', cellEditableCondition: function($scope){return $scope.rowRenderIndex%2} }
+   { name: 'isActive', enableCellEdit: true, type: 'boolean'},
+]
+</pre><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-26" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-26" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-26">
+  <div ng-controller="MainCtrl">
+    <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+    <br>
+    <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+    <br>
+    <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 600px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'addressFormatter']);
+
+  angular.module('addressFormatter', []).filter('address', function () {
+    return function (input) {
+        return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
+    };
+  });
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {  };
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id', enableCellEdit: false },
+      { name: 'name', displayName: 'Name (editable)' },
+      { name: 'age', displayName: 'Age' , type: 'number'},
+      { name: 'registered', displayName: 'Registered' , type: 'date', cellFilter: 'date:"yyyy-MM-dd"'},
+      { name: 'address', displayName: 'Address', type: 'object', cellFilter: 'address'},
+      { name: 'address.city', displayName: 'Address (even rows editable)',
+           cellEditableCondition: function($scope){
+           return $scope.rowRenderIndex%2
+           }
+      },
+      { name: 'isActive', displayName: 'Active', type: 'boolean'}
+    ];
+
+
+
+   $scope.msg = {};
+
+   $scope.gridOptions.onRegisterApi = function(gridApi){
+            //set gridApi on scope
+            $scope.gridApi = gridApi;
+            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+              $scope.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
+              $scope.$apply();
+            });
+          };
+
+    $http.get('/data/500_complex.json')
+      .success(function(data) {
+        for(i = 0; i < data.length; i++){
+          data[i].registered = new Date(data[i].registered);
+        }
+        $scope.gridOptions.data = data;
+      });
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-26" ng-eval-javascript="app.js"></div></div>
+</div>

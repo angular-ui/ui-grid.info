@@ -1,0 +1,86 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The Resize Columns feature allows each column to be resized.</p>
+
+<p>To enable, you must include the 'ui.grid.resizeColumns' module and you must include the ui-grid-resize-columns directive on your grid element.</p>
+
+<pre class="prettyprint linenums">
+angular.module('yourApp', ['ui.grid', 'ui.grid.resizeColumns']);
+</pre>
+
+<pre class="prettyprint linenums">
+&lt;div ui-grid="gridOptions" class="grid" ui-grid-resize-columns&gt;&lt;/div&gt;
+</pre>
+<br>
+<br>
+If, for some reason, you want to use the ui-grid-resize-columns directive, but not allow column resizing, you can explicitly set the
+option to false. This prevents resizing for the entire grid, regardless of individual colDef options.
+<pre class="prettyprint linenums">
+$scope.gridOptions = {
+  enableColumnResizing: false
+};
+</pre>
+<br>
+<br>
+You can disable it on a column by setting the <code>enableColumnResizing</code> property to false in its column definition.
+<pre class="prettyprint linenums">
+$scope.gridOptions = {
+  enableColumnResizing: true,
+  columnDefs: [
+    { field: 'name' },
+    { field: 'gender', enableColumnResizing: false },
+    { field: 'company' }
+  ]
+};
+</pre><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-29" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-29" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-29">
+  <div ng-controller="MainCtrl">
+    <strong>Drag</strong> a the column separator to resize; <strong>double-click</strong> to size according to rendered column contents.
+    <br>
+    <br>
+    The column will obey any <i>minWidth</i> or <i>maxWidth</i> constraints you give it.
+    <br>
+    <br>
+    <div ui-grid="gridOptions" class="grid" ui-grid-resize-columns></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.resizeColumns']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {
+      enableSorting: true,
+      columnDefs: [
+        { field: 'name', minWidth: 200, width: '50%' },
+        { field: 'gender', width: '30%', enableColumnResizing: false },
+        { field: 'company', width: '20%' }
+      ]
+    };
+
+    $http.get('/data/100.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-29" ng-eval-javascript="app.js"></div></div>
+</div>

@@ -1,0 +1,77 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>This grid example uses the ui-grid-cellNav directive to add cell navigation. To enable, you must include the 'ui.grid.cellNav' module and you must include the ui-grid-cellNav directive on your grid element.</p>
+
+<p>Uses the gridOptions.onRegisterApi callback to register the on_cellNav event and log when the cell is navigated.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-27" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-27" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-27">
+  <div ng-controller="MainCtrl">
+    <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
+    <br>
+    <br>
+    <div ui-grid="gridOptions" ui-grid-cellNav class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.cellNav']);
+
+  app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+    $scope.gridOptions = {};
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id' },
+      { name: 'name'},
+      { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
+      { name: 'address.city' }
+    ];
+
+    $http.get('/data/500_complex.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+
+      $scope.info = {};
+
+      $scope.currentFocused = "";
+
+      $scope.getCurrentFocus = function(){
+        var rowCol = $scope.gridApi.cellNav.getFocusedCell();
+        if(rowCol !== null) {
+            $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.name;
+        }
+      }
+
+      $scope.gridOptions.onRegisterApi = function(gridApi){
+         $scope.gridApi = gridApi;
+         gridApi.cellNav.on.navigate($scope,function(newRowCol, oldRowCol){
+               // var rowCol = {row: newRowCol.row.index, col:newRowCol.col.colDef.name};
+               // var msg = 'New RowCol is ' + angular.toJson(rowCol);
+               // if(oldRowCol){
+               //    rowCol = {row: oldRowCol.row.index, col:oldRowCol.col.colDef.name};
+               //    msg += ' Old RowCol is ' + angular.toJson(rowCol);
+               // }
+                $log.log('navigation event');
+              });
+      };
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-27" ng-eval-javascript="app.js"></div></div>
+</div>

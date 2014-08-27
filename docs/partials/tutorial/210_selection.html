@@ -1,0 +1,86 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>This grid example uses the ui-grid-selection directive to row selection. To enable, you must include the 'ui.grid.selection' module and you must include the ui-grid-selection directive on your grid element.</p>
+
+<p>Uses the gridOptions.onRegisterApi callback to register the rowSelectionChanged event and log when the row is selected.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-30" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-30" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-30">
+  <div ng-controller="MainCtrl">
+   <button type="button" class="btn btn-success" ng-click="toggleMultiSelect()">Toggle multiSelect</button>  <strong>MultiSelect:</strong> <span ng-bind="gridApi.grid.options.multiSelect"></span>
+    <button type="button" class="btn btn-success" ng-click="toggleRow1()">Toggle Row 0</button> </span>
+    <br/>
+    <br/>
+    <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button> </span>
+    <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button> </span>
+    <br>
+    <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.selection']);
+
+  app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+    $scope.gridOptions = {};
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id' },
+      { name: 'name'},
+      { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
+      { name: 'address.city' }
+    ];
+
+    $scope.gridOptions.multiSelect = true;
+
+    $http.get('/data/500_complex.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+
+      $scope.info = {};
+
+      $scope.toggleMultiSelect = function() {
+         $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
+      };
+
+      $scope.selectAll = function() {
+                 $scope.gridApi.selection.selectAllRows();
+      };
+
+       $scope.clearAll = function() {
+                       $scope.gridApi.selection.clearSelectedRows();
+            };
+
+      $scope.toggleRow1 = function() {
+                       $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
+      };
+
+      $scope.gridOptions.onRegisterApi = function(gridApi){
+        //set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope,function(row){
+          var msg = 'row selected ' + row.isSelected;
+          $log.log(msg);
+        });
+      };
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-30" ng-eval-javascript="app.js"></div></div>
+</div>

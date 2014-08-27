@@ -1,0 +1,84 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>UI-Grid uses isolate scope, so there is no access to your application scope variables from a row or cell template.</p>
+
+<p>To access your application data within UI-Grid, use the external-scopes attribute.  Give the attribute a
+property that exists on your scope.
+<pre class="prettyprint linenums">
+ $scope.myViewModel.showMe = function(){...};
+ &lt;div ui-grid="{ data: myData }" external-scopes="myViewModel" class="grid"&gt;&lt;/div&gt;
+</pre>
+
+<p>Then in a template, you access the scope using getExternalScopes() function.
+<pre class="prettyprint linenums">
+    ng-click="getExternalScopes().showMe()"
+</pre><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-36" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-36" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-36">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="gridOptions" external-scopes="myViewModel" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$log', function ($scope, $log) {
+
+   $scope.myViewModel = {
+      someProp:'abc',
+      showMe : function(){
+         alert(this.someProp);
+      }
+   };
+
+   $scope.gridOptions = {};
+
+     $scope.gridOptions.columnDefs = [
+           { name: 'firstName' },
+           { name: 'lastName'},
+           { name: 'ShowScope',
+               cellTemplate:'<button class="btn primary" ng-click="getExternalScopes().showMe()">Click Me</button>' }
+         ];
+
+   $scope.gridOptions.data = [
+      {
+          "firstName": "Cox",
+          "lastName": "Carney",
+          "company": "Enormo",
+          "employed": true
+      },
+      {
+          "firstName": "Lorraine",
+          "lastName": "Wise",
+          "company": "Comveyer",
+          "employed": false
+      },
+      {
+          "firstName": "Nancy",
+          "lastName": "Waters",
+          "company": "Fuelton",
+          "employed": false
+      }
+  ];
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-36" ng-eval-javascript="app.js"></div></div>
+</div>
