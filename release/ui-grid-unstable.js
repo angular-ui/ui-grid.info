@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-274e8e5 - 2014-08-28
+/*! ui-grid - v2.0.12-2c2e186 - 2014-08-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -73,6 +73,14 @@
       LESS_THAN: 128,
       LESS_THAN_OR_EQUAL: 256,
       NOT_EQUAL: 512
+    },
+
+    aggregationTypes: {
+      sum: 2,
+      count: 4,
+      avg: 8,
+      min: 16,
+      max: 32
     },
 
     // TODO(c0bra): Create full list of these somehow. NOTE: do any allow a space before or after them?
@@ -4628,18 +4636,18 @@ angular.module('ui.grid')
       if (angular.isFunction(self.aggregationType)) {
         return self.aggregationType(visibleRows, self);
       }
-      else if (self.aggregationType === 'count') {
+      else if (self.aggregationType === uiGridConstants.aggregationTypes.count) {
         //TODO: change to i18n
         return 'total rows: ' + self.grid.getVisibleRowCount();
       }
-      else if (self.aggregationType === 'sum') {
+      else if (self.aggregationType === uiGridConstants.aggregationTypes.sum) {
         angular.forEach(cellValues, function (value) {
           result += value;
         });
         //TODO: change to i18n
         return 'total: ' + result;
       }
-      else if (self.aggregationType === 'avg') {
+      else if (self.aggregationType === uiGridConstants.aggregationTypes.avg) {
         angular.forEach(cellValues, function (value) {
           result += value;
         });
@@ -4647,10 +4655,10 @@ angular.module('ui.grid')
         //TODO: change to i18n
         return 'avg: ' + result;
       }
-      else if (self.aggregationType === 'min') {
+      else if (self.aggregationType === uiGridConstants.aggregationTypes.min) {
         return 'min: ' + Math.min.apply(null, cellValues);
       }
-      else if (self.aggregationType === 'max') {
+      else if (self.aggregationType === uiGridConstants.aggregationTypes.max) {
         return 'max: ' + Math.max.apply(null, cellValues);
       }
       else {

@@ -373,7 +373,7 @@ NG_DOCS={
       "id": "105_footer",
       "shortName": "105 Footer",
       "type": "overview",
-      "keywords": "$scope age agemax agemin aggregation aggregationtype an angular app are avg background-color balance be can class column columndefs controller count css custom customcelltemplate data display displayed displayname each enablefiltering ever field footer footercelltemplate for function functions grid gridoptions height html if index is js main mainctrl max min module name ng-controller option or overview parseint person push random red row set showfooter showfooterrow style sum supported supports template to true tutorial ui ui-grid ui-grid-cell-contents use var want what which white width you"
+      "keywords": "$scope age agemax agemin aggregation aggregationtype aggregationtypes also an angular app are avg background-color balance be can class column columndefs controller count create css custom customcelltemplate data display displayed displayname each enablefiltering enum ever field footer footercelltemplate for function functions grid gridoptions height html if in index inject is js logic main mainctrl max min module name need ng-controller option or order overview own parseint pass person push random red row set showfooter showfooterrow style sum supported supports template the to true tutorial ui ui-grid ui-grid-cell-contents uigridconstants use var want what which white width you your"
     },
     {
       "section": "tutorial",
