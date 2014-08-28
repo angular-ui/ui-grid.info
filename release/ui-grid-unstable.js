@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-c29c006 - 2014-08-27
+/*! ui-grid - v2.0.12-065d3a4 - 2014-08-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -412,6 +412,351 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
   return uiGridColumnMenu;
 
 }]);
+
+})();
+(function () {
+  'use strict';
+
+  angular.module('ui.grid').directive('uiGridFooterCell', ['$log', '$timeout', 'gridUtil', '$compile', function ($log, $timeout, gridUtil, $compile) {
+    var uiGridFooterCell = {
+      priority: 0,
+      scope: {
+        col: '=',
+        row: '=',
+        renderIndex: '='
+      },
+      replace: true,
+      require: '^uiGrid',
+      compile: function compile(tElement, tAttrs, transclude) {
+        return {
+          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+            function compileTemplate(template) {
+              gridUtil.getTemplate(template).then(function (contents) {
+                var linkFunction = $compile(contents);
+                var html = linkFunction($scope);
+                $elm.append(html);
+              });
+            }
+
+            //compile the footer template
+            if ($scope.col.footerCellTemplate) {
+              //compile the custom template
+              compileTemplate($scope.col.footerCellTemplate);
+            }
+            else {
+              //use default template
+              compileTemplate('ui-grid/uiGridFooterCell');
+            }
+          },
+          post: function ($scope, $elm, $attrs, uiGridCtrl) {
+            //$elm.addClass($scope.col.getColClass(false));
+            $scope.grid = uiGridCtrl.grid;
+          }
+        };
+      }
+    };
+
+    return uiGridFooterCell;
+  }]);
+
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('ui.grid').directive('uiGridFooter', ['$log', '$templateCache', '$compile', 'uiGridConstants', 'gridUtil', '$timeout', function ($log, $templateCache, $compile, uiGridConstants, gridUtil, $timeout) {
+    var defaultTemplate = 'ui-grid/ui-grid-footer';
+
+    return {
+      restrict: 'EA',
+      replace: true,
+      // priority: 1000,
+      require: ['^uiGrid', '^uiGridRenderContainer'],
+      scope: true,
+      compile: function ($elm, $attrs) {
+        return {
+          pre: function ($scope, $elm, $attrs, controllers) {
+            var uiGridCtrl = controllers[0];
+            var containerCtrl = controllers[1];
+
+            $scope.grid = uiGridCtrl.grid;
+            $scope.colContainer = containerCtrl.colContainer;
+
+            containerCtrl.footer = $elm;
+
+            var footerTemplate = ($scope.grid.options.footerTemplate) ? $scope.grid.options.footerTemplate : defaultTemplate;
+            gridUtil.getTemplate(footerTemplate)
+              .then(function (contents) {
+                var template = angular.element(contents);
+
+                var newElm = $compile(template)($scope);
+                $elm.append(newElm);
+
+                if (containerCtrl) {
+                  // Inject a reference to the footer viewport (if it exists) into the grid controller for use in the horizontal scroll handler below
+                  var footerViewport = $elm[0].getElementsByClassName('ui-grid-footer-viewport')[0];
+
+                  if (footerViewport) {
+                    containerCtrl.footerViewport = footerViewport;
+                  }
+                }
+              });
+          },
+
+          post: function ($scope, $elm, $attrs, controllers) {
+            var uiGridCtrl = controllers[0];
+            var containerCtrl = controllers[1];
+
+            $log.debug('ui-grid-footer link');
+
+            var grid = uiGridCtrl.grid;
+
+            // Don't animate footer cells
+            gridUtil.disableAnimations($elm);
+
+            function updateColumnWidths() {
+              var asterisksArray = [],
+                percentArray = [],
+                manualArray = [],
+                asteriskNum = 0,
+                totalWidth = 0;
+
+              // Get the width of the viewport
+              var availableWidth = containerCtrl.colContainer.getViewportWidth();
+
+              if (typeof(uiGridCtrl.grid.verticalScrollbarWidth) !== 'undefined' && uiGridCtrl.grid.verticalScrollbarWidth !== undefined && uiGridCtrl.grid.verticalScrollbarWidth > 0) {
+                availableWidth = availableWidth + uiGridCtrl.grid.verticalScrollbarWidth;
+              }
+
+              // The total number of columns
+              // var equalWidthColumnCount = columnCount = uiGridCtrl.grid.options.columnDefs.length;
+              // var equalWidth = availableWidth / equalWidthColumnCount;
+
+              // The last column we processed
+              var lastColumn;
+
+              var manualWidthSum = 0;
+
+              var canvasWidth = 0;
+
+              var ret = '';
+
+
+              // uiGridCtrl.grid.columns.forEach(function(column, i) {
+
+              var columnCache = containerCtrl.colContainer.visibleColumnCache;
+
+              columnCache.forEach(function (column, i) {
+                // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
+                //var colWidth = (typeof(c.width) !== 'undefined' && c.width !== undefined) ? c.width : equalWidth;
+
+                // Skip hidden columns
+                if (!column.visible) {
+                  return;
+                }
+
+                var colWidth,
+                  isPercent = false;
+
+                if (!angular.isNumber(column.width)) {
+                  isPercent = isNaN(column.width) ? gridUtil.endsWith(column.width, "%") : false;
+                }
+
+                if (angular.isString(column.width) && column.width.indexOf('*') !== -1) { //  we need to save it until the end to do the calulations on the remaining width.
+                  asteriskNum = parseInt(asteriskNum + column.width.length, 10);
+
+                  asterisksArray.push(column);
+                }
+                else if (isPercent) { // If the width is a percentage, save it until the very last.
+                  percentArray.push(column);
+                }
+                else if (angular.isNumber(column.width)) {
+                  manualWidthSum = parseInt(manualWidthSum + column.width, 10);
+
+                  canvasWidth = parseInt(canvasWidth, 10) + parseInt(column.width, 10);
+
+                  column.drawnWidth = column.width;
+
+                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + column.width + 'px; }';
+                }
+              });
+
+              // Get the remaining width (available width subtracted by the manual widths sum)
+              var remainingWidth = availableWidth - manualWidthSum;
+
+              var i, column, colWidth;
+
+              if (percentArray.length > 0) {
+                // Pre-process to make sure they're all within any min/max values
+                for (i = 0; i < percentArray.length; i++) {
+                  column = percentArray[i];
+
+                  var percent = parseInt(column.width.replace(/%/g, ''), 10) / 100;
+
+                  colWidth = parseInt(percent * remainingWidth, 10);
+
+                  if (column.colDef.minWidth && colWidth < column.colDef.minWidth) {
+                    colWidth = column.colDef.minWidth;
+
+                    remainingWidth = remainingWidth - colWidth;
+
+                    canvasWidth += colWidth;
+                    column.drawnWidth = colWidth;
+
+                    // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+
+                    // Remove this element from the percent array so it's not processed below
+                    percentArray.splice(i, 1);
+                  }
+                  else if (column.colDef.maxWidth && colWidth > column.colDef.maxWidth) {
+                    colWidth = column.colDef.maxWidth;
+
+                    remainingWidth = remainingWidth - colWidth;
+
+                    canvasWidth += colWidth;
+                    column.drawnWidth = colWidth;
+
+                    // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+
+                    // Remove this element from the percent array so it's not processed below
+                    percentArray.splice(i, 1);
+                  }
+                }
+
+                percentArray.forEach(function (column) {
+                  var percent = parseInt(column.width.replace(/%/g, ''), 10) / 100;
+                  var colWidth = parseInt(percent * remainingWidth, 10);
+
+                  canvasWidth += colWidth;
+
+                  column.drawnWidth = colWidth;
+
+                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+                });
+              }
+
+              if (asterisksArray.length > 0) {
+                var asteriskVal = parseInt(remainingWidth / asteriskNum, 10);
+
+                // Pre-process to make sure they're all within any min/max values
+                for (i = 0; i < asterisksArray.length; i++) {
+                  column = asterisksArray[i];
+
+                  colWidth = parseInt(asteriskVal * column.width.length, 10);
+
+                  if (column.colDef.minWidth && colWidth < column.colDef.minWidth) {
+                    colWidth = column.colDef.minWidth;
+
+                    remainingWidth = remainingWidth - colWidth;
+                    asteriskNum--;
+
+                    canvasWidth += colWidth;
+                    column.drawnWidth = colWidth;
+
+                    // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+
+                    lastColumn = column;
+
+                    // Remove this element from the percent array so it's not processed below
+                    asterisksArray.splice(i, 1);
+                  }
+                  else if (column.colDef.maxWidth && colWidth > column.colDef.maxWidth) {
+                    colWidth = column.colDef.maxWidth;
+
+                    remainingWidth = remainingWidth - colWidth;
+                    asteriskNum--;
+
+                    canvasWidth += colWidth;
+                    column.drawnWidth = colWidth;
+
+                    // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+
+                    // Remove this element from the percent array so it's not processed below
+                    asterisksArray.splice(i, 1);
+                  }
+                }
+
+                // Redo the asterisk value, as we may have removed columns due to width constraints
+                asteriskVal = parseInt(remainingWidth / asteriskNum, 10);
+
+                asterisksArray.forEach(function (column) {
+                  var colWidth = parseInt(asteriskVal * column.width.length, 10);
+
+                  canvasWidth += colWidth;
+
+                  column.drawnWidth = colWidth;
+
+                  // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + column.index + ' { width: ' + colWidth + 'px; }';
+                });
+              }
+
+              // If the grid width didn't divide evenly into the column widths and we have pixels left over, dole them out to the columns one by one to make everything fit
+              var leftoverWidth = availableWidth - parseInt(canvasWidth, 10);
+
+              if (leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
+                var variableColumn = false;
+                // uiGridCtrl.grid.columns.forEach(function(col) {
+                columnCache.forEach(function (col) {
+                  if (col.width && !angular.isNumber(col.width)) {
+                    variableColumn = true;
+                  }
+                });
+
+                if (variableColumn) {
+                  var remFn = function (column) {
+                    if (leftoverWidth > 0) {
+                      column.drawnWidth = column.drawnWidth + 1;
+                      canvasWidth = canvasWidth + 1;
+                      leftoverWidth--;
+                    }
+                  };
+                  while (leftoverWidth > 0) {
+                    columnCache.forEach(remFn);
+                  }
+                }
+              }
+
+              if (canvasWidth < availableWidth) {
+                canvasWidth = availableWidth;
+              }
+
+              // Build the CSS
+              // uiGridCtrl.grid.columns.forEach(function (column) {
+              columnCache.forEach(function (column) {
+                ret = ret + column.getColClassDefinition();
+              });
+
+              // Add the vertical scrollbar width back in to the canvas width, it's taken out in getCanvasWidth
+              if (grid.verticalScrollbarWidth) {
+                canvasWidth = canvasWidth + grid.verticalScrollbarWidth;
+              }
+              // canvasWidth = canvasWidth + 1;
+
+              containerCtrl.colContainer.canvasWidth = parseInt(canvasWidth, 10);
+
+              // Return the styles back to buildStyles which pops them into the `customStyles` scope variable
+              return ret;
+            }
+
+            containerCtrl.footer = $elm;
+
+            var footerViewport = $elm[0].getElementsByClassName('ui-grid-footer-viewport')[0];
+            if (footerViewport) {
+              containerCtrl.footerViewport = footerViewport;
+            }
+
+            //todo: remove this if by injecting gridCtrl into unit tests
+            if (uiGridCtrl) {
+              uiGridCtrl.grid.registerStyleComputation({
+                priority: 5,
+                func: updateColumnWidths
+              });
+            }
+          }
+        };
+      }
+    };
+  }]);
 
 })();
 (function(){
@@ -1107,10 +1452,10 @@ angular.module('ui.grid')
 }]);
 
 })();
-(function(){
+(function () {
 // 'use strict';
 
-  angular.module('ui.grid').directive('uiGridNativeScrollbar', ['$log', '$timeout', '$document', 'uiGridConstants', 'gridUtil', function($log, $timeout, $document, uiGridConstants, gridUtil) {
+  angular.module('ui.grid').directive('uiGridNativeScrollbar', ['$log', '$timeout', '$document', 'uiGridConstants', 'gridUtil', function ($log, $timeout, $document, uiGridConstants, gridUtil) {
     var scrollBarWidth = gridUtil.getScrollbarWidth();
     scrollBarWidth = scrollBarWidth > 0 ? scrollBarWidth : 17;
 
@@ -1170,7 +1515,7 @@ angular.module('ui.grid')
         else if ($scope.type === 'horizontal') {
           elmMaxScroll = gridUtil.elementWidth($elm);
         }
-        
+
         function updateNativeVerticalScrollbar() {
           // Update the vertical scrollbar's content height so it's the same as the canvas
           var h = rowContainer.getCanvasHeight();
@@ -1199,7 +1544,9 @@ angular.module('ui.grid')
 
           // Scrollbar needs to be negatively positioned beyond the bottom of the relatively-positioned render container
           var bottom = (scrollBarWidth * -1) + gridBottomBorder;
-
+          if (grid.options.showFooter) {
+            bottom -= 1;
+          }
           var ret = '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.horizontal { bottom: ' + bottom + 'px; }';
           ret += '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.horizontal .contents { width: ' + w + 'px; }';
 
@@ -1241,8 +1588,12 @@ angular.module('ui.grid')
 
             var vertScrollPercentage = newScrollTop / vertScrollLength;
 
-            if (vertScrollPercentage > 1) { vertScrollPercentage = 1; }
-            if (vertScrollPercentage < 0) { vertScrollPercentage = 0; }
+            if (vertScrollPercentage > 1) {
+              vertScrollPercentage = 1;
+            }
+            if (vertScrollPercentage < 0) {
+              vertScrollPercentage = 0;
+            }
 
             var yArgs = {
               target: $elm,
@@ -1250,7 +1601,7 @@ angular.module('ui.grid')
                 percentage: vertScrollPercentage
               }
             };
-            
+
             // If the source of this scroll is defined (i.e., not us, then don't fire the scroll event because we'll be re-triggering)
             if (!$scope.scrollSource) {
               uiGridCtrl.fireScrollingEvent(yArgs);
@@ -1277,7 +1628,7 @@ angular.module('ui.grid')
                 percentage: horizScrollPercentage
               }
             };
-            
+
             // If the source of this scroll is defined (i.e., not us, then don't fire the scroll event because we'll be re-triggering)
             if (!$scope.scrollSource) {
               uiGridCtrl.fireScrollingEvent(xArgs);
@@ -1293,7 +1644,7 @@ angular.module('ui.grid')
 
         $elm.on('scroll', scrollEvent);
 
-        $elm.on('$destroy', function() {
+        $elm.on('$destroy', function () {
           $elm.off('scroll');
         });
 
@@ -1311,7 +1662,7 @@ angular.module('ui.grid')
               var vertScrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
 
               var newScrollTop = Math.max(0, args.y.percentage * vertScrollLength);
-              
+
               $elm[0].scrollTop = newScrollTop;
             }
           }
@@ -1320,7 +1671,7 @@ angular.module('ui.grid')
               var horizScrollLength = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
 
               var newScrollLeft = Math.max(0, args.x.percentage * horizScrollLength);
-              
+
               // $elm[0].scrollLeft = newScrollLeft;
               $elm[0].scrollLeft = gridUtil.denormalizeScrollLeft($elm, newScrollLeft);
             }
@@ -1474,6 +1825,11 @@ angular.module('ui.grid')
                   containerCtrl.headerViewport.scrollLeft = GridUtil.denormalizeScrollLeft(containerCtrl.headerViewport, newScrollLeft);
                 }
 
+                if (containerCtrl.footerViewport) {
+                  // containerCtrl.footerViewport.scrollLeft = newScrollLeft;
+                  containerCtrl.footerViewport.scrollLeft = GridUtil.denormalizeScrollLeft(containerCtrl.footerViewport, newScrollLeft);
+                }
+
                 // uiGridCtrl.grid.options.offsetLeft = newScrollLeft;
 
                 containerCtrl.prevScrollArgs.x.pixels = newScrollLeft - oldScrollLeft;
@@ -1528,6 +1884,7 @@ angular.module('ui.grid')
               var viewportHeight = rowContainer.getViewportHeight();
 
               var headerViewportWidth = colContainer.getHeaderViewportWidth();
+              var footerViewportWidth = colContainer.getHeaderViewportWidth();
               
               // Set canvas dimensions
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-canvas { width: ' + canvasWidth + 'px; height: ' + canvasHeight + 'px; }';
@@ -1536,7 +1893,9 @@ angular.module('ui.grid')
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-viewport { width: ' + viewportWidth + 'px; height: ' + viewportHeight + 'px; }';
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-viewport { width: ' + headerViewportWidth + 'px; }';
 
-              // Update 
+              ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-canvas { width: ' + canvasWidth + 'px; }';
+              ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-viewport { width: ' + footerViewportWidth + 'px; }';
+              // Update
 
               return ret;
             }
@@ -2468,67 +2827,69 @@ angular.module('ui.grid')
    * @param {object} options Object map of options to pass into the grid. An 'id' property is expected.
    */
   var Grid = function Grid(options) {
-    // Get the id out of the options, then remove it
-    if (options !== undefined && typeof(options.id) !== 'undefined' && options.id) {
-      if (!/^[_a-zA-Z0-9-]+$/.test(options.id)) {
-        throw new Error("Grid id '" + options.id + '" is invalid. It must follow CSS selector syntax rules.');
-      }
+  // Get the id out of the options, then remove it
+  if (options !== undefined && typeof(options.id) !== 'undefined' && options.id) {
+    if (!/^[_a-zA-Z0-9-]+$/.test(options.id)) {
+      throw new Error("Grid id '" + options.id + '" is invalid. It must follow CSS selector syntax rules.');
     }
-    else {
-      throw new Error('No ID provided. An ID must be given when creating a grid.');
-    }
+  }
+  else {
+    throw new Error('No ID provided. An ID must be given when creating a grid.');
+  }
 
-    this.id = options.id;
-    delete options.id;
+  this.id = options.id;
+  delete options.id;
 
-    // Get default options
-    this.options = new GridOptions();
+  // Get default options
+  this.options = new GridOptions();
 
-    // Extend the default options with what we were passed in
-    angular.extend(this.options, options);
+  // Extend the default options with what we were passed in
+  angular.extend(this.options, options);
 
-    this.headerHeight = this.options.headerRowHeight;
-    this.gridHeight = 0;
-    this.gridWidth = 0;
-    this.columnBuilders = [];
-    this.rowBuilders = [];
-    this.rowsProcessors = [];
-    this.columnsProcessors = [];
-    this.styleComputations = [];
-    this.viewportAdjusters = [];
+  this.headerHeight = this.options.headerRowHeight;
+  this.footerHeight = this.options.showFooter === true ? this.options.footerRowHeight : 0;
 
-    // this.visibleRowCache = [];
+  this.gridHeight = 0;
+  this.gridWidth = 0;
+  this.columnBuilders = [];
+  this.rowBuilders = [];
+  this.rowsProcessors = [];
+  this.columnsProcessors = [];
+  this.styleComputations = [];
+  this.viewportAdjusters = [];
 
-    // Set of 'render' containers for this grid, which can render sets of rows
-    this.renderContainers = {};
+  // this.visibleRowCache = [];
 
-    // Create a 
-    this.renderContainers.body = new GridRenderContainer('body', this);
+  // Set of 'render' containers for this grid, which can render sets of rows
+  this.renderContainers = {};
 
-    this.cellValueGetterCache = {};
+  // Create a
+  this.renderContainers.body = new GridRenderContainer('body', this);
 
-    // Cached function to use with custom row templates
-    this.getRowTemplateFn = null;
+  this.cellValueGetterCache = {};
 
-    // Validate options
-    if (!this.options.enableNativeScrolling && !this.options.enableVirtualScrolling) {
-      throw "Either native or virtual scrolling must be enabled.";
-    }
+  // Cached function to use with custom row templates
+  this.getRowTemplateFn = null;
+
+  // Validate options
+  if (!this.options.enableNativeScrolling && !this.options.enableVirtualScrolling) {
+    throw "Either native or virtual scrolling must be enabled.";
+  }
 
 
-    //representation of the rows on the grid.
-    //these are wrapped references to the actual data rows (options.data)
-    this.rows = [];
+  //representation of the rows on the grid.
+  //these are wrapped references to the actual data rows (options.data)
+  this.rows = [];
 
-    //represents the columns on the grid
-    this.columns = [];
+  //represents the columns on the grid
+  this.columns = [];
 
-    //current rows that are rendered on the DOM
-    this.renderedRows = [];
-    this.renderedColumns = [];
+  //current rows that are rendered on the DOM
+  this.renderedRows = [];
+  this.renderedColumns = [];
 
-    this.api = new GridApi(this);
-  };
+  this.api = new GridApi(this);
+};
 
   /**
    * @ngdoc function
@@ -3356,7 +3717,7 @@ angular.module('ui.grid')
   Grid.prototype.getViewportHeight = function getViewportHeight() {
     var self = this;
 
-    var viewPortHeight = this.gridHeight - this.headerHeight;
+    var viewPortHeight = this.gridHeight - this.headerHeight - this.footerHeight;
 
     // Account for native horizontal scrollbar, if present
     if (typeof(this.horizontalScrollbarHeight) !== 'undefined' && this.horizontalScrollbarHeight !== undefined && this.horizontalScrollbarHeight > 0) {
@@ -3436,6 +3797,10 @@ angular.module('ui.grid')
     // return this.visibleRowCache.length;
     return this.renderContainers.body.visibleRowCache.length;
   };
+
+   Grid.prototype.getVisibleRows = function getVisibleRows() {
+    return this.renderContainers.body.visibleRowCache;
+   };
 
   Grid.prototype.getVisibleColumnCount = function getVisibleColumnCount() {
     // var count = 0;
@@ -4136,6 +4501,9 @@ angular.module('ui.grid')
 
     //self.originalIndex = index;
 
+    self.aggregationType = angular.isDefined(colDef.aggregationType) ? colDef.aggregationType : null;
+    self.footerCellTemplate = angular.isDefined(colDef.footerCellTemplate) ? colDef.footerCellTemplate : null;
+
     self.cellClass = colDef.cellClass;
     self.cellFilter = colDef.cellFilter ? colDef.cellFilter : "";
 
@@ -4173,6 +4541,8 @@ angular.module('ui.grid')
     self.setPropertyOrDefault(colDef, 'filter');
     self.setPropertyOrDefault(colDef, 'filters', []);
   };
+
+
 
 
     /**
@@ -4238,8 +4608,58 @@ angular.module('ui.grid')
         this.colDef.visible = false;
     };
 
+    /**
+     * @ngdoc function
+     * @name getAggregationValue
+     * @methodOf ui.grid.class:GridColumn
+     * @description gets the aggregation value based on the aggregation type for this column
+     */
+    GridColumn.prototype.getAggregationValue = function () {
+      var self = this;
+      var result = 0;
+      var visibleRows = self.grid.getVisibleRows();
+      var cellValues = [];
+      angular.forEach(visibleRows, function (row) {
+        var cellValue = self.grid.getCellValue(row, self);
+        if (angular.isNumber(cellValue)) {
+          cellValues.push(cellValue);
+        }
+      });
+      if (angular.isFunction(self.aggregationType)) {
+        return self.aggregationType(visibleRows, self);
+      }
+      else if (self.aggregationType === 'count') {
+        //TODO: change to i18n
+        return 'total rows: ' + self.grid.getVisibleRowCount();
+      }
+      else if (self.aggregationType === 'sum') {
+        angular.forEach(cellValues, function (value) {
+          result += value;
+        });
+        //TODO: change to i18n
+        return 'total: ' + result;
+      }
+      else if (self.aggregationType === 'avg') {
+        angular.forEach(cellValues, function (value) {
+          result += value;
+        });
+        result = result / cellValues.length;
+        //TODO: change to i18n
+        return 'avg: ' + result;
+      }
+      else if (self.aggregationType === 'min') {
+        return 'min: ' + Math.min.apply(null, cellValues);
+      }
+      else if (self.aggregationType === 'max') {
+        return 'max: ' + Math.max.apply(null, cellValues);
+      }
+      else {
+        return null;
+      }
+    };
+
     return GridColumn;
-}]);
+  }]);
 
 })();
 
@@ -4376,6 +4796,9 @@ angular.module('ui.grid')
     this.rowHeight = 30;
     this.maxVisibleRowCount = 200;
 
+    this.showFooter = false;
+    this.footerRowHeight = 30;
+
     this.columnWidth = 50;
     this.maxVisibleColumnCount = 200;
 
@@ -4442,7 +4865,7 @@ angular.module('ui.grid')
     };
 
     /**
-     * @ngdoc boolean
+     * @ngdoc string
      * @name headerTemplate
      * @propertyOf ui.grid.class:GridOptions
      * @description Null by default. When provided, this setting uses a custom header
@@ -4456,7 +4879,18 @@ angular.module('ui.grid')
     this.headerTemplate = null;
 
     /**
-     * @ngdoc boolean
+     * @ngdoc string
+     * @name footerTemplate
+     * @propertyOf ui.grid.class:GridOptions
+     * @description (optional) Null by default. When provided, this setting uses a custom footer
+     * template. Can be set to either the name of a template file 'footer_template.html', inline html
+     * <pre>'<div class="ui-grid-bottom-panel" style="text-align: center">I am a Custom Grid Footer</div>'</pre>, or the id
+     * of a precompiled template '??'.  Refer to the custom footer tutorial for more information.
+     */
+    this.footerTemplate = null;
+
+    /**
+     * @ngdoc string
      * @name rowTemplate
      * @propertyOf ui.grid.class:GridOptions
      * @description 'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
@@ -4605,7 +5039,7 @@ angular.module('ui.grid')
   GridRenderContainer.prototype.getViewportHeight = function getViewportHeight() {
     var self = this;
 
-    var viewPortHeight = self.grid.gridHeight - self.grid.headerHeight;
+    var viewPortHeight = self.grid.gridHeight - self.grid.headerHeight - self.grid.footerHeight;
 
     // Account for native horizontal scrollbar, if present
     if (typeof(self.horizontalScrollbarHeight) !== 'undefined' && self.horizontalScrollbarHeight !== undefined && self.horizontalScrollbarHeight > 0) {
@@ -9808,6 +10242,11 @@ module.filter('px', function() {
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('ui-grid/ui-grid-footer',
+    "<div class=\"ui-grid-footer-panel\"><div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-footer ui-grid-footer-viewport\"><div class=\"ui-grid-footer-canvas\"><div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-footer-cell col=\"col\" render-index=\"$index\" class=\"ui-grid-footer-cell clearfix ui-grid-col{{$index}}\"></div></div></div></div>"
+  );
+
+
   $templateCache.put('ui-grid/ui-grid-group-panel',
     "<div class=\"ui-grid-group-panel\"><div ui-t=\"groupPanel.description\" class=\"description\" ng-show=\"groupings.length == 0\"></div><ul ng-show=\"groupings.length > 0\" class=\"ngGroupList\"><li class=\"ngGroupItem\" ng-repeat=\"group in configGroups\"><span class=\"ngGroupElement\"><span class=\"ngGroupName\">{{group.displayName}} <span ng-click=\"removeGroup($index)\" class=\"ngRemoveGroup\">x</span></span> <span ng-hide=\"$last\" class=\"ngGroupArrow\"></span></span></li></ul></div>"
   );
@@ -9855,7 +10294,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
-    "    {{ grid.customStyles }}</style><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"true\"></div><div ui-grid-footer></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
+    "    {{ grid.customStyles }}</style><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"true\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
   );
 
 
@@ -9884,6 +10323,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('ui-grid/uiGridFooterCell',
+    "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div>{{ col.getAggregationValue() }}</div></div>"
+  );
+
+
   $templateCache.put('ui-grid/uiGridHeaderCell',
     "<div class=\"ui-grid-header-cell clearfix\" ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"col.filter.term\" ng-click=\"$event.stopPropagation()\"><div class=\"ui-grid-filter-button\" ng-click=\"col.filter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!col.filter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
@@ -9900,7 +10344,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><!-- native scrolling --><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"vertical\"></div><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"horizontal\"></div></div>"
+    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showFooter\"></div><!-- native scrolling --><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"vertical\"></div><div ui-grid-native-scrollbar ng-if=\"!grid.options.enableVirtualScrolling && grid.options.enableNativeScrolling && enableScrollbars\" type=\"horizontal\"></div></div>"
   );
 
 
