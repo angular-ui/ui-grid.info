@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-2c2e186 - 2014-08-28
+/*! ui-grid - v2.0.12-87da7f7 - 2014-08-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -118,8 +118,18 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
             $elm.append(cellElement);
           }
         },
-        post: function($scope, $elm, $attrs) {
+        post: function($scope, $elm, $attrs, uiGridCtrl) {
           $elm.addClass($scope.col.getColClass(false));
+          if ($scope.col.cellClass) {
+            //var contents = angular.element($elm[0].getElementsByClassName('ui-grid-cell-contents'));
+            var contents = $elm;
+            if (angular.isFunction($scope.col.cellClass)) {
+              contents.addClass($scope.col.cellClass($scope.grid, $scope.row, $scope.col, $scope.rowRenderIndex, $scope.colRenderIndex));
+            }
+            else {
+              contents.addClass($scope.col.cellClass);
+            }
+          }
         }
       };
     }
@@ -4512,7 +4522,20 @@ angular.module('ui.grid')
     self.aggregationType = angular.isDefined(colDef.aggregationType) ? colDef.aggregationType : null;
     self.footerCellTemplate = angular.isDefined(colDef.footerCellTemplate) ? colDef.footerCellTemplate : null;
 
+    /**
+     * @ngdoc property
+     * @name cellClass
+     * @propertyOf ui.grid.class:GridColumn
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description cellClass can be a string specifying the class to append to a cell
+     * or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name
+     *
+     */
     self.cellClass = colDef.cellClass;
+
+
+
+
     self.cellFilter = colDef.cellFilter ? colDef.cellFilter : "";
 
     self.visible = gridUtil.isNullOrUndefined(colDef.visible) || colDef.visible;
