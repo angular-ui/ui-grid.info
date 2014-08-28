@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-065d3a4 - 2014-08-28
+/*! ui-grid - v2.0.12-274e8e5 - 2014-08-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9035,6 +9035,23 @@ module.filter('px', function() {
    *
    */
     module.directive('input', ['$filter', function ($filter) {
+      function parseDateString(dateString) {
+        if ('undefined' === typeof dateString || '' === dateString) {
+          return null;
+        }
+        var parts = dateString.split('-');
+        if (3 !== parts.length) {
+          return null;
+        }
+        var year = parseInt(parts[0], 10);
+        var month = parseInt(parts[1], 10);
+        var day = parseInt(parts[2], 10);
+
+        if (month < 1 || year < 1 || day < 1) {
+          return null;
+        }
+        return new Date(year, (month - 1), day);
+      }
       return {
         restrict: 'E',
         require: '?ngModel',
@@ -9043,14 +9060,20 @@ module.filter('px', function() {
           if (angular.version.minor === 2 && attrs.type && 'date' === attrs.type && ngModel) {
 
             ngModel.$formatters.push(function (modelValue) {
-              ngModel.$setValidity(null, (!modelValue || !isNaN(modelValue.getTime())));
+              ngModel.$setValidity(null,(!modelValue || !isNaN(modelValue.getTime())));
               return $filter('date')(modelValue, 'yyyy-MM-dd');
             });
 
             ngModel.$parsers.push(function (viewValue) {
-              var dateValue = new Date(viewValue);
-              ngModel.$setValidity(null, (!dateValue || !isNaN(dateValue.getTime())));
-              return dateValue;
+              if (viewValue && viewValue.length > 0) {
+                var dateValue = parseDateString(viewValue);
+                ngModel.$setValidity(null, (dateValue && !isNaN(dateValue.getTime())));
+                return dateValue;
+              }
+              else {
+                ngModel.$setValidity(null, true);
+                return null;
+              }
             });
           }
         }
