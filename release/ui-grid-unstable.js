@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-87da7f7 - 2014-08-28
+/*! ui-grid - v2.0.12-e31050c - 2014-08-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9328,7 +9328,7 @@ module.filter('px', function() {
               if ($scope.side === 'left' || $scope.side === 'right') {
                 var cols = grid.renderContainers[$scope.side].visibleColumnCache;
                 var width = 0;
-                for (var i in cols) {
+                for (var i = 0; i < cols.length; i++) {
                   var col = cols[i];
                   width += col.drawnWidth;
                 }
