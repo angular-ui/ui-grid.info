@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-e31050c - 2014-08-29
+/*! ui-grid - v2.0.12-8c7bf54 - 2014-09-01
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -176,7 +176,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
       /**
        * @ngdoc boolean
-       * @name ui.grid.class:GridOptions.columnDef.enableSorting
+       * @name enableSorting
        * @propertyOf ui.grid.class:GridOptions.columnDef
        * @description (optional) True by default. When enabled, this setting adds sort
        * widgets to the column header, allowing sorting of the data in the individual column.
@@ -192,7 +192,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
       /**
        * @ngdoc boolean
-       * @name ui.grid.class:GridOptions.columnDef.enableFiltering
+       * @name enableFiltering
        * @propertyOf ui.grid.class:GridOptions.columnDef
        * @description (optional) True by default. When enabled, this setting adds filter
        * widgets to the column header, allowing filtering of the data in the individual column.
@@ -4283,10 +4283,29 @@ angular.module('ui.grid')
    * @param {Grid} grid reference to the grid
    */
    
+   /**
+    * ******************************************************************************************
+    * PaulL1: Ugly hack here in documentation.  These properties are clearly properties of GridColumn, 
+    * and need to be noted as such for those extending and building ui-grid itself.
+    * However, from an end-developer perspective, they interact with all these through columnDefs,
+    * and they really need to be documented there.  I feel like they're relatively static, and
+    * I can't find an elegant way for ngDoc to reference to both....so I've duplicated each
+    * comment block.  Ugh.
+    * 
+    */
+
    /** 
     * @ngdoc property
-    * @name ui.grid.class:GridColumn.name
+    * @name name
     * @propertyOf ui.grid.class:GridColumn
+    * @description (mandatory) each column should have a name, although for backward
+    * compatibility with 2.x name can be omitted if field is present
+    *
+    */
+
+   /** 
+    * @ngdoc property
+    * @name name
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description (mandatory) each column should have a name, although for backward
     * compatibility with 2.x name can be omitted if field is present
@@ -4295,18 +4314,36 @@ angular.module('ui.grid')
     
     /** 
     * @ngdoc property
-    * @name ui.grid.class:GridColumn.displayName
+    * @name displayName
     * @propertyOf ui.grid.class:GridColumn
+    * @description Column name that will be shown in the header.  If displayName is not
+    * provided then one is generated using the name.
+    *
+    */
+
+    /** 
+    * @ngdoc property
+    * @name displayName
     * @propertyOf ui.grid.class:GridOptions.columnDef
-    * @description name is used for displayName if displayName is not
-    * provided.  If provided then displayName is used in the header.
+    * @description Column name that will be shown in the header.  If displayName is not
+    * provided then one is generated using the name.
+    *
+    */
+       
+    /** 
+    * @ngdoc property
+    * @name field
+    * @propertyOf ui.grid.class:GridColumn
+    * @description field must be provided if you wish to bind to a 
+    * property in the data source.  Should be an angular expression that evaluates against grid.options.data 
+    * array element.  Can be a complex expression: <code>employee.address.city</code>, or can be a function: <code>employee.getFullAddress()</code>.
+    * See the angular docs on binding expressions.
     *
     */
     
     /** 
     * @ngdoc property
-    * @name ui.grid.class:GridColumn.field
-    * @propertyOf ui.grid.class:GridColumn
+    * @name field
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description field must be provided if you wish to bind to a 
     * property in the data source.  Should be an angular expression that evaluates against grid.options.data 
@@ -4317,8 +4354,17 @@ angular.module('ui.grid')
     
     /** 
     * @ngdoc property
-    * @name ui.grid.class:GridColumn.filter
+    * @name filter
     * @propertyOf ui.grid.class:GridColumn
+    * @description Filter to insert against this column.  
+    * @example
+    * <pre>{ term: 'text' }</pre>
+    *
+    */
+
+    /** 
+    * @ngdoc property
+    * @name filter
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description Filter to insert against this column.  
     * @example
@@ -4357,7 +4403,7 @@ angular.module('ui.grid')
   
    /** 
     * @ngdoc property
-    * @name ui.grid.class:GridOptions.columnDef.width
+    * @name width
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description sets the column width.  Can be either 
     * a number or a percentage, or an * for auto.
@@ -4370,7 +4416,7 @@ angular.module('ui.grid')
 
    /** 
     * @ngdoc property
-    * @name ui.grid.class:GridOptions.columnDef.minWidth
+    * @name minWidth
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description sets the minimum column width.  Should be a number.
     * @example
@@ -4380,7 +4426,7 @@ angular.module('ui.grid')
 
    /** 
     * @ngdoc property
-    * @name ui.grid.class:GridOptions.columnDef.maxWidth
+    * @name maxWidth
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description sets the maximum column width.  Should be a number.
     * @example
@@ -4390,7 +4436,7 @@ angular.module('ui.grid')
 
    /** 
     * @ngdoc property
-    * @name ui.grid.class:GridOptions.columnDef.visible
+    * @name visible
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description sets whether or not the column is visible
     * </br>Default is true
@@ -4403,8 +4449,8 @@ angular.module('ui.grid')
     */
    
   /**
-   * @ngdoc constant
-   * @name ui.grid.class:GridOptions.columnDef.sort
+   * @ngdoc property
+   * @name sort
    * @propertyOf ui.grid.class:GridOptions.columnDef
    * @description Can be used to set the sort direction for the column, values are
    * uiGridConstants.ASC or uiGridConstants.DESC
@@ -4415,8 +4461,16 @@ angular.module('ui.grid')
 
     /** 
     * @ngdoc property
-    * @name ui.grid.class:GridColumn.sortingAlgorithm
+    * @name sortingAlgorithm
     * @propertyOf ui.grid.class:GridColumn
+    * @description Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
+    * like any normal sorting function.
+    *
+    */
+
+    /** 
+    * @ngdoc property
+    * @name sortingAlgorithm
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
     * like any normal sorting function.
@@ -4425,7 +4479,7 @@ angular.module('ui.grid')
       
    /** 
     * @ngdoc array
-    * @name ui.grid.class:GridOptions.columnDef.filters
+    * @name filters
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description unclear what this does or how it's used, but it does something.
     *
@@ -4433,7 +4487,7 @@ angular.module('ui.grid')
 
    /** 
     * @ngdoc array
-    * @name ui.grid.class:GridOptions.columnDef.menuItems
+    * @name menuItems
     * @propertyOf ui.grid.class:GridOptions.columnDef
     * @description used to add menu items to a column.  Refer to the tutorial on this 
     * functionality.
@@ -4740,7 +4794,8 @@ angular.module('ui.grid')
      * @propertyOf ui.grid.class:GridOptions
      * @description (mandatory) Array of data to be rendered into the grid, providing the data source or data binding for 
      * the grid.  The most common case is an array of objects, where each object has a number of attributes.
-     * Each attribute automatically becomes a column in your grid.  The array can also contain complex objects.
+     * Each attribute automatically becomes a column in your grid.  This array could, for example, be sourced from
+     * an angularJS $resource query request.  The array can also contain complex objects.
      * 
      */
     this.data = [];
@@ -4750,8 +4805,9 @@ angular.module('ui.grid')
      * @name columnDefs
      * @propertyOf  ui.grid.class:GridOptions
      * @description Array of columnDef objects.  Only required property is name.
+     * The individual options available in columnDefs are documented in the
+     * {@link ui.grid.class:GridOptions.columnDef columnDef} section
      * </br>_field property can be used in place of name for backwards compatibility with 2.x_
-     * </br>The individual options available in columnDefs are documented in the {@link ui.grid.class:GridOptions.columnDef columnDef} section
      *  @example
      *
      * <pre>var columnDefs = [{name:'field1'}, {name:'field2'}];</pre>
@@ -4851,7 +4907,8 @@ angular.module('ui.grid')
      * @name enableSorting
      * @propertyOf ui.grid.class:GridOptions
      * @description True by default. When enabled, this setting adds sort
-     * widgets to the column headers, allowing sorting of the data.
+     * widgets to the column headers, allowing sorting of the data for the entire grid.
+     * Sorting can then be disabled on individual columns using the columnDefs.
      */
     this.enableSorting = true;
 
@@ -4860,7 +4917,8 @@ angular.module('ui.grid')
      * @name enableFiltering
      * @propertyOf ui.grid.class:GridOptions
      * @description False by default. When enabled, this setting adds filter 
-     * boxes to each column header, allowing filtering within the column.
+     * boxes to each column header, allowing filtering within the column for the entire grid.
+     * Filtering can then be disabled on individual columns using the columnDefs. 
      */
     this.enableFiltering = false;
 
@@ -4916,7 +4974,7 @@ angular.module('ui.grid')
      * @description (optional) Null by default. When provided, this setting uses a custom footer
      * template. Can be set to either the name of a template file 'footer_template.html', inline html
      * <pre>'<div class="ui-grid-bottom-panel" style="text-align: center">I am a Custom Grid Footer</div>'</pre>, or the id
-     * of a precompiled template '??'.  Refer to the custom footer tutorial for more information.
+     * of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.
      */
     this.footerTemplate = null;
 
@@ -8302,19 +8360,18 @@ module.filter('px', function() {
 
           /**
            *  @ngdoc object
-           *  @name ui.grid.cellNav.api:ColDef
+           *  @name ui.grid.cellNav.api:ColumnDef
            *
-           *  @description Column Definitions for cellNav feature
+           *  @description Column Definitions for cellNav feature, these are available to be 
+           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
            */
 
           /**
            *  @ngdoc object
            *  @name allowCellFocus
-           *  @propertyOf  ui.grid.cellNav.api:ColDef
-           *  @propertyOf  ui.grid.class:GridOptions.columnDef
+           *  @propertyOf  ui.grid.cellNav.api:ColumnDef
            *  @description Enable focus on a cell.  
            *  <br/>Defaults to true
-           *  <br/>_Requires the cell nav feature to be enabled._
            */
           colDef.allowCellFocus = colDef.allowCellFocus === undefined ? true : colDef.allowCellFocus ;
 
@@ -8557,27 +8614,24 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name ui.grid.edit.api:GridOptions
            *
-           *  @description Options for configuring the edit feature
+           *  @description Options for configuring the edit feature, these are available to be  
+           *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
 
           /**
            *  @ngdoc object
            *  @name enableCellEdit
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
            *  @description If defined, sets the default value for the editable flag on each individual colDefs 
            *  if their individual enableCellEdit configuration is not defined. Defaults to undefined.  
-           *  </br>_requires the edit feature to be enabled_
            */
 
           /**
            *  @ngdoc object
            *  @name cellEditableCondition
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
            *  @description If specified, either a value or function to be used by all columns before editing.  
            *  If falsy, then editing of cell is not allowed.
-           *  </br>_requires the edit feature to be enabled_
            *  @example
            *  <pre>
            *  function($scope){
@@ -8592,17 +8646,14 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name editableCellTemplate
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @description If specified, cellTemplate to use as the editor for all columns.
            *  @description If specified, cellTemplate to use as the editor for all columns.  
            *  <br/> defaults to 'ui-grid/cellTextEditor'
-           *  <br/>_requires the edit feature to be enabled_
            */
 
           /**
            *  @ngdoc object
            *  @name enableCellEditOnFocus
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
            *  @description If true, then editor is invoked as soon as cell receives focus. Default false.
            *  <br/>_requires cellNav feature and the edit feature to be enabled_
            */
@@ -8624,18 +8675,17 @@ module.filter('px', function() {
 
           /**
            *  @ngdoc object
-           *  @name ui.grid.edit.api:ColDef
+           *  @name ui.grid.edit.api:ColumnDef
            *
-           *  @description Column Definitions for edit feature
+           *  @description Column Definition for edit feature, these are available to be 
+           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
            */
 
           /**
            *  @ngdoc object
            *  @name enableCellEdit
-           *  @propertyOf  ui.grid.edit.api:ColDef
-           *  @propertyOf  ui.grid.class:GridOptions.columnDef
+           *  @propertyOf  ui.grid.edit.api:ColumnDef
            *  @description enable editing on column
-           *  <br/>_requires the edit feature to be enabled_
            */
           colDef.enableCellEdit = colDef.enableCellEdit === undefined ? (gridOptions.enableCellEdit === undefined ?
             (colDef.type !== 'object'):gridOptions.enableCellEdit) : colDef.enableCellEdit;
@@ -8643,10 +8693,8 @@ module.filter('px', function() {
           /**
            *  @ngdoc object
            *  @name cellEditableCondition
-           *  @propertyOf  ui.grid.edit.api:ColDef
-           *  @propertyOf  ui.grid.class:GridOptions.columnDef
+           *  @propertyOf  ui.grid.edit.api:ColumnDef
            *  @description If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.
-           *  <br/>_requires the edit feature to be enabled_
            *  @example 
            *  <pre>
            *  function($scope){
@@ -8660,11 +8708,9 @@ module.filter('px', function() {
           /**
            *  @ngdoc object
            *  @name editableCellTemplate
-           *  @propertyOf  ui.grid.edit.api:ColDef
-           *  @propertyOf  ui.grid.class:GridOptions.columnDef
+           *  @propertyOf  ui.grid.edit.api:ColumnDef
            *  @description cell template to be used when editing this column. Can be Url or text template
            *  <br/>Defaults to gridOptions.editableCellTemplate
-           *  <br/>_requires the edit feature to be enabled_
            */
           if (colDef.enableCellEdit) {
             colDef.editableCellTemplate = colDef.editableCellTemplate || gridOptions.editableCellTemplate || 'ui-grid/cellEditor';
@@ -8683,8 +8729,7 @@ module.filter('px', function() {
           /**
            *  @ngdoc object
            *  @name enableCellEditOnFocus
-           *  @propertyOf  ui.grid.edit.api:ColDef
-           *  @propertyOf  ui.grid.class:GridOptions.columnDef
+           *  @propertyOf  ui.grid.edit.api:ColumnDef
            *  @requires ui.grid.cellNav
            *  @description If true, then editor is invoked as soon as cell receives focus. Default false.
            *  <br>_requires both the cellNav feature and the edit feature to be enabled_
@@ -9166,17 +9211,16 @@ module.filter('px', function() {
          *  @ngdoc object
          *  @name ui.grid.pinning.api:GridOptions
          *
-         *  @description GridOptions for pinning feature
+         *  @description GridOptions for pinning feature, these are available to be  
+           *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
          */
 
         /**
          *  @ngdoc object
          *  @name enableRowSelection
          *  @propertyOf  ui.grid.pinning.api:GridOptions
-         *  @propertyOf  ui.grid.class:GridOptions
          *  @description Enable pinning for the entire grid.  
          *  <br/>Defaults to true
-         *  <br/>_requires the pinning feature to be enabled_
          */
         gridOptions.enablePinning = gridOptions.enablePinning !== false;
 
@@ -9187,19 +9231,18 @@ module.filter('px', function() {
 
         /**
          *  @ngdoc object
-         *  @name ui.grid.pinning.api:ColDef
+         *  @name ui.grid.pinning.api:ColumnDef
          *
-         *  @description ColDef for pinning feature
+         *  @description ColumnDef for pinning feature, these are available to be 
+         *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
          */
 
         /**
          *  @ngdoc object
          *  @name enablePinning
-         *  @propertyOf  ui.grid.pinning.api:ColDef
-         *  @propertyOf  ui.grid.class:GridOptions.columnDef
+         *  @propertyOf  ui.grid.pinning.api:ColumnDef
          *  @description Enable pinning for the individual column.  
          *  <br/>Defaults to true
-         *  <br/>_requires the pinning feature to be enabled_
          */
         colDef.enablePinning = colDef.enablePinning === undefined ? gridOptions.enablePinning : colDef.enablePinning;
 
@@ -9387,17 +9430,16 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name ui.grid.resizeColumns.api:GridOptions
            *
-           *  @description GridOptions for resizeColumns feature
+           *  @description GridOptions for resizeColumns feature, these are available to be  
+           *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
 
           /**
            *  @ngdoc object
            *  @name enableColumnResizing
            *  @propertyOf  ui.grid.resizeColumns.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
            *  @description Enable column resizing on the entire grid 
            *  <br/>Defaults to true
-           *  <br/>_requires the column resizing feature to be enabled_
            */
           gridOptions.enableColumnResizing = gridOptions.enableColumnResizing !== false;
 
@@ -9413,19 +9455,18 @@ module.filter('px', function() {
           var promises = [];
           /**
            *  @ngdoc object
-           *  @name ui.grid.resizeColumns.api:ColDef
+           *  @name ui.grid.resizeColumns.api:ColumnDef
            *
-           *  @description ColDef for resizeColumns feature
+           *  @description ColumnDef for resizeColumns feature, these are available to be 
+           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
            */
 
           /**
            *  @ngdoc object
            *  @name enableColumnResizing
-           *  @propertyOf  ui.grid.resizeColumns.api:ColDef
-           *  @propertyOf  ui.grid.class:GridOptions.columnDef
+           *  @propertyOf  ui.grid.resizeColumns.api:ColumnDef
            *  @description Enable column resizing on an individual column
            *  <br/>Defaults to GridOptions.enableColumnResizing
-           *  <br/>_requires column resizing feature to be enabled_
            */
           //default to true unless gridOptions or colDef is explicitly false
           colDef.enableColumnResizing = colDef.enableColumnResizing === undefined ? gridOptions.enableColumnResizing : colDef.enableColumnResizing;
@@ -9452,7 +9493,7 @@ module.filter('px', function() {
    * @restrict A
    * @description
    * Enables resizing for all columns on the grid. If, for some reason, you want to use the ui-grid-resize-columns directive, but not allow column resizing, you can explicitly set the
-   * option to false. This prevents resizing for the entire grid, regardless of individual colDef options.
+   * option to false. This prevents resizing for the entire grid, regardless of individual columnDef options.
    *
    * @example
    <doc:example module="app">
@@ -10063,27 +10104,24 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name ui.grid.selection.api:GridOptions
            *
-           *  @description GridOptions for selection feature
+           *  @description GridOptions for selection feature, these are available to be  
+           *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
 
           /**
            *  @ngdoc object
            *  @name enableRowSelection
            *  @propertyOf  ui.grid.selection.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
            *  @description Enable row selection for entire grid.
            *  <br/>Defaults to true
-           *  <br/>_requires row selection feature to be enabled_
            */
           gridOptions.enableRowSelection = gridOptions.enableRowSelection !== false;
           /**
            *  @ngdoc object
            *  @name multiSelect
            *  @propertyOf  ui.grid.selection.api:GridOptions
-           *  @propertyOf  ui.grid.class:GridOptions
            *  @description Enable multiple row selection for entire grid
            *  <br/>Defaults to true
-           *  <br/>_requires row selection feature to be enabled_
            */
           gridOptions.multiSelect = gridOptions.multiSelect !== false;
         },

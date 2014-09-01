@@ -6,10 +6,17 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
-      "id": "ui.grid.cellNav.api:ColDef",
-      "shortName": "ColDef",
+      "id": "index",
+      "shortName": "Index",
+      "type": "overview",
+      "keywords": "$scope add additional and any api at but can choose class columndef columndefs columns configuration configure consists core documentation each edit enablecelledit enablecelleditonfocus enabled enablesorting example extend false feature features field1 field2 field3 for found general grid gridoptions had have if in index is ll mechanism might module name of on options overview plus same set settings so some still that the then therefore these through to true ui ui-grid use visible wanted will would you your"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellNav.api:ColumnDef",
+      "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "api cellnav column definitions feature for grid object ui"
+      "keywords": "allowcellfocus api are available be cell cellnav class column columndefs definitions enable feature focus for grid gridoptions object on set the these to true ui ui-grid using"
     },
     {
       "section": "api",
@@ -65,21 +72,21 @@ NG_DOCS={
       "id": "ui.grid.class:GridColumn",
       "shortName": "GridColumn",
       "type": "function",
-      "keywords": "aggregation allocated any api are aren array based be belongs body by class classname coldef column columns container current default defined definition each false for function getaggregationvalue getcolclass getcolclassdefinition getrendercontainer gets grid hidecolumn hides if in index instead makes methods name needed object of on one or position prefixdot prototype reference render represents return returns setting showcolumn specifically state th that the they this to true type ui value viewmodel visible will"
+      "keywords": "address against aggregation algorithm allocated although an and angular any api are aren array backward based be belongs bind binding body by can city class classname coldef column columns compatibility complex container current data default defined definition displayname docs each element evaluates expression expressions false field filter for function generated getaggregationvalue getcolclass getcolclassdefinition getfulladdress getrendercontainer gets grid have header hidecolumn hides if in index insert instead is like makes methods must name needed normal not object of omitted on one options or parameters position prefixdot present property prototype provided reference render represents return returns see setting should showcolumn shown sorting sortingalgorithm source specifically state takes term text th that the then they this to true type ui use using value viewmodel visible will wish with you"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "$delegate $provide $scope add adding adds all allowed allowing allows also altering am an and angular any api application aquamarine are array as at attribute attributes auto-generating automatically available background-color backwards be becomes before behaviour binding boolean boxes but by can case cell celleditablecondition cellnav center class col colcontainer coldef coldefs column columndef columndefs columns common compare compared compatibility complex config configuration configure contain controller custom data decorator default defaultoptions defaults define defined determine developer disable display displayname displays do documented does doesn each edit editable editing editor either elements enable enablecelledit enablecelleditonfocus enablecolumnmenu enablecolumnresizing enabled enabled_ enablefiltering enablerowhashing enablerowselection enablesorting entire entity entitya entityb equality exclude excludeproperties exists factory false falsy feature field1 field2 file filter filtering first flag fnone focus footer footer_template footertemplate for function generate get getexternalscopes getrowidentity grid gridoptions grids gridutil has header header_template headers headertemplate hit how html id identifying identity if ignore ignored in include individual information inline into inverse invoked is it item large list maintain may menu method modify more most multiple multiselect mydata name names necessary new nextuid ng-click ng-repeat not note null number numbers object objects of often on one only option options or out over overlaid overridden performance pinning place precompiled pretty process properties property provide provided provides providing receives refer rendered renderedcolumns required resizecolumns resizing return returns row row_template rowequality rowidentity rows rowtemplate second section selection set sets setting soon sort sorting source specified speeding state string stripped style take template text-align that the their then they this to tojson track true tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-top-panel uigrid undefined uniquely up use used uses using value var vastly visible want when where while widgets will with within x_ you your"
+      "keywords": "$delegate $provide $resource $scope add adding adds all allowing allows also altering am an and angular angularjs any api application aquamarine are array at attribute attributes auto-generating automatically available background-color backwards be becomes behaviour binding boolean boxes but by can case center class col colcontainer coldef column columndef columndefs columns common compare compared compatibility complex config configure contain controller could custom data decorator default defaultoptions defaults define defined developer disable disabled display displayname displays do documented does doesn each either elements enablecolumnmenu enabled enablefiltering enablerowhashing enablesorting entire entitya entityb equality example exclude excludeproperties exists factory false field1 field2 file filter filtering first fnone footer footer_template footertemplate for from function generate get getexternalscopes getrowidentity grid gridoptions grids gridutil has header header_template headers headertemplate hit how html id identifying identity if ignore ignored in include individual information inline into inverse is it item large list maintain may menu method modify more most mydata name names necessary new nextuid ng-click ng-repeat not note null number numbers object objects of often on one only option options or out over overlaid overridden performance place precompiled pretty process properties property provide provided provides providing query refer rendered renderedcolumns request required return returns row row_template rowequality rowidentity rows rowtemplate second section set setting sort sorting source sourced speeding state string stripped style take template text-align that the their then they this to tojson track true tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-top-panel uigrid uniquely up use used uses using value var vastly visible want when where while widgets will with within x_ you your"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridOptions.columnDef",
       "shortName": "columnDef",
       "type": "object",
-      "keywords": "$scope action add address adds against alert algorithm allowcellfocus allowed allowing although an and angular any api append are array as asc auto backward be before bind binding blargh boolean both but by can cell cellclass celleditablecondition cellnav city class col coldef colrenderindex column columndef columndefs compatibility complex configuration constant context data default definition definitions desc determine direction displayname docs does each edit editablecelltemplate editing editor either element enable enablecelledit enablecelleditonfocus enablecolumnresizing enabled enabled_ enablefiltering enablepinning enablesorting entity evaluated evaluates example expression expressions false falsy feature field field1 field2 field3 filter filtering filters focus for function functionality getfulladdress grid gridoptions have header how icon id if in individual insert invoked is it items just like many maximum maxwidth menu menuitems minimum minwidth must name nav normal not number object of omitted on one options or outer parameters percentage pinning present property provided receives refer resizecolumns resizing return returns row rowrenderindex scope see set sets setting should something soon sort sorting sortingalgorithm source specified specifying string takes template term text that the then this title to too true tutorial typically ui ui-grid-icon-info-circled uigridconstants unclear url use used value values visible what when whether which widgets width wish with within work would xxx you"
+      "keywords": "$scope action add address adds against alert algorithm allowing although an and angular any api append are array asc auto backward be bind binding blargh boolean but by can cell cellclass city class col colrenderindex column columndef columndefs compatibility complex configuration context data default definition definitions desc direction displayname docs does each either element enabled enablefiltering enablesorting evaluates example expression expressions false field field1 field2 field3 filter filtering filters for function functionality generated getfulladdress grid gridoptions have header how icon id if in individual insert is it items just like many maximum maxwidth menu menuitems minimum minwidth must name normal not number object of omitted on one options or outer parameters percentage present property provided refer returns rowrenderindex scope see set sets setting should shown something sort sorting sortingalgorithm source specifying string takes term text that the then this title to too true tutorial typically ui ui-grid-icon-info-circled uigridconstants unclear use used using values visible what when whether which widgets width will wish with within work would xxx you"
     },
     {
       "section": "api",
@@ -118,17 +125,17 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.edit.api:ColDef",
-      "shortName": "ColDef",
+      "id": "ui.grid.edit.api:ColumnDef",
+      "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "api column definitions edit feature for grid object ui"
+      "keywords": "$scope allowed and api are as available be before both can cell celleditablecondition cellnav class col coldef column columndefs default definition determine edit editablecelltemplate editing editor either enable enablecelledit enablecelleditonfocus enabled_ entity evaluated false falsy feature focus for function grid gridoptions if invoked is not object of on or receives return row set soon specified template text the then these this to true ui ui-grid url used using value when"
     },
     {
       "section": "api",
       "id": "ui.grid.edit.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "all api as be celltemplate columns configuring defaults edit editablecelltemplate editor enabled_ feature for grid if object options specified the to ui ui-grid use"
+      "keywords": "$scope all allowed and api are as available be before by cell celleditablecondition cellnav celltemplate class col coldef coldefs columns configuration configuring default defaults defined determine each edit editable editablecelltemplate editing editor either enablecelledit enablecelleditonfocus enabled_ entity false falsy feature flag focus for function grid gridoptions if individual invoked is not object of on options or receives return row set sets soon specified the their then these to true ui ui-grid undefined use used using value"
     },
     {
       "section": "api",
@@ -209,31 +216,31 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.pinning.api:ColDef",
-      "shortName": "ColDef",
+      "id": "ui.grid.pinning.api:ColumnDef",
+      "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "api coldef feature for grid object pinning ui"
+      "keywords": "api are available be class column columndef columndefs enable enablepinning feature for grid gridoptions individual object pinning set the these to true ui ui-grid using"
     },
     {
       "section": "api",
       "id": "ui.grid.pinning.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api feature for grid gridoptions object pinning ui"
+      "keywords": "api are available be class enable enablerowselection entire feature for grid gridoptions object pinning set the these to true ui ui-grid using"
     },
     {
       "section": "api",
-      "id": "ui.grid.resizeColumns.api:ColDef",
-      "shortName": "ColDef",
+      "id": "ui.grid.resizeColumns.api:ColumnDef",
+      "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "api coldef feature for grid object resizecolumns ui"
+      "keywords": "an api are available be class column columndef columndefs enable enablecolumnresizing feature for grid gridoptions individual object on resizecolumns resizing set the these to ui ui-grid using"
     },
     {
       "section": "api",
       "id": "ui.grid.resizeColumns.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api feature for grid gridoptions object resizecolumns ui"
+      "keywords": "api are available be class column enable enablecolumnresizing entire feature for grid gridoptions object on resizecolumns resizing set the these to true ui ui-grid using"
     },
     {
       "section": "api",
@@ -247,7 +254,7 @@ NG_DOCS={
       "id": "ui.grid.resizeColumns.directive:uiGridResizeColumns",
       "shortName": "uiGridResizeColumns",
       "type": "directive",
-      "keywords": "$scope all allow angular api app beryl but can class claudine coldef column columns company controller data directive div enables enersol entire ethel explicitly false female for function geekko gender gonzales grid gridopts if individual mainctrl male module name neal ng-controller not of on option options prevents price reason regardless resizecolumns resizing rice sealoud set some testgrid the this to ui ui-grid ui-grid-resize-columns use var velity want wilder you"
+      "keywords": "$scope all allow angular api app beryl but can class claudine column columndef columns company controller data directive div enables enersol entire ethel explicitly false female for function geekko gender gonzales grid gridopts if individual mainctrl male module name neal ng-controller not of on option options prevents price reason regardless resizecolumns resizing rice sealoud set some testgrid the this to ui ui-grid ui-grid-resize-columns use var velity want wilder you"
     },
     {
       "section": "api",
@@ -261,7 +268,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api feature for grid gridoptions object selection ui"
+      "keywords": "api are available be class enable enablerowselection entire feature for grid gridoptions multiple multiselect object row selection set the these to true ui ui-grid using"
     },
     {
       "section": "api",

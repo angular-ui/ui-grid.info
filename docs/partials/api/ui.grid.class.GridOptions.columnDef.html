@@ -6,52 +6,21 @@
 <div class="description"><p>Definition / configuration of an individual column, which would typically be
 one of many column definitions within the gridOptions.columnDefs array</p></div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="allowCellFocus">allowCellFocus</h3>
-<div class="allowcellfocus"><p>Enable focus on a cell. <br />
-<br/>Defaults to true
-<br/><em>Requires the cell nav feature to be enabled.</em></p></div>
-</li>
-<li><h3 id="cellClass">cellClass</h3>
+<ul class="properties"><li><h3 id="cellClass">cellClass</h3>
 <div class="cellclass"><p>cellClass can be a string specifying the class to append to a cell
 or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name</p></div>
 </li>
-<li><h3 id="cellEditableCondition">cellEditableCondition</h3>
-<div class="celleditablecondition"><p>If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.
-<br/><em>requires the edit feature to be enabled</em></p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
-function($scope){
-  //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
-  return true;
-}
-</pre></div>
-</div>
-</li>
-<li><h3 id="editableCellTemplate">editableCellTemplate</h3>
-<div class="editablecelltemplate"><p>cell template to be used when editing this column. Can be Url or text template
-<br/>Defaults to gridOptions.editableCellTemplate
-<br/><em>requires the edit feature to be enabled</em></p></div>
-</li>
-<li><h3 id="enableCellEdit">enableCellEdit</h3>
-<div class="enablecelledit"><p>enable editing on column
-<br/><em>requires the edit feature to be enabled</em></p></div>
-</li>
-<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
-<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
-<br><em>requires both the cellNav feature and the edit feature to be enabled</em></p></div>
-</li>
-<li><h3 id="enableColumnResizing">enableColumnResizing</h3>
-<div class="enablecolumnresizing"><p>Enable column resizing on an individual column
-<br/>Defaults to GridOptions.enableColumnResizing
-<br/><em>requires column resizing feature to be enabled</em></p></div>
-</li>
-<li><h3 id="enablePinning">enablePinning</h3>
-<div class="enablepinning"><p>Enable pinning for the individual column. <br />
-<br/>Defaults to true
-<br/><em>requires the pinning feature to be enabled</em></p></div>
-</li>
 <li><h3 id="displayName">displayName</h3>
-<div class="displayname"><p>name is used for displayName if displayName is not
-provided.  If provided then displayName is used in the header.</p></div>
+<div class="displayname"><p>Column name that will be shown in the header.  If displayName is not
+provided then one is generated using the name.</p></div>
+</li>
+<li><h3 id="enableFiltering">enableFiltering</h3>
+<div class="enablefiltering"><p>(optional) True by default. When enabled, this setting adds filter
+widgets to the column header, allowing filtering of the data in the individual column.</p></div>
+</li>
+<li><h3 id="enableSorting">enableSorting</h3>
+<div class="enablesorting"><p>(optional) True by default. When enabled, this setting adds sort
+widgets to the column header, allowing sorting of the data in the individual column.</p></div>
 </li>
 <li><h3 id="field">field</h3>
 <div class="field"><p>field must be provided if you wish to bind to a 
@@ -63,22 +32,6 @@ See the angular docs on binding expressions.</p></div>
 <div class="filter"><p>Filter to insert against this column.  </p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">{ term: 'text' }</pre></div>
 </div>
-</li>
-<li><h3 id="name">name</h3>
-<div class="name"><p>(mandatory) each column should have a name, although for backward
-compatibility with 2.x name can be omitted if field is present</p></div>
-</li>
-<li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>
-<div class="sortingalgorithm"><p>Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
-like any normal sorting function.</p></div>
-</li>
-<li><h3 id="enableFiltering">enableFiltering</h3>
-<div class="enablefiltering"><p>(optional) True by default. When enabled, this setting adds filter
-widgets to the column header, allowing filtering of the data in the individual column.</p></div>
-</li>
-<li><h3 id="enableSorting">enableSorting</h3>
-<div class="enablesorting"><p>(optional) True by default. When enabled, this setting adds sort
-widgets to the column header, allowing sorting of the data in the individual column.</p></div>
 </li>
 <li><h3 id="filters">filters</h3>
 <div class="filters"><p>unclear what this does or how it's used, but it does something.</p></div>
@@ -115,11 +68,19 @@ functionality.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', minWidth: 100}]; </pre></div>
 </div>
 </li>
+<li><h3 id="name">name</h3>
+<div class="name"><p>(mandatory) each column should have a name, although for backward
+compatibility with 2.x name can be omitted if field is present</p></div>
+</li>
 <li><h3 id="sort">sort</h3>
 <div class="sort"><p>Can be used to set the sort direction for the column, values are
 uiGridConstants.ASC or uiGridConstants.DESC</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC }}] </pre></div>
 </div>
+</li>
+<li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>
+<div class="sortingalgorithm"><p>Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
+like any normal sorting function.</p></div>
 </li>
 <li><h3 id="visible">visible</h3>
 <div class="visible"><p>sets whether or not the column is visible
