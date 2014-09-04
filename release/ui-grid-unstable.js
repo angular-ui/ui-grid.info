@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-2c962ad - 2014-09-04
+/*! ui-grid - v2.0.12-g1e20b74-96a4115 - 2014-09-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9625,6 +9625,25 @@ module.filter('px', function() {
 
                   grid.rows.forEach(function (row) {
                     row.isSelected = true;
+                  });
+                },
+                /**
+                 * @ngdoc function
+                 * @name selectAllVisibleRows
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description Selects all visible rows.  Does nothing if multiSelect = false
+                 */
+                selectAllVisibleRows: function () {
+                  if (grid.options.multiSelect === false) {
+                    return;
+                  }
+
+                  grid.rows.forEach(function (row) {
+                    if (row.visible) {
+                      row.isSelected = true;
+                    } else {
+                      row.isSelected = false;
+                    }
                   });
                 },
                 /**

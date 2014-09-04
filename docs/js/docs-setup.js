@@ -275,7 +275,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "all allow api array as clearselectedrows current data does entity false feature for function getselectedrows grid gridoption gridoptions if instance multiple multiselect nothing object or public references returns row rowentity rows select selectallrows selected selectedrow selection selectrow selects setmultiselect sets the to togglerowselection toggles true ui unselect unselected unselectrow unselects"
+      "keywords": "all allow api array as clearselectedrows current data does entity false feature for function getselectedrows grid gridoption gridoptions if instance multiple multiselect nothing object or public references returns row rowentity rows select selectallrows selectallvisiblerows selected selectedrow selection selectrow selects setmultiselect sets the to togglerowselection toggles true ui unselect unselected unselectrow unselects visible"
     },
     {
       "section": "api",
