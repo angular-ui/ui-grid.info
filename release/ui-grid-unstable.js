@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-96a4115 - 2014-09-04
+/*! ui-grid - v2.0.12-g1e20b74-f62c77d - 2014-09-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -406,7 +406,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
         uiGridCtrl.grid.sortColumn($scope.col, dir, true)
           .then(function () {
-            uiGridCtrl.queueRefresh();
+            uiGridCtrl.refresh();
             self.hideMenu();
           });
       };
@@ -414,7 +414,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       $scope.unsortColumn = function () {
         $scope.col.unsort();
 
-        uiGridCtrl.queueRefresh();
+        uiGridCtrl.refresh();
         self.hideMenu();
       };
     },
