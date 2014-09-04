@@ -366,7 +366,7 @@ NG_DOCS={
       "id": "103_filtering",
       "shortName": "103 Filtering",
       "type": "overview",
-      "keywords": "$http $scope allows an and angular app at be below by can class click column columndefs company controller css data def default disabled enablefiltering example false field filter filtering filters flag for function gender get grid gridoptions has header height html in index is js json just last level main mainctrl male menu module name ng-controller nganimate off on open options overview programmatically rows second see set setting success term that the then third to true tutorial ui ui-grid var width xxx you your"
+      "keywords": "$http $scope allows an angular any app as asterisks at be below by can class column columndefs company contains controller css data def default disabled enablefiltering example false field filter filtering filters flag for function fuzz-match gender get grid gridoptions has height html in index is js json just last level main mainctrl male module name ng-controller nganimate off options overview programmatically row rows second see set setting show success term that the third to true tutorial ui ui-grid use var where width xxx you your"
     },
     {
       "section": "tutorial",

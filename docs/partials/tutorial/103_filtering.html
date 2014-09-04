@@ -12,7 +12,10 @@
 <pre class="prettyprint linenums" ng-set-text="index.html-16" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-16">
   <div ng-controller="MainCtrl">
-    Click on a column header to open the menu and then filter by that column. (The third column has filtering disabled.)
+    You can use asterisks to fuzz-match, i.e. use "*z*" as your filter to show any row where that column contains a "z".
+    <br>
+    <br>
+    <strong>Note:</strong> The third column has filtering disabled.
     <br>
     <br>
     <div ui-grid="gridOptions" class="grid"></div>

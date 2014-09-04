@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-f62c77d - 2014-09-04
+/*! ui-grid - v2.0.12-g1e20b74-dcecb67 - 2014-09-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1000,6 +1000,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.colContainer = containerCtrl.colContainer;
 
             containerCtrl.header = $elm;
+            containerCtrl.colContainer.header = $elm;
 
             var headerTemplate = ($scope.grid.options.headerTemplate) ? $scope.grid.options.headerTemplate : defaultTemplate;
 
@@ -1535,20 +1536,23 @@ angular.module('ui.grid')
         }
 
         function updateNativeVerticalScrollbar() {
+          // Get the height that the scrollbar should have
+          var height = rowContainer.getViewportHeight();
+
           // Update the vertical scrollbar's content height so it's the same as the canvas
-          var h = rowContainer.getCanvasHeight();
+          var contentHeight = rowContainer.getCanvasHeight();
 
           // TODO(c0bra): set scrollbar `top` by height of header row
           // var headerHeight = gridUtil.outerElementHeight(containerCtrl.header);
-          var headerHeight = grid.headerHeight;
+          var headerHeight = colContainer.headerHeight ? colContainer.headerHeight : grid.headerHeight;
 
           // $log.debug('headerHeight in scrollbar', headerHeight);
 
           // var ret = '.grid' + uiGridCtrl.grid.id + ' .ui-grid-native-scrollbar.vertical .contents { height: ' + h + 'px; }';
-          var ret = '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical .contents { height: ' + h + 'px; }';
-          ret += '\n .grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical { top: ' + headerHeight + 'px}';
+          var ret = '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical .contents { height: ' + contentHeight + 'px; }';
+          ret += '\n .grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical { height: ' + height + 'px; top: ' + headerHeight + 'px}';
 
-          elmMaxScroll = h;
+          elmMaxScroll = contentHeight;
 
           return ret;
         }
@@ -2306,15 +2310,44 @@ angular.module('ui.grid')
 
         var p = $q.defer();
 
-        if (self.header) {
+        // Get all the header heights
+        var containerHeadersToRecalc = [];
+        for (var containerId in self.grid.renderContainers) {
+          if (self.grid.renderContainers.hasOwnProperty(containerId)) {
+            var container = self.grid.renderContainers[containerId];
+
+            if (container.header) {
+              containerHeadersToRecalc.push(container);
+            }
+          }
+        }
+
+        if (containerHeadersToRecalc.length > 0) {
           // Putting in a timeout as it's not calculating after the grid element is rendered and filled out
           $timeout(function() {
-            var oldHeaderHeight = self.grid.headerHeight;
-            self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
+            // var oldHeaderHeight = self.grid.headerHeight;
+            // self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
+
+            var rebuildStyles = false;
+
+            // Get all the header heights
+            for (var i = 0; i < containerHeadersToRecalc.length; i++) {
+              var container = containerHeadersToRecalc[i];
+
+              if (container.header) {
+                var oldHeaderHeight = container.headerHeight;
+                var headerHeight = gridUtil.outerElementHeight(container.header);
+                container.headerHeight = headerHeight;
+
+                if (oldHeaderHeight !== headerHeight) {
+                  rebuildStyles = true;
+                }
+              }
+            }
 
             // Rebuild styles if the header height has changed
             //   The header height is used in body/viewport calculations and those are then used in other styles so we need it to be available
-            if (buildStyles && oldHeaderHeight !== self.grid.headerHeight) {
+            if (buildStyles && rebuildStyles) {
               self.grid.buildStyles($scope);
             }
 
@@ -4712,7 +4745,9 @@ angular.module('ui.grid')
   GridRenderContainer.prototype.getViewportHeight = function getViewportHeight() {
     var self = this;
 
-    var viewPortHeight = self.grid.gridHeight - self.grid.headerHeight - self.grid.footerHeight;
+    var headerHeight = (self.headerHeight) ? self.headerHeight : self.grid.headerHeight;
+
+    var viewPortHeight = self.grid.gridHeight - headerHeight - self.grid.footerHeight;
 
     // Account for native horizontal scrollbar, if present
     if (typeof(self.horizontalScrollbarHeight) !== 'undefined' && self.horizontalScrollbarHeight !== undefined && self.horizontalScrollbarHeight > 0) {
@@ -9957,13 +9992,6 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "\n" +
     "    {{ grid.verticalScrollbarStyles }}\n" +
     "    {{ grid.horizontalScrollbarStyles }}\n" +
-    "\n" +
-    "    /*{{ grid.nativeVerticalScrollbarStyles }}\n" +
-    "    {{ grid.nativeHorizontalScrollbarStyles }}*/\n" +
-    "\n" +
-    "    .grid{{ grid.id }} .ui-grid-native-scrollbar.vertical {\n" +
-    "      height: {{ grid.getViewportHeight() }}px;\n" +
-    "    }\n" +
     "\n" +
     "    .ui-grid[dir=rtl] .ui-grid-viewport {\n" +
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
