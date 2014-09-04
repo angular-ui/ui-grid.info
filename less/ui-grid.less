@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-8c7bf54 - 2014-09-01
+/*! ui-grid - v2.0.12-g1e20b74-1626ac4 - 2014-09-04
 * Copyright (c) 2014 ; License: MIT */
 
 .ui-grid-render-container {
@@ -6,10 +6,6 @@
   // overflow: hidden;
 
   .border-radius(0, @gridBorderRadius, @gridBorderRadius, 0);
-}
-
-.ui-grid-scrollbar-box {
-  position: static;
 }
 
 .ui-grid-viewport {
@@ -677,7 +673,6 @@ input[type="text"].ui-grid-filter-input {
 
 
 
-
 .ui-grid-menu {
   z-index: 2; // So it shows up over grid canvas
   position: absolute;
@@ -790,64 +785,6 @@ input[type="text"].ui-grid-filter-input {
 .ui-grid[dir=rtl] .ui-grid-footer-cell:first-child .ui-grid-vertical-bar,
 .ui-grid[dir=rtl] .ui-grid-cell:first-child .ui-grid-vertical-bar {
   width: 0;
-}
-.ui-grid-scrollbar {
-  z-index: 10;
-  position: absolute;
-  .opacity(0);
-  .transition(opacity, 0.25s, ease-out);
-
-  background: @scrollbarBackground;
-
-  cursor: pointer;
-  // transform: translateZ(0);
-
-  border: @scrollbarBorder;
-  .rounded(@scrollbarBorderRadius);
-  .box-shadow(@scrollbarShadow);
-  // .transition(all, 300ms, linear);
-
-  &-vertical {
-    width: @scrollbarWidth;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    right: 4px;
-    top: 0
-    // right: @scrollbarWidth;
-    // .transition();
-  }
-
-  &-horizontal {
-    height: @scrollbarWidth;
-    margin-right: 4px;
-    margin-left: 4px;
-    bottom: 4px;
-    left: 0px;
-    width: 45px;
-  }
-
-  &-visible {
-    .opacity(1);
-    // -webkit-transition: opacity 0.5s ease-out;
-    // -moz-transition: opacity 0.5s ease-out;
-    // -o-transition: opacity 0.5s ease-out;
-    // transition: opacity 0.5s ease-out;
-  }
-
-  // &-vertical.in {
-  //   .transition(all);
-  //   right: 4px;
-  // }
-}
-
-.ui-grid-scrollbar:hover {
-  background: @scrollbarBackgroundHover;
-}
-
-.ui-grid-scrollbar.ui-grid-scrolling {
-  display: block;
-  background: @scrollbarBackgroundScrolling;
-  border: @scrollbarBorderScrolling;
 }
 // .ui-grid-sortarrow {
 //   fill: @sortArrowBackgroundColor; 
