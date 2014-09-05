@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-efe4e5f - 2014-09-05
+/*! ui-grid - v2.0.12-g1e20b74-ccefefa - 2014-09-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2752,6 +2752,30 @@ angular.module('ui.grid')
           var compiledElementFn = $compile(html);
           col.compiledElementFn = compiledElementFn;
         });
+  };
+
+  /**
+   * @ngdoc function
+   * @name createLeftContainer
+   * @methodOf ui.grid.class:Grid
+   * @description creates the left render container if it doesn't already exist
+   */
+  Grid.prototype.createLeftContainer = function() {
+    if (!this.renderContainers.left) {
+      this.renderContainers.left = new GridRenderContainer('left', this, { disableColumnOffset: true });
+    }
+  };
+
+  /**
+   * @ngdoc function
+   * @name createRightContainer
+   * @methodOf ui.grid.class:Grid
+   * @description creates the right render container if it doesn't already exist
+   */
+  Grid.prototype.createRightContainer = function() {
+    if (!this.renderContainers.right) {
+      this.renderContainers.right = new GridRenderContainer('right', this, { disableColumnOffset: true });
+    }
   };
 
   /**
@@ -8819,9 +8843,8 @@ module.filter('px', function() {
         // Register a column builder to add new menu items for pinning left and right
         grid.registerColumnBuilder(service.pinningColumnBuilder);
 
-        grid.renderContainers.left = new GridRenderContainer('left', grid, { disableColumnOffset: true });
-        grid.renderContainers.right = new GridRenderContainer('right', grid, { disableColumnOffset: true });
-
+        grid.createLeftContainer();
+        grid.createRightContainer();
       },
 
       defaultGridOptions: function (gridOptions) {
