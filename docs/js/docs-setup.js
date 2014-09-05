@@ -219,7 +219,7 @@ NG_DOCS={
       "id": "ui.grid.pinning.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "api are available be class column columndef columndefs enable enablepinning feature for grid gridoptions individual object pinning set the these to true ui ui-grid using"
+      "keywords": "api are available be class column columndef columndefs enable enablepinning false feature for grid gridoptions individual is left object pinned pinnedleft pinnedright pinning rendered right set the these to true ui ui-grid using when"
     },
     {
       "section": "api",
@@ -471,7 +471,7 @@ NG_DOCS={
       "id": "203_pinning",
       "shortName": "203 Pinning",
       "type": "overview",
-      "keywords": "$http $log $scope about address age allows and angular app city class column columndefs company controller css data directive displayname element email enable feature friend friends function get grid gridoptions height html id include index js json left main mainctrl module must name ng-controller on or overview phone pin pinning right state street success the to tutorial ui ui-grid ui-grid-pinning user var width you your zip"
+      "keywords": "$http $log $scope about address age allows and angular app city class column columndefs company controller css data directive displayname element email enable feature friend friends function get grid gridoptions height html id include index js json left main mainctrl module must name ng-controller on or overview phone pin pinnedleft pinnedright pinning right state street success the to tutorial ui ui-grid ui-grid-pinning user var width you your zip"
     },
     {
       "section": "tutorial",

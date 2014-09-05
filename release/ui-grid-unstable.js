@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-dcecb67 - 2014-09-04
+/*! ui-grid - v2.0.12-g1e20b74-efe4e5f - 2014-09-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8864,6 +8864,29 @@ module.filter('px', function() {
          *  <br/>Defaults to true
          */
         colDef.enablePinning = colDef.enablePinning === undefined ? gridOptions.enablePinning : colDef.enablePinning;
+
+
+        /**
+         *  @ngdoc object
+         *  @name pinnedLeft
+         *  @propertyOf  ui.grid.pinning.api:ColumnDef
+         *  @description Column is pinned left when grid is rendered
+         *  <br/>Defaults to false
+         */
+
+        /**
+         *  @ngdoc object
+         *  @name pinnedRight
+         *  @propertyOf  ui.grid.pinning.api:ColumnDef
+         *  @description Column is pinned right when grid is rendered
+         *  <br/>Defaults to false
+         */
+        if (colDef.pinnedLeft) {
+          col.renderContainer = 'left';
+        }
+        else if (colDef.pinnedRight) {
+          col.renderContainer = 'right';
+        }
 
         if (!colDef.enablePinning) {
           return;
