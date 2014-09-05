@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-0885d8d - 2014-09-05
+/*! ui-grid - v2.0.12-g1e20b74-e3b7358 - 2014-09-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -19,7 +19,6 @@
     COL_CLASS_PREFIX: 'ui-grid-col',
     events: {
       GRID_SCROLL: 'uiGridScroll',
-      GRID_SCROLLING: 'uiGridScrolling',
       COLUMN_MENU_SHOWN: 'uiGridColMenuShown',
       ITEM_DRAGGING: 'uiGridItemDragStart' // For any item being dragged
     },
@@ -1474,7 +1473,8 @@ angular.module('ui.grid')
 (function () {
 // 'use strict';
 
-  angular.module('ui.grid').directive('uiGridNativeScrollbar', ['$log', '$timeout', '$document', 'uiGridConstants', 'gridUtil', function ($log, $timeout, $document, uiGridConstants, gridUtil) {
+  angular.module('ui.grid').directive('uiGridNativeScrollbar', ['$log', '$timeout', '$document', 'uiGridConstants', 'gridUtil',
+    function ($log, $timeout, $document, uiGridConstants, gridUtil) {
     var scrollBarWidth = gridUtil.getScrollbarWidth();
     scrollBarWidth = scrollBarWidth > 0 ? scrollBarWidth : 17;
 
@@ -1596,6 +1596,7 @@ angular.module('ui.grid')
 
         function scrollEvent(evt) {
           if ($scope.type === 'vertical') {
+            grid.flagScrollingVertically();
             var newScrollTop = $elm[0].scrollTop;
 
             var yDiff = previousScrollPosition - newScrollTop;
@@ -1635,6 +1636,7 @@ angular.module('ui.grid')
             previousScrollPosition = newScrollTop;
           }
           else if ($scope.type === 'horizontal') {
+            grid.flagScrollingHorizontally();
             // var newScrollLeft = $elm[0].scrollLeft;
             var newScrollLeft = gridUtil.normalizeScrollLeft($elm);
 
@@ -1680,15 +1682,19 @@ angular.module('ui.grid')
 
           if ($scope.type === 'vertical') {
             if (args.y && typeof(args.y.percentage) !== 'undefined' && args.y.percentage !== undefined) {
+              grid.flagScrollingVertically();
               var vertScrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
 
               var newScrollTop = Math.max(0, args.y.percentage * vertScrollLength);
 
               $elm[0].scrollTop = newScrollTop;
+
+
             }
           }
           else if ($scope.type === 'horizontal') {
             if (args.x && typeof(args.x.percentage) !== 'undefined' && args.x.percentage !== undefined) {
+              grid.flagScrollingHorizontally();
               var horizScrollLength = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
 
               var newScrollLeft = Math.max(0, args.x.percentage * horizScrollLength);
@@ -1701,6 +1707,9 @@ angular.module('ui.grid')
 
         var gridScrollDereg = $scope.$on(uiGridConstants.events.GRID_SCROLL, gridScroll);
         $scope.$on('$destroy', gridScrollDereg);
+
+
+
       }
     };
   }]);
@@ -2582,6 +2591,7 @@ angular.module('ui.grid')
    * @param {object} options Object map of options to pass into the grid. An 'id' property is expected.
    */
   var Grid = function Grid(options) {
+    var self = this;
   // Get the id out of the options, then remove it
   if (options !== undefined && typeof(options.id) !== 'undefined' && options.id) {
     if (!/^[_a-zA-Z0-9-]+$/.test(options.id)) {
@@ -2592,50 +2602,98 @@ angular.module('ui.grid')
     throw new Error('No ID provided. An ID must be given when creating a grid.');
   }
 
-  this.id = options.id;
+  self.id = options.id;
   delete options.id;
 
   // Get default options
-  this.options = new GridOptions();
+  self.options = new GridOptions();
 
   // Extend the default options with what we were passed in
-  angular.extend(this.options, options);
+  angular.extend(self.options, options);
 
-  this.headerHeight = this.options.headerRowHeight;
-  this.footerHeight = this.options.showFooter === true ? this.options.footerRowHeight : 0;
+  self.headerHeight = self.options.headerRowHeight;
+  self.footerHeight = self.options.showFooter === true ? self.options.footerRowHeight : 0;
 
-  this.gridHeight = 0;
-  this.gridWidth = 0;
-  this.columnBuilders = [];
-  this.rowBuilders = [];
-  this.rowsProcessors = [];
-  this.columnsProcessors = [];
-  this.styleComputations = [];
-  this.viewportAdjusters = [];
+  self.gridHeight = 0;
+  self.gridWidth = 0;
+  self.columnBuilders = [];
+  self.rowBuilders = [];
+  self.rowsProcessors = [];
+  self.columnsProcessors = [];
+  self.styleComputations = [];
+  self.viewportAdjusters = [];
 
-  // this.visibleRowCache = [];
+  // self.visibleRowCache = [];
 
-  // Set of 'render' containers for this grid, which can render sets of rows
-  this.renderContainers = {};
+  // Set of 'render' containers for self grid, which can render sets of rows
+  self.renderContainers = {};
 
   // Create a
-  this.renderContainers.body = new GridRenderContainer('body', this);
+  self.renderContainers.body = new GridRenderContainer('body', self);
 
-  this.cellValueGetterCache = {};
+  self.cellValueGetterCache = {};
 
   // Cached function to use with custom row templates
-  this.getRowTemplateFn = null;
+  self.getRowTemplateFn = null;
 
 
   //representation of the rows on the grid.
   //these are wrapped references to the actual data rows (options.data)
-  this.rows = [];
+  self.rows = [];
 
   //represents the columns on the grid
-  this.columns = [];
+  self.columns = [];
+
+  /**
+   * @ngdoc boolean
+   * @name isScrollingVertically
+   * @propertyOf ui.grid.class:Grid
+   * @description set to true when Grid is scrolling vertically. Set to false via debounced method
+   */
+  self.isScrollingVertically = false;
+
+  /**
+   * @ngdoc boolean
+   * @name isScrollingHorizontally
+   * @propertyOf ui.grid.class:Grid
+   * @description set to true when Grid is scrolling horizontally. Set to false via debounced method
+   */
+  self.isScrollingHorizontally = false;
+
+  var debouncedVertical = gridUtil.debounce(function () {
+    self.isScrollingVertically = false;
+  }, 300);
+
+  var debouncedHorizontal = gridUtil.debounce(function () {
+    self.isScrollingHorizontally = false;
+  }, 300);
 
 
-  this.api = new GridApi(this);
+  /**
+   * @ngdoc function
+   * @name flagScrollingVertically
+   * @methodOf ui.grid.class:Grid
+   * @description sets isScrollingVertically to true and sets it to false in a debounced function
+   */
+  self.flagScrollingVertically = function() {
+    self.isScrollingVertically = true;
+    debouncedVertical();
+  };
+
+  /**
+   * @ngdoc function
+   * @name flagScrollingHorizontally
+   * @methodOf ui.grid.class:Grid
+   * @description sets isScrollingHorizontally to true and sets it to false in a debounced function
+   */
+  self.flagScrollingHorizontally = function() {
+    self.isScrollingHorizontally = true;
+    debouncedHorizontal();
+  };
+
+
+
+  self.api = new GridApi(self);
 };
 
   /**
@@ -3706,6 +3764,7 @@ angular.module('ui.grid')
     self.rowHashMap = hashMap;
   };
 
+
   // Blatantly stolen from Angular as it isn't exposed (yet? 2.0?)
   function RowHashMap() {}
 
@@ -3737,6 +3796,8 @@ angular.module('ui.grid')
       return value;
     }
   };
+
+
 
   return Grid;
 
@@ -7100,6 +7161,57 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       });
       return preparsed.join('[\'');
     }
+  };
+
+  /**
+   * @ngdoc method
+   * @name debounce
+   * @methodOf ui.grid.service:GridUtil
+   *
+   * @param {function} func function to debounce
+   * @param {number} wait milliseconds to delay
+   * @param {bool} immediate execute before delay
+   *
+   * @returns {function} A function that can be executed as debounced function
+   *
+   * @description
+   * Copied from https://github.com/shahata/angular-debounce
+   * Takes a function, decorates it to execute only 1 time after multiple calls, and returns the decorated function
+   * @example
+   * <pre>
+   * var debouncedFunc =  gridUtil.debounce(function(){alert('debounced');}, 500);
+   * debouncedFunc();
+   * debouncedFunc();
+   * debouncedFunc();
+   * </pre>
+   */
+  s.debounce =  function (func, wait, immediate) {
+    var timeout, args, context, result;
+    function debounce() {
+      /* jshint validthis:true */
+      context = this;
+      args = arguments;
+      var later = function () {
+        timeout = null;
+        if (!immediate) {
+          result = func.apply(context, args);
+        }
+      };
+      var callNow = immediate && !timeout;
+      if (timeout) {
+        $timeout.cancel(timeout);
+      }
+      timeout = $timeout(later, wait);
+      if (callNow) {
+        result = func.apply(context, args);
+      }
+      return result;
+    }
+    debounce.cancel = function () {
+      $timeout.cancel(timeout);
+      timeout = null;
+    };
+    return debounce;
   };
 
   return s;

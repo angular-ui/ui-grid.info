@@ -5,7 +5,29 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Grid utility functions</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="elementHeight">elementHeight(element, [extra])</h3>
+<ul class="methods"><li><h3 id="debounce">debounce(func, wait, immediate)</h3>
+<div class="debounce"><p>Copied from https://github.com/shahata/angular-debounce
+Takes a function, decorates it to execute only 1 time after multiple calls, and returns the decorated function</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
+<p>function to debounce</p></li>
+<li><code ng:non-bindable="">wait – {number} – </code>
+<p>milliseconds to delay</p></li>
+<li><code ng:non-bindable="">immediate – {bool} – </code>
+<p>execute before delay</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>A function that can be executed as debounced function</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+var debouncedFunc =  gridUtil.debounce(function(){alert('debounced');}, 500);
+debouncedFunc();
+debouncedFunc();
+debouncedFunc();
+</pre></div>
+</div>
+</li>
+<li><h3 id="elementHeight">elementHeight(element, [extra])</h3>
 <div class="elementheight"><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
 <p>DOM element</p></li>
@@ -103,22 +125,22 @@ var id = GridUtil.newId();
 </pre></div>
 </div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element)</h3>
-<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>The element to get the <code>scrollLeft</code> from.</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{int}</code>
-– <p>A normalized scrollLeft value for the current browser.</p></div>
-</div>
-</li>
 <li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, scrollLeft)</h3>
 <div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
 <p>The element to normalize the <code>scrollLeft</code> value for</p></li>
 <li><code ng:non-bindable="">scrollLeft – {int} – </code>
 <p>The <code>scrollLeft</code> value to denormalize.</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{int}</code>
+– <p>A normalized scrollLeft value for the current browser.</p></div>
+</div>
+</li>
+<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element)</h3>
+<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
+<p>The element to get the <code>scrollLeft</code> from.</p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{int}</code>

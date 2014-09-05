@@ -39,6 +39,12 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <li><h3 id="createRightContainer">createRightContainer()</h3>
 <div class="createrightcontainer"><p>creates the right render container if it doesn't already exist</p></div>
 </li>
+<li><h3 id="flagScrollingHorizontally">flagScrollingHorizontally()</h3>
+<div class="flagscrollinghorizontally"><p>sets isScrollingHorizontally to true and sets it to false in a debounced function</p></div>
+</li>
+<li><h3 id="flagScrollingVertically">flagScrollingVertically()</h3>
+<div class="flagscrollingvertically"><p>sets isScrollingVertically to true and sets it to false in a debounced function</p></div>
+</li>
 <li><h3 id="getColDef">getColDef(name)</h3>
 <div class="getcoldef"><p>returns a grid colDef for the column name</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
@@ -167,6 +173,15 @@ by this column only</p></li>
 <div class="returns"><code ng:non-bindable="">{Promise}</code>
 – <p>A resolved promise that supplies the column.</p></div>
 </div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="isScrollingHorizontally">isScrollingHorizontally</h3>
+<div class="isscrollinghorizontally"><p>set to true when Grid is scrolling horizontally. Set to false via debounced method</p></div>
+</li>
+<li><h3 id="isScrollingVertically">isScrollingVertically</h3>
+<div class="isscrollingvertically"><p>set to true when Grid is scrolling vertically. Set to false via debounced method</p></div>
 </li>
 </ul>
 </div>
