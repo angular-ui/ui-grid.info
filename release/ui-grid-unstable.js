@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-ccefefa - 2014-09-05
+/*! ui-grid - v2.0.12-g1e20b74-0885d8d - 2014-09-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2493,11 +2493,13 @@ angular.module('ui.grid').directive('uiGrid',
     '$compile',
     '$templateCache',
     'gridUtil',
+    '$window',
     function(
       $log,
       $compile,
       $templateCache,
-      gridUtil
+      gridUtil,
+      $window
       ) {
       return {
         templateUrl: 'ui-grid/ui-grid',
@@ -2513,21 +2515,50 @@ angular.module('ui.grid').directive('uiGrid',
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
               $log.debug('ui-grid postlink');
 
-              //todo: assume it is ok to communicate that rendering is complete??
-              uiGridCtrl.grid.renderingComplete();
+              var grid = uiGridCtrl.grid;
 
-              uiGridCtrl.grid.element = $elm;
-
-              uiGridCtrl.grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
-
-              // Default canvasWidth to the grid width, in case we don't get any column definitions to calculate it from
-              uiGridCtrl.grid.canvasWidth = uiGridCtrl.grid.gridWidth;
-
-              uiGridCtrl.grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
-
+              // Initialize scrollbars (TODO: move to controller??)
               uiGridCtrl.scrollbars = [];
 
+              //todo: assume it is ok to communicate that rendering is complete??
+              grid.renderingComplete();
+
+              grid.element = $elm;
+
+              grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
+
+              // Default canvasWidth to the grid width, in case we don't get any column definitions to calculate it from
+              grid.canvasWidth = uiGridCtrl.grid.gridWidth;
+
+              grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
+
+              // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
+              if (grid.gridHeight < grid.options.rowHeight) {
+                // Figure out the new height
+                var newHeight = grid.options.minRowsToShow * grid.options.rowHeight;
+
+                $elm.css('height', newHeight + 'px');
+
+                grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
+              }
+
+              // Run initial canvas refresh
               uiGridCtrl.refreshCanvas();
+
+              // Resize the grid on window resize events
+              function gridResize($event) {
+                grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
+                grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
+
+                uiGridCtrl.queueRefresh();
+              }
+
+              angular.element($window).on('resize', gridResize);
+
+              // Unbind from window resize events when the grid is destroyed
+              $elm.on('$destroy', function () {
+                angular.element($window).off('resize', gridResize);
+              });
             }
           };
         }
@@ -3343,6 +3374,20 @@ angular.module('ui.grid')
     }
   };
 
+  /**
+   * @ngdoc function
+   * @name handleWindowResize
+   * @methodOf ui.grid.class:Grid
+   * @description Triggered when the browser window resizes; automatically resizes the grid
+   */
+  Grid.prototype.handleWindowResize = function handleWindowResize($event) {
+    var self = this;
+
+    self.gridWidth = gridUtil.elementWidth(self.element);
+    self.gridHeight = gridUtil.elementHeight(self.element);
+
+    self.queueRefresh();
+  };
 
   /**
    * @ngdoc function
@@ -4529,6 +4574,14 @@ angular.module('ui.grid')
     this.headerRowHeight = 30;
     this.rowHeight = 30;
     this.maxVisibleRowCount = 200;
+
+    /**
+     * @ngdoc integer
+     * @name minRowsToShow
+     * @propertyOf ui.grid.class:GridOptions
+     * @description Minimum number of rows to show when the grid doesn't have a defined height. Defaults to "10".
+     */
+    this.minRowsToShow = 10;
 
     this.showFooter = false;
     this.footerRowHeight = 30;
