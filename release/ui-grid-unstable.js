@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-f55955d - 2014-09-08
+/*! ui-grid - v2.0.12-g1e20b74-fbc17c3 - 2014-09-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8171,7 +8171,7 @@ module.filter('px', function() {
            *  @name ui.grid.cellNav.api:ColumnDef
            *
            *  @description Column Definitions for cellNav feature, these are available to be 
-           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
+           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDef gridOptions.columnDefs}
            */
 
           /**
@@ -8486,7 +8486,7 @@ module.filter('px', function() {
            *  @name ui.grid.edit.api:ColumnDef
            *
            *  @description Column Definition for edit feature, these are available to be 
-           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
+           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDef gridOptions.columnDefs}
            */
 
           /**
@@ -9041,7 +9041,7 @@ module.filter('px', function() {
          *  @name ui.grid.pinning.api:ColumnDef
          *
          *  @description ColumnDef for pinning feature, these are available to be 
-         *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
+         *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDef gridOptions.columnDefs}
          */
 
         /**
@@ -9288,7 +9288,7 @@ module.filter('px', function() {
            *  @name ui.grid.resizeColumns.api:ColumnDef
            *
            *  @description ColumnDef for resizeColumns feature, these are available to be 
-           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDefs gridOptions.columnDefs}
+           *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDef gridOptions.columnDefs}
            */
 
           /**

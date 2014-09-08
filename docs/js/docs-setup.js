@@ -16,7 +16,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "allowcellfocus api are available be cell cellnav class column columndefs definitions enable feature focus for grid gridoptions object on set the these to true ui ui-grid using"
+      "keywords": "allowcellfocus api are available be cell cellnav class column columndef columndefs definitions enable feature focus for grid gridoptions object on set the these to true ui ui-grid using"
     },
     {
       "section": "api",
@@ -128,7 +128,7 @@ NG_DOCS={
       "id": "ui.grid.edit.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "$scope allowed and api are as available be before both can cell celleditablecondition cellnav class col coldef column columndefs default definition determine edit editablecelltemplate editing editor either enable enablecelledit enablecelleditonfocus enabled_ entity evaluated false falsy feature focus for function grid gridoptions if invoked is not object of on or receives return row set soon specified template text the then these this to true ui ui-grid url used using value when"
+      "keywords": "$scope allowed and api are as available be before both can cell celleditablecondition cellnav class col coldef column columndef columndefs default definition determine edit editablecelltemplate editing editor either enable enablecelledit enablecelleditonfocus enabled_ entity evaluated false falsy feature focus for function grid gridoptions if invoked is not object of on or receives return row set soon specified template text the then these this to true ui ui-grid url used using value when"
     },
     {
       "section": "api",
