@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-4ece940 - 2014-09-10
+/*! ui-grid - v2.0.12-g1e20b74-3e4b47e - 2014-09-10
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -981,6 +981,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
   angular.module('ui.grid').directive('uiGridHeader', ['$log', '$templateCache', '$compile', 'uiGridConstants', 'gridUtil', '$timeout', function($log, $templateCache, $compile, uiGridConstants, gridUtil, $timeout) {
     var defaultTemplate = 'ui-grid/ui-grid-header';
+    var emptyTemplate = 'ui-grid/ui-grid-no-header';
 
     return {
       restrict: 'EA',
@@ -1001,7 +1002,20 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             containerCtrl.header = $elm;
             containerCtrl.colContainer.header = $elm;
 
-            var headerTemplate = ($scope.grid.options.headerTemplate) ? $scope.grid.options.headerTemplate : defaultTemplate;
+            /**
+             * @ngdoc property
+             * @name hideHeader
+             * @propertyOf ui.grid.class:GridOptions
+             * @description Null by default. When set to true, this setting will replace the
+             * standard header template with '<div></div>', resulting in no header being shown.
+             */
+            
+            var headerTemplate;
+            if ($scope.grid.options.hideHeader){
+              headerTemplate = emptyTemplate;
+            } else {
+              headerTemplate = ($scope.grid.options.headerTemplate) ? $scope.grid.options.headerTemplate : defaultTemplate;            
+            }
 
              gridUtil.getTemplate(headerTemplate)
               .then(function (contents) {
@@ -2620,6 +2634,45 @@ angular.module('ui.grid').directive('uiGrid',
               // Run initial canvas refresh
               uiGridCtrl.refreshCanvas();
 
+              //add pinned containers for row headers support
+              //moved from pinning feature
+              var left = angular.element('<div ng-if="grid.hasLeftContainer()" style="width: 0" ui-grid-pinned-container="\'left\'"></div>');
+              $elm.prepend(left);
+              uiGridCtrl.innerCompile(left);
+
+              var right = angular.element('<div  ng-if="grid.hasRightContainer()" style="width: 0" ui-grid-pinned-container="\'right\'"></div>');
+              $elm.append(right);
+              uiGridCtrl.innerCompile(right);
+
+
+              //if we add a left container after render, we need to watch and react
+              $scope.$watch(function () { return grid.hasLeftContainer();}, function (newValue, oldValue) {
+                if (newValue === oldValue) {
+                  return;
+                }
+
+                //todo: remove this code.  it was commented out after moving from pinning because body is already float:left
+//                var bodyContainer = angular.element($elm[0].querySelectorAll('[container-id="body"]'));
+//                if (newValue){
+//                  bodyContainer.attr('style', 'float: left; position: inherit');
+//                }
+//                else {
+//                  bodyContainer.attr('style', 'float: left; position: relative');
+//                }
+
+                grid.refreshCanvas(true);
+              });
+
+              //if we add a right container after render, we need to watch and react
+              $scope.$watch(function () { return grid.hasRightContainer();}, function (newValue, oldValue) {
+                if (newValue === oldValue) {
+                  return;
+                }
+                grid.refreshCanvas(true);
+              });
+
+
+
               // Resize the grid on window resize events
               function gridResize($event) {
                 grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
@@ -2643,6 +2696,76 @@ angular.module('ui.grid').directive('uiGrid',
 
 })();
 
+(function(){
+  'use strict';
+
+  angular.module('ui.grid').directive('uiGridPinnedContainer', ['$log', function ($log) {
+    return {
+      restrict: 'EA',
+      replace: true,
+      template: '<div><div ui-grid-render-container container-id="side" row-container-name="\'body\'" col-container-name="side" bind-scroll-vertical="true" class="ui-grid-pinned-container {{ side }}"></div></div>',
+      scope: {
+        side: '=uiGridPinnedContainer'
+      },
+      require: '^uiGrid',
+      compile: function compile() {
+        return {
+          post: function ($scope, $elm, $attrs, uiGridCtrl) {
+            $log.debug('ui-grid-pinned-container ' + $scope.side + ' link');
+
+            var grid = uiGridCtrl.grid;
+
+            var myWidth = 0;
+
+            // $elm.addClass($scope.side);
+
+            function updateContainerDimensions() {
+              // $log.debug('update ' + $scope.side + ' dimensions');
+
+              var ret = '';
+
+              // Column containers
+              if ($scope.side === 'left' || $scope.side === 'right') {
+                var cols = grid.renderContainers[$scope.side].visibleColumnCache;
+                var width = 0;
+                for (var i = 0; i < cols.length; i++) {
+                  var col = cols[i];
+                  width += col.drawnWidth;
+                }
+
+                myWidth = width;
+
+                // $log.debug('myWidth', myWidth);
+
+                // TODO(c0bra): Subtract sum of col widths from grid viewport width and update it
+                $elm.attr('style', null);
+
+                var myHeight = grid.renderContainers.body.getViewportHeight(); // + grid.horizontalScrollbarHeight;
+
+                ret += '.grid' + grid.id + ' .ui-grid-pinned-container.' + $scope.side + ', .ui-grid-pinned-container.' + $scope.side + ' .ui-grid-viewport { width: ' + myWidth + 'px; height: ' + myHeight + 'px; } ';
+              }
+
+              return ret;
+            }
+
+            grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
+              // Subtract our own width
+              adjustment.width -= myWidth;
+
+              return adjustment;
+            });
+
+            // Register style computation to adjust for columns in `side`'s render container
+            grid.registerStyleComputation({
+              priority: 15,
+              func: updateContainerDimensions
+            });
+          }
+        };
+      }
+    };
+  }]);
+})();
 (function(){
 
 angular.module('ui.grid')
@@ -2930,7 +3053,7 @@ angular.module('ui.grid')
    * @description creates the left render container if it doesn't already exist
    */
   Grid.prototype.createLeftContainer = function() {
-    if (!this.renderContainers.left) {
+    if (!this.hasLeftContainer()) {
       this.renderContainers.left = new GridRenderContainer('left', this, { disableColumnOffset: true });
     }
   };
@@ -2942,12 +3065,33 @@ angular.module('ui.grid')
    * @description creates the right render container if it doesn't already exist
    */
   Grid.prototype.createRightContainer = function() {
-    if (!this.renderContainers.right) {
+    if (!this.hasRightContainer()) {
       this.renderContainers.right = new GridRenderContainer('right', this, { disableColumnOffset: true });
     }
   };
 
   /**
+   * @ngdoc function
+   * @name hasLeftContainer
+   * @methodOf ui.grid.class:Grid
+   * @description returns true if leftContainer exists
+   */
+  Grid.prototype.hasLeftContainer = function() {
+    return this.renderContainers.left !== undefined;
+  };
+
+  /**
+   * @ngdoc function
+   * @name hasLeftContainer
+   * @methodOf ui.grid.class:Grid
+   * @description returns true if rightContainer exists
+   */
+  Grid.prototype.hasRightContainer = function() {
+    return this.renderContainers.right !== undefined;
+  };
+
+
+      /**
    * undocumented function
    * @name preprocessColDef
    * @methodOf ui.grid.class:Grid
@@ -4963,12 +5107,19 @@ angular.module('ui.grid')
      * @name headerTemplate
      * @propertyOf ui.grid.class:GridOptions
      * @description Null by default. When provided, this setting uses a custom header
-     * template. Can be set to either the name of a template file:
+     * template, rather than the default template. Can be set to either the name of a template file:
      * <pre>  $scope.gridOptions.headerTemplate = 'header_template.html';</pre>
      * inline html 
      * <pre>  $scope.gridOptions.headerTemplate = '<div class="ui-grid-top-panel" style="text-align: center">I am a Custom Grid Header</div>'</pre>
      * or the id of a precompiled template (TBD how to use this).  
      * </br>Refer to the custom header tutorial for more information.
+     * If you want no header at all, you can set to an empty div:
+     * <pre>  $scope.gridOptions.headerTemplate = '<div></div>';</pre>
+     * 
+     * If you want to only have a static header, then you can set to static content.  If
+     * you want to tailor the existing column headers, then you should look at the
+     * current 'ui-grid-header.html' template in github as your starting point.
+     * 
      */
     this.headerTemplate = null;
 
@@ -7373,7 +7524,12 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     }
     // Firefox goes negative!
     else if (browser === 'firefox') {
-      return scrollLeft * -1;
+      if (dir === 'rtl') {
+        return scrollLeft * -1;
+      }
+      else {
+        return scrollLeft;
+      }
     }
     else {
       // TODO(c0bra): Handle other browsers? Android? iOS? Opera?
@@ -9225,7 +9381,7 @@ module.filter('px', function() {
    * @description
    *
    *  # ui.grid.pinning
-   * This module provides column pinning
+   * This module provides column pinning to the end user via menu options in the column header
    * <br/>
    * <br/>
    *
@@ -9257,9 +9413,6 @@ module.filter('px', function() {
 
         // Register a column builder to add new menu items for pinning left and right
         grid.registerColumnBuilder(service.pinningColumnBuilder);
-
-        grid.createLeftContainer();
-        grid.createRightContainer();
       },
 
       defaultGridOptions: function (gridOptions) {
@@ -9321,9 +9474,11 @@ module.filter('px', function() {
          */
         if (colDef.pinnedLeft) {
           col.renderContainer = 'left';
+          col.grid.createLeftContainer();
         }
         else if (colDef.pinnedRight) {
           col.renderContainer = 'right';
+          col.grid.createRightContainer();
         }
 
         if (!colDef.enablePinning) {
@@ -9338,6 +9493,7 @@ module.filter('px', function() {
           },
           action: function () {
             this.context.col.renderContainer = 'left';
+            this.context.col.grid.createLeftContainer();
 
             // Need to call refresh twice; once to move our column over to the new render container and then
             //   a second time to update the grid viewport dimensions with our adjustments
@@ -9356,6 +9512,8 @@ module.filter('px', function() {
           },
           action: function () {
             this.context.col.renderContainer = 'right';
+            this.context.col.grid.createRightContainer();
+
 
             // Need to call refresh twice; once to move our column over to the new render container and then
             //   a second time to update the grid viewport dimensions with our adjustments
@@ -9404,90 +9562,12 @@ module.filter('px', function() {
               uiGridPinningService.initializeGrid(uiGridCtrl.grid);
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
-
-              var left = angular.element('<div style="width: 0" ui-grid-pinned-container="\'left\'"></div>');
-              $elm.prepend(left);
-              uiGridCtrl.innerCompile(left);
-
-              var right = angular.element('<div style="width: 0" ui-grid-pinned-container="\'right\'"></div>');
-              $elm.append(right);
-              uiGridCtrl.innerCompile(right);
-
-              var bodyContainer = angular.element($elm[0].querySelectorAll('[container-id="body"]'));
-
-              bodyContainer.attr('style', 'float: left; position: inherit');
             }
           };
         }
       };
     }]);
 
-  module.directive('uiGridPinnedContainer', ['$log', function ($log) {
-    return {
-      restrict: 'EA',
-      replace: true,
-      template: '<div><div ui-grid-render-container container-id="side" row-container-name="\'body\'" col-container-name="side" bind-scroll-vertical="true" class="ui-grid-pinned-container {{ side }}"></div></div>',
-      scope: {
-        side: '=uiGridPinnedContainer'
-      },
-      require: '^uiGrid',
-      compile: function compile() {
-        return {
-          post: function ($scope, $elm, $attrs, uiGridCtrl) {
-            $log.debug('ui-grid-pinned-container ' + $scope.side + ' link');
-
-            var grid = uiGridCtrl.grid;
-
-            var myWidth = 0;
-
-            // $elm.addClass($scope.side);
-
-            function updateContainerDimensions() {
-              // $log.debug('update ' + $scope.side + ' dimensions');
-
-              var ret = '';
-
-              // Column containers
-              if ($scope.side === 'left' || $scope.side === 'right') {
-                var cols = grid.renderContainers[$scope.side].visibleColumnCache;
-                var width = 0;
-                for (var i = 0; i < cols.length; i++) {
-                  var col = cols[i];
-                  width += col.drawnWidth;
-                }
-
-                myWidth = width;
-
-                // $log.debug('myWidth', myWidth);
-
-                // TODO(c0bra): Subtract sum of col widths from grid viewport width and update it
-                $elm.attr('style', null);
-
-                var myHeight = grid.renderContainers.body.getViewportHeight(); // + grid.horizontalScrollbarHeight;
-
-                ret += '.grid' + grid.id + ' .ui-grid-pinned-container.' + $scope.side + ', .ui-grid-pinned-container.' + $scope.side + ' .ui-grid-viewport { width: ' + myWidth + 'px; height: ' + myHeight + 'px; } ';
-              }
-
-              return ret;
-            }
-
-            grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
-              // Subtract our own width
-              adjustment.width -= myWidth;
-
-              return adjustment;
-            });
-
-            // Register style computation to adjust for columns in `side`'s render container
-            grid.registerStyleComputation({
-              priority: 15,
-              func: updateContainerDimensions
-            });
-          }
-        };
-      }
-    };
-  }]);
 
 })();
 (function(){
@@ -10430,6 +10510,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('ui-grid/ui-grid-header',
     "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div><div ui-grid-menu></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/ui-grid-no-header',
+    "<div class=\"ui-grid-top-panel\"></div>"
   );
 
 

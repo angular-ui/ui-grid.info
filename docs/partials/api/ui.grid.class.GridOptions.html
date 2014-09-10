@@ -87,12 +87,23 @@ of a precompiled template (TBD how to use this).  Refer to the custom footer tut
 </li>
 <li><h3 id="headerTemplate">headerTemplate</h3>
 <div class="headertemplate"><p>Null by default. When provided, this setting uses a custom header
-template. Can be set to either the name of a template file:
+template, rather than the default template. Can be set to either the name of a template file:
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = 'header_template.html';</pre>
 inline html 
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div class="ui-grid-top-panel" style="text-align: center"&gt;I am a Custom Grid Header&lt;/div&gt;'</pre>
 or the id of a precompiled template (TBD how to use this). <br />
-</br>Refer to the custom header tutorial for more information.</p></div>
+</br>Refer to the custom header tutorial for more information.
+If you want no header at all, you can set to an empty div:
+<pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div&gt;&lt;/div&gt;';</pre>
+
+<p>If you want to only have a static header, then you can set to static content.  If
+you want to tailor the existing column headers, then you should look at the
+current 'ui-grid-header.html' template in github as your starting point.</p></div>
+</li>
+<li><h3 id="hideHeader">hideHeader</h3>
+<div class="hideheader"><p>Null by default. When set to true, this setting will replace the
+standard header template with '<div>
+</div>', resulting in no header being shown.</p></div>
 </li>
 <li><h3 id="minRowsToShow">minRowsToShow</h3>
 <div class="minrowstoshow"><p>Minimum number of rows to show when the grid doesn't have a defined height. Defaults to "10".</p></div>
