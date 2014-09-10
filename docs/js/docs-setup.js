@@ -58,7 +58,7 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "add added additional all already alter an and any api appended are array as asc ascending assign assigntypes automatically be behavior being block boolean browser build buildcolumndefsfromdata buildcolumns buildstyles by called calls cell chance class col coldef column columnbuilder columnbuilders columndefinition columndefs columns columnsprocessor container contains count created createleftcontainer createrightcontainer creates currently data debounced defined definitions desc descending direction directions directive doesn each either element etc exclude exist existing expected false field first flagscrollinghorizontally flagscrollingvertically for from function further getcoldef getcolumn getcolumnsorting getrow given grid gridcolumn gridoptions gridrow handlewindowresize has having horizontally id identified if in instance into is isscrollinghorizontally isscrollingvertically it iterate its left load long main maintain map method methods modified modifyrows name needed newrawdata not object objects of on one only optional optionally options or pass per populates precompilecelltemplates precompiles process processes processor processrowbuilders promise properties property prototype provided reference register registercolumnbuilder registercolumnsprocessor registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes render renderable reset resetcolumnsorting resetting resizes resolved resources return returns right row rowbuilder rowbuilders rowentity rowequality rows scrolling set sets sort sortcolumn sorted sorting state stylecomputation supplies templates that the this through to triggered true type types ui unsorted updated uses using value vertically via viewmodel when which will window with"
+      "keywords": "add added additional all already alter an and any api appended are array as asc ascending assign assigntypes at automatically based be been behavior being block boolean browser build buildcolumndefsfromdata buildcolumns buildstyles by called calls canvas cell chance class col coldef column columnbuilder columnbuilders columndefinition columndefs columns columnsprocessor completes container contains count created createleftcontainer createrightcontainer creates current currently data debounced defined definitions desc descending direction directions directive doesn each either element etc exclude exist existing expected false field first flagscrollinghorizontally flagscrollingvertically for from function functional further getcoldef getcolumn getcolumnsorting getrow given grid gridcolumn gridoptions gridrow handlewindowresize has having horizontally id identified if in instance into is isscrollinghorizontally isscrollingvertically it iterate its left load long main maintain map method methods modified modifyrows name needed newrawdata not note object objects of on one only optional optionally options or our parameter pass per populates position precompilecelltemplates precompiles present process processes processor processrowbuilders promise properties property prototype provided redraw redrawcanvas reference refresh refreshed refreshrows register registercolumnbuilder registercolumnsprocessor registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removerowsprocessor removes render renderable rendered reset resetcolumnsorting resetting resizes resolved resources return returns right row rowbuilder rowbuilders rowentity rowequality rows screen scroll scrolling set sets sort sortcolumn sorted sorting state stylecomputation supplies tbd templates that the this through to triggered true type types ui unsorted updated use uses using value vertically via viewmodel when which will window with"
     },
     {
       "section": "api",
@@ -94,6 +94,20 @@ NG_DOCS={
       "shortName": "GridRow",
       "type": "function",
       "keywords": "against always an and api array as back be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one parent path position qualified reference relation rendered resulting returns row scope should that the to true ui uid unique uniqueid viewmodel visible will"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.core",
+      "shortName": "core",
+      "type": "object",
+      "keywords": "api be core defined grid ll needs not object see sure this to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.core.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "api at completes core features for function functional grid is not note object on present promise public refresh refreshrows render rendered resolved screen that the ui when"
     },
     {
       "section": "api",

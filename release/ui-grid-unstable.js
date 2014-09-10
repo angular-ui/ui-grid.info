@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-be6073e - 2014-09-09
+/*! ui-grid - v2.0.12-g1e20b74-4ece940 - 2014-09-10
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2462,66 +2462,9 @@ angular.module('ui.grid')
         self.refreshCanvas(true);
       });
 
-      // Refresh the canvas drawable size
-      $scope.grid.refreshCanvas = self.refreshCanvas = function(buildStyles) {
-        if (buildStyles) {
-          self.grid.buildStyles($scope);
-        }
-
-        var p = $q.defer();
-
-        // Get all the header heights
-        var containerHeadersToRecalc = [];
-        for (var containerId in self.grid.renderContainers) {
-          if (self.grid.renderContainers.hasOwnProperty(containerId)) {
-            var container = self.grid.renderContainers[containerId];
-
-            if (container.header) {
-              containerHeadersToRecalc.push(container);
-            }
-          }
-        }
-
-        if (containerHeadersToRecalc.length > 0) {
-          // Putting in a timeout as it's not calculating after the grid element is rendered and filled out
-          $timeout(function() {
-            // var oldHeaderHeight = self.grid.headerHeight;
-            // self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
-
-            var rebuildStyles = false;
-
-            // Get all the header heights
-            for (var i = 0; i < containerHeadersToRecalc.length; i++) {
-              var container = containerHeadersToRecalc[i];
-
-              if (container.header) {
-                var oldHeaderHeight = container.headerHeight;
-                var headerHeight = gridUtil.outerElementHeight(container.header);
-                container.headerHeight = headerHeight;
-
-                if (oldHeaderHeight !== headerHeight) {
-                  rebuildStyles = true;
-                }
-              }
-            }
-
-            // Rebuild styles if the header height has changed
-            //   The header height is used in body/viewport calculations and those are then used in other styles so we need it to be available
-            if (buildStyles && rebuildStyles) {
-              self.grid.buildStyles($scope);
-            }
-
-            p.resolve();
-          });
-        }
-        else {
-          // Timeout still needs to be here to trigger digest after styles have been rebuilt
-          $timeout(function() {
-            p.resolve();
-          });
-        }
-
-        return p.promise;
+      // provided only for backward compatibility, moved to grid and ideally would be removed from here
+      self.refreshCanvas = function(buildStyles) {
+        return $scope.grid.refreshCanvas(buildStyles);
       };
 
       $scope.grid.queueRefresh = self.queueRefresh = function queueRefresh() {
@@ -2542,47 +2485,19 @@ angular.module('ui.grid')
         return $scope.grid.getCellValue(row, col);
       };
 
-      $scope.grid.refreshRows = self.refreshRows = function refreshRows() {
-        return self.grid.processRowsProcessors(self.grid.rows)
-          .then(function (renderableRows) {
-            self.grid.setVisibleRows(renderableRows);
-
-            self.redrawRows();
-
-            self.refreshCanvas();
-          });
+      // provided only for backward compatibility, moved to grid and ideally would be removed from here
+      self.refreshRows = function refreshRows() {
+        return $scope.grid.refreshRows();
       };
 
-      $scope.grid.refresh = self.refresh = function refresh() {
-        $log.debug('grid refresh');
-
-        var p1 = self.grid.processRowsProcessors(self.grid.rows).then(function (renderableRows) {
-          self.grid.setVisibleRows(renderableRows);
-        });
-
-        var p2 = self.grid.processColumnsProcessors(self.grid.columns).then(function (renderableColumns) {
-          self.grid.setVisibleColumns(renderableColumns);
-        });
-
-        return $q.all([p1, p2]).then(function () {
-          self.redrawInPlace();
-
-          self.refreshCanvas(true);
-        });
+      // provided only for backward compatibility, moved to grid and ideally would be removed from here
+      self.refresh = function refresh() {
+        $scope.grid.refresh();
       };
 
-      // Redraw the rows and columns based on our current scroll position
+      // provided only for backward compatibility, moved to grid and ideally would be removed from here
       self.redrawInPlace = function redrawInPlace() {
-        // $log.debug('redrawInPlace');
-
-        for (var i in self.grid.renderContainers) {
-          var container = self.grid.renderContainers[i];
-
-          // $log.debug('redrawing container', i);
-
-          container.adjustRows(container.prevScrollTop, null);
-          container.adjustColumns(container.prevScrollLeft, null);
-        }
+        $scope.grid.redrawInPlace();
       };
 
       /* Sorting Methods */
@@ -2731,8 +2646,22 @@ angular.module('ui.grid').directive('uiGrid',
 (function(){
 
 angular.module('ui.grid')
-.factory('Grid', ['$log', '$q', '$compile', '$parse', 'gridUtil', 'uiGridConstants', 'GridOptions', 'GridColumn', 'GridRow', 'GridApi', 'rowSorter', 'rowSearcher', 'GridRenderContainer',
-    function($log, $q, $compile, $parse, gridUtil, uiGridConstants, GridOptions, GridColumn, GridRow, GridApi, rowSorter, rowSearcher, GridRenderContainer) {
+.factory('Grid', ['$log', '$q', '$compile', '$parse', 'gridUtil', 'uiGridConstants', 'GridOptions', 'GridColumn', 'GridRow', 'GridApi', 'rowSorter', 'rowSearcher', 'GridRenderContainer', '$timeout',
+    function($log, $q, $compile, $parse, gridUtil, uiGridConstants, GridOptions, GridColumn, GridRow, GridApi, rowSorter, rowSearcher, GridRenderContainer, $timeout) {
+
+/**
+ * @ngdoc object
+ * @name ui.grid.core
+ * @description Not sure this needs to be defined, I'll see
+ *
+ */
+/**
+ * @ngdoc object
+ * @name ui.grid.core.api:PublicApi
+ * @description Public Api for the core grid features
+ *
+ */
+
 
 /**
    * @ngdoc function
@@ -3604,7 +3533,8 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:Grid
    * @description calls each styleComputation function
    */
-  Grid.prototype.buildStyles = function buildStyles($scope) {
+  // TODO: this used to take $scope, but couldn't see that it was used
+  Grid.prototype.buildStyles = function buildStyles() {
     // $log.debug('buildStyles');
 
     var self = this;
@@ -3619,7 +3549,9 @@ angular.module('ui.grid')
         return a.priority - b.priority;
       })
       .forEach(function (compInfo) {
-        var ret = compInfo.func.call(self, $scope);
+        // this used to provide $scope as a second parameter, but I couldn't find any 
+        // style builders that used it, so removed it as part of moving to grid from controller
+        var ret = compInfo.func.call(self);
 
         if (angular.isString(ret)) {
           self.customStyles += '\n' + ret;
@@ -3913,6 +3845,173 @@ angular.module('ui.grid')
     hashMap.grid = self;
 
     self.rowHashMap = hashMap;
+  };
+  
+  
+  /**
+   * @ngdoc function
+   * @name refresh
+   * @methodOf ui.grid.class:Grid
+   * @description Refresh the rendered grid on screen.
+   * 
+   */
+  Grid.prototype.refresh = function refresh() {
+    $log.debug('grid refresh');
+    
+    var self = this;
+    
+    var p1 = self.processRowsProcessors(self.rows).then(function (renderableRows) {
+      self.setVisibleRows(renderableRows);
+    });
+
+    var p2 = self.processColumnsProcessors(self.columns).then(function (renderableColumns) {
+      self.setVisibleColumns(renderableColumns);
+    });
+
+    return $q.all([p1, p2]).then(function () {
+      self.redrawInPlace();
+
+      self.refreshCanvas(true);
+    });
+  };  
+  
+  /**
+   * @ngdoc function
+   * @name refresh
+   * @methodOf ui.grid.core.api:PublicApi
+   * @description Refresh the rendered grid on screen.
+   * 
+   */
+  // this.api.registerMethod( 'core', 'refresh', this.refresh );
+
+
+  /**
+   * @ngdoc function
+   * @name refreshRows
+   * @methodOf ui.grid.class:Grid
+   * @description Refresh the rendered rows on screen?  Note: not functional at present 
+   * @returns {promise} promise that is resolved when render completes?
+   * 
+   */
+  Grid.prototype.refreshRows = function refreshRows() {
+    var self = this;
+    
+    return self.processRowsProcessors(self.rows)
+      .then(function (renderableRows) {
+        self.setVisibleRows(renderableRows);
+
+        // TODO: this method doesn't exist, so clearly refreshRows doesn't work.
+        self.redrawRows();
+
+        self.refreshCanvas();
+      });
+  };
+
+  /**
+   * @ngdoc function
+   * @name refreshRows
+   * @methodOf ui.grid.core.api:PublicApi
+   * @description Refresh the rendered grid on screen?  Note: not functional at present
+   * @returns {promise} promise that is resolved when render completes?
+   * 
+   */
+  // this.api.registerMethod( 'core', 'refreshRows', this.refreshRows );
+
+
+  /**
+   * @ngdoc function
+   * @name redrawCanvas
+   * @methodOf ui.grid.class:Grid
+   * @description TBD
+   * @params {object} buildStyles optional parameter.  Use TBD
+   * @returns {promise} promise that is resolved when the canvas
+   * has been refreshed
+   * 
+   */
+  Grid.prototype.refreshCanvas = function(buildStyles) {
+    var self = this;
+    
+    if (buildStyles) {
+      self.buildStyles();
+    }
+
+    var p = $q.defer();
+
+    // Get all the header heights
+    var containerHeadersToRecalc = [];
+    for (var containerId in self.renderContainers) {
+      if (self.renderContainers.hasOwnProperty(containerId)) {
+        var container = self.renderContainers[containerId];
+
+        if (container.header) {
+          containerHeadersToRecalc.push(container);
+        }
+      }
+    }
+
+    if (containerHeadersToRecalc.length > 0) {
+      // Putting in a timeout as it's not calculating after the grid element is rendered and filled out
+      $timeout(function() {
+        // var oldHeaderHeight = self.grid.headerHeight;
+        // self.grid.headerHeight = gridUtil.outerElementHeight(self.header);
+
+        var rebuildStyles = false;
+
+        // Get all the header heights
+        for (var i = 0; i < containerHeadersToRecalc.length; i++) {
+          var container = containerHeadersToRecalc[i];
+
+          if (container.header) {
+            var oldHeaderHeight = container.headerHeight;
+            var headerHeight = gridUtil.outerElementHeight(container.header);
+            container.headerHeight = headerHeight;
+
+            if (oldHeaderHeight !== headerHeight) {
+              rebuildStyles = true;
+            }
+          }
+        }
+
+        // Rebuild styles if the header height has changed
+        //   The header height is used in body/viewport calculations and those are then used in other styles so we need it to be available
+        if (buildStyles && rebuildStyles) {
+          self.buildStyles();
+        }
+
+        p.resolve();
+      });
+    }
+    else {
+      // Timeout still needs to be here to trigger digest after styles have been rebuilt
+      $timeout(function() {
+        p.resolve();
+      });
+    }
+
+    return p.promise;
+  };
+
+
+  /**
+   * @ngdoc function
+   * @name redrawCanvas
+   * @methodOf ui.grid.class:Grid
+   * @description Redraw the rows and columns based on our current scroll position
+   * 
+   */
+  Grid.prototype.redrawInPlace = function redrawInPlace() {
+    // $log.debug('redrawInPlace');
+    
+    var self = this;
+
+    for (var i in self.renderContainers) {
+      var container = self.renderContainers[i];
+
+      // $log.debug('redrawing container', i);
+
+      container.adjustRows(container.prevScrollTop, null);
+      container.adjustColumns(container.prevScrollLeft, null);
+    }
   };
 
 
