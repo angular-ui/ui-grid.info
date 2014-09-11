@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-3e4b47e - 2014-09-10
+/*! ui-grid - v2.0.12-g1e20b74-f73322e - 2014-09-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2378,6 +2378,7 @@ angular.module('ui.grid')
       // Extend options with ui-grid attribute reference
       self.grid = gridClassFactory.createGrid($scope.uiGrid);
       $elm.addClass('grid' + self.grid.id);
+      self.grid.rtl = $elm.css('direction') === 'rtl';
 
 
       //add optional reference to externalScopes function to controller
@@ -2541,9 +2542,6 @@ angular.module('ui.grid')
         $compile(elm)($scope);
       };
 
-      $scope.grid.isRTL = self.isRTL = function isRTL() {
-        return $elm.css('direction') === 'rtl';
-      };
     }]);
 
 /**
@@ -2817,6 +2815,7 @@ angular.module('ui.grid')
   self.headerHeight = self.options.headerRowHeight;
   self.footerHeight = self.options.showFooter === true ? self.options.footerRowHeight : 0;
 
+  self.rtl = false;
   self.gridHeight = 0;
   self.gridWidth = 0;
   self.columnBuilders = [];
@@ -2825,6 +2824,7 @@ angular.module('ui.grid')
   self.columnsProcessors = [];
   self.styleComputations = [];
   self.viewportAdjusters = [];
+  self.rowHeaderColumns = [];
 
   // self.visibleRowCache = [];
 
@@ -2899,7 +2899,18 @@ angular.module('ui.grid')
   self.api = new GridApi(self);
 };
 
-  /**
+    /**
+     * @ngdoc function
+     * @name isRTL
+     * @methodOf ui.grid.class:Grid
+     * @description Returns true if grid is RightToLeft
+     */
+    Grid.prototype.isRTL = function () {
+      return this.rtl;
+    };
+
+
+      /**
    * @ngdoc function
    * @name registerColumnBuilder
    * @methodOf ui.grid.class:Grid
@@ -2988,6 +2999,32 @@ angular.module('ui.grid')
   };
 
   /**
+  * @ngdoc function
+  * @name addRowHeaderColumn
+  * @methodOf ui.grid.class:Grid
+  * @description adds a row header column to the grid
+  * @param {object} column def
+  */
+  Grid.prototype.addRowHeaderColumn = function addRowHeaderColumn(colDef, index) {
+    var self = this;
+    //self.createLeftContainer();
+    var rowHeaderCol = new GridColumn(colDef, self.rowHeaderColumns.length + 1, self);
+    rowHeaderCol.isRowHeader = true;
+    if (self.isRTL()) {
+      self.createRightContainer();
+      rowHeaderCol.renderContainer = 'right';
+    }
+    else {
+      self.createLeftContainer();
+      rowHeaderCol.renderContainer = 'left';
+    }
+    rowHeaderCol.cellTemplate = colDef.cellTemplate;
+    rowHeaderCol.enableFiltering = false;
+    rowHeaderCol.enableSorting = false;
+    self.rowHeaderColumns.push(rowHeaderCol);
+  };
+
+  /**
    * @ngdoc function
    * @name buildColumns
    * @methodOf ui.grid.class:Grid
@@ -2999,14 +3036,21 @@ angular.module('ui.grid')
     $log.debug('buildColumns');
     var self = this;
     var builderPromises = [];
+    var offset = self.rowHeaderColumns.length;
+
+    //add row header columns to the grid columns array
+    angular.forEach(self.rowHeaderColumns, function (rowHeaderColumn) {
+      offset++;
+      self.columns.push(rowHeaderColumn);
+    });
 
     // Synchronize self.columns with self.options.columnDefs so that columns can also be removed.
     if (self.columns.length > self.options.columnDefs.length) {
-        self.columns.forEach(function (column, index) {
-            if (!self.getColDef(column.name)) {
-                self.columns.splice(index, 1);
-            }
-        });
+      self.columns.forEach(function (column, index) {
+        if (!self.getColDef(column.name)) {
+          self.columns.splice(index, 1);
+        }
+      });
     }
 
     self.options.columnDefs.forEach(function (colDef, index) {
@@ -3014,8 +3058,8 @@ angular.module('ui.grid')
       var col = self.getColumn(colDef.name);
 
       if (!col) {
-        col = new GridColumn(colDef, index, self);
-        self.columns.splice(index, 0, col);
+        col = new GridColumn(colDef, index + offset, self);
+        self.columns.push(col);
       }
       else {
         col.updateColumnDef(colDef, col.index);
@@ -3024,7 +3068,6 @@ angular.module('ui.grid')
       self.columnBuilders.forEach(function (builder) {
         builderPromises.push(builder.call(self, colDef, col, self.options));
       });
-
     });
 
     return $q.all(builderPromises);
@@ -10519,7 +10562,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-row',
-    "<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ui-grid-cell></div>"
+    "<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ uiGridRowHeaderCell: col.isRowHeader }\" ui-grid-cell></div>"
   );
 
 
@@ -10578,7 +10621,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div class=\"ui-grid-header-cell clearfix\" ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"col.filter.term\" ng-click=\"$event.stopPropagation()\"><div class=\"ui-grid-filter-button\" ng-click=\"col.filter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!col.filter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div class=\"ui-grid-header-cell clearfix\" ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"col.filter.term\" ng-click=\"$event.stopPropagation()\"><div class=\"ui-grid-filter-button\" ng-click=\"col.filter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!col.filter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
 
 

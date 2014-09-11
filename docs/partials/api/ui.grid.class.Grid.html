@@ -13,7 +13,14 @@
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="assignTypes">assignTypes()</h3>
+<ul class="methods"><li><h3 id="addRowHeaderColumn">addRowHeaderColumn(column)</h3>
+<div class="addrowheadercolumn"><p>adds a row header column to the grid</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">column – {object} – </code>
+<p>def</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="assignTypes">assignTypes()</h3>
 <div class="assigntypes"><p>uses the first row of data to assign colDef.type for any types not defined.</p></div>
 </li>
 <li><h3 id="buildColumnDefsFromData">buildColumnDefsFromData(rowBuilder)</h3>
@@ -80,6 +87,9 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
 <div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+</li>
+<li><h3 id="isRTL">isRTL()</h3>
+<div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>
 </li>
 <li><h3 id="modifyRows">modifyRows()</h3>
 <div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered

@@ -330,6 +330,9 @@ input[type="text"].ui-grid-filter-input:hover {
   height: 0;
   display: none;
 }
+.uiGridRowHeaderCell {
+  background-color: #F0F0EE !important;
+}
 .ui-grid-native-scrollbar {
   position: absolute;
   overflow: scroll;
