@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-f73322e - 2014-09-11
+/*! ui-grid - v2.0.12-g1e20b74-d83bcf8 - 2014-09-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -405,7 +405,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
         uiGridCtrl.grid.sortColumn($scope.col, dir, true)
           .then(function () {
-            uiGridCtrl.refresh();
+            uiGridCtrl.grid.refresh();
             self.hideMenu();
           });
       };
@@ -413,7 +413,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       $scope.unsortColumn = function () {
         $scope.col.unsort();
 
-        uiGridCtrl.refresh();
+        uiGridCtrl.grid.refresh();
         self.hideMenu();
       };
     },
@@ -879,7 +879,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
           uiGridCtrl.grid.sortColumn($scope.col, add)
             .then(function () {
               uiGridCtrl.columnMenuCtrl.hideMenu();
-              uiGridCtrl.refresh();
+              uiGridCtrl.grid.refresh();
             });
         }
 
@@ -2390,11 +2390,6 @@ angular.module('ui.grid')
       //all properties of grid are available on scope
       $scope.grid = self.grid;
 
-
-      //TODO: Move this.
-      $scope.groupings = [];
-
-
       if ($attrs.uiGridColumns) {
         $attrs.$observe('uiGridColumns', function(value) {
           self.grid.options.columnDefs = value;
@@ -2402,14 +2397,9 @@ angular.module('ui.grid')
             .then(function(){
               self.grid.preCompileCellTemplates();
 
-              self.refreshCanvas(true);
+              self.grid.refreshCanvas(true);
             });
         });
-      }
-      else {
-        if (self.grid.options.columnDefs.length > 0) {
-        //   self.grid.buildColumns();
-        }
       }
 
 
@@ -2431,7 +2421,7 @@ angular.module('ui.grid')
 
               self.grid.preCompileCellTemplates();
 
-              self.refreshCanvas(true);
+              self.grid.refreshCanvas(true);
             });
         }
       }
@@ -2455,11 +2445,11 @@ angular.module('ui.grid')
             self.grid.modifyRows(n)
               .then(function () {
                 // if (self.viewport) {
-                  self.redrawInPlace();
+                  self.grid.redrawInPlace();
                 // }
 
                 $scope.$evalAsync(function() {
-                  self.refreshCanvas(true);
+                  self.grid.refreshCanvas(true);
                 });
               });
           });
@@ -2472,15 +2462,10 @@ angular.module('ui.grid')
         columnDefWatchCollectionDereg();
       });
 
-      // TODO(c0bra): Do we need to destroy this watch on $destroy?
       $scope.$watch(function () { return self.grid.styleComputations; }, function() {
-        self.refreshCanvas(true);
+        self.grid.refreshCanvas(true);
       });
 
-      // provided only for backward compatibility, moved to grid and ideally would be removed from here
-      self.refreshCanvas = function(buildStyles) {
-        return $scope.grid.refreshCanvas(buildStyles);
-      };
 
       $scope.grid.queueRefresh = self.queueRefresh = function queueRefresh() {
         if (self.refreshCanceler) {
@@ -2488,7 +2473,7 @@ angular.module('ui.grid')
         }
 
         self.refreshCanceler = $timeout(function () {
-          self.refreshCanvas(true);
+          self.grid.refreshCanvas(true);
         });
 
         self.refreshCanceler.then(function () {
@@ -2499,25 +2484,6 @@ angular.module('ui.grid')
       self.getCellValue = function(row, col) {
         return $scope.grid.getCellValue(row, col);
       };
-
-      // provided only for backward compatibility, moved to grid and ideally would be removed from here
-      self.refreshRows = function refreshRows() {
-        return $scope.grid.refreshRows();
-      };
-
-      // provided only for backward compatibility, moved to grid and ideally would be removed from here
-      self.refresh = function refresh() {
-        $scope.grid.refresh();
-      };
-
-      // provided only for backward compatibility, moved to grid and ideally would be removed from here
-      self.redrawInPlace = function redrawInPlace() {
-        $scope.grid.redrawInPlace();
-      };
-
-      /* Sorting Methods */
-
-
       /* Event Methods */
 
       //todo: throttle this event?
@@ -2630,7 +2596,7 @@ angular.module('ui.grid').directive('uiGrid',
               }
 
               // Run initial canvas refresh
-              uiGridCtrl.refreshCanvas();
+              grid.refreshCanvas();
 
               //add pinned containers for row headers support
               //moved from pinning feature
@@ -9890,7 +9856,7 @@ module.filter('px', function() {
           uiGridCtrl.grid.buildColumns()
             .then(function() {
               // Then refresh the grid canvas, rebuilding the styles so that the scrollbar updates its size
-              uiGridCtrl.refreshCanvas(true);
+              uiGridCtrl.grid.refreshCanvas(true);
             });
         }
 
