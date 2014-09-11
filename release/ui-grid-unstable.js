@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-d83bcf8 - 2014-09-11
+/*! ui-grid - v2.0.12-g1e20b74-6de202d - 2014-09-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -105,14 +105,12 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
 
           // If the grid controller is present, use it to get the compiled cell template function
           if (uiGridCtrl) {
-            $scope.getCellValue = uiGridCtrl.getCellValue;
-
-            compileTemplate();
+             compileTemplate();
           }
-          // No controller, compile the element manually
+          // No controller, compile the element manually (for unit tests)
           else {
             var html = $scope.col.cellTemplate
-              .replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
+              .replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
             var cellElement = $compile(html)($scope);
             $elm.append(cellElement);
           }
@@ -2197,7 +2195,6 @@ angular.module('ui.grid')
             //add optional reference to externalScopes function to scope
             //so it can be retrieved in lower elements
             $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
-            $scope.getCellValue = uiGridCtrl.getCellValue;
           }
         };
       }
@@ -2481,9 +2478,6 @@ angular.module('ui.grid')
         });
       };
 
-      self.getCellValue = function(row, col) {
-        return $scope.grid.getCellValue(row, col);
-      };
       /* Event Methods */
 
       //todo: throttle this event?
@@ -3048,7 +3042,7 @@ angular.module('ui.grid')
   Grid.prototype.preCompileCellTemplates = function() {
         $log.info('pre-compiling cell templates');
         this.columns.forEach(function (col) {
-          var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'getCellValue(row, col)');
+          var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
 
           var compiledElementFn = $compile(html);
           col.compiledElementFn = compiledElementFn;
