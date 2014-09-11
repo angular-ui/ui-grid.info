@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-6de202d - 2014-09-11
+/*! ui-grid - v2.0.12-g1e20b74-8b5cd8e - 2014-09-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -957,7 +957,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
         if ($scope.filterable) {
           $scope.$on('$destroy', $scope.$watch('col.filter.term', function(n, o) {
-            uiGridCtrl.refresh()
+            uiGridCtrl.grid.refresh()
               .then(function () {
                 if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
                    uiGridCtrl.fireScrollingEvent({ y: { percentage: uiGridCtrl.prevScrollArgs.y.percentage } });
@@ -2464,20 +2464,6 @@ angular.module('ui.grid')
       });
 
 
-      $scope.grid.queueRefresh = self.queueRefresh = function queueRefresh() {
-        if (self.refreshCanceler) {
-          $timeout.cancel(self.refreshCanceler);
-        }
-
-        self.refreshCanceler = $timeout(function () {
-          self.grid.refreshCanvas(true);
-        });
-
-        self.refreshCanceler.then(function () {
-          self.refreshCanceler = null;
-        });
-      };
-
       /* Event Methods */
 
       //todo: throttle this event?
@@ -2630,13 +2616,12 @@ angular.module('ui.grid').directive('uiGrid',
               });
 
 
-
               // Resize the grid on window resize events
               function gridResize($event) {
                 grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
                 grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
-                uiGridCtrl.queueRefresh();
+                grid.queueRefresh();
               }
 
               angular.element($window).on('resize', gridResize);
@@ -3672,6 +3657,27 @@ angular.module('ui.grid')
     self.gridHeight = gridUtil.elementHeight(self.element);
 
     self.queueRefresh();
+  };
+
+  /**
+   * @ngdoc function
+   * @name queueRefresh
+   * @methodOf ui.grid.class:Grid
+   * @description todo: @c0bra can you document this method?
+   */
+  Grid.prototype.queueRefresh = function queueRefresh() {
+    var self = this;
+    if (self.refreshCanceller) {
+      $timeout.cancel(self.refreshCanceller);
+    }
+
+    self.refreshCanceller = $timeout(function () {
+      self.refreshCanvas(true);
+    });
+
+    self.refreshCanceller.then(function () {
+      self.refreshCanceller = null;
+    });
   };
 
   /**
