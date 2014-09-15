@@ -332,6 +332,7 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 .uiGridRowHeaderCell {
   background-color: #F0F0EE !important;
+  border-bottom: solid 1px #d4d4d4;
 }
 .ui-grid-native-scrollbar {
   position: absolute;
@@ -915,6 +916,12 @@ div.ui-grid-cell input.ng-valid {
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+}
+.uiGridSelectionRowHeaderButtons {
+  cursor: pointer;
+}
+.uiGridSelectionRowHeaderCell {
+  border-bottom: solid 1px #d4d4d4;
 }
 
 .ui-grid-icon-filter:before {

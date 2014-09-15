@@ -282,7 +282,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api are available be class enable enablerowselection entire feature for grid gridoptions multiple multiselect object row selection set the these to true ui ui-grid using"
+      "keywords": "api are available be class enable enablerowheaderselection enablerowselection entire feature for grid gridoptions header multiple multiselect object row selection set the these to true ui ui-grid used using"
     },
     {
       "section": "api",
@@ -499,7 +499,7 @@ NG_DOCS={
       "id": "210_selection",
       "shortName": "210 Selection",
       "type": "overview",
-      "keywords": "$http $log $scope address age all allowcellfocus and angular app btn btn-success button callback city class clearall clearselectedrows columndefs controller css data directive displayname element enable event example false focusable function get grid gridapi gridoptions height html id include index info is isselected js json log main mainctrl module msg multiselect must name ng-bind ng-click ng-controller ng-disabled on onregisterapi options overview register row rowselectionchanged scope selectall selectallrows selected selection setmultiselect success the this to togglemultiselect togglerow1 togglerowselection true tutorial type ui ui-grid ui-grid-selection uses var when width you your"
+      "keywords": "$http $log $scope address age all allowcellfocus and angular app btn btn-success button callback city class clearall clearselectedrows columndefs controller css data directive displayname element enable enablerowselection event example false focusable function get grid gridapi gridoptions height html id include index info is isselected js json log main mainctrl module msg multiselect must name ng-bind ng-click ng-controller ng-disabled on onregisterapi options overview register row rowselectionchanged scope selectall selectallrows selected selection setmultiselect success the this to togglemultiselect togglerow1 togglerowselection true tutorial type ui ui-grid ui-grid-selection uses var when width you your"
     },
     {
       "section": "tutorial",
