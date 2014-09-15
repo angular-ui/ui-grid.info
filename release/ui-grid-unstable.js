@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-d889a39 - 2014-09-15
+/*! ui-grid - v2.0.12-g1e20b74-beb5762 - 2014-09-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10657,7 +10657,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionRowHeader',
-    "<div class=\"ui-grid-row-header-cell\"><div class=\"ui-grid-cell-contents\"><ui-grid-selection-row-header-buttons></ui-grid-selection-row-header-buttons></div></div>"
+    "<div class=\"ui-grid-row-header-cell ui-grid-disable-selection\"><div class=\"ui-grid-cell-contents\"><ui-grid-selection-row-header-buttons></ui-grid-selection-row-header-buttons></div></div>"
   );
 
 
