@@ -10,6 +10,16 @@ one of many column definitions within the gridOptions.columnDefs array</p></div>
 <div class="cellclass"><p>cellClass can be a string specifying the class to append to a cell
 or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name</p></div>
 </li>
+<li><h3 id="cellFilter">cellFilter</h3>
+<div class="cellfilter"><p>cellFilter is a filter to apply to the content of each cell</p><h4 id="Example">Example</h4>
+<div class="example"><p><pre>
+gridOptions.columnDefs[0].cellFilter = 'date'</p></div>
+</div>
+</li>
+<li><h3 id="cellTemplate">cellTemplate</h3>
+<div class="celltemplate"><p>a custom template for each cell in this column.  The default
+is ui-grid/uiGridCell</p></div>
+</li>
 <li><h3 id="displayName">displayName</h3>
 <div class="displayname"><p>Column name that will be shown in the header.  If displayName is not
 provided then one is generated using the name.</p></div>
@@ -35,6 +45,16 @@ See the angular docs on binding expressions.</p></div>
 </li>
 <li><h3 id="filters">filters</h3>
 <div class="filters"><p>unclear what this does or how it's used, but it does something.</p></div>
+</li>
+<li><h3 id="headerCellFilter">headerCellFilter</h3>
+<div class="headercellfilter"><p>headerCellFilter is a filter to apply to the content of the column header</p><h4 id="Example">Example</h4>
+<div class="example"><p><pre>
+gridOptions.columnDefs[0].headerCellFilter = 'translate'</p></div>
+</div>
+</li>
+<li><h3 id="headerCellTemplate">headerCellTemplate</h3>
+<div class="headercelltemplate"><p>a custom template for the header for this column.  The default
+is ui-grid/uiGridHeaderCell</p></div>
 </li>
 <li><h3 id="maxWidth">maxWidth</h3>
 <div class="maxwidth"><p>sets the maximum column width.  Should be a number.</p><h4 id="Example">Example</h4>
@@ -81,6 +101,12 @@ uiGridConstants.ASC or uiGridConstants.DESC</p><h4 id="Example">Example</h4>
 <li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>
 <div class="sortingalgorithm"><p>Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
 like any normal sorting function.</p></div>
+</li>
+<li><h3 id="type">type</h3>
+<div class="type"><p>the type of the column, used in sorting.  If not provided then the 
+grid will guess the type.  Add this only if the grid guessing is not to your
+satisfaction.  Refer to <a href="#/api/ui.grid.service:GridUtil.guessType">gridUtil.guessType</a> for
+a list of values the grid knows about.</p></div>
 </li>
 <li><h3 id="visible">visible</h3>
 <div class="visible"><p>sets whether or not the column is visible
