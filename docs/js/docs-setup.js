@@ -93,21 +93,14 @@ NG_DOCS={
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "against always an and api array as back be can class col column current data entity evaluated exists field fielda for from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow ie if immutable in index instance is it item logical minus name necessarily not object of on one one-to-one parent path position qualified reference relation rendered resulting returns row scope should that the to true ui uid unique uniqueid viewmodel visible will"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.core",
-      "shortName": "core",
-      "type": "object",
-      "keywords": "api be core defined grid ll needs not object see sure this to ui"
+      "keywords": "action against all always an and any api are array as back be cache calculations calls can changed class clear clearrowinvisible clears col column come current currently data emits entity evaluated event exists field fielda filter findrow for force forces found from function getentityqualifiedcolfield getqualifiedcolfield getvisiblerows grid gridoptions gridrow gridrows ie if immutable in index instance instead invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified rather reference refresh refreshes relation rendered resulting return returning returns right row rows rowsvisiblechanged scope setrowinvisible sets should than that the then this to todo true ui uid unique uniqueid using viewmodel visibility visible which will your"
     },
     {
       "section": "api",
       "id": "ui.grid.core.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "api at completes core features for function functional grid is not note object on present promise public refresh refreshrows render rendered resolved screen that the ui when"
+      "keywords": "active all always an and any api array at both calculations calls can clearrowinvisible clears completes core currently data emits event features filter filtering for from function functional get getvisiblerows grid gridoptions gridrow if instance invisible is it just make normal not note object of on or other override present promise public refresh refreshrows render rendered resolved returns row rowentity rows rowsvisiblechanged screen set setrowinvisible sets so that the then to todo ui using visibility visible want we when which will you"
     },
     {
       "section": "api",

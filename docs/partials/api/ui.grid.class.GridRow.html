@@ -17,7 +17,19 @@ relation to gridOptions.data.</p></div>
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getEntityQualifiedColField">getEntityQualifiedColField(col)</h3>
+<ul class="methods"><li><h3 id="clearRowInvisible">clearRowInvisible(row)</h3>
+<div class="clearrowinvisible"><p>Clears any override on the row visibility, returning it 
+to normal visibility calculations.  If the row is currently invisible
+then sets it to visible and calls refresh and emits the rowsVisibleChanged
+event
+TODO: if filter in action, then is this right?</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>row clear force invisible, needs to be a GridRow,
+which can be found from your data entity using grid.findRow</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="getEntityQualifiedColField">getEntityQualifiedColField(col)</h3>
 <div class="getentityqualifiedcolfield"><p>returns the qualified field name minus the row path
 ie: entity.fieldA</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">col – {GridCol} – </code>
@@ -37,6 +49,29 @@ ie: row.entity.fieldA</p><h4 id="Parameters">Parameters</h4>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{string}</code>
 – <p>resulting name that can be evaluated on scope</p></div>
+</div>
+</li>
+<li><h3 id="getVisibleRows">getVisibleRows(grid)</h3>
+<div class="getvisiblerows"><p>Returns all the visible rows</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid to return rows from</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>rows that are currently visible, returns the
+GridRows rather than gridRow.entity
+TODO: should this come from visible row cache instead?</p></div>
+</div>
+</li>
+<li><h3 id="setRowInvisible">setRowInvisible(row)</h3>
+<div class="setrowinvisible"><p>Sets an override on the row that forces it to always
+be invisible, and if the row is currently visible then marks it
+as invisible and refreshes the grid.  Emits the rowsVisibleChanged
+event if it changed the row visibility</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>row to force invisible, needs to be a GridRow,
+which can be found from your data entity using grid.findRow</p></li>
+</ul>
 </div>
 </li>
 </ul>
