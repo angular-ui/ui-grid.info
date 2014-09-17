@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-b8e4311 - 2014-09-17
+/*! ui-grid - v2.0.12-g1e20b74-ac288cc - 2014-09-17
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2869,7 +2869,7 @@ angular.module('ui.grid')
    * @description Refresh the rendered grid on screen.
    * 
    */
-  this.api.registerMethod( 'core', 'refresh', this.refresh );
+  self.api.registerMethod( 'core', 'refresh', this.refresh );
 
   /**
    * @ngdoc function
@@ -2879,7 +2879,28 @@ angular.module('ui.grid')
    * @returns {promise} promise that is resolved when render completes?
    * 
    */
-  this.api.registerMethod( 'core', 'refreshRows', this.refreshRows );
+  self.api.registerMethod( 'core', 'refreshRows', this.refreshRows );
+
+
+  /**
+   * @ngdoc function
+   * @name sortChanged
+   * @methodOf  ui.grid.core.api:PublicApi
+   * @description The sort criteria on one or more columns has
+   * changed.  Provides as parameters the grid and the output of
+   * getColumnSorting, which is an array of gridColumns
+   * that have sorting on them, sorted in priority order. 
+   * 
+   * @param {Grid} grid the grid
+   * @param {array} sortColumns an array of columns with 
+   * sorts on them, in priority order
+   * 
+   * @example
+   * <pre>
+   *      gridApi.core.on.sortChanged( grid, sortColumns );
+   * </pre>
+   */
+  self.api.registerEvent( 'core', 'sortChanged' );
 };
 
     /**
@@ -3978,6 +3999,7 @@ angular.module('ui.grid')
    * @name sortColumn
    * @methodOf ui.grid.class:Grid
    * @description Set the sorting on a given column, optionally resetting any existing sorting on the Grid.
+   * Emits the sortChanged event whenever the sort criteria are changed.
    * @param {GridColumn} column Column to set the sorting on
    * @param {uiGridConstants.ASC|uiGridConstants.DESC} [direction] Direction to sort by, either descending or ascending.
    *   If not provided, the column will iterate through the sort directions: ascending, descending, unsorted.
@@ -4026,6 +4048,8 @@ angular.module('ui.grid')
     else {
       column.sort.direction = direction;
     }
+    
+    self.api.core.raise.sortChanged( self, self.getColumnSorting() );
 
     return $q.when(column);
   };
@@ -5935,7 +5959,9 @@ angular.module('ui.grid')
      * both grid refresh and emits the rowsVisibleChanged event
      * @param {object} rowEntity gridOptions.data[] array instance
      */
-    this.grid.api.registerMethod( 'core', 'setRowInvisible', this.setRowInvisible );
+    if (!this.grid.api.core.setRowInvisible){
+      this.grid.api.registerMethod( 'core', 'setRowInvisible', this.setRowInvisible );
+    }
 
     /**
      * @ngdoc function
@@ -5948,7 +5974,9 @@ angular.module('ui.grid')
      * TODO: if a filter is active then we can't just set it to visible?
      * @param {object} rowEntity gridOptions.data[] array instance
      */
-    this.grid.api.registerMethod( 'core', 'clearRowInvisible', this.clearRowInvisible );
+    if (!this.grid.api.core.clearRowInvisible){
+      this.grid.api.registerMethod( 'core', 'clearRowInvisible', this.clearRowInvisible );
+    }
 
     /**
      * @ngdoc function
@@ -5958,7 +5986,9 @@ angular.module('ui.grid')
      * @param {Grid} grid the grid you want to get visible rows from
      * @returns {array} an array of gridRow 
      */
-    this.grid.api.registerMethod( 'core', 'getVisibleRows', this.getVisibleRows );
+    if (!this.grid.api.core.getVisibleRows){
+      this.grid.api.registerMethod( 'core', 'getVisibleRows', this.getVisibleRows );
+    }
     
     /**
      * @ngdoc event
@@ -5973,7 +6003,9 @@ angular.module('ui.grid')
      * and that is the one that would have been useful.
      * 
      */
-    this.grid.api.registerEvent( 'core', 'rowsVisibleChanged' );
+    if (!this.grid.api.core.raise.rowsVisibleChanged){
+      this.grid.api.registerEvent( 'core', 'rowsVisibleChanged' );
+    }
     
   }
 
@@ -6614,6 +6646,15 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
 
 var module = angular.module('ui.grid');
 
+/**
+ * @ngdoc object
+ * @name ui.grid.class:RowSorter
+ * @description RowSorter provides the default sorting mechanisms, 
+ * including guessing column types and applying appropriate sort 
+ * algorithms
+ * 
+ */ 
+
 module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGridConstants) {
   var currencyRegexStr = 
     '(' +
@@ -6798,10 +6839,34 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     }
   };
 
+  /**
+   * @ngdoc object
+   * @name useExternalSorting
+   * @propertyOf ui.grid.class:GridOptions
+   * @description Prevents the internal sorting from executing.  Events will
+   * still be fired when the sort changes, and the sort information on
+   * the columns will be updated, allowing an external sorter (for example,
+   * server sorting) to be implemented.  Defaults to false. 
+   * 
+   */
+  /**
+   * @ngdoc method
+   * @methodOf ui.grid.class:RowSorter
+   * @name sort
+   * @description sorts the grid 
+   * @param {Object} grid the grid itself
+   * @param {Object} rows the rows to be sorted
+   * @param {Object} columns the columns in which to look
+   * for sort criteria
+   */
   rowSorter.sort = function rowSorterSort(grid, rows, columns) {
     // first make sure we are even supposed to do work
     if (!rows) {
       return;
+    }
+    
+    if (grid.options.useExternalSorting){
+      return rows;
     }
 
     // Build the list of columns to sort by

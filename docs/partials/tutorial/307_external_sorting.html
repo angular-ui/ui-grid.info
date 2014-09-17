@@ -1,0 +1,95 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Sometimes you want to sort data externally, either on the client using custom sort routines (that are over and
+above those you can achieve with <a href="#/tutorial/xxxxxx">custom sort functions</a>, or on the server as part of
+your data retrieve.</p>
+
+<p>UI-Grid provides two functions that support this, firstly a sortChanged event that tells you when a user has
+changed their requested sort using the grid ui, and secondly a useExternalSorting property to turn off
+the grid native sorting.</p><h2 id="Example">Example</h2>
+<div class="example"><p>In this example we suppress the internal sorting, and emulate an external sort by picking one of three 
+json files to show - one sorted ASC, one sorted DESC, and one not sorted.  To further illustrate that this
+is using external sorting, the external sort routine (consisting of me manually editing json files) got bored
+of sorting after the first 10 or so rows.</p>
+
+<h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-40" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-40" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-40">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 250px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ui.grid']);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridConstants', function ($scope, $http, $interval, uiGridConstants) {
+
+      $scope.gridOptions = {
+        useExternalSorting: true,
+        columnDefs: [
+          { name: 'name' },
+          { name: 'gender', enableSorting: false},
+          { name: 'company', enableSorting: false}
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+          $interval(function() {
+            $scope.gridApi.core.on.sortChanged( $scope, function( grid, sortColumns ) {
+              if( sortColumns.length === 0 ){
+                $http.get('/data/100.json')
+                .success(function(data) {
+                  $scope.gridOptions.data = data;
+                });
+              } else {
+                switch( sortColumns[0].sort.direction ) {
+                  case uiGridConstants.ASC:
+                    $http.get('/data/100_ASC.json')
+                    .success(function(data) {
+                      $scope.gridOptions.data = data;
+                    });
+                    break;
+                  case uiGridConstants.DESC:
+                    $http.get('/data/100_DESC.json')
+                    .success(function(data) {
+                      $scope.gridOptions.data = data;
+                    });
+                    break;
+                  case undefined:
+                    $http.get('/data/100.json')
+                    .success(function(data) {
+                      $scope.gridOptions.data = data;
+                    });
+                    break;
+                }
+              }
+            });
+          }, 200, 1);
+        }
+      };
+      
+      $http.get('/data/100.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+      
+    }]);
+  </script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-40" ng-eval-javascript="app.js"></div></div>
+</div>

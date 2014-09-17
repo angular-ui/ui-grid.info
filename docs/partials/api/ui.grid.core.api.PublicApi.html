@@ -45,6 +45,23 @@ both grid refresh and emits the rowsVisibleChanged event</p><h4 id="Parameters">
 </ul>
 </div>
 </li>
+<li><h3 id="sortChanged">sortChanged(grid, sortColumns)</h3>
+<div class="sortchanged"><p>The sort criteria on one or more columns has
+changed.  Provides as parameters the grid and the output of
+getColumnSorting, which is an array of gridColumns
+that have sorting on them, sorted in priority order. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid</p></li>
+<li><code ng:non-bindable="">sortColumns – {array} – </code>
+<p>an array of columns with 
+sorts on them, in priority order</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridApi.core.on.sortChanged( grid, sortColumns );
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <div class="member event"><h2 id="Events">Events</h2>
