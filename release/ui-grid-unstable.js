@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-ac288cc - 2014-09-17
+/*! ui-grid - v2.0.12-g1e20b74-6f6de09 - 2014-09-17
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -154,8 +154,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       var self = this;
 
       // Store a reference to this link/controller in the main uiGrid controller
-      // to allow showMenu later
-      uiGridCtrl.columnMenuScope = $scope;
+      uiGridCtrl.columnMenuCtrl = self;
 
       // Save whether we're shown or not so the columns can check
       self.shown = $scope.menuShown = false;
@@ -167,10 +166,10 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       // $scope.i18n = i18nService;
 
       // Get the grid menu element. We'll use it to calculate positioning
-      $scope.menu = $elm[0].querySelectorAll('.ui-grid-menu');
+      var menu = $elm[0].querySelectorAll('.ui-grid-menu');
 
       // Get the inner menu part. It's what slides up/down
-      $scope.inner = $elm[0].querySelectorAll('.ui-grid-menu-inner');
+      var inner = $elm[0].querySelectorAll('.ui-grid-menu-inner');
 
       /**
        * @ngdoc boolean
@@ -179,14 +178,14 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
        * @description (optional) True by default. When enabled, this setting adds sort
        * widgets to the column header, allowing sorting of the data in the individual column.
        */
-      $scope.sortable = function() {
+      function sortable() {
         if (uiGridCtrl.grid.options.enableSorting && typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.enableSorting) {
           return true;
         }
         else {
           return false;
         }
-      };
+      }
 
       /**
        * @ngdoc boolean
@@ -195,14 +194,14 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
        * @description (optional) True by default. When enabled, this setting adds filter
        * widgets to the column header, allowing filtering of the data in the individual column.
        */
-      $scope.filterable = function() {
+      function filterable() {
         if (uiGridCtrl.grid.options.enableFiltering && typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.enableFiltering) {
           return true;
         }
         else {
           return false;
         }
-      };
+      }
       
       var defaultMenuItems = [
         // NOTE: disabling this in favor of a little filter text box
@@ -230,7 +229,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.sortColumn($event, uiGridConstants.ASC);
           },
           shown: function () {
-            return $scope.sortable();
+            return sortable();
           },
           active: function() {
             return (typeof($scope.col) !== 'undefined' && typeof($scope.col.sort) !== 'undefined' && typeof($scope.col.sort.direction) !== 'undefined' && $scope.col.sort.direction === uiGridConstants.ASC);
@@ -244,7 +243,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.sortColumn($event, uiGridConstants.DESC);
           },
           shown: function() {
-            return $scope.sortable();
+            return sortable();
           },
           active: function() {
             return (typeof($scope.col) !== 'undefined' && typeof($scope.col.sort) !== 'undefined' && typeof($scope.col.sort.direction) !== 'undefined' && $scope.col.sort.direction === uiGridConstants.DESC);
@@ -258,15 +257,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.unsortColumn();
           },
           shown: function() {
-            return ($scope.sortable() && typeof($scope.col) !== 'undefined' && (typeof($scope.col.sort) !== 'undefined' && typeof($scope.col.sort.direction) !== 'undefined') && $scope.col.sort.direction !== null);
-          }
-        },
-        {
-          title: i18nService.getSafeText('column.hide'),
-          icon: 'ui-grid-icon-cancel',
-          action: function ($event) {
-            $event.stopPropagation();
-            $scope.hideColumn();
+            return (sortable() && typeof($scope.col) !== 'undefined' && (typeof($scope.col.sort) !== 'undefined' && typeof($scope.col.sort.direction) !== 'undefined') && $scope.col.sort.direction !== null);
           }
         }
       ];
@@ -298,7 +289,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       }
 
       // Show the menu
-      $scope.showMenu = function(column, $columnElement) {
+      self.showMenu = function(column, $columnElement) {
         // Swap to this column
         //   note - store a reference to this column in 'self' so the columns can check whether they're the shown column or not
         self.col = $scope.col = column;
@@ -312,8 +303,8 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
         // Get the grid scrollLeft
         var offset = 0;
-        if (column.grid.options.offsetLeft) {
-          offset = column.grid.options.offsetLeft;
+        if (uiGridCtrl.grid.options.offsetLeft) {
+          offset = uiGridCtrl.grid.options.offsetLeft;
         }
 
         var height = gridUtil.elementHeight($columnElement, true);
@@ -326,24 +317,24 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
         function reposition() {
           $timeout(function() {
             if (hidden && $animate) {
-              $animate.removeClass($scope.inner, 'ng-hide');
+              $animate.removeClass(inner, 'ng-hide');
               self.shown = $scope.menuShown = true;
               $scope.$broadcast('show-menu');
             }
-            else if (angular.element($scope.inner).hasClass('ng-hide')) {
-              angular.element($scope.inner).removeClass('ng-hide');
+            else if (angular.element(inner).hasClass('ng-hide')) {
+              angular.element(inner).removeClass('ng-hide');
             }
 
             // var containerScrollLeft = $columnelement
             var containerId = column.renderContainer ? column.renderContainer : 'body';
-            var renderContainer = column.grid.renderContainers[containerId];
+            var renderContainer = $scope.grid.renderContainers[containerId];
             var containerScrolLeft = renderContainer.prevScrollLeft;
 
-            var myWidth = gridUtil.elementWidth($scope.menu, true);
+            var myWidth = gridUtil.elementWidth(menu, true);
 
             // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
             // Get the column menu right padding
-            var paddingRight = parseInt(angular.element($scope.menu).css('padding-right'), 10);
+            var paddingRight = parseInt(angular.element(menu).css('padding-right'), 10);
 
             $log.debug('position', left + ' + ' + width + ' - ' + myWidth + ' + ' + paddingRight);
 
@@ -359,7 +350,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
         if ($scope.menuShown && $animate) {
           // Animate closing the menu on the current column, then animate it opening on the other column
-          $animate.addClass($scope.inner, 'ng-hide', reposition);
+          $animate.addClass(inner, 'ng-hide', reposition);
           hidden = true;
         }
         else {
@@ -370,9 +361,8 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       };
 
       // Hide the menu
-      $scope.hideMenu = function() {
-        delete self.col;
-        delete $scope.col;
+      self.hideMenu = function() {
+        self.col = null;
         self.shown = $scope.menuShown = false;
         $scope.$broadcast('hide-menu');
       };
@@ -383,22 +373,22 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       // });
 
       function documentClick() {
-        $scope.$apply($scope.hideMenu);
+        $scope.$apply(self.hideMenu);
         $document.off('click', documentClick);
       }
       
       function resizeHandler() {
-        $scope.$apply($scope.hideMenu);
+        $scope.$apply(self.hideMenu);
       }
       angular.element($window).bind('resize', resizeHandler);
 
       $scope.$on('$destroy', $scope.$on(uiGridConstants.events.GRID_SCROLL, function(evt, args) {
-        $scope.hideMenu();
+        self.hideMenu();
         // if (!$scope.$$phase) { $scope.$apply(); }
       }));
 
       $scope.$on('$destroy', $scope.$on(uiGridConstants.events.ITEM_DRAGGING, function(evt, args) {
-        $scope.hideMenu();
+        self.hideMenu();
         // if (!$scope.$$phase) { $scope.$apply(); }
       }));
 
@@ -414,7 +404,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
         uiGridCtrl.grid.sortColumn($scope.col, dir, true)
           .then(function () {
             uiGridCtrl.grid.refresh();
-            $scope.hideMenu();
+            self.hideMenu();
           });
       };
 
@@ -422,14 +412,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
         $scope.col.unsort();
 
         uiGridCtrl.grid.refresh();
-        $scope.hideMenu();
-      };
-
-      $scope.hideColumn = function () {
-        $scope.col.colDef.visible = false;
-
-        uiGridCtrl.grid.refresh();
-        $scope.hideMenu();
+        self.hideMenu();
       };
     },
     controller: ['$scope', function ($scope) {
@@ -830,8 +813,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 (function(){
   'use strict';
 
-  angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$compile', '$timeout', '$window', '$document', 'gridUtil', 'uiGridConstants', 
-  function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
+  angular.module('ui.grid').directive('uiGridHeaderCell', ['$log', '$timeout', '$window', '$document', 'gridUtil', 'uiGridConstants', function ($log, $timeout, $window, $document, gridUtil, uiGridConstants) {
     // Do stuff after mouse has been down this many ms on the header cell
     var mousedownTimeout = 500;
 
@@ -843,155 +825,147 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
         renderIndex: '='
       },
       require: '?^uiGrid',
+      templateUrl: 'ui-grid/uiGridHeaderCell',
       replace: true,
-      compile: function() {
-        return {
-          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            var cellHeader = $compile($scope.col.headerCellTemplate)($scope);
-            $elm.append(cellHeader);
-          },
-          
-          post: function ($scope, $elm, $attrs, uiGridCtrl) {
-            $scope.grid = uiGridCtrl.grid;
-    
-            $elm.addClass($scope.col.getColClass(false));
-    // shane - No need for watch now that we trackby col name
-    //        $scope.$watch('col.index', function (newValue, oldValue) {
-    //          if (newValue === oldValue) { return; }
-    //          var className = $elm.attr('class');
-    //          className = className.replace(uiGridConstants.COL_CLASS_PREFIX + oldValue, uiGridConstants.COL_CLASS_PREFIX + newValue);
-    //          $elm.attr('class', className);
-    //        });
-    
-            // Hide the menu by default
-            $scope.menuShown = false;
-    
-            // Put asc and desc sort directions in scope
-            $scope.asc = uiGridConstants.ASC;
-            $scope.desc = uiGridConstants.DESC;
-    
-            // Store a reference to menu element
-            var $colMenu = angular.element( $elm[0].querySelectorAll('.ui-grid-header-cell-menu') );
-    
-            var $contentsElm = angular.element( $elm[0].querySelectorAll('.ui-grid-cell-contents') );
-    
-            // Figure out whether this column is sortable or not
-            if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
-              $scope.sortable = true;
-            }
-            else {
-              $scope.sortable = false;
-            }
-    
-            if (uiGridCtrl.grid.options.enableFiltering && $scope.col.enableFiltering) {
-              $scope.filterable = true;
-            }
-            else {
-              $scope.filterable = false;
-            }
-    
-            function handleClick(evt) {
-              // If the shift key is being held down, add this column to the sort
-              var add = false;
-              if (evt.shiftKey) {
-                add = true;
-              }
-    
-              // Sort this column then rebuild the grid's rows
-              uiGridCtrl.grid.sortColumn($scope.col, add)
-                .then(function () {
-                  uiGridCtrl.columnMenuScope.hideMenu();
-                  uiGridCtrl.grid.refresh();
-                });
-            }
-    
-            // Long-click (for mobile)
-            var cancelMousedownTimeout;
-            var mousedownStartTime = 0;
-            $contentsElm.on('mousedown', function(event) {
-              if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
-                event = event.originalEvent;
-              }
-    
-              // Don't show the menu if it's not the left button
-              if (event.button && event.button !== 0) {
-                return;
-              }
-    
-              mousedownStartTime = (new Date()).getTime();
-    
-              cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
-    
-              cancelMousedownTimeout.then(function () {
-                uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm);
-              });
+      link: function ($scope, $elm, $attrs, uiGridCtrl) {
+        $scope.grid = uiGridCtrl.grid;
+
+        $elm.addClass($scope.col.getColClass(false));
+// shane - No need for watch now that we trackby col name
+//        $scope.$watch('col.index', function (newValue, oldValue) {
+//          if (newValue === oldValue) { return; }
+//          var className = $elm.attr('class');
+//          className = className.replace(uiGridConstants.COL_CLASS_PREFIX + oldValue, uiGridConstants.COL_CLASS_PREFIX + newValue);
+//          $elm.attr('class', className);
+//        });
+
+        // Hide the menu by default
+        $scope.menuShown = false;
+
+        // Put asc and desc sort directions in scope
+        $scope.asc = uiGridConstants.ASC;
+        $scope.desc = uiGridConstants.DESC;
+
+        // Store a reference to menu element
+        var $colMenu = angular.element( $elm[0].querySelectorAll('.ui-grid-header-cell-menu') );
+
+        var $contentsElm = angular.element( $elm[0].querySelectorAll('.ui-grid-cell-contents') );
+
+        // Figure out whether this column is sortable or not
+        if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
+          $scope.sortable = true;
+        }
+        else {
+          $scope.sortable = false;
+        }
+
+        if (uiGridCtrl.grid.options.enableFiltering && $scope.col.enableFiltering) {
+          $scope.filterable = true;
+        }
+        else {
+          $scope.filterable = false;
+        }
+
+        function handleClick(evt) {
+          // If the shift key is being held down, add this column to the sort
+          var add = false;
+          if (evt.shiftKey) {
+            add = true;
+          }
+
+          // Sort this column then rebuild the grid's rows
+          uiGridCtrl.grid.sortColumn($scope.col, add)
+            .then(function () {
+              uiGridCtrl.columnMenuCtrl.hideMenu();
+              uiGridCtrl.grid.refresh();
             });
-    
-            $contentsElm.on('mouseup', function () {
-              $timeout.cancel(cancelMousedownTimeout);
-            });
-    
-            $scope.toggleMenu = function($event) {
-              $event.stopPropagation();
-    
-              // If the menu is already showing...
-              if (uiGridCtrl.columnMenuScope.menuShown) {
-                // ... and we're the column the menu is on...
-                if (uiGridCtrl.columnMenuScope.col === $scope.col) {
-                  // ... hide it
-                  uiGridCtrl.columnMenuScope.hideMenu();
-                }
-                // ... and we're NOT the column the menu is on
-                else {
-                  // ... move the menu to our column
-                  uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm);
-                }
-              }
-              // If the menu is NOT showing
-              else {
-                // ... show it on our column
-                uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm);
-              }
-            };
-    
-            // If this column is sortable, add a click event handler
-            if ($scope.sortable) {
-              $contentsElm.on('click', function(evt) {
-                evt.stopPropagation();
-    
-                $timeout.cancel(cancelMousedownTimeout);
-    
-                var mousedownEndTime = (new Date()).getTime();
-                var mousedownTime = mousedownEndTime - mousedownStartTime;
-    
-                if (mousedownTime > mousedownTimeout) {
-                  // long click, handled above with mousedown
-                }
-                else {
-                  // short click
-                  handleClick(evt);
-                }
-              });
-    
-              $scope.$on('$destroy', function () {
-                // Cancel any pending long-click timeout
-                $timeout.cancel(cancelMousedownTimeout);
-              });
+        }
+
+        // Long-click (for mobile)
+        var cancelMousedownTimeout;
+        var mousedownStartTime = 0;
+        $contentsElm.on('mousedown', function(event) {
+          if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
+            event = event.originalEvent;
+          }
+
+          // Don't show the menu if it's not the left button
+          if (event.button && event.button !== 0) {
+            return;
+          }
+
+          mousedownStartTime = (new Date()).getTime();
+
+          cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
+
+          cancelMousedownTimeout.then(function () {
+            uiGridCtrl.columnMenuCtrl.showMenu($scope.col, $elm);
+          });
+        });
+
+        $contentsElm.on('mouseup', function () {
+          $timeout.cancel(cancelMousedownTimeout);
+        });
+
+        $scope.toggleMenu = function($event) {
+          $event.stopPropagation();
+
+          // If the menu is already showing...
+          if (uiGridCtrl.columnMenuCtrl.shown) {
+            // ... and we're the column the menu is on...
+            if (uiGridCtrl.columnMenuCtrl.col === $scope.col) {
+              // ... hide it
+              uiGridCtrl.columnMenuCtrl.hideMenu();
             }
-    
-            if ($scope.filterable) {
-              $scope.$on('$destroy', $scope.$watch('col.filter.term', function(n, o) {
-                uiGridCtrl.grid.refresh()
-                  .then(function () {
-                    if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
-                       uiGridCtrl.fireScrollingEvent({ y: { percentage: uiGridCtrl.prevScrollArgs.y.percentage } });
-                    }
-                    // uiGridCtrl.fireEvent('force-vertical-scroll');
-                  });
-              }));
+            // ... and we're NOT the column the menu is on
+            else {
+              // ... move the menu to our column
+              uiGridCtrl.columnMenuCtrl.showMenu($scope.col, $elm);
             }
           }
+          // If the menu is NOT showing
+          else {
+            // ... show it on our column
+            uiGridCtrl.columnMenuCtrl.showMenu($scope.col, $elm);
+          }
         };
+
+        // If this column is sortable, add a click event handler
+        if ($scope.sortable) {
+          $contentsElm.on('click', function(evt) {
+            evt.stopPropagation();
+
+            $timeout.cancel(cancelMousedownTimeout);
+
+            var mousedownEndTime = (new Date()).getTime();
+            var mousedownTime = mousedownEndTime - mousedownStartTime;
+
+            if (mousedownTime > mousedownTimeout) {
+              // long click, handled above with mousedown
+            }
+            else {
+              // short click
+              handleClick(evt);
+            }
+          });
+
+          $scope.$on('$destroy', function () {
+            // Cancel any pending long-click timeout
+            $timeout.cancel(cancelMousedownTimeout);
+          });
+        }
+
+        if ($scope.filterable) {
+          $scope.$on('$destroy', $scope.$watch('col.filter.term', function(n, o) {
+            uiGridCtrl.grid.refresh()
+              .then(function () {
+                if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
+                   uiGridCtrl.fireScrollingEvent({ y: { percentage: uiGridCtrl.prevScrollArgs.y.percentage } });
+                }
+                // uiGridCtrl.fireEvent('force-vertical-scroll');
+              });
+          }));
+        }
       }
     };
 
@@ -999,6 +973,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
   }]);
 
 })();
+
 (function(){
   'use strict';
 
@@ -2983,16 +2958,6 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:Grid
    * @description uses the first row of data to assign colDef.type for any types not defined.
    */
-  /**
-   * @ngdoc property
-   * @name type
-   * @propertyOf ui.grid.class:GridOptions.columnDef
-   * @description the type of the column, used in sorting.  If not provided then the 
-   * grid will guess the type.  Add this only if the grid guessing is not to your
-   * satisfaction.  Refer to {@link ui.grid.service:GridUtil.guessType gridUtil.guessType} for
-   * a list of values the grid knows about.
-   *
-   */
   Grid.prototype.assignTypes = function(){
     var self = this;
     self.options.columnDefs.forEach(function (colDef, index) {
@@ -4786,6 +4751,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc property
      * @name cellClass
+     * @propertyOf ui.grid.class:GridColumn
      * @propertyOf ui.grid.class:GridOptions.columnDef
      * @description cellClass can be a string specifying the class to append to a cell
      * or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name
@@ -4794,29 +4760,9 @@ angular.module('ui.grid')
     self.cellClass = colDef.cellClass;
 
 
-    /**
-     * @ngdoc property
-     * @name cellFilter
-     * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description cellFilter is a filter to apply to the content of each cell
-     * @example
-     * <pre>
-     *   gridOptions.columnDefs[0].cellFilter = 'date'
-     *
-     */
-    self.cellFilter = colDef.cellFilter ? colDef.cellFilter : "";
 
-    /**
-     * @ngdoc property
-     * @name headerCellFilter
-     * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description headerCellFilter is a filter to apply to the content of the column header
-     * @example
-     * <pre>
-     *   gridOptions.columnDefs[0].headerCellFilter = 'translate'
-     *
-     */
-    self.headerCellFilter = colDef.headerCellFilter ? colDef.headerCellFilter : "";
+
+    self.cellFilter = colDef.cellFilter ? colDef.cellFilter : "";
 
     self.visible = gridUtil.isNullOrUndefined(colDef.visible) || colDef.visible;
 
@@ -6206,26 +6152,10 @@ angular.module('ui.grid')
 
           var templateGetPromises = [];
 
-          /**
-           * @ngdoc property
-           * @name headerCellTemplate
-           * @propertyOf ui.grid.class:GridOptions.columnDef
-           * @description a custom template for the header for this column.  The default
-           * is ui-grid/uiGridHeaderCell
-           *
-           */
           if (!colDef.headerCellTemplate) {
             colDef.headerCellTemplate = 'ui-grid/uiGridHeaderCell';
           }
 
-          /**
-           * @ngdoc property
-           * @name cellTemplate
-           * @propertyOf ui.grid.class:GridOptions.columnDef
-           * @description a custom template for each cell in this column.  The default
-           * is ui-grid/uiGridCell
-           *
-           */
           if (!colDef.cellTemplate) {
             colDef.cellTemplate = 'ui-grid/uiGridCell';
           }
@@ -6240,11 +6170,10 @@ angular.module('ui.grid')
               })
           );
 
-
           templateGetPromises.push(gridUtil.getTemplate(colDef.headerCellTemplate)
               .then(
               function (template) {
-                col.headerCellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.headerCellFilter ? "|" + col.headerCellFilter : "");
+                col.headerCellTemplate = template;
               },
               function (res) {
                 throw new Error("Couldn't fetch/use colDef.headerCellTemplate '" + colDef.headerCellTemplate + "'");
@@ -7914,9 +7843,6 @@ module.filter('px', function() {
           },
           menu:{
             text: 'Vælg kolonner:',
-          },
-          column: {
-            hide: 'Skjul kolonne'
           }
         });
       return $delegate;
@@ -7946,9 +7872,6 @@ module.filter('px', function() {
         },
         menu: {
           text: 'Spalten auswählen:'
-        },
-        column: {
-          hide: 'Spalte ausblenden'
         }
       });
       return $delegate;
@@ -7983,9 +7906,6 @@ module.filter('px', function() {
           ascending: 'Sort Ascending',
           descending: 'Sort Descending',
           remove: 'Remove Sort'
-        },
-        column: {
-          hide: 'Hide Column'
         }
       });
       return $delegate;
@@ -8015,9 +7935,6 @@ module.filter('px', function() {
         },
         menu: {
           text: 'Elegir columnas:'
-        },
-        column: {
-          hide: 'Ocultar la columna'
         }
       });
       return $delegate;
@@ -8047,9 +7964,6 @@ module.filter('px', function() {
         },
         menu: {
           text: 'انتخاب ستون\u200cها:'
-        },
-        column: {
-          hide: 'ستون پنهان کن'
         }
       });
       return $delegate;
@@ -8079,9 +7993,6 @@ module.filter('px', function() {
         },
         menu: {
           text: 'Choisir des colonnes:'
-        },
-        column: {
-          hide: 'Colonne de peau'
         }
       });
       return $delegate;
@@ -8116,9 +8027,6 @@ module.filter('px', function() {
                     ascending: 'סדר עולה',
                     descending: 'סדר יורד',
                     remove: 'בטל'
-                },
-                column: {
-                  hide: 'טור הסתר'
                 }
             });
             return $delegate;
@@ -8153,9 +8061,6 @@ module.filter('px', function() {
           ascending: 'Sorteer oplopend',
           descending: 'Sorteer aflopend',
           remove: 'Verwijder sortering'
-        },
-        column: {
-          hide: 'Kolom te verbergen'
         }
       });
       return $delegate;
@@ -8185,9 +8090,6 @@ module.filter('px', function() {
         },
         menu: {
           text: 'Selecione as colunas:'
-        },
-        column: {
-          hide: 'Esconder coluna'
         }
       });
       return $delegate;
@@ -8222,9 +8124,6 @@ module.filter('px', function() {
           ascending: 'По возрастанию',
           descending: 'По убыванию',
           remove: 'Убрать сортировку'
-        },
-        column: {
-          hide: 'спрятать столбец'
         }
       });
       return $delegate;
@@ -8586,9 +8485,6 @@ return $delegate;
         },
         menu: {
           text: '数据分组与选择列：'
-        },
-        column: {
-          hide: '隐藏列'
         }
       });
       return $delegate;
@@ -8619,9 +8515,6 @@ return $delegate;
         },
         menu: {
           text: '選擇欄位：'
-        },
-        column: {
-          hide: '隐藏列'
         }
       });
       return $delegate;
@@ -10869,7 +10762,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div><div ui-grid-menu></div></div>"
+    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div><div ui-grid-menu></div></div>"
   );
 
 
@@ -10938,7 +10831,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"col.filter.term\" ng-click=\"$event.stopPropagation()\"><div class=\"ui-grid-filter-button\" ng-click=\"col.filter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!col.filter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div class=\"ui-grid-header-cell clearfix\" ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"col.filter.term\" ng-click=\"$event.stopPropagation()\"><div class=\"ui-grid-filter-button\" ng-click=\"col.filter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!col.filter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
 
 

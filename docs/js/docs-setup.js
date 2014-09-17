@@ -86,7 +86,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions.columnDef",
       "shortName": "columnDef",
       "type": "object",
-      "keywords": "$scope about action add address adds against alert algorithm allowing although an and angular any api append apply are array asc auto backward be bind binding blargh boolean but by can cell cellclass cellfilter celltemplate city class col colrenderindex column columndef columndefs compatibility complex configuration content context custom data date default definition definitions desc direction displayname docs does each either element enabled enablefiltering enablesorting evaluates example expression expressions false field field1 field2 field3 filter filtering filters for function functionality generated getfulladdress grid gridoptions gridutil guess guessing guesstype have header headercellfilter headercelltemplate how icon id if in individual insert is it items just knows like list many maximum maxwidth menu menuitems minimum minwidth must name normal not number object of omitted on one only options or outer parameters percentage present property provided refer returns rowrenderindex satisfaction scope see service set sets setting should shown something sort sorting sortingalgorithm source specifying string takes template term text that the then this title to too translate true tutorial type typically ui ui-grid ui-grid-icon-info-circled uigridconstants unclear use used using values visible what when whether which widgets width will wish with within work would xxx you your"
+      "keywords": "$scope action add address adds against alert algorithm allowing although an and angular any api append are array asc auto backward be bind binding blargh boolean but by can cell cellclass city class col colrenderindex column columndef columndefs compatibility complex configuration context data default definition definitions desc direction displayname docs does each either element enabled enablefiltering enablesorting evaluates example expression expressions false field field1 field2 field3 filter filtering filters for function functionality generated getfulladdress grid gridoptions have header how icon id if in individual insert is it items just like many maximum maxwidth menu menuitems minimum minwidth must name normal not number object of omitted on one options or outer parameters percentage present property provided refer returns rowrenderindex scope see set sets setting should shown something sort sorting sortingalgorithm source specifying string takes term text that the then this title to too true tutorial typically ui ui-grid-icon-info-circled uigridconstants unclear use used using values visible what when whether which widgets width will wish with within work would xxx you"
     },
     {
       "section": "api",
@@ -500,13 +500,6 @@ NG_DOCS={
       "shortName": "210 Selection",
       "type": "overview",
       "keywords": "$http $log $scope address age all allowcellfocus and angular app btn btn-success button callback city class clearall clearselectedrows columndefs controller css data directive displayname element enable enablerowselection event example false focusable function get grid gridapi gridoptions height html id include index info is isselected js json log main mainctrl module msg multiselect must name ng-bind ng-click ng-controller ng-disabled on onregisterapi options overview register row rowselectionchanged scope selectall selectallrows selected selection setmultiselect success the this to togglemultiselect togglerow1 togglerowselection true tutorial type ui ui-grid ui-grid-selection uses var when width you your"
-    },
-    {
-      "section": "tutorial",
-      "id": "211_two_grids",
-      "shortName": "211 Two grids on a page",
-      "type": "overview",
-      "keywords": "$http $log $scope and angular app are class controller css data demonstrates each example firstgrid from function get grid gridoptions grids height html id index isolated js json main mainctrl module name ng-controller on other overview page puts same secondctrl secondgrid selection success that the they this tutorial two ui ui-grid ui-grid-selection var width"
     },
     {
       "section": "tutorial",
