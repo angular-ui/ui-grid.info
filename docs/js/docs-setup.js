@@ -93,7 +93,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "action against all always an and any api are array as back be cache calculations calls can changed class clear clearrowinvisible clears col column come current currently data emits entity evaluated event exists field fielda filter findrow for force forces found from function getentityqualifiedcolfield getqualifiedcolfield getvisiblerows grid gridoptions gridrow gridrows ie if immutable in index instance instead invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified rather reference refresh refreshes relation rendered resulting return returning returns right row rows rowsvisiblechanged scope setrowinvisible sets should than that the then this to todo true ui uid unique uniqueid using viewmodel visibility visible which will your"
+      "keywords": "action against all always an and any api are array as back be cache calculations calls can changed class clear clearrowinvisible clears col column come current currently data each emits entity evaluated event exists field fielda filter findrow for force forces found from function getentityqualifiedcolfield getqualifiedcolfield getvisiblerows grid gridoptions gridrow gridrows height ie if immutable in index individual instance instead invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified rather reference refresh refreshes relation rendered resulting return returning returns right row rows rowsvisiblechanged scope setrowinvisible sets should than that the then this to todo true ui uid unique uniqueid using viewmodel visibility visible which will your"
     },
     {
       "section": "api",
@@ -549,6 +549,13 @@ NG_DOCS={
       "shortName": "305 External Scopes",
       "type": "overview",
       "keywords": "$log $scope abc access alert angular app application attribute btn carney cell celltemplate class columndefs company comveyer controller cox css data employed enormo exists external external-scopes false firstname from fuelton function getexternalscopes give grid gridoptions height html in index is isolate js lastname lorraine main mainctrl me module mydata myviewmodel name nancy ng-click ng-controller no on or overview primary property row scope scopes showme showscope so someprop template that the then there to true tutorial ui ui-grid use uses using var variables waters width wise within you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "306_expandable_grid",
+      "shortName": "306 Expandable grid",
+      "type": "overview",
+      "keywords": "$http $log $scope address adds age all and angular api app as be btn btn-small button can city class collapse collapseallrows columndefs control-group controller css data done each entity events expand expandable expandablerowheight expandallrows expanded feature field fired following for fos friends function get grid gridapi gridoptions height html id index is its js json length levels main mainctrl methods module multiple name need nesting ng-click ng-controller of on onregisterapi option overview provide provided render row rowexpandabletemplate rowexpandedstatechanged rows show style subgrid subgridoptions subgrids success template that the to tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning upto used value var width will you"
     },
     {
       "section": "tutorial",

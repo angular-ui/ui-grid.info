@@ -807,6 +807,33 @@ div.ui-grid-cell input.ng-valid {
 * @section Scrollbar styles
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.expandableRow .ui-grid-row:nth-child(odd) .ui-grid-cell {
+  background-color: #fdfdfd;
+}
+.expandableRow .ui-grid-row:nth-child(even) .ui-grid-cell {
+  background-color: #f3f3f3;
+}
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-pinned-container {
   float: left;
 }
@@ -924,67 +951,79 @@ div.ui-grid-cell input.ng-valid {
   border-bottom: solid 1px #d4d4d4;
 }
 
-.ui-grid-icon-filter:before {
-  content: '\e800';
+.ui-grid-icon-plus-squared:before {
+  content: '\c350';
 }
-/* '' */
-.ui-grid-icon-sort-alt-up:before {
-  content: '\e801';
+/* '썐' */
+.ui-grid-icon-minus-squared:before {
+  content: '\c351';
 }
-/* '' */
-.ui-grid-icon-sort-alt-down:before {
-  content: '\e802';
-}
-/* '' */
-.ui-grid-icon-lock:before {
-  content: '\e803';
-}
-/* '' */
-.ui-grid-icon-lock-open:before {
-  content: '\e804';
-}
-/* '' */
-.ui-grid-icon-right-open:before {
-  content: '\e805';
-}
-/* '' */
-.ui-grid-icon-left-open:before {
-  content: '\e806';
-}
-/* '' */
-.ui-grid-icon-left-dir:before {
-  content: '\e807';
-}
-/* '' */
-.ui-grid-icon-cancel:before {
-  content: '\e808';
-}
-/* '' */
-.ui-grid-icon-pencil:before {
-  content: '\e809';
-}
-/* '' */
-.ui-grid-icon-up-dir:before {
-  content: '\e80a';
-}
-/* '' */
-.ui-grid-icon-down-dir:before {
-  content: '\e80b';
-}
-/* '' */
-.ui-grid-icon-angle-down:before {
-  content: '\e80c';
-}
-/* '' */
-.ui-grid-icon-right-dir:before {
-  content: '\e80d';
-}
-/* '' */
-.ui-grid-icon-info-circled:before {
-  content: '\e80e';
-}
-/* '' */
+/* '썑' */
 .ui-grid-icon-search:before {
-  content: '\e80f';
+  content: '\c352';
 }
-/* '' */
+/* '썒' */
+.ui-grid-icon-cancel:before {
+  content: '\c353';
+}
+/* '썓' */
+.ui-grid-icon-info-circled:before {
+  content: '\c354';
+}
+/* '썔' */
+.ui-grid-icon-lock:before {
+  content: '\c355';
+}
+/* '썕' */
+.ui-grid-icon-lock-open:before {
+  content: '\c356';
+}
+/* '썖' */
+.ui-grid-icon-pencil:before {
+  content: '\c357';
+}
+/* '썗' */
+.ui-grid-icon-down-dir:before {
+  content: '\c358';
+}
+/* '썘' */
+.ui-grid-icon-up-dir:before {
+  content: '\c359';
+}
+/* '썙' */
+.ui-grid-icon-left-dir:before {
+  content: '\c35a';
+}
+/* '썚' */
+.ui-grid-icon-right-dir:before {
+  content: '\c35b';
+}
+/* '썛' */
+.ui-grid-icon-left-open:before {
+  content: '\c35c';
+}
+/* '썜' */
+.ui-grid-icon-right-open:before {
+  content: '\c35d';
+}
+/* '썝' */
+.ui-grid-icon-angle-down:before {
+  content: '\c35e';
+}
+/* '썞' */
+.ui-grid-icon-filter:before {
+  content: '\c35f';
+}
+/* '썟' */
+.ui-grid-icon-sort-alt-up:before {
+  content: '\c360';
+}
+/* '썠' */
+.ui-grid-icon-sort-alt-down:before {
+  content: '\c361';
+}
+/* '썡' */
+.ui-grid-icon-spin5:before {
+  content: '\ea61';
+}
+/* '' */

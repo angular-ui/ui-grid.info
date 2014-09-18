@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-1fb89a7 - 2014-09-18
+/*! ui-grid - v2.0.12-g1e20b74-eccd70e - 2014-09-18
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2129,7 +2129,7 @@ angular.module('ui.grid')
 
   }]);
 
-  module.controller('uiGridRenderContainer', ['$scope', function ($scope) {
+  module.controller('uiGridRenderContainer', ['$scope', '$log', function ($scope, $log) {
     var self = this;
 
     self.rowStyle = function (index) {
@@ -2140,7 +2140,8 @@ angular.module('ui.grid')
       if (!renderContainer.disableRowOffset) {
         if (index === 0 && self.currentTopRow !== 0) {
           // The row offset-top is just the height of the rows above the current top-most row, which are no longer rendered
-          var hiddenRowWidth = ($scope.rowContainer.currentTopRow) * $scope.grid.options.rowHeight;
+          var hiddenRowWidth = ($scope.rowContainer.currentTopRow) *
+            $scope.rowContainer.visibleRowCache[$scope.rowContainer.currentTopRow].height;
 
           // return { 'margin-top': hiddenRowWidth + 'px' };
           styles['margin-top'] = hiddenRowWidth + 'px';
@@ -2329,6 +2330,8 @@ angular.module('ui.grid')
           var colContainer = containerCtrl.colContainer;
 
           var grid = uiGridCtrl.grid;
+
+          $scope.grid = uiGridCtrl.grid;
 
           // Put the containers in scope so we can get rows and columns from them
           $scope.rowContainer = containerCtrl.rowContainer;
@@ -3019,7 +3022,7 @@ angular.module('ui.grid')
   * @description adds a row header column to the grid
   * @param {object} column def
   */
-  Grid.prototype.addRowHeaderColumn = function addRowHeaderColumn(colDef, index) {
+  Grid.prototype.addRowHeaderColumn = function addRowHeaderColumn(colDef) {
     var self = this;
     //self.createLeftContainer();
     var rowHeaderCol = new GridColumn(colDef, self.rowHeaderColumns.length + 1, self);
@@ -3097,7 +3100,6 @@ angular.module('ui.grid')
  * @description precompiles all cell templates
  */
   Grid.prototype.preCompileCellTemplates = function() {
-        $log.info('pre-compiling cell templates');
         this.columns.forEach(function (col) {
           var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
 
@@ -5304,7 +5306,14 @@ angular.module('ui.grid')
 
   GridRenderContainer.prototype.minRowsToRender = function minRowsToRender() {
     var self = this;
-    return Math.ceil(self.getViewportHeight() / self.grid.options.rowHeight);
+    var minRows = 0;
+    var rowAddedHeight = 0;
+    var viewPortHeight = self.getViewportHeight();
+    for (var i = self.visibleRowCache.length - 1; rowAddedHeight < viewPortHeight && i >= 0; i--) {
+      rowAddedHeight += self.visibleRowCache[i].height;
+      minRows++;
+    }
+    return minRows;
   };
 
   GridRenderContainer.prototype.minColumnsToRender = function minColumnsToRender() {
@@ -5416,7 +5425,11 @@ angular.module('ui.grid')
   GridRenderContainer.prototype.getCanvasHeight = function getCanvasHeight() {
     var self = this;
 
-    var ret =  self.grid.options.rowHeight * self.getVisibleRowCount();
+    var ret =  0;
+
+    self.visibleRowCache.forEach(function(row){
+      ret += row.height;
+    });
 
     if (typeof(self.grid.horizontalScrollbarHeight) !== 'undefined' && self.grid.horizontalScrollbarHeight !== undefined && self.grid.horizontalScrollbarHeight > 0) {
       ret = ret - self.grid.horizontalScrollbarHeight;
@@ -5951,6 +5964,14 @@ angular.module('ui.grid')
       */
     // Default to true
     this.visible = true;
+
+  /**
+    *  @ngdoc object
+    *  @name height
+    *  @propertyOf  ui.grid.class:GridRow
+    *  @description height of each individual row
+    */
+    this.height = grid.options.rowHeight;
 
     /**
      * @ngdoc function
@@ -9703,6 +9724,179 @@ return $delegate;
 (function () {
   'use strict';
 
+  var module = angular.module('ui.grid.expandable', ['ui.grid']);
+
+  module.service('uiGridExpandableService', ['gridUtil', '$log', '$compile', function (gridUtil, $log, $compile) {
+    var service = {
+      initializeGrid: function (grid) {
+        var publicApi = {
+          events: {
+            expandable: {
+              rowExpandedStateChanged: function (scope, row) {
+              }
+            }
+          },
+          methods: {
+            expandable: {
+              toggleRowExpansion: function (rowEntity) {
+                var row = grid.getRow(rowEntity);
+                if (row !== null) {
+                  service.toggleRowExpansion(grid, row);
+                }
+              },
+              expandAllRows: function() {
+                service.expandAllRows(grid);
+              },
+              collapseAllRows: function() {
+                service.collapseAllRows(grid);
+              }
+            }
+          }
+        };
+        grid.api.registerEventsFromObject(publicApi.events);
+        grid.api.registerMethodsFromObject(publicApi.methods);
+      },
+      toggleRowExpansion: function (grid, row) {
+        row.isExpanded = !row.isExpanded;
+
+        if (row.isExpanded) {
+          row.height = row.grid.options.rowHeight + grid.options.expandable.expandableRowHeight;
+        }
+        else {
+          row.height = row.grid.options.rowHeight;
+        }
+
+        grid.api.expandable.raise.rowExpandedStateChanged(row);
+      },
+      expandAllRows: function(grid, $scope) {
+        angular.forEach(grid.renderContainers.body.visibleRowCache, function(row) {
+          if (!row.isExpanded) {
+            service.toggleRowExpansion(grid, row);
+          }
+        });
+        grid.refresh();
+      },
+      collapseAllRows: function(grid) {
+        angular.forEach(grid.renderContainers.body.visibleRowCache, function(row) {
+          if (row.isExpanded) {
+            service.toggleRowExpansion(grid, row);
+          }
+        });
+        grid.refresh();
+      }
+    };
+    return service;
+  }]);
+
+  module.directive('uiGridExpandable', ['$log', 'uiGridExpandableService', '$templateCache',
+    function ($log, uiGridExpandableService, $templateCache) {
+      return {
+        replace: true,
+        priority: 0,
+        require: '^uiGrid',
+        scope: false,
+        compile: function () {
+          return {
+            pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+              var expandableRowHeaderColDef = {name: 'expandableButtons', width: 40};
+              expandableRowHeaderColDef.cellTemplate = $templateCache.get('ui-grid/expandableRowHeader');
+              uiGridCtrl.grid.addRowHeaderColumn(expandableRowHeaderColDef);
+              uiGridExpandableService.initializeGrid(uiGridCtrl.grid);
+            },
+            post: function ($scope, $elm, $attrs, uiGridCtrl) {
+            }
+          };
+        }
+      };
+    }]);
+
+  module.directive('uiGridExpandableRow',
+  ['uiGridExpandableService', '$timeout', '$log', '$compile', 'uiGridConstants','gridUtil','$interval',
+    function (uiGridExpandableService, $timeout, $log, $compile, uiGridConstants, gridUtil, $interval) {
+
+      return {
+        replace: false,
+        priority: 0,
+        scope: false,
+
+        compile: function () {
+          return {
+            pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+              gridUtil.getTemplate($scope.grid.options.expandable.rowExpandableTemplate).then(
+                function (template) {
+                  var expandedRowElement = $compile(template)($scope);
+                  $elm.append(expandedRowElement);
+                  $scope.row.expandedRendered = true;
+              });
+            },
+
+            post: function ($scope, $elm, $attrs, uiGridCtrl) {
+              $scope.$on('$destroy', function() {
+                $scope.row.expandedRendered = false;
+              });
+            }
+          };
+        }
+      };
+    }]);
+
+  module.directive('uiGridRow',
+    ['$compile', '$log', '$templateCache',
+      function ($compile, $log, $templateCache) {
+        return {
+          priority: -200,
+          scope: false,
+          compile: function ($elm, $attrs) {
+            return {
+              pre: function ($scope, $elm, $attrs, controllers) {
+
+                $scope.expandableRow = {};
+
+                $scope.expandableRow.shouldRenderExpand = function () {
+                  var ret = $scope.colContainer.name === 'body' &&  $scope.row.isExpanded && (!$scope.grid.isScrollingVertically || $scope.row.expandedRendered);
+                  return ret;
+                };
+
+                $scope.expandableRow.shouldRenderFiller = function () {
+                  var ret = $scope.row.isExpanded && ( $scope.colContainer.name !== 'body' || ($scope.grid.isScrollingVertically && !$scope.row.expandedRendered));
+                  return ret;
+                };
+
+              },
+              post: function ($scope, $elm, $attrs, controllers) {
+              }
+            };
+          }
+        };
+      }]);
+
+  module.directive('uiGridViewport',
+    ['$compile', '$log', '$templateCache',
+      function ($compile, $log, $templateCache) {
+        return {
+          priority: -200,
+          scope: false,
+          compile: function ($elm, $attrs) {
+            var rowRepeatDiv = angular.element($elm.children().children()[0]);
+            var expandedRowFillerElement = $templateCache.get('ui-grid/expandableScrollFiller');
+            var expandedRowElement = $templateCache.get('ui-grid/expandableRow');
+            rowRepeatDiv.append(expandedRowElement);
+            rowRepeatDiv.append(expandedRowFillerElement);
+            return {
+              pre: function ($scope, $elm, $attrs, controllers) {
+              },
+              post: function ($scope, $elm, $attrs, controllers) {
+              }
+            };
+          }
+        };
+      }]);
+
+})();
+
+(function () {
+  'use strict';
+
   /**
    * @ngdoc overview
    * @name ui.grid.pinning
@@ -10968,6 +11162,24 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('ui-grid/cellEditor',
     "<div><form name=\"inputForm\"><input type=\"{{inputType}}\" ng-class=\"'colt' + col.index\" ui-grid-editor ng-model=\"COL_FIELD\"></form></div>"
+  );
+
+
+  $templateCache.put('ui-grid/expandableRow',
+    "<div ui-grid-expandable-row ng-if=\"expandableRow.shouldRenderExpand()\" class=\"expandableRow\" style=\"float:left;margin-top: 1px;margin-bottom: 1px\" ng-style=\"{width: (grid.renderContainers.body.getCanvasWidth() - grid.verticalScrollbarWidth)\n" +
+    "     ,height: grid.options.expandable.expandableRowHeight}\"></div>"
+  );
+
+
+  $templateCache.put('ui-grid/expandableRowHeader',
+    "<div class=\"ui-grid-row-header-cell uiGridExpandableButtonsCell\"><div class=\"ui-grid-cell-contents\"><i ng-class=\"{'ui-grid-icon-plus-squared':!row.isExpanded, 'ui-grid-icon-minus-squared':row.isExpanded}\" ng-click=\"grid.api.expandable.toggleRowExpansion(row.entity)\"></i></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/expandableScrollFiller',
+    "<div ng-if=\"expandableRow.shouldRenderFiller()\" style=\"float:left;margin-top: 2px;margin-bottom: 2px\" ng-style=\"{width: (grid.getViewportWidth())\n" +
+    "     ,height: grid.options.expandable.expandableRowHeight, 'margin-left': grid.options.rowHeader.rowHeaderWidth}\"><i class=\"ui-grid-icon-spin5 ui-grid-animate-spin\" ng-style=\"{'margin-top': ( grid.options.expandable.expandableRowHeight/2 - 5),\n" +
+    "            'margin-left':((grid.getViewportWidth() - grid.options.rowHeader.rowHeaderWidth)/2 - 5)}\"></i></div>"
   );
 
 
