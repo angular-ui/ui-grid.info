@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-52c3dfa - 2014-09-19
+/*! ui-grid - v2.0.12-g1e20b74-3abf585 - 2014-09-19
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7471,7 +7471,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
       // Webkit
       if ( orgEvent.wheelDeltaY !== undefined ) { deltaY = orgEvent.wheelDeltaY; }
-      if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = orgEvent.wheelDeltaX * -1; }
+      if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = orgEvent.wheelDeltaX; }
 
       // Look for lowest delta to normalize the delta values
       absDelta = Math.abs(delta);
