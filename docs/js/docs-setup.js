@@ -538,6 +538,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "212_infinite_scroll",
+      "shortName": "Infinite scroll",
+      "type": "overview",
+      "keywords": "$http $log $scope age allows angular app at by class columndefs controller controls css data dataloaded error feature for function get getdata grid gridapi gridoptions height html id index infinite infinitescroll infinitescrollpercentage is js json lazy length load main mainctrl module more name needloadmoredata ng-controller of on onregisterapi overview page percentage property push requested res return scroll setting should specify success the their this to trigger tutorial ui ui-grid ui-grid-infinite-scroll user var what when width"
+    },
+    {
+      "section": "tutorial",
       "id": "301_custom_row_template",
       "shortName": "301 Custom Row Template",
       "type": "overview",
@@ -605,13 +612,6 @@ NG_DOCS={
       "shortName": "402 Grid Scrolling",
       "type": "overview",
       "keywords": "$http $scope about address age agetemplate angular app can celltemplate city class columndefs company controller css data displayname email enablecelledit event field friend friends function get grid gridapi gridoptions height horizontally html id if in index is isscrollinghorizontally isscrollingvertically js json main mainctrl module name ng-controller onregisterapi overview phone property reference scroll scrolling see state street success to true tutorial ui ui-grid ui-grid-cell-contents var vertically width you zip"
-    },
-    {
-      "section": "tutorial",
-      "id": "infinite_scroll",
-      "shortName": "Infinite scroll",
-      "type": "overview",
-      "keywords": "$http $log $scope age allows angular app at by class columndefs controller controls css data dataloaded error feature for function get getdata grid gridapi gridoptions height html id index infinite infinitescroll infinitescrollpercentage is js json lazy length load main mainctrl module more name needloadmoredata ng-controller of on onregisterapi overview page percentage property push requested res return scroll setting should specify success the their this to trigger tutorial ui ui-grid ui-grid-infinite-scroll user var what when width"
     }
   ],
   "apis": {
