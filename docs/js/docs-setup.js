@@ -79,7 +79,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "$delegate $provide $resource $scope add adding adds all allowing allows also altering am an and angular angularjs any api application aquamarine are array as at attribute attributes auto-generating automatically available background-color backwards be becomes behaviour being binding boolean boxes but by can case center changes class col colcontainer coldef column columndef columndefs columns common compare compared compatibility complex config configure contain content controller could current custom data decorator default defaultoptions defaults define defined developer disable disabled display displayname displays div do documented does doesn each either elements empty enablecolumnmenu enabled enablefiltering enablerowhashing enablesorting entire entitya entityb equality events example exclude excludeproperties executing existing exists external factory false field1 field2 file filter filtering fired first fnone footer footer_template footertemplate for from function generate get getexternalscopes getrowidentity github grid gridoptions grids gridutil has have header header_template headers headertemplate height hideheader hit how html id identifying identity if ignore ignored implemented in include individual information inline integer internal into inverse is it item large list look maintain may menu method minimum minrowstoshow modify more most mydata name names necessary new nextuid ng-click ng-repeat no not note null number numbers object objects of often on one only option options or out over overlaid overridden performance place point precompiled pretty prevents process properties property provide provided provides providing query rather refer rendered renderedcolumns replace request required resulting return returns row row_template rowequality rowidentity rows rowtemplate second section server set setting should show shown sort sorter sorting source sourced speeding standard starting state static still string stripped style tailor take template text-align than that the their then they this to tojson track true tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uniquely up updated use used useexternalsorting uses using value var vastly visible want when where while widgets will with within x_ you your"
+      "keywords": "$delegate $provide $resource $scope add adding adds all allowing allows also altering am an and angular angularjs any api application aquamarine are array as at attribute attributes auto-generating automatically available background-color backwards be becomes behaviour being binding boolean boxes but by can case center changes class col colcontainer coldef column columndef columndefs columns common compare compared compatibility complex config configure contain content controller controls could current custom data decorator default defaultoptions defaults define defined developer disable disabled display displayname displays div do documented does doesn each either elements empty enablecolumnmenu enabled enablefiltering enablerowhashing enablesorting entire entitya entityb equality events example exclude excludeproperties executing existing exists external factory false field1 field2 file filter filtering fired first fnone footer footer_template footertemplate for from function generate get getexternalscopes getrowidentity github grid gridoptions grids gridutil has have header header_template headers headertemplate height hideheader hit how html id identifying identity if ignore ignored implemented in include individual infinite infinitescrollpercentage information inline integer internal into inverse is it item large list look maintain may menu method minimum minrowstoshow modify more most mydata name names necessary new nextuid ng-click ng-repeat no not note null number numbers object objects of often on one only option options or out over overlaid overridden percentage performance place point precompiled pretty prevents process properties property provide provided provides providing query rather refer rendered renderedcolumns replace request requested required resulting return returns row row_template rowequality rowidentity rows rowtemplate scroll second section server set setting should show shown sort sorter sorting source sourced speeding standard starting state static still string stripped style tailor take template text-align than that the their then they this to tojson track true tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uniquely up updated use used useexternalsorting uses using value var vastly visible want what when where while widgets will with within x_ you your"
     },
     {
       "section": "api",
@@ -220,6 +220,34 @@ NG_DOCS={
       "shortName": "i18nService",
       "type": "service",
       "keywords": "$broadcasts $rootscope add adds aggregate all and api application ascending by cache column current currently decorate description drag drop en for found fr from get getalllangs getcurrentlang getsafetext grid group grouped grouppanel header here i18n i18nservice if in is it items label1 label2 lang language languages loaded map maps missing more names not of on or path property retrieving return returns service services set setcurrentlang sets some sort specified string stringmaps strings text that the this to translation ui update_event use used"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.infiniteScroll",
+      "shortName": "infiniteScroll",
+      "type": "overview",
+      "keywords": "api functionality grid infinite infinitescroll module overview provides scroll this to ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.infiniteScroll.api:PublicAPI",
+      "shortName": "PublicAPI",
+      "type": "object",
+      "keywords": "api as data dataloaded example feature finished for function grid infinite infinite_scroll infinitescroll is loading ngdoc object of promise public scroll see this ui usage used when"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.infiniteScroll.directive:uiGridInfiniteScroll",
+      "shortName": "uiGridInfiniteScroll",
+      "type": "directive",
+      "keywords": "$scope adds alex angular api app car columndefs controller data directive div features function grid html index infinite infinitescroll js lexus mainctrl module name ng-controller sam scroll to toyota ui ui-grid ui-grid-infinite-scroll var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.infiniteScroll.service:uiGridInfiniteScrollService",
+      "shortName": "uiGridInfiniteScrollService",
+      "type": "service",
+      "keywords": "and api calls checks checkscroll event events features fires for function grid infinite infinitescroll infinitescrollpercentage initializegrid inside into loaddata method methods needloadmoredata position public reaches register scroll service this ui when"
     },
     {
       "section": "api",
@@ -577,6 +605,13 @@ NG_DOCS={
       "shortName": "402 Grid Scrolling",
       "type": "overview",
       "keywords": "$http $scope about address age agetemplate angular app can celltemplate city class columndefs company controller css data displayname email enablecelledit event field friend friends function get grid gridapi gridoptions height horizontally html id if in index is isscrollinghorizontally isscrollingvertically js json main mainctrl module name ng-controller onregisterapi overview phone property reference scroll scrolling see state street success to true tutorial ui ui-grid ui-grid-cell-contents var vertically width you zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "infinite_scroll",
+      "shortName": "Infinite scroll",
+      "type": "overview",
+      "keywords": "$http $log $scope age allows angular app at by class columndefs controller controls css data dataloaded error feature for function get getdata grid gridapi gridoptions height html id index infinite infinitescroll infinitescrollpercentage is js json lazy length load main mainctrl module more name needloadmoredata ng-controller of on onregisterapi overview page percentage property push requested res return scroll setting should specify success the their this to trigger tutorial ui ui-grid ui-grid-infinite-scroll user var what when width"
     }
   ],
   "apis": {

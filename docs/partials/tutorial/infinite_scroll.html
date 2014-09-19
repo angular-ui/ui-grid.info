@@ -1,0 +1,84 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The infinite scroll feature allows the user to lazy load their data to gridOptions.data</p>
+
+<p>Specify percentage when lazy load should trigger:
+<pre class="prettyprint linenums">
+  $scope.gridOptions.infiniteScroll = 20;
+</pre><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-45" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-45" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-45">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="gridOptions" class="grid" ui-grid-infinite-scroll></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ui.grid', 'ui.grid.infiniteScroll']);
+
+  app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+    $scope.gridOptions = {};
+
+  /**
+    * @ngdoc property
+    * @name infiniteScrollPercentage
+    * @propertyOf ui.grid.class:GridOptions
+    * @description This setting controls at what percentage of the scroll more data
+    * is requested by the infinite scroll
+    */
+    $scope.gridOptions.infiniteScrollPercentage = 15;
+    
+    $scope.gridOptions.columnDefs = [
+      { name:'id'},
+      { name:'name' },
+      { name:'age' }
+    ];
+    var page = 1;
+    var getData = function(data, page) {
+      var res = [];
+      for (var i = 0; i < page * 100 && i < data.length; ++i) {
+        res.push(data[i]);
+      }
+      return res;
+    };
+
+    $http.get('/data/10000_complex.json')
+      .success(function(data) {
+        $scope.gridOptions.data = getData(data, page);
+        ++page;
+      });
+
+    $scope.gridOptions.onRegisterApi = function(gridApi){
+      gridApi.infiniteScroll.on.needLoadMoreData($scope,function(){
+        $http.get('/data/10000_complex.json')
+          .success(function(data) {
+            $scope.gridOptions.data = getData(data, page);
+            ++page;
+            gridApi.infiniteScroll.dataLoaded();
+          })
+          .error(function() {
+            gridApi.infiniteScroll.dataLoaded();
+          });
+      });
+    };
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-45" ng-eval-javascript="app.js"></div></div>
+</div>
