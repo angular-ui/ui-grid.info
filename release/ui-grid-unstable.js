@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-eccd70e - 2014-09-18
+/*! ui-grid - v2.0.12-g1e20b74-52c3dfa - 2014-09-19
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11001,8 +11001,7 @@ return $delegate;
           scope: false,
           compile: function ($elm, $attrs) {
             var rowRepeatDiv = angular.element($elm.children().children()[0]);
-            rowRepeatDiv.removeClass('ui-grid-row');
-            rowRepeatDiv.attr("ng-class", "{'ui-grid-row-selected': row.isSelected, 'ui-grid-row' : !row.isSelected }");
+            rowRepeatDiv.attr("ng-class", "{'ui-grid-row-selected': row.isSelected}");
             return {
               pre: function ($scope, $elm, $attrs, controllers) {
 

@@ -933,7 +933,7 @@ div.ui-grid-cell input.ng-valid {
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-row-selected .ui-grid-cell {
-  background-color: #c9dde1;
+  background-color: #c9dde1 !important;
 }
 .ui-grid-disable-selection {
   -webkit-touch-callout: none;
