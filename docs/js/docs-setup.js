@@ -539,7 +539,7 @@ NG_DOCS={
     {
       "section": "tutorial",
       "id": "212_infinite_scroll",
-      "shortName": "Infinite scroll",
+      "shortName": "212 Infinite scroll",
       "type": "overview",
       "keywords": "$http $log $scope age allows angular app at by class columndefs controller controls css data dataloaded error feature for function get getdata grid gridapi gridoptions height html id index infinite infinitescroll infinitescrollpercentage is js json lazy length load main mainctrl module more name needloadmoredata ng-controller of on onregisterapi overview page percentage property push requested res return scroll setting should specify success the their this to trigger tutorial ui ui-grid ui-grid-infinite-scroll user var what when width"
     },
