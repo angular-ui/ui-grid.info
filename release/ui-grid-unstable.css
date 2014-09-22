@@ -944,10 +944,14 @@ div.ui-grid-cell input.ng-valid {
   user-select: none;
   cursor: default;
 }
-.uiGridSelectionRowHeaderButtons {
+.ui-grid-selection-row-header-buttons {
   cursor: pointer;
+  opacity: 0.1;
 }
-.uiGridSelectionRowHeaderCell {
+.ui-grid-selection-row-header-buttons.ui-grid-row-selected {
+  opacity: 1;
+}
+.ui-grid-selection-row-header-cell {
   border-bottom: solid 1px #d4d4d4;
 }
 
@@ -1023,6 +1027,10 @@ div.ui-grid-cell input.ng-valid {
   content: '\c361';
 }
 /* '썡' */
+.ui-grid-icon-ok:before {
+  content: '\e800';
+}
+/* '' */
 .ui-grid-icon-spin5:before {
   content: '\ea61';
 }

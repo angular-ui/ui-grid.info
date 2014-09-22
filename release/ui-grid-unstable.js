@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-cf14396 - 2014-09-22
+/*! ui-grid - v2.0.12-g1e20b74-b20c41c - 2014-09-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11388,7 +11388,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionRowHeaderButtons',
-    "<div class=\"uiGridSelectionRowHeaderButtons\" ng-class=\"{'icon-ok': row.isSelected}\" ng-click=\"selectButtonClick(row, $event)\">&nbsp</div>"
+    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" ng-click=\"selectButtonClick(row, $event)\">&nbsp;</div>"
   );
 
 }]);
