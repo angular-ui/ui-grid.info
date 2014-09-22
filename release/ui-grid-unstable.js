@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-b20c41c - 2014-09-22
+/*! ui-grid - v2.0.12-g1e20b74-d21e873 - 2014-09-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11271,7 +11271,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-row',
-    "<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ uiGridRowHeaderCell: col.isRowHeader }\" ui-grid-cell></div>"
+    "<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell></div>"
   );
 
 
