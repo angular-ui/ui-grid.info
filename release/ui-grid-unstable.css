@@ -130,7 +130,7 @@
   user-select: none;
   width: 0;
 }
-.ui-grid-header-cell.sortable {
+.ui-grid-header-cell .sortable {
   cursor: pointer;
 }
 .ui-grid-header .ui-grid-vertical-bar {
