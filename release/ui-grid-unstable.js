@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-03f94f8 - 2014-09-19
+/*! ui-grid - v2.0.12-g1e20b74-5331f04 - 2014-09-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5169,6 +5169,15 @@ angular.module('ui.grid')
      * menu within each column.
      */
     this.enableColumnMenu = true;
+
+    /**
+     * @ngdoc boolean
+     * @name enableScrollbars
+     * @propertyOf ui.grid.class:GridOptions
+     * @description True by default. When enabled, this settings enable vertical
+     * and horizontal scrollbar for grid.
+     */
+    this.enableScrollbars = true;
 
     // Columns can't be smaller than 10 pixels
     this.minimumColumnSize = 10;
@@ -11283,7 +11292,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
-    "    {{ grid.customStyles }}</style><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"true\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
+    "    {{ grid.customStyles }}</style><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"grid.options.enableScrollbars\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
   );
 
 
