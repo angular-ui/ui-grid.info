@@ -39,12 +39,35 @@ array element.  Can be a complex expression: <code>employee.address.city</code>,
 See the angular docs on binding expressions.</p></div>
 </li>
 <li><h3 id="filter">filter</h3>
-<div class="filter"><p>Filter to insert against this column.  </p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">{ term: 'text' }</pre></div>
+<div class="filter"><p>Specify a single filter field on this column.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
+{
+  field: 'field1',
+  filter: {
+    condition: uiGridConstants.filter.STARTS_WITH,
+    placeholder: 'starts with...'
+  }
+}
+]; </pre></div>
 </div>
 </li>
 <li><h3 id="filters">filters</h3>
-<div class="filters"><p>unclear what this does or how it's used, but it does something.</p></div>
+<div class="filters"><p>Specify multiple filter fields.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
+{
+  field: 'field1', filters: [
+    {
+      condition: uiGridConstants.filter.STARTS_WITH,
+      placeholder: 'starts with...'
+    },
+    {
+      condition: uiGridConstants.filter.ENDS_WITH,
+      placeholder: 'ends with...'
+    }
+  ]
+}
+]; </pre></div>
+</div>
 </li>
 <li><h3 id="headerCellFilter">headerCellFilter</h3>
 <div class="headercellfilter"><p>headerCellFilter is a filter to apply to the content of the column header</p><h4 id="Example">Example</h4>
@@ -107,6 +130,9 @@ like any normal sorting function.</p></div>
 grid will guess the type.  Add this only if the grid guessing is not to your
 satisfaction.  Refer to <a href="#/api/ui.grid.service:GridUtil.guessType">gridUtil.guessType</a> for
 a list of values the grid knows about.</p></div>
+</li>
+<li><h3 id="filter">filter</h3>
+<div class="filter"><p>An object defining filtering for a column.</p></div>
 </li>
 <li><h3 id="visible">visible</h3>
 <div class="visible"><p>sets whether or not the column is visible

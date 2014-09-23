@@ -55,8 +55,24 @@ array element.  Can be a complex expression: <code>employee.address.city</code>,
 See the angular docs on binding expressions.</p></div>
 </li>
 <li><h3 id="filter">filter</h3>
-<div class="filter"><p>Filter to insert against this column.  </p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">{ term: 'text' }</pre></div>
+<div class="filter"><p>Filter on this column.  </p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...' }</pre></div>
+</div>
+</li>
+<li><h3 id="filters">filters</h3>
+<div class="filters"><p>Filters for this column. Includes 'term' property bound to filter input elements.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">[
+{
+  term: 'foo', // ngModel for &lt;input&gt;
+  condition: uiGridConstants.filter.STARTS_WITH,
+  placeholder: 'starts with...'
+},
+{
+  term: 'baz',
+  condition: uiGridConstants.filter.ENDS_WITH,
+  placeholder: 'ends with...'
+}
+] </pre></div>
 </div>
 </li>
 <li><h3 id="name">name</h3>

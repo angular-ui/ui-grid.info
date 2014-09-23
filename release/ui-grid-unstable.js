@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-469aced - 2014-09-23
+/*! ui-grid - v2.0.12-g1e20b74-f678e51 - 2014-09-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -985,15 +985,23 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             }
     
             if ($scope.filterable) {
-              $scope.$on('$destroy', $scope.$watch('col.filter.term', function(n, o) {
-                uiGridCtrl.grid.refresh()
-                  .then(function () {
-                    if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
-                       uiGridCtrl.fireScrollingEvent({ y: { percentage: uiGridCtrl.prevScrollArgs.y.percentage } });
-                    }
-                    // uiGridCtrl.fireEvent('force-vertical-scroll');
-                  });
-              }));
+              var filterDeregisters = [];
+              angular.forEach($scope.col.filters, function(filter, i) {
+                filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
+                  uiGridCtrl.grid.refresh()
+                    .then(function () {
+                      if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
+                         uiGridCtrl.fireScrollingEvent({ y: { percentage: uiGridCtrl.prevScrollArgs.y.percentage } });
+                      }
+                      // uiGridCtrl.fireEvent('force-vertical-scroll');
+                    });
+                }));  
+              });
+              $scope.$on('$destroy', function() {
+                angular.forEach(filterDeregisters, function(filterDeregister) {
+                  filterDeregister();
+                });
+              });
             }
           }
         };
@@ -4581,9 +4589,9 @@ angular.module('ui.grid')
     * @ngdoc property
     * @name filter
     * @propertyOf ui.grid.class:GridColumn
-    * @description Filter to insert against this column.  
+    * @description Filter on this column.  
     * @example
-    * <pre>{ term: 'text' }</pre>
+    * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...' }</pre>
     *
     */
 
@@ -4591,9 +4599,17 @@ angular.module('ui.grid')
     * @ngdoc property
     * @name filter
     * @propertyOf ui.grid.class:GridOptions.columnDef
-    * @description Filter to insert against this column.  
+    * @description Specify a single filter field on this column.
     * @example
-    * <pre>{ term: 'text' }</pre>
+    * <pre>$scope.gridOptions.columnDefs = [ 
+    *   {
+    *     field: 'field1',
+    *     filter: {
+    *       condition: uiGridConstants.filter.STARTS_WITH,
+    *       placeholder: 'starts with...'
+    *     }
+    *   }
+    * ]; </pre>
     *
     */
     
@@ -4706,8 +4722,46 @@ angular.module('ui.grid')
     * @ngdoc array
     * @name filters
     * @propertyOf ui.grid.class:GridOptions.columnDef
-    * @description unclear what this does or how it's used, but it does something.
+    * @description Specify multiple filter fields.
+    * @example
+    * <pre>$scope.gridOptions.columnDefs = [ 
+    *   {
+    *     field: 'field1', filters: [
+    *       {
+    *         condition: uiGridConstants.filter.STARTS_WITH,
+    *         placeholder: 'starts with...'
+    *       },
+    *       {
+    *         condition: uiGridConstants.filter.ENDS_WITH,
+    *         placeholder: 'ends with...'
+    *       }
+    *     ]
+    *   }
+    * ]; </pre>
     *
+    * 
+    */ 
+   
+   /** 
+    * @ngdoc array
+    * @name filters
+    * @propertyOf ui.grid.class:GridColumn
+    * @description Filters for this column. Includes 'term' property bound to filter input elements.
+    * @example
+    * <pre>[
+    *   {
+    *     term: 'foo', // ngModel for <input>
+    *     condition: uiGridConstants.filter.STARTS_WITH,
+    *     placeholder: 'starts with...'
+    *   },
+    *   {
+    *     term: 'baz',
+    *     condition: uiGridConstants.filter.ENDS_WITH,
+    *     placeholder: 'ends with...'
+    *   }
+    * ] </pre>
+    *
+    * 
     */   
 
    /** 
@@ -4856,19 +4910,74 @@ angular.module('ui.grid')
     // Use the column definition sort if we were passed it
     self.setPropertyOrDefault(colDef, 'sort');
 
+    // Set up default filters array for when one is not provided.
+    //   In other words, this (in column def):
+    //   
+    //       filter: { term: 'something', flags: {}, condition: [CONDITION] }
+    //       
+    //   is just shorthand for this:
+    //   
+    //       filters: [{ term: 'something', flags: {}, condition: [CONDITION] }]
+    //       
+    var defaultFilters = [];
+    if (colDef.filter) {
+      defaultFilters.push(colDef.filter);
+    }
+    else if (self.enableFiltering && self.grid.options.enableFiltering) {
+      // Add an empty filter definition object, which will
+      // translate to a guessed condition and no pre-populated
+      // value for the filter <input>.
+      defaultFilters.push({});
+    }
+
+    /**
+     * @ngdoc object
+     * @name ui.grid.class:GridOptions.columnDef.filter
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description An object defining filtering for a column.
+     */    
+
+    /**
+     * @ngdoc property
+     * @name condition
+     * @propertyOf ui.grid.class:GridOptions.columnDef.filter
+     * @description Defines how rows are chosen as matching the filter term. This can be set to
+     * one of the constants in uiGridConstants.filter, or you can supply a custom filter function
+     * that gets passed the following arguments: [searchTerm, cellValue, row, column].
+     */
+    
+    /**
+     * @ngdoc property
+     * @name term
+     * @propertyOf ui.grid.class:GridOptions.columnDef.filter
+     * @description If set, the filter field will be pre-populated
+     * with this value.
+     */
+
+    /**
+     * @ngdoc property
+     * @name placeholder
+     * @propertyOf ui.grid.class:GridOptions.columnDef.filter
+     * @description String that will be set to the <input>.placeholder attribute.
+     */
+
     /*
 
       self.filters = [
         {
           term: 'search term'
-          condition: uiGridContants.filter.CONTAINS
+          condition: uiGridConstants.filter.CONTAINS,
+          placeholder: 'my placeholder',
+          flags: {
+            caseSensitive: true
+          }
         }
       ]
 
     */
 
     self.setPropertyOrDefault(colDef, 'filter');
-    self.setPropertyOrDefault(colDef, 'filters', []);
+    self.setPropertyOrDefault(colDef, 'filters', defaultFilters);
   };
 
 
@@ -6472,8 +6581,11 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
   };
 
   rowSearcher.runColumnFilter = function runColumnFilter(grid, row, column, termCache, i, filter) {
+    // Cache typeof condition
+    var conditionType = typeof(filter.condition);
+
     // Default to CONTAINS condition
-    if (typeof(filter.condition) === 'undefined' || !filter.condition) {
+    if (conditionType === 'undefined' || !filter.condition) {
       filter.condition = uiGridConstants.filter.CONTAINS;
     }
 
@@ -6499,6 +6611,10 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
       if (!filter.condition.test(value)) {
         return false;
       }
+    }
+    // If the filter's condition is a function, run it
+    else if (conditionType === 'function') {
+      return filter.condition(term, value, row, column);
     }
     else if (filter.condition === uiGridConstants.filter.STARTS_WITH) {
       var startswithRE = termCache(cacheId) ? termCache(cacheId) : termCache(cacheId, new RegExp('^' + term, regexpFlags));
@@ -6573,18 +6689,10 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
     if (typeof(column.filters) !== 'undefined' && column.filters && column.filters.length > 0) {
       filters = column.filters;
     }
-    else if (typeof(column.filter) !== 'undefined' && column.filter) {
-      // Cache custom conditions, building the RegExp takes time
-      var conditionCacheId = 'cond-' + column.field + '-' + column.filter.term;
-      var condition = termCache(conditionCacheId) ? termCache(conditionCacheId) : termCache(conditionCacheId, rowSearcher.guessCondition(column.filter));
-
-      filters[0] = {
-        term: column.filter.term,
-        condition: condition,
-        flags: {
-          caseSensitive: false
-        }
-      };
+    else {
+      // If filters array is not there, assume no filters for this column. 
+      // This array should have been built in GridColumn::updateColumnDef.
+      return true;
     }
     
     for (var i in filters) {
@@ -6599,6 +6707,27 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
           }
         }
       */
+     
+      // Check for when no condition is supplied. In this case, guess the condition
+      // to use based on the filter's term. Cache this result.
+      if (!filter.condition) {
+        // Cache custom conditions, building the RegExp takes time
+        var conditionCacheId = 'cond-' + column.field + '-' + filter.term;
+        var condition = termCache(conditionCacheId) ? termCache(conditionCacheId) : termCache(conditionCacheId, rowSearcher.guessCondition(filter));
+
+        // Create a surrogate filter so as not to change
+        // the actual columnDef.filters.
+        filter = {
+          // Copy over the search term
+          term: filter.term,
+          // Use the guessed condition
+          condition: condition,
+          // Set flags, using passed flags if present
+          flags: angular.extend({
+            caseSensitive: false
+          }, filter.flags)
+        };
+      }
 
       var ret = rowSearcher.runColumnFilter(grid, row, column, termCache, i, filter);
       if (!ret) {
@@ -11431,7 +11560,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"col.filter.term\" ng-click=\"$event.stopPropagation()\"><div class=\"ui-grid-filter-button\" ng-click=\"col.filter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!col.filter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-click=\"$event.stopPropagation()\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!colFilter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
 
 
