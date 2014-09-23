@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-3422d0d - 2014-09-23
+/*! ui-grid - v2.0.12-g1e20b74-4546a30 - 2014-09-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1298,6 +1298,15 @@ angular.module('ui.grid')
     function ($log, $timeout, $document, uiGridConstants, gridUtil) {
     var scrollBarWidth = gridUtil.getScrollbarWidth();
     scrollBarWidth = scrollBarWidth > 0 ? scrollBarWidth : 17;
+
+
+    var browser = gridUtil.detectBrowser();
+    $log.debug('browser', browser);
+    if (browser === 'ie') {
+      scrollBarWidth = scrollBarWidth + 1;
+    }
+
+    $log.debug('scrollBarWidth', scrollBarWidth);
 
     return {
       scope: {
@@ -7648,7 +7657,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
   s.detectBrowser = function detectBrowser() {
     var userAgent = $window.navigator.userAgent;
 
-    var browsers = {chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i};
+    var browsers = {chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer|trident\//i};
 
     for (var key in browsers) {
       if (browsers[key].test(userAgent)) {
