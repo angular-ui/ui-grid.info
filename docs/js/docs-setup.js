@@ -114,7 +114,7 @@ NG_DOCS={
       "id": "ui.grid.core.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "active all always an and any api array as at both calculations calls can changed clearrowinvisible clears columns completes core criteria currently data emits event features filter filtering for from function functional get getcolumnsorting getvisiblerows grid gridapi gridcolumns gridoptions gridrow has have if in instance invisible is it just make more normal not note object of on one or order other output override parameters present priority promise provides public refresh refreshrows render rendered resolved returns row rowentity rows rowsvisiblechanged screen set setrowinvisible sets so sort sortchanged sortcolumns sorted sorting sorts that the them then to todo ui using visibility visible want we when which will with you"
+      "keywords": "active all always an and any api array as at both but calculations call called calls can changed clearrowinvisible clears columns complete completes core criteria currently data emits end event feature features filter filtering for from function functional get getcolumnsorting getting getvisiblerows grid gridapi gridcolumns gridoptions gridrow has have if in included instance invisible is it just make method more normal normally not note object obtain of on one onregisterapi or order other otherwise output override parameters present priority problem promise provides public refresh refreshrows render rendered rendering renderingcomplete resolved returned returns row rowentity rows rowsvisiblechanged same screen set setrowinvisible sets so sort sortchanged sortcolumns sorted sorting sorts still stopping that the them then there this time timing to todo ui users using visibility visible want way we when which will with within without you"
     },
     {
       "section": "api",
@@ -304,6 +304,55 @@ NG_DOCS={
       "shortName": "uiGridResizeColumns",
       "type": "directive",
       "keywords": "$scope all allow angular api app beryl but can class claudine column columndef columns company controller data directive div enables enersol entire ethel explicitly false female for function geekko gender gonzales grid gridopts if individual mainctrl male module name neal ng-controller not of on option options prevents price reason regardless resizecolumns resizing rice sealoud set some testgrid the this to ui ui-grid ui-grid-resize-columns use var velity want wilder you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit",
+      "shortName": "rowEdit",
+      "type": "overview",
+      "keywords": "also and api benefits best data depends edit editing experience extends feature from full grid here how information is module more of on overview provide provides rowedit rows saving spreadsheet-like the this to tracking tutorial ui ui-grid-cellnav ui-grid-edit usage use used"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "$scope another api are available be before change class configuring feature for grid gridoptions how interval long milliseconds object on options property row rowedit roweditwaitinterval save seconds set setting should the these this to triggering ui ui-grid using wait"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "aggregate all an api are array associated away be been before button calls could currently data dirty error errored event fails feature flushdirtyrows flushed for from getdirtyrows geterrorrows grid gridapi gridrows handler has have if in individual initiated is it mandatory method navigates object of or page presses promise promises public rejected represents resolved returned returning returns row rowedit rowentity rows save savepromise saverow sets setsavepromise should somewhere successful that the this triggers ui used user when where which will with"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit.constant:uiGridRowEditConstants",
+      "shortName": "uiGridRowEditConstants",
+      "type": "object",
+      "keywords": "api available constant constants edit grid in module object row rowedit ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit.directive:uiGridEdit",
+      "shortName": "uiGridEdit",
+      "type": "directive",
+      "keywords": "adds api directive div editing features grid row rowedit the to ui ui-grid-edit"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit.directive:uiGridViewport",
+      "shortName": "uiGridViewport",
+      "type": "directive",
+      "keywords": "allow alter and api attributes coloring directive div error for grid of on row rowedit rows saving stacks the to top ui uigridviewport used"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.rowEdit.service:uiGridRowEditService",
+      "shortName": "uiGridRowEditService",
+      "type": "service",
+      "keywords": "$interval adjusted aftercelledit aggregate all already although an and any api appropriate are array as associated automatically available away be been before begincelledit begineditcell button by cache call callback called calls cancel cancelcelledit canceleditcell cancelled cancels canceltimer cell cellnav changed column commenced consider considersettimer could currently data delete dirty does edit edited editing either endeditcell entity error event failed fails features flags flushdirtyrows flushed for from function grid gridapi gridrow had handler handling has have if in individual initiated is isn it itself left mandatory method navigate navigates new newrowcol not nothing now of old oldrowcol on only or other page parameter params present presses processed processerrorpromise processes processing processsuccesspromise promise promises provided receives rejected relating remove removed removerow removes represents resolution resolved restarts returned returning returns row rowarray rowedit roweditdirtyrows rowediterrorrows roweditsavetimers rowentity rows running same save saved savepromise saverow saves saving selected service services set sets setsavepromise setting should silently similar somewhere specified start still stop success successful tells that the then there this timer to triggers turn ui us used user using was we were when where which will with"
     },
     {
       "section": "api",
@@ -528,6 +577,13 @@ NG_DOCS={
       "shortName": "204 Column Resizing",
       "type": "overview",
       "keywords": "$http $scope according allow allows and angular any app be but by can class coldef column columndefs columns company constraints contents controller css data definition directive disable each element enable enablecolumnresizing enablesorting entire explicitly false feature field for function gender get give grid gridoptions height html if in include index individual it its js json main mainctrl minwidth module must name ng-controller not obey of on option options or overview prevents property reason regardless rendered resize resizecolumns resized resizing separator set setting size some success the this to true tutorial ui ui-grid ui-grid-resize-columns use var want width will you your yourapp"
+    },
+    {
+      "section": "tutorial",
+      "id": "205_row_editable",
+      "shortName": "205 Row Edit Feature",
+      "type": "overview",
+      "keywords": "$http $interval $q $resource $scope active address addressformatter aftercelledit again age all almost also an and angular another any app application are array as at attempts avoid back basic be because been boolean but button by callback callbacks called calling can causing cell celleditablecondition cellfilter cellnav city class clean clicks columndefs columns commences completing configurable controller create css currently data date deals defer delay destroyed dirty displayed displayname doesn during each easily edit editable edited editing edits either else enablecelledit enabled error errored errors event exceptions experience extends extent fake false feature field fields filter flag flushdirtyrows flushes for four from function gender generate get getdirtyrows geterrorrows give go grey greyed grid gridapi gridoptions gridrows has hasn have height html id if in index input invisible is isactive isdirty iserror issaving js json last length local locking made main mainctrl male method methods might module more must name navigation new ng-controller no non-editable normally not number object occassionally occurs of on one only onregisterapi operate operation optionally or other otherwise out overview page perspective point pressing promise properties provided ready red regime registered reject rejected request resolve resolved return returned returns row rowedit rowentity rowrenderindex rows same save saved saverow savetimer saving scope seconds seek server set setfocus setsavepromise shown similar since situations so some spreadsheet state states status still street success successfully sufficient support tabs that the then they this time timer to trigger triggered tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit ui-grid-row-edit updated upon use used user using var wait were when whenever where which whichever whilst width will wish with within yet you yyyy-mm-dd zip"
     },
     {
       "section": "tutorial",

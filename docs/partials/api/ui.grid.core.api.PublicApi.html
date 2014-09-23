@@ -35,6 +35,25 @@ TODO: if a filter is active then we can't just set it to visible?</p><h4 id="Par
 – <p>promise that is resolved when render completes?</p></div>
 </div>
 </li>
+<li><h3 id="renderingComplete">renderingComplete(gridApi)</h3>
+<div class="renderingcomplete"><p>Rendering is complete, called at the same
+time as <code>onRegisterApi</code>, but provides a way to obtain
+that same event within features without stopping end
+users from getting at the onRegisterApi method.</p>
+
+<p>Included in gridApi so that it's always there - otherwise
+there is still a timing problem with when a feature can
+call this. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridApi – {GridApi} – </code>
+<p>the grid api, as normally 
+returned in the onRegisterApi method</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridApi.core.on.renderingComplete( grid );
+</pre></div>
+</div>
+</li>
 <li><h3 id="setRowInvisible">setRowInvisible(rowEntity)</h3>
 <div class="setrowinvisible"><p>Sets an override on the row to make it always invisible,
 which will override any filtering or other visibility calculations. <br />

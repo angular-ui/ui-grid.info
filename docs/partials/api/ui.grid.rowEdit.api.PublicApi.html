@@ -1,0 +1,97 @@
+<h1><code ng:non-bindable="">PublicApi</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.rowEdit</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Public Api for rowEdit feature</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="flushDirtyRows">flushDirtyRows(grid)</h3>
+<div class="flushdirtyrows"><p>Triggers a save event for all currently dirty rows, could
+be used where user presses a save button or navigates away from the page
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.flushDirtyRows(grid)
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which dirty rows should be flushed</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>a promise that represents the aggregate of all
+of the individual save promises - i.e. it will be resolved when all
+the individual save promises have been resolved.</p></div>
+</div>
+</li>
+<li><h3 id="getDirtyRows">getDirtyRows(grid)</h3>
+<div class="getdirtyrows"><p>Returns all currently dirty rows
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.getDirtyRows(grid)
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which dirty rows should be returned</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>An array of gridRows that are currently dirty</p></div>
+</div>
+</li>
+<li><h3 id="getErrorRows">getErrorRows(grid)</h3>
+<div class="geterrorrows"><p>Returns all currently errored rows
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.getErrorRows(grid)
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which errored rows should be returned</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>An array of gridRows that are currently in error</p></div>
+</div>
+</li>
+<li><h3 id="setSavePromise">setSavePromise(grid, rowEntity, savePromise)</h3>
+<div class="setsavepromise"><p>Sets the promise associated with the row save, mandatory that
+the saveRow event handler calls this method somewhere before returning.
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.setSavePromise(grid, rowEntity)
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which dirty rows should be returned</p></li>
+<li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>a data row from the grid for which a save has
+been initiated</p></li>
+<li><code ng:non-bindable="">savePromise – {promise} – </code>
+<p>the promise that will be resolved when the
+save is successful, or rejected if the save fails</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="member event"><h2 id="Events">Events</h2>
+<ul class="events"><li><h3 id="saveRow">saveRow</h3>
+<div class="saverow"><p>raised when a row is ready for saving.  Once your
+row has saved you may need to use angular.extend to update the
+data entity with any changed data from your save (for example, 
+lock version information if you're using optimistic locking,
+or last update time/user information).</p>
+
+<p>Your method should call setSavePromise somewhere in the body before
+returning control.  The feature will then wait, with the gridRow greyed out 
+whilst this promise is being resolved.</p>
+
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.on.saveRow(scope,function(rowEntity){})
+</pre>
+and somewhere within the event handler:
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.setSavePromise( grid, rowEntity, savePromise)
+</pre><div class="inline"></div>
+<div class="inline"></div>
+<h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the options.data element that was edited</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>

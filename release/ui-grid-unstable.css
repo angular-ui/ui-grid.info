@@ -932,6 +932,33 @@ div.ui-grid-cell input.ng-valid {
 * @section Scrollbar styles
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.ui-grid-row-saving .ui-grid-cell {
+  color: #848484 !important;
+}
+.ui-grid-row-error .ui-grid-cell {
+  color: #ff0000 !important;
+}
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-row-selected .ui-grid-cell {
   background-color: #c9dde1 !important;
 }

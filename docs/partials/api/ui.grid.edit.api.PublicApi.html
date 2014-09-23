@@ -23,6 +23,34 @@
 </ul>
 </div>
 </li>
+<li><h3 id="beginCellEdit">beginCellEdit</h3>
+<div class="begincelledit"><p>raised when cell editing starts on a cell
+<pre class="prettyprint linenums">
+     gridApi.edit.on.beginCellEdit(scope,function(rowEntity, colDef){})
+</pre><div class="inline"></div>
+<div class="inline"></div>
+<h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the options.data element that was edited</p></li>
+<li><code ng:non-bindable="">colDef – {object} – </code>
+<p>the column that was edited</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="cancelCellEdit">cancelCellEdit</h3>
+<div class="cancelcelledit"><p>raised when cell editing is cancelled on a cell
+<pre class="prettyprint linenums">
+     gridApi.edit.on.cancelCellEdit(scope,function(rowEntity, colDef){})
+</pre><div class="inline"></div>
+<div class="inline"></div>
+<h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the options.data element that was edited</p></li>
+<li><code ng:non-bindable="">colDef – {object} – </code>
+<p>the column that was edited</p></li>
+</ul>
+</div>
+</li>
 </ul>
 </div>
 </div>

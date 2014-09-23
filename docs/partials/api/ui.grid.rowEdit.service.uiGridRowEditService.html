@@ -1,0 +1,164 @@
+<h1><code ng:non-bindable="">uiGridRowEditService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid.rowEdit</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Services for row editing features</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="beginEditCell">beginEditCell(rowEntity)</h3>
+<div class="begineditcell"><p>Receives a beginCellEdit event from the edit function,
+and cancels any rowEditSaveTimers if present, as the user is still editing
+this row.  Only the rowEntity parameter
+is processed, although other params are available.  Grid
+is automatically provided by the gridApi. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the data entity for which the cell
+editing has commenced</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="cancelEditCell">cancelEditCell(rowEntity)</h3>
+<div class="canceleditcell"><p>Receives a cancelCellEdit event from the edit function,
+and if the row was already dirty, restarts the save timer.  If the row
+was not already dirty, then it's not dirty now either and does nothing.</p>
+
+<p>Only the rowEntity parameter
+is processed, although other params are available.  Grid
+is automatically provided by the gridApi.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the data entity for which the cell
+editing was cancelled</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="cancelTimer">cancelTimer(grid, gridRow)</h3>
+<div class="canceltimer"><p>cancel the $interval for any timer running on this row
+then delete the timer itself</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which we are processing</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row for which the timer should be adjusted</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="considerSetTimer">considerSetTimer(grid, gridRow)</h3>
+<div class="considersettimer"><p>Consider setting a timer on this row (if it is dirty).  if there is a timer running 
+on the row and the row isn't currently saving, cancel it, using cancelTimer, then if the row is 
+dirty and not currently saving then set a new timer</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which we are processing</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row for which the timer should be adjusted</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="endEditCell">endEditCell(rowEntity)</h3>
+<div class="endeditcell"><p>Receives an afterCellEdit event from the edit function,
+and sets flags as appropriate.  Only the rowEntity parameter
+is processed, although other params are available.  Grid
+is automatically provided by the gridApi. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the data entity for which the cell
+was edited</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="flushDirtyRows">flushDirtyRows(grid)</h3>
+<div class="flushdirtyrows"><p>Triggers a save event for all currently dirty rows, could
+be used where user presses a save button or navigates away from the page
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.flushDirtyRows(grid)
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which dirty rows should be flushed</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>a promise that represents the aggregate of all
+of the individual save promises - i.e. it will be resolved when all
+the individual save promises have been resolved.</p></div>
+</div>
+</li>
+<li><h3 id="navigate">navigate(newRowCol, oldRowCol)</h3>
+<div class="navigate"><p>cellNav tells us that the selected cell has changed.  If
+the new row had a timer running, then stop it similar to in a beginCellEdit
+call.  If the old row is dirty and not the same as the new row, then 
+start a timer on it.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">newRowCol – {object} – </code>
+<p>the row and column that were selected</p></li>
+<li><code ng:non-bindable="">oldRowCol – {object} – </code>
+<p>the row and column that was left</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="processErrorPromise">processErrorPromise(grid, gridRow)</h3>
+<div class="processerrorpromise"><p>Returns a function that processes the failed
+resolution of a save promise  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which the promise should be processed</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row that is now in error</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>the error handling function</p></div>
+</div>
+</li>
+<li><h3 id="processSuccessPromise">processSuccessPromise(grid, gridRow)</h3>
+<div class="processsuccesspromise"><p>Returns a function that processes the successful
+resolution of a save promise  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which the promise should be processed</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row that has been saved</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>the success handling function</p></div>
+</div>
+</li>
+<li><h3 id="removeRow">removeRow(rowArray, gridRow)</h3>
+<div class="removerow"><p>Removes a row from a cache of rows - either
+grid.rowEditErrorRows or grid.rowEditDirtyRows.  If the row
+is not present silently does nothing. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowArray – {array} – </code>
+<p>the array from which to remove the row</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row that should be removed</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="saveRow">saveRow(grid, gridRow)</h3>
+<div class="saverow"><p>Returns a function that saves the specified row from the grid,
+and returns a promise</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which dirty rows should be flushed</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row that should be saved</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>the saveRow function returns a function.  That function
+in turn, when called, returns a promise relating to the save callback</p></div>
+</div>
+</li>
+<li><h3 id="setSavePromise">setSavePromise(grid, rowEntity, savePromise)</h3>
+<div class="setsavepromise"><p>Sets the promise associated with the row save, mandatory that
+the saveRow event handler calls this method somewhere before returning.
+<pre class="prettyprint linenums">
+     gridApi.rowEdit.setSavePromise(grid, rowEntity)
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which dirty rows should be returned</p></li>
+<li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>a data row from the grid for which a save has
+been initiated</p></li>
+<li><code ng:non-bindable="">savePromise – {promise} – </code>
+<p>the promise that will be resolved when the
+save is successful, or rejected if the save fails</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
