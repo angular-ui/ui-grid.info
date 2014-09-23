@@ -5,7 +5,25 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Grid utility functions</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="debounce">debounce(func, wait, immediate)</h3>
+<ul class="methods"><li><h3 id="createBoundedWrapper">createBoundedWrapper(Object, Method)</h3>
+<div class="createboundedwrapper"><p>Binds given method to given object.</p>
+
+<p>By means of a wrapper, ensures that <code>method</code> is always bound to
+<code>object</code> regardless of its calling environment.
+Iow, inside <code>method</code>, <code>this</code> always points to <code>object</code>.</p>
+
+<p>See http://alistapart.com/article/getoutbindingsituations</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">Object – {object} – </code>
+<p>to bind 'this' to</p></li>
+<li><code ng:non-bindable="">Method – {method} – </code>
+<p>to bind</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Function}</code>
+– <p>The wrapper that performs the binding</p></div>
+</div>
+</li>
+<li><h3 id="debounce">debounce(func, wait, immediate)</h3>
 <div class="debounce"><p>Copied from https://github.com/shahata/angular-debounce
 Takes a function, decorates it to execute only 1 time after multiple calls, and returns the decorated function</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>

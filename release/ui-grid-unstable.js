@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-aafc116 - 2014-09-23
+/*! ui-grid - v2.0.12-g1e20b74-469aced - 2014-09-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -905,7 +905,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
               // Sort this column then rebuild the grid's rows
               uiGridCtrl.grid.sortColumn($scope.col, add)
                 .then(function () {
-                  uiGridCtrl.columnMenuScope.hideMenu();
+                  if (uiGridCtrl.columnMenuScope) { uiGridCtrl.columnMenuScope.hideMenu(); }
                   uiGridCtrl.grid.refresh();
                 });
             }
@@ -1004,6 +1004,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
   }]);
 
 })();
+
 (function(){
   'use strict';
 
@@ -3992,10 +3993,13 @@ angular.module('ui.grid')
   Grid.prototype.getColumnSorting = function getColumnSorting() {
     var self = this;
 
-    var sortedCols = [];
+    var sortedCols = [], myCols;
 
     // Iterate through all the columns, sorted by priority
-    self.columns.sort(rowSorter.prioritySort).forEach(function (col) {
+    // Make local copy of column list, because sorting is in-place and we do not want to
+    // change the original sequence of columns
+    myCols = self.columns.slice(0);
+    myCols.sort(rowSorter.prioritySort).forEach(function (col) {
       if (col.sort && typeof(col.sort.direction) !== 'undefined' && col.sort.direction && (col.sort.direction === uiGridConstants.ASC || col.sort.direction === uiGridConstants.DESC)) {
         sortedCols.push(col);
       }
@@ -4268,6 +4272,7 @@ angular.module('ui.grid')
 }]);
 
 })();
+
 (function () {
 
   angular.module('ui.grid')
@@ -4436,15 +4441,16 @@ angular.module('ui.grid')
          * @param {string} featureName name of the feature
          * @param {string} methodName  name of the method
          * @param {object} callBackFn function to execute
+         * @param {object} thisArg binds callBackFn 'this' to thisArg.  Defaults to gridApi.grid
          */
-        GridApi.prototype.registerMethod = function (featureName, methodName, callBackFn) {
+        GridApi.prototype.registerMethod = function (featureName, methodName, callBackFn, thisArg) {
           if (!this[featureName]) {
             this[featureName] = {};
           }
 
           var feature = this[featureName];
-          feature[methodName] = callBackFn;
 
+          feature[methodName] = gridUtil.createBoundedWrapper(thisArg || this.grid, callBackFn);
         };
 
         /**
@@ -4460,8 +4466,9 @@ angular.module('ui.grid')
          *          methodNameTwo:function(args){}
          *        }
          * @param {object} eventObjectMap map of feature/event names
+         * @param {object} thisArg binds this to thisArg for all functions.  Defaults to gridApi.grid
          */
-        GridApi.prototype.registerMethodsFromObject = function (methodMap) {
+        GridApi.prototype.registerMethodsFromObject = function (methodMap, thisArg) {
           var self = this;
           var features = [];
           angular.forEach(methodMap, function (featProp, featPropName) {
@@ -4474,7 +4481,7 @@ angular.module('ui.grid')
 
           features.forEach(function (feature) {
             feature.methods.forEach(function (method) {
-              self.registerMethod(feature.name, method.name, method.fn);
+              self.registerMethod(feature.name, method.name, method.fn, thisArg);
             });
           });
 
@@ -4485,6 +4492,7 @@ angular.module('ui.grid')
       }]);
 
 })();
+
 (function(){
 
 angular.module('ui.grid')
@@ -6983,6 +6991,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
 var module = angular.module('ui.grid');
 
+
 function getStyles (elem) {
   return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
 }
@@ -7118,6 +7127,32 @@ var uidPrefix = 'uiGrid-';
 module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateCache', '$timeout', '$injector', '$q', 'uiGridConstants',
   function ($log, $window, $document, $http, $templateCache, $timeout, $injector, $q, uiGridConstants) {
   var s = {
+
+    /**
+     * @ngdoc method
+     * @name createBoundedWrapper
+     * @methodOf ui.grid.service:GridUtil
+     *
+     * @param {object} Object to bind 'this' to
+     * @param {method} Method to bind
+     * @returns {Function} The wrapper that performs the binding
+     *
+     * @description
+     * Binds given method to given object.
+     *
+     * By means of a wrapper, ensures that ``method`` is always bound to
+     * ``object`` regardless of its calling environment.
+     * Iow, inside ``method``, ``this`` always points to ``object``.
+     *
+     * See http://alistapart.com/article/getoutbindingsituations
+     *
+     */
+    createBoundedWrapper: function(object, method) {
+        return function() {
+            return method.apply(object, arguments);
+        };
+    },
+
 
     /**
      * @ngdoc method
