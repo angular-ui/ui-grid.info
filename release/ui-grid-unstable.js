@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-f678e51 - 2014-09-23
+/*! ui-grid - v2.0.12-g1e20b74-f9ec46b - 2014-09-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10919,7 +10919,8 @@ return $delegate;
           event.stopPropagation();
 
           // Get the left offset of the grid
-          gridLeft = uiGridCtrl.grid.element[0].offsetLeft;
+          // gridLeft = uiGridCtrl.grid.element[0].offsetLeft;
+          gridLeft = uiGridCtrl.grid.element[0].getBoundingClientRect().left;
 
           // Get the starting X position, which is the X coordinate of the click minus the grid's offset
           startX = event.clientX - gridLeft;
