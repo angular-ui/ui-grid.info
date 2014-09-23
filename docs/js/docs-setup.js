@@ -30,7 +30,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "and api array brings cellnav coldef column current data does feature focus focused for function getfocusedcell grid gridoptions has have if instance into is last make no not null object occurred public returns row rowentity scrollto selection the to ui value view visible"
+      "keywords": "$scope act and api array available brings broadcast can cellnav coldef column current data does events feature focus focused for from function getfocusedcell grid gridapi gridoptions has have if instance into is last like make no not null object occurred public returns row rowentity scope scrollto selection specified the to ui upon usually value view visible we you"
     },
     {
       "section": "api",
@@ -58,7 +58,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.service:uiGridCellNavService",
       "shortName": "uiGridCellNavService",
       "type": "service",
-      "keywords": "adds and angular any api are cell cellnav cellnavcolumnbuilder cells column columnbuilder columns curcol current currow decorator determines direction docs don event features focusable for function getdirection getnextrowcol given grid gridcol gridrow if key keydown like load maps navigation needed next not object or override promise properties resolved returns row rowcol service services skipped templates that the to ui use we when which will with you"
+      "keywords": "$scope act adds and angular any api are array available broadcast can cell cellnav cellnavcolumnbuilder cells coldef colindex column columnbuilder columns curcol current currow data decorator determines direction docs don drawn event events features focusable for from function get getdirection getleftwidth getnextrowcol given grid gridapi gridcol gridoptions gridrow if in including instance is key keydown like load make maps method navigation needed next not numbered object of or override promise properties resolved returns row rowcol rowentity scope scroll scrollverticallyto service services skipped specified such templates that the to total ui up upon use usually vertically view visible we when which width will with you"
     },
     {
       "section": "api",
@@ -513,7 +513,7 @@ NG_DOCS={
       "id": "202_cellnav",
       "shortName": "202 Cell Navigation",
       "type": "overview",
-      "keywords": "$http $log $scope add address age allowcellfocus and angular app btn btn-success button callback cell cellnav city class col coldef columndefs controller css current currentfocused data directive displayname element enable entity event example false focusable focused function get getcurrentfocus getfocusedcell grid gridapi gridoptions height html id if include index info is js json log main mainctrl module msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null old oldrowcol on on_cellnav onregisterapi overview register row rowcol success the this to tojson tutorial type ui ui-grid ui-grid-cellnav uses var when width you your"
+      "keywords": "$http $log $scope add address age allowcellfocus also an and angular app back balance btn btn-success button callback cell cellnav city class col coldef colindex column columndefs company controller css current currentfocused data directive displayname element email enable entity event example false focusable focused for function get getcurrentfocus getfocusedcell grid gridapi gridoptions guid height html id if include index info is js json log main mainctrl module msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null of old oldrowcol on on_cellnav onregisterapi or overview page phone position programatically provides register remembering requesting returns row rowcol rowindex scroll scrolling scrollto specific state success that the this to tojson tutorial type ui ui-grid ui-grid-cellnav useful user uses var when width you your"
     },
     {
       "section": "tutorial",
