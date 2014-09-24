@@ -16,6 +16,53 @@ function($scope){
 </pre></div>
 </div>
 </li>
+<li><h3 id="editDropdownFilter">editDropdownFilter</h3>
+<div class="editdropdownfilter"><p>A filter that you would like to apply to the values in the options list
+of the dropdown.  For example if you were using angular-translate you might set this
+to <code>'translate'</code></p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = { 
+  columnDefs: [
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+      editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
+      editDropdownIdLabel: 'code', editDropdownValueLabel: 'status', editDropdownFilter: 'translate' }
+  ],
+</pre></div>
+</div>
+</li>
+<li><h3 id="editDropdownIdLabel">editDropdownIdLabel</h3>
+<div class="editdropdownidlabel"><p>the label for the "id" field
+in the editDropdownOptionsArray.  Defaults
+to 'id'</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = { 
+  columnDefs: [
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+      editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
+      editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
+  ],
+</pre></div>
+</div>
+</li>
+<li><h3 id="editDropdownOptionsArray">editDropdownOptionsArray</h3>
+<div class="editdropdownoptionsarray"><p>an array of values in the format
+[ {id: xxx, value: xxx} ], which is populated
+into the edit dropdown</p></div>
+</li>
+<li><h3 id="editDropdownValueLabel">editDropdownValueLabel</h3>
+<div class="editdropdownvaluelabel"><p>the label for the "value" field
+in the editDropdownOptionsArray.  Defaults
+to 'value'</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = { 
+  columnDefs: [
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+      editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
+      editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
+  ],
+</pre></div>
+</div>
+</li>
 <li><h3 id="editableCellTemplate">editableCellTemplate</h3>
 <div class="editablecelltemplate"><p>cell template to be used when editing this column. Can be Url or text template
 <br/>Defaults to gridOptions.editableCellTemplate</p></div>

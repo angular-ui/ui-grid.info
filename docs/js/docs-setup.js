@@ -149,7 +149,7 @@ NG_DOCS={
       "id": "ui.grid.edit.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "$scope allowed and api are as available be before both can cell celleditablecondition cellnav class col coldef column columndef columndefs default definition determine edit editablecelltemplate editing editor either enable enablecelledit enablecelleditonfocus enabled_ entity evaluated false falsy feature focus for function grid gridoptions if invoked is not object of on or receives return row set soon specified template text the then these this to true ui ui-grid url used using value when"
+      "keywords": "$scope active allowed an and angular-translate api apply are array as available be before both can cell celleditablecondition cellnav class code col coldef column columndef columndefs default defaults definition determine dropdown edit editablecelltemplate editdropdownfilter editdropdownidlabel editdropdownoptionsarray editdropdownvaluelabel editing editor either enable enablecelledit enablecelleditonfocus enabled_ entity evaluated example false falsy feature field filter focus for format function grid gridoptions id if in inactive into invoked is label like list might not object of on options or populated property receives return row set soon specified status template text that the then these this to translate true ui ui-grid url used using value values were when which would xxx you"
     },
     {
       "section": "api",
@@ -195,8 +195,15 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.edit.directive:uiGridTextEditor",
-      "shortName": "uiGridTextEditor",
+      "id": "ui.grid.edit.directive:uiGridEditDropdown",
+      "shortName": "uiGridEditDropdown",
+      "type": "directive",
+      "keywords": "and any api blur cancel canceledit directive div dropdown edit editable editing editor end endedit enter esc events fields for grid keydown left nav provides that ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.edit.directive:uiGridEditor",
+      "shortName": "uiGridEditor",
       "type": "directive",
       "keywords": "and api blur cancel canceledit directive div edit editable editing editor end endedit enter esc events fields for grid input keydown provides that ui"
     },
@@ -562,7 +569,7 @@ NG_DOCS={
       "id": "201_editable",
       "shortName": "201 Edit Feature",
       "type": "overview",
-      "keywords": "$apply $http $scope active address addressformatter aftercelledit age all allow allows and angular any app are as available be boolean by called can cell celleditablecondition cellfilter cellnav cellscope checkbox city class coldef column columndef columndefs columns compiled content controller css custom data date default definitions determine directive disable displayname double-click edit editable editablecelltemplate edited editing editor editors element enable enablecelledit f2 false feature fields filter focus following for function get grid gridapi gridoptions has height html id if in include index inline input invoke invoked is isactive it js json key lastcelledited length main mainctrl mode module msg must name new newvalue ng-controller non-navigable not number numeric object of oldvalue on only onregisterapi option options or other overview provided registered respectively return returns row rowentity rowrenderindex rows scope set should simple soon specified start state street string success templatecache templates text than that the to true tutorial type types typing ui ui-grid ui-grid-edit url use used using valid var via when width will with you your yyyy-mm-dd zip"
+      "keywords": "$apply $http $scope __columndef active address addressformatter adjusted aftercelledit age all allow allows also although an and angular angular-translate any app apply array arrows as available aware be begin_cell_edit boolean but by called can cancel_cell_edit cell celleditablecondition cellfilter cellnav cellscope changed checkbox city class code coldef column columndef columndefs columns compiled contain content controller controls css custom data date default definitions determine directive disable displayname double-click dropdown edit editable editablecelltemplate editdropdownfilter editdropdownidlabel editdropdownnamelabel editdropdownoptionsarray editdropdownvaluelabel edited editing editor editors element else enable enablecelledit enablecelleditonfocus end_cell_edit ends enter esc events example f2 false feature female field fields filter focus following for function gender genderhash get grid gridapi gridoptions happens has having height html id if in include including index inline input instead invoke invoked is isactive it js json key label labels lastcelledited left length likely logic main mainctrl male mapgender mode module msg must name need needs new newvalue next ng-controller non-navigable not number numeric object of oldvalue on only onregisterapi option options options__ or other overview populated property provide provided purposes registered reprocess respectively return returns right row rowentity rowrenderindex rows scope set setting should similar simple so soon sorting specified start state street string success tab tags templatecache templates text than that the this those through to translate true tutorial two type types typing ui ui-grid ui-grid-edit uigrideditor url use used using valid value values var via were when width will with within without would xxx xxxxxxx you your yyyy-mm-dd zip"
     },
     {
       "section": "tutorial",
@@ -675,6 +682,13 @@ NG_DOCS={
       "shortName": "307 External Sorting",
       "type": "overview",
       "keywords": "$http $interval $scope above achieve after an and angular app are as asc bored break by can case changed class client columndefs company controller core css custom data desc direction editing either else emulate enablesorting event example external externally false files first firstly function functions further gender get got grid gridapi gridoptions has height html if illustrate in index internal is js json length main mainctrl manually me module name native ng-controller not of off on one onregisterapi or over overview part picking property provides requested retrieve routine routines rows secondly server show so sometimes sort sortchanged sortcolumns sorted sorting success support suppress switch tells that the their this those three to true turn tutorial two ui ui-grid uigridconstants undefined useexternalsorting user using var want we when width with you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "309_editable_with_cellnav",
+      "shortName": "309 Edit Feature With Cellnav",
+      "type": "overview",
+      "keywords": "$apply $http $scope active address addressformatter aftercelledit age an and angular app basics boolean cell celleditablecondition cellfilter cellnav city class coldef column columndefs combining controller css data date displayname dropdown edit editable editdropdownoptionsarray editdropdownvaluelabel edited editing edittype else enablecelledit enablecelleditonfocus example experience false feature female filter for function gender genderhash get give grid gridapi gridoptions height html id if index input isactive js json lastcelledited length main mainctrl male mapgender module more msg name new newvalue ng-controller number object of oldvalue on onregisterapi overview provides refer registered return row rowentity rowrenderindex rows scope spreadsheet-like state street success the this to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var width with yyyy-mm-dd zip"
     },
     {
       "section": "tutorial",
