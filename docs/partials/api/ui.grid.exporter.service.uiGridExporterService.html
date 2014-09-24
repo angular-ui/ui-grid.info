@@ -1,0 +1,214 @@
+<h1><code ng:non-bindable="">uiGridExporterService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid.exporter</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Services for exporter feature</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="calculatePdfHeaderWidths">calculatePdfHeaderWidths(grid, exportHeaders)</h3>
+<div class="calculatepdfheaderwidths"><p>Determines the column widths base on the 
+widths we got from the grid.  If the column is drawn
+then we have a drawnWidth.  If the column is not visible
+then we have '*', 'x%' or a width.  When columns are
+not visible they don't contribute to the overall gridWidth,
+so we need to adjust to allow for extra columns</p>
+
+<p>Our basic heuristic is to take the current gridWidth, plus 
+numeric columns and call this the base gridwidth.</p>
+
+<p>To that we add 100 for any '*' column, and x% of the base gridWidth
+for any column that is a %</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">exportHeaders – {object} – </code>
+<p>array of header information </p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>an array of header widths</p></div>
+</div>
+</li>
+<li><h3 id="csvExport">csvExport(grid, rowTypes, colTypes, $elm)</h3>
+<div class="csvexport"><p>Exports rows from the grid in csv format, 
+the data exported is selected based on the provided options</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">rowTypes – {string} – </code>
+<p>which rows to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+<li><code ng:non-bindable="">colTypes – {string} – </code>
+<p>which columns to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+<li><code ng:non-bindable="">$elm – {element} – </code>
+<p>(Optional) A UI element into which the
+resulting download link will be placed. </p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="formatAsCSV">formatAsCSV(exportColumnHeaders, exportData)</h3>
+<div class="formatascsv"><p>Formats the column headers and data as a CSV, 
+and sends that data to the user</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">exportColumnHeaders – {array} – </code>
+<p>an array of column headers, 
+where each header is an object with name, width and maybe alignment</p></li>
+<li><code ng:non-bindable="">exportData – {array} – </code>
+<p>an array of rows, where each row is
+an array of column data</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>csv the formatted csv as a string</p></div>
+</div>
+</li>
+<li><h3 id="formatFieldAsCsv">formatFieldAsCsv(field)</h3>
+<div class="formatfieldascsv"><p>Renders a single field as a csv field, including
+quotes around the value</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">field – {field} – </code>
+<p>the field to be turned into a csv string,
+may be of any type</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>a csv-ified version of the field</p></div>
+</div>
+</li>
+<li><h3 id="formatFieldAsCsv">formatFieldAsCsv(field)</h3>
+<div class="formatfieldascsv"><p>Renders a single field as a pdf-able field, which
+is different from a csv field only in that strings don't have quotes
+around them</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">field – {field} – </code>
+<p>the field to be turned into a pdf string,
+may be of any type</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>a string-ified version of the field</p></div>
+</div>
+</li>
+<li><h3 id="formatRowAsCsv">formatRowAsCsv(exporter, row)</h3>
+<div class="formatrowascsv"><p>Renders a single field as a csv field, including
+quotes around the value</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">exporter – {exporterService} – </code>
+<p>pass in exporter </p></li>
+<li><code ng:non-bindable="">row – {array} – </code>
+<p>the row to be turned into a csv string</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>a csv-ified version of the row</p></div>
+</div>
+</li>
+<li><h3 id="formatRowAsPdf">formatRowAsPdf(exporter, row)</h3>
+<div class="formatrowaspdf"><p>Renders a row in a format consumable by PDF,
+mainly meaning casting everything to a string</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">exporter – {exporterService} – </code>
+<p>pass in exporter </p></li>
+<li><code ng:non-bindable="">row – {array} – </code>
+<p>the row to be turned into a csv string</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>a csv-ified version of the row</p></div>
+</div>
+</li>
+<li><h3 id="getColumnHeaders">getColumnHeaders(grid, colTypes)</h3>
+<div class="getcolumnheaders"><p>Gets the column headers from the grid to use
+as a title row for the exported file, all headers have 
+headerCellFilters applied as appropriate.</p>
+
+<p>TODO: filters</p>
+
+<p>Column headers are an array of objects, each object has
+name, displayName, width and align attributes.  Only name is
+used for csv, all attributes are used for pdf.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">colTypes – {string} – </code>
+<p>which columns to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="getData">getData(grid, rowTypes, colTypes)</h3>
+<div class="getdata"><p>Gets data from the grid based on the provided options,
+all cells have cellFilters applied as appropriate</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">rowTypes – {string} – </code>
+<p>which rows to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+<li><code ng:non-bindable="">colTypes – {string} – </code>
+<p>which columns to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="pdfExport">pdfExport(grid, rowTypes, colTypes)</h3>
+<div class="pdfexport"><p>Exports rows from the grid in pdf format, 
+the data exported is selected based on the provided options.
+Note that this function has a dependency on jsPDF, which must
+be either included as a script on your page, or downloaded and
+served as part of your site.  The resulting pdf opens in a new
+browser window.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">rowTypes – {string} – </code>
+<p>which rows to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+<li><code ng:non-bindable="">colTypes – {string} – </code>
+<p>which columns to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="renderAsPdf">renderAsPdf(grid, exportColumnHeaders, exportData)</h3>
+<div class="renderaspdf"><p>Renders the data into a pdf, and opens that pdf.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">exportColumnHeaders – {array} – </code>
+<p>an array of column headers, 
+where each header is an object with name, width and maybe alignment</p></li>
+<li><code ng:non-bindable="">exportData – {array} – </code>
+<p>an array of rows, where each row is
+an array of column data</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>a pdfMake format document definition, ready 
+for generation</p></div>
+</div>
+</li>
+<li><h3 id="renderCsvLink">renderCsvLink(grid, csvContent, $elm)</h3>
+<div class="rendercsvlink"><p>Creates a download link with the csv content, 
+putting it into the default exporter element, or into the element
+passed in if provided</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">csvContent – {string} – </code>
+<p>the csv content that we'd like to 
+make available as a download link</p></li>
+<li><code ng:non-bindable="">$elm – {element} – </code>
+<p>(Optional) A UI element into which the
+resulting download link will be placed.  If not provided, the
+link is put into the default exporter element. </p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="showMenu">showMenu(grid)</h3>
+<div class="showmenu"><p>Shows the grid menu with exporter content,
+allowing the user to select export options </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>

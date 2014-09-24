@@ -216,6 +216,48 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.exporter",
+      "shortName": "exporter",
+      "type": "overview",
+      "keywords": "ability all and api appropriate as be caller can columns data doc-module-components exported exporter formats from grid in is module no of or overview own provide provided provides range rows selected should the their this to ui visible with"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.exporter.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "$elm a4 accordingly adjusted and any api are available be being black bold button calling class color columns com containing controls csv current custom default don download export exporter exporterbuttonlabel exporterheadertemplate exporterlinklabel exporterlinktemplate exporterpdfdefaultstyle exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablelayout exporterpdftablestyle exportersuppressbutton false feature fixed fontsize for format go grid gridlines gridoptions header https if implying in into js landscape layout letter like link margin match maxium means menu needed no not null object on or orientation own page paper pdfmake portrait providing resulting roll scaled section selection set should show size sizes style suppressbutton table tableheader tablelayout template text the their these this to true ui ui-grid use user using usually valid value ve we which width will with you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.exporter.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "$elm all api are based be been browser coltypes columns csv csvexport data dependency download element export exported exporter exports feature for format from function going grid has in installed into is link new note object on opens options pdf pdfexport pdfmake placed provided public resulting rows rowtypes selected that the this to ui uigridexporterconstants valid values visible well which will window you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.exporter.constant:uiGridExporterConstants",
+      "shortName": "uiGridExporterConstants",
+      "type": "object",
+      "keywords": "all api available be can coltypes columns constant constants data either export exporter for grid in including is module not object of only or property rowtypes selected selection set some supported ui visible"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.exporter.directive:uiGridExporter",
+      "shortName": "uiGridExporter",
+      "type": "directive",
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div edit enablecelledit exporter features frank function grid gridoptions html index js lowly mainctrl module name ng-controller title to true ui ui-grid ui-grid-exporter var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.exporter.service:uiGridExporterService",
+      "shortName": "uiGridExporterService",
+      "type": "service",
+      "keywords": "$elm add adjust align alignment all allow allowing an and any api applied appropriate are around array as attributes available base based basic be browser by calculatepdfheaderwidths call casting cellfilters cells coltypes column columns consumable content contribute creates csv csv-ified csvcontent csvexport current data default definition dependency determines different displayname document don download downloaded drawn drawnwidth each either element everything export exportcolumnheaders exportdata exported exporter exportheaders exports extra feature field file filters for format formatascsv formatfieldascsv formatrowascsv formatrowaspdf formats formatted from function generation getcolumnheaders getdata gets got grid gridwidth has have header headercellfilters headers heuristic if in included including information into is it jspdf like link mainly make may maybe meaning menu must name need new not note numeric object objects of on only opens options or our overall page part pass passed pdf pdf-able pdfexport pdfmake placed plus provided put putting quotes ready renderaspdf rendercsvlink renders resulting row rows rowtypes script select selected sends served service services should showmenu shows single site so string string-ified strings take that the them then they this title to todo turned type ui uigridexporterconstants use used user valid value values version visible we when where which width widths will window with your"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.i18n",
       "shortName": "i18n",
       "type": "overview",
@@ -380,7 +422,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "all allow api array as clearselectedrows current data does entity false feature for function getselectedrows grid gridoption gridoptions if instance multiple multiselect nothing object or public references returns row rowentity rows select selectallrows selectallvisiblerows selected selectedrow selection selectrow selects setmultiselect sets the to togglerowselection toggles true ui unselect unselected unselectrow unselects visible"
+      "keywords": "all allow api array as clearselectedrows current data does entity false feature for function getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if instance multiple multiselect nothing object or public references returns row rowentity rows select selectallrows selectallvisiblerows selected selectedrow selection selectrow selects setmultiselect sets the to togglerowselection toggles true ui unselect unselected unselectrow unselects visible"
     },
     {
       "section": "api",
@@ -678,6 +720,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "306_exporting_data_complex",
+      "shortName": "306 Exporting Data",
+      "type": "overview",
+      "keywords": "$http $scope all allows and angular api app as at available be behaves below bold bower calling can class color columndefs columns company controller css csv csvexport custom custom-csv-link-location data directive element else example export export_column_type export_format export_row_type exported exporter exporterbuttonlabel exporterlinklabel exporterpdfdefaultstyle exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablestyle exportersuppressbutton exporting false feature field for format found from function gender get grid gridapi gridoptions have height here html if in include index install installed italics js json letter like main mainctrl module must myelement name need ng-click ng-controller ng-model nganimate now on onregisterapi options or overview pdf pdfexport pdfmake portrait provide queryselectorall red returned rows selected selection should show success tailor the this through to true tutorial ui ui-grid ui-grid-exporter ui-grid-exporter-csv-link ui-grid-selection use value var visible want way we width will would you your"
+    },
+    {
+      "section": "tutorial",
       "id": "307_external_sorting",
       "shortName": "307 External Sorting",
       "type": "overview",
@@ -715,7 +764,9 @@ NG_DOCS={
     "jquery.min.js",
     "angular.js",
     "angular-touch.js",
-    "angular-animate.js"
+    "angular-animate.js",
+    "pdfmake.js",
+    "vfs_fonts.js"
   ]
 }; VERSIONED_FILES={
   "default": "unstable",

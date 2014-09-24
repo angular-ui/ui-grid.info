@@ -1,0 +1,90 @@
+<h1><code ng:non-bindable="">GridOptions</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.exporter</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>GridOptions for selection feature, these are available to be <br />
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="exporterButtonLabel">exporterButtonLabel</h3>
+<div class="exporterbuttonlabel"><p>The text to show on the exporter menu button
+link
+<br/>Defaults to 'Export'</p></div>
+</li>
+<li><h3 id="exporterHeaderTemplate">exporterHeaderTemplate</h3>
+<div class="exporterheadertemplate"><p>A custom template to use for the header
+section, containing the button and csv download link.  Not
+needed if you've set suppressButton and are providing a custom
+$elm into which the download link will go.
+<br/>Defaults to ui-grid/exporterHeader</p></div>
+</li>
+<li><h3 id="exporterLinkLabel">exporterLinkLabel</h3>
+<div class="exporterlinklabel"><p>The text to show on the CSV download
+link
+<br/>Defaults to 'Download CSV'</p></div>
+</li>
+<li><h3 id="exporterLinkTemplate">exporterLinkTemplate</h3>
+<div class="exporterlinktemplate"><p>A custom template to use for the resulting
+link (for csv export)
+<br/>Defaults to ui-grid/csvLink</p></div>
+</li>
+<li><h3 id="exporterPdfDefaultStyle">exporterPdfDefaultStyle</h3>
+<div class="exporterpdfdefaultstyle"><p>The default style in pdfMake format
+<br/>Defaults to:
+<pre class="prettyprint linenums">
+  {
+    fontSize: 11
+  }
+</pre></div>
+</li>
+<li><h3 id="exporterPdfMaxGridWidth">exporterPdfMaxGridWidth</h3>
+<div class="exporterpdfmaxgridwidth"><p>The maxium grid width - the current grid width 
+will be scaled to match this, with any fixed width columns
+being adjusted accordingly.
+<br/>Defaults to 720 (for A4 landscape), use 670 for LETTER </p></div>
+</li>
+<li><h3 id="exporterPdfOrientation">exporterPdfOrientation</h3>
+<div class="exporterpdforientation"><p>The orientation, should be a valid pdfMake value,
+'landscape' or 'portrait'
+<br/>Defaults to landscape</p></div>
+</li>
+<li><h3 id="exporterPdfPageSize">exporterPdfPageSize</h3>
+<div class="exporterpdfpagesize"><p>The orientation, should be a valid pdfMake
+paper size, usually 'A4' or 'LETTER'
+<a href="https://github.com/bpampuch/pdfmake/blob/master/src/standardPageSizes.js">pdfMake page sizes</a>
+<br/>Defaults to A4</p></div>
+</li>
+<li><h3 id="exporterPdfTableHeaderStyle">exporterPdfTableHeaderStyle</h3>
+<div class="exporterpdftableheaderstyle"><p>The tableHeader style in pdfMake format
+<br/>Defaults to:
+<pre class="prettyprint linenums">
+  {
+    bold: true,
+    fontSize: 12,
+    color: 'black'
+  }
+</pre></div>
+</li>
+<li><h3 id="exporterPdfTableLayout">exporterPdfTableLayout</h3>
+<div class="exporterpdftablelayout"><p>A tableLayout in pdfMake format, 
+controls gridlines and the like.  We use the default
+layout usually.
+<br/>Defaults to null, which means no layout </p></div>
+</li>
+<li><h3 id="exporterPdfTableStyle">exporterPdfTableStyle</h3>
+<div class="exporterpdftablestyle"><p>The table style in pdfMake format
+<br/>Defaults to:
+<pre class="prettyprint linenums">
+  {
+    margin: [0, 5, 0, 15]
+  }
+</pre></div>
+</li>
+<li><h3 id="exporterSuppressButton">exporterSuppressButton</h3>
+<div class="exportersuppressbutton"><p>Don't show the export menu button, implying the user
+will roll their own UI for calling the exporter
+<br/>Defaults to false</p></div>
+</li>
+</ul>
+</div>
+</div>
