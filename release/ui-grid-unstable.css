@@ -1,5 +1,6 @@
 .ui-grid {
   border: 1px solid #d4d4d4;
+  box-sizing: content-box;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;

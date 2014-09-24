@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-7ca66b6 - 2014-09-24
+/*! ui-grid - v2.0.12-g1e20b74-f050a21 - 2014-09-24
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -457,6 +457,7 @@ input[type="text"].ui-grid-filter-input {
 
 .ui-grid {
   border: @gridBorderWidth solid @borderColor;
+  box-sizing: content-box; // If bootstrap (or another included library) makes the default sizing on element "border-box", then calculations get messed up
 
   .rounded(@gridBorderRadius);
 
