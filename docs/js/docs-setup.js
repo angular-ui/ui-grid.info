@@ -667,7 +667,7 @@ NG_DOCS={
       "id": "213_auto_resizing",
       "shortName": "213 Auto-Resizing",
       "type": "overview",
-      "keywords": "$http $log $scope about address age angular app auto-resize auto-resizing autoresize btn btn-success button changes city class columndefs company container controller css data displayname element email enable feature floor friend friends function get getelementsbyclassname grid gridoptions height html id index its itself js json main mainctrl math module name newheight newwidth ng-click ng-controller overview phone pinnedleft pinnedright px random randomsize resize size state street success the to tutorial type ui ui-grid ui-grid-auto-resize var when width will zip"
+      "keywords": "$http $log $scope about add adding address affect age and angular app application auto-resize auto-resizing autoresize btn btn-success button by changed changes checker city class columndefs company container controller could css data dependencies directive displayname element email enable feature floor friend friends function get getelementsbyclassname grid gridoptions has height html id if in include index interval it its itself js json main mainctrl math module name negatively newheight newwidth ng-click ng-controller of on or overview performance phone pinnedleft pinnedright potentially px random randomsize resize sees site size state street success that the this to tutorial type ui ui-grid ui-grid-auto-resize use var when width will works your zip"
     },
     {
       "section": "tutorial",
