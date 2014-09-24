@@ -667,7 +667,7 @@ NG_DOCS={
       "id": "213_auto_resizing",
       "shortName": "213 Auto-Resizing",
       "type": "overview",
-      "keywords": "$http $log $scope about address age angular app auto-resize auto-resizing autoresize btn btn-success button changes city class columndefs company container controller css data displayname element email enable feature floor friend friends function get grid gridoptions height html id index its itself js json main mainctrl math module name newheight newwidth ng-click ng-controller overview phone pinnedleft pinnedright px random randomsize resize size state street success the to tutorial type ui ui-grid ui-grid-auto-resize var when width will zip"
+      "keywords": "$http $log $scope about address age angular app auto-resize auto-resizing autoresize btn btn-success button changes city class columndefs company container controller css data displayname element email enable feature floor friend friends function get getelementsbyclassname grid gridoptions height html id index its itself js json main mainctrl math module name newheight newwidth ng-click ng-controller overview phone pinnedleft pinnedright px random randomsize resize size state street success the to tutorial type ui ui-grid ui-grid-auto-resize var when width will zip"
     },
     {
       "section": "tutorial",
@@ -761,7 +761,6 @@ NG_DOCS={
   "html5Mode": false,
   "startPage": "/api",
   "scripts": [
-    "jquery.min.js",
     "angular.js",
     "angular-touch.js",
     "angular-animate.js",

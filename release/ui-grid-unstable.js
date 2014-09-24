@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-99938d7 - 2014-09-24
+/*! ui-grid - v2.0.12-g1e20b74-ff36925 - 2014-09-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9174,7 +9174,7 @@ return $delegate;
 
           function setFocused(){
             var div = $elm.find('div');
-            div.focus();
+            div[0].focus();
             div.attr("tabindex", 0);
           }
 
