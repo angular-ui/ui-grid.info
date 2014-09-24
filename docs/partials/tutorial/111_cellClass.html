@@ -6,15 +6,14 @@
 <p>In this example, we will override the color and background for the first column and color the company text blue if it equals 'Velity'.</p>
 
 <h3>Source</h3>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-25" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-32" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-33"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-25" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-25">
+<pre class="prettyprint linenums" ng-set-text="index.html-32" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-32">
     <div ng-controller="MainCtrl">
-      Click on a column header to sort by that column. (The third column has sorting disabled.)
       <br>
       <br>
-      <div ui-grid="gridOptions" class="grid"></div>
+      <div id="grid1" ui-grid="gridOptions" class="grid"></div>
     </div>
   </script>
 </div>
@@ -56,5 +55,24 @@
     }]);
   </script>
 </div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-33"></pre>
+<script type="text/ng-template" id="scenario.js-33">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+    it('grid should have two visible columns', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
+    });
+
+    it('column one formatted color red, background yellow', function () {
+      // red on yellow background for 0,0
+      expect( gridTestUtils.dataCell( 'grid1', 0, 0 ).getCssValue('background-color')).toEqual('rgba(255, 255, 0, 1)');
+      expect( gridTestUtils.dataCell( 'grid1', 0, 0 ).getCssValue('color')).toEqual('rgba(255, 0, 0, 1)');
+      
+      // color blue for 2,1, which has company name 'Velity'
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'Velity' );
+      expect( gridTestUtils.dataCell( 'grid1', 2, 1 ).getCssValue('color')).toEqual('rgba(0, 0, 255, 1)');
+    });
+  </script>
+</div>
 </div><h3>Demo</h3>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-25" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-32" ng-eval-javascript="app.js"></div></div>

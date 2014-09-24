@@ -35,12 +35,6 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
 <div class="tab-pane" title="End to end test">
 <pre class="prettyprint linenums" ng-set-text="scenario.js-10"></pre>
 <script type="text/ng-template" id="scenario.js-10">
-it('should apply the right class to the element', function () {
-     element(by.css('.blah')).getCssValue('border')
-       .then(function(c) {
-         expect(c).toContain('1px solid');
-       });
-   });
 </script>
 </div>
 </div><h4>Demo</h4>

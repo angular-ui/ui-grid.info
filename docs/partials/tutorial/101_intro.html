@@ -62,12 +62,12 @@ while executing very complex features only when you need them.</p>
  </li>
 </ul><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-16" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-16" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-17"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-16" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-16">
   <div ng-controller="MainCtrl">
-    <div ui-grid="{ data: myData }" class="grid"></div>
+    <div id="grid1" ui-grid="{ data: myData }" class="grid"></div>
   </div>
 </script>
 </div>
@@ -108,6 +108,40 @@ while executing very complex features only when you need them.</p>
       }
   ];
   }]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-17"></pre>
+<script type="text/ng-template" id="scenario.js-17">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  it('grid should have three visible rows', function () {
+    gridTestUtils.expectRowCount( 'grid1', 3 );
+  });
+
+  it('grid should have four visible columns', function () {
+    gridTestUtils.expectHeaderColumnCount( 'grid1', 4 );
+  });
+
+  it('header values should be as expected', function () {
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'First Name' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Last Name' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Company' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 3, 'Employed' );
+  });
+
+  it('first row cell values should be as expected', function () {
+    // checking individual cells usually gives a better stack trace when there are errors
+    gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Cox' );
+    gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'Carney' );
+    gridTestUtils.expectCellValueMatch( 'grid1', 0, 2, 'Enormo' );
+    gridTestUtils.expectCellValueMatch( 'grid1', 0, 3, 'true' );
+  });
+
+  it('next two row cell values should be as expected', function () {
+    // checking in bulk is convenient to write, but can be less informative with errors
+    gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'false' ] );
+    gridTestUtils.expectRowValuesMatch( 'grid1', 2, [ 'Nancy', 'Waters', 'Fuelton', 'false' ] );
+  });
 </script>
 </div>
 </div><h4>Demo</h4>

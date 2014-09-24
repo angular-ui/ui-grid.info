@@ -1,4 +1,4 @@
-/*! ui-grid - v2.0.12-g1e20b74-59c39db - 2014-09-24
+/*! ui-grid - v2.0.12-g1e20b74-7ca66b6 - 2014-09-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1123,12 +1123,6 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
  </div>
  </doc:source>
  <doc:scenario>
- it('should apply the right class to the element', function () {
-      element(by.css('.blah')).getCssValue('border')
-        .then(function(c) {
-          expect(c).toContain('1px solid');
-        });
-    });
  </doc:scenario>
  </doc:example>
  */

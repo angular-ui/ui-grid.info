@@ -128,7 +128,7 @@ NG_DOCS={
       "id": "ui.grid.directive:uiGridColumnMenu",
       "shortName": "uiGridColumnMenu",
       "type": "directive",
-      "keywords": "$scope allows angular api app apply as blah border break by can class controller css default directive do doesn element elements expect expressions function getcssvalue grid ie8 in interpolate it mainctrl module ng-controller right should shown solid style the then this to tocontain true ui ui-grid-menu us var"
+      "keywords": "$scope allows angular api app as break by can controller default directive do doesn elements expressions function grid ie8 in interpolate it mainctrl module ng-controller shown style this to true ui ui-grid-menu us var"
     },
     {
       "section": "api",
@@ -136,6 +136,20 @@ NG_DOCS={
       "shortName": "uiGridStyle",
       "type": "directive",
       "keywords": "$scope allows am angular api app apply as blah border box break by can class controller css default directive do doesn element elements expect expressions function getcssvalue grid ie8 in interpolate it mainctrl module mystyle ng-controller right should solid style the then this to tocontain ui ui-grid-style us var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.e2eTestLibrary",
+      "shortName": "e2eTestLibrary",
+      "type": "overview",
+      "keywords": "also api are associated be e2etestlibrary end functions grid it may necessary overview test the these to tutorial ui update updated whenever"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.e2eTestLibrary.api:gridTest",
+      "shortName": "gridTest",
+      "type": "service",
+      "keywords": "about adding all also alternatively although an and any api are array as ascending associated be box boxes break browser but by can cancel cancelfilterincolumn cancels cell cellvalue cellvalue1 cellvalue3 change changed check checks click clickcolumnmenu clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickheadercell clicks col colnumber cols column columns constant could count cumbersome data datacell dataset descending develop does doing e2etestlibrary each easily element end enter enterfilterincolumn enters error every exists expect expectcellvaluematch expectcolumncount expectedcol expectednumcols expectednumrows expectedrow expectedvalue expectedvaluearray expectfilterboxincolumn expectfootercellvaluematch expectfootercolumncount expectheadercellvaluematch expectheadercolumncount expectrowcount expectrowvaluesmatch feels fetchcol fetchrow filter filtervalue find finds footer footercell footervalue for fragile from functional functions given go greater grid gridid gridtestutils has have header headercell headervalue helpers i18n id if in individual inspect internal into is it item less ll lots matches may meaning menu menuitemnumber menus method methods myelement mygrid necessary none not note number numbers numerical of on only option or ordering quite reason recommended regex regexes remove rendered result return returns row rows script second see service shift-clicks shiftclickheadercell simple small some sort specified standard string strings takes test tests text than that the therefore these this to tutorial typically ui ui-grid update updated used useful using usually value values verify virtualisation visible want when whenever which will with within would wrap write you"
     },
     {
       "section": "api",
@@ -506,21 +520,21 @@ NG_DOCS={
       "id": "101_intro",
       "shortName": "101 Intro to UI-Grid",
       "type": "overview",
-      "keywords": "$scope actually add allows an and angular angularjs app are around array as asc basic carney cell cells change class columns com company complex comveyer contents controller core cox create css custom data dependencies dependency desc designed dimensions directive directives employed enormo example executing extra false features filtering firstname focused fuelton function functions get googleapis grid header height href html http in index intro is it js json keeps knows label lastname layered lorraine main mainctrl margin module modules most mydata mygrid name nancy need ng-controller ng-grid no none object of on only other overview possible properties property referencing rel release rendered rows script small so some sorting specify src states steps style stylesheet templates than the them this three to translations true tutorial ui ui-grid uigrid use var very viewport visible waters we when while width wise with written you your"
+      "keywords": "$scope actually add allows an and angular angularjs app are around array as asc basic be better bulk but can carney cell cells change checking class columns com company complex comveyer contents controller convenient core cox create css custom data dependencies dependency desc designed dimensions directive directives employed enormo errors example executing expectcellvaluematch expected expectheadercellvaluematch expectheadercolumncount expectrowcount expectrowvaluesmatch extra false features filtering first firstname focused four fuelton function functions get gives googleapis grid grid1 gridtestutils have header height href html http id in index individual informative intro is it js json keeps knows label last lastname layered less lorraine main mainctrl margin module modules most mydata mygrid name nancy need next ng-controller ng-grid no none object of on only other overview possible properties property referencing rel release rendered require row rows scenario script should small so some sorting spec specify src stack states steps style stylesheet templates than the them there this three to trace translations true tutorial two ui ui-grid uigrid use usually values var very viewport visible waters we when while width wise with write written you your"
     },
     {
       "section": "tutorial",
       "id": "102_sorting",
       "shortName": "102 Sorting",
       "type": "overview",
-      "keywords": "$http $scope accessing action alert alert-warning allows an and angular app app2 application asc at be below but by can class click column columndefs columns company controller css data def default defining definitions desc direction disabled enable enablesorting example false feature field first flag for function gender get gets grid gridoptions has header height html id if in include index index2 inital-sort initial is it js json last level main main2 mainctrl menu module multiple must name ng-controller nganimate not on options order overview priority property required rows says see set setting shift-click shift-clicking slide sort sorted sorting span8 state sub-property success that the then third to true tutorial ui ui-grid up var want way what which width you your"
+      "keywords": "$http $scope accessing action alert alert-warning alexander alisha allows an and angular app app2 application as asc at be below beryl but by can class claudine click clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickheadercell clicking column columndefs columns company controller css data def default defining definitions desc describe direction disabled enable enablesorting ethel example expectcellvaluematch expected expectheadercellvaluematch expectheadercolumncount false feature field first flag foley for fry function gender get gets grid grid1 grid2 gridoptions gridtestutils has have header height html id if in include index index2 inital-sort initial is it js json key last level main main2 mainctrl menu module multiple must myers name neal ng-controller nganimate no not on options order original overview page parsons price priority property remove require required return reverse rice rows says scenario second see set setting shift shift-click shift-clicking shiftclickheadercell should slide sort sorted sorting span8 spec state sub-property success that the then third three to true tutorial two ui ui-grid unsorted up values var velma visible want way what which width woods you your yvonne"
     },
     {
       "section": "tutorial",
       "id": "103_filtering",
       "shortName": "103 Filtering",
       "type": "overview",
-      "keywords": "$http $scope above accomplished add age alias all allows also an and angular any app are array as asterisks at attribute based basic be below best booleanresult built-in by can cellvalue chosen class column columndefs columns comes company compare condition conditions conditon contains contents controller create css custom data def default defined defines digits disabled each element elements email enablefiltering ends ends_with even everything example examples except fact false field fields filter filtered filtering filters flag following for function fuzz-match gender get gets greater greater_than grid gridoptions guess has height how html if in index indexof input instead introduced is it javascript js json just less less_than level logic main mainctrl makes male matching may module more multiple mycustomsorter name ng-controller nganimate no number object occasionally of off on one options or out out-of-the-box overview own passes phone placeholder pre-populated previous property provide replace return returns row rows run same search see set setting setup several should show signature simple single specifies specify strip strippedvalue success such supported sure take term than that the third this to true tutorial two ui ui-grid uigridconstants use var want where which width wildcard will with xxx you your"
+      "keywords": "$http $scope above accomplished add age alias all allows also an and angular any app are array as asterisks at attribute automatically based basic be below best bishop booleanresult broken built-in by can cancel cancelfilterincolumn carr cellvalue chosen class clay column columndefs columns com comes company compare condition conditions conditon contains contents controller create css custom data def default defined defines describe digits disabled do each element elements email enablefiltering ends ends_with enterfilterincolumn even everything example examples except expectcellvaluematch expectfilterboxincolumn expectheadercolumncount expectrowcount fact false field fields filter filtered filtering filters first flag following for function fuzz-match gender get gets greater greater_than grid grid1 gridoptions gridtestutils guess has have height how html id if in index indexof input instead introduced is it javascript js json just less less_than level logic main mainctrl makes male matching may mixers module more multiple mycustomsorter name ng-controller nganimate no now number object occasionally of off on one options or out out-of-the-box overview own page passes phone placeholder pre-populated previous property provide replace require return returns row rows run same scenario search see set setting setup several should show signature simple single six spec specifies specify strip strippedvalue success such supported sure take term terry than that the third this to true tutorial two ui ui-grid uigridconstants use var visible want where which width wildcard will with xxx you your"
     },
     {
       "section": "tutorial",
@@ -534,14 +548,14 @@ NG_DOCS={
       "id": "105_footer",
       "shortName": "105 Footer",
       "type": "overview",
-      "keywords": "$scope age agemax agemin aggregation aggregationtype aggregationtypes also an angular app are avg background-color balance be can class column columndefs controller count create css custom customcelltemplate data display displayed displayname each enablefiltering enum ever field footer footercelltemplate for function functions grid gridoptions height html if in index inject is js logic main mainctrl max min module name need ng-controller option or order overview own parseint pass person push random red row set showfooter showfooterrow style sum supported supports template the to true tutorial ui ui-grid ui-grid-cell-contents uigridconstants use var want what which white width you your"
+      "keywords": "$http $scope address age agemax agemin aggregation aggregationtype aggregationtypes also an and angular app are avg background-color be can class column columndefs columns controller count create css custom customcelltemplate data display displayed displayname each enablefiltering enterfilterincolumn enum ever expect expectfootercellvaluematch expectfootercolumncount expectheadercolumncount field filter footer footercelltemplate footers for function functions get grid grid1 gridoptions gridtestutils have height html id if in index inject is it js json logic main mainctrl max min module name need ng-controller option or order overview own pass recalculate red require row rows scenario set should showfooter showfooterrow six spec specific street style success sum supported supports template the to total true tutorial ui ui-grid ui-grid-cell-contents uigridconstants use values var visible want what which white width with you your"
     },
     {
       "section": "tutorial",
       "id": "106_binding",
       "shortName": "106 Binding examples",
       "type": "overview",
-      "keywords": "$scope address and angular app array ave be binding can characters city class coldef columndefs complex controller cox css data dove edit edited element enablecelledit enablesorting examples field first-name fistname friend0 friends function getzip grid gridoptions height html in index js laurel main mainctrl module name nested ng-controller not note object overview properties property shows special supports that the this to true tutorial two-way ui ui-grid ui-grid-edit var width with zip"
+      "keywords": "$scope address and angular app array as ave be binding can characters city class coldef columndefs columns complex controller cox css data dove edit edited element enablecelledit enablesorting examples expected expectheadercellvaluematch expectheadercolumncount expectrowcount expectrowvaluesmatch field first first-name firstname four friend friend0 friends function get getzip grid grid1 gridoptions gridtestutils have headers height html id in index it js laurel main mainctrl module name nested ng-controller not note object one overview properties property require row scenario should shows spec special specified supports that the this to true tutorial two-way ui ui-grid ui-grid-edit values var visible width with zip"
     },
     {
       "section": "tutorial",
@@ -555,21 +569,21 @@ NG_DOCS={
       "id": "109_multiple_grids",
       "shortName": "109 Multiple Grids per Page",
       "type": "overview",
-      "keywords": "$http $scope angular app class controller css data function get grid gridoptions1 gridoptions2 grids height html index js json main mainctrl module multiple name ng-controller on overview page per row single span4 success tutorial ui ui-grid using var width"
+      "keywords": "$http $scope all and angular app at by check class click columnmenu columns controller correct count css data element expect expectheadercolumncount four function get grid grid1 grid2 gridoptions1 gridoptions2 grids gridtestutils has have headercell height html id in index is it item items js json least list main mainctrl menu menuitems menus module multiple name ng-controller on over overview page per repeater require row scenario should show showing single somewhere span4 spec success three tobegreaterthan tutorial ui ui-grid ui-grid-column-menu ui-grid-column-menu-button using var visible width"
     },
     {
       "section": "tutorial",
       "id": "110_grid_in_modal",
       "shortName": "110 Grid in a Modal",
       "type": "overview",
-      "keywords": "$compile $http $rootscope $scope absolute angular app auto background-color body bold border btn btn-success class close color controller css data element elm factory fafafa fixed font-weight function get grid gridoptions height hidegrid href html if in index js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend remove return right showmodal solid success top transform translatex translatey true tutorial ui ui-grid using var width z-index"
+      "keywords": "$compile $http $rootscope $scope absolute and angular app auto background-color body bold border btn btn-success button by class click close color columns controller css data element elm enersol ethel expectheadercolumncount expectrowvaluesmatch factory fafafa female fixed font-weight function get grid grid1 gridoptions gridtestutils height hidegrid href html id if in index it js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend price remove require return right scenario should show showbutton showmodal solid some spec success three top transform translatex translatey true tutorial ui ui-grid using var width with z-index"
     },
     {
       "section": "tutorial",
       "id": "111_cellClass",
       "shortName": "111 CellClass",
       "type": "overview",
-      "keywords": "$http $scope and angular app assigned background background-color be blue by can cellclass class click col color colrenderindex column columndef columndefs company controller css data disabled each enablesorting equals example field first for function get getcellvalue grid gridoptions has header height html if in index it js json main mainctrl module name ng-controller nganimate on or override overview red return returning row rowrenderindex sort sorting success text that the third this to true tutorial ui ui-grid var velity we width will yellow"
+      "keywords": "$http $scope and angular app assigned background background-color be blue can cellclass class col color colrenderindex column columndef columndefs columns company controller css data datacell each enablesorting equals example expect expectcellvaluematch expectheadercolumncount field first for formatted function get getcellvalue getcssvalue grid grid1 gridoptions gridtestutils has have height html id if in index it js json main mainctrl module name ng-controller nganimate on one or override overview red require return returning rgba row rowrenderindex scenario should spec success text the this to toequal true tutorial two ui ui-grid var velity visible we which width will yellow"
     },
     {
       "section": "tutorial",
@@ -752,6 +766,13 @@ NG_DOCS={
       "shortName": "402 Grid Scrolling",
       "type": "overview",
       "keywords": "$http $scope about address age agetemplate angular app can celltemplate city class columndefs company controller css data displayname email enablecelledit event field friend friends function get grid gridapi gridoptions height horizontally html id if in index is isscrollinghorizontally isscrollingvertically js json main mainctrl module name ng-controller onregisterapi overview phone property reference scroll scrolling see state street success to true tutorial ui ui-grid ui-grid-cell-contents var vertically width you zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "403_end_to_end_testing",
+      "shortName": "403 End to End Testing",
+      "type": "overview",
+      "keywords": "abstracts and api are as assist at available be can cell check checking clicking com complex could counting declaring documentation e2e e2etestlibrary each elements end expectrowcount file folder for functions get git github grid gridtest gridtestutil gridtestutils held helper https in involves is it itself js key latest library methods mygrid of or order out overview potential project protractor provided provides refer require requires rows scenario some specific specified such synch test testing tests that the then there therefore this to top tutorial use value var version with within worthwhile you your"
     }
   ],
   "apis": {

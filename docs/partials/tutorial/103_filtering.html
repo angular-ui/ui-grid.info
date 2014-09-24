@@ -40,10 +40,10 @@ except digits to compare to the search term.</p>
 The elements of this array are the same as the contents of the <code>filter</code> object in all the previous examples. In fact, <code>filter: { term: 'xxx' }</code> is just an alias 
 for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an example.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-18" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-21"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-18" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-18">
+<pre class="prettyprint linenums" ng-set-text="index.html-20" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-20">
   <div ng-controller="MainCtrl">
     You can use asterisks to fuzz-match, i.e. use "*z*" as your filter to show any row where that column contains a "z".
     <br>
@@ -51,7 +51,7 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
     <strong>Note:</strong> The third column has filtering disabled.
     <br>
     <br>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
 </div>
@@ -119,6 +119,42 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
   }]);
 </script>
 </div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-21"></pre>
+<script type="text/ng-template" id="scenario.js-21">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  
+  describe('first grid on the page, filtered by male by default', function() {
+    it('grid should have six visible columns', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 6 );
+    });
+
+    it('filter on 4 columns, filter with greater than/less than on one, one with no filter', function () {
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 0, 1 );
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 1, 1 );
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 2, 0 );
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 3, 1 );
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 4, 1 );
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 5, 2 );
+    });
+
+    it('third row should be Bishop Carr - will be Terry Clay if filtering broken', function () {
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'Bishop Carr' );
+    });
+    
+    it('cancel filter on gender column, should now see Terry Clay in third row', function() {
+      gridTestUtils.cancelFilterInColumn( 'grid1', 1 );        
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'Terry Clay' );
+    });
+
+    it('filter on email column, should automatically do "ends with"', function() {
+      gridTestUtils.cancelFilterInColumn( 'grid1', 1 );        
+      gridTestUtils.enterFilterInColumn( 'grid1', 3, 'mixers.com' );        
+      gridTestUtils.expectRowCount( 'grid1', 2 );
+    });
+  });
+</script>
+</div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-18" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-20" ng-eval-javascript="app.js"></div></div>
 </div>

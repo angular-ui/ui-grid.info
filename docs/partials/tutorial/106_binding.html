@@ -7,12 +7,12 @@
 
 <p>Note that a function can not be edited.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-21" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-25" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-26"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-21" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-21">
+<pre class="prettyprint linenums" ng-set-text="index.html-25" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-25">
   <div ng-controller="MainCtrl">
-    <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+    <div id="grid1" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
   </div>
 </script>
 </div>
@@ -35,7 +35,7 @@
   $scope.gridOptions = {
           enableSorting: true,
           columnDefs: [
-            { name:'fistName', field: 'first-name' },
+            { name:'firstName', field: 'first-name' },
             { name:'1stFriend', field: 'friends[0]' },
             { name:'city', field: 'address.city'},
             { name:'getZip', field: 'getZip()', enableCellEdit:false}
@@ -52,6 +52,27 @@
   }]);
 </script>
 </div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-26"></pre>
+<script type="text/ng-template" id="scenario.js-26">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  it('grid should have one visible row and four columns', function () {
+    gridTestUtils.expectRowCount( 'grid1', 1 );
+    gridTestUtils.expectHeaderColumnCount( 'grid1', 4 );
+  });
+
+  it('headers as specified', function () {
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'First Name' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, '1st Friend' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'City' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 3, 'Get Zip' );
+  });
+
+  it('row values should be as expected', function () {
+    gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'friend0', 'Laurel', '39565' ]);
+  });
+</script>
+</div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-21" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-25" ng-eval-javascript="app.js"></div></div>
 </div>

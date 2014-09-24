@@ -1,0 +1,329 @@
+<h1><code ng:non-bindable="">gridTest</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.e2eTestLibrary</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>End to end test functions.  Whenever these are updated, it may also be necessary
+to update the associated tutorial.</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="cancelFilterInColumn">cancelFilterInColumn(gridId, colNumber)</h3>
+<div class="cancelfilterincolumn"><p>Cancels the filter in a column  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to cancel the filter in</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.cancelFilterInColumn('myGrid', 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="clickColumnMenu">clickColumnMenu(gridId, colNumber, menuItemNumber)</h3>
+<div class="clickcolumnmenu"><p>Clicks on the specified option in the specified column
+menu.  Using this method is fragile, as any change to menu ordering
+will break all the tests.  For this reason it is recommended to wrap
+this into "clickColumnMenu<ItemName>" methods, each with a constant
+for the item you want to click on.  You could alternatively develop
+a method that finds a menu item by text value, but given that
+ui-grid has i18n, the text values could also change easily</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to sort on</p></li>
+<li><code ng:non-bindable="">menuItemNumber – {integer} – </code>
+<p>the number of the item in the menu that
+you want to click on</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickColumnMenu('myGrid', 0, 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="clickColumnMenuRemoveSort">clickColumnMenuRemoveSort(gridId, colNumber)</h3>
+<div class="clickcolumnmenuremovesort"><p>Clicks on the remove sort item within the specified
+column menu.  Although it feels cumbersome to write lots of individual
+"click this menu item" helpers, it is quite useful if the column menus are
+changed to not have to go to every test script and change the menu item number  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to remove the sort from</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickColumnMenuRemoveSort('myGrid', 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="clickColumnMenuSortAsc">clickColumnMenuSortAsc(gridId, colNumber)</h3>
+<div class="clickcolumnmenusortasc"><p>Clicks on the sort ascending item within the specified
+column menu.  Although it feels cumbersome to write lots of individual
+"click this menu item" helpers, it is quite useful if the column menus are
+changed to not have to go to every test script and change the menu item number  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to sort on</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickColumnMenuSortAsc('myGrid', 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="clickColumnMenuSortDesc">clickColumnMenuSortDesc(gridId, colNumber)</h3>
+<div class="clickcolumnmenusortdesc"><p>Clicks on the sort descending item within the specified
+column menu.  Although it feels cumbersome to write lots of individual
+"click this menu item" helpers, it is quite useful if the column menus are
+changed to not have to go to every test script and change the menu item number  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to sort on</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickColumnMenuSortDesc('myGrid', 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="clickHeaderCell">clickHeaderCell(gridId, colNumber)</h3>
+<div class="clickheadercell"><p>Clicks on the header of the specified column,
+which would usually result in a sort </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to click on</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickHeaderCell('myGrid', 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="dataCell">dataCell(gridId, fetchRow, fetchCol)</h3>
+<div class="datacell"><p>Internal method used to return a dataCell element
+given the grid and column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">fetchRow – {integer} – </code>
+<p>the number of the row (within the visible rows)
+that you want to return</p></li>
+<li><code ng:non-bindable="">fetchCol – {integer} – </code>
+<p>the number of the col (within the visible cols)
+that you want to return</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+myElement = gridTestUtils.dataCell('myGrid', 2, 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="enterFilterInColumn">enterFilterInColumn(gridId, colNumber, filterValue)</h3>
+<div class="enterfilterincolumn"><p>Enters a filter in a column  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to enter the filter in</p></li>
+<li><code ng:non-bindable="">filterValue – {string} – </code>
+<p>the value you want to enter into the filter</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.cancelFilterInColumn('myGrid', 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectCellValueMatch">expectCellValueMatch(gridId, expectedRow, expectedCol, expectedValue)</h3>
+<div class="expectcellvaluematch"><p>Checks that a cell matches the specified value,
+takes a regEx or a simple string.  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedRow – {integer} – </code>
+<p>the number of the row (within the visible rows)
+that you want to check the value of</p></li>
+<li><code ng:non-bindable="">expectedCol – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to check the value of</p></li>
+<li><code ng:non-bindable="">expectedValue – {string} – </code>
+<p>a regex or string of the value you expect in that cell</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectCellValueMatch('myGrid', 0, 2, 'CellValue');
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectFilterBoxInColumn">expectFilterBoxInColumn(gridId, colNumber, count)</h3>
+<div class="expectfilterboxincolumn"><p>Checks that a filter box exists in the specified column  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to verify the filter box is in</p></li>
+<li><code ng:non-bindable="">count – {integer} – </code>
+<p>the number filter boxes you expect - 0 meaning none, 1 meaning
+a standard filter, 2 meaning a numerical filter with greater than / less than.</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectFilterBoxInColumn('myGrid', 0, 0);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectFooterCellValueMatch">expectFooterCellValueMatch(gridId, expectedCol, expectedValue)</h3>
+<div class="expectfootercellvaluematch"><p>Checks that a footer cell matches the specified value,
+takes a regEx or a simple string.  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedCol – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to check the value of</p></li>
+<li><code ng:non-bindable="">expectedValue – {string} – </code>
+<p>a regex or string of the value you expect in that footer</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectFooterCellValueMatch('myGrid', 2, 'FooterValue');
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectFooterColumnCount">expectFooterColumnCount(gridId, expectedNumCols)</h3>
+<div class="expectfootercolumncount"><p>Checks that a grid footer has the specified number of rows.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedNumCols – {integer} – </code>
+<p>the number of visible columns you expect the
+grid to have</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectColumnCount('myGrid', 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectHeaderCellValueMatch">expectHeaderCellValueMatch(gridId, expectedCol, expectedValue)</h3>
+<div class="expectheadercellvaluematch"><p>Checks that a header cell matches the specified value,
+takes a regEx or a simple string.  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedCol – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to check the value of</p></li>
+<li><code ng:non-bindable="">expectedValue – {string} – </code>
+<p>a regex or string of the value you expect in that header</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectHeaderCellValueMatch('myGrid', 2, 'HeaderValue');
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectHeaderColumnCount">expectHeaderColumnCount(gridId, expectedNumCols)</h3>
+<div class="expectheadercolumncount"><p>Checks that a grid header has the specified number of columns.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedNumCols – {integer} – </code>
+<p>the number of visible columns you expect the
+grid to have</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectHeaderColumnCount('myGrid', 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectRowCount">expectRowCount(gridId, expectedNumRows)</h3>
+<div class="expectrowcount"><p>Checks that a grid has the specified number of rows. Note
+that this only returns the number of rendered rows, and the grid does
+row virtualisation - that is that the browser can only see the rendered
+rows, not all the rows in the dataset.  This method is useful when doing
+functional tests with small numbers of data, but typically with numbers
+greater than about 10 you'll find that some of the rows are not rendered
+and therefore an error is given.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedNumRows – {integer} – </code>
+<p>the number of visible rows you expect the
+grid to have</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectRowCount('myGrid', 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectRowValuesMatch">expectRowValuesMatch(gridId, expectedRow, expectedValueArray)</h3>
+<div class="expectrowvaluesmatch"><p>Checks that a row matches the specified values,
+takes an array of regExes or simple strings.  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedRow – {integer} – </code>
+<p>the number of the row (within the visible rows)
+that you want to check the value of</p></li>
+<li><code ng:non-bindable="">expectedValueArray – {array} – </code>
+<p>an array of regexes or strings of the values you expect in that row</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectRowValuesMatch('myGrid', 0, [ 'CellValue1', '^cellvalue2', 'cellValue3$' ]);
+</pre></div>
+</div>
+</li>
+<li><h3 id="footerCell">footerCell(gridId, col)</h3>
+<div class="footercell"><p>Internal method used to return a footerCell element
+given the grid and column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">col – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to return</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.headerCell('myGrid', 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="headerCell">headerCell(gridId, col)</h3>
+<div class="headercell"><p>Internal method used to return a headerCell element
+given the grid and column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">col – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to return</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.headerCell('myGrid', 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="shiftClickHeaderCell">shiftClickHeaderCell(gridId, colNumber)</h3>
+<div class="shiftclickheadercell"><p>Shift-clicks on the header of the specified column,
+which would usually result in adding a second column to the sort </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to click on</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.shiftClickHeaderCell('myGrid', 0);
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>

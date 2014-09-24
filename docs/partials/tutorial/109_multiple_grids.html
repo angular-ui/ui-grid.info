@@ -3,18 +3,18 @@
 </h1>
 <div><p>Using multiple grids on a single page</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-23" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-29"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-23" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-23">
+<pre class="prettyprint linenums" ng-set-text="index.html-28" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-28">
   <div ng-controller="MainCtrl">
     <div class="row">
       <div class="span4">
-        <div ui-grid="gridOptions1" class="grid"></div>
+        <div id="grid1" ui-grid="gridOptions1" class="grid"></div>
       </div>
       
       <div class="span4">
-        <div ui-grid="gridOptions2" class="grid"></div>
+        <div id="grid2" ui-grid="gridOptions2" class="grid"></div>
       </div>
     </div>
   </div>
@@ -50,6 +50,35 @@
   }]);
 </script>
 </div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-29"></pre>
+<script type="text/ng-template" id="scenario.js-29">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  it('grid1 should have three visible columns, grid2 has four', function () {
+    gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+    gridTestUtils.expectHeaderColumnCount( 'grid2', 4 );
+  });
+
+  it('menus should show over correct grid', function () {
+    // click on menu in grid 1
+    var headerCell = gridTestUtils.headerCell( 'grid1', 0 );
+    headerCell.element( by.css( '.ui-grid-column-menu-button' ) ).click();
+    
+    // check a menu list is showing somewhere in grid1, and has at least 2 items
+    var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ));
+    expect( columnMenu.all( by.repeater('item in menuItems') ).count() ).toBeGreaterThan(2);
+
+    // click on menu in grid 2
+    var headerCell = gridTestUtils.headerCell( 'grid2', 0 );
+    headerCell.element( by.css( '.ui-grid-column-menu-button' ) ).click();
+    
+    // check a menu list is showing somewhere in grid2, and has at least 2 items
+    var columnMenu = element( by.id( 'grid2' ) ).element( by.css( '.ui-grid-column-menu' ));
+    expect( columnMenu.all( by.repeater('item in menuItems') ).count() ).toBeGreaterThan(2);
+  });
+
+</script>
+</div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-23" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-28" ng-eval-javascript="app.js"></div></div>
 </div>
