@@ -84,7 +84,15 @@ gridApi.core.on.sortChanged( grid, sortColumns );
 </ul>
 </div>
 <div class="member event"><h2 id="Events">Events</h2>
-<ul class="events"><li><h3 id="rowsVisibleChanged">rowsVisibleChanged</h3>
+<ul class="events"><li><h3 id="filterChanged">filterChanged</h3>
+<div class="filterchanged"><p>is raised after the filter is changed.  The nature
+of the watch expression doesn't allow notification of what changed,
+so the receiver of this event will need to re-extract the filter 
+conditions from the columns.</p><div class="inline"></div>
+<div class="inline"></div>
+</div>
+</li>
+<li><h3 id="rowsVisibleChanged">rowsVisibleChanged</h3>
 <div class="rowsvisiblechanged"><p>is raised after the rows that are visible
 change.  The filtering is zero-based, so it isn't possible
 to say which rows changed (unlike in the selection feature).

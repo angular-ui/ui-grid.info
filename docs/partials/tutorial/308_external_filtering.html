@@ -1,0 +1,86 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Sometimes you want to filter data externally, either on the client using custom filter routines, or on 
+the server as part of your data retrieve.</p>
+
+<p>UI-Grid provides two functions that support this, firstly a filterChanged event that tells you when a user has
+changed their requested filter using the grid ui, and secondly a useExternalFiltering property to turn off
+the grid native filtering.</p><h2 id="Example">Example</h2>
+<div class="example"><p>In this example we suppress the internal filtering, and emulate an external filter by picking one of three 
+json files to show - one filtered by gender 'male', one filtered by gender 'female', and one not sorted.  </p>
+
+<p>To further illustrate that this is using external sorting, the external filter routine (consisting of me manually 
+editing json files) got bored of filtering after the first 10 or so rows, and deleted all other rows in the file.</p>
+
+<h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-56" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-56" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-56">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 250px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ui.grid']);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridConstants', function ($scope, $http, $interval, uiGridConstants) {
+
+      $scope.gridOptions = {
+        enableFiltering: true,
+        useExternalFiltering: true,
+        columnDefs: [
+          { name: 'name', enableFiltering: false },
+          { name: 'gender' },
+          { name: 'company', enableFiltering: false}
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+          $interval(function() {
+            $scope.gridApi.core.on.filterChanged( $scope, function() {
+              var grid = this.grid;
+              if( grid.columns[1].filters[0].term === 'male' ) {
+                $http.get('/data/100_male.json')
+                .success(function(data) {
+                  $scope.gridOptions.data = data;
+                });
+              } else if ( grid.columns[1].filters[0].term === 'female' ) {
+                $http.get('/data/100_female.json')
+                .success(function(data) {
+                  $scope.gridOptions.data = data;
+                });
+              } else {
+                $http.get('/data/100.json')
+                .success(function(data) {
+                  $scope.gridOptions.data = data;
+                });
+              }
+            });
+          }, 200, 1);
+        }
+      };
+      
+      $http.get('/data/100.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+      
+    }]);
+  </script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-56" ng-eval-javascript="app.js"></div></div>
+</div>

@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.2-ge32fd8a - 2014-09-24
+/*! ui-grid - v3.0.0-rc.2-gec2e962 - 2014-09-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -628,6 +628,21 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
           
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
             $scope.grid = uiGridCtrl.grid;
+            
+            /**
+             * @ngdoc event
+             * @name filterChanged
+             * @eventOf  ui.grid.core.api:PublicApi
+             * @description  is raised after the filter is changed.  The nature
+             * of the watch expression doesn't allow notification of what changed,
+             * so the receiver of this event will need to re-extract the filter 
+             * conditions from the columns.
+             * 
+             */
+            if (!$scope.grid.api.core.raise.filterChanged){
+              $scope.grid.api.registerEvent( 'core', 'filterChanged' );
+            }
+                        
     
             $elm.addClass($scope.col.getColClass(false));
     // shane - No need for watch now that we trackby col name
@@ -758,6 +773,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
               var filterDeregisters = [];
               angular.forEach($scope.col.filters, function(filter, i) {
                 filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
+                  uiGridCtrl.grid.api.core.raise.filterChanged();
                   uiGridCtrl.grid.refresh()
                     .then(function () {
                       if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
@@ -6468,6 +6484,16 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
   };
 
   /**
+   * @ngdoc boolean
+   * @name useExternalFiltering
+   * @propertyOf ui.grid.class:GridOptions
+   * @description False by default. When enabled, this setting suppresses the internal filtering.
+   * All UI logic will still operate, allowing filter conditions to be set and modified.
+   * 
+   * The external filter logic can listen for the `filterChange` event, which fires whenever
+   * a filter has been adjusted.
+   */
+  /**
    * @ngdoc function
    * @name searchColumn
    * @methodOf ui.grid.service:rowSearcher
@@ -6480,10 +6506,13 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
   rowSearcher.searchColumn = function searchColumn(grid, row, column, termCache) {
     var filters = [];
 
+    if (grid.options.useExternalFiltering) {
+      return true;
+    }
+    
     if (typeof(column.filters) !== 'undefined' && column.filters && column.filters.length > 0) {
       filters = column.filters;
-    }
-    else {
+    } else {
       // If filters array is not there, assume no filters for this column. 
       // This array should have been built in GridColumn::updateColumnDef.
       return true;
