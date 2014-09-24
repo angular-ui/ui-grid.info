@@ -440,6 +440,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "099_upgrading_from_2",
+      "shortName": "099 Upgrading",
+      "type": "overview",
+      "keywords": "$myscope $scope access accessible adding additional adjusting again all allowing along also an and angular api application are as associated backward base be becomes been behaviour both btn-small but button by cell cells celltemplate change changed changes choose class code column columndefs columns compatible concepts configuration controller core covers declare declared default define definition defs derived directive directives directly displayname do documentation each edit editbtn editing element elements enable enabled entity example external external-scopes faster feature features field filtering filteroptions filters for from function getexternalscopes grid gridoptions gridstyle had has have having id if in include included including inclusion individual instead integrate into is isolate kept key longer majority many may meaning module modules moved multiple must mycoldefs myscope name navigation need neither ng-click ng-grid nggrid no not now of on one only onto optionally options or overview per-column place possible present previously priority provision rather refer relevant require requires resizing rewritten row scope scopes selection separate shifted similarly single smaller some something somewhat sort sorting sortoptions stored string substantial substantially supported than that the this to tutorial type ui ui-grid ui-grid-edit ui-grid-selection update upgrade upgrading use uses using values ways when where whole widgets will wish with within would you your yourapplication"
+    },
+    {
+      "section": "tutorial",
       "id": "100_preReqs",
       "shortName": "100 Prerequisites",
       "type": "overview",
