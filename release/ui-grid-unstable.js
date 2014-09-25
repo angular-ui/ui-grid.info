@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10 - 2014-09-25
+/*! ui-grid - v3.0.0-rc.10-7f6bb78 - 2014-09-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7939,7 +7939,7 @@ module.filter('px', function() {
             last: 'Sidste side'
           },
           menu:{
-            text: 'Vælg kolonner:',
+            text: 'Vælg kolonner:'
           },
           column: {
             hide: 'Skjul kolonne'
@@ -8181,7 +8181,7 @@ module.filter('px', function() {
           remove: 'Verwijder sortering'
         },
         column: {
-          hide: 'Kolom te verbergen'
+          hide: 'Verberg kolom'
         }
       });
       return $delegate;
@@ -8292,6 +8292,43 @@ return $delegate;
 }]);
 })();
 
+(function () {
+  angular.module('ui.grid').config(['$provide', function($provide) {
+    $provide.decorator('i18nService', ['$delegate', function($delegate) {
+      $delegate.add('sv', {
+        aggregate: {
+          label: 'artiklar'
+        },
+        groupPanel: {
+          description: 'Dra en kolumnrubrik hit och släpp den för att gruppera efter den kolumnen.'
+        },
+        search: {
+          placeholder: 'Sök...',
+          showingItems: 'Visar artiklar:',
+          selectedItems: 'Valda artiklar:',
+          totalItems: 'Antal artiklar:',
+          size: 'Sidstorlek:',
+          first: 'Första sidan',
+          next: 'Nästa sida',
+          previous: 'Föregående sida',
+          last: 'Sista sidan'
+        },
+        menu: {
+          text: 'Välj kolumner:'
+        },
+        sort: {
+          ascending: 'Sortera stigande',
+          descending: 'Sortera fallande',
+          remove: 'Inaktivera sortering'
+        },
+        column: {
+          hide: 'Göm kolumn'
+        }
+      });
+      return $delegate;
+    }]);
+  }]);
+})();
 /**
  * @ngdoc overview
  * @name ui.grid.i18n
