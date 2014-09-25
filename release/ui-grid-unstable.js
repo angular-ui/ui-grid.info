@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-3f2890d - 2014-09-25
+/*! ui-grid - v3.0.0-rc.10-08018ef - 2014-09-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2682,6 +2682,18 @@ angular.module('ui.grid')
    */
   self.api.registerMethod( 'core', 'refreshRows', this.refreshRows );
 
+  /**
+   * @ngdoc function
+   * @name handleWindowResize
+   * @methodOf ui.grid.core.api:PublicApi
+   * @description Trigger a grid resize, normally this would be picked
+   * up by a watch on window size, but in some circumstances it is necessary
+   * to call this manually
+   * @returns {promise} promise that is resolved when render completes?
+   * 
+   */
+  self.api.registerMethod( 'core', 'handleWindowResize', this.handleWindowResize );
+
 
   /**
    * @ngdoc function
@@ -2834,11 +2846,18 @@ angular.module('ui.grid')
       rowHeaderCol.renderContainer = 'left';
     }
 
-    self.columnBuilders[0](colDef,rowHeaderCol,self.gridOptions)
+    // relies on the default column builder being first in array, as it is instantiated
+    // as part of grid creation
+    self.columnBuilders[0](colDef,rowHeaderCol,self.options)
       .then(function(){
         rowHeaderCol.enableFiltering = false;
         rowHeaderCol.enableSorting = false;
         self.rowHeaderColumns.push(rowHeaderCol);
+        self.buildColumns()
+          .then( function() {
+            self.preCompileCellTemplates();
+            self.handleWindowResize();
+          });
       });
   };
 
@@ -2856,12 +2875,6 @@ angular.module('ui.grid')
     var builderPromises = [];
     var offset = self.rowHeaderColumns.length;
 
-    //add row header columns to the grid columns array
-    angular.forEach(self.rowHeaderColumns, function (rowHeaderColumn) {
-      offset++;
-      self.columns.push(rowHeaderColumn);
-    });
-
     // Synchronize self.columns with self.options.columnDefs so that columns can also be removed.
     if (self.columns.length > self.options.columnDefs.length) {
       self.columns.forEach(function (column, index) {
@@ -2870,6 +2883,13 @@ angular.module('ui.grid')
         }
       });
     }
+
+    //add row header columns to the grid columns array _after_ columns without columnDefs have been removed
+    angular.forEach(self.rowHeaderColumns, function (rowHeaderColumn) {
+      offset++;
+      self.columns.unshift(rowHeaderColumn);
+    });
+
 
     self.options.columnDefs.forEach(function (colDef, index) {
       self.preprocessColDef(colDef);
@@ -4656,6 +4676,7 @@ angular.module('ui.grid')
 
     //use field if it is defined; name if it is not
     self.field = (colDef.field === undefined) ? colDef.name : colDef.field;
+    self.name = colDef.name;
 
     // Use colDef.displayName as long as it's not undefined, otherwise default to the field name
     self.displayName = (colDef.displayName === undefined) ? gridUtil.readableColumnName(colDef.name) : colDef.displayName;
@@ -7023,7 +7044,7 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 function getWidthOrHeight( elem, name, extra ) {
   // Start with offset property, which is equivalent to the border-box value
   var valueIsBorderBox = true,
-          val = name === 'width' ? elem.offsetWidth : elem.offsetHeight,
+          val,
           styles = getStyles(elem),
           isBorderBox = styles['boxSizing'] === 'border-box';
 
@@ -7939,7 +7960,7 @@ module.filter('px', function() {
             last: 'Sidste side'
           },
           menu:{
-            text: 'Vælg kolonner:',
+            text: 'Vælg kolonner:'
           },
           column: {
             hide: 'Skjul kolonne'
@@ -8181,7 +8202,7 @@ module.filter('px', function() {
           remove: 'Verwijder sortering'
         },
         column: {
-          hide: 'Kolom te verbergen'
+          hide: 'Verberg kolom'
         }
       });
       return $delegate;
