@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.8 - 2014-09-25
+/*! ui-grid - v3.0.0-rc.9-0b9ae40 - 2014-09-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -350,7 +350,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
             // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
             // Get the column menu right padding
-            var paddingRight = parseInt(angular.element($scope.menu).css('padding-right'), 10);
+            var paddingRight = parseInt(gridUtil.getStyles(angular.element($scope.menu)[0])['padding-right'], 10);
 
             // $log.debug('position', left + ' + ' + width + ' - ' + myWidth + ' + ' + paddingRight);
 
@@ -6943,7 +6943,6 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
 var module = angular.module('ui.grid');
 
-
 function getStyles (elem) {
   return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
 }
@@ -7079,6 +7078,8 @@ var uidPrefix = 'uiGrid-';
 module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateCache', '$timeout', '$injector', '$q', 'uiGridConstants',
   function ($log, $window, $document, $http, $templateCache, $timeout, $injector, $q, uiGridConstants) {
   var s = {
+
+    getStyles: getStyles,
 
     /**
      * @ngdoc method
