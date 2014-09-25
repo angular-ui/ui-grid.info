@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-7f6bb78 - 2014-09-25
+/*! ui-grid - v3.0.0-rc.10-3f2890d - 2014-09-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7939,7 +7939,7 @@ module.filter('px', function() {
             last: 'Sidste side'
           },
           menu:{
-            text: 'Vælg kolonner:'
+            text: 'Vælg kolonner:',
           },
           column: {
             hide: 'Skjul kolonne'
@@ -8181,7 +8181,7 @@ module.filter('px', function() {
           remove: 'Verwijder sortering'
         },
         column: {
-          hide: 'Verberg kolom'
+          hide: 'Kolom te verbergen'
         }
       });
       return $delegate;
