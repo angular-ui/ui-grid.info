@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-ff41311 - 2014-09-26
+/*! ui-grid - v3.0.0-rc.10-7ccd3cc - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2835,7 +2835,7 @@ angular.module('ui.grid')
   Grid.prototype.addRowHeaderColumn = function addRowHeaderColumn(colDef) {
     var self = this;
     //self.createLeftContainer();
-    var rowHeaderCol = new GridColumn(colDef, self.rowHeaderColumns.length + 1, self);
+    var rowHeaderCol = new GridColumn(colDef, self.rowHeaderColumns.length, self);
     rowHeaderCol.isRowHeader = true;
     if (self.isRTL()) {
       self.createRightContainer();
@@ -2888,6 +2888,11 @@ angular.module('ui.grid')
     angular.forEach(self.rowHeaderColumns, function (rowHeaderColumn) {
       offset++;
       self.columns.unshift(rowHeaderColumn);
+      
+      // renumber any columns already there, as cellNav relies on cols[index] === col.index
+      self.columns.forEach(function(column, index){
+        column.index = index;
+      });
     });
 
 
@@ -6209,7 +6214,8 @@ angular.module('ui.grid')
            * @name cellTemplate
            * @propertyOf ui.grid.class:GridOptions.columnDef
            * @description a custom template for each cell in this column.  The default
-           * is ui-grid/uiGridCell
+           * is ui-grid/uiGridCell.  If you are using the cellNav feature, this template
+           * must contain a div that can receive focus.
            *
            */
           if (!colDef.cellTemplate) {
@@ -9068,9 +9074,9 @@ return $delegate;
         /**
          * @ngdoc method
          * @methodOf ui.grid.cellNav.service:uiGridCellNavService
-         * @name scrollVerticallyTo
-         * @description Scroll the grid vertically such that the specified
-         * row is in view
+         * @name scrollTo
+         * @description Scroll the grid such that the specified
+         * row and column is in view
          * @param {Grid} grid the grid you'd like to act upon, usually available
          * from gridApi.grid
          * @param {object} $scope a scope we can broadcast events from
@@ -9078,20 +9084,39 @@ return $delegate;
          * @param {object} colDef to make visible
          */
         scrollTo: function (grid, $scope, rowEntity, colDef) {
-          var args = {};
+          var gridRow = null, gridCol = null;
           
           if ( rowEntity !== null ){
-            var row = grid.getRow(rowEntity);
-            if ( row ) { 
-              args.y = { percentage: row.index / grid.renderContainers.body.visibleRowCache.length }; 
-            }
+            gridRow = grid.getRow(rowEntity);
           }
           
           if ( colDef !== null ){
-            var col = grid.getColumn(colDef.name ? colDef.name : colDef.field);
-            if ( col ) {
-              args.x = { percentage: this.getLeftWidth(grid, col.index) / this.getLeftWidth(grid, grid.renderContainers.body.visibleColumnCache.length - 1) };              
-            }
+            gridCol = grid.getColumn(colDef.name ? colDef.name : colDef.field);
+          }
+          this.scrollToInternal(grid, $scope, gridRow, gridCol);
+        },
+        
+
+        /**
+         * @ngdoc method
+         * @methodOf ui.grid.cellNav.service:uiGridCellNavService
+         * @name scrollToInternal
+         * @description Like scrollTo, but takes gridRow and gridCol
+         * @param {Grid} grid the grid you'd like to act upon, usually available
+         * from gridApi.grid
+         * @param {object} $scope a scope we can broadcast events from
+         * @param {GridRow} gridRow row to make visible
+         * @param {GridCol} gridCol column to make visible
+         */
+        scrollToInternal: function( grid, $scope, gridRow, gridCol ){
+          var args = {};
+          
+          if ( gridRow !== null ){
+            args.y = { percentage: gridRow.index / grid.renderContainers.body.visibleRowCache.length }; 
+          }
+          
+          if ( gridCol !== null ){
+            args.x = { percentage: this.getLeftWidth(grid, gridCol.index) / this.getLeftWidth(grid, grid.renderContainers.body.visibleColumnCache.length - 1) };              
           }
           
           if ( args.y || args.x ){
@@ -9255,6 +9280,7 @@ return $delegate;
             var div = $elm.find('div');
             div[0].focus();
             div.attr("tabindex", 0);
+            $scope.grid.queueRefresh();
           }
 
         }
