@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-a2f60ef - 2014-09-26
+/*! ui-grid - v3.0.0-rc.10-f69fd39 - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11835,7 +11835,7 @@ return $delegate;
           }
 
           // Get the new width
-          var newWidth = col.drawnWidth + xDiff;
+          var newWidth = parseInt(col.drawnWidth + xDiff, 10);
 
           // If the new width is less than the minimum width, make it the minimum width
           if (col.colDef.minWidth && newWidth < col.colDef.minWidth) {
@@ -11953,7 +11953,7 @@ return $delegate;
             maxWidth = col.colDef.maxWidth;
           }
 
-          col.colDef.width = maxWidth;
+          col.colDef.width = parseInt(maxWidth, 10);
           
           // All other columns because fixed to their drawn width, if they aren't already
           resizeAroundColumn(col);
