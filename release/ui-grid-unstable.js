@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11 - 2014-09-26
+/*! ui-grid - v3.0.0-rc.11-4f1474b - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2221,7 +2221,7 @@ angular.module('ui.grid')
       // Extend options with ui-grid attribute reference
       self.grid = gridClassFactory.createGrid($scope.uiGrid);
       $elm.addClass('grid' + self.grid.id);
-      self.grid.rtl = $elm.css('direction') === 'rtl';
+      self.grid.rtl = gridUtil.getStyles($elm[0])['direction'] === 'rtl';
 
 
       //add optional reference to externalScopes function to controller
