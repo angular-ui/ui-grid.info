@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-f69fd39 - 2014-09-26
+/*! ui-grid - v3.0.0-rc.10-399ea86 - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -698,7 +698,7 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             // Long-click (for mobile)
             var cancelMousedownTimeout;
             var mousedownStartTime = 0;
-            $contentsElm.on('mousedown', function(event) {
+            $contentsElm.on('mousedown touchstart', function(event) {
               if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
                 event = event.originalEvent;
               }
@@ -717,8 +717,12 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
               });
             });
     
-            $contentsElm.on('mouseup', function () {
+            $contentsElm.on('mouseup touchend', function () {
               $timeout.cancel(cancelMousedownTimeout);
+            });
+
+            $scope.$on('$destroy', function () {
+              $contentsElm.off('mousedown touchstart');
             });
     
             $scope.toggleMenu = function($event) {
