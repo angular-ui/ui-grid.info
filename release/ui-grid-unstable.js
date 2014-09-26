@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-7ccd3cc - 2014-09-26
+/*! ui-grid - v3.0.0-rc.10-54d2de9 - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2142,6 +2142,8 @@ angular.module('ui.grid')
             var newScrollTop = $elm[0].scrollTop;
             // var newScrollLeft = $elm[0].scrollLeft;
             var newScrollLeft = gridUtil.normalizeScrollLeft($elm);
+            var horizScrollPercentage = -1;
+            var vertScrollPercentage = -1;
 
             // Handle RTL here
 
@@ -2149,7 +2151,7 @@ angular.module('ui.grid')
               var xDiff = newScrollLeft - colContainer.prevScrollLeft;
 
               var horizScrollLength = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
-              var horizScrollPercentage = newScrollLeft / horizScrollLength;
+              horizScrollPercentage = newScrollLeft / horizScrollLength;
 
               colContainer.adjustScrollHorizontal(newScrollLeft, horizScrollPercentage);
             }
@@ -2160,12 +2162,26 @@ angular.module('ui.grid')
               // uiGridCtrl.fireScrollingEvent({ y: { pixels: diff } });
               var vertScrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
               // var vertScrollPercentage = (uiGridCtrl.prevScrollTop + yDiff) / vertScrollLength;
-              var vertScrollPercentage = newScrollTop / vertScrollLength;
+              vertScrollPercentage = newScrollTop / vertScrollLength;
 
               if (vertScrollPercentage > 1) { vertScrollPercentage = 1; }
               if (vertScrollPercentage < 0) { vertScrollPercentage = 0; }
               
               rowContainer.adjustScrollVertical(newScrollTop, vertScrollPercentage);
+            }
+            
+            if ( !$scope.grid.isScrollingVertically && !$scope.grid.isScrollingHorizontally ){
+              // viewport scroll that didn't come from fireScrollEvent, so fire a scroll to keep 
+              // the header in sync
+              var args = {};
+              if ( horizScrollPercentage > -1 ){
+                args.x = { percentage: horizScrollPercentage };
+              }
+
+              if ( vertScrollPercentage > -1 ){
+                args.y = { percentage: vertScrollPercentage };
+              }
+              uiGridCtrl.fireScrollingEvent(args); 
             }
           });
         }
