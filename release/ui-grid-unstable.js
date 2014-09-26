@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-9fa4170 - 2014-09-25
+/*! ui-grid - v3.0.0-rc.10-ff41311 - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7044,7 +7044,7 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 function getWidthOrHeight( elem, name, extra ) {
   // Start with offset property, which is equivalent to the border-box value
   var valueIsBorderBox = true,
-          val = name === 'width' ? elem.offsetWidth : elem.offsetHeight,
+          val,
           styles = getStyles(elem),
           isBorderBox = styles['boxSizing'] === 'border-box';
 
@@ -12463,7 +12463,16 @@ return $delegate;
           scope: false,
           compile: function ($elm, $attrs) {
             var rowRepeatDiv = angular.element($elm.children().children()[0]);
-            rowRepeatDiv.attr("ng-class", "{'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}");
+            
+            var existingNgClass = rowRepeatDiv.attr("ng-class");
+            var newNgClass = '';
+            if ( existingNgClass ) {
+              newNgClass = existingNgClass.slice(0, -1) + ",'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}";
+            } else {
+              newNgClass = "{'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}";
+            }
+            rowRepeatDiv.attr("ng-class", newNgClass);
+
             return {
               pre: function ($scope, $elm, $attrs, controllers) {
 
@@ -12885,7 +12894,16 @@ return $delegate;
           scope: false,
           compile: function ($elm, $attrs) {
             var rowRepeatDiv = angular.element($elm.children().children()[0]);
-            rowRepeatDiv.attr("ng-class", "{'ui-grid-row-selected': row.isSelected}");
+
+            var existingNgClass = rowRepeatDiv.attr("ng-class");
+            var newNgClass = '';
+            if ( existingNgClass ) {
+              newNgClass = existingNgClass.slice(0, -1) + ",'ui-grid-row-selected': row.isSelected}";
+            } else {
+              newNgClass = "{'ui-grid-row-selected': row.isSelected}";
+            }
+            rowRepeatDiv.attr("ng-class", newNgClass);
+
             return {
               pre: function ($scope, $elm, $attrs, controllers) {
 
