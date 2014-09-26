@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.10-d8afdba - 2014-09-26
+/*! ui-grid - v3.0.0-rc.10-a2f60ef - 2014-09-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5310,13 +5310,13 @@ angular.module('ui.grid')
       var col = self.visibleColumnCache[i];
 
       if (totalWidth < viewportWidth) {
-        totalWidth += col.drawnWidth;
+        totalWidth += col.drawnWidth ? col.drawnWidth : 0;
         min++;
       }
       else {
         var currWidth = 0;
         for (var j = i; j >= i - min; j--) {
-          currWidth += self.visibleColumnCache[j].drawnWidth;
+          currWidth += self.visibleColumnCache[j].drawnWidth ? self.visibleColumnCache[j].drawnWidth : 0;
         }
         if (currWidth < viewportWidth) {
           min++;
@@ -13120,7 +13120,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/expandableRowHeader',
-    "<div class=\"ui-grid-row-header-cell uiGridExpandableButtonsCell\"><div class=\"ui-grid-cell-contents\"><i ng-class=\"{ 'ui-grid-icon-plus-squared' : !row.isExpanded, 'ui-grid-icon-minus-squared' : row.isExpanded }\" ng-click=\"grid.api.expandable.toggleRowExpansion(row.entity)\"></i></div></div>"
+    "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\"><div class=\"ui-grid-cell-contents\"><i ng-class=\"{ 'ui-grid-icon-plus-squared' : !row.isExpanded, 'ui-grid-icon-minus-squared' : row.isExpanded }\" ng-click=\"grid.api.expandable.toggleRowExpansion(row.entity)\"></i></div></div>"
   );
 
 
