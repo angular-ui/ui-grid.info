@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-ec411a6 - 2014-09-29
+/*! ui-grid - v3.0.0-rc.11-006976b - 2014-09-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10,6 +10,7 @@
   angular.module('ui.grid').constant('uiGridConstants', {
     CUSTOM_FILTERS: /CUSTOM_FILTERS/g,
     COL_FIELD: /COL_FIELD/g,
+    MODEL_COL_FIELD: /MODEL_COL_FIELD/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
     TEMPLATE_REGEXP: /<.+>/,
     FUNC_REGEXP: /(\([^)]*\))?$/,
@@ -2993,12 +2994,26 @@ angular.module('ui.grid')
  * @description precompiles all cell templates
  */
   Grid.prototype.preCompileCellTemplates = function() {
-        this.columns.forEach(function (col) {
-          var html = col.cellTemplate.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
+    var self = this;
+    this.columns.forEach(function (col) {
+      var html = col.cellTemplate.replace(uiGridConstants.MODEL_COL_FIELD, self.getQualifiedColField(col));
+      html = html.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
 
-          var compiledElementFn = $compile(html);
-          col.compiledElementFn = compiledElementFn;
-        });
+
+      var compiledElementFn = $compile(html);
+      col.compiledElementFn = compiledElementFn;
+    });
+  };
+
+  /**
+   * @ngdoc function
+   * @name getGridQualifiedColField
+   * @methodOf ui.grid.class:Grid
+   * @description precompiles all cell templates
+   * @param {GridColumn} col col object
+   */
+  Grid.prototype.getQualifiedColField = function (col) {
+    return 'row.entity.' + gridUtil.preEval(col.field);
   };
 
   /**
@@ -9870,7 +9885,7 @@ return $delegate;
               origCellValue = cellModel($scope);
 
               html = $scope.col.editableCellTemplate;
-              html = html.replace(uiGridConstants.COL_FIELD, $scope.row.getQualifiedColField($scope.col));
+              html = html.replace(uiGridConstants.MODEL_COL_FIELD, $scope.row.getQualifiedColField($scope.col));
               
               var optionFilter = $scope.col.colDef.editDropdownFilter ? '|' + $scope.col.colDef.editDropdownFilter : ''; 
               html = html.replace(uiGridConstants.CUSTOM_FILTERS, optionFilter);
@@ -13171,12 +13186,12 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/cellEditor',
-    "<div><form name=\"inputForm\"><input type=\"{{inputType}}\" ng-class=\"'colt' + col.index\" ui-grid-editor ng-model=\"COL_FIELD\"></form></div>"
+    "<div><form name=\"inputForm\"><input type=\"{{inputType}}\" ng-class=\"'colt' + col.index\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
   );
 
 
   $templateCache.put('ui-grid/dropdownEditor',
-    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.index\" ui-grid-edit-dropdown ng-model=\"COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\"></select></form></div>"
+    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.index\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\"></select></form></div>"
   );
 
 
