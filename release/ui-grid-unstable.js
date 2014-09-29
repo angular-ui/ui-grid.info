@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-b807997 - 2014-09-29
+/*! ui-grid - v3.0.0-rc.11-ec411a6 - 2014-09-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2947,16 +2947,15 @@ angular.module('ui.grid')
     var offset = self.rowHeaderColumns.length;
 
     // Synchronize self.columns with self.options.columnDefs so that columns can also be removed.
-    if (self.columns.length > self.options.columnDefs.length) {
-      self.columns.forEach(function (column, index) {
-        if (!self.getColDef(column.name)) {
-          self.columns.splice(index, 1);
-        }
-      });
-    }
+    self.columns.forEach(function (column, index) {
+      if (!self.getColDef(column.name)) {
+        self.columns.splice(index, 1);
+      }
+    });
+
 
     //add row header columns to the grid columns array _after_ columns without columnDefs have been removed
-    angular.forEach(self.rowHeaderColumns, function (rowHeaderColumn) {
+    self.rowHeaderColumns.forEach(function (rowHeaderColumn) {
       offset++;
       self.columns.unshift(rowHeaderColumn);
       
