@@ -3,25 +3,33 @@
 </h1>
 <div><p>You can customize a column's menu and provide your own functionality.</p>
 
-<p>By default, the <code>action</code> and <code>shown</code>'s' contexts will have a reference to the grid added as the property <code>grid</code> (accessible through <code>this.grid</code>.
-You can pass in your own context by supplying the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</p>
+<p>By default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the 
+property <code>grid</code> (accessible through <code>this.grid</code>.  You can pass in your own context by supplying 
+the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</p>
 
-<p>The column menu will add the column's <code>GridColumn</code> object to the context as <code>this.context.col</code>. You can then show/hide the the menu item based
-on conditions that use the grid and column.  You could also use a custom column builder to add some item to the every column definition.</p>
+<p>The column menu will add the column's <code>GridColumn</code> object to the context as <code>this.context.col</code>. 
+You can then show/hide the the menu item based on conditions that use the grid and column.  You could 
+also use a custom column builder to add some item to the every column definition.</p>
+
+<p>You can remove the column hide option using the <code>disableHiding</code> columnDef option.  You can disable
+the column menu entirely using the <code>disableColumnMenu</code> columnDef option.</p>
 
 <p>You can supply an icon class with the <code>icon</code> property.</p>
 
 <p>See the example below for usage.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-50" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-52" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-53"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-50" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-50">
+<pre class="prettyprint linenums" ng-set-text="index.html-52" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-52">
   <div ng-controller="MainCtrl">
-    Click on the third column header to test custom menu items.
+    Click on the third column header to test custom menu items.  The first column should have no
+    column menu available, including via a long-press.  The second column should have a menu, but the
+    ability to remove the sort is suppressed - the user can toggle between ASC and DESC but not remove
+    the sort.
     <br>
     <br>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
 </div>
@@ -39,7 +47,7 @@ on conditions that use the grid and column.  You could also use a custom column 
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ngAnimate', 'ui.grid']);
 
-  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+  app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
     $scope.blargh = function() {
       alert("I'm in the outer scope!");
     };
@@ -47,8 +55,8 @@ on conditions that use the grid and column.  You could also use a custom column 
     $scope.gridOptions = {
       enableSorting: true,
       columnDefs: [
-        { field: 'name' },
-        { field: 'gender' },
+        { field: 'name', disableColumnMenu: true },
+        { field: 'gender', disableHiding: true, suppressRemoveSort: true, sort: { direction: uiGridConstants.ASC } },
         {
           field: 'company',
           menuItems: [
@@ -87,6 +95,75 @@ on conditions that use the grid and column.  You could also use a custom column 
   }]);
 </script>
 </div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-53"></pre>
+<script type="text/ng-template" id="scenario.js-53">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  describe('column menus', function() {
+    it('grid1 should have three visible columns', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+    });
+
+    it('no column menu on first column, including from long press', function () {
+      var headerCell = gridTestUtils.headerCell( 'grid1', 0 );
+      expect( headerCell.all( by.css( '.ui-grid-column-menu-button' ) ).count()).toEqual(0);
+      
+      browser.actions()
+        .mouseDown(headerCell, protractor.Button.LEFT)
+        .perform();
+      browser.sleep(550);  // 500ms for long press
+      
+      var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).element( by.css( '.ui-grid-menu-inner' ));
+      expect(columnMenu.isDisplayed()).toEqual(false);
+    });
+
+    it('2 menu items in second column, implying no hide option and no remove sort option', function () {
+      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 2 );        
+    });      
+
+    it('Long press opens menu in second column', function () {
+      var headerCell = gridTestUtils.headerCell( 'grid1', 1 );
+
+      browser.actions()
+        .mouseDown(headerCell, protractor.Button.LEFT)
+        .perform();
+      browser.sleep(550);  // 500ms for long press
+      
+      var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).element( by.css( '.ui-grid-menu-inner' ));
+      expect(columnMenu.isDisplayed()).toEqual(true, 'column menu should be displayed');
+    });      
+
+    it('Column 2 rotates through sort ASC and sort DESC, but no sort null', function () {
+      gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'female' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'female' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'female' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'female' );
+
+      gridTestUtils.clickHeaderCell( 'grid1', 1 );
+      gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'male' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'male' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'male' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'male' );
+
+      gridTestUtils.clickHeaderCell( 'grid1', 1 );
+      gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'female' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'female' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'female' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'female' );
+    });      
+
+    it('6 visible items in the third column, implying hide option', function () {
+      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 2, 6 );        
+    });
+
+    it('click header to sort third column, 7 visible items in the third column, implying remove sort option', function () {
+      gridTestUtils.clickHeaderCell( 'grid1', 2 );
+      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 2, 7 );        
+    });
+  });
+
+</script>
+</div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-50" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-52" ng-eval-javascript="app.js"></div></div>
 </div>

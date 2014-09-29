@@ -279,6 +279,22 @@ gridTestUtils.expectRowValuesMatch('myGrid', 0, [ 'CellValue1', '^cellvalue2', '
 </pre></div>
 </div>
 </li>
+<li><h3 id="expectVisibleColumnMenuItems">expectVisibleColumnMenuItems(gridId, colNumber, expectItems)</h3>
+<div class="expectvisiblecolumnmenuitems"><p>Checks how many visible menu items there are in the column menu   </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to check the count for</p></li>
+<li><code ng:non-bindable="">expectItems – {integer} – </code>
+<p>the number of visible items you expect</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.visibleColumnMenuItems('myGrid', 0, 3);
+</pre></div>
+</div>
+</li>
 <li><h3 id="footerCell">footerCell(gridId, col)</h3>
 <div class="footercell"><p>Internal method used to return a footerCell element
 given the grid and column</p><h4 id="Parameters">Parameters</h4>

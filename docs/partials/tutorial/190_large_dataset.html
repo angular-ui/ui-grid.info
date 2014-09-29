@@ -11,15 +11,15 @@
    <li>using field instead of name for backwards compatibility with 2.x</li>
  </ul><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-35" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-37" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-38"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-35" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-35">
+<pre class="prettyprint linenums" ng-set-text="index.html-37" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-37">
   <div ng-controller="MainCtrl">
     <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
     <br>
     <br>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
 </div>
@@ -55,6 +55,30 @@
   }]);
 </script>
 </div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-38"></pre>
+<script type="text/ng-template" id="scenario.js-38">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  describe( '190 large dataset', function() {
+    it('grid should have five visible columns', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 5 );
+    });
+
+    it('column headers as expected', function () {
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Id' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Name' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Age' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 3, 'Address.City' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 4, 'Age Again' );
+    });
+
+    it('first couple of rows as expected', function () {
+      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ '0', 'Ramsey Cummings', '52', 'Glendale', '52' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ '1', 'Stefanie Huff', '70', 'Beaverdale', '70' ] );
+    });
+  });    
+</script>
+</div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-35" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-37" ng-eval-javascript="app.js"></div></div>
 </div>
