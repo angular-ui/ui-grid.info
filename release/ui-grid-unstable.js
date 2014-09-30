@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-006976b - 2014-09-29
+/*! ui-grid - v3.0.0-rc.11-8d31f6a - 2014-09-30
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7069,7 +7069,12 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 var module = angular.module('ui.grid');
 
 function getStyles (elem) {
-  return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
+  var e = elem;
+  if (typeof(e.length) !== 'undefined' && e.length) {
+    e = elem[0];
+  }
+
+  return e.ownerDocument.defaultView.getComputedStyle(e, null);
 }
 
 var rnumnonpx = new RegExp( "^(" + (/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/).source + ")(?!px)[a-z%]+$", "i" ),
@@ -7858,8 +7863,8 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     var browser = s.detectBrowser();
 
     var scrollLeft = element.scrollLeft;
-
-    var dir = angular.element(element).css('direction');
+    
+    var dir = s.getStyles(element)['direction'];
 
     // IE stays normal in RTL
     if (browser === 'ie') {
@@ -7908,7 +7913,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
     var browser = s.detectBrowser();
 
-    var dir = angular.element(element).css('direction');
+    var dir = s.getStyles(element)['direction'];
 
     // IE stays normal in RTL
     if (browser === 'ie') {
