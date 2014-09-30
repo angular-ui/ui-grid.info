@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-bccaf9e - 2014-09-30
+/*! ui-grid - v3.0.0-rc.11-74132b4 - 2014-09-30
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -6728,8 +6728,10 @@ module.service('rowSearcher', ['$log', 'uiGridConstants', function ($log, uiGrid
           }
         });
       });
-      
-      grid.api.core.raise.rowsVisibleChanged();
+
+      if (grid.api.core.raise.rowsVisibleChanged) {
+        grid.api.core.raise.rowsVisibleChanged();
+      }
 
       // rows.forEach(function (row) {
       //   var matchesAllColumns = true;
