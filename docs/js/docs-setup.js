@@ -55,10 +55,17 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.cellNav.object:CellNav",
+      "shortName": "CellNav",
+      "type": "object",
+      "keywords": "api cellnav colcontainer column container for function grid left leftcolcontainer object of parent prototype returns right rightcolcontainer rowcontainer rows the to ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.cellNav.service:uiGridCellNavService",
       "shortName": "uiGridCellNavService",
       "type": "service",
-      "keywords": "$scope act adds and angular any api are array available broadcast but can cell cellnav cellnavcolumnbuilder cells coldef colindex column columnbuilder columns curcol current currow data decorator determines direction docs don drawn event events features focusable for from function get getdirection getleftwidth getnextrowcol given grid gridapi gridcol gridoptions gridrow if in including instance is key keydown like load make maps method navigation needed next not numbered object of or override promise properties resolved returns row rowcol rowentity scope scroll scrollto scrolltointernal service services skipped specified such takes templates that the to total ui up upon use usually view visible we when which width will with you"
+      "keywords": "$scope act adds and angular any api array available broadcast but can cell cellnav cellnavcolumnbuilder cells coldef colindex column columnbuilder columns current data decoraterendercontainers decorates decorator determines direction docs don drawn event events features for from function functions get getdirection getleftwidth given grid gridapi gridcol gridoptions gridrow if in including instance is key keydown like load make maps method navigation needed numbered of or override promise properties rendercontainers resolved row rowentity scope scroll scrollto scrolltointernal service services specified such takes templates that the to total ui up upon use usually view visible we when which width will with you"
     },
     {
       "section": "api",
@@ -632,7 +639,7 @@ NG_DOCS={
       "id": "202_cellnav",
       "shortName": "202 Cell Navigation",
       "type": "overview",
-      "keywords": "$http $log $scope add address age allowcellfocus also an and angular app back balance btn btn-success button callback cell cellnav city class col coldef colindex column columndefs company controller css current currentfocused data directive displayname element email enable entity event example false focusable focused for function get getcurrentfocus getfocusedcell grid gridapi gridoptions guid height html id if include index info is js json log main mainctrl module msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null of old oldrowcol on on_cellnav onregisterapi or overview page phone position programatically provides register remembering requesting returns row rowcol rowindex scroll scrolling scrollto specific state success that the this to tojson tutorial type ui ui-grid ui-grid-cellnav useful user uses var when width you your"
+      "keywords": "$http $log $scope add address age allowcellfocus also an and angular app back balance btn btn-success button callback cell cellnav city class col coldef colindex column columndefs company controller css current currentfocused data directive displayname element email enable entity event example false focusable focused for function get getcurrentfocus getfocusedcell grid gridapi gridoptions guid height html id if include index info is js json log main mainctrl module msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller null of old oldrowcol on on_cellnav onregisterapi or overview page phone pinning position programatically provides register remembering requesting returns row rowcol rowindex scroll scrolling scrollto specific state success that the this to tojson tutorial type ui ui-grid ui-grid-cellnav ui-grid-pinning useful user uses var when width you your"
     },
     {
       "section": "tutorial",

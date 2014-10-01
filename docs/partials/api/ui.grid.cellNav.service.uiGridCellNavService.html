@@ -12,6 +12,9 @@ or the direction cells navigation, override with a service decorator (see angula
 – <p>promise that will load any needed templates when resolved</p></div>
 </div>
 </li>
+<li><h3 id="decorateRenderContainers">decorateRenderContainers()</h3>
+<div class="decoraterendercontainers"><p>decorates grid renderContainers with cellNav functions</p></div>
+</li>
 <li><h3 id="getDirection">getDirection()</h3>
 <div class="getdirection"><p>determines which direction to for a given keyDown event</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{uiGridCellNavConstants.direction}</code>
@@ -19,7 +22,7 @@ or the direction cells navigation, override with a service decorator (see angula
 </div>
 </li>
 <li><h3 id="getLeftWidth">getLeftWidth(grid, colIndex)</h3>
-<div class="getleftwidth"><p>Get the current drawn width of the columns in the 
+<div class="getleftwidth"><p>Get the current drawn width of the columns in the
 grid up to and including the numbered column</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid you'd like to act upon, usually available
@@ -27,23 +30,6 @@ from gridApi.grid</p></li>
 <li><code ng:non-bindable="">colIndex – {object} – </code>
 <p>the column to total up to and including</p></li>
 </ul>
-</div>
-</li>
-<li><h3 id="getNextRowCol">getNextRowCol(direction, grid, curRow, curCol)</h3>
-<div class="getnextrowcol"><p>returns the next row and column for a given direction
-columns that are not focusable are skipped</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">direction – {object} – </code>
-<p>navigation direction</p></li>
-<li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>current grid</p></li>
-<li><code ng:non-bindable="">curRow – {GridRow} – </code>
-<p>Gridrow</p></li>
-<li><code ng:non-bindable="">curCol – {GridCol} – </code>
-<p>Gridcol</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{uiGridCellNavConstants.direction}</code>
-– <p>rowCol object</p></div>
 </div>
 </li>
 <li><h3 id="scrollTo">scrollTo(grid, $scope, rowEntity, colDef)</h3>
