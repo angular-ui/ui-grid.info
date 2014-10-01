@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-974e9d7 - 2014-10-01
+/*! ui-grid - v3.0.0-rc.11-0d6e323 - 2014-10-01
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5812,7 +5812,7 @@ angular.module('ui.grid')
           isPercent = false;
 
       if (!angular.isNumber(column.width)) {
-        isPercent = isNaN(column.width) ? gridUtil.endsWith(column.width, "%") : false;
+        isPercent = isNaN(column.width) && gridUtil.endsWith(column.width, "%");
       }
 
       if (angular.isString(column.width) && column.width.indexOf('*') !== -1) { //  we need to save it until the end to do the calulations on the remaining width.
@@ -5997,6 +5997,7 @@ angular.module('ui.grid')
 }]);
 
 })();
+
 (function(){
 
 angular.module('ui.grid')
