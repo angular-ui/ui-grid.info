@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-b622a1c - 2014-10-01
+/*! ui-grid - v3.0.0-rc.11-974e9d7 - 2014-10-01
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12775,9 +12775,9 @@ return $delegate;
             var existingNgClass = rowRepeatDiv.attr("ng-class");
             var newNgClass = '';
             if ( existingNgClass ) {
-              newNgClass = existingNgClass.slice(0, -1) + ",'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}";
+              newNgClass = existingNgClass.slice(0, -1) + ",'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError, 'ui-grid-row-dirty': row.isDirty}";
             } else {
-              newNgClass = "{'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}";
+              newNgClass = "{'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError, 'ui-grid-row-dirty': row.isDirty}";
             }
             rowRepeatDiv.attr("ng-class", newNgClass);
 
