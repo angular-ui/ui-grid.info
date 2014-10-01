@@ -89,6 +89,30 @@ gridApi.core.on.sortChanged( grid, sortColumns );
 </pre></div>
 </div>
 </li>
+<li><h3 id="sortHandleNulls">sortHandleNulls(a, b)</h3>
+<div class="sorthandlenulls"><p>A null handling method that can be used when building custom sort
+functions</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>null if there were no nulls/undefineds, otherwise returns
+a sort value that should be passed back from the sort function</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+mySortFn = function(a, b) {
+var nulls = $scope.gridApi.core.sortHandleNulls(a, b);
+if ( nulls !== null ){
+  return nulls;
+} else {
+  // your code for sorting here
+};
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <div class="member event"><h2 id="Events">Events</h2>

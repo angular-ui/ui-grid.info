@@ -7,7 +7,85 @@
 including guessing column types and applying appropriate sort 
 algorithms</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="sort">sort(grid, rows, columns)</h3>
+<ul class="methods"><li><h3 id="basicSort">basicSort(a, b)</h3>
+<div class="basicsort"><p>Sorts any values that provide the &lt; method, including strings
+or numbers.  Handles nulls and undefined through calling handleNulls </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
+</div>
+</li>
+<li><h3 id="getSortFn">getSortFn(grid, col, rows)</h3>
+<div class="getsortfn"><p>Get the sort function for the column.  Looks first in 
+rowSorter.colSortFnCache using the column name, failing that it
+looks at col.sortingAlgorithm (and puts it in the cache), failing that
+it guesses the sort algorithm based on the data type.</p>
+
+<p>The cache currently seems a bit pointless, as none of the work we do is
+processor intensive enough to need caching.  Presumably in future we might
+inspect the row data itself to guess the sort function, and in that case
+it would make sense to have a cache, the infrastructure is in place to allow
+that.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid to consider</p></li>
+<li><code ng:non-bindable="">col – {GridCol} – </code>
+<p>the column to find a function for</p></li>
+<li><code ng:non-bindable="">rows – {array} – </code>
+<p>an array of grid rows.  Currently unused, but presumably in future
+we might inspect the rows themselves to decide what sort of data might be there</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>the sort function chosen for the column</p></div>
+</div>
+</li>
+<li><h3 id="guessSortFn">guessSortFn(itemType)</h3>
+<div class="guesssortfn"><p>Assigns a sort function to use based on the itemType in the column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">itemType – {string} – </code>
+<p>one of 'number', 'boolean', 'string', 'date', 'object'.  And
+error will be thrown for any other type.</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>a sort function that will sort that type</p></div>
+</div>
+</li>
+<li><h3 id="handleNulls">handleNulls(a, b)</h3>
+<div class="handlenulls"><p>Sorts nulls and undefined to the bottom (top when
+descending).  Called by each of the internal sorters before
+attempting to sort.  Note that this method is available on the core api
+via gridApi.core.sortHandleNulls</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>null if there were no nulls/undefineds, otherwise returns
+a sort value that should be passed back from the sort function</p></div>
+</div>
+</li>
+<li><h3 id="prioritySort">prioritySort(a, b)</h3>
+<div class="prioritysort"><p>Used where multiple columns are present in the sort criteria,
+we determine which column should take precedence in the sort by sorting
+the columns based on their sort.priority</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {gridColumn} – </code>
+<p>column a</p></li>
+<li><code ng:non-bindable="">b – {gridColumn} – </code>
+<p>column b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
+</div>
+</li>
+<li><h3 id="sort">sort(grid, rows, columns)</h3>
 <div class="sort"><p>sorts the grid </p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Object} – </code>
 <p>the grid itself</p></li>
@@ -17,6 +95,68 @@ algorithms</p></div>
 <p>the columns in which to look
 for sort criteria</p></li>
 </ul>
+</div>
+</li>
+<li><h3 id="sortAlpha">sortAlpha(a, b)</h3>
+<div class="sortalpha"><p>Sorts string values. Handles nulls and undefined through calling handleNulls </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
+</div>
+</li>
+<li><h3 id="sortBool">sortBool(a, b)</h3>
+<div class="sortbool"><p>Sorts boolean values, true is considered larger than false. 
+Handles nulls and undefined through calling handleNulls </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
+</div>
+</li>
+<li><h3 id="sortDate">sortDate(a, b)</h3>
+<div class="sortdate"><p>Sorts date values. Handles nulls and undefined through calling handleNulls </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
+</div>
+</li>
+<li><h3 id="sortNumber">sortNumber(a, b)</h3>
+<div class="sortnumber"><p>Sorts numerical values.  Handles nulls and undefined through calling handleNulls </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
+</div>
+</li>
+<li><h3 id="sortNumberStr">sortNumberStr(a, b)</h3>
+<div class="sortnumberstr"><p>Sorts numerical values that are stored in a string (i.e. parses them to numbers first). <br />
+Handles nulls and undefined through calling handleNulls </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">a – {object} – </code>
+<p>sort value a</p></li>
+<li><code ng:non-bindable="">b – {object} – </code>
+<p>sort value b</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>normal sort function, returns -ve, 0, +ve</p></div>
 </div>
 </li>
 </ul>

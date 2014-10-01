@@ -60,7 +60,9 @@
 
 <h1 id="inital-sort">Initial Sort State</h2>
 
-<p>You can set an initial sort state for the grid by defining the <code>sort</code> property on your column definitions. The <code>direction</code> sub-property says which way to sort, and the <code>priority</code> says what order to sort the columns in (lower priority gets sorted first).</p>
+<p>You can set an initial sort state for the grid by defining the <code>sort</code> property on your column definitions. 
+The <code>direction</code> sub-property says which way to sort, and the <code>priority</code> says what order to sort the columns 
+in (lower priority gets sorted first).</p>
 
 <h3>Source</h3>
 <div source-edit="app2" source-edit-deps="angular.js app2.js" source-edit-html="index2.html" source-edit-css="main2.css" source-edit-js="app2.js" source-edit-unit="" source-edit-scenario="scenario.js-19"></div>
@@ -89,6 +91,9 @@
     app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
       $scope.gridOptions = {
         enableSorting: true,
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+        },
         columnDefs: [
           {
             field: 'name',
@@ -101,7 +106,30 @@
             field: 'gender',
             sort: {
               direction: 'asc',
-              priority: 0
+              priority: 0,
+              sortingAlgorithm: function(a, b) {
+                var nulls = $scope.gridApi.core.sortHandleNulls(a, b);
+                if( nulls !== null ) {
+                  return nulls;
+                } else {
+                  if( a === b ) {
+                    return 0;
+                  }
+                  if( a === 'male' ) {
+                    return -1;
+                  }
+                  if( b === 'male' ) {
+                    return 1;
+                  }
+                  if( a == 'female' ) {
+                    return -1;
+                  }
+                  if( b === 'female' ) {
+                    return 1;
+                  }
+                  return 0;
+                }
+              }
             }
           },
           { field: 'company', enableSorting: false  }
