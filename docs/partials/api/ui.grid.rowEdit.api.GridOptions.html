@@ -8,7 +8,9 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a><
 <div class="member property"><h2 id="Properties">Properties</h2>
 <ul class="properties"><li><h3 id="rowEditWaitInterval">rowEditWaitInterval</h3>
 <div class="roweditwaitinterval"><p>How long the grid should wait for another change on this row
-before triggering a save (in milliseconds)</p><h4 id="Example">Example</h4>
+before triggering a save (in milliseconds).  If set to -1, then saves are 
+never triggered by timer (implying that the user will call flushDirtyRows() 
+manually)</p><h4 id="Example">Example</h4>
 <div class="example"><p>Setting the wait interval to 4 seconds
 <pre class="prettyprint linenums">
   $scope.gridOptions = { rowEditWaitInterval: 4000 }

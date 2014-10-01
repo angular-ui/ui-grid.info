@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-74132b4 - 2014-09-30
+/*! ui-grid - v3.0.0-rc.11-bcf7cdb - 2014-10-01
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12178,7 +12178,7 @@ return $delegate;
                  * 
                  */
                 getDirtyRows: function (grid) {
-                  return grid.rowEditDirtyRows;
+                  return grid.rowEditDirtyRows ? grid.rowEditDirtyRows : [];
                 },
                 /**
                  * @ngdoc method
@@ -12193,7 +12193,7 @@ return $delegate;
                  * 
                  */
                 getErrorRows: function (grid) {
-                  return grid.rowEditErrorRows;
+                  return grid.rowEditErrorRows ? grid.rowEditErrorRows : [];
                 },
                 /**
                  * @ngdoc method
@@ -12391,20 +12391,6 @@ return $delegate;
         
         
         /**
-         * @ngdoc property
-         * @propertyOf ui.grid.rowEdit.api:GridOptions
-         * @name rowEditWaitInterval
-         * @description How long the grid should wait for another change on this row
-         * before triggering a save (in milliseconds)
-         * 
-         * @example
-         * Setting the wait interval to 4 seconds
-         * <pre>
-         *   $scope.gridOptions = { rowEditWaitInterval: 4000 }
-         * </pre>
-         * 
-         */
-        /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
          * @name endEditCell
@@ -12507,6 +12493,22 @@ return $delegate;
         
         
         /**
+         * @ngdoc property
+         * @propertyOf ui.grid.rowEdit.api:GridOptions
+         * @name rowEditWaitInterval
+         * @description How long the grid should wait for another change on this row
+         * before triggering a save (in milliseconds).  If set to -1, then saves are 
+         * never triggered by timer (implying that the user will call flushDirtyRows() 
+         * manually)
+         * 
+         * @example
+         * Setting the wait interval to 4 seconds
+         * <pre>
+         *   $scope.gridOptions = { rowEditWaitInterval: 4000 }
+         * </pre>
+         * 
+         */
+        /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
          * @name considerSetTimer
@@ -12521,8 +12523,10 @@ return $delegate;
           service.cancelTimer( grid, gridRow );
           
           if ( gridRow.isDirty && !gridRow.isSaving ){
-            var waitTime = grid.options.rowEditWaitInterval ? grid.options.rowEditWaitInterval : 2000;
-            gridRow.rowEditSaveTimer = $interval( service.saveRow( grid, gridRow ), waitTime, 1);
+            if ( grid.options.rowEditWaitInterval !== -1 ){
+              var waitTime = grid.options.rowEditWaitInterval ? grid.options.rowEditWaitInterval : 2000;
+              gridRow.rowEditSaveTimer = $interval( service.saveRow( grid, gridRow ), waitTime, 1);
+            }
           }
         },
         

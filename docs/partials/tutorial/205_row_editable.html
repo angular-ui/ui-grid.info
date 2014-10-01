@@ -36,7 +36,8 @@ or clicks to a non-editable field on the same row).</p>
 row is set to a status of <code>isError</code>.</p>
 
 <p>Optionally, the calling application can request <code>flushDirtyRows</code>, which will trigger the save event for all
-currently dirty rows.</p>
+currently dirty rows.  If the <code>rowEditWaitInterval</code> grid option is set to -1, then saves will never be triggered
+by timer, and only be triggered when manually called.</p>
 
 <p>Methods and properties are provided to operate with this regime:</p>
 
@@ -46,6 +47,7 @@ currently dirty rows.</p>
 <li><code>flushDirtyRows()</code>: flushes all currently dirty rows to the server, might be used 
 on a page navigation request or pressing of a save button</li>
 <li><code>saveRow( rowEntity )</code>: event called when a row is ready for saving</li>
+<li><code>rowEditWaitInterval</code>: grid option that controls how long a wait will be before a save is triggered (in ms)</li>
 </ul><h2 id="Example">Example</h2>
 <div class="example"><p>In this example rows are saved 2 seconds after moving off, and the save is faked using a timeout of 3 seconds, so 
 each save will take 3 seconds to complete.  Any row saved with a gender of "male" will error.</p>
