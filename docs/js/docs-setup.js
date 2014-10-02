@@ -307,6 +307,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.infiniteScroll.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api are available be class enable enableinfinitescroll feature for grid gridoptions infinite infinitescroll object scroll scrolling set the these this to true ui ui-grid using"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.infiniteScroll.api:PublicAPI",
       "shortName": "PublicAPI",
       "type": "object",
