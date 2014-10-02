@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-14634b5 - 2014-10-02
+/*! ui-grid - v3.0.0-rc.11-ef7c138 - 2014-10-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2316,7 +2316,7 @@ angular.module('ui.grid')
 
               self.grid.preCompileCellTemplates();
 
-              self.grid.refreshCanvas(true);
+              self.grid.refresh();
             });
         }
       }
@@ -2997,8 +2997,8 @@ angular.module('ui.grid')
       var col = self.getColumn(colDef.name);
 
       if (!col) {
-        col = new GridColumn(colDef, index + offset, self);
-        self.columns.push(col);
+        col = new GridColumn(colDef, index, self);
+        self.columns.splice(index, 0, col);
       }
       else {
         col.updateColumnDef(colDef, col.index);

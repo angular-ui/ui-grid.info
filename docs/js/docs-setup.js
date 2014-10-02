@@ -608,6 +608,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "113_adding_and_removing_columns",
+      "shortName": "113 Adding and removing columns",
+      "type": "overview",
+      "keywords": "$http $scope accordingly add adding and angular app appropriately btn button button_add button_remove button_splice button_unsplice can changing class click clicking column columndefs columns company console controller css data defs describe dynamically element enablesorting end expectheadercellvaluematch expectheadercolumncount false field from function gender get grid grid1 gridoptions gridtestutils have height html id in index insert it js json last length-1 log main mainctrl middle module name ng-click ng-controller nganimate overview push remove removing require scenario should spec splice success the to true try tutorial two ui ui-grid unsplice updates var visible watches width you"
+    },
+    {
+      "section": "tutorial",
       "id": "120_RTL",
       "shortName": "120 RTL Support",
       "type": "overview",
