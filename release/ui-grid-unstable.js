@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-c239cc7 - 2014-10-02
+/*! ui-grid - v3.0.0-rc.11-12e2f1e - 2014-10-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2970,7 +2970,7 @@ angular.module('ui.grid')
     $log.debug('buildColumns');
     var self = this;
     var builderPromises = [];
-    var offset = self.rowHeaderColumns.length;
+    var headerOffset = self.rowHeaderColumns.length;
 
     // Synchronize self.columns with self.options.columnDefs so that columns can also be removed.
     self.columns.forEach(function (column, index) {
@@ -2982,13 +2982,7 @@ angular.module('ui.grid')
 
     //add row header columns to the grid columns array _after_ columns without columnDefs have been removed
     self.rowHeaderColumns.forEach(function (rowHeaderColumn) {
-      offset++;
       self.columns.unshift(rowHeaderColumn);
-      
-      // renumber any columns already there, as cellNav relies on cols[index] === col.index
-      self.columns.forEach(function(column, index){
-        column.index = index;
-      });
     });
 
 
@@ -2998,7 +2992,7 @@ angular.module('ui.grid')
 
       if (!col) {
         col = new GridColumn(colDef, index, self);
-        self.columns.splice(index, 0, col);
+        self.columns.splice(index + headerOffset, 0, col);
       }
       else {
         col.updateColumnDef(colDef, col.index);
@@ -7947,7 +7941,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     var capsName = angular.uppercase(name.charAt(0)) + name.substr(1);
     s['element' + capsName] = function (elem, extra) {
       var e = elem;
-      if (typeof(e.length) !== 'undefined' && e.length) {
+      if (e && typeof(e.length) !== 'undefined' && e.length) {
         e = elem[0];
       }
 
