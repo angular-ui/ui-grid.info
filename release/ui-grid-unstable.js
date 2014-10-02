@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-12e2f1e - 2014-10-02
+/*! ui-grid - v3.0.0-rc.11-c21a24d - 2014-10-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8738,7 +8738,12 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
-        }
+        },
+        pinning: {
+          pinLeft: 'Fäst vänster',
+          pinRight: 'Fäst höger',
+          unpin: 'Lösgör'
+          }
       });
       return $delegate;
     }]);
