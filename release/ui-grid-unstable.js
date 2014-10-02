@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-b5c2e40 - 2014-10-02
+/*! ui-grid - v3.0.0-rc.11-0f083ff - 2014-10-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8364,6 +8364,11 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        pinning: {
+         pinLeft: 'Pin Left',
+          pinRight: 'Pin Right',
+          unpin: 'Unpin'
         }
       });
       return $delegate;
@@ -11745,21 +11750,6 @@ module.filter('px', function() {
    */
 
   var module = angular.module('ui.grid.pinning', ['ui.grid']);
-
-  module.config(['$provide', function ($provide) {
-    $provide.decorator('i18nService', ['$delegate', function ($delegate) {
-      $delegate.add('en',
-        { pinning: {
-            pinLeft: 'Pin Left',
-            pinRight: 'Pin Right',
-            unpin: 'Unpin'
-          }
-        }
-      );
-
-      return $delegate;
-    }]);
-  }]);
 
   module.service('uiGridPinningService', ['$log', 'GridRenderContainer', 'i18nService', function ($log, GridRenderContainer, i18nService) {
     var service = {
