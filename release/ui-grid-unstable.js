@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-9e022ba - 2014-10-03
+/*! ui-grid - v3.0.0-rc.11-7454408 - 2014-10-03
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4756,34 +4756,36 @@ angular.module('ui.grid')
     var parseErrorMsg = "Cannot parse column width '" + colDef.width + "' for column named '" + colDef.name + "'";
 
     // If width is not defined, set it to a single star
-    if (gridUtil.isNullOrUndefined(colDef.width)) {
-      self.width = '*';
-    }
-    else {
-      // If the width is not a number
-      if (!angular.isNumber(colDef.width)) {
-        // See if it ends with a percent
-        if (gridUtil.endsWith(colDef.width, '%')) {
-          // If so we should be able to parse the non-percent-sign part to a number
-          var percentStr = colDef.width.replace(/%/g, '');
-          var percent = parseInt(percentStr, 10);
-          if (isNaN(percent)) {
+    if (gridUtil.isNullOrUndefined(self.width) || !angular.isNumber(self.width)) {
+      if (gridUtil.isNullOrUndefined(colDef.width)) {
+        self.width = '*';
+      }
+      else {
+        // If the width is not a number
+        if (!angular.isNumber(colDef.width)) {
+          // See if it ends with a percent
+          if (gridUtil.endsWith(colDef.width, '%')) {
+            // If so we should be able to parse the non-percent-sign part to a number
+            var percentStr = colDef.width.replace(/%/g, '');
+            var percent = parseInt(percentStr, 10);
+            if (isNaN(percent)) {
+              throw new Error(parseErrorMsg);
+            }
+            self.width = colDef.width;
+          }
+          // And see if it's a number string
+          else if (colDef.width.match(/^(\d+)$/)) {
+            self.width = parseInt(colDef.width.match(/^(\d+)$/)[1], 10);
+          }
+          // Otherwise it should be a string of asterisks
+          else if (!colDef.width.match(/^\*+$/)) {
             throw new Error(parseErrorMsg);
           }
+        }
+        // Is a number, use it as the width
+        else {
           self.width = colDef.width;
         }
-        // And see if it's a number string
-        else if (colDef.width.match(/^(\d+)$/)) {
-          self.width = parseInt(colDef.width.match(/^(\d+)$/)[1], 10);
-        }
-        // Otherwise it should be a string of asterisks
-        else if (!colDef.width.match(/^\*+$/)) {
-          throw new Error(parseErrorMsg);
-        }
-      }
-      // Is a number, use it as the width
-      else {
-        self.width = colDef.width;
       }
     }
 
@@ -12233,7 +12235,7 @@ module.filter('px', function() {
             
             var colDef = column.colDef;
             if (!colDef.width || (angular.isString(colDef.width) && (colDef.width.indexOf('*') !== -1 || colDef.width.indexOf('%') !== -1))) {
-              colDef.width = column.drawnWidth;
+              column.width = column.drawnWidth;
             }
           });
         }
@@ -12354,7 +12356,7 @@ module.filter('px', function() {
             newWidth = col.colDef.maxWidth;
           }
           
-          col.colDef.width = newWidth;
+          col.width = newWidth;
 
           // All other columns because fixed to their drawn width, if they aren't already
           resizeAroundColumn(col);
@@ -12458,7 +12460,7 @@ module.filter('px', function() {
             maxWidth = col.colDef.maxWidth;
           }
 
-          col.colDef.width = parseInt(maxWidth, 10);
+          col.width = parseInt(maxWidth, 10);
           
           // All other columns because fixed to their drawn width, if they aren't already
           resizeAroundColumn(col);
