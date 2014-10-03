@@ -233,6 +233,29 @@ gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
 <div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-15" ng-eval-javascript="app.js"></div></div>
 </div>
 </li>
+<li><h3 id="throttle">throttle(func, wait, params)</h3>
+<div class="throttle"><p>Adapted from debounce function (above)
+Potential keys for Params Object are:
+   trailing (bool) - whether to trigger after throttle time ends if called multiple times</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
+<p>function to throttle</p></li>
+<li><code ng:non-bindable="">wait – {number} – </code>
+<p>milliseconds to delay after first trigger</p></li>
+<li><code ng:non-bindable="">params – {Object} – </code>
+<p>to use in throttle.</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{function}</code>
+– <p>A function that can be executed as throttled function</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+var throttledFunc =  gridUtil.throttle(function(){console.log('throttled');}, 500, {trailing: true});
+throttledFunc(); //=&gt; logs throttled
+throttledFunc(); //=&gt; queues attempt to log throttled for ~500ms (since trailing param is truthy)
+throttledFunc(); //=&gt; updates arguments to keep most-recent request, but does not do anything else.
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 </div>

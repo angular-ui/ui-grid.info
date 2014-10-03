@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-48121e6 - 2014-10-03
+/*! ui-grid - v3.0.0-rc.11-c755753 - 2014-10-03
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2364,10 +2364,9 @@ angular.module('ui.grid')
 
       /* Event Methods */
 
-      //todo: throttle this event?
-      self.fireScrollingEvent = function(args) {
+      self.fireScrollingEvent = gridUtil.throttle(function(args) {
         $scope.$broadcast(uiGridConstants.events.GRID_SCROLL, args);
-      };
+      }, self.grid.options.scrollThrottle, {trailing: true});
 
       self.fireEvent = function(eventName, args) {
         // Add the grid to the event arguments if it's not there
@@ -5240,6 +5239,9 @@ angular.module('ui.grid')
     // Extra columns to to render outside of the viewport
     this.excessColumns = 4;
     this.horizontalScrollThreshold = 2;
+
+    // Default time to throttle scroll events to.
+    this.scrollThrottle = 70;
 
     /**
      * @ngdoc boolean
@@ -8223,6 +8225,55 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       timeout = null;
     };
     return debounce;
+  };
+
+  /**
+   * @ngdoc method
+   * @name throttle
+   * @methodOf ui.grid.service:GridUtil
+   *
+   * @param {function} func function to throttle
+   * @param {number} wait milliseconds to delay after first trigger
+   * @param {Object} params to use in throttle.
+   *
+   * @returns {function} A function that can be executed as throttled function
+   *
+   * @description
+   * Adapted from debounce function (above)
+   * Potential keys for Params Object are:
+   *    trailing (bool) - whether to trigger after throttle time ends if called multiple times
+   * @example
+   * <pre>
+   * var throttledFunc =  gridUtil.throttle(function(){console.log('throttled');}, 500, {trailing: true});
+   * throttledFunc(); //=> logs throttled
+   * throttledFunc(); //=> queues attempt to log throttled for ~500ms (since trailing param is truthy)
+   * throttledFunc(); //=> updates arguments to keep most-recent request, but does not do anything else.
+   * </pre>
+   */
+  s.throttle = function(func, wait, options){
+    options = options || {};
+    var lastCall = 0, queued = null, context, args;
+
+    function runFunc(endDate){
+      lastCall = +new Date();
+      func.apply(context, args);
+      $timeout(function(){ queued = null; }, 0);
+    }
+
+    return function(){
+      /* jshint validthis:true */
+      context = this;
+      args = arguments;
+      if (queued === null){
+        var sinceLast = +new Date() - lastCall;
+        if (sinceLast > wait){
+          runFunc();
+        }
+        else if (options.trailing){
+          queued = $timeout(runFunc, wait - sinceLast);
+        }
+      }
+    };
   };
 
   return s;
