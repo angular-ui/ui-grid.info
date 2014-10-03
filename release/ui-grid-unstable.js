@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-c755753 - 2014-10-03
+/*! ui-grid - v3.0.0-rc.11-9e022ba - 2014-10-03
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11889,6 +11889,7 @@ module.filter('px', function() {
           },
           action: function () {
             this.context.col.renderContainer = 'left';
+            this.context.col.width = this.context.col.drawnWidth;
             this.context.col.grid.createLeftContainer();
 
             // Need to call refresh twice; once to move our column over to the new render container and then
@@ -11908,6 +11909,7 @@ module.filter('px', function() {
           },
           action: function () {
             this.context.col.renderContainer = 'right';
+            this.context.col.width = this.context.col.drawnWidth;
             this.context.col.grid.createRightContainer();
 
 
