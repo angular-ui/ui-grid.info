@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-8eff695 - 2014-10-03
+/*! ui-grid - v3.0.0-rc.11-11f8d22 - 2014-10-03
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2326,7 +2326,7 @@ angular.module('ui.grid')
         var promises = [];
 
         if (n) {
-          if (self.grid.columns.length === 0) {
+          if (self.grid.columns.length === ( self.grid.rowHeaderColumns ? self.grid.rowHeaderColumns.length : 0 ) ) {
             $log.debug('loading cols in dataWatchFunction');
             if (!$attrs.uiGridColumns && self.grid.options.columnDefs.length === 0) {
               self.grid.buildColumnDefsFromData(n);

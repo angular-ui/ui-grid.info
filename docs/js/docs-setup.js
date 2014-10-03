@@ -639,7 +639,7 @@ NG_DOCS={
       "id": "191_horizontal_scrolling",
       "shortName": "191 Horizontal Scrolling",
       "type": "overview",
-      "keywords": "$http $scope amount angular app class col colcount colindex columndefs columns controller css data demonstrating enablesorting floor for function grid gridoptions height horizontal html index js large length main mainctrl math module name ng-controller number of overview push random row rowindex scrolling true tutorial ui ui-grid var width widths with"
+      "keywords": "$http $scope amount an and angular app cells check class col col0 col1 col2 colcount colindex columndefs columns controller couple css data demonstrating describe element enablesorting expectcellvaluematch expectheadercellvaluematch first floor for function get grid grid1 gridoptions gridtestutils has headers height horizontal how html id index it js large length main mainctrl make math module name ng-controller number of out overview protractor push r0c0 r0c1 r1c0 r1c1 r2c0 random rendered require right row rowindex scenario scroll scrolling spec still sure to true tutorial ui ui-grid var width widths with working"
     },
     {
       "section": "tutorial",
@@ -695,7 +695,7 @@ NG_DOCS={
       "id": "211_two_grids",
       "shortName": "211 Two grids on a page",
       "type": "overview",
-      "keywords": "$http $log $scope and angular app are class controller css data demonstrates each example firstgrid from function get grid gridoptions grids height html id index isolated js json main mainctrl module name ng-controller on other overview page puts same secondctrl secondgrid selection success that the they this tutorial two ui ui-grid ui-grid-selection var width"
+      "keywords": "$http $log $scope an and angular app are check class controller correct css data demonstrates describe display each element example expectheadercolumncount first firstgrid from function get grid gridoptions grids gridtestutils has height how html id index isolated it js json main mainctrl menus module name ng-controller on other out over overview page protractor puts rendered require same scenario scroll second secondctrl secondgrid selection spec still success that the they this to tutorial two ui ui-grid ui-grid-selection var width working"
     },
     {
       "section": "tutorial",

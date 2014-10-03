@@ -3,7 +3,7 @@
 </h1>
 <div><p>Demonstrating scrolling with large amount of columns</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-41" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-41" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-42"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-41" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-41">
@@ -11,7 +11,7 @@
     <strong>{{ gridOptions.columnDefs.length | number }} Columns with Random Widths</strong>
     <br>
     <br>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
 </div>
@@ -57,6 +57,29 @@
 
     $scope.gridOptions.data = data;
   }]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-42"></pre>
+<script type="text/ng-template" id="scenario.js-42">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  describe( '191 horizontal scrolling', function() {
+    it('check first couple of headers and cells - make sure grid has rendered', function () {
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Col0' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Col1' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Col2' );
+      
+      gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'r0c0' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 1, 0, 'r1c0' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'r2c0' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'r0c1' );
+      gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'r1c1' );
+    });
+
+//      it('scroll right', function () {
+      // still working out how to get protractor to scroll an element
+//      });
+  });
 </script>
 </div>
 </div><h4>Demo</h4>
