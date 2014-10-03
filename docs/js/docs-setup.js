@@ -517,6 +517,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "098_contributing_to_ui-grid",
+      "shortName": "098 Contributing to ui-grid",
+      "type": "overview",
+      "keywords": "_demonstrable accessible account add adjust aim all allow already always an and angularjs answer answers appropriate are area aren as ask assist assisting at be before bits both branch bug build but button by can channels click code coding collate com come commit commits complete complex configuration continue contribute contributing contributions contributors copy core could courteous covered create default demonstrates described detail development diagnose dive do documentation don each easier easiest edit end-to-end enough everywhere existing expected extended familiar features find first fix follow for freeing friendly from generally get github gitter good grid guide guides happen hard have help helping high if in including increase indent information instead intentions into is issue issues it key know knowledge large least ll long look looking looks lot make match may md members minimum more most much must new ngdoc ngdocs not number of on once one only open or other others our out outside overview paste patches people place places plunkr point possible pro problem problems_ project projects pros provide providing prs pull push pushed quality questions raising re read reasonably refer register remember report request requests requires resolve right run same save sections short should similarly single small so some source spaces squash squashing start started straight style submission submit submitting take team tell tests that the them then there these they things think this through time timer timers to tools tracker tried tutorial tutorials ui-grid unit up updates url us used using value valued ve version volunteers want watch way ways we welcomes well what where which who will with work working yet you your"
+    },
+    {
+      "section": "tutorial",
       "id": "099_upgrading_from_2",
       "shortName": "099 Upgrading",
       "type": "overview",
