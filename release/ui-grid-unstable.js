@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-5d590d8 - 2014-10-04
+/*! ui-grid - v3.0.0-rc.11-aeee7eb - 2014-10-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2744,6 +2744,17 @@ angular.module('ui.grid')
    * 
    */
   self.api.registerMethod( 'core', 'handleWindowResize', this.handleWindowResize );
+
+
+  /**
+   * @ngdoc function
+   * @name addRowHeaderColumn
+   * @methodOf ui.grid.core.api:PublicApi
+   * @description adds a row header column to the grid
+   * @param {object} column def
+   * 
+   */
+  self.api.registerMethod( 'core', 'addRowHeaderColumn', this.addRowHeaderColumn );
 
 
   /**

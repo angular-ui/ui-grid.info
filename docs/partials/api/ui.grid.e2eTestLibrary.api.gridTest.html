@@ -229,16 +229,32 @@ gridTestUtils.expectHeaderCellValueMatch('myGrid', 2, 'HeaderValue');
 </div>
 </li>
 <li><h3 id="expectHeaderColumnCount">expectHeaderColumnCount(gridId, expectedNumCols)</h3>
-<div class="expectheadercolumncount"><p>Checks that a grid header has the specified number of columns.</p><h4 id="Parameters">Parameters</h4>
+<div class="expectheadercolumncount"><p>Checks that a grid header body render container (the default render container)
+has the specified number of columns.  If you are using pinned columns then you may also want
+to check expectHeaderLeftColumnCount</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
 <p>the id of the grid that you want to inspect</p></li>
 <li><code ng:non-bindable="">expectedNumCols – {integer} – </code>
 <p>the number of visible columns you expect the
-grid to have</p></li>
+body to have</p></li>
 </ul>
 <h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
 gridTestUtils.expectHeaderColumnCount('myGrid', 2);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectHeaderLeftColumnCount">expectHeaderLeftColumnCount(gridId, expectedNumCols)</h3>
+<div class="expectheaderleftcolumncount"><p>Checks that a grid header left render container has the specified number of columns.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectedNumCols – {integer} – </code>
+<p>the number of visible columns you expect the
+left render container to have</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectHeaderLeftColumnCount('myGrid', 2);
 </pre></div>
 </div>
 </li>
