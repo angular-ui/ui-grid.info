@@ -957,11 +957,11 @@ div.ui-grid-cell input.ng-valid {
 .ui-grid-row-saving .ui-grid-cell {
   color: #848484 !important;
 }
+.ui-grid-row-dirty .ui-grid-cell {
+  color: #610b38;
+}
 .ui-grid-row-error .ui-grid-cell {
   color: #ff0000 !important;
-}
-.ui-grid-row-dirty .ui-grid-cell {
-  color: #610b38 !important;
 }
 
 /* This file contains variable declarations (do not remove this line) */

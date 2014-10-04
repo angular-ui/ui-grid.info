@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-45cc233 - 2014-10-04
+/*! ui-grid - v3.0.0-rc.11-7d8d2b4 - 2014-10-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -13028,9 +13028,9 @@ module.filter('px', function() {
             var existingNgClass = rowRepeatDiv.attr("ng-class");
             var newNgClass = '';
             if ( existingNgClass ) {
-              newNgClass = existingNgClass.slice(0, -1) + ",'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError, 'ui-grid-row-dirty': row.isDirty}";
+              newNgClass = existingNgClass.slice(0, -1) + ", 'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}";
             } else {
-              newNgClass = "{'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError, 'ui-grid-row-dirty': row.isDirty}";
+              newNgClass = "{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError}";
             }
             rowRepeatDiv.attr("ng-class", newNgClass);
 
