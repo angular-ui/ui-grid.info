@@ -94,6 +94,22 @@ gridTestUtils.clickColumnMenuSortDesc('myGrid', 0);
 </pre></div>
 </div>
 </li>
+<li><h3 id="clickGridMenuItem">clickGridMenuItem(gridId, itemNumber)</h3>
+<div class="clickgridmenuitem"><p>Clicks on a numbered grid menu item.  Note that it's clicking
+the item based on the underlying repeater - and that some of the items will
+not be visible.  So the item you want to click on may not be the same
+as the item number when you look at the ui   </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">itemNumber – {integer} – </code>
+<p>the number of visible items you expect</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickVisibleGridMenuItem('myGrid', 9);
+</pre></div>
+</div>
+</li>
 <li><h3 id="clickHeaderCell">clickHeaderCell(gridId, colNumber)</h3>
 <div class="clickheadercell"><p>Clicks on the header of the specified column,
 which would usually result in a sort </p><h4 id="Parameters">Parameters</h4>
@@ -308,6 +324,19 @@ that you want to check the count for</p></li>
 <h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
 gridTestUtils.visibleColumnMenuItems('myGrid', 0, 3);
+</pre></div>
+</div>
+</li>
+<li><h3 id="expectVisibleGridMenuItems">expectVisibleGridMenuItems(gridId, expectItems)</h3>
+<div class="expectvisiblegridmenuitems"><p>Checks how many visible menu items there are in the grid menu   </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">expectItems – {integer} – </code>
+<p>the number of visible items you expect</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectVisibleGridMenuItems('myGrid', 3);
 </pre></div>
 </div>
 </li>

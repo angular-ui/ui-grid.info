@@ -37,10 +37,6 @@ using the column menu or the grid menu.</p></div>
 <div class="displayname"><p>Column name that will be shown in the header.  If displayName is not
 provided then one is generated using the name.</p></div>
 </li>
-<li><h3 id="enableFiltering">enableFiltering</h3>
-<div class="enablefiltering"><p>(optional) True by default. When enabled, this setting adds filter
-widgets to the column header, allowing filtering of the data in the individual column.</p></div>
-</li>
 <li><h3 id="enableSorting">enableSorting</h3>
 <div class="enablesorting"><p>(optional) True by default. When enabled, this setting adds sort
 widgets to the column header, allowing sorting of the data in the individual column.</p></div>
@@ -106,7 +102,7 @@ functionality.  A number of settings are supported:</p>
 <li>icon: the icon shown alongside that title</li>
 <li>action: the method to call when the menu is clicked</li>
 <li>shown: a function to evaluate to determine whether or not to show the item</li>
-<li>active: a function to evaluate to determine whether or not to enable the item</li>
+<li>active: a function to evaluate to determine whether or not the item is currently selected</li>
 <li>context: context to pass to the action function??</li>
 </ul><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ 

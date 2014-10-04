@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-608d5b0 - 2014-10-04
+/*! ui-grid - v3.0.0-rc.11-fda3ebb - 2014-10-04
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -604,58 +604,22 @@ input[type="text"].ui-grid-filter-input {
 
 /* Slide up/down animations */
 .ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner {
-  &.ng-hide-add, &.ng-hide-remove {
+  &.ng-enter, &.ng-leave {
     .transition(all, 0.05s, linear);
     display: block !important;
   }
   
-  &.ng-hide-add.ng-hide-add-active,
-  &.ng-hide-remove {
+  &.ng-leave.ng-leave-active,
+  &.ng-enter {
     .transform(translateY(-100%));
   }
    
-  &.ng-hide-add,
-  &.ng-hide-remove.ng-hide-remove-active {
+  &.ng-leave,
+  &.ng-enter.ng-enter-active {
     .transform(translateY(0));
   }
 }
 
-// NOTE: not used currently (TODO(c0bra): Remove or use down the road?)
-// .ui-grid-column-filter {
-//   display: table;
-
-//   .input-container {
-//     position: relative;
-//     display: table-cell;
-
-//     .column-filter-input {
-//       margin: 0;
-//     }
-
-//     .column-filter-cancel-icon-container {
-//       position: absolute;
-//       top: 0;
-//       bottom: 0;
-//       right: 0;
-
-//       .column-filter-cancel-icon {
-//         position: absolute;
-//         top: 50%;
-//         line-height: 32px;
-//         margin-top: -16px;
-//         right: 2px;
-//       }
-//     }
-//   }
-
-//   .button-container {
-//     display: table-cell;
-
-//     .ui-grid-button {
-//       margin-left: 4px;
-//     }
-//   }
-// }
 
 .ui-grid-filter-container {
   padding: 4px 10px;
@@ -765,12 +729,31 @@ input[type="text"].ui-grid-filter-input {
 
 
 
+.ui-grid-menu-button {
+  z-index: 2;
+  position: fixed;
+  right: 0;  
+  background: @headerBackgroundColor;
+  border: @gridBorderWidth solid @borderColor;
+  cursor: pointer;
+  min-height: 27px;
+  font-weight: normal;
+}
+
+.ui-grid-menu-button .ui-grid-icon-container {
+  margin-top: 3px;
+}
+
+.ui-grid-menu-button .ui-grid-menu {
+  right: 0;
+}
+
 .ui-grid-menu {
   z-index: 2; // So it shows up over grid canvas
   position: absolute;
   overflow: hidden;
   padding: 0 10px 20px 10px;
-  cursor: default; // Parent element can have pointer cursor
+  cursor: pointer;
 }
 
 .ui-grid-menu .ui-grid-menu-inner {

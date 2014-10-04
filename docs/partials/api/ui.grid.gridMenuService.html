@@ -1,0 +1,63 @@
+<h1><code ng:non-bindable="">gridMenuService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Methods for working with the grid menu</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="getMenuItems">getMenuItems($scope)</h3>
+<div class="getmenuitems"><p>Decides the menu items to show in the menu.  This is a
+combination of:</p>
+
+<ul>
+<li>the default menu items that are always included, </li>
+<li>any menu items that have been provided through the addMenuItem api. These
+are typically added by features within the grid</li>
+<li>any menu items included in grid.options.gridMenuCustomItems.  These can be
+changed dynamically, as they're always recalculated whenever we show the
+menu</li>
+</ul><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">$scope – {$scope} – </code>
+<p>the scope of this gridMenu, from which we can find all 
+the information that we need</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>an array of menu items that can be shown </p></div>
+</div>
+</li>
+<li><h3 id="initialize">initialize($scope, grid)</h3>
+<div class="initialize"><p>Sets up the gridMenu. Most importantly, sets our
+scope onto the grid object as grid.gridMenuScope, allowing us
+to operate when passed only the grid.  Second most importantly, 
+we register the 'addToGridMenu' and 'removeFromGridMenu' methods
+on the core api.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">$scope – {$scope} – </code>
+<p>the scope of this gridMenu</p></li>
+<li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid to which this gridMenu is associated</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="showHideColumns">showHideColumns($scope)</h3>
+<div class="showhidecolumns"><p>Adds two menu items for each of the columns in columnDefs.  One
+menu item for hide, one menu item for show.  Each is visible when appropriate
+(show when column is not visible, hide when column is visible).  Each toggles
+the visible property on the columnDef using toggleColumnVisibility</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">$scope – {$scope} – </code>
+<p>of a gridMenu, which contains a reference to the grid</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="toggleColumnVisibility">toggleColumnVisibility(gridCol)</h3>
+<div class="togglecolumnvisibility"><p>Toggles the visibility of an individual column.  Expects to be
+provided a context that has on it a gridColumn, which is the column that
+we'll operate upon.  We change the visibility, and refresh the grid as appropriate</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridCol – {GridCol} – </code>
+<p>the column that we want to toggle</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>

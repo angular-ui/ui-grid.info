@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-608d5b0 - 2014-10-04
+/*! ui-grid - v3.0.0-rc.11-fda3ebb - 2014-10-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -139,124 +139,174 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
 
 (function(){
 
-angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$window', '$document', '$injector', 'gridUtil', 'uiGridConstants', 'i18nService', function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstants, i18nService) {
+angular.module('ui.grid')
+.service('uiGridColumnMenuService', [ 'i18nService', 'uiGridConstants', 'gridUtil', 
+function ( i18nService, uiGridConstants, gridUtil ) {
+/**
+ *  @ngdoc service
+ *  @name ui.grid.service:uiGridColumnMenuService
+ *
+ *  @description Services for working with column menus, factored out
+ *  to make the code easier to understand
+ */
 
-  var uiGridColumnMenu = {
-    priority: 0,
-    scope: true,
-    require: '?^uiGrid',
-    templateUrl: 'ui-grid/uiGridColumnMenu',
-    replace: true,
-    link: function ($scope, $elm, $attrs, uiGridCtrl) {
-      gridUtil.enableAnimations($elm);
-
+  var service = {
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name initialize
+     * @description  Sets defaults, puts a reference to the $scope on 
+     * the uiGridController
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * @param {controller} uiGridCtrl the uiGridController for the grid
+     * we're on
+     * 
+     */
+    initialize: function( $scope, uiGridCtrl ){
       $scope.grid = uiGridCtrl.grid;
-
-      var self = this;
 
       // Store a reference to this link/controller in the main uiGrid controller
       // to allow showMenu later
       uiGridCtrl.columnMenuScope = $scope;
-
+      
       // Save whether we're shown or not so the columns can check
-      self.shown = $scope.menuShown = false;
+      $scope.menuShown = false;
+    },
+    
+    
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name setColMenuItemWatch
+     * @description  Setup a watch on $scope.col.menuItems, and update
+     * menuItems based on this.  $scope.col needs to be set by the column
+     * before calling the menu.
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * @param {controller} uiGridCtrl the uiGridController for the grid
+     * we're on
+     * 
+     */    
+    setColMenuItemWatch: function ( $scope ){
+      var deregFunction = $scope.$watch('col.menuItems', function (n, o) {
+        if (typeof(n) !== 'undefined' && n && angular.isArray(n)) {
+          n.forEach(function (item) {
+            if (typeof(item.context) === 'undefined' || !item.context) {
+              item.context = {};
+            }
+            item.context.col = $scope.col;
+          });
 
-      // Put asc and desc sort directions in scope
-      $scope.asc = uiGridConstants.ASC;
-      $scope.desc = uiGridConstants.DESC;
-
-      // $scope.i18n = i18nService;
-
-      // Get the grid menu element. We'll use it to calculate positioning
-      $scope.menu = $elm[0].querySelectorAll('.ui-grid-menu');
-
-      // Get the inner menu part. It's what slides up/down
-      $scope.inner = $elm[0].querySelectorAll('.ui-grid-menu-inner');
-
-      /**
-       * @ngdoc boolean
-       * @name enableSorting
-       * @propertyOf ui.grid.class:GridOptions.columnDef
-       * @description (optional) True by default. When enabled, this setting adds sort
-       * widgets to the column header, allowing sorting of the data in the individual column.
-       */
-      $scope.sortable = function() {
-        if (uiGridCtrl.grid.options.enableSorting && typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.enableSorting) {
-          return true;
+          $scope.menuItems = $scope.defaultMenuItems.concat(n);
         }
         else {
-          return false;
+          $scope.menuItems = $scope.defaultMenuItems;
         }
-      };
+      }); 
+      
+      $scope.$on( '$destroy', deregFunction );     
+    },
 
 
-      /**
-       * @ngdoc boolean
-       * @name suppressRemoveSort
-       * @propertyOf ui.grid.class:GridOptions.columnDef
-       * @description (optional) False by default. When enabled, this setting hides the removeSort option
-       * in the menu.
-       */
-      $scope.suppressRemoveSort = function() {
-        if ($scope.col && $scope.col.colDef && $scope.col.colDef.suppressRemoveSort) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      };
+    /**
+     * @ngdoc boolean
+     * @name enableSorting
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description (optional) True by default. When enabled, this setting adds sort
+     * widgets to the column header, allowing sorting of the data in the individual column.
+     */
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name sortable
+     * @description  determines whether this column is sortable
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * 
+     */    
+    sortable: function( $scope ) {
+      if ( $scope.grid.options.enableSorting && typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.enableSorting) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
+    
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name isActiveSort
+     * @description  determines whether the requested sort direction is current active, to 
+     * allow highlighting in the menu
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * @param {string} direction the direction that we'd have selected for us to be active
+     * 
+     */  
+    isActiveSort: function( $scope, direction ){
+      return (typeof($scope.col) !== 'undefined' && typeof($scope.col.sort) !== 'undefined' && 
+              typeof($scope.col.sort.direction) !== 'undefined' && $scope.col.sort.direction === direction);
+      
+    },
+    
+    /**
+     * @ngdoc boolean
+     * @name suppressRemoveSort
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description (optional) False by default. When enabled, this setting hides the removeSort option
+     * in the menu.
+     */
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name suppressRemoveSort
+     * @description  determines whether we should suppress the removeSort option
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * 
+     */  
+    suppressRemoveSort: function( $scope ) {
+      if ($scope.col && $scope.col.colDef && $scope.col.colDef.suppressRemoveSort) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    },       
 
 
-      /**
-       * @ngdoc boolean
-       * @name enableFiltering
-       * @propertyOf ui.grid.class:GridOptions.columnDef
-       * @description (optional) True by default. When enabled, this setting adds filter
-       * widgets to the column header, allowing filtering of the data in the individual column.
-       */
-      $scope.filterable = function() {
-        if (uiGridCtrl.grid.options.enableFiltering && typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.enableFiltering) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      };
+    /**
+     * @ngdoc boolean
+     * @name disableHiding
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description (optional) False by default. When enabled, this setting prevents a user from hiding the column
+     * using the column menu or the grid menu.
+     */
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name hideable
+     * @description  determines whether a column can be hidden, but checking the disableHiding columnDef option
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * 
+     */  
+    hideable: function( $scope ) {
+      if (typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.colDef && $scope.col.colDef.disableHiding) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    },     
 
 
-      /**
-       * @ngdoc boolean
-       * @name disableHiding
-       * @propertyOf ui.grid.class:GridOptions.columnDef
-       * @description (optional) False by default. When enabled, this setting prevents a user from hiding the column
-       * using the column menu or the grid menu.
-       */
-      $scope.hideable = function() {
-        if (typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.colDef && $scope.col.colDef.disableHiding) {
-          return false;
-        }
-        else {
-          return true;
-        }
-      };      
-      var defaultMenuItems = [
-        // NOTE: disabling this in favor of a little filter text box
-        // Column filter input
-        // {
-        //   templateUrl: 'ui-grid/uiGridColumnFilter',
-        //   action: function($event) {
-        //     $event.stopPropagation();
-        //     $scope.filterColumn($event);
-        //   },
-        //   cancel: function ($event) {
-        //     $event.stopPropagation();
-
-        //     $scope.col.filter = {};
-        //   },
-        //   shown: function () {
-        //     return filterable();
-        //   }
-        // },
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name getDefaultMenuItems
+     * @description  returns the default menu items for a column menu
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * 
+     */     
+    getDefaultMenuItems: function( $scope ){
+      return [
         {
           title: i18nService.getSafeText('sort.ascending'),
           icon: 'ui-grid-icon-sort-alt-up',
@@ -265,11 +315,10 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.sortColumn($event, uiGridConstants.ASC);
           },
           shown: function () {
-            return $scope.sortable();
+            return service.sortable( $scope );
           },
           active: function() {
-            return (typeof($scope.col) !== 'undefined' && typeof($scope.col.sort) !== 'undefined' && 
-                    typeof($scope.col.sort.direction) !== 'undefined' && $scope.col.sort.direction === uiGridConstants.ASC);
+            return service.isActiveSort( $scope, uiGridConstants.ASC);
           }
         },
         {
@@ -280,11 +329,10 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.sortColumn($event, uiGridConstants.DESC);
           },
           shown: function() {
-            return $scope.sortable();
+            return service.sortable( $scope );
           },
           active: function() {
-            return (typeof($scope.col) !== 'undefined' && typeof($scope.col.sort) !== 'undefined' && 
-                    typeof($scope.col.sort.direction) !== 'undefined' && $scope.col.sort.direction === uiGridConstants.DESC);
+            return service.isActiveSort( $scope, uiGridConstants.DESC);
           }
         },
         {
@@ -295,16 +343,17 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
             $scope.unsortColumn();
           },
           shown: function() {
-            return ($scope.sortable() && typeof($scope.col) !== 'undefined' && (typeof($scope.col.sort) !== 'undefined' && 
-                    typeof($scope.col.sort.direction) !== 'undefined') && $scope.col.sort.direction !== null && 
-                    !$scope.suppressRemoveSort());
+            return service.sortable( $scope ) && 
+                   typeof($scope.col) !== 'undefined' && (typeof($scope.col.sort) !== 'undefined' && 
+                   typeof($scope.col.sort.direction) !== 'undefined') && $scope.col.sort.direction !== null &&
+                  !service.suppressRemoveSort( $scope );
           }
         },
         {
           title: i18nService.getSafeText('column.hide'),
           icon: 'ui-grid-icon-cancel',
           shown: function() {
-            return $scope.hideable();
+            return service.hideable( $scope );
           },
           action: function ($event) {
             $event.stopPropagation();
@@ -312,122 +361,173 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
           }
         }
       ];
+    },
+    
 
-      // Set the menu items for use with the column menu. Let's the user specify extra menu items per column if they want.
-      $scope.menuItems = defaultMenuItems;
-      $scope.$watch('col.menuItems', function (n, o) {
-        if (typeof(n) !== 'undefined' && n && angular.isArray(n)) {
-          n.forEach(function (item) {
-            if (typeof(item.context) === 'undefined' || !item.context) {
-              item.context = {};
-            }
-            item.context.col = $scope.col;
-          });
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name getColumnElementPosition
+     * @description  gets the position information needed to place the column
+     * menu below the column header
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * @param {GridCol} column the column we want to position below
+     * @param {element} $columnElement the column element we want to position below
+     * @returns {hash} containing left, top, offset, height, width
+     * 
+     */  
+    getColumnElementPosition: function( $scope, column, $columnElement ){
+      var positionData = {};
+      positionData.left = $columnElement[0].offsetLeft;
+      positionData.top = $columnElement[0].offsetTop;
 
-          $scope.menuItems = defaultMenuItems.concat(n);
-        }
-        else {
-          $scope.menuItems = defaultMenuItems;
-        }
-      });
-
-      var $animate;
-      try {
-        $animate = $injector.get('$animate');
+      // Get the grid scrollLeft
+      positionData.offset = 0;
+      if (column.grid.options.offsetLeft) {
+        positionData.offset = column.grid.options.offsetLeft;
       }
-      catch (e) {
-        $log.info('$animate service not found (ngAnimate not add as a dependency?), menu animations will not occur');
+
+      positionData.height = gridUtil.elementHeight($columnElement, true);
+      positionData.width = gridUtil.elementWidth($columnElement, true);
+      
+      return positionData;
+    },
+    
+
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.service:uiGridColumnMenuService
+     * @name repositionMenu
+     * @description  Reposition the menu below the new column.  If the menu has no child nodes 
+     * (i.e. it's not currently visible) then we guess it's width at 100, we'll be called again
+     * later to fix it
+     * @param {$scope} $scope the $scope from the uiGridColumnMenu
+     * @param {GridCol} column the column we want to position below
+     * @param {hash} positionData a hash containing left, top, offset, height, width
+     * @param {element} $elm the column menu element that we want to reposition
+     * @param {element} $columnElement the column element that we want to reposition underneath
+     * 
+     */  
+    repositionMenu: function( $scope, column, positionData, $elm, $columnElement ) {
+      var menu = $elm[0].querySelectorAll('.ui-grid-menu');
+      var containerId = column.renderContainer ? column.renderContainer : 'body';
+      var renderContainer = column.grid.renderContainers[containerId];
+
+      // It's possible that the render container of the column we're attaching to is 
+      // offset from the grid (i.e. pinned containers), we need to get the difference in the offsetLeft 
+      // between the render container and the grid
+      var renderContainerElm = gridUtil.closestElm($columnElement, '.ui-grid-render-container');
+      var renderContainerOffset = renderContainerElm.getBoundingClientRect().left - $scope.grid.element[0].getBoundingClientRect().left;
+
+      var containerScrolLeft = renderContainerElm.querySelectorAll('.ui-grid-viewport')[0].scrollLeft;
+
+      var myWidth = $scope.lastWidth ? $scope.lastWidth : 170;
+      var paddingRight = $scope.lastPaddingRight ? $scope.lastPaddingRight : 10;
+      if (menu.length !== 0){
+        myWidth = gridUtil.elementWidth(menu, true);
+        $scope.lastWidth = myWidth;
+
+        // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
+        // Get the column menu right padding
+        paddingRight = parseInt(gridUtil.getStyles(angular.element(menu)[0])['paddingRight'], 10);
+        $scope.lastPaddingRight = paddingRight;
       }
 
-      // Show the menu
+      $elm.css('left', (positionData.left + renderContainerOffset - containerScrolLeft + positionData.width - myWidth + paddingRight) + 'px');
+      $elm.css('top', (positionData.top + positionData.height) + 'px');
+    }    
+
+  };
+  
+  return service;
+}])
+
+
+.directive('uiGridColumnMenu', ['$log', '$timeout', '$window', '$document', '$injector', 'gridUtil', 'uiGridConstants', 'uiGridColumnMenuService', 
+function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstants, uiGridColumnMenuService) {
+/**
+ * @ngdoc directive
+ * @name ui.grid.directive:uiGridColumnMenu
+ * @description  Provides the column menu framework, leverages uiGridMenu underneath
+ * 
+ */
+
+  var uiGridColumnMenu = {
+    priority: 0,
+    scope: true,
+    require: '?^uiGrid',
+    templateUrl: 'ui-grid/uiGridColumnMenu',
+    replace: true,
+    link: function ($scope, $elm, $attrs, uiGridCtrl) {
+      var self = this;
+      
+      uiGridColumnMenuService.initialize( $scope, uiGridCtrl );
+
+      $scope.defaultMenuItems = uiGridColumnMenuService.getDefaultMenuItems( $scope );
+
+      // Set the menu items for use with the column menu. The user can later add additional items via the watch
+      $scope.menuItems = $scope.defaultMenuItems;
+      uiGridColumnMenuService.setColMenuItemWatch( $scope );
+
+  
+      /**
+       * @ngdoc method
+       * @methodOf ui.grid.directive:uiGridColumnMenu
+       * @name showMenu
+       * @description Shows the column menu.  If the menu is already displayed it
+       * calls the menu to ask it to hide (it will animate), then it repositions the menu
+       * to the right place whilst hidden (it will make an assumption on menu width), 
+       * then it asks the menu to show (it will animate), then it repositions the menu again 
+       * once we can calculate it's size.
+       * @param {GridCol} column the column we want to position below
+       * @param {element} $columnElement the column element we want to position below
+       */
       $scope.showMenu = function(column, $columnElement) {
         // Swap to this column
-        //   note - store a reference to this column in 'self' so the columns can check whether they're the shown column or not
-        self.col = $scope.col = column;
+        $scope.col = column;
 
         // Remove an existing document click handler
         $document.off('click', documentClick);
 
-        /* Reposition the menu below this column's element */
-        var left = $columnElement[0].offsetLeft;
-        var top = $columnElement[0].offsetTop;
+        // Get the position information for the column element
+        var colElementPosition = uiGridColumnMenuService.getColumnElementPosition( $scope, column, $columnElement );
 
-        // Get the grid scrollLeft
-        var offset = 0;
-        if (column.grid.options.offsetLeft) {
-          offset = column.grid.options.offsetLeft;
-        }
-
-        var height = gridUtil.elementHeight($columnElement, true);
-        var width = gridUtil.elementWidth($columnElement, true);
-
-        // Flag for whether we're hidden for showing via $animate
-        var hidden = false;
-
-        // Re-position the menu AFTER it's been shown, so we can calculate the width correctly.
-        function reposition() {
-          $timeout(function() {
-            if (hidden && $animate) {
-              $animate.removeClass($scope.inner, 'ng-hide');
-              self.shown = $scope.menuShown = true;
-              $scope.$broadcast('show-menu');
-            }
-            else if (angular.element($scope.inner).hasClass('ng-hide')) {
-              angular.element($scope.inner).removeClass('ng-hide');
-            }
-
-            // var containerScrollLeft = $columnelement
-            var containerId = column.renderContainer ? column.renderContainer : 'body';
-            var renderContainer = column.grid.renderContainers[containerId];
-            // var containerScrolLeft = renderContainer.prevScrollLeft;
-
-            // It's possible that the render container of the column we're attaching to is offset from the grid (i.e. pinned containers), we
-            //   need to get the different in the offsetLeft between the render container and the grid
-            var renderContainerElm = gridUtil.closestElm($columnElement, '.ui-grid-render-container');
-            var renderContainerOffset = renderContainerElm.getBoundingClientRect().left - $scope.grid.element[0].getBoundingClientRect().left;
-
-            var containerScrolLeft = renderContainerElm.querySelectorAll('.ui-grid-viewport')[0].scrollLeft;
-
-            var myWidth = gridUtil.elementWidth($scope.menu, true);
-
-            // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
-            // Get the column menu right padding
-            var paddingRight = parseInt(gridUtil.getStyles(angular.element($scope.menu)[0])['paddingRight'], 10);
-
-            // $log.debug('position', left + ' + ' + width + ' - ' + myWidth + ' + ' + paddingRight);
-
-            $elm.css('left', (left + renderContainerOffset - containerScrolLeft + width - myWidth + paddingRight) + 'px');
-            $elm.css('top', (top + height) + 'px');
-
-            // Hide the menu on a click on the document
-            $document.on('click', documentClick);
-          });
-        }
-
-        if ($scope.menuShown && $animate) {
-          // Animate closing the menu on the current column, then animate it opening on the other column
-          $animate.addClass($scope.inner, 'ng-hide', reposition);
-          hidden = true;
-        }
-        else {
-          self.shown = $scope.menuShown = true;
+        var repositionMenuClosure = function( $scope, column, colElementPosition, $elm, $columnElement ) {
+          return function() {
+            uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
+          };
+        };
+        
+        if ($scope.menuShown) {
+          $scope.$broadcast('hide-menu');
+          
+          uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
           $scope.$broadcast('show-menu');
-          reposition();
+          $timeout( repositionMenuClosure( $scope, column, colElementPosition, $elm, $columnElement ));
+        } else {
+          self.shown = $scope.menuShown = true;
+          uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
+          $scope.$broadcast('show-menu');
+          $timeout( repositionMenuClosure( $scope, column, colElementPosition, $elm, $columnElement ));
         }
+
+        // Hide the menu on a click on the document
+        $document.on('click', documentClick);
       };
 
-      // Hide the menu
+
+      /**
+       * @ngdoc method
+       * @methodOf ui.grid.directive:uiGridColumnMenu
+       * @name hideMenu
+       * @description Hides the column menu.
+       */
       $scope.hideMenu = function() {
-        delete self.col;
         delete $scope.col;
-        self.shown = $scope.menuShown = false;
+        $scope.menuShown = false;
         $scope.$broadcast('hide-menu');
       };
 
-      // Prevent clicks on the menu from bubbling up to the document and making it hide prematurely
-      // $elm.on('click', function (event) {
-      //   event.stopPropagation();
-      // });
 
       function documentClick() {
         $scope.$apply($scope.hideMenu);
@@ -441,12 +541,10 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
 
       $scope.$on('$destroy', $scope.$on(uiGridConstants.events.GRID_SCROLL, function(evt, args) {
         $scope.hideMenu();
-        // if (!$scope.$$phase) { $scope.$apply(); }
       }));
 
       $scope.$on('$destroy', $scope.$on(uiGridConstants.events.ITEM_DRAGGING, function(evt, args) {
         $scope.hideMenu();
-        // if (!$scope.$$phase) { $scope.$apply(); }
       }));
 
       $scope.$on('$destroy', function() {
@@ -454,13 +552,14 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
         $document.off('click', documentClick);
       });
 
+ 
       /* Column methods */
       $scope.sortColumn = function (event, dir) {
         event.stopPropagation();
 
-        uiGridCtrl.grid.sortColumn($scope.col, dir, true)
+        $scope.grid.sortColumn($scope.col, dir, true)
           .then(function () {
-            uiGridCtrl.grid.refresh();
+            $scope.grid.refresh();
             $scope.hideMenu();
           });
       };
@@ -468,17 +567,20 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       $scope.unsortColumn = function () {
         $scope.col.unsort();
 
-        uiGridCtrl.grid.refresh();
+        $scope.grid.refresh();
         $scope.hideMenu();
       };
 
       $scope.hideColumn = function () {
         $scope.col.colDef.visible = false;
 
-        uiGridCtrl.grid.refresh();
+        $scope.grid.refresh();
         $scope.hideMenu();
       };
     },
+    
+    
+    
     controller: ['$scope', function ($scope) {
       var self = this;
       
@@ -1121,6 +1223,12 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
               }
               // canvasWidth = canvasWidth + 1;
 
+              // if we have a grid menu, then we prune the width of the last column header
+              // to allow room for the button whilst still getting to the column menu
+              if (columnCache.length > 0) { // && grid.options.enableGridMenu) {
+                columnCache[columnCache.length - 1].headerWidth = columnCache[columnCache.length - 1].drawnWidth - 30;
+              }
+
               containerCtrl.colContainer.canvasWidth = parseInt(canvasWidth, 10);
 
               // Return the styles back to buildStyles which pops them into the `customStyles` scope variable
@@ -1146,6 +1254,331 @@ angular.module('ui.grid').directive('uiGridColumnMenu', ['$log', '$timeout', '$w
       }
     };
   }]);
+
+})();
+(function(){
+
+angular.module('ui.grid')
+.service('uiGridGridMenuService', [ '$log', 'i18nService', function( $log, i18nService ) {
+  /**
+   *  @ngdoc service
+   *  @name ui.grid.gridMenuService
+   *
+   *  @description Methods for working with the grid menu
+   */
+
+  var service = {
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.gridMenuService
+     * @name initialize
+     * @description Sets up the gridMenu. Most importantly, sets our
+     * scope onto the grid object as grid.gridMenuScope, allowing us
+     * to operate when passed only the grid.  Second most importantly, 
+     * we register the 'addToGridMenu' and 'removeFromGridMenu' methods
+     * on the core api.
+     * @param {$scope} $scope the scope of this gridMenu
+     * @param {Grid} grid the grid to which this gridMenu is associated
+     */
+    initialize: function( $scope, grid ){
+      grid.gridMenuScope = $scope;
+      $scope.grid = grid;
+      
+      // not certain this is needed, but would be bad to create a memory leak
+      $scope.$on('$destroy', function() {
+        $scope.grid.gridMenuScope = null;
+        $scope.grid = null;
+        $scope.registeredMenuItems = null;
+      });
+      
+      $scope.registeredMenuItems = [];
+      
+      /**
+       * @ngdoc function
+       * @name addToGridMenu
+       * @methodOf ui.grid.core.api:PublicApi
+       * @description add items to the grid menu.  Used by features
+       * to add their menu items if they are enabled, can also be used by
+       * end users to add menu items.  This method has the advantage of allowing
+       * remove again, which can simplify management of which items are included
+       * in the menu when.  (Noting that in most cases the shown and active functions
+       * provide a better way to handle visibility of menu items)
+       * @param {Grid} grid the grid on which we are acting
+       * @param {array} items menu items in the format as described in the tutorial, with 
+       * the added note that if you want to use remove you must also specify an `id` field,
+       * which is provided when you want to remove an item.  The id should be unique.
+       * 
+       */
+      grid.api.registerMethod( 'core', 'addToGridMenu', service.addToGridMenu );
+  
+      /**
+       * @ngdoc function
+       * @name removeFromGridMenu
+       * @methodOf ui.grid.core.api:PublicApi
+       * @description Remove an item from the grid menu based on a provided id. Assumes
+       * that the id is unique, removes only the last instance of that id. Does nothing if
+       * the specified id is not found
+       * @param {Grid} grid the grid on which we are acting
+       * @param {string} id the id we'd like to remove from the menu
+       * 
+       */
+      grid.api.registerMethod( 'core', 'removeFromGridMenu', service.removeFromGridMenu );
+    },
+ 
+    
+    /**
+     * @ngdoc function
+     * @name addToGridMenu
+     * @propertyOf ui.grid.class:GridOptions
+     * @description add items to the grid menu.  Used by features
+     * to add their menu items if they are enabled, can also be used by
+     * end users to add menu items.  This method has the advantage of allowing
+     * remove again, which can simplify management of which items are included
+     * in the menu when.  (Noting that in most cases the shown and active functions
+     * provide a better way to handle visibility of menu items)
+     * @param {Grid} grid the grid on which we are acting
+     * @param {array} items menu items in the format as described in the tutorial, with 
+     * the added note that if you want to use remove you must also specify an `id` field,
+     * which is provided when you want to remove an item.  The id should be unique.
+     * 
+     */
+    addToGridMenu: function( grid, menuItems ) {
+      if ( !angular.isArray( menuItems ) ) {
+        $log.error( 'addToGridMenu: menuItems must be an array, and is not, not adding any items');
+      } else {
+        grid.gridMenuScope.registeredMenuItems = grid.gridMenuScope.registeredMenuItems.concat( menuItems );
+      }  
+    },
+    
+
+    /**
+     * @ngdoc function
+     * @name removeFromGridMenu
+     * @methodOf ui.grid.core.api:PublicApi
+     * @description Remove an item from the grid menu based on a provided id.  Assumes
+     * that the id is unique, removes only the last instance of that id.  Does nothing if
+     * the specified id is not found
+     * @param {Grid} grid the grid on which we are acting
+     * @param {string} id the id we'd like to remove from the menu
+     * 
+     */    
+    removeFromGridMenu: function( grid, id ){
+      var foundIndex = -1;
+      
+      grid.gridMenuScope.registeredMenuItems.forEach( function( value, index ) {
+        if ( value.id === id ){
+          if (foundIndex > -1) {
+            $log.error( 'removeFromGridMenu: found multiple items with the same id, removing only the last' );
+          } else {
+            
+            foundIndex = index;
+          }
+        }
+      });
+
+      if ( foundIndex > -1 ){
+        grid.gridMenuScope.registeredMenuItems.splice( foundIndex, 1 );
+      }
+    },
+    
+        
+    /**
+     * @ngdoc array
+     * @name gridMenuCustomItems
+     * @propertyOf ui.grid.class:GridOptions
+     * @description (optional) An array of menu items that should be added to
+     * the gridMenu.  Follow the format documented in the tutorial for column
+     * menu customisation.  The context provided to the action function will 
+     * include context.grid.  An alternative if working with dynamic menus is to use the 
+     * provided api - core.addToGridMenu and core.removeFromGridMenu, which handles
+     * some of the management of items for you.
+     * 
+     */
+    /**
+     * @ngdoc boolean
+     * @name gridMenuShowHideColumns
+     * @propertyOf ui.grid.class:GridOptions
+     * @description true by default, whether the grid menu should allow hide/show
+     * of columns
+     * 
+     */
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.gridMenuService
+     * @name getMenuItems
+     * @description Decides the menu items to show in the menu.  This is a
+     * combination of:
+     * 
+     * - the default menu items that are always included, 
+     * - any menu items that have been provided through the addMenuItem api. These
+     *   are typically added by features within the grid
+     * - any menu items included in grid.options.gridMenuCustomItems.  These can be
+     *   changed dynamically, as they're always recalculated whenever we show the
+     *   menu
+     * @param {$scope} $scope the scope of this gridMenu, from which we can find all 
+     * the information that we need
+     * @returns {array} an array of menu items that can be shown 
+     */
+    getMenuItems: function( $scope ) {
+      var menuItems = [
+        // this is where we add any menu items we want to always include
+      ];
+      
+      if ( $scope.grid.options.gridMenuCustomItems ){
+        if ( !angular.isArray( $scope.grid.options.gridMenuCustomItems ) ){ 
+          $log.error( 'gridOptions.gridMenuCustomItems must be an array, and is not'); 
+        } else {
+          menuItems = menuItems.concat( $scope.grid.options.gridMenuCustomItems );
+        }
+      }
+  
+      menuItems = menuItems.concat( $scope.registeredMenuItems );
+      
+      if ( $scope.grid.options.gridMenuShowHideColumns !== false ){
+        menuItems = menuItems.concat( service.showHideColumns( $scope ) );
+      }
+      
+      return menuItems;
+    },
+    
+    
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.gridMenuService
+     * @name showHideColumns
+     * @description Adds two menu items for each of the columns in columnDefs.  One
+     * menu item for hide, one menu item for show.  Each is visible when appropriate
+     * (show when column is not visible, hide when column is visible).  Each toggles
+     * the visible property on the columnDef using toggleColumnVisibility
+     * @param {$scope} $scope of a gridMenu, which contains a reference to the grid
+     */
+    showHideColumns: function( $scope ){
+      var showHideColumns = [];
+      if ( !$scope.grid.options.columnDefs ) {
+        $log.error( 'Something is wrong in showHideColumns, there are no columnDefs' );
+        return showHideColumns;
+      }
+      
+      // add header for columns
+      showHideColumns.push({
+        title: i18nService.getSafeText('gridMenu.columns')
+      });
+      
+      $scope.grid.options.columnDefs.forEach( function( value, index ){
+        if ( !value.disableHiding ){
+          // add hide menu item - shows an OK icon as we only show when column is already visible
+          showHideColumns.push({
+            title: value.displayName || value.name || value.field,
+            icon: 'ui-grid-icon-ok',
+            action: function($event) {
+              $event.stopPropagation();
+              service.toggleColumnVisibility( this.context.gridCol );
+            },
+            shown: function() {
+              return this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined;
+            },
+            context: { gridCol: $scope.grid.getColumn(value.name || value.field) }
+          });
+
+          // add show menu item - shows no icon as we only show when column is invisible
+          showHideColumns.push({
+            title: value.displayName || value.name || value.field,
+            icon: 'ui-grid-icon-cancel',
+            action: function($event) {
+              $event.stopPropagation();
+              service.toggleColumnVisibility( this.context.gridCol );
+            },
+            shown: function() {
+              return !(this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined);
+            },
+            context: { gridCol: $scope.grid.getColumn(value.name || value.field) }
+          });
+        }
+      });
+      return showHideColumns;
+    },
+    
+    
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.gridMenuService
+     * @name toggleColumnVisibility
+     * @description Toggles the visibility of an individual column.  Expects to be
+     * provided a context that has on it a gridColumn, which is the column that
+     * we'll operate upon.  We change the visibility, and refresh the grid as appropriate
+     * @param {GridCol} gridCol the column that we want to toggle
+     * 
+     */
+    toggleColumnVisibility: function( gridCol ) {
+      gridCol.colDef.visible = !( gridCol.colDef.visible === true || gridCol.colDef.visible === undefined ); 
+      
+      gridCol.grid.refresh();
+    }
+  };
+  
+  return service;
+}])
+
+
+
+.directive('uiGridMenuButton', ['$log', 'gridUtil', 'uiGridConstants', 'uiGridGridMenuService', 
+function ($log, gridUtil, uiGridConstants, uiGridGridMenuService) {
+
+  return {
+    priority: 0,
+    scope: true,
+    require: ['?^uiGrid'],
+    templateUrl: 'ui-grid/ui-grid-menu-button',
+    replace: true,
+
+
+    link: function ($scope, $elm, $attrs, controllers) {
+      var uiGridCtrl = controllers[0];
+
+      uiGridGridMenuService.initialize($scope, uiGridCtrl.grid);
+      
+
+      $scope.openMenu = function () {
+        $scope.menuItems = uiGridGridMenuService.getMenuItems( $scope );
+        $scope.$broadcast('openGridMenu');
+      };
+    }
+  };
+
+}])
+.directive('uiGridMenuHandler', ['$log', 'gridUtil', 'uiGridConstants', '$timeout', 
+function ($log, gridUtil, uiGridConstants, $timeout) {
+
+  return {
+    priority: 0,
+    require: ['?^uiGrid', 'uiGridMenu'],
+    link: function ($scope, $elm, $attrs, controllers) {
+      var uiGridCtrl = controllers[0];
+      var uiGridMenuCtrl = controllers[1];
+
+      $scope.$on('openGridMenu', function () {
+        uiGridMenuCtrl.showMenu();
+        
+        $timeout(function () {
+          var gridElm = uiGridCtrl.grid.element;
+          var gridWidth = gridUtil.elementWidth(gridElm, true);
+          var menuWidth = 200;  // calculate this later
+
+          // Put the menu inside the right of the grid
+          $elm.css('left', gridWidth - menuWidth + 'px');
+
+          // Put the menu at the top of the grid but adjust for the border
+          $elm.css('top', '-1px');
+        });
+      });
+      
+      $scope.$on('hideGridMenu', function () {
+        uiGridMenuCtrl.hideMenu();
+      });      
+    }
+  };
+
+}]);
 
 })();
 (function(){
@@ -4733,7 +5166,7 @@ angular.module('ui.grid')
     * - icon: the icon shown alongside that title
     * - action: the method to call when the menu is clicked
     * - shown: a function to evaluate to determine whether or not to show the item
-    * - active: a function to evaluate to determine whether or not to enable the item
+    * - active: a function to evaluate to determine whether or not the item is currently selected
     * - context: context to pass to the action function??
     * @example
     * <pre>  $scope.gridOptions.columnDefs = [ 
@@ -8299,36 +8732,45 @@ module.filter('px', function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('da', {
-          aggregate:{
-            label: 'artikler'
-          },
-          groupPanel:{
-            description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
-          },
-          search:{
-            placeholder: 'Søg...',
-            showingItems: 'Viste rækker:',
-            selectedItems: 'Valgte rækker:',
-            totalItems: 'Rækker totalt:',
-            size: 'Side størrelse:',
-            first: 'Første side',
-            next: 'Næste side',
-            previous: 'Forrige side',
-            last: 'Sidste side'
-          },
-          menu:{
-            text: 'Vælg kolonner:'
-          },
-          column: {
-            hide: 'Skjul kolonne'
-          },
-          aggregation: {
-            count: 'samlede rækker: ',
-            sum: 'smalede: ',
-            avg: 'gns: ',
-            min: 'min: ',
-            max: 'max: '
-          }
+        aggregate:{
+          label: 'artikler'
+        },
+        groupPanel:{
+          description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
+        },
+        search:{
+          placeholder: 'Søg...',
+          showingItems: 'Viste rækker:',
+          selectedItems: 'Valgte rækker:',
+          totalItems: 'Rækker totalt:',
+          size: 'Side størrelse:',
+          first: 'Første side',
+          next: 'Næste side',
+          previous: 'Forrige side',
+          last: 'Sidste side'
+        },
+        menu:{
+          text: 'Vælg kolonner:'
+        },
+        column: {
+          hide: 'Skjul kolonne'
+        },
+        aggregation: {
+          count: 'samlede rækker: ',
+          sum: 'smalede: ',
+          avg: 'gns: ',
+          min: 'min: ',
+          max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
+        }
         });
       return $delegate;
     }]);
@@ -8367,6 +8809,15 @@ module.filter('px', function() {
           avg: 'durchschnitt: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8416,6 +8867,15 @@ module.filter('px', function() {
          pinLeft: 'Pin Left',
           pinRight: 'Pin Right',
           unpin: 'Unpin'
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8455,6 +8915,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8494,6 +8963,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8533,6 +9011,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8577,8 +9064,16 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
-          
       });
       return $delegate;
     }]);
@@ -8622,6 +9117,15 @@ module.filter('px', function() {
           avg: 'gemiddelde: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8661,6 +9165,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8705,6 +9218,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8746,6 +9268,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -8796,7 +9327,16 @@ module.filter('px', function() {
           pinLeft: 'Fäst vänster',
           pinRight: 'Fäst höger',
           unpin: 'Lösgör'
-          }
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
+        }
       });
       return $delegate;
     }]);
@@ -9132,6 +9672,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -9172,6 +9721,15 @@ module.filter('px', function() {
           avg: 'avg: ',
           min: 'min: ',
           max: 'max: '
+        },
+        gridMenu: {
+          columns: 'Columns:',
+          exporterAllAsCsv: 'Export all data as csv',
+          exporterVisibleAsCsv: 'Export visible data as csv',
+          exporterSelectedAsCsv: 'Export selected data as csv',
+          exporterAllAsPdf: 'Export all data as pdf',
+          exporterVisibleAsPdf: 'Export visible data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf',
         }
       });
       return $delegate;
@@ -10819,7 +11377,7 @@ module.filter('px', function() {
    * columns.
    * 
    * No UI is provided, the caller should provide their own UI/buttons 
-   * as appropriate.
+   * as appropriate, or enable the gridMenu
    * 
    * <br/>
    * <br/>
@@ -10873,8 +11431,8 @@ module.filter('px', function() {
    *
    *  @description Services for exporter feature
    */
-  module.service('uiGridExporterService', ['$log', '$q', 'uiGridExporterConstants', 'gridUtil', '$compile',
-    function ($log, $q, uiGridExporterConstants, gridUtil, $compile) {
+  module.service('uiGridExporterService', ['$log', '$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
+    function ($log, $q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService) {
 
       var service = {
 
@@ -10939,6 +11497,17 @@ module.filter('px', function() {
           grid.api.registerEventsFromObject(publicApi.events);
 
           grid.api.registerMethodsFromObject(publicApi.methods);
+          
+          if (grid.api.core.addToGridMenu){
+            service.addToMenu( grid );
+          } else {
+            // order of registration is not guaranteed, register in a little while
+            $interval( function() {
+              if (grid.api.core.addToGridMenu){
+                service.addToMenu( grid );
+              }              
+            }, 100, 1);
+          }
 
         },
 
@@ -11079,58 +11648,93 @@ module.filter('px', function() {
            * <br/>Defaults to null, which means no layout 
            */
 
+          /**
+           * @ngdoc object
+           * @name exporterMenuCsv
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description Add csv export menu items to the ui-grid grid menu, if it's present.  Defaults to true.
+           */
+          gridOptions.exporterMenuCsv = gridOptions.exporterMenuCsv !== undefined ? gridOptions.exporterMenuCsv : true;
+
+          /**
+           * @ngdoc object
+           * @name exporterMenuPdf
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description Add pdf export menu items to the ui-grid grid menu, if it's present.  Defaults to true.
+           */
+          gridOptions.exporterMenuPdf = gridOptions.exporterMenuPdf !== undefined ? gridOptions.exporterMenuPdf : true;
+
+
         },
 
 
         /**
          * @ngdoc function
-         * @name showMenu
+         * @name addToMenu
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
-         * @description Shows the grid menu with exporter content,
+         * @description Adds export items to the grid menu,
          * allowing the user to select export options 
          * @param {Grid} grid the grid from which data should be exported
          */
-        showMenu: function ( grid ) {
-          grid.exporter.$scope.menuItems = [
+        addToMenu: function ( grid ) {
+          grid.api.core.addToGridMenu( grid, [
             {
-              title: 'Export all data as csv',
+              title: i18nService.getSafeText('gridMenu.exporterAllAsCsv'),
               action: function ($event) {
                 this.grid.api.exporter.csvExport( uiGridExporterConstants.ALL, uiGridExporterConstants.ALL );
+              },
+              shown: function() {
+                return this.grid.options.exporterMenuCsv; 
               }
             },
             {
-              title: 'Export visible data as csv',
+              title: i18nService.getSafeText('gridMenu.exporterVisibleAsCsv'),
               action: function ($event) {
                 this.grid.api.exporter.csvExport( uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE );
+              },
+              shown: function() {
+                return this.grid.options.exporterMenuCsv; 
               }
             },
             {
-              title: 'Export selected data as csv',
+              title: i18nService.getSafeText('gridMenu.exporterSelectedAsCsv'),
               action: function ($event) {
                 this.grid.api.exporter.csvExport( uiGridExporterConstants.SELECTED, uiGridExporterConstants.VISIBLE );
+              },
+              shown: function() {
+                return this.grid.options.exporterMenuCsv &&
+                       ( this.grid.api.selection && this.grid.api.selection.getSelectedRows().length > 0 ); 
               }
             },
             {
-              title: 'Export all data as pdf',
+              title: i18nService.getSafeText('gridMenu.exporterAllAsPdf'),
               action: function ($event) {
                 this.grid.api.exporter.pdfExport( uiGridExporterConstants.ALL, uiGridExporterConstants.ALL );
+              },
+              shown: function() {
+                return this.grid.options.exporterMenuPdf; 
               }
             },
             {
-              title: 'Export visible data as pdf',
+              title: i18nService.getSafeText('gridMenu.exporterVisibleAsPdf'),
               action: function ($event) {
                 this.grid.api.exporter.pdfExport( uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE );
+              },
+              shown: function() {
+                return this.grid.options.exporterMenuPdf; 
               }
             },
             {
-              title: 'Export selected data as pdf',
+              title: i18nService.getSafeText('gridMenu.exporterSelectedAsPdf'),
               action: function ($event) {
                 this.grid.api.exporter.pdfExport( uiGridExporterConstants.SELECTED, uiGridExporterConstants.VISIBLE );
+              },
+              shown: function() {
+                return this.grid.options.exporterMenuPdf &&
+                       ( this.grid.api.selection && this.grid.api.selection.getSelectedRows().length > 0 ); 
               }
             }
-          ];
-          
-          grid.exporter.$scope.$broadcast('toggleExporterMenu');          
+          ]);
         },
         
 
@@ -11572,15 +12176,9 @@ module.filter('px', function() {
         priority: 0,
         require: '^uiGrid',
         scope: false,
-        compile: function () {
-          return {
-            pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-              uiGridExporterService.initializeGrid(uiGridCtrl.grid);
-              uiGridCtrl.grid.exporter.$scope = $scope;
-            },
-            post: function ($scope, $elm, $attrs, uiGridCtrl) {
-            }
-          };
+        link: function ($scope, $elm, $attrs, uiGridCtrl) {
+          uiGridExporterService.initializeGrid(uiGridCtrl.grid);
+          uiGridCtrl.grid.exporter.$scope = $scope;
         }
       };
     }
@@ -13533,6 +14131,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('ui-grid/ui-grid-menu-button',
+    "<div class=\"ui-grid-menu-button\" ng-click=\"openMenu()\"><div class=\"ui-grid-icon-container\"><i class=\"ui-grid-icon-menu\">&nbsp;</i></div><div ui-grid-menu-handler ui-grid-menu menu-items=\"menuItems\"></div></div>"
+  );
+
+
   $templateCache.put('ui-grid/ui-grid-no-header',
     "<div class=\"ui-grid-top-panel\"></div>"
   );
@@ -13563,7 +14166,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
-    "    {{ grid.customStyles }}</style><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"grid.options.enableScrollbars\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
+    "    {{ grid.customStyles }}</style><div ui-grid-menu-button ng-if=\"grid.options.enableGridMenu\"></div><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"grid.options.enableScrollbars\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
   );
 
 
@@ -13603,7 +14206,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridMenu',
-    "<div class=\"ui-grid-menu\"><div class=\"ui-grid-menu-inner\" ng-show=\"shown\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" title=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div>"
+    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" title=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div>"
   );
 
 

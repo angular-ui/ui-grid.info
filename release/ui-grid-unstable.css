@@ -150,24 +150,24 @@
   position: absolute;
 }
 /* Slide up/down animations */
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-add,
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-remove {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-enter,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-leave {
   -webkit-transition: all 0.05s linear;
   -moz-transition: all 0.05s linear;
   -o-transition: all 0.05s linear;
   transition: all 0.05s linear;
   display: block !important;
 }
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-add.ng-hide-add-active,
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-remove {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-leave.ng-leave-active,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-enter {
   -webkit-transform: translateY(-100%);
   -moz-transform: translateY(-100%);
   -o-transform: translateY(-100%);
   -ms-transform: translateY(-100%);
   transform: translateY(-100%);
 }
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-add,
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-hide-remove.ng-hide-remove-active {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-leave,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-enter.ng-enter-active {
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
   -o-transform: translateY(0);
@@ -473,12 +473,28 @@ input[type="text"].ui-grid-filter-input {
 input[type="text"].ui-grid-filter-input:hover {
   border: 1px solid #d4d4d4;
 }
+.ui-grid-menu-button {
+  z-index: 2;
+  position: fixed;
+  right: 0;
+  background: #f3f3f3;
+  border: 1px solid #d4d4d4;
+  cursor: pointer;
+  min-height: 27px;
+  font-weight: normal;
+}
+.ui-grid-menu-button .ui-grid-icon-container {
+  margin-top: 3px;
+}
+.ui-grid-menu-button .ui-grid-menu {
+  right: 0;
+}
 .ui-grid-menu {
   z-index: 2;
   position: absolute;
   overflow: hidden;
   padding: 0 10px 20px 10px;
-  cursor: default;
+  cursor: pointer;
 }
 .ui-grid-menu .ui-grid-menu-inner {
   background: #f3f3f3;
@@ -1080,9 +1096,13 @@ div.ui-grid-cell input.ng-valid {
 }
 /* '썡' */
 .ui-grid-icon-ok:before {
-  content: '\e800';
+  content: '\c362';
 }
-/* '' */
+/* '썢' */
+.ui-grid-icon-menu:before {
+  content: '\c363';
+}
+/* '썣' */
 .ui-grid-icon-spin5:before {
   content: '\ea61';
 }

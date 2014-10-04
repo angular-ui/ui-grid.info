@@ -9,6 +9,25 @@
    ...
 &lt;/style&gt;</pre>
 </div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="hideMenu">hideMenu()</h3>
+<div class="hidemenu"><p>Hides the column menu.</p></div>
+</li>
+<li><h3 id="showMenu">showMenu(column, $columnElement)</h3>
+<div class="showmenu"><p>Shows the column menu.  If the menu is already displayed it
+calls the menu to ask it to hide (it will animate), then it repositions the menu
+to the right place whilst hidden (it will make an assumption on menu width), 
+then it asks the menu to show (it will animate), then it repositions the menu again 
+once we can calculate it's size.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">column – {GridCol} – </code>
+<p>the column we want to position below</p></li>
+<li><code ng:non-bindable="">$columnElement – {element} – </code>
+<p>the column element we want to position below</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js script.js" source-edit-html="index.html-9" source-edit-css="" source-edit-js="script.js-8" source-edit-unit="" source-edit-scenario="scenario.js-10"></div>

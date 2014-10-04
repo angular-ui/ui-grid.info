@@ -5,7 +5,15 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Services for exporter feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="calculatePdfHeaderWidths">calculatePdfHeaderWidths(grid, exportHeaders)</h3>
+<ul class="methods"><li><h3 id="addToMenu">addToMenu(grid)</h3>
+<div class="addtomenu"><p>Adds export items to the grid menu,
+allowing the user to select export options </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="calculatePdfHeaderWidths">calculatePdfHeaderWidths(grid, exportHeaders)</h3>
 <div class="calculatepdfheaderwidths"><p>Determines the column widths base on the 
 widths we got from the grid.  If the column is drawn
 then we have a drawnWidth.  If the column is not visible
@@ -198,14 +206,6 @@ make available as a download link</p></li>
 <p>(Optional) A UI element into which the
 resulting download link will be placed.  If not provided, the
 link is put into the default exporter element. </p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="showMenu">showMenu(grid)</h3>
-<div class="showmenu"><p>Shows the grid menu with exporter content,
-allowing the user to select export options </p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
 </ul>
 </div>
 </li>

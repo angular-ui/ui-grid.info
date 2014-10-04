@@ -33,7 +33,15 @@ to compare on any data item property or function</p><h4 id="Parameters">Paramete
 </ul>
 </div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="columnDefs">columnDefs</h3>
+<ul class="properties"><li><h3 id="addToGridMenu">addToGridMenu</h3>
+<div class="addtogridmenu"><p>add items to the grid menu.  Used by features
+to add their menu items if they are enabled, can also be used by
+end users to add menu items.  This method has the advantage of allowing
+remove again, which can simplify management of which items are included
+in the menu when.  (Noting that in most cases the shown and active functions
+provide a better way to handle visibility of menu items)</p></div>
+</li>
+<li><h3 id="columnDefs">columnDefs</h3>
 <div class="columndefs"><p>Array of columnDef objects.  Only required property is name.
 The individual options available in columnDefs are documented in the
 <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a> section
@@ -88,6 +96,18 @@ to exclude. </p>
 template. Can be set to either the name of a template file 'footer_template.html', inline html
 <pre class="prettyprint linenums">'&lt;div class="ui-grid-bottom-panel" style="text-align: center"&gt;I am a Custom Grid Footer&lt;/div&gt;'</pre>, or the id
 of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p></div>
+</li>
+<li><h3 id="gridMenuCustomItems">gridMenuCustomItems</h3>
+<div class="gridmenucustomitems"><p>(optional) An array of menu items that should be added to
+the gridMenu.  Follow the format documented in the tutorial for column
+menu customisation.  The context provided to the action function will 
+include context.grid.  An alternative if working with dynamic menus is to use the 
+provided api - core.addToGridMenu and core.removeFromGridMenu, which handles
+some of the management of items for you.</p></div>
+</li>
+<li><h3 id="gridMenuShowHideColumns">gridMenuShowHideColumns</h3>
+<div class="gridmenushowhidecolumns"><p>true by default, whether the grid menu should allow hide/show
+of columns</p></div>
 </li>
 <li><h3 id="headerTemplate">headerTemplate</h3>
 <div class="headertemplate"><p>Null by default. When provided, this setting uses a custom header
