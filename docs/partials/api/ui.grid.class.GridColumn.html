@@ -17,7 +17,18 @@ are defined on this prototype</p></div>
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getAggregationText">getAggregationText(label, value)</h3>
+<ul class="methods"><li><h3 id="GridColumn">GridColumn(colDef, uid, grid)</h3>
+<div class="gridcolumn"><p>Initializes a gridColumn</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
+<p>the column def to associate with this column</p></li>
+<li><code ng:non-bindable="">uid – {number} – </code>
+<p>the unique and immutable uid we'd like to allocate to this column</p></li>
+<li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we'd like to create this column in</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="getAggregationText">getAggregationText(label, value)</h3>
 <div class="getaggregationtext"><p>converts the aggregation value into a text string, including 
 i18n and deciding whether or not to display based on colDef.aggregationHideLabel</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">label – {string} – </code>
@@ -48,8 +59,28 @@ i18n and deciding whether or not to display based on colDef.aggregationHideLabel
 <li><h3 id="hideColumn">hideColumn()</h3>
 <div class="hidecolumn"><p>Hides the column by setting colDef.visible = false</p></div>
 </li>
+<li><h3 id="setPropertyOrDefault">setPropertyOrDefault(colDef, propName, defaultValue)</h3>
+<div class="setpropertyordefault"><p>Sets a property on the column using the passed in columnDef, and
+setting the defaultValue if the value cannot be found on the colDef</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
+<p>the column def to look in for the property value</p></li>
+<li><code ng:non-bindable="">propName – {string} – </code>
+<p>the property name we'd like to set</p></li>
+<li><code ng:non-bindable="">defaultValue – {object} – </code>
+<p>the value to use if the colDef doesn't provide the setting</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="showColumn">showColumn()</h3>
 <div class="showcolumn"><p>Makes the column visible by setting colDef.visible = true</p></div>
+</li>
+<li><h3 id="updateColumnDef">updateColumnDef(colDef)</h3>
+<div class="updatecolumndef"><p>Moves settings from the columnDef down onto the column,
+and sets properties as appropriate</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
+<p>the column def to look in for the property value</p></li>
+</ul>
+</div>
 </li>
 </ul>
 </div>

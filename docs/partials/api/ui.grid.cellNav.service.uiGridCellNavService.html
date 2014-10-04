@@ -21,13 +21,17 @@ or the direction cells navigation, override with a service decorator (see angula
 – <p>direction</p></div>
 </div>
 </li>
-<li><h3 id="getLeftWidth">getLeftWidth(grid, colIndex)</h3>
+<li><h3 id="getLeftWidth">getLeftWidth(grid, upToCol)</h3>
 <div class="getleftwidth"><p>Get the current drawn width of the columns in the
-grid up to and including the numbered column</p><h4 id="Parameters">Parameters</h4>
+grid up to the numbered column, and add an apportionment for the
+column that we're on.  So if we are on column 0, we want to scroll
+0% (i.e. exclude this column from calc).  If we're on the last column
+we want to scroll to 100% (i.e. include this column in the calc). So
+we include (thisColIndex / totalNumberCols) % of this column width</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid you'd like to act upon, usually available
 from gridApi.grid</p></li>
-<li><code ng:non-bindable="">colIndex – {object} – </code>
+<li><code ng:non-bindable="">upToCol – {gridCol} – </code>
 <p>the column to total up to and including</p></li>
 </ul>
 </div>
