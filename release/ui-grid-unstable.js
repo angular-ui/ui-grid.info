@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-aeee7eb - 2014-10-04
+/*! ui-grid - v3.0.0-rc.11-45cc233 - 2014-10-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4814,6 +4814,7 @@ angular.module('ui.grid')
     // Remove this column from the grid sorting
     GridColumn.prototype.unsort = function () {
       this.sort = {};
+      self.grid.api.core.raise.sortChanged( self, self.grid.getColumnSorting() );
     };
 
     self.minWidth = !colDef.minWidth ? 50 : colDef.minWidth;
