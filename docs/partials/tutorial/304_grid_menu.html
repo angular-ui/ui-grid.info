@@ -8,12 +8,18 @@ actions.  </p>
 
 <p>The exporter feature also adds menu items to this menu.  The <code>exporterMenuCsv</code> option is set
 to false, which suppresses csv export.  The 'export selected rows' option is only available
-if at least one row is selected.</p><h2 id="Example">Example</h2>
+if at least one row is selected.</p>
+
+<p>The column titles can have a custom filter defined using <code>gridMenuTitleFilter</code>, used when your
+column headers have an internationalization filter (angular translate or i18nService), and you
+want them also internationalized in the grid menu.  The translate needs to return either a string,
+or a promise that will resolve to a string.  In the example below we create a fake 
+internationalization function that waits 1 second then prefixes each column with "col: ".</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-60" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-61"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-61" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-62"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-60" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-60">
+<pre class="prettyprint linenums" ng-set-text="index.html-61" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-61">
   <div ng-controller="MainCtrl">
     <div id="grid1" ui-grid="gridOptions" ui-grid-exporter ui-grid-selection class="grid"></div>
   </div>
@@ -54,10 +60,19 @@ if at least one row is selected.</p><h2 id="Example">Example</h2>
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ngAnimate', 'ui.grid', 'ui.grid.exporter', 'ui.grid.selection']);
 
-  app.controller('MainCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+  app.controller('MainCtrl', ['$scope', '$http', '$interval', '$q', function ($scope, $http, $interval, $q) {
+    var fakeI18n = function( title ){
+      var deferred = $q.defer();
+      $interval( function() {
+        deferred.resolve( 'col: ' + title );
+      }, 1000, 1);
+      return deferred.promise;
+    };
+  
     $scope.gridOptions = {
-      exporterMenuCsvExport: false,
+      exporterMenuCsv: false,
       enableGridMenu: true,
+      gridMenuTitleFilter: fakeI18n,
       gridMenuCustomItems: [
         {
           title: 'Rotate Grid',
@@ -82,16 +97,16 @@ if at least one row is selected.</p><h2 id="Example">Example</h2>
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-61"></pre>
-<script type="text/ng-template" id="scenario.js-61">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-62"></pre>
+<script type="text/ng-template" id="scenario.js-62">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   describe('grid menu', function() {
     it('grid1 should have three visible columns', function () {
       gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
     });
 
-    it('grid1 grid menu should have 10 items', function () {
-      gridTestUtils.expectVisibleGridMenuItems( 'grid1', 10 );
+    it('grid1 grid menu should have 8 items', function () {
+      gridTestUtils.expectVisibleGridMenuItems( 'grid1', 8 );
     });
     
     it('grid1 hide then show gender column', function () {
@@ -116,5 +131,5 @@ if at least one row is selected.</p><h2 id="Example">Example</h2>
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-60" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-61" ng-eval-javascript="app.js"></div></div>
 </div>

@@ -10,33 +10,19 @@ directive on your grid.  If you want to export as PDF you need to have installed
 available through:
 <pre class="prettyprint linenums">  bower install pdfmake  </pre>
 
-<p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>.</p><h2 id="Example">Example</h2>
+<p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>.</p>
+
+<p>The exporter adds menu items to the grid menu, to use the native UI you need to enable
+the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we provide a custom UI for calling the exporter, and we tailor
 the way the returned data behaves.</p>
 
 <h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-65" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-50" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-65" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-65">
+<pre class="prettyprint linenums" ng-set-text="index.html-50" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-50">
     <div ng-controller="MainCtrl">
-      <label>Which columns should we export?</label>
-      <select ng-model="export_column_type"</select>
-        <option value='all'>All</option>
-        <option value='visible'>Visible</option>
-      </select>
-      <label>Which rows should we export?</label>
-      <select ng-model="export_row_type"</select>
-        <option value='all'>All</option>
-        <option value='visible'>Visible</option>
-        <option value='selected'>Selected</option>
-      </select>
-      <label>What format would you like?</label>
-      <select ng-model="export_format"</select>
-        <option value='csv'>CSV</option>
-        <option value='pdf'>PDF</option>
-      </select>
-      <button ng-click="export()">Export</button>
       <div class="custom-csv-link-location">
         <label>Your CSV will show below:</label>
         <span class="ui-grid-exporter-csv-link">&nbsp</span>
@@ -67,6 +53,7 @@ the way the returned data behaves.</p>
           { field: 'gender', visible: false},
           { field: 'company' }
         ],
+        enableGridMenu: true,
         exporterLinkLabel: 'get your csv here',
         exporterPdfDefaultStyle: {fontSize: 9},
         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
@@ -74,29 +61,20 @@ the way the returned data behaves.</p>
         exporterPdfOrientation: 'portrait',
         exporterPdfPageSize: 'LETTER',
         exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         onRegisterApi: function(gridApi){ 
           $scope.gridApi = gridApi;
         }
       };
       
       $http.get('/data/100.json')
-        .success(function(data) {
-          $scope.gridOptions.data = data;
-        });
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
         
-      
-        
-      $scope.export = function(){
-        if ($scope.export_format == 'csv') {
-          var myElement = angular.element(document.querySelectorAll(".custom-csv-link-location"));
-          $scope.gridApi.exporter.csvExport( $scope.export_row_type, $scope.export_column_type, myElement );
-        } else if ($scope.export_format == 'pdf') {
-          $scope.gridApi.exporter.pdfExport( $scope.export_row_type, $scope.export_column_type );
-        };
-      };
     }]);
   </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-65" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-50" ng-eval-javascript="app.js"></div></div>
 </div>

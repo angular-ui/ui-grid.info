@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-08c522b - 2014-10-05
+/*! ui-grid - v3.0.0-rc.11-44d9525 - 2014-10-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -426,16 +426,19 @@ function ( i18nService, uiGridConstants, gridUtil ) {
 
       var containerScrolLeft = renderContainerElm.querySelectorAll('.ui-grid-viewport')[0].scrollLeft;
 
-      var myWidth = $scope.lastWidth ? $scope.lastWidth : 170;
-      var paddingRight = $scope.lastPaddingRight ? $scope.lastPaddingRight : 10;
+      // default value the last width for _this_ column, otherwise last width for _any_ column, otherwise default to 170
+      var myWidth = $scope.col.lastMenuWidth ? $scope.col.lastMenuWidth : ( $scope.lastMenuWidth ? $scope.lastMenuWidth : 170);
+      var paddingRight = $scope.col.lastMenuPaddingRight ? $scope.col.lastMenuPaddingRight : ( $scope.lastMenuPaddingRight ? $scope.lastMenuPaddingRight : 10);
       if (menu.length !== 0){
         myWidth = gridUtil.elementWidth(menu, true);
-        $scope.lastWidth = myWidth;
+        $scope.lastMenuWidth = myWidth;
+        $scope.col.lastMenuWidth = myWidth;
 
         // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
         // Get the column menu right padding
         paddingRight = parseInt(gridUtil.getStyles(angular.element(menu)[0])['paddingRight'], 10);
-        $scope.lastPaddingRight = paddingRight;
+        $scope.lastMenuPaddingRight = paddingRight;
+        $scope.col.lastMenuPaddingRight = paddingRight;
       }
 
       $elm.css('left', (positionData.left + renderContainerOffset - containerScrolLeft + positionData.width - myWidth + paddingRight) + 'px');
@@ -448,8 +451,8 @@ function ( i18nService, uiGridConstants, gridUtil ) {
 }])
 
 
-.directive('uiGridColumnMenu', ['$log', '$timeout', '$window', '$document', '$injector', 'gridUtil', 'uiGridConstants', 'uiGridColumnMenuService', 
-function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstants, uiGridColumnMenuService) {
+.directive('uiGridColumnMenu', ['$log', '$timeout', 'gridUtil', 'uiGridConstants', 'uiGridColumnMenuService', 
+function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 /**
  * @ngdoc directive
  * @name ui.grid.directive:uiGridColumnMenu
@@ -492,7 +495,7 @@ function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstan
         $scope.col = column;
 
         // Remove an existing document click handler
-        $document.off('click', documentClick);
+//        $document.off('click', documentClick);
 
         // Get the position information for the column element
         var colElementPosition = uiGridColumnMenuService.getColumnElementPosition( $scope, column, $columnElement );
@@ -517,7 +520,7 @@ function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstan
         }
 
         // Hide the menu on a click on the document
-        $document.on('click', documentClick);
+//        $document.on('click', documentClick);
       };
 
 
@@ -526,14 +529,20 @@ function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstan
        * @methodOf ui.grid.directive:uiGridColumnMenu
        * @name hideMenu
        * @description Hides the column menu.
+       * @param {boolean} broadcastTrigger true if we were triggered by a broadcast
+       * from the menu itself - in which case don't broadcast again as we'll get
+       * an infinite loop
        */
-      $scope.hideMenu = function() {
+      $scope.hideMenu = function( broadcastTrigger ) {
         delete $scope.col;
         $scope.menuShown = false;
-        $scope.$broadcast('hide-menu');
+        
+        if ( !broadcastTrigger ){
+          $scope.$broadcast('hide-menu');
+        }
       };
 
-
+/*
       function documentClick() {
         $scope.$apply($scope.hideMenu);
         $document.off('click', documentClick);
@@ -555,6 +564,10 @@ function ($log, $timeout, $window, $document, $injector, gridUtil, uiGridConstan
       $scope.$on('$destroy', function() {
         angular.element($window).off('resize', resizeHandler);
         $document.off('click', documentClick);
+      });
+*/      
+      $scope.$on('menu-hidden', function() {
+        $scope.hideMenu( true );
       });
 
  
@@ -1448,6 +1461,24 @@ angular.module('ui.grid')
     
     
     /**
+     * @ngdoc array
+     * @name gridMenuTitleFilter
+     * @propertyOf ui.grid.class:GridOptions
+     * @description (optional) A function that takes a title string 
+     * (usually the col.displayName), and converts it into a display value.  The function
+     * must return either a string or a promise.
+     * 
+     * Used for internationalization of the grid menu column names - for angular-translate
+     * you can pass $translate as the function, for i18nService you can pass getSafeText as the 
+     * function
+     * @example
+     * <pre>
+     *   gridOptions = {
+     *     gridMenuTitleFilter: $translate
+     *   }
+     * </pre>
+     */
+    /**
      * @ngdoc method
      * @methodOf ui.grid.gridMenuService
      * @name showHideColumns
@@ -1469,11 +1500,12 @@ angular.module('ui.grid')
         title: i18nService.getSafeText('gridMenu.columns')
       });
       
-      $scope.grid.options.columnDefs.forEach( function( value, index ){
-        if ( !value.disableHiding ){
+      $scope.grid.options.gridMenuTitleFilter = $scope.grid.options.gridMenuTitleFilter ? $scope.grid.options.gridMenuTitleFilter : function( title ) { return title; };  
+      
+      $scope.grid.options.columnDefs.forEach( function( colDef, index ){
+        if ( !colDef.disableHiding ){
           // add hide menu item - shows an OK icon as we only show when column is already visible
-          showHideColumns.push({
-            title: value.displayName || value.name || value.field,
+          var menuItem = {
             icon: 'ui-grid-icon-ok',
             action: function($event) {
               $event.stopPropagation();
@@ -1482,12 +1514,13 @@ angular.module('ui.grid')
             shown: function() {
               return this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined;
             },
-            context: { gridCol: $scope.grid.getColumn(value.name || value.field) }
-          });
+            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) }
+          };
+          service.setMenuItemTitle( menuItem, colDef, $scope.grid );
+          showHideColumns.push( menuItem );
 
           // add show menu item - shows no icon as we only show when column is invisible
-          showHideColumns.push({
-            title: value.displayName || value.name || value.field,
+          menuItem = {
             icon: 'ui-grid-icon-cancel',
             action: function($event) {
               $event.stopPropagation();
@@ -1496,14 +1529,47 @@ angular.module('ui.grid')
             shown: function() {
               return !(this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined);
             },
-            context: { gridCol: $scope.grid.getColumn(value.name || value.field) }
-          });
+            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) }
+          };
+          service.setMenuItemTitle( menuItem, colDef, $scope.grid );
+          showHideColumns.push( menuItem );
         }
       });
       return showHideColumns;
     },
     
     
+    /**
+     * @ngdoc method
+     * @methodOf ui.grid.gridMenuService
+     * @name setMenuItemTitle
+     * @description Handles the response from gridMenuTitleFilter, adding it directly to the menu
+     * item if it returns a string, otherwise waiting for the promise to resolve or reject then
+     * putting the result into the title 
+     * @param {object} menuItem the menuItem we want to put the title on
+     * @param {object} colDef the colDef from which we can get displayName, name or field
+     * @param {Grid} grid the grid, from which we can get the options.gridMenuTitleFilter
+     * 
+     */
+    setMenuItemTitle: function( menuItem, colDef, grid ){
+      var title = grid.options.gridMenuTitleFilter( colDef.displayName || colDef.name || colDef.field );
+      
+      if ( typeof(title) === 'string' ){
+        menuItem.title = title;
+      } else if ( title.then ){
+        // must be a promise
+        menuItem.title = "";
+        title.then( function( successValue ) {
+          menuItem.title = successValue;
+        }, function( errorValue ) {
+          menuItem.title = errorValue;
+        });
+      } else {
+        $log.error('Expected gridMenuTitleFilter to return a string or a promise, it has returned neither, bad config');
+        menuItem.title = 'badconfig';
+      }
+    },
+
     /**
      * @ngdoc method
      * @methodOf ui.grid.gridMenuService
@@ -1542,44 +1608,22 @@ function ($log, gridUtil, uiGridConstants, uiGridGridMenuService) {
 
       uiGridGridMenuService.initialize($scope, uiGridCtrl.grid);
       
+      $scope.shown = false;
 
-      $scope.openMenu = function () {
-        $scope.menuItems = uiGridGridMenuService.getMenuItems( $scope );
-        $scope.$broadcast('openGridMenu');
+      $scope.toggleMenu = function () {
+        if ( $scope.shown ){
+          $scope.$broadcast('hide-menu');
+          $scope.shown = false;
+        } else {
+          $scope.menuItems = uiGridGridMenuService.getMenuItems( $scope );
+          $scope.$broadcast('show-menu');
+          $scope.shown = true;
+        }
       };
-    }
-  };
-
-}])
-.directive('uiGridMenuHandler', ['$log', 'gridUtil', 'uiGridConstants', '$timeout', 
-function ($log, gridUtil, uiGridConstants, $timeout) {
-
-  return {
-    priority: 0,
-    require: ['?^uiGrid', 'uiGridMenu'],
-    link: function ($scope, $elm, $attrs, controllers) {
-      var uiGridCtrl = controllers[0];
-      var uiGridMenuCtrl = controllers[1];
-
-      $scope.$on('openGridMenu', function () {
-        uiGridMenuCtrl.showMenu();
-        
-        $timeout(function () {
-          var gridElm = uiGridCtrl.grid.element;
-          var gridWidth = gridUtil.elementWidth(gridElm, true);
-          var menuWidth = 200;  // calculate this later
-
-          // Put the menu inside the right of the grid
-          $elm.css('left', gridWidth - menuWidth + 'px');
-
-          // Put the menu at the top of the grid but adjust for the border
-          $elm.css('top', '-1px');
-        });
-      });
       
-      $scope.$on('hideGridMenu', function () {
-        uiGridMenuCtrl.hideMenu();
-      });      
+      $scope.$on('menu-hidden', function() {
+        $scope.shown = false;
+      });
     }
   };
 
@@ -1630,57 +1674,66 @@ angular.module('ui.grid')
     templateUrl: 'ui-grid/uiGridMenu',
     replace: false,
     link: function ($scope, $elm, $attrs, uiGridCtrl) {
+      var self = this;
       gridUtil.enableAnimations($elm);
 
+      
+    // *** Show/Hide functions ******
+      self.showMenu = $scope.showMenu = function() {
+        $scope.shown = true;
+
+        // Turn off an existing dpcument click handler
+        angular.element(document).off('click', applyHideMenu);
+
+        // Turn on the document click handler, but in a timeout so it doesn't apply to THIS click if there is one
+        $timeout(function() {
+          angular.element(document).on('click', applyHideMenu);
+        });
+      };
+
+      self.hideMenu = $scope.hideMenu = function() {
+        $scope.shown = false;
+        $scope.$emit('menu-hidden');
+        angular.element(document).off('click', applyHideMenu);
+      };
+
+      $scope.$on('hide-menu', function () {
+        $scope.hideMenu();
+      });
+
+      $scope.$on('show-menu', function () {
+        $scope.showMenu();
+      });
+
+      
+    // *** Auto hide when click elsewhere ******
+      var applyHideMenu = function(){
+        $scope.$apply(function () {
+          $scope.hideMenu();
+        });
+      };
+    
       if (typeof($scope.autoHide) === 'undefined' || $scope.autoHide === undefined) {
         $scope.autoHide = true;
       }
 
       if ($scope.autoHide) {
-        angular.element($window).on('resize', $scope.hideMenu);
+        angular.element($window).on('resize', applyHideMenu);
       }
-
-      $scope.$on('hide-menu', function () {
-        $scope.shown = false;
-      });
-
-      $scope.$on('show-menu', function () {
-        $scope.shown = true;
-      });
-
-      $scope.$on('$destroy', function() {
-        angular.element($window).off('resize', $scope.hideMenu);
-      });
-    },
-    controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-      var self = this;
-
-      self.hideMenu = $scope.hideMenu = function() {
-        $scope.shown = false;
-      };
-
-      function documentClick() {
-        $scope.$apply(function () {
-          self.hideMenu();
-          angular.element(document).off('click', documentClick);
-        });
-      }
-
-      self.showMenu = $scope.showMenu = function() {
-        $scope.shown = true;
-
-        // Turn off an existing dpcument click handler
-        angular.element(document).off('click', documentClick);
-
-        // Turn on the document click handler, but in a timeout so it doesn't apply to THIS click if there is one
-        $timeout(function() {
-          angular.element(document).on('click', documentClick);
-        });
-      };
 
       $scope.$on('$destroy', function () {
-        angular.element(document).off('click', documentClick);
+        angular.element(document).off('click', applyHideMenu);
       });
+      
+
+      $scope.$on('$destroy', function() {
+        angular.element($window).off('resize', applyHideMenu);
+      });
+    },
+    
+    
+    controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+      var self = this;
     }]
   };
 
@@ -1761,7 +1814,7 @@ angular.module('ui.grid')
 
               $scope.action.call(context, $event, title);
 
-              uiGridMenuCtrl.hideMenu();
+              $scope.$emit('hide-menu');
             }
           };
 
@@ -11749,6 +11802,13 @@ module.filter('px', function() {
         
 
         /**
+         * @ngdoc object
+         * @name exporterCsvLinkElement
+         * @propertyOf  ui.grid.exporter.api:GridOptions
+         * @description The element that the csv link should be placed into.
+         * Mandatory if using the native UI.
+         */
+        /**
          * @ngdoc function
          * @name csvExport
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
@@ -11768,9 +11828,16 @@ module.filter('px', function() {
           var exportColumnHeaders = this.getColumnHeaders(grid, colTypes);
           var exportData = this.getData(grid, rowTypes, colTypes);
           var csvContent = this.formatAsCsv(exportColumnHeaders, exportData);
-          this.renderCsvLink(grid, csvContent, $elm);
           
-          // this.grid.exporter.$scope.$broadcast('clearExporterMenu');
+          if ( !$elm && grid.options.exporterCsvLinkElement ){
+            $elm = grid.options.exporterCsvLinkElement;
+          }
+          
+          if ( $elm ){
+            this.renderCsvLink(grid, csvContent, $elm);
+          } else {
+            $log.error( 'Exporter asked to export as csv, but no element provided.  Perhaps you should set gridOptions.exporterCsvLinkElement?')
+;          }
         },
         
         
@@ -14142,7 +14209,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-menu-button',
-    "<div class=\"ui-grid-menu-button\" ng-click=\"openMenu()\"><div class=\"ui-grid-icon-container\"><i class=\"ui-grid-icon-menu\">&nbsp;</i></div><div ui-grid-menu-handler ui-grid-menu menu-items=\"menuItems\"></div></div>"
+    "<div class=\"ui-grid-menu-button\" ng-click=\"toggleMenu()\"><div class=\"ui-grid-icon-container\"><i class=\"ui-grid-icon-menu\">&nbsp;</i></div><div ui-grid-menu menu-items=\"menuItems\"></div></div>"
   );
 
 

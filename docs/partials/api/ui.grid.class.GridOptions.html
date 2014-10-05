@@ -109,6 +109,21 @@ some of the management of items for you.</p></div>
 <div class="gridmenushowhidecolumns"><p>true by default, whether the grid menu should allow hide/show
 of columns</p></div>
 </li>
+<li><h3 id="gridMenuTitleFilter">gridMenuTitleFilter</h3>
+<div class="gridmenutitlefilter"><p>(optional) A function that takes a title string 
+(usually the col.displayName), and converts it into a display value.  The function
+must return either a string or a promise.</p>
+
+<p>Used for internationalization of the grid menu column names - for angular-translate
+you can pass $translate as the function, for i18nService you can pass getSafeText as the 
+function</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridOptions = {
+  gridMenuTitleFilter: $translate
+}
+</pre></div>
+</div>
+</li>
 <li><h3 id="headerTemplate">headerTemplate</h3>
 <div class="headertemplate"><p>Null by default. When provided, this setting uses a custom header
 template, rather than the default template. Can be set to either the name of a template file:

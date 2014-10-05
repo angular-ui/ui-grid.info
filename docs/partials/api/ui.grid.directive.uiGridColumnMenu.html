@@ -10,8 +10,14 @@
 &lt;/style&gt;</pre>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="hideMenu">hideMenu()</h3>
-<div class="hidemenu"><p>Hides the column menu.</p></div>
+<ul class="methods"><li><h3 id="hideMenu">hideMenu(broadcastTrigger)</h3>
+<div class="hidemenu"><p>Hides the column menu.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">broadcastTrigger – {boolean} – </code>
+<p>true if we were triggered by a broadcast
+from the menu itself - in which case don't broadcast again as we'll get
+an infinite loop</p></li>
+</ul>
+</div>
 </li>
 <li><h3 id="showMenu">showMenu(column, $columnElement)</h3>
 <div class="showmenu"><p>Shows the column menu.  If the menu is already displayed it
