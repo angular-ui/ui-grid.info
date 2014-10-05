@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-fda3ebb - 2014-10-04
+/*! ui-grid - v3.0.0-rc.11-08c522b - 2014-10-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -105,12 +105,17 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
           }
 
           // If the grid controller is present, use it to get the compiled cell template function
-          if (uiGridCtrl) {
+          if (uiGridCtrl && $scope.col.compiledElementFn) {
              compileTemplate();
           }
           // No controller, compile the element manually (for unit tests)
           else {
+            if ( uiGridCtrl && !$scope.col.compiledElementFn ){
+              $log.error('Manually compiling cell template as render has been called before precompile.  Please log a ui-grid issue');  
+            }
+            
             var html = $scope.col.cellTemplate
+              .replace(uiGridConstants.MODEL_COL_FIELD, 'row.entity.' + gridUtil.preEval($scope.col.field))
               .replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
             var cellElement = $compile(html)($scope);
             $elm.append(cellElement);
@@ -4876,7 +4881,7 @@ angular.module('ui.grid')
 (function(){
 
 angular.module('ui.grid')
-.factory('GridColumn', ['gridUtil', 'uiGridConstants', 'i18nService', function(gridUtil, uiGridConstants, i18nService) {
+.factory('GridColumn', ['gridUtil', 'uiGridConstants', 'i18nService', '$log', function(gridUtil, uiGridConstants, i18nService, $log) {
 
   /**
    * @ngdoc function
@@ -5207,7 +5212,7 @@ angular.module('ui.grid')
     if (colDef.name === undefined) {
       throw new Error('colDef.name is required for column at index ' + self.grid.options.columnDefs.indexOf(colDef));
     }
-
+    
     var parseErrorMsg = "Cannot parse column width '" + colDef.width + "' for column named '" + colDef.name + "'";
 
     // If width is not defined, set it to a single star
@@ -5255,6 +5260,11 @@ angular.module('ui.grid')
 
     //use field if it is defined; name if it is not
     self.field = (colDef.field === undefined) ? colDef.name : colDef.field;
+    
+    if ( typeof( self.field ) !== 'string' ){
+      $log.error( 'Field is not a string, this is likely to break the code, Field is: ' + self.field );
+    }
+    
     self.name = colDef.name;
 
     // Use colDef.displayName as long as it's not undefined, otherwise default to the field name
