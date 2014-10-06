@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-7c5eea9 - 2014-10-06
+/*! ui-grid - v3.0.0-rc.11-0212320 - 2014-10-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -424,7 +424,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
       var renderContainerElm = gridUtil.closestElm($columnElement, '.ui-grid-render-container');
       var renderContainerOffset = renderContainerElm.getBoundingClientRect().left - $scope.grid.element[0].getBoundingClientRect().left;
 
-      var containerScrolLeft = renderContainerElm.querySelectorAll('.ui-grid-viewport')[0].scrollLeft;
+      var containerScrollLeft = renderContainerElm.querySelectorAll('.ui-grid-viewport')[0].scrollLeft;
 
       // default value the last width for _this_ column, otherwise last width for _any_ column, otherwise default to 170
       var myWidth = $scope.col.lastMenuWidth ? $scope.col.lastMenuWidth : ( $scope.lastMenuWidth ? $scope.lastMenuWidth : 170);
@@ -440,8 +440,13 @@ function ( i18nService, uiGridConstants, gridUtil ) {
         $scope.lastMenuPaddingRight = paddingRight;
         $scope.col.lastMenuPaddingRight = paddingRight;
       }
+      
+      var left = positionData.left + renderContainerOffset - containerScrollLeft + positionData.width - myWidth + paddingRight;
+      if (left < positionData.offset){
+        left = positionData.offset;
+      }
 
-      $elm.css('left', (positionData.left + renderContainerOffset - containerScrolLeft + positionData.width - myWidth + paddingRight) + 'px');
+      $elm.css('left', left + 'px');
       $elm.css('top', (positionData.top + positionData.height) + 'px');
     }    
 
