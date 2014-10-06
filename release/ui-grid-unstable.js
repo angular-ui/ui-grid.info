@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-0212320 - 2014-10-06
+/*! ui-grid - v3.0.0-rc.11-1be593b - 2014-10-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -796,21 +796,6 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
             $scope.grid = uiGridCtrl.grid;
             
-            /**
-             * @ngdoc event
-             * @name filterChanged
-             * @eventOf  ui.grid.core.api:PublicApi
-             * @description  is raised after the filter is changed.  The nature
-             * of the watch expression doesn't allow notification of what changed,
-             * so the receiver of this event will need to re-extract the filter 
-             * conditions from the columns.
-             * 
-             */
-            if (!$scope.grid.api.core.raise.filterChanged){
-              $scope.grid.api.registerEvent( 'core', 'filterChanged' );
-            }
-                        
-    
             $elm.addClass($scope.col.getColClass(false));
     
             // Hide the menu by default
@@ -1315,7 +1300,7 @@ angular.module('ui.grid')
       });
       
       $scope.registeredMenuItems = [];
-      
+
       /**
        * @ngdoc function
        * @name addToGridMenu
@@ -4696,8 +4681,8 @@ angular.module('ui.grid')
 (function () {
 
   angular.module('ui.grid')
-    .factory('GridApi', ['$log', '$q', '$rootScope', 'gridUtil', 'uiGridConstants',
-      function ($log, $q, $rootScope, gridUtil, uiGridConstants) {
+    .factory('GridApi', ['$log', '$q', '$rootScope', 'gridUtil', 'uiGridConstants', 'GridRow', 'uiGridGridMenuService',
+      function ($log, $q, $rootScope, gridUtil, uiGridConstants, GridRow, uiGridGridMenuService) {
         /**
          * @ngdoc function
          * @name ui.grid.class:GridApi
@@ -4731,6 +4716,68 @@ angular.module('ui.grid')
            * </pre>
            */
           this.registerEvent( 'core', 'renderingComplete' );
+
+          /**
+           * @ngdoc event
+           * @name filterChanged
+           * @eventOf  ui.grid.core.api:PublicApi
+           * @description  is raised after the filter is changed.  The nature
+           * of the watch expression doesn't allow notification of what changed,
+           * so the receiver of this event will need to re-extract the filter 
+           * conditions from the columns.
+           * 
+           */
+          this.registerEvent( 'core', 'filterChanged' );
+
+          /**
+           * @ngdoc function
+           * @name setRowInvisible
+           * @methodOf  ui.grid.core.api:PublicApi
+           * @description Sets an override on the row to make it always invisible,
+           * which will override any filtering or other visibility calculations.  
+           * If the row is currently visible then sets it to invisible and calls
+           * both grid refresh and emits the rowsVisibleChanged event
+           * @param {object} rowEntity gridOptions.data[] array instance
+           */
+          this.registerMethod( 'core', 'setRowInvisible', GridRow.prototype.setRowInvisible );
+      
+          /**
+           * @ngdoc function
+           * @name clearRowInvisible
+           * @methodOf  ui.grid.core.api:PublicApi
+           * @description Clears any override on visibility for the row so that it returns to 
+           * using normal filtering and other visibility calculations.  
+           * If the row is currently invisible then sets it to visible and calls
+           * both grid refresh and emits the rowsVisibleChanged event
+           * TODO: if a filter is active then we can't just set it to visible?
+           * @param {object} rowEntity gridOptions.data[] array instance
+           */
+          this.registerMethod( 'core', 'clearRowInvisible', GridRow.prototype.clearRowInvisible );
+      
+          /**
+           * @ngdoc function
+           * @name getVisibleRows
+           * @methodOf  ui.grid.core.api:PublicApi
+           * @description Returns all visible rows
+           * @param {Grid} grid the grid you want to get visible rows from
+           * @returns {array} an array of gridRow 
+           */
+          this.registerMethod( 'core', 'getVisibleRows', GridRow.prototype.getVisibleRows );
+          
+          /**
+           * @ngdoc event
+           * @name rowsVisibleChanged
+           * @eventOf  ui.grid.core.api:PublicApi
+           * @description  is raised after the rows that are visible
+           * change.  The filtering is zero-based, so it isn't possible
+           * to say which rows changed (unlike in the selection feature).
+           * We can plausibly know which row was changed when setRowInvisible
+           * is called, but in that situation the user already knows which row
+           * they changed.  When a filter runs we don't know what changed, 
+           * and that is the one that would have been useful.
+           * 
+           */
+          this.registerEvent( 'core', 'rowsVisibleChanged' );
         };
 
         /**
@@ -6587,65 +6634,6 @@ angular.module('ui.grid')
     *  @description height of each individual row
     */
     this.height = grid.options.rowHeight;
-
-    /**
-     * @ngdoc function
-     * @name setRowInvisible
-     * @methodOf  ui.grid.core.api:PublicApi
-     * @description Sets an override on the row to make it always invisible,
-     * which will override any filtering or other visibility calculations.  
-     * If the row is currently visible then sets it to invisible and calls
-     * both grid refresh and emits the rowsVisibleChanged event
-     * @param {object} rowEntity gridOptions.data[] array instance
-     */
-    if (!this.grid.api.core.setRowInvisible){
-      this.grid.api.registerMethod( 'core', 'setRowInvisible', this.setRowInvisible );
-    }
-
-    /**
-     * @ngdoc function
-     * @name clearRowInvisible
-     * @methodOf  ui.grid.core.api:PublicApi
-     * @description Clears any override on visibility for the row so that it returns to 
-     * using normal filtering and other visibility calculations.  
-     * If the row is currently invisible then sets it to visible and calls
-     * both grid refresh and emits the rowsVisibleChanged event
-     * TODO: if a filter is active then we can't just set it to visible?
-     * @param {object} rowEntity gridOptions.data[] array instance
-     */
-    if (!this.grid.api.core.clearRowInvisible){
-      this.grid.api.registerMethod( 'core', 'clearRowInvisible', this.clearRowInvisible );
-    }
-
-    /**
-     * @ngdoc function
-     * @name getVisibleRows
-     * @methodOf  ui.grid.core.api:PublicApi
-     * @description Returns all visible rows
-     * @param {Grid} grid the grid you want to get visible rows from
-     * @returns {array} an array of gridRow 
-     */
-    if (!this.grid.api.core.getVisibleRows){
-      this.grid.api.registerMethod( 'core', 'getVisibleRows', this.getVisibleRows );
-    }
-    
-    /**
-     * @ngdoc event
-     * @name rowsVisibleChanged
-     * @eventOf  ui.grid.core.api:PublicApi
-     * @description  is raised after the rows that are visible
-     * change.  The filtering is zero-based, so it isn't possible
-     * to say which rows changed (unlike in the selection feature).
-     * We can plausibly know which row was changed when setRowInvisible
-     * is called, but in that situation the user already knows which row
-     * they changed.  When a filter runs we don't know what changed, 
-     * and that is the one that would have been useful.
-     * 
-     */
-    if (!this.grid.api.core.raise.rowsVisibleChanged){
-      this.grid.api.registerEvent( 'core', 'rowsVisibleChanged' );
-    }
-    
   }
 
   /**
@@ -10424,6 +10412,7 @@ module.filter('px', function() {
 
           function setFocused() {
             var div = $elm.find('div');
+            console.log('setFocused: ' + div[0].parentElement.className);
             div[0].focus();
             div.attr("tabindex", 0);
             $scope.grid.queueRefresh();
@@ -10842,6 +10831,7 @@ module.filter('px', function() {
             }
 
             function beginEditFocus(evt) {
+              console.log('begin edit');
               evt.stopPropagation();
               beginEdit();
             }
