@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-1be593b - 2014-10-06
+/*! ui-grid - v3.0.0-rc.11-da85649 - 2014-10-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8418,6 +8418,10 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       }
 
       return objType + ':' + key;
+    },
+
+    resetUids: function () {
+      uid = ['0', '0', '0'];
     }
 
     // setHashKey: function setHashKey(obj, h) {
@@ -12820,15 +12824,14 @@ module.filter('px', function() {
                 // Don't append the left resizer if this is the first column or the column to the left of this one has resizing disabled
                 if (otherCol && renderContainer.visibleColumnCache.indexOf($scope.col) !== 0 && otherCol.colDef.enableColumnResizing !== false) {
                   $elm.prepend(resizerLeft);
+                  $compile(resizerLeft)($scope);
                 }
                 
                 // Don't append the right resizer if this column has resizing disabled
                 if ($scope.col.colDef.enableColumnResizing !== false) {
                   $elm.append(resizerRight);
+                  $compile(resizerRight)($scope);
                 }
-
-                $compile(resizerLeft)($scope);
-                $compile(resizerRight)($scope);
               });
             }
           }
