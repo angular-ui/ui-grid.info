@@ -457,7 +457,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api are available be class enable enablerowheaderselection enablerowselection entire feature for grid gridoptions header multiple multiselect object row selection set the these to true ui ui-grid used using"
+      "keywords": "allow always and api are available be being can class conjunction create different enable enablerowheaderselection enablerowselection entire false feature for from grid gridapi gridoptions header in is multiple multiselect nounselect object only prevent row rows select selected selection selectrow set single the these to true ui ui-grid unselect unselected used using with works you"
     },
     {
       "section": "api",
@@ -499,7 +499,7 @@ NG_DOCS={
       "id": "ui.grid.selection.service:uiGridSelectionService",
       "shortName": "uiGridSelectionService",
       "type": "service",
-      "keywords": "all api as at be can clears clearselectedrows clicked deselect does false features for from function getselectedrows grid group if is key last multiselect nothing object of one only or returns row rows select selected selection selects service services shift shiftselect the this time to togglerowselection toggles ui unselected using"
+      "keywords": "all api as at be can cannot clears clearselectedrows clicked deselect does false features for from function getselectedrows grid group if is key last multiselect nothing nounselect object of one only or returns row rows select selected selection selects service services shift shiftselect the then this time to togglerowselection toggles true ui unselected using"
     },
     {
       "section": "api",
@@ -723,7 +723,7 @@ NG_DOCS={
       "id": "210_selection",
       "shortName": "210 Selection",
       "type": "overview",
-      "keywords": "$http $log $scope address age all allow allowcellfocus and angular app are at btn btn-success button by callback checkboxes city class clearall clearselectedrows click columndefs controller css data default directive displayname element enable enablerowheaderselection enablerowselection event example examples false first focusable function get grid gridapi gridoption gridoptions header height hidden html id if in include index individual info is isselected js json log main mainctrl module msg multi-select multiple multiselect must name ng-bind ng-click ng-controller ng-disabled of on one only onregisterapi options overview provide provided register result row rowheader rowheaderselection rows rowselectionchanged scope second secondctrl selectall selectallrows selected selecting selection set setmultiselect setting single success that the then this time to togglemultiselect togglerow1 togglerowselection true tutorial two type ui ui-grid ui-grid-selection uses var when width will with without you your"
+      "keywords": "$http $interval $log $scope additional address age all allow allowcellfocus always an and angular app are at btn btn-success but button by callback can cannot checkboxes city class clearall clearselectedrows click clicking columndefs controller could css current data default demonstrates different directive displayname element enable enablerowheaderselection enablerowselection event example examples false first focusable function get grid gridapi gridoption gridoptions have header height hidden html id if in include index individual info is isselected it js json least log main mainctrl manually mean means module msg multi-select multiple multiselect must name necessary ng-bind ng-click ng-controller ng-disabled nounselect of on one only onregisterapi open option options other overview page programatically provide provided register result row rowheader rowheaderselection rows rowselectionchanged scope second secondctrl select selectall selectallrows selected selecting selection selectrow set setmultiselect setting single success than that the then this time to togglemultiselect togglerow1 togglerowselection true tutorial two type ui ui-grid ui-grid-selection unselect upon uses var when width will with without you your"
     },
     {
       "section": "tutorial",

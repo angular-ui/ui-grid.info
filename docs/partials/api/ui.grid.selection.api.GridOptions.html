@@ -18,6 +18,13 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a><
 <div class="multiselect"><p>Enable multiple row selection for entire grid
 <br/>Defaults to true</p></div>
 </li>
+<li><h3 id="noUnselect">noUnselect</h3>
+<div class="nounselect"><p>Prevent a row from being unselected.  Works in conjunction
+with <code>multiselect = false</code> and <code>gridApi.selection.selectRow()</code> to allow
+you to create a single selection only grid - a row is always selected, you
+can only select different rows, you can't unselect the row.
+<br/>Defaults to false</p></div>
+</li>
 </ul>
 </div>
 </div>
