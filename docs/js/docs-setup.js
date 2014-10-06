@@ -667,7 +667,7 @@ NG_DOCS={
       "id": "191_horizontal_scrolling",
       "shortName": "191 Horizontal Scrolling",
       "type": "overview",
-      "keywords": "$http $scope amount an and angular app cells check class col col0 col1 col2 colcount colindex columndefs columns controller couple css data demonstrating describe element enablesorting expectcellvaluematch expectheadercellvaluematch first floor for function get grid grid1 gridoptions gridtestutils has headers height horizontal how html id index it js large length main mainctrl make math module name ng-controller number of out overview protractor push r0c0 r0c1 r1c0 r1c1 r2c0 random rendered require right row rowindex scenario scroll scrolling spec still sure to true tutorial ui ui-grid var width widths with working"
+      "keywords": "$scope $timeout amount an and angular app cells check class col col0 col1 col2 colcount colindex columndefs columns controller couple css data demonstrating describe element enablesorting expectcellvaluematch expectheadercellvaluematch first floor for function get grid grid1 gridoptions gridtestutils has headers height horizontal how html id index it js large length main mainctrl make math module name ng-controller number of out overview protractor push r0c0 r0c1 r1c0 r1c1 r2c0 random rendered require right row rowcount rowindex scenario scroll scrolling spec still sure to true tutorial ui ui-grid var width widths with working"
     },
     {
       "section": "tutorial",
