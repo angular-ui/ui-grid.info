@@ -16,7 +16,11 @@ of only one row at a time.</p>
 <p>If you have <code>multiSelect: false</code>, then an additional option <code>noUnselect</code> will mean that a row is always selected.  You
 can select a different row (which will unselect the current row), but you cannot manually unselect the current row
 by clicking on it.  This means that at least one row is always selected, other than when you first open the grid.  If 
-necessary you could programatically select the first row upon page open.  The second grid demonstrates this.</p><h2 id="Example">Example</h2>
+necessary you could programatically select the first row upon page open.  The second grid demonstrates this.</p>
+
+<p>If <code>multiSelect: true</code>, another option <code>modifierKeysToMultiSelect</code> may be used. If set to true will allow selecting multiple 
+row only if the Ctrl-Key, Cmd-Key (Mac) or the Shift-Key is used when selecting, set to false will allow selecting multiple 
+rows always. </p><h2 id="Example">Example</h2>
 <div class="example"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.</p>
 
 <h4>Source</h4>
@@ -25,15 +29,18 @@ necessary you could programatically select the first row upon page open.  The se
 <pre class="prettyprint linenums" ng-set-text="index.html-51" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-51">
     <div ng-controller="MainCtrl">
-     <button type="button" class="btn btn-success" ng-click="toggleMultiSelect()">Toggle multiSelect</button>  <strong>MultiSelect:</strong> <span ng-bind="gridApi.grid.options.multiSelect"></span>
-      <button type="button" class="btn btn-success" ng-click="toggleRow1()">Toggle Row 0</button> </span>
+      <button type="button" class="btn btn-success" ng-click="toggleMultiSelect()">Toggle multiSelect</button>  <strong>MultiSelect:</strong> <span ng-bind="gridApi.grid.options.multiSelect"></span>
+      <button type="button" class="btn btn-success" ng-click="toggleRow1()">Toggle Row 0</button>
       <br/>
       <br/>
-      <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button> </span>
-      <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button> </span>
-      <br>
+      <button type="button" class="btn btn-success" ng-click="toggleModifierKeysToMultiSelect()">Toggle modifierKeysToMultiSelect</button>  <strong>ModifierKeysToMultiSelect:</strong> <span ng-bind="gridApi.grid.options.modifierKeysToMultiSelect"> </span>     
+      <br/>
+      <br/>
+      <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button>
+      <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button>
+      <br/>
+
       <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
-      
     </div>
     <div ng-controller="SecondCtrl">
       Single selection grid without rowHeader:
@@ -75,19 +82,23 @@ necessary you could programatically select the first row upon page open.  The se
         $scope.info = {};
 
         $scope.toggleMultiSelect = function() {
-           $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
+          $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
+        };
+
+        $scope.toggleModifierKeysToMultiSelect = function() {
+          $scope.gridApi.selection.setModifierKeysToMultiSelect(!$scope.gridApi.grid.options.modifierKeysToMultiSelect);
         };
 
         $scope.selectAll = function() {
-                   $scope.gridApi.selection.selectAllRows();
+          $scope.gridApi.selection.selectAllRows();
         };
 
-         $scope.clearAll = function() {
-                         $scope.gridApi.selection.clearSelectedRows();
-              };
+        $scope.clearAll = function() {
+          $scope.gridApi.selection.clearSelectedRows();
+        };
 
         $scope.toggleRow1 = function() {
-                         $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
+          $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
         };
 
         $scope.gridOptions.onRegisterApi = function(gridApi){
@@ -111,6 +122,7 @@ necessary you could programatically select the first row upon page open.  The se
       ];
 
       $scope.gridOptions.multiSelect = false;
+      $scope.gridOptions.modifierKeysToMultiSelect = false;
       $scope.gridOptions.noUnselect = true;
       $scope.gridOptions.onRegisterApi = function( gridApi ) {
         $scope.gridApi = gridApi;

@@ -457,14 +457,14 @@ NG_DOCS={
       "id": "ui.grid.selection.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "allow always and api are available be being can class conjunction create different enable enablerowheaderselection enablerowselection entire false feature for from grid gridapi gridoptions header in is multiple multiselect nounselect object only prevent row rows select selected selection selectrow set single the these to true ui ui-grid unselect unselected used using with works you"
+      "keywords": "allow always and api are available be being can class conjunction create ctrlkey different enable enablerowheaderselection enablerowselection entire false feature for from grid gridapi gridoptions header in is modifierkeystomultiselect multiple multiselect nounselect object only or prevent requires row rows select selected selection selectrow set shiftkey single the these to true ui ui-grid unselect unselected used using when with works you"
     },
     {
       "section": "api",
       "id": "ui.grid.selection.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "all allow api array as clearselectedrows current data does entity false feature for function getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if instance multiple multiselect nothing object or public references returns row rowentity rows select selectallrows selectallvisiblerows selected selectedrow selection selectrow selects setmultiselect sets the to togglerowselection toggles true ui unselect unselected unselectrow unselects visible"
+      "keywords": "all allow api array as clearselectedrows ctrlkey current data does entity false feature for function getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if instance is modifierkeystomultiselect multiple multiselect nothing object only or public references returns row rowentity rows select selectallrows selectallvisiblerows selected selectedrow selection selectrow selects setmodifierkeystomultiselect setmultiselect sets shiftkey the to togglerowselection toggles true ui unselect unselected unselectrow unselects used using visible when"
     },
     {
       "section": "api",
@@ -723,7 +723,7 @@ NG_DOCS={
       "id": "210_selection",
       "shortName": "210 Selection",
       "type": "overview",
-      "keywords": "$http $interval $log $scope additional address age all allow allowcellfocus always an and angular app are at btn btn-success but button by callback can cannot checkboxes city class clearall clearselectedrows click clicking columndefs controller could css current data default demonstrates different digest directive displayname element enable enablerowheaderselection enablerowselection event example examples false first focusable for function gave get grid gridapi gridoption gridoptions have header height hidden html id if in include index individual info is isselected it js json just least log main mainctrl manually mean means module msg multi-select multiple multiselect must name necessary ng-bind ng-click ng-controller ng-disabled nounselect of on one only onregisterapi open option options other overview page programatically provide provided register result row rowheader rowheaderselection rows rowselectionchanged scope second secondctrl select selectall selectallrows selected selecting selection selectrow set setmultiselect setting single success than that the then this time to togglemultiselect togglerow1 togglerowselection true tutorial two type ui ui-grid ui-grid-selection unselect upon uses var wait we when whilst width will with without you your"
+      "keywords": "$http $interval $log $scope additional address age all allow allowcellfocus always an and angular another app are at be btn btn-success but button by callback can cannot checkboxes city class clearall clearselectedrows click clicking cmd-key columndefs controller could css ctrl-key current data default demonstrates different digest directive displayname element enable enablerowheaderselection enablerowselection event example examples false first focusable for function gave get grid gridapi gridoption gridoptions have header height hidden html id if in include index individual info is isselected it js json just least log main mainctrl manually may mean means modifierkeystomultiselect module msg multi-select multiple multiselect must name necessary ng-bind ng-click ng-controller ng-disabled nounselect of on one only onregisterapi open option options or other overview page programatically provide provided register result row rowheader rowheaderselection rows rowselectionchanged scope second secondctrl select selectall selectallrows selected selecting selection selectrow set setmodifierkeystomultiselect setmultiselect setting shift-key single success than that the then this time to togglemodifierkeystomultiselect togglemultiselect togglerow1 togglerowselection true tutorial two type ui ui-grid ui-grid-selection unselect upon used uses var wait we when whilst width will with without you your"
     },
     {
       "section": "tutorial",

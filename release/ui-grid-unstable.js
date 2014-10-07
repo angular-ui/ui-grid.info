@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-26c9c91 - 2014-10-07
+/*! ui-grid - v3.0.0-rc.11-3d4e857 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -14003,6 +14003,16 @@ module.filter('px', function() {
                  */
                 setMultiSelect: function (multiSelect) {
                   grid.options.multiSelect = multiSelect;
+                },
+                /**
+                 * @ngdoc function
+                 * @name setModifierKeysToMultiSelect
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description Sets the current gridOption.modifierKeysToMultiSelect to true or false
+                 * @param {bool} modifierKeysToMultiSelect true to only allow multiple rows when using ctrlKey or shiftKey is used
+                 */
+                setModifierKeysToMultiSelect: function (modifierKeysToMultiSelect) {
+                  grid.options.modifierKeysToMultiSelect = modifierKeysToMultiSelect;
                 }
               }
             }
@@ -14051,6 +14061,14 @@ module.filter('px', function() {
            *  <br/>Defaults to false
            */
           gridOptions.noUnselect = gridOptions.noUnselect === true;
+          /**
+           *  @ngdoc object
+           *  @name modifierKeysToMultiSelect
+           *  @propertyOf  ui.grid.selection.api:GridOptions
+           *  @description Enable multiple row selection only when using the ctrlKey or shiftKey. Requires multiSelect to be true.
+           *  <br/>Defaults to false
+           */
+          gridOptions.modifierKeysToMultiSelect = gridOptions.modifierKeysToMultiSelect === true;
           /**
            *  @ngdoc object
            *  @name enableRowHeaderSelection
@@ -14222,10 +14240,12 @@ module.filter('px', function() {
           $scope.selectButtonClick = function(row, evt) {
             if (evt.shiftKey) {
               uiGridSelectionService.shiftSelect(self, row, self.options.multiSelect);
-
+            }
+            else if (evt.ctrlKey || evt.metaKey) {
+              uiGridSelectionService.toggleRowSelection(self, row, self.options.multiSelect, self.options.noUnselect); 
             }
             else {
-              uiGridSelectionService.toggleRowSelection(self, row, self.options.multiSelect, self.options.noUnselect );
+              uiGridSelectionService.toggleRowSelection(self, row, (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect);
             }
           };
         }
@@ -14295,10 +14315,12 @@ module.filter('px', function() {
               $elm.on('click', function (evt) {
                 if (evt.shiftKey) {
                   uiGridSelectionService.shiftSelect($scope.grid, $scope.row, $scope.grid.options.multiSelect);
-
+                }
+                else if (evt.ctrlKey || evt.metaKey) {
+                  uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
                 }
                 else {
-                  uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
+                  uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
                 }
                 $scope.$apply();
               });
