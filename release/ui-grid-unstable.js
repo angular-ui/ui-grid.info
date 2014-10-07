@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-cb117af - 2014-10-07
+/*! ui-grid - v3.0.0-rc.11-97868e0 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -518,7 +518,6 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         if ($scope.menuShown) {
           // we want to hide, then reposition, then show, but we want to wait for animations
           // we set a variable, and then rely on the menu-hidden event to call the reposition and show
-          $scope.col = column;
           $scope.colElement = $columnElement;
           $scope.colElementPosition = colElementPosition;
           $scope.hideThenShow = true;
@@ -527,21 +526,14 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         } else {
           self.shown = $scope.menuShown = true;
           uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
+
+          $scope.colElement = $columnElement;
+          $scope.colElementPosition = colElementPosition;
           $scope.$broadcast('show-menu');
-          $timeout( $scope.repositionMenuClosure( $scope, column, colElementPosition, $elm, $columnElement ));
         } 
 
       };
 
-
-      $scope.repositionMenuClosure = function( $scope, column, colElementPosition, $elm, $columnElement ) {
-        return function() {
-          uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
-          delete $scope.colElementPosition;
-          delete $scope.columnElement;
-        };
-      };
-      
 
       /**
        * @ngdoc method
@@ -568,12 +560,17 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
           uiGridColumnMenuService.repositionMenu( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement );
           $scope.$broadcast('show-menu');
-          $timeout( $scope.repositionMenuClosure( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement ));
 
           $scope.menuShown = true;
         } else {
           $scope.hideMenu( true );
         }
+      });
+      
+      $scope.$on('menu-shown', function() {
+        uiGridColumnMenuService.repositionMenu( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement );
+        delete $scope.colElementPosition;
+        delete $scope.columnElement;
       });
 
  
@@ -1667,7 +1664,8 @@ function ($log, gridUtil, uiGridConstants, uiGridGridMenuService) {
  */
 angular.module('ui.grid')
 
-.directive('uiGridMenu', ['$log', '$compile', '$timeout', '$window', '$document', 'gridUtil', function ($log, $compile, $timeout, $window, $document, gridUtil) {
+.directive('uiGridMenu', ['$log', '$compile', '$timeout', '$window', '$document', 'gridUtil', 'uiGridConstants', 
+function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
   var uiGridMenu = {
     priority: 0,
     scope: {
@@ -1706,9 +1704,12 @@ angular.module('ui.grid')
             $animate = gridUtil.enableAnimations(menuMid);
             if ( $animate ){
               $scope.shownMid = true;
-              $animate.removeClass(menuMid, 'ng-hide');
+              $animate.removeClass(menuMid, 'ng-hide', function() {
+                $scope.$emit('menu-shown');
+              });
             } else {
               $scope.shownMid = true;
+              $scope.$emit('menu-shown');
             }
           });
         } else if ( !$scope.shownMid ){
@@ -1717,9 +1718,12 @@ angular.module('ui.grid')
           $animate = gridUtil.enableAnimations(menuMid);
           if ( $animate ){
             $scope.shownMid = true;
-            $animate.removeClass(menuMid, 'ng-hide');
+            $animate.removeClass(menuMid, 'ng-hide', function() {
+              $scope.$emit('menu-shown');
+            });
           } else {
             $scope.shownMid = true;
+            $scope.$emit('menu-shown');
           }
         }
 
@@ -1794,6 +1798,10 @@ angular.module('ui.grid')
       $scope.$on('$destroy', function() {
         angular.element($window).off('resize', applyHideMenu);
       });
+
+      $scope.$on('$destroy', $scope.$on(uiGridConstants.events.GRID_SCROLL, applyHideMenu ));
+
+      $scope.$on('$destroy', $scope.$on(uiGridConstants.events.ITEM_DRAGGING, applyHideMenu ));
     },
     
     
