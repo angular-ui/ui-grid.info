@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-9f85c8a - 2014-10-07
+/*! ui-grid - v3.0.0-rc.11-19cbb72 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -111,11 +111,20 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$log', '$parse',
           // No controller, compile the element manually (for unit tests)
           else {
             if ( uiGridCtrl && !$scope.col.compiledElementFn ){
-              $log.error('Render has been called before precompile.  Please log a ui-grid issue');  
-            } else {
+              // $log.error('Render has been called before precompile.  Please log a ui-grid issue');  
+
+              $scope.col.getCompiledElementFn()
+                .then(function (compiledElementFn) {
+                  compiledElementFn($scope, function(clonedElement, scope) {
+                    $elm.append(clonedElement);
+                  });
+                });
+            }
+            else {
               var html = $scope.col.cellTemplate
                 .replace(uiGridConstants.MODEL_COL_FIELD, 'row.entity.' + gridUtil.preEval($scope.col.field))
                 .replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
+
               var cellElement = $compile(html)($scope);
               $elm.append(cellElement);
             }
@@ -3574,6 +3583,10 @@ angular.module('ui.grid')
 
       var compiledElementFn = $compile(html);
       col.compiledElementFn = compiledElementFn;
+
+      if (col.compiledElementFnDefer) {
+        col.compiledElementFnDefer.resolve(col.compiledElementFn);
+      }
     });
   };
 
@@ -5747,6 +5760,18 @@ angular.module('ui.grid')
       }
     };
 
+    GridColumn.prototype.getCellTemplate = function () {
+      var self = this;
+
+      return self.cellTemplatePromise;
+    };
+
+    GridColumn.prototype.getCompiledElementFn = function () {
+      var self = this;
+      
+      return self.compiledElementFnDefer.promise;
+    };
+
     return GridColumn;
   }]);
 
@@ -6957,9 +6982,11 @@ angular.module('ui.grid')
            */
           if (!colDef.cellTemplate) {
             colDef.cellTemplate = 'ui-grid/uiGridCell';
+            col.cellTemplatePromise = gridUtil.getTemplate(colDef.cellTemplate);
           }
 
-          templateGetPromises.push(gridUtil.getTemplate(colDef.cellTemplate)
+          col.cellTemplatePromise = gridUtil.getTemplate(colDef.cellTemplate);
+          templateGetPromises.push(col.cellTemplatePromise
             .then(
               function (template) {
                 col.cellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.cellFilter ? "|" + col.cellFilter : "");
@@ -6968,7 +6995,6 @@ angular.module('ui.grid')
                 throw new Error("Couldn't fetch/use colDef.cellTemplate '" + colDef.cellTemplate + "'");
               })
           );
-
 
           templateGetPromises.push(gridUtil.getTemplate(colDef.headerCellTemplate)
               .then(
@@ -6979,6 +7005,9 @@ angular.module('ui.grid')
                 throw new Error("Couldn't fetch/use colDef.headerCellTemplate '" + colDef.headerCellTemplate + "'");
               })
           );
+
+          // Create a promise for the compiled element function
+          col.compiledElementFnDefer = $q.defer();
 
           return $q.all(templateGetPromises);
         }
