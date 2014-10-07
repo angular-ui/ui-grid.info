@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-509d888 - 2014-10-07
+/*! ui-grid - v3.0.0-rc.11-9f85c8a - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12329,7 +12329,7 @@ module.filter('px', function() {
    *  @example
    <example module="app">
    <file name="app.js">
-   var app = angular.module('app', ['ui.grid', 'ui.grid.edit']);
+   var app = angular.module('app', ['ui.grid', 'ui.grid.exporter']);
 
    app.controller('MainCtrl', ['$scope', function ($scope) {
       $scope.data = [
@@ -12338,6 +12338,8 @@ module.filter('px', function() {
       ];
 
       $scope.gridOptions = {
+        enableGridMenu: true,
+        exporterMenuCsv: false,
         columnDefs: [
           {name: 'name', enableCellEdit: true},
           {name: 'title', enableCellEdit: true}
@@ -14186,7 +14188,7 @@ module.filter('px', function() {
    *  @example
    <example module="app">
    <file name="app.js">
-   var app = angular.module('app', ['ui.grid', 'ui.grid.edit']);
+   var app = angular.module('app', ['ui.grid', 'ui.grid.selection']);
 
    app.controller('MainCtrl', ['$scope', function ($scope) {
       $scope.data = [

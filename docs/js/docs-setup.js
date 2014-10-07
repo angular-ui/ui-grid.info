@@ -275,7 +275,7 @@ NG_DOCS={
       "id": "ui.grid.exporter.directive:uiGridExporter",
       "shortName": "uiGridExporter",
       "type": "directive",
-      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div edit enablecelledit exporter features frank function grid gridoptions html index js lowly mainctrl module name ng-controller title to true ui ui-grid ui-grid-exporter var"
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div enablecelledit enablegridmenu exporter exportermenucsv false features frank function grid gridoptions html index js lowly mainctrl module name ng-controller title to true ui ui-grid ui-grid-exporter var"
     },
     {
       "section": "api",
@@ -485,7 +485,7 @@ NG_DOCS={
       "id": "ui.grid.selection.directive:uiGridSelection",
       "shortName": "uiGridSelection",
       "type": "directive",
-      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div edit enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller selection title to true ui ui-grid ui-grid-selection var"
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div enablecelledit features frank function grid html index js lowly mainctrl module name ng-controller selection title to true ui ui-grid ui-grid-selection var"
     },
     {
       "section": "api",
@@ -569,7 +569,7 @@ NG_DOCS={
       "id": "102_sorting",
       "shortName": "102 Sorting",
       "type": "overview",
-      "keywords": "$http $scope accessing action add additive alert alert-warning alexander alisha all allows an and angular another any app app2 application are as asc at be below beryl but by can class claudine click clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickheadercell clicking column columndefs columns company controller core css data def default defining definitions desc describe direction disabled don else enable enablesorting ethel example existing expect expectcellvaluematch expected expectheadercellvaluematch expectheadercolumncount expectvisiblecolumnmenuitems false feature female field first flag foley for from fry function gender get gets grid grid1 grid2 gridapi gridoptions gridtestutils has have header headers height html id if in include index index2 inital-sort initial is it js json key last level main main2 mainctrl male menu menus module more multiple must myers name neal need ng-controller nganimate no not null nulls on one onregisterapi option options order original other overview page parsons pick price priority property rather redisplay remove removes replacing require required return reverse rice rows says scenario second see set setting shift shift-click shift-clicking shiftclickheadercell should slide so sort sorted sorthandlenulls sorting sortingalgorithm sorts span8 spec state sub-property success than that the then third three to true tutorial two ui ui-grid undisplay unless unsorted up use using values var velma visible want way what when which width will woods you your yvonne"
+      "keywords": "$http $scope accessing action add additive alert alert-warning alexander alisha all allows an and angular another any app app2 application are as asc at be below beryl but by can class claudine click clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickheadercell clicking col-xs-12 column columndefs columns company controller core css data def default defining definitions desc describe direction disabled don else enable enablesorting ethel example existing expect expectcellvaluematch expected expectheadercellvaluematch expectheadercolumncount expectvisiblecolumnmenuitems false feature female field first flag foley for from fry function gender get gets grid grid1 grid2 gridapi gridoptions gridtestutils has have header headers height html id if in include index index2 inital-sort initial is it js json key last level main main2 mainctrl male menu menus module more multiple must myers name neal need ng-controller nganimate no not null nulls on one onregisterapi option options order original other overview page parsons pick price priority property rather redisplay remove removes replacing require required return reverse rice rows says scenario second see set setting shift shift-click shift-clicking shiftclickheadercell should slide so sort sorted sorthandlenulls sorting sortingalgorithm sorts spec state sub-property success than that the then third three to true tutorial two ui ui-grid undisplay unless unsorted up use using values var velma visible want way what when which width will woods you your yvonne"
     },
     {
       "section": "tutorial",
@@ -618,7 +618,7 @@ NG_DOCS={
       "id": "110_grid_in_modal",
       "shortName": "110 Grid in a Modal",
       "type": "overview",
-      "keywords": "$compile $http $rootscope $scope absolute and angular app auto background-color body bold border btn btn-success button by class click close color columns controller css data element elm enersol ethel expectheadercolumncount expectrowvaluesmatch factory fafafa female fixed font-weight function get grid grid1 gridoptions gridtestutils height hidegrid href html id if in index it js json left main mainctrl max-width min-width modal modal-close module mymodal name new ng-click ng-controller open overview padding popup position prepend price remove require return right scenario should show showbutton showmodal solid some spec success three top transform translatex translatey true tutorial ui ui-grid using var width with z-index"
+      "keywords": "$compile $http $rootscope $scope and angular app block body btn btn-primary btn-success button buttonclose by class click close columns controller css data display element elm enersol ethel expectheadercolumncount expectrowvaluesmatch factory female function get grid grid1 gridoptions gridtestutils height hidegrid html id if in index it js json main mainctrl modal modal-body modal-content modal-dialog modal-footer modal-header modalstyle module mymodal name new ng-click ng-controller ng-style open overview popup prepend price remove require return scenario should show showbutton showmodal some spec success three true tutorial ui ui-grid using var width with"
     },
     {
       "section": "tutorial",
