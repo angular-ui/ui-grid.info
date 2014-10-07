@@ -49,9 +49,11 @@
   background: -o-linear-gradient(#ffffff, #eeeeee);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
 }
+.ui-grid-header {
+  border-bottom: 1px solid #d4d4d4;
+}
 .ui-grid-top-panel {
   position: relative;
-  border-bottom: 1px solid #d4d4d4;
   overflow: hidden;
   font-weight: bold;
   background: #f3f3f3;
@@ -150,24 +152,49 @@
   position: absolute;
 }
 /* Slide up/down animations */
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-enter,
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-leave {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-add,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-remove {
   -webkit-transition: all 0.05s linear;
   -moz-transition: all 0.05s linear;
   -o-transition: all 0.05s linear;
   transition: all 0.05s linear;
   display: block !important;
 }
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-leave.ng-leave-active,
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-enter {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-add.ng-hide-add-active,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-remove {
   -webkit-transform: translateY(-100%);
   -moz-transform: translateY(-100%);
   -o-transform: translateY(-100%);
   -ms-transform: translateY(-100%);
   transform: translateY(-100%);
 }
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-leave,
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner.ng-enter.ng-enter-active {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-add,
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -o-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+/* Slide up/down animations */
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid.ng-hide-add,
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid.ng-hide-remove {
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+  display: block !important;
+}
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid.ng-hide-add.ng-hide-add-active,
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid.ng-hide-remove {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid.ng-hide-add,
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid.ng-hide-remove.ng-hide-remove-active {
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
   -o-transform: translateY(0);

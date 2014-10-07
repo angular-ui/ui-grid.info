@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-c4ecd01 - 2014-10-06
+/*! ui-grid - v3.0.0-rc.11-26c9c91 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -427,18 +427,22 @@ function ( i18nService, uiGridConstants, gridUtil ) {
       var containerScrollLeft = renderContainerElm.querySelectorAll('.ui-grid-viewport')[0].scrollLeft;
 
       // default value the last width for _this_ column, otherwise last width for _any_ column, otherwise default to 170
-      var myWidth = $scope.col.lastMenuWidth ? $scope.col.lastMenuWidth : ( $scope.lastMenuWidth ? $scope.lastMenuWidth : 170);
-      var paddingRight = $scope.col.lastMenuPaddingRight ? $scope.col.lastMenuPaddingRight : ( $scope.lastMenuPaddingRight ? $scope.lastMenuPaddingRight : 10);
-      if (menu.length !== 0){
-        myWidth = gridUtil.elementWidth(menu, true);
-        $scope.lastMenuWidth = myWidth;
-        $scope.col.lastMenuWidth = myWidth;
-
-        // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
-        // Get the column menu right padding
-        paddingRight = parseInt(gridUtil.getStyles(angular.element(menu)[0])['paddingRight'], 10);
-        $scope.lastMenuPaddingRight = paddingRight;
-        $scope.col.lastMenuPaddingRight = paddingRight;
+      var myWidth = column.lastMenuWidth ? column.lastMenuWidth : ( $scope.lastMenuWidth ? $scope.lastMenuWidth : 170);
+      var paddingRight = column.lastMenuPaddingRight ? column.lastMenuPaddingRight : ( $scope.lastMenuPaddingRight ? $scope.lastMenuPaddingRight : 10);
+      
+      if ( menu.length !== 0 ){
+        var mid = menu[0].querySelectorAll('.ui-grid-menu-mid'); 
+        if ( mid.length !== 0 && !mid[0].classList.contains('ng-hide') ){
+          myWidth = gridUtil.elementWidth(menu, true);
+          $scope.lastMenuWidth = myWidth;
+          column.lastMenuWidth = myWidth;
+  
+          // TODO(c0bra): use padding-left/padding-right based on document direction (ltr/rtl), place menu on proper side
+          // Get the column menu right padding
+          paddingRight = parseInt(gridUtil.getStyles(angular.element(menu)[0])['paddingRight'], 10);
+          $scope.lastMenuPaddingRight = paddingRight;
+          column.lastMenuPaddingRight = paddingRight;
+        }
       }
       
       var left = positionData.left + renderContainerOffset - containerScrollLeft + positionData.width - myWidth + paddingRight;
@@ -499,35 +503,36 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         // Swap to this column
         $scope.col = column;
 
-        // Remove an existing document click handler
-//        $document.off('click', documentClick);
-
         // Get the position information for the column element
         var colElementPosition = uiGridColumnMenuService.getColumnElementPosition( $scope, column, $columnElement );
 
-        var repositionMenuClosure = function( $scope, column, colElementPosition, $elm, $columnElement ) {
-          return function() {
-            uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
-          };
-        };
-        
         if ($scope.menuShown) {
+          // we want to hide, then reposition, then show, but we want to wait for animations
+          // we set a variable, and then rely on the menu-hidden event to call the reposition and show
+          $scope.col = column;
+          $scope.colElement = $columnElement;
+          $scope.colElementPosition = colElementPosition;
+          $scope.hideThenShow = true;
+
           $scope.$broadcast('hide-menu');
-          
-          uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
-          $scope.$broadcast('show-menu');
-          $timeout( repositionMenuClosure( $scope, column, colElementPosition, $elm, $columnElement ));
         } else {
           self.shown = $scope.menuShown = true;
           uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
           $scope.$broadcast('show-menu');
-          $timeout( repositionMenuClosure( $scope, column, colElementPosition, $elm, $columnElement ));
-        }
+          $timeout( $scope.repositionMenuClosure( $scope, column, colElementPosition, $elm, $columnElement ));
+        } 
 
-        // Hide the menu on a click on the document
-//        $document.on('click', documentClick);
       };
 
+
+      $scope.repositionMenuClosure = function( $scope, column, colElementPosition, $elm, $columnElement ) {
+        return function() {
+          uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
+          delete $scope.colElementPosition;
+          delete $scope.columnElement;
+        };
+      };
+      
 
       /**
        * @ngdoc method
@@ -547,32 +552,19 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         }
       };
 
-/*
-      function documentClick() {
-        $scope.$apply($scope.hideMenu);
-        $document.off('click', documentClick);
-      }
       
-      function resizeHandler() {
-        $scope.$apply($scope.hideMenu);
-      }
-      angular.element($window).bind('resize', resizeHandler);
-
-      $scope.$on('$destroy', $scope.$on(uiGridConstants.events.GRID_SCROLL, function(evt, args) {
-        $scope.hideMenu();
-      }));
-
-      $scope.$on('$destroy', $scope.$on(uiGridConstants.events.ITEM_DRAGGING, function(evt, args) {
-        $scope.hideMenu();
-      }));
-
-      $scope.$on('$destroy', function() {
-        angular.element($window).off('resize', resizeHandler);
-        $document.off('click', documentClick);
-      });
-*/      
       $scope.$on('menu-hidden', function() {
-        $scope.hideMenu( true );
+        if ( $scope.hideThenShow ){
+          delete $scope.hideThenShow;
+
+          uiGridColumnMenuService.repositionMenu( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement );
+          $scope.$broadcast('show-menu');
+          $timeout( $scope.repositionMenuClosure( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement ));
+
+          $scope.menuShown = true;
+        } else {
+          $scope.hideMenu( true );
+        }
       });
 
  
@@ -784,17 +776,24 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         row: '=',
         renderIndex: '='
       },
-      require: '?^uiGrid',
+      require: ['?^uiGrid', '^uiGridRenderContainer'],
       replace: true,
       compile: function() {
         return {
-          pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+          pre: function ($scope, $elm, $attrs) {
             var cellHeader = $compile($scope.col.headerCellTemplate)($scope);
             $elm.append(cellHeader);
           },
           
-          post: function ($scope, $elm, $attrs, uiGridCtrl) {
+          post: function ($scope, $elm, $attrs, controllers) {
+            var uiGridCtrl = controllers[0];
+            var renderContainerCtrl = controllers[1];
+
             $scope.grid = uiGridCtrl.grid;
+
+            $log.debug('id', renderContainerCtrl.containerId);
+
+            $scope.renderContainer = uiGridCtrl.grid.renderContainers[renderContainerCtrl.containerId];
             
             $elm.addClass($scope.col.getColClass(false));
     
@@ -1004,7 +1003,14 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 var template = angular.element(contents);
                 
                 var newElm = $compile(template)($scope);
-                $elm.append(newElm);
+                $elm.replaceWith(newElm);
+
+                // Replace the reference to the container's header element with this new element
+                containerCtrl.header = newElm;
+                containerCtrl.colContainer.header = newElm;
+
+                // And update $elm to be the new element
+                $elm = newElm;
 
                 if (containerCtrl) {
                   // Inject a reference to the header viewport (if it exists) into the grid controller for use in the horizontal scroll handler below
@@ -1665,14 +1671,50 @@ angular.module('ui.grid')
     replace: false,
     link: function ($scope, $elm, $attrs, uiGridCtrl) {
       var self = this;
-      gridUtil.enableAnimations($elm);
-
-      
+      var menuMid;
+      var $animate;
+     
     // *** Show/Hide functions ******
       self.showMenu = $scope.showMenu = function() {
-        $scope.shown = true;
+        if ( !$scope.shown ){
 
-        // Turn off an existing dpcument click handler
+          /*
+           * In order to animate cleanly we remove the ng-if, wait a digest cycle, then
+           * animate the removal of the ng-hide.  We can't successfully (so far as I can tell)
+           * animate removal of the ng-if, as the menu items aren't there yet.  And we don't want
+           * to rely on ng-show only, as that leaves elements in the DOM that are needlessly evaluated
+           * on scroll events.
+           * 
+           * Note when testing animation that animations don't run on the tutorials.  When debugging it looks
+           * like they do, but angular has a default $animate provider that is just a stub, and that's what's
+           * being called.  ALso don't be fooled by the fact that your browser has actually loaded the 
+           * angular-translate.js, it's not using it.  You need to test animations in an external application. 
+           */
+          $scope.shown = true;
+
+          $timeout( function() {
+            menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
+            $animate = gridUtil.enableAnimations(menuMid);
+            if ( $animate ){
+              $scope.shownMid = true;
+              $animate.removeClass(menuMid, 'ng-hide');
+            } else {
+              $scope.shownMid = true;
+            }
+          });
+        } else if ( !$scope.shownMid ){
+          // we're probably doing a hide then show, so we don't need to wait for ng-if
+          menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
+          $animate = gridUtil.enableAnimations(menuMid);
+          if ( $animate ){
+            $scope.shownMid = true;
+            $animate.removeClass(menuMid, 'ng-hide');
+          } else {
+            $scope.shownMid = true;
+          }
+        }
+
+        // Turn off an existing document click handler
         angular.element(document).off('click', applyHideMenu);
 
         // Turn on the document click handler, but in a timeout so it doesn't apply to THIS click if there is one
@@ -1681,9 +1723,33 @@ angular.module('ui.grid')
         });
       };
 
+
       self.hideMenu = $scope.hideMenu = function() {
-        $scope.shown = false;
-        $scope.$emit('menu-hidden');
+        if ( $scope.shown ){
+          /*
+           * In order to animate cleanly we animate the addition of ng-hide, then use a $timeout to
+           * set the ng-if (shown = false) after the animation runs.  In theory we can cascade off the
+           * callback on the addClass method, but it is very unreliable with unit tests for no discernable reason.
+           *   
+           * The user may have clicked on the menu again whilst
+           * we're waiting, so we check that the mid isn't shown before applying the ng-if.
+           */
+          menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
+          $animate = gridUtil.enableAnimations(menuMid);
+
+          if ( $animate ){
+            $scope.shownMid = false;
+            $animate.addClass(menuMid, 'ng-hide', function() {
+              if ( !$scope.shownMid ){
+                $scope.shown = false;
+                $scope.$emit('menu-hidden');
+              }
+            });
+          } else {
+            $scope.shownMid = false;
+            $scope.shown = false;
+          }
+        }
         angular.element(document).off('click', applyHideMenu);
       };
 
@@ -2131,6 +2197,8 @@ angular.module('ui.grid')
             var rowContainer = containerCtrl.rowContainer;
             var colContainer = containerCtrl.colContainer;
 
+            var renderContainer = grid.renderContainers[$scope.containerId];
+
             // Put the container name on this element as a class
             $elm.addClass('ui-grid-render-container-' + $scope.containerId);
 
@@ -2428,7 +2496,15 @@ angular.module('ui.grid')
 
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-canvas { width: ' + canvasWidth + 'px; }';
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-viewport { width: ' + footerViewportWidth + 'px; }';
-              // Update
+
+              // If the render container has an "explicit" header height (such as in the case that its header is smaller than the other headers and needs to be explicitly set to be the same, ue thae)
+              if (renderContainer.explicitHeaderHeight !== undefined && renderContainer.explicitHeaderHeight !== null && renderContainer.explicitHeaderHeight > 0) {
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.explicitHeaderHeight + 'px; }';
+              }
+              // Otherwise if the render container has an INNER header height, use that on the header cells (so that all the header cells are the same height and those that have less elements don't have undersized borders)
+              else if (renderContainer.innerHeaderHeight !== undefined && renderContainer.innerHeaderHeight !== null && renderContainer.innerHeaderHeight > 0) {
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.innerHeaderHeight + 'px; }';
+              }
 
               return ret;
             }
@@ -4581,17 +4657,42 @@ angular.module('ui.grid')
         var rebuildStyles = false;
 
         // Get all the header heights
-        for (var i = 0; i < containerHeadersToRecalc.length; i++) {
-          var container = containerHeadersToRecalc[i];
+        var maxHeight = 0;
+        var i, container;
+        for (i = 0; i < containerHeadersToRecalc.length; i++) {
+          container = containerHeadersToRecalc[i];
 
           if (container.header) {
             var oldHeaderHeight = container.headerHeight;
             var headerHeight = gridUtil.outerElementHeight(container.header);
+
             container.headerHeight = headerHeight;
 
             if (oldHeaderHeight !== headerHeight) {
               rebuildStyles = true;
             }
+
+            // Get the "inner" header height, that is the height minus the top and bottom borders, if present. We'll use it to make sure all the headers have a consistent height
+            var topBorder = gridUtil.getBorderSize(container.header, 'top');
+            var bottomBorder = gridUtil.getBorderSize(container.header, 'bottom');
+            var innerHeaderHeight = headerHeight - topBorder - bottomBorder;
+
+            container.innerHeaderHeight = innerHeaderHeight;
+
+            // Save the largest header height for use later
+            if (innerHeaderHeight > maxHeight) {
+              maxHeight = innerHeaderHeight;
+            }
+          }
+        }
+
+        // Go through all the headers
+        for (i = 0; i < containerHeadersToRecalc.length; i++) {
+          container = containerHeadersToRecalc[i];
+
+          // If this header's height is less than another header's height, then explicitly set it so they're the same and one isn't all offset and weird looking
+          if (container.headerHeight < maxHeight) {
+            container.explicitHeaderHeight = maxHeight;
           }
         }
 
@@ -8368,6 +8469,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       try {
         $animate = $injector.get('$animate');
         $animate.enabled(true, element);
+        return $animate;
       }
       catch (e) {}
     },
@@ -8502,8 +8604,9 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
     var styles = getStyles(elem);
 
+    // If a specific border is supplied, like 'top', read the 'borderTop' style property
     if (borderType) {
-      borderType = 'border-' + borderType;
+      borderType = 'border' + borderType.charAt(0).toUpperCase() + borderType.slice(1);
     }
     else {
       borderType = 'border';
@@ -14219,7 +14322,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-top-panel\"><div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div><div ui-grid-menu></div></div>"
+    "<div class=\"ui-grid-header\"><div class=\"ui-grid-top-panel\"><div ui-grid-group-panel ng-show=\"grid.options.showGroupPanel\"></div><div class=\"ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div><div ui-grid-menu></div></div></div>"
   );
 
 
@@ -14293,12 +14396,12 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader  && !col.colDef.disableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;<i></i></i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-click=\"$event.stopPropagation()\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!colFilter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader  && !col.colDef.disableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-click=\"$event.stopPropagation()\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!colFilter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
 
 
   $templateCache.put('ui-grid/uiGridMenu',
-    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" title=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div>"
+    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-mid\" ng-show=\"shownMid\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" title=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div></div>"
   );
 
 

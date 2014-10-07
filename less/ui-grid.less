@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-c4ecd01 - 2014-10-06
+/*! ui-grid - v3.0.0-rc.11-26c9c91 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -514,11 +514,14 @@ input[type="text"].ui-grid-filter-input {
 }
 
 @topPanelRadius: @gridBorderRadius - @gridBorderWidth;
+
+.ui-grid-header {
+  border-bottom: 1px solid @borderColor;
+}
+
 .ui-grid-top-panel {
     position: relative;
-    // z-index: 1;
-    // background-color: @darkGray; // #EAEAEA
-    border-bottom: 1px solid @borderColor; // #D4D4D4
+    // border-bottom: 1px solid @borderColor; // #D4D4D4
 
     overflow: hidden;  // Disable so menus show up
     font-weight: bold;
@@ -603,19 +606,37 @@ input[type="text"].ui-grid-filter-input {
 }
 
 /* Slide up/down animations */
-.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-inner {
-  &.ng-enter, &.ng-leave {
+.ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid {
+  &.ng-hide-add, &.ng-hide-remove {
     .transition(all, 0.05s, linear);
     display: block !important;
   }
   
-  &.ng-leave.ng-leave-active,
-  &.ng-enter {
+  &.ng-hide-add.ng-hide-add-active,
+  &.ng-hide-remove {
     .transform(translateY(-100%));
   }
    
-  &.ng-leave,
-  &.ng-enter.ng-enter-active {
+  &.ng-hide-add,
+  &.ng-hide-remove.ng-hide-remove-active {
+    .transform(translateY(0));
+  }
+}
+
+/* Slide up/down animations */
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid {
+  &.ng-hide-add, &.ng-hide-remove {
+    .transition(all, 0.05s, linear);
+    display: block !important;
+  }
+  
+  &.ng-hide-add.ng-hide-add-active,
+  &.ng-hide-remove {
+    .transform(translateY(-100%));
+  }
+   
+  &.ng-hide-add,
+  &.ng-hide-remove.ng-hide-remove-active {
     .transform(translateY(0));
   }
 }
