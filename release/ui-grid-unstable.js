@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-3d4e857 - 2014-10-07
+/*! ui-grid - v3.0.0-rc.11-509d888 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9319,24 +9319,29 @@ module.filter('px', function() {
         menu: {
           text: 'Selecione as colunas:'
         },
+        sort: {
+          ascending: 'Ordenar Ascendente',
+          descending: 'Ordenar Descendente',
+          remove: 'Remover Ordenação'
+        },
         column: {
           hide: 'Esconder coluna'
         },
         aggregation: {
-          count: 'total rows: ',
+          count: 'total de linhas: ',
           sum: 'total: ',
-          avg: 'avg: ',
+          avg: 'med: ',
           min: 'min: ',
           max: 'max: '
         },
         gridMenu: {
-          columns: 'Columns:',
-          exporterAllAsCsv: 'Export all data as csv',
-          exporterVisibleAsCsv: 'Export visible data as csv',
-          exporterSelectedAsCsv: 'Export selected data as csv',
-          exporterAllAsPdf: 'Export all data as pdf',
-          exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          columns: 'Colunas:',
+          exporterAllAsCsv: 'Exportar todos os dados como csv',
+          exporterVisibleAsCsv: 'Exportar dados visíveis como csv',
+          exporterSelectedAsCsv: 'Exportar dados selecionados como csv',
+          exporterAllAsPdf: 'Exportar todos os dados como pdf',
+          exporterVisibleAsPdf: 'Exportar dados visíveis como pdf',
+          exporterSelectedAsPdf: 'Exportar dados selecionados como pdf'
         }
       });
       return $delegate;
