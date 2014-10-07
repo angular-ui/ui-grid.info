@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-97868e0 - 2014-10-07
+/*! ui-grid - v3.0.0-rc.11-174f252 - 2014-10-07
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4687,7 +4687,7 @@ angular.module('ui.grid')
             var oldHeaderHeight = container.headerHeight;
             var headerHeight = gridUtil.outerElementHeight(container.header);
 
-            container.headerHeight = headerHeight;
+            container.headerHeight = parseInt(headerHeight, 10);
 
             if (oldHeaderHeight !== headerHeight) {
               rebuildStyles = true;
@@ -4696,7 +4696,9 @@ angular.module('ui.grid')
             // Get the "inner" header height, that is the height minus the top and bottom borders, if present. We'll use it to make sure all the headers have a consistent height
             var topBorder = gridUtil.getBorderSize(container.header, 'top');
             var bottomBorder = gridUtil.getBorderSize(container.header, 'bottom');
-            var innerHeaderHeight = headerHeight - topBorder - bottomBorder;
+            var innerHeaderHeight = parseInt(headerHeight - topBorder - bottomBorder, 10);
+
+            innerHeaderHeight  = innerHeaderHeight < 0 ? 0 : innerHeaderHeight;
 
             container.innerHeaderHeight = innerHeaderHeight;
 
@@ -8648,6 +8650,8 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     else {
       borderType = 'border';
     }
+
+    borderType += 'Width';
 
     var val = parseInt(styles[borderType], 10);
 

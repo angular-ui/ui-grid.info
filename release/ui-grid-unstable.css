@@ -51,6 +51,7 @@
 }
 .ui-grid-header {
   border-bottom: 1px solid #d4d4d4;
+  box-sizing: content-box;
 }
 .ui-grid-top-panel {
   position: relative;
