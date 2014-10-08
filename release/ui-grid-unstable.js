@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12 - 2014-10-08
+/*! ui-grid - v3.0.0-rc.12-1bb5367 - 2014-10-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9995,7 +9995,7 @@ module.filter('px', function() {
               uiGridCtrl.grid.gridHeight = newGridHeight;
               uiGridCtrl.grid.gridWidth = newGridWidth;
 
-              uiGridCtrl.grid.queueRefresh()
+              uiGridCtrl.grid.refresh()
                 .then(function () {
                   getDimensions();
 
