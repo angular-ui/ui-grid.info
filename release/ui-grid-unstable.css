@@ -1047,9 +1047,6 @@ div.ui-grid-cell input.ng-valid {
 .ui-grid-selection-row-header-buttons.ui-grid-row-selected {
   opacity: 1;
 }
-.ui-grid-selection-row-header-cell {
-  border-bottom: solid 1px #d4d4d4;
-}
 
 .ui-grid-icon-plus-squared:before {
   content: '\c350';
