@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-d269909 - 2014-10-08
+/*! ui-grid - v3.0.0-rc.11-ece4034 - 2014-10-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -441,7 +441,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
       
       if ( menu.length !== 0 ){
         var mid = menu[0].querySelectorAll('.ui-grid-menu-mid'); 
-        if ( mid.length !== 0 && !mid[0].classList.contains('ng-hide') ){
+        if ( mid.length !== 0 && !angular.element(mid).hasClass('ng-hide') ) {
           myWidth = gridUtil.elementWidth(menu, true);
           $scope.lastMenuWidth = myWidth;
           column.lastMenuWidth = myWidth;
@@ -508,7 +508,7 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
        * @param {GridCol} column the column we want to position below
        * @param {element} $columnElement the column element we want to position below
        */
-      $scope.showMenu = function(column, $columnElement) {
+      $scope.showMenu = function(column, $columnElement, event) {
         // Swap to this column
         $scope.col = column;
 
@@ -522,14 +522,14 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
           $scope.colElementPosition = colElementPosition;
           $scope.hideThenShow = true;
 
-          $scope.$broadcast('hide-menu');
+          $scope.$broadcast('hide-menu', { originalEvent: event });
         } else {
           self.shown = $scope.menuShown = true;
           uiGridColumnMenuService.repositionMenu( $scope, column, colElementPosition, $elm, $columnElement );
 
           $scope.colElement = $columnElement;
           $scope.colElementPosition = colElementPosition;
-          $scope.$broadcast('show-menu');
+          $scope.$broadcast('show-menu', { originalEvent: event });
         } 
 
       };
@@ -797,8 +797,6 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.grid = uiGridCtrl.grid;
 
-            $log.debug('id', renderContainerCtrl.containerId);
-
             $scope.renderContainer = uiGridCtrl.grid.renderContainers[renderContainerCtrl.containerId];
             
             $elm.addClass($scope.col.getColClass(false));
@@ -863,8 +861,8 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
     
               cancelMousedownTimeout.then(function () {
-                if ( $scope.col.colDef && !$scope.col.colDef.disableColumnMenu ){
-                  uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm);
+                if ($scope.col.colDef && !$scope.col.colDef.disableColumnMenu) {
+                  uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm, event);
                 }
               });
             });
@@ -910,7 +908,7 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
     
             // If this column is sortable, add a click event handler
             if ($scope.sortable) {
-              $contentsElm.on('click', function(evt) {
+              $contentsElm.on('click touchend', function(evt) {
                 evt.stopPropagation();
     
                 $timeout.cancel(cancelMousedownTimeout);
@@ -1682,7 +1680,7 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
       var $animate;
      
     // *** Show/Hide functions ******
-      self.showMenu = $scope.showMenu = function() {
+      self.showMenu = $scope.showMenu = function(event, args) {
         if ( !$scope.shown ){
 
           /*
@@ -1712,7 +1710,7 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
               $scope.$emit('menu-shown');
             }
           });
-        } else if ( !$scope.shownMid ){
+        } else if ( !$scope.shownMid ) {
           // we're probably doing a hide then show, so we don't need to wait for ng-if
           menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
           $animate = gridUtil.enableAnimations(menuMid);
@@ -1727,17 +1725,22 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
           }
         }
 
+        var docEventType = 'click';
+        if (args && args.originalEvent && args.originalEvent.type && args.originalEvent.type === 'touchstart') {
+          docEventType = args.originalEvent.type;
+        }
+
         // Turn off an existing document click handler
-        angular.element(document).off('click', applyHideMenu);
+        angular.element(document).off('click touchstart', applyHideMenu);
 
         // Turn on the document click handler, but in a timeout so it doesn't apply to THIS click if there is one
         $timeout(function() {
-          angular.element(document).on('click', applyHideMenu);
+          angular.element(document).on(docEventType, applyHideMenu);
         });
       };
 
 
-      self.hideMenu = $scope.hideMenu = function() {
+      self.hideMenu = $scope.hideMenu = function(event, args) {
         if ( $scope.shown ){
           /*
            * In order to animate cleanly we animate the addition of ng-hide, then use a $timeout to
@@ -1763,15 +1766,16 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
             $scope.shown = false;
           }
         }
-        angular.element(document).off('click', applyHideMenu);
+
+        angular.element(document).off('click touchstart', applyHideMenu);
       };
 
-      $scope.$on('hide-menu', function () {
-        $scope.hideMenu();
+      $scope.$on('hide-menu', function (event, args) {
+        $scope.hideMenu(event, args);
       });
 
-      $scope.$on('show-menu', function () {
-        $scope.showMenu();
+      $scope.$on('show-menu', function (event, args) {
+        $scope.showMenu(event, args);
       });
 
       
@@ -1791,7 +1795,7 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
       }
 
       $scope.$on('$destroy', function () {
-        angular.element(document).off('click', applyHideMenu);
+        angular.element(document).off('click touchstart', applyHideMenu);
       });
       
 
@@ -1907,7 +1911,11 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
   angular.module('ui.grid').directive('uiGridNativeScrollbar', ['$log', '$timeout', '$document', 'uiGridConstants', 'gridUtil',
     function ($log, $timeout, $document, uiGridConstants, gridUtil) {
     var scrollBarWidth = gridUtil.getScrollbarWidth();
-    scrollBarWidth = scrollBarWidth > 0 ? scrollBarWidth : 17;
+
+    // scrollBarWidth = scrollBarWidth > 0 ? scrollBarWidth : 17;
+    if (!angular.isNumber(scrollBarWidth)) {
+      scrollBarWidth = 0;
+    }
 
     // If the browser is IE, add 1px to the scrollbar container, otherwise scroll events won't work right (in IE11 at least)
     var browser = gridUtil.detectBrowser();
@@ -2455,7 +2463,7 @@ function ($log, $compile, $timeout, $window, $document, gridUtil, uiGridConstant
                 }, decelerateInterval);
               }
 
-              // decelerate();
+              decelerate();
             }
 
             if (GridUtil.isTouchEnabled()) {
@@ -3541,7 +3549,7 @@ angular.module('ui.grid')
     // Remove any columns for which a columnDef cannot be found
     // Deliberately don't use forEach, as it doesn't like splice being called in the middle
     // Also don't cache columns.length, as it will change during this operation
-    for ( i=0; i<self.columns.length; i++ ){
+    for (i = 0; i < self.columns.length; i++){
       if (!self.getColDef(self.columns[i].name)) {
         self.columns.splice(i, 1);
         i--;
@@ -3679,11 +3687,11 @@ angular.module('ui.grid')
     var self = this;
 
     var t = [];
-    for (var i=0; i<n.length; i++) {
+    for (var i = 0; i < n.length; i++) {
       var nV = nAccessor ? n[i][nAccessor] : n[i];
       
       var found = false;
-      for (var j=0; j<o.length; j++) {
+      for (var j = 0; j < o.length; j++) {
         var oV = oAccessor ? o[j][oAccessor] : o[j];
         if (self.options.rowEquality(nV, oV)) {
           found = true;
@@ -3733,7 +3741,7 @@ angular.module('ui.grid')
           self.createRowHashMap();
         }
 
-        for (i=0; i<newRawData.length; i++) {
+        for (i = 0; i < newRawData.length; i++) {
           newRow = newRawData[i];
 
           self.rowHashMap.put(newRow, {
@@ -3881,7 +3889,7 @@ angular.module('ui.grid')
     var self = this;
 
     var existingRowCount = self.rows.length;
-    for (var i=0; i < newRawData.length; i++) {
+    for (var i = 0; i < newRawData.length; i++) {
       var newRow = self.processRowBuilders(new GridRow(newRawData[i], i + existingRowCount, self));
 
       if (self.options.enableRowHashing) {
@@ -6888,7 +6896,7 @@ angular.module('ui.grid')
          * @returns {Grid} grid
          */
         createGrid : function(options) {
-          options = (typeof(options) !== 'undefined') ? options: {};
+          options = (typeof(options) !== 'undefined') ? options : {};
           options.id = gridUtil.newId();
           var grid = new Grid(options);
 
@@ -10743,8 +10751,7 @@ module.filter('px', function() {
            *  <br/>_requires cellNav feature and the edit feature to be enabled_
            */
             //enableCellEditOnFocus can only be used if cellnav module is used
-          gridOptions.enableCellEditOnFocus = gridOptions.enableCellEditOnFocus === undefined ?
-            false: gridOptions.enableCellEditOnFocus;
+          gridOptions.enableCellEditOnFocus = gridOptions.enableCellEditOnFocus === undefined ? false : gridOptions.enableCellEditOnFocus;
         },
 
         /**
@@ -10773,7 +10780,7 @@ module.filter('px', function() {
            *  @description enable editing on column
            */
           colDef.enableCellEdit = colDef.enableCellEdit === undefined ? (gridOptions.enableCellEdit === undefined ?
-            (colDef.type !== 'object'):gridOptions.enableCellEdit) : colDef.enableCellEdit;
+            (colDef.type !== 'object') : gridOptions.enableCellEdit) : colDef.enableCellEdit;
 
           /**
            *  @ngdoc object
