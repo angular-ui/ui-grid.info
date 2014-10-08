@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-ece4034 - 2014-10-08
+/*! ui-grid - v3.0.0-rc.11-0c5fbc4 - 2014-10-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -8981,7 +8981,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
         });
       return $delegate;
@@ -9029,7 +9029,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9087,7 +9087,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9135,7 +9135,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9183,7 +9183,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9231,7 +9231,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9284,7 +9284,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9337,7 +9337,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9443,7 +9443,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9493,7 +9493,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9552,7 +9552,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9897,7 +9897,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -9946,7 +9946,7 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf',
+          exporterSelectedAsPdf: 'Export selected data as pdf'
         }
       });
       return $delegate;
@@ -11282,11 +11282,11 @@ module.filter('px', function() {
    */
     module.directive('input', ['$filter', function ($filter) {
       function parseDateString(dateString) {
-        if ('undefined' === typeof dateString || '' === dateString) {
+        if (typeof(dateString) === 'undefined' || dateString === '') {
           return null;
         }
         var parts = dateString.split('-');
-        if (3 !== parts.length) {
+        if (parts.length !== 3) {
           return null;
         }
         var year = parseInt(parts[0], 10);
@@ -11303,7 +11303,7 @@ module.filter('px', function() {
         require: '?ngModel',
         link: function (scope, element, attrs, ngModel) {
 
-          if (angular.version.minor === 2 && attrs.type && 'date' === attrs.type && ngModel) {
+          if (angular.version.minor === 2 && attrs.type && attrs.type === 'date' && ngModel) {
 
             ngModel.$formatters.push(function (modelValue) {
               ngModel.$setValidity(null,(!modelValue || !isNaN(modelValue.getTime())));
@@ -12251,7 +12251,7 @@ module.filter('px', function() {
             }],
             styles: {
               tableStyle: grid.options.exporterPdfTableStyle,
-              tableHeader: grid.options.exporterPdfTableHeaderStyle,
+              tableHeader: grid.options.exporterPdfTableHeaderStyle
             },
             defaultStyle: grid.options.exporterPdfDefaultStyle
           };
