@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.11-f9801a9 - 2014-10-08
+/*! ui-grid - v3.0.0-rc.11-a8ac76c - 2014-10-08
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -14262,8 +14262,14 @@ module.filter('px', function() {
             pre: function ($scope, $elm, $attrs, uiGridCtrl) {
               uiGridSelectionService.initializeGrid(uiGridCtrl.grid);
               if (uiGridCtrl.grid.options.enableRowHeaderSelection) {
-                var cellTemplate = 'ui-grid/selectionRowHeader';
-                var selectionRowHeaderDef = { name: 'selectionRowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate};
+                var selectionRowHeaderDef = {
+                  name: 'selectionRowHeaderCol',
+                  displayName: '',
+                  width: 30,
+                  cellTemplate: 'ui-grid/selectionRowHeader',
+                  headerCellTemplate: 'ui-grid/selectionHeaderCell'
+                };
+
                 uiGridCtrl.grid.addRowHeaderColumn(selectionRowHeaderDef);
               }
             },
@@ -14525,6 +14531,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('ui-grid/columnResizer',
     "<div ui-grid-column-resizer ng-if=\"grid.options.enableColumnResizing\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\"></div>"
+  );
+
+
+  $templateCache.put('ui-grid/selectionHeaderCell',
+    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"></div></div>"
   );
 
 
