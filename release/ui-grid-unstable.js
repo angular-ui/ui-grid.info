@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-1bb5367 - 2014-10-08
+/*! ui-grid - v3.0.0-rc.12-f6afa21 - 2014-10-13
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3610,7 +3610,7 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name getGridQualifiedColField
    * @methodOf ui.grid.class:Grid
-   * @description precompiles all cell templates
+   * @description Returns the $parse-able accessor for a column within its $scope
    * @param {GridColumn} col col object
    */
   Grid.prototype.getQualifiedColField = function (col) {
@@ -4447,6 +4447,14 @@ angular.module('ui.grid')
     return rowSorter.sort(this, renderableRows, this.columns);
   };
 
+  /**
+   * @ngdoc function
+   * @name getCellValue
+   * @methodOf ui.grid.class:Grid
+   * @description Gets the value of a cell for a particular row and column
+   * @param {GridRow} row Row to access
+   * @param {GridColumn} col Column to access
+   */
   Grid.prototype.getCellValue = function getCellValue(row, col){
     var self = this;
 

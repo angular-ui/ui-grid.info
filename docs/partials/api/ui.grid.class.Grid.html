@@ -52,6 +52,15 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <li><h3 id="flagScrollingVertically">flagScrollingVertically()</h3>
 <div class="flagscrollingvertically"><p>sets isScrollingVertically to true and sets it to false in a debounced function</p></div>
 </li>
+<li><h3 id="getCellValue">getCellValue(row, col)</h3>
+<div class="getcellvalue"><p>Gets the value of a cell for a particular row and column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>Row to access</p></li>
+<li><code ng:non-bindable="">col – {GridColumn} – </code>
+<p>Column to access</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="getColDef">getColDef(name)</h3>
 <div class="getcoldef"><p>returns a grid colDef for the column name</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
@@ -73,7 +82,7 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 </div>
 </li>
 <li><h3 id="getGridQualifiedColField">getGridQualifiedColField(col)</h3>
-<div class="getgridqualifiedcolfield"><p>precompiles all cell templates</p><h4 id="Parameters">Parameters</h4>
+<div class="getgridqualifiedcolfield"><p>Returns the $parse-able accessor for a column within its $scope</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">col – {GridColumn} – </code>
 <p>col object</p></li>
 </ul>
@@ -90,10 +99,10 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="isRTL">isRTL()</h3>
 <div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>
