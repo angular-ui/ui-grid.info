@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-f6afa21 - 2014-10-13
+/*! ui-grid - v3.0.0-rc.12-89197a3 - 2014-10-13
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -14154,11 +14154,18 @@ module.filter('px', function() {
          */
         toggleRowSelection: function (grid, row, multiSelect, noUnselect) {
           var selected = row.isSelected;
+
           if (!multiSelect && !selected) {
             service.clearSelectedRows(grid);
+          } else if (!multiSelect && selected) {
+            var selectedRows = service.getSelectedRows(grid);
+            if (selectedRows.length > 1) {
+              selected = false; // Enable reselect of the row
+              service.clearSelectedRows(grid);
+            }
           }
           
-          if (row.isSelected && noUnselect){
+          if (selected && noUnselect){
             // don't deselect the row 
           } else {
             row.isSelected = !selected;
