@@ -1,0 +1,52 @@
+<h1><code ng:non-bindable="">uiGridMoveColumns</code>
+<span class="hint">(directive in module <code ng:non-bindable="">ui.grid.moveColumns</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Adds column moving features to the ui-grid directive.</p></div>
+<h2 id="Usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;div ui-grid-move-columns&gt;
+   ...
+&lt;/div&gt;</pre>
+</div>
+<h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-3" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-3" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-3">
+<div ng-controller="MainCtrl">
+<div class="grid" ui-grid="{ data: data, columnDefs: columnDefs }" ui-grid-move-columns></div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+.grid {
+   width: 100%;
+   height: 150px;
+ }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+var app = angular.module('app', ['ui.grid', 'ui.grid.moveColumns']);
+app.controller('MainCtrl', ['$scope', function ($scope) {
+     $scope.data = [
+       { name: 'Bob', title: 'CEO', age: 45 },
+       { name: 'Frank', title: 'Lowly Developer', age: 25 },
+       { name: 'Jenny', title: 'Highly Developer', age: 35 }
+     ];
+     $scope.columnDefs = [
+       {name: 'name'},
+       {name: 'title'},
+       {name: 'age'}
+     ];
+   }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-3" ng-eval-javascript="app.js"></div></div>
+</div>

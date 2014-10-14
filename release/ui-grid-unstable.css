@@ -922,6 +922,35 @@ div.ui-grid-cell input.ng-valid {
 * @section Scrollbar styles
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.movingColumn {
+  position: fixed;
+  border: 1px solid #d4d4d4;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
+}
+.movingColumn .ui-grid-icon-angle-down {
+  display: none;
+}
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-pinned-container {
   float: left;
 }

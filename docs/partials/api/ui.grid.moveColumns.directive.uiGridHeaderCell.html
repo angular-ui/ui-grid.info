@@ -1,0 +1,25 @@
+<h1><code ng:non-bindable="">uiGridHeaderCell</code>
+<span class="hint">(directive in module <code ng:non-bindable="">ui.grid.moveColumns</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Stacks on top of ui.grid.uiGridHeaderCell to provide capability to be able to move it to reposition column.</p>
+
+<p>On receiving mouseDown event headerCell is cloned, now as the mouse moves the cloned header cell also moved in the grid.
+ In case the moving cloned header cell reaches the left or right extreme of grid, grid scrolling is triggered (if horizontal scroll exists).
+ On mouseUp event column is repositioned at position where mouse is released and coned header cell is removed.</p>
+
+<p>Events that invoke cloning of header cell:
+   - mousedown</p>
+
+<p>Events that invoke movement of cloned header cell:
+   - mousemove</p>
+
+<p>Events that invoke repositioning of column:
+   - mouseup</p></div>
+<h2 id="Usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;div ui-grid-header-cell&gt;
+   ...
+&lt;/div&gt;</pre>
+</div>
+</div>

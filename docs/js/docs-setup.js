@@ -398,6 +398,55 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.moveColumns",
+      "shortName": "moveColumns",
+      "type": "overview",
+      "keywords": "api capability change column columns doc-module-components enables grid it module movecolumns moving of overview position provides the this to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.moveColumns.api:ColumnDef",
+      "shortName": "ColumnDef",
+      "type": "object",
+      "keywords": "api are available be class column columndef columndefs definition enable enablecolumnmoving feature for grid gridoptions move movecolumns moving object set the these to ui ui-grid using"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.moveColumns.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api are available be class coldefs colmovable column configuration configuring default defaults defined each enablecolumnmoving feature flag for grid gridoptions if individual is move movecolumns not object on options set sets the their these to true ui ui-grid using value"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.moveColumns.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "api be can change colmovable column feature finalposition for grid gridapi method movecolumn movecolumns moving newposition object of on originalposition position public the to ui used"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.moveColumns.directive:uiGridHeaderCell",
+      "shortName": "uiGridHeaderCell",
+      "type": "directive",
+      "keywords": "able also and api as at be capability case cell cloned cloning column coned directive div event events exists extreme grid header headercell horizontal in invoke is it left mouse mousedown mousemove mouseup move movecolumns moved movement moves moving now of on or position provide reaches receiving released removed reposition repositioned repositioning right scroll scrolling stacks that the to top triggered ui uigridheadercell where"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.moveColumns.directive:uiGridMoveColumns",
+      "shortName": "uiGridMoveColumns",
+      "type": "directive",
+      "keywords": "$scope adds age angular api app bob ceo class column columndefs controller css data developer directive div features frank function grid height highly html index jenny js lowly main mainctrl module movecolumns moving name ng-controller the title to ui ui-grid ui-grid-move-columns var width"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.moveColumns.service:uiGridMoveColumnService",
+      "shortName": "uiGridMoveColumnService",
+      "type": "service",
+      "keywords": "api column feature for grid movecolumns moving service ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.pinning",
       "shortName": "pinning",
       "type": "overview",
@@ -878,6 +927,13 @@ NG_DOCS={
       "shortName": "309 Edit Feature With Cellnav",
       "type": "overview",
       "keywords": "$apply $http $scope active address addressformatter aftercelledit age an and angular app basics boolean cell celleditablecondition cellfilter cellnav city class coldef column columndefs combining controller css data date displayname dropdown edit editable editdropdownoptionsarray editdropdownvaluelabel edited editing edittype else enablecelledit enablecelleditonfocus example experience false feature female filter for function gender genderhash get give grid gridapi gridoptions height html id if index input isactive js json lastcelledited length main mainctrl male mapgender module more msg name new newvalue ng-controller number object of oldvalue on onregisterapi overview provides refer registered return row rowentity rowrenderindex rows scope spreadsheet-like state street success the this to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var width with yyyy-mm-dd zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "310_column_moving_grid",
+      "shortName": "310 Column Moving grid",
+      "type": "overview",
+      "keywords": "$http $scope age all allows and angular app be by can class colmovable column columndefs columns controller css data default definitions different directive disable dragging dropping either element email enable enablecolumnmoving enabled feature for function gender get grid gridapi gridoptions height html id include index it js json main mainctrl method module movecolumn movecolumns moving must name newposition ng-controller of on options or overview position property repositioned specific specifically success the them this to tutorial ui ui-grid ui-grid-move-columns used using var width will you your"
     },
     {
       "section": "tutorial",

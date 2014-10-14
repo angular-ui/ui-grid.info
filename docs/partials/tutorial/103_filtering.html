@@ -40,10 +40,10 @@ except digits to compare to the search term.</p>
 The elements of this array are the same as the contents of the <code>filter</code> object in all the previous examples. In fact, <code>filter: { term: 'xxx' }</code> is just an alias 
 for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an example.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-21"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-21" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-22"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-20" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-20">
+<pre class="prettyprint linenums" ng-set-text="index.html-21" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-21">
   <div ng-controller="MainCtrl">
     You can use asterisks to fuzz-match, i.e. use "*z*" as your filter to show any row where that column contains a "z".
     <br>
@@ -120,8 +120,8 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-21"></pre>
-<script type="text/ng-template" id="scenario.js-21">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-22"></pre>
+<script type="text/ng-template" id="scenario.js-22">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   
   describe('first grid on the page, filtered by male by default', function() {
@@ -156,5 +156,5 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-20" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-21" ng-eval-javascript="app.js"></div></div>
 </div>
