@@ -121,7 +121,7 @@ NG_DOCS={
       "id": "ui.grid.core.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "$scope acting active add added addrowheadercolumn adds addtogridmenu advantage again all allowing also always an and any api are array as assumes at back based be better both building but by calculations call called calls can cases changed circumstances clearrowinvisible clears code column columns complete completes core criteria currently custom data def described does else emits enabled end event feature features field filter filtering for format found from function functional functions get getcolumnsorting getting getvisiblerows grid gridapi gridcolumns gridoptions gridrow handle handlewindowresize handling has have header here id if in included instance invisible is it item items just last like make management manually menu method more most must mysortfn necessary no normal normally not note nothing null nulls object obtain of on one only onregisterapi or order other otherwise output override parameters passed picked present priority problem promise provide provided provides public refresh refreshrows remove removefromgridmenu removes render rendered rendering renderingcomplete resize resolved return returned returns row rowentity rows rowsvisiblechanged same screen set setrowinvisible sets should shown simplify size so some sort sortchanged sortcolumns sorted sorthandlenulls sorting sorts specified specify still stopping that the their them then there they this time timing to todo trigger tutorial ui unique up use used users using value var visibility visible want watch way we were when which will window with within without would you your"
+      "keywords": "$scope acting active add added addrowheadercolumn adds addtogridmenu advantage again all allowing also always an and any api are aren array as assumes at back based be better both building but by calculations call called calls can cases changed circumstances clearrowinvisible clears code column columns complete completes core criteria currently custom data def described desired do does else emits enabled end event feature features field filter filtering for format found from function functional functions get getcolumnsorting getting getvisiblerows grid gridapi gridcolumns gridmenuscope gridoptions gridrow handle handlewindowresize handling has have header here id if in included instance invisible is it item items just last like make management manually menu method more most must mysortfn necessary no normal normally not note nothing null nulls object obtain of on one only onregisterapi or order other otherwise output override parameters passed picked present priority problem promise provide provided provides public refresh refreshrows registeredmenuitems remove removefromgridmenu removes render rendered rendering renderingcomplete resize resolved result return returned returns row rowentity rows rowsvisiblechanged same screen set setrowinvisible sets should shown silently simplify size so some sort sortchanged sortcolumns sorted sorthandlenulls sorting sorts specified specify still stopping that the their them then there they this those time timing to todo trigger tutorial ui unique up use used users using value var visibility visible want watch way we were when which will window with within without would you your"
     },
     {
       "section": "api",
@@ -314,6 +314,55 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.importer",
+      "shortName": "importer",
+      "type": "overview",
+      "keywords": "$resource ability added allows also although an and another any api application as attributes be been belongs callback calls can class column configured copies created creates csv currently data default defs displayname displays doesn don each enabled entities errors feature file files for formats from grid has header headings identification if import imported importer imports in instance internationalised into is it json just made makes match matching menu module must name names new newly object objects of on only optionally or other out over overview particularly process properties provides provision put relies requesting row rowedit save sees specified that the then these this those time to type ui ui-grid-importer use used useful user uses using way which within work your"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.importer.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "$resource about alert an and any api appended application are array as automatically available be before behaviour both box browser by call callback can class column columns commonly console consolemessage content context create csv custom data defaults different directly discarded displayname does don each element enabled enableimporter english entity error errorkey errors event false feature field file fileapi first for foreach from function given grid gridoptions handling have header headerarray headers i18n if import importer importererrorcallback importerinputelement importernewobject importerprocessheaders importershowmenu importing in index inserting internal internationalise internationalised into invalidcsv invalidjson is it item itself javascript jsonnotarray keys knows language log logging logic match matching may means menu message messages method might must myheadercols myheadercolumns myloggingroutine myres myspeciallookupfunction myuserdisplayroutine name names necessarily need new no noheaders non-matching noobjects not null object occur of often on one or order otherwise position positioning process processheaders processing property provide provided provides push rather re recognises required respond return returned returning routine row rowedit same save seeks server set should show shown some standard support suppressed text than that the their then there therefore these this thiscol to triggered true typically ui ui-grid use useful user using value vanilla var way we well when where whether which will would write written you your"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.importer.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "api as bypasses feature file fileobject for function grid import importer importfile importing imports into javascript menu object provided public re the to ui using want we"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.importer.constant:uiGridImporterConstants",
+      "shortName": "uiGridImporterConstants",
+      "type": "object",
+      "keywords": "api available constant constants grid importer in module object ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.importer.directive:uiGridImporter",
+      "shortName": "uiGridImporter",
+      "type": "directive",
+      "keywords": "adds api directive div features grid importer to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.importer.directive:uiGridImporterMenuItem",
+      "shortName": "uiGridImporterMenuItem",
+      "type": "directive",
+      "keywords": "api directive div file from grid handles importer is item menu once processing selected the ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.importer.service:uiGridImporterService",
+      "shortName": "uiGridImporterService",
+      "type": "service",
+      "keywords": "addobjects adds addtomenu against alert alerterror allowing an and api are array arrays as attribute attributes based be being by bypasses calls checker code column columns com comes condition console content converts create createcsvobjects creates creating csv data defined definitions defs determines diagnostic dirty displayname displays doesn either empty enabled error event failure feature field file fileobject first for from function grid gridoptions have he header headerrow headers https if ift import importcsvclosure imported importer importererrorcallback importernewobject importerprocessheaders importfile importing importjson imports importthisfile in including individual insert inserts instead internationalised into is it item javascript js jscs json license logic logs makes maps marked match matching menu message method mit modified name named names native new newobject newobjects not noted object objects of on onload optionally or order other our parse parsecsv parsed parsejson parses pass present processheaders provided provides re reader remaining represents request resulting returned returns routine routines row rowedit rows service services set sets should specified that the then this to type ui under used user uses using want we which will wish with yoda"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.infiniteScroll",
       "shortName": "infiniteScroll",
       "type": "overview",
@@ -415,7 +464,7 @@ NG_DOCS={
       "id": "ui.grid.rowEdit.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "aggregate all an api are array associated away be been before button calls could currently data dirty error errored event fails feature flushdirtyrows flushed for from getdirtyrows geterrorrows grid gridapi gridrows handler has have if in individual initiated is it mandatory method navigates object of or page presses promise promises public rejected represents resolved returned returning returns row rowedit rowentity rows save savepromise saverow sets setsavepromise should somewhere successful that the this triggers ui used user when where which will with"
+      "keywords": "$digest $interval $timeout aggregate all an api are array associated away be been before button call calls could currently cycle data datarows dirty each entities error errored event fails feature flushdirtyrows flushed for from function getdirtyrows geterrorrows grid gridapi gridrows handler has have if in individual initiated inserted into is it just mandatory method mydatarows navigates need note object of often only or page passed present presses promise promises public rejected represents resolved returned returning returns row rowedit rowentity rows save savepromise saverow set setrowsdirty sets setsavepromise should so somewhere successful that the this to triggers ui used user wait when where which will with would wrap you your"
     },
     {
       "section": "api",
@@ -464,7 +513,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "all allow api array as clearselectedrows ctrlkey current data does entity false feature for function getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if instance is modifierkeystomultiselect multiple multiselect nothing object only or public references returns row rowentity rows select selectallrows selectallvisiblerows selected selectedrow selection selectrow selects setmodifierkeystomultiselect setmultiselect sets shiftkey the to togglerowselection toggles true ui unselect unselected unselectrow unselects used using visible when"
+      "keywords": "all allow api are array as by clearselectedrows context ctrlkey current currently data does entity false feature filtered first for function get getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if in index instance is ll means modifierkeystomultiselect multiple multiselect not nothing object of on only or public rather references rendered returns row rowentity rows rowsvisible screen select selectallrows selectallvisiblerows selected selectedrow selection selectrow selectrowbyvisibleindex selects setmodifierkeystomultiselect setmultiselect sets shiftkey specified specify than that the theoretically this those to togglerowselection toggles true ui unselect unselected unselectrow unselects used using visible when within you"
     },
     {
       "section": "api",
@@ -716,7 +765,14 @@ NG_DOCS={
       "id": "206_exporting_data",
       "shortName": "206 Exporting Data With Native UI",
       "type": "overview",
-      "keywords": "$http $scope adds all allows and angular api app as at available be behaves below bold bower calling can class color columndefs company controller css csv custom custom-csv-link-location data directive element enable enablegridmenu example export exported exporter exportercsvlinkelement exporterlinklabel exporterpdfdefaultstyle exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablestyle exporting false feature field for format found from function gender get grid gridapi gridoption gridoptions have height here html if in include index install installed italics items js json letter main mainctrl menu module must name native need ng-controller nganimate on onregisterapi options or overview pdf pdfmake portrait provide queryselectorall red returned rows selected selection show success tailor the this through to true tutorial ui ui-grid ui-grid-exporter ui-grid-exporter-csv-link ui-grid-selection use using var visible want way we width will with you your"
+      "keywords": "$http $scope adds all allows and angular api app as at available be below bold both bower buttons can class color columndefs company controller css csv custom-csv-link-location data directive element enable enablegridmenu example export exported exporter exportercsvlinkelement exporterlinklabel exporterpdfdefaultstyle exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablestyle exporting false feature field for format found from function gender get grid gridapi gridoption gridoptions have height here html if in include index install installed italics items js json letter main mainctrl menu module must name native need ng-controller nganimate on onregisterapi options or overview pdf pdfmake portrait queryselectorall red rows selected selection show success the this through to true tutorial ui ui-grid ui-grid-exporter ui-grid-exporter-csv-link ui-grid-selection use using var visible want we width will with you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "207_importing_data",
+      "shortName": "207 Importing Data With Native UI",
+      "type": "overview",
+      "keywords": "$http $interval $scope ability accept adds allows and angular api app are as assumed at attributes auto-populate be been by can class column columndefs columns company controller copy css csv custom data define defs demand directive displayname doe doing each either elements empty enable enablegridmenu entity example exists extended fasttruck fasttrucks feature female field file files for format formats found from front function gender grid gridapi gridoption gridoptions has heading headings height html if illustrates implemented import imported importer importing imports in include index instead into is it items jane john js json loaded main mainctrl male mandatory many mapped maps match menu module name native need needing ng-controller nganimate not on once onregisterapi optionally options or other overview picker provide provided received row smith so start system test testicon that the this to true tutorial ui ui-grid ui-grid-importer up use used user uses using var we width will with would you your"
     },
     {
       "section": "tutorial",
@@ -822,6 +878,13 @@ NG_DOCS={
       "shortName": "309 Edit Feature With Cellnav",
       "type": "overview",
       "keywords": "$apply $http $scope active address addressformatter aftercelledit age an and angular app basics boolean cell celleditablecondition cellfilter cellnav city class coldef column columndefs combining controller css data date displayname dropdown edit editable editdropdownoptionsarray editdropdownvaluelabel edited editing edittype else enablecelledit enablecelleditonfocus example experience false feature female filter for function gender genderhash get give grid gridapi gridoptions height html id if index input isactive js json lastcelledited length main mainctrl male mapgender module more msg name new newvalue ng-controller number object of oldvalue on onregisterapi overview provides refer registered return row rowentity rowrenderindex rows scope spreadsheet-like state street success the this to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var width with yyyy-mm-dd zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "310_importing_data_with_rowedit",
+      "shortName": "310 Importing Data With Row Edit",
+      "type": "overview",
+      "keywords": "$http $interval $q $resource $scope accept accepted allow allows an and angular any app are as at auto-save automatically be before by call can class company consider controller create created css csv custom data defer delay doe edit edited else enablegridmenu error errors example fake fasttruck fasttrucks feature female file flushdirtyrows for format from function gender give grid gridapi gridoptions has height html if implemented import imported importer importing in index into is jane john js json kick look made main mainctrl male manually menu module name native ng-controller nganimate normally not occurs of off on once onregisterapi or overview picker promise records reject request require resolve return returned row rowedit roweditwaitinterval rowentity rows save saverow saves seconds server setsavepromise setting show smith suppress testicon that the they this to together true tutorial ui ui-grid ui-grid-edit ui-grid-importer ui-grid-row-edit use user validation var want we were which whilst width will with without work you your"
     },
     {
       "section": "tutorial",

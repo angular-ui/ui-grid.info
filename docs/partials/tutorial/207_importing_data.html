@@ -1,0 +1,81 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The importer feature allows data to be imported into the grid in 
+csv or json format.  The importer can use the native grid menu, or can accept a 
+file from a custom file picker implemented by the user.</p>
+
+<p>The importer imports files in json or csv format, with the ability to be extended
+to other file formats if demand exists.</p>
+
+<p>For json format files the received elements are assumed to match the column.field 
+attributes in your columnDefs, and are loaded into the provided entity.  Optionally
+you can provide a custom function that maps each entity as it is imported.</p>
+
+<p>For csv files the data is mapped to the columnDefs, with columns in the heading row in the 
+csv needing to match either the column.name or column.displayName.  Optionally you can
+provide a custom function that maps headings to column.name, and this will be used instead.</p>
+
+<p>To use the importer you need to include the ui-grid-importer directive on
+your grid.  </p>
+
+<p>The options and API for importer can be found at <a href="#/api/ui.grid.importer">ui.grid.importer</a>.</p>
+
+<p>The importer adds menu items to the grid menu, to use the native UI you need to enable
+the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Example">Example</h2>
+<div class="example"><p>In this example we use the native grid menu to import a file.  You need to provide a file
+from your file system to use the tutorial, you can copy either import.json or import.csv
+as a test file.</p>
+
+<p>The grid will start empty, and will auto-populate the column defs and data once the file 
+has been imported (in many uses you would define the column defs up front, this example
+illustrates that doing so is not mandatory).</p>
+
+<h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-51" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-51" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-51">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" ui-grid-importer class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 400px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngAnimate', 'ui.grid', 'ui.grid.importer']);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+      $scope.gridOptions = {
+        enableGridMenu: true,
+        onRegisterApi: function(gridApi){ 
+          $scope.gridApi = gridApi;
+        }
+      };
+    }]);
+  </script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-51" ng-eval-javascript="app.js"></div>
+import.json:
+<pre class="prettyprint linenums">
+[{"Name":"John Smith","Gender":"male","Company":"TestIcon"},{"Name":"Jane Doe","Gender":"female","Company":"FastTruck"}]
+</pre>
+
+<p>import.csv
+<pre class="prettyprint linenums">
+"Name","Gender","Company"
+"John Smith","male","TestIcon"
+"Jane Doe","female","FastTrucks"
+</pre></div>
+</div>

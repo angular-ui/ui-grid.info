@@ -1,0 +1,30 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><h1 id="uigridimporter">ui.grid.importer</h2>
+
+<p>This module provides the ability to import data into the grid. It
+uses the column defs to work out which data belongs in which column, 
+and creates entities from a configured class (typically a $resource).</p>
+
+<p>If the rowEdit feature is enabled, it also calls save on those newly 
+created objects, and then displays any errors in the imported data.  </p>
+
+<p>Currently the importer imports only CSV and json files, although provision has been
+made to process other file formats, and these can be added over time.  </p>
+
+<p>For json files, the properties within each object in the json must match the column names
+(to put it another way, the importer doesn't process the json, it just copies the objects
+within the json into a new instance of the specified object type)</p>
+
+<p>For CSV import, the default column identification relies on each column in the
+header row matching a column.name or column.displayName. Optionally, a column identification 
+callback can be used.  This allows matching using other attributes, which is particularly
+useful if your application has internationalised column headings (i.e. the headings that 
+the user sees don't match the column names).</p>
+
+<p>The importer makes use of the grid menu as the UI for requesting an
+import. </p>
+
+<div ui-grid-importer>
+</div></div>

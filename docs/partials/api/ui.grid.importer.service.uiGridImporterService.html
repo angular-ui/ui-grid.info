@@ -1,0 +1,146 @@
+<h1><code ng:non-bindable="">uiGridImporterService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid.importer</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Services for importer feature</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="addObjects">addObjects(grid, newObjects)</h3>
+<div class="addobjects"><p>Inserts our new objects into the grid data, and
+sets the rows to dirty if the rowEdit feature is being used</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into</p></li>
+<li><code ng:non-bindable="">newObjects – {array} – </code>
+<p>the objects we want to insert into the grid data</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the new object</p></div>
+</div>
+</li>
+<li><h3 id="addToMenu">addToMenu(grid)</h3>
+<div class="addtomenu"><p>Adds import menu item to the grid menu,
+allowing the user to request import of a file </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid into which data should be imported</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="alertError">alertError(grid, headerRow)</h3>
+<div class="alerterror"><p>Provides an internationalised user alert for the failure,
+and logs a console message including diagnostic content.
+Optionally, if the the <code>gridOptions.importerErrorCallback</code> routine
+is defined, then calls that instead, allowing user specified error routines</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into</p></li>
+<li><code ng:non-bindable="">headerRow – {array} – </code>
+<p>the header row that we wish to match against
+the column definitions</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="createCsvObjects">createCsvObjects(grid, importFile)</h3>
+<div class="createcsvobjects"><p>Converts an array of arrays (representing the csv file)
+into a set of objects.  Uses the provided <code>gridOptions.importerNewObject</code>
+to create the objects, and maps the header row into the individual columns 
+using either <code>gridOptions.importerProcessHeaders</code>, or by using a native method
+of matching to either the displayName, column name or column field of
+the columns in the column defs.  The resulting objects will have attributes
+that are named based on the column.field or column.name, in that order.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid that we want to import into </p></li>
+<li><code ng:non-bindable="">importFile – {FileObject} – </code>
+<p>the file that we want to import, as a 
+file object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="importCsvClosure">importCsvClosure(grid, importFile)</h3>
+<div class="importcsvclosure"><p>Creates a function that imports a csv file into the grid
+(allowing it to be used in the reader.onload event)</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid that we want to import into </p></li>
+<li><code ng:non-bindable="">importFile – {FileObject} – </code>
+<p>the file that we want to import, as 
+a file object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="importJson">importJson(grid, importFile)</h3>
+<div class="importjson"><p>Creates a function that imports a json file into the grid.
+The json data is imported into new objects of type <code>gridOptions.importerNewObject</code>,
+and ift he rowEdit feature is enabled the rows are marked as dirty</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we want to import into</p></li>
+<li><code ng:non-bindable="">importFile – {FileObject} – </code>
+<p>the file that we want to import, as 
+a FileObject</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="importThisFile">importThisFile(grid, fileObject)</h3>
+<div class="importthisfile"><p>Imports the provided file into the grid using the file object 
+provided.  Bypasses the grid menu</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into</p></li>
+<li><code ng:non-bindable="">fileObject – {File} – </code>
+<p>the file we want to import, as returned from the File
+javascript object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="newObject">newObject(grid)</h3>
+<div class="newobject"><p>Makes a new object based on <code>gridOptions.importerNewObject</code>,
+or based on an empty object if not present</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the new object</p></div>
+</div>
+</li>
+<li><h3 id="parseCsv">parseCsv(importFile)</h3>
+<div class="parsecsv"><p>Parses a csv file into an array of arrays, with the first
+array being the headers, and the remaining arrays being the data.
+The logic for this comes from https://github.com/thetalecrafter/excel.js/blob/master/src/csv.js, 
+which is noted as being under the MIT license.  The code is modified to pass the jscs yoda condition
+checker</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">importFile – {FileObject} – </code>
+<p>the file that we want to import, as a 
+file object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="parseJson">parseJson(grid, importFile)</h3>
+<div class="parsejson"><p>Parses a json file, returns the parsed data.
+Displays an error if file doesn't parse</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid that we want to import into </p></li>
+<li><code ng:non-bindable="">importFile – {FileObject} – </code>
+<p>the file that we want to import, as 
+a FileObject</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>array of objects from the imported json</p></div>
+</div>
+</li>
+<li><h3 id="processHeaders">processHeaders(grid, headerRow)</h3>
+<div class="processheaders"><p>Determines the columns that the header row from
+a csv (or other) file represents.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into</p></li>
+<li><code ng:non-bindable="">headerRow – {array} – </code>
+<p>the header row that we wish to match against
+the column definitions</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>an array of the attribute names that should be used
+for that column, based on matching the headers or creating the headers</p></div>
+</div>
+</li>
+</ul>
+</div>
+</div>

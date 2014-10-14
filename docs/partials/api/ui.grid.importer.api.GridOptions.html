@@ -1,0 +1,99 @@
+<h1><code ng:non-bindable="">GridOptions</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.importer</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>GridOptions for importer feature, these are available to be <br />
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="importerErrorCallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
+<div class="importererrorcallback"><p>A callback function that provides custom error handling, rather
+than the standard grid behaviour of an alert box and a console message.  You 
+might use this to internationalise the console log messages, or to write to a 
+custom logging routine that returned errors to the server.</p>
+
+<pre class="prettyprint linenums">
+     gridOptions.importerErrorCallback: function( grid, errorKey, consoleMessage, context ) {
+       myUserDisplayRoutine( errorKey );
+       myLoggingRoutine( consoleMessage, context );
+     })
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into, may be useful if you're positioning messages
+in some way</p></li>
+<li><code ng:non-bindable="">errorKey – {string} – </code>
+<p>one of the i18n keys the importer can return - importer.noHeaders, 
+importer.noObjects, importer.invalidCsv, importer.invalidJson, importer.jsonNotArray</p></li>
+<li><code ng:non-bindable="">consoleMessage – {string} – </code>
+<p>the English console message that importer would have written</p></li>
+<li><code ng:non-bindable="">context – {object} – </code>
+<p>the context data that importer would have appended to that console message,
+often the file content itself or the element that is in error</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="importerProcessHeaders">importerProcessHeaders(grid, headerArray)</h3>
+<div class="importerprocessheaders"><p>A callback function that will process headers using custom
+logic.  Set this callback function if the headers that your user will provide in their 
+import file don't necessarily match the grid header or field names.  This might commonly
+occur where your application is internationalised, and therefore the field names
+that the user recognises are in a different language than the field names that
+ui-grid knows about.</p>
+
+<p>Defaults to the internal <code>processHeaders</code> method, which seeks to match using both
+displayName and column.name.  Any non-matching columns are discarded.</p>
+
+<p>Your callback routine should respond by processing the header array, and returning an array
+of matching column names.  A null value in any given position means "don't import this column"</p>
+
+<pre class="prettyprint linenums">
+     gridOptions.importerProcessHeaders: function( headerArray ) {
+       var myHeaderColumns = [];
+       var thisCol;
+       headerArray.forEach( function( value, index ) {
+         thisCol = mySpecialLookupFunction( value );
+         myHeaderColumns.push( thisCol.name ); 
+       });
+       
+       return myHeaderCols;
+     })
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into</p></li>
+<li><code ng:non-bindable="">headerArray – {array} – </code>
+<p>an array of the text from the first row of the csv file,
+which you need to match to column.names</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>array of matching column names, in the same order as the headerArray</p></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="enableImporter">enableImporter</h3>
+<div class="enableimporter"><p>Whether or not importer is enabled.  Automatically set
+to false if the user's browser does not support the required fileApi.
+Otherwise defaults to true.</p></div>
+</li>
+<li><h3 id="importerNewObject">importerNewObject</h3>
+<div class="importernewobject"><p>An object on which we call <code>new</code> to create each new row before inserting it into
+the data array.  Typically this would be a $resource entity, which means that if you're using 
+the rowEdit feature, you can directly call save on this entity when the save event is triggered.</p>
+
+<p>Defaults to a vanilla javascript object</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridOptions.importerNewObject = MyRes;
+</pre></div>
+</div>
+</li>
+<li><h3 id="importerShowMenu">importerShowMenu</h3>
+<div class="importershowmenu"><p>Whether or not to show an item in the grid menu.  If an item
+is to be shown in the grid menu then an <code>importerInputElement</code> must be 
+provided as well.  If there is no <code>importerInputElement</code> then the menu
+will be automatically suppressed, otherwise defaults to true.</p></div>
+</li>
+</ul>
+</div>
+</div>
