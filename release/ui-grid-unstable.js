@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-34b9101 - 2014-10-14
+/*! ui-grid - v3.0.0-rc.12-4441927 - 2014-10-14
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -13733,8 +13733,16 @@ module.filter('px', function() {
                         movingElm.css({'width': reducedWidth + 'px'});
                       }
                     };
-                    angular.element(gridUtil.closestElm($elm, 'body'))
-                      .on('mousemove', mouseMoveHandler);
+
+                    // NOTE(c0bra0): Can this event be bound to $document rather than <body>?  That would prevent looking up the element w/ closestElm()
+                    var bodyElm = angular.element(gridUtil.closestElm($elm, 'body'));
+                    bodyElm.on('mousemove', mouseMoveHandler);
+
+                    // On scope destroy, remove the mouse event handlers from the document body
+                    $scope.$on('$destroy', function () {
+                      bodyElm.off('mousemove', mouseMoveHandler);
+                      bodyElm.off('mouseup', mouseUpHandler);
+                    });
 
                     var mouseUpHandler = function (evt) {
                       var renderIndexDefer = $q.defer();
@@ -13804,16 +13812,15 @@ module.filter('px', function() {
                             });
                         }
 
-                        angular.element(gridUtil.closestElm($elm, 'body'))
-                          .off('mousemove', mouseMoveHandler);
-                        angular.element(gridUtil.closestElm($elm, 'body'))
-                          .off('mouseup', mouseUpHandler);
+                        bodyElm.off('mousemove', mouseMoveHandler);
+                        bodyElm.off('mouseup', mouseUpHandler);
                       });
                     };
-                    angular.element(gridUtil.closestElm($elm, 'body'))
-                      .on('mouseup', mouseUpHandler);
+
+                    bodyElm.on('mouseup', mouseUpHandler);
                   }
                 };
+
                 $elm.on('mousedown', mouseDownHandler);
               }
             }

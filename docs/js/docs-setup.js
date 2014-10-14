@@ -930,8 +930,8 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "310_column_moving_grid",
-      "shortName": "310 Column Moving grid",
+      "id": "310_column_moving",
+      "shortName": "310 Column Moving",
       "type": "overview",
       "keywords": "$http $scope age all allows and angular app be by can class colmovable column columndefs columns controller css data default definitions different directive disable dragging dropping either element email enable enablecolumnmoving enabled feature for function gender get grid gridapi gridoptions height html id include index it js json main mainctrl method module movecolumn movecolumns moving must name newposition ng-controller of on options or overview position property repositioned specific specifically success the them this to tutorial ui ui-grid ui-grid-move-columns used using var width will you your"
     },
