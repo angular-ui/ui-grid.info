@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-4441927 - 2014-10-14
+/*! ui-grid - v3.0.0-rc.12-f421c2f - 2014-10-14
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -15194,6 +15194,7 @@ module.filter('px', function() {
           //add feature namespace and any properties to grid for needed state
           grid.selection = {};
           grid.selection.lastSelectedRow = null;
+          grid.selection.selectAll = false;
 
           service.defaultGridOptions(grid.options);
 
@@ -15359,7 +15360,21 @@ module.filter('px', function() {
                  */
                 setModifierKeysToMultiSelect: function (modifierKeysToMultiSelect) {
                   grid.options.modifierKeysToMultiSelect = modifierKeysToMultiSelect;
+                },
+                /**
+                 * @ngdoc function
+                 * @name getSelectAllState
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description Returns whether or not the selectAll checkbox is currently ticked.  The
+                 * grid doesn't automatically select rows when you add extra data - so when you add data
+                 * you need to explicitly check whether the selectAll is set, and then call setVisible rows
+                 * if it is
+                 * @param {bool} modifierKeysToMultiSelect true to only allow multiple rows when using ctrlKey or shiftKey is used
+                 */
+                getSelectAllState: function (grid) {
+                  return grid.selection.selectAll;
                 }
+                
               }
             }
           };
@@ -15423,6 +15438,14 @@ module.filter('px', function() {
            *  <br/>Defaults to true
            */
           gridOptions.enableRowHeaderSelection = gridOptions.enableRowHeaderSelection !== false;
+          /**
+           *  @ngdoc object
+           *  @name enableSelectAll
+           *  @propertyOf  ui.grid.selection.api:GridOptions
+           *  @description Enable the select all checkbox at the top of the selectionRowHeader
+           *  <br/>Defaults to true
+           */
+          gridOptions.enableSelectAll = gridOptions.enableSelectAll !== false;
         },
 
         /**
@@ -15606,6 +15629,34 @@ module.filter('px', function() {
             }
             else {
               uiGridSelectionService.toggleRowSelection(self, row, (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect);
+            }
+          };
+        }
+      };
+    }]);
+
+  module.directive('uiGridSelectionSelectAllButtons', ['$log', '$templateCache', 'uiGridSelectionService',
+    function ($log, $templateCache, uiGridSelectionService) {
+      return {
+        replace: true,
+        restrict: 'E',
+        template: $templateCache.get('ui-grid/selectionSelectAllButtons'),
+        scope: false,
+        link: function($scope, $elm, $attrs, uiGridCtrl) {
+          var self = $scope.col.grid;
+          
+          $scope.headerButtonClick = function(row, evt) {
+            if ( self.selection.selectAll ){
+              uiGridSelectionService.clearSelectedRows(self);
+              if ( self.options.noUnselect ){
+                self.api.selection.selectRowByVisibleIndex(0);
+              }
+              self.selection.selectAll = false;
+            } else {
+              if ( self.options.multiSelect ){
+                self.api.selection.selectAllVisibleRows();
+                self.selection.selectAll = true;
+              }
             }
           };
         }
@@ -15851,7 +15902,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionHeaderCell',
-    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"></div></div>"
+    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\"></ui-grid-selection-select-all-buttons></div></div>"
   );
 
 
@@ -15862,6 +15913,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('ui-grid/selectionRowHeaderButtons',
     "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" ng-click=\"selectButtonClick(row, $event)\">&nbsp;</div>"
+  );
+
+
+  $templateCache.put('ui-grid/selectionSelectAllButtons',
+    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\">&nbsp;</div>"
   );
 
 }]);
