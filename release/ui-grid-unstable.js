@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-a91b0b0 - 2014-10-15
+/*! ui-grid - v3.0.0-rc.12-237a1a6 - 2014-10-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11800,6 +11800,21 @@ module.filter('px', function() {
                   var ret = $scope.row.isExpanded && ( $scope.colContainer.name !== 'body' || ($scope.grid.isScrollingVertically && !$scope.row.expandedRendered));
                   return ret;
                 };
+
+                  function updateRowContainerWidth() {
+                      var grid = $scope.grid;
+                      var colWidth = grid.getColumn('expandableButtons').width;
+                      return '.grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.colContainer.name + ', .grid' + grid.id +
+                          ' .ui-grid-pinned-container-' + $scope.colContainer.name + ' .ui-grid-render-container-' + $scope.colContainer.name +
+                          ' .ui-grid-viewport .ui-grid-canvas .ui-grid-row { width: ' + colWidth + 'px; }';
+                  }
+
+                  if ($scope.colContainer.name === 'left') {
+                      $scope.grid.registerStyleComputation({
+                          priority: 15,
+                          func: updateRowContainerWidth
+                      });
+                  }
 
               },
               post: function ($scope, $elm, $attrs, controllers) {
