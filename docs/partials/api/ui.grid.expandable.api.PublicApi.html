@@ -1,0 +1,47 @@
+<h1><code ng:non-bindable="">PublicApi</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.expandable</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Public Api for expandable feature</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="collapseAllRows">collapseAllRows()</h3>
+<div class="collapseallrows"><p>Collapse all subgrids.
+<pre class="prettyprint linenums">
+     gridApi.expandable.collapseAllRows();
+</pre></div>
+</li>
+<li><h3 id="expandAllRows">expandAllRows()</h3>
+<div class="expandallrows"><p>Expand all subgrids.
+<pre class="prettyprint linenums">
+     gridApi.expandable.expandAllRows();
+</pre></div>
+</li>
+<li><h3 id="toggleRowExpansion">toggleRowExpansion(rowEntity)</h3>
+<div class="togglerowexpansion"><p>Toggle a specific row
+<pre class="prettyprint linenums">
+     gridApi.expandable.toggleRowExpansion(rowEntity);
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
+<p>the data entity for the row you want to expand</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="member event"><h2 id="Events">Events</h2>
+<ul class="events"><li><h3 id="rowExpandedStateChanged">rowExpandedStateChanged</h3>
+<div class="rowexpandedstatechanged"><p>raised when cell editing is complete
+<pre class="prettyprint linenums">
+     gridApi.expandable.on.rowExpandedStateChanged(scope,function(row){})
+</pre><div class="inline"></div>
+<div class="inline"></div>
+<h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row that was expanded</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>

@@ -1,0 +1,50 @@
+<h1><code ng:non-bindable="">GridOptions</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.expandable</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Options for configuring the expandable feature, these are available to be <br />
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="enableExpandable">enableExpandable</h3>
+<div class="enableexpandable"><p>Whether or not to use expandable feature, allows you to turn off expandable on specific grids
+within your application, or in specific modes on <em>this</em> grid. Defaults to true.  </p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  enableExpandable: false
+}
+</pre>  </p></div>
+</div>
+</li>
+<li><h3 id="enableExpandableRowHeader">enableExpandableRowHeader</h3>
+<div class="enableexpandablerowheader"><p>Show a rowHeader to provide the expandable buttons.  If set to false then implies
+you're going to use a custom method for expanding and collapsing the subgrids. Defaults to true.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  enableExpandableRowHeader: false
+}
+</pre>  </p></div>
+</div>
+</li>
+<li><h3 id="expandableRowHeight">expandableRowHeight</h3>
+<div class="expandablerowheight"><p>Height in pixels of the expanded subgrid.  Defaults to
+150</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  expandableRowHeight: 150
+}
+</pre>  </p></div>
+</div>
+</li>
+<li><h3 id="expandableRowTemplate">expandableRowTemplate</h3>
+<div class="expandablerowtemplate"><p>Mandatory. The template for your expanded row</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  expandableRowTemplate: 'expandableRowTemplate.html'
+}
+</pre>  </p></div>
+</div>
+</li>
+</ul>
+</div>
+</div>

@@ -244,6 +244,34 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.edit.service:uiGridExpandableService",
+      "shortName": "uiGridExpandableService",
+      "type": "service",
+      "keywords": "api edit expandable for grid service services the ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable",
+      "shortName": "expandable",
+      "type": "overview",
+      "keywords": "ability api create doc-module-components expand expandable grid module overview provides row show subgrid subgrids the this to ui with"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "$scope _this_ allows and api application are available be buttons class collapsing configuring custom defaults enableexpandable enableexpandablerowheader expandable expandablerowheight expandablerowtemplate expanded expanding false feature for going grid gridoptions grids height html if implies in mandatory method modes not object of off on options or pixels provide re row rowheader set show specific subgrid subgrids template the then these to true turn ui ui-grid use using whether within you your"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "all api collapse collapseallrows data entity expand expandable expandallrows feature for grid gridapi method object public row rowentity specific subgrids the to toggle togglerowexpansion ui want you"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.exporter",
       "shortName": "exporter",
       "type": "overview",
@@ -667,7 +695,7 @@ NG_DOCS={
       "id": "102_sorting",
       "shortName": "102 Sorting",
       "type": "overview",
-      "keywords": "$http $scope accessing action add additive alert alert-warning alexander alisha all allows an and angular another any app app2 application are as asc at be below beryl but by can class claudine click clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickheadercell clicking col-xs-12 column columndefs columns company controller core css data def default defining definitions desc describe direction disabled don else enable enablesorting ethel example existing expect expectcellvaluematch expected expectheadercellvaluematch expectheadercolumncount expectvisiblecolumnmenuitems false feature female field first flag foley for from fry function gender get gets grid grid1 grid2 gridapi gridoptions gridtestutils has have header headers height html id if in include index index2 inital-sort initial is it js json key last level main main2 mainctrl male menu menus module more multiple must myers name neal need ng-controller nganimate no not null nulls on one onregisterapi option options order original other overview page parsons pick price priority property rather redisplay remove removes replacing require required return reverse rice rows says scenario second see set setting shift shift-click shift-clicking shiftclickheadercell should slide so sort sorted sorthandlenulls sorting sortingalgorithm sorts spec state sub-property success than that the then third three to true tutorial two ui ui-grid undisplay unless unsorted up use using values var velma visible want way what when which width will woods you your yvonne"
+      "keywords": "$http $scope accessing action add additive alert alert-warning alexander alisha all allows an and angular another any app app2 application are as asc at be below beryl but by can class claudine click clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickheadercell clicking col-xs-12 column columndefs columns company controller core css data def default defining definitions desc describe direction disabled don else enable enablesorting ethel example existing expect expectcellvaluematch expected expectheadercellvaluematch expectheadercolumncount expectvisiblecolumnmenuitems false feature female field first flag foley for from fry function gender get gets grid grid1 grid2 gridapi gridoptions gridtestutils has have header headers height html id if in include index index2 inital-sort initial is it js json key last level main main2 mainctrl male menu menus module more multiple must myers name neal need ng-controller nganimate no not null nulls on one onregisterapi option options order original other overview page parsons pick price priority property rather redisplay remove removes replacing require required return reverse rice rows says scenario second see set setting shift shift-click shift-clicking shiftclickheadercell should slide so sort sorted sorthandlenulls sorting sortingalgorithm sorts spec state sub-property success than that the then third three to true tutorial two ui ui-grid uigridconstants undisplay unless unsorted up use using values var velma visible want way what when which width will woods you your yvonne"
     },
     {
       "section": "tutorial",
@@ -898,7 +926,7 @@ NG_DOCS={
       "id": "306_expandable_grid",
       "shortName": "306 Expandable grid",
       "type": "overview",
-      "keywords": "$http $log $scope address adds age all and angular api app as be btn btn-small button can city class collapse collapseallrows columndefs control-group controller css data done each entity events expand expandable expandablerowheight expandallrows expanded feature field fired following for fos friends function get grid gridapi gridoptions height html id index is its js json length levels main mainctrl methods module multiple name need nesting ng-click ng-controller of on onregisterapi option overview provide provided render row rowexpandabletemplate rowexpandedstatechanged rows show style subgrid subgridoptions subgrids success template that the to tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning upto used value var width will you"
+      "keywords": "$http $log $scope address adds age all and angular api app as be btn btn-small button can city class collapse collapseallrows columndefs control-group controller css data done each entity events expand expandable expandablerowheight expandablerowtemplate expandallrows expanded feature field fired following for fos friends function get grid gridapi gridoptions height html id index is its js json length levels main mainctrl methods module multiple name need nesting ng-click ng-controller of on onregisterapi option overview provide provided render row rowexpandabletemplate rowexpandedstatechanged rows show style subgrid subgridoptions subgrids success template that the to tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning upto used value var width will you"
     },
     {
       "section": "tutorial",

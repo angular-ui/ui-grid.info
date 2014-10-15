@@ -26,7 +26,7 @@ provided following events and methods fos subGrids:</p>
 
 <p>SubGrid nesting can be done upto multiple levels.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-66 rowExpandableTemplate.html" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-66 expandableRowTemplate.html" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-66" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-66">
@@ -39,9 +39,9 @@ provided following events and methods fos subGrids:</p>
   </div>
 </script>
 </div>
-<div class="tab-pane" title="rowExpandableTemplate.html">
-<pre class="prettyprint linenums" ng-set-text="rowExpandableTemplate.html"></pre>
-<script type="text/ng-template" id="rowExpandableTemplate.html">
+<div class="tab-pane" title="expandableRowTemplate.html">
+<pre class="prettyprint linenums" ng-set-text="expandableRowTemplate.html"></pre>
+<script type="text/ng-template" id="expandableRowTemplate.html">
   <div ui-grid="row.entity.subGridOptions" style="height:140px;"></div>
 </script>
 </div>
@@ -60,9 +60,8 @@ provided following events and methods fos subGrids:</p>
   var app = angular.module('app', ['ui.grid', 'ui.grid.expandable']);
 
   app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
-    $scope.gridOptions = {};
-    $scope.gridOptions.expandable = {
-      rowExpandableTemplate: 'rowExpandableTemplate.html',
+    $scope.gridOptions = {
+      expandableRowTemplate: 'expandableRowTemplate.html',
       expandableRowHeight: 150
     }
 

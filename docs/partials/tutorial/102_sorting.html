@@ -94,7 +94,7 @@ in (lower priority gets sorted first).</p>
 <script type="text/ng-template" id="app2.js">
     var app = angular.module('app2', ['ngAnimate', 'ui.grid']);
 
-    app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
       $scope.gridOptions = {
         enableSorting: true,
         onRegisterApi: function( gridApi ) {
@@ -104,7 +104,7 @@ in (lower priority gets sorted first).</p>
           {
             field: 'name',
             sort: {
-              direction: 'desc',
+              direction: uiGridConstants.DESC,
               priority: 1
             }
           },
