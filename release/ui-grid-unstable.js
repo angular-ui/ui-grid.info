@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-a138105 - 2014-10-15
+/*! ui-grid - v3.0.0-rc.12-c41ad43 - 2014-10-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9585,6 +9585,11 @@ module.filter('px', function() {
           min: 'min: ',
           max: 'max: '
         },
+        pinning: {
+          pinLeft: 'Fixar Esquerda',
+          pinRight: 'Fixar Direita',
+          unpin: 'Desprender'
+        },
         gridMenu: {
           columns: 'Colunas:',
           exporterAllAsCsv: 'Exportar todos os dados como csv',
@@ -9595,11 +9600,11 @@ module.filter('px', function() {
           exporterSelectedAsPdf: 'Exportar dados selecionados como pdf'
         },
         importer: {
-          noHeaders: 'Column names were unable to be derived, does the file have a header?',
-          noObjects: 'Objects were not able to be derived, was there data in the file other than headers?',
-          invalidCsv: 'File was unable to be processed, is it valid CSV?',
-          invalidJson: 'File was unable to be processed, is it valid Json?',
-          jsonNotArray: 'Imported json file must contain an array, aborting.'
+          noHeaders: 'Nomes de colunas não puderam ser derivados. O arquivo tem um cabeçalho?',
+          noObjects: 'Objetos não puderam ser derivados. Havia dados no arquivo, além dos cabeçalhos?',
+          invalidCsv: 'Arquivo não pode ser processado. É um CSV válido?',
+          invalidJson: 'Arquivo não pode ser processado. É um Json válido?',
+          jsonNotArray: 'Arquivo json importado tem que conter um array. Abortando.'
         }
       });
       return $delegate;
