@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-c41ad43 - 2014-10-15
+/*! ui-grid - v3.0.0-rc.12-a91b0b0 - 2014-10-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
