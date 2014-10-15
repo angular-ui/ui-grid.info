@@ -11,9 +11,11 @@ the <code>context</code> property to your menu item. It will be accessible throu
 You can then show/hide the the menu item based on conditions that use the grid and column.  You could 
 also use a custom column builder to add some item to the every column definition.</p>
 
-<p>You can remove the column hide option using the <code>disableHiding</code> columnDef option, which will also prevent
+<p>You can remove the column hide option using the <code>enableHiding: false</code> columnDef option, which will also prevent
 this column being hidden in the gridMenu (once it is finished and merged).  You can disable
-the column menu entirely using the <code>disableColumnMenu</code> columnDef option.</p>
+the column menu entirely using the <code>enableColumnMenu: false</code> columnDef option.</p>
+
+<p>You can disable all column menus using the <code>enableColumnMenus: false</code> grid option.</p>
 
 <p>You can supply an icon class with the <code>icon</code> property.</p>
 
@@ -56,8 +58,8 @@ the column menu entirely using the <code>disableColumnMenu</code> columnDef opti
     $scope.gridOptions = {
       enableSorting: true,
       columnDefs: [
-        { field: 'name', disableColumnMenu: true },
-        { field: 'gender', disableHiding: true, suppressRemoveSort: true, sort: { direction: uiGridConstants.ASC } },
+        { field: 'name', enableColumnMenu: false },
+        { field: 'gender', enableHiding: false, suppressRemoveSort: true, sort: { direction: uiGridConstants.ASC } },
         {
           field: 'company',
           menuItems: [

@@ -25,17 +25,23 @@ gridOptions.columnDefs[0].cellFilter = 'date'</p></div>
 is ui-grid/uiGridCell.  If you are using the cellNav feature, this template
 must contain a div that can receive focus.</p></div>
 </li>
-<li><h3 id="disableColumnMenu">disableColumnMenu</h3>
-<div class="disablecolumnmenu"><p>if column menus are enabled, disables column menus for this specific
-column</p></div>
-</li>
-<li><h3 id="disableHiding">disableHiding</h3>
-<div class="disablehiding"><p>(optional) False by default. When enabled, this setting prevents a user from hiding the column
-using the column menu or the grid menu.</p></div>
-</li>
 <li><h3 id="displayName">displayName</h3>
 <div class="displayname"><p>Column name that will be shown in the header.  If displayName is not
 provided then one is generated using the name.</p></div>
+</li>
+<li><h3 id="enableColumnMenu">enableColumnMenu</h3>
+<div class="enablecolumnmenu"><p>if column menus are enabled, controls the column menus for this specific
+column (i.e. if gridOptions.enableColumnMenus, then you can control column menus
+using this option. If gridOptions.enableColumnMenus === false then you get no column
+menus irrespective of the value of this option ).  Defaults to true.</p></div>
+</li>
+<li><h3 id="enableColumnMenus">enableColumnMenus</h3>
+<div class="enablecolumnmenus"><p>Override for column menus everywhere - if set to false then you get no
+column menus.  Defaults to true.</p></div>
+</li>
+<li><h3 id="enableHiding">enableHiding</h3>
+<div class="enablehiding"><p>(optional) True by default. When set to false, this setting prevents a user from hiding the column
+using the column menu or the grid menu.</p></div>
 </li>
 <li><h3 id="enableSorting">enableSorting</h3>
 <div class="enablesorting"><p>(optional) True by default. When enabled, this setting adds sort

@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-f421c2f - 2014-10-14
+/*! ui-grid - v3.0.0-rc.12-0396a0d - 2014-10-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -288,21 +288,21 @@ function ( i18nService, uiGridConstants, gridUtil ) {
 
     /**
      * @ngdoc boolean
-     * @name disableHiding
+     * @name enableHiding
      * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description (optional) False by default. When enabled, this setting prevents a user from hiding the column
+     * @description (optional) True by default. When set to false, this setting prevents a user from hiding the column
      * using the column menu or the grid menu.
      */
     /**
      * @ngdoc method
      * @methodOf ui.grid.service:uiGridColumnMenuService
      * @name hideable
-     * @description  determines whether a column can be hidden, but checking the disableHiding columnDef option
+     * @description  determines whether a column can be hidden, by checking the enableHiding columnDef option
      * @param {$scope} $scope the $scope from the uiGridColumnMenu
      * 
      */  
     hideable: function( $scope ) {
-      if (typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.colDef && $scope.col.colDef.disableHiding) {
+      if (typeof($scope.col) !== 'undefined' && $scope.col && $scope.col.colDef && $scope.col.colDef.enableHiding === false ) {
         return false;
       }
       else {
@@ -843,6 +843,25 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 });
             }
     
+            /**
+            * @ngdoc property
+            * @name enableColumnMenu
+            * @propertyOf ui.grid.class:GridOptions.columnDef
+            * @description if column menus are enabled, controls the column menus for this specific
+            * column (i.e. if gridOptions.enableColumnMenus, then you can control column menus
+            * using this option. If gridOptions.enableColumnMenus === false then you get no column
+            * menus irrespective of the value of this option ).  Defaults to true.
+            *
+            */
+            /**
+            * @ngdoc property
+            * @name enableColumnMenus
+            * @propertyOf ui.grid.class:GridOptions.columnDef
+            * @description Override for column menus everywhere - if set to false then you get no
+            * column menus.  Defaults to true.
+            *
+            */
+
             // Long-click (for mobile)
             var cancelMousedownTimeout;
             var mousedownStartTime = 0;
@@ -861,7 +880,8 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
     
               cancelMousedownTimeout.then(function () {
-                if ($scope.col.colDef && !$scope.col.colDef.disableColumnMenu) {
+                if ($scope.col.grid.options && $scope.col.grid.options.enableColumnMenus !== false && 
+                    $scope.col.colDef && $scope.col.colDef.enableColumnMenu !== false) {
                   uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm, event);
                 }
               });
@@ -875,14 +895,7 @@ function ($log, $timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               $contentsElm.off('mousedown touchstart');
             });
 
-            /**
-            * @ngdoc property
-            * @name disableColumnMenu
-            * @propertyOf ui.grid.class:GridOptions.columnDef
-            * @description if column menus are enabled, disables column menus for this specific
-            * column
-            *
-            */
+
             $scope.toggleMenu = function($event) {
               $event.stopPropagation();
     
@@ -1518,7 +1531,7 @@ angular.module('ui.grid')
       $scope.grid.options.gridMenuTitleFilter = $scope.grid.options.gridMenuTitleFilter ? $scope.grid.options.gridMenuTitleFilter : function( title ) { return title; };  
       
       $scope.grid.options.columnDefs.forEach( function( colDef, index ){
-        if ( !colDef.disableHiding ){
+        if ( colDef.enableHiding !== false ){
           // add hide menu item - shows an OK icon as we only show when column is already visible
           var menuItem = {
             icon: 'ui-grid-icon-ok',
@@ -3536,7 +3549,7 @@ angular.module('ui.grid')
       .then(function(){
         rowHeaderCol.enableFiltering = false;
         rowHeaderCol.enableSorting = false;
-        rowHeaderCol.disableHiding = true;
+        rowHeaderCol.enableHiding = false;
         self.rowHeaderColumns.push(rowHeaderCol);
         self.buildColumns()
           .then( function() {
@@ -6005,12 +6018,12 @@ angular.module('ui.grid')
 
     /**
      * @ngdoc boolean
-     * @name enableColumnMenu
+     * @name enableColumnMenus
      * @propertyOf ui.grid.class:GridOptions
      * @description True by default. When enabled, this setting displays a column
      * menu within each column.
      */
-    this.enableColumnMenu = true;
+    this.enableColumnMenus = true;
 
     /**
      * @ngdoc boolean
@@ -15794,7 +15807,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
-    "    {{ grid.customStyles }}</style><div ui-grid-menu-button ng-if=\"grid.options.enableGridMenu\"></div><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"grid.options.enableScrollbars\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenu\"></div><div ng-transclude></div></div>"
+    "    {{ grid.customStyles }}</style><div ui-grid-menu-button ng-if=\"grid.options.enableGridMenu\"></div><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"grid.options.enableScrollbars\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenus\"></div><div ng-transclude></div></div>"
   );
 
 
@@ -15829,7 +15842,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenu && !col.isRowHeader  && !col.colDef.disableColumnMenu\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-click=\"$event.stopPropagation()\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!colFilter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\">{{ col.displayName CUSTOM_FILTERS }} <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-click=\"$event.stopPropagation()\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel right\" ng-show=\"!!colFilter.term\">&nbsp;</i> <!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
 
 
