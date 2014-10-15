@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-0396a0d - 2014-10-15
+/*! ui-grid - v3.0.0-rc.12-91de254 - 2014-10-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2914,7 +2914,7 @@ angular.module('ui.grid')
       function dataWatchFunction(n) {
         // $log.debug('dataWatch fired');
         var promises = [];
-
+        
         if (n) {
           if (self.grid.columns.length === ( self.grid.rowHeaderColumns ? self.grid.rowHeaderColumns.length : 0 ) ) {
             $log.debug('loading cols in dataWatchFunction');
@@ -2935,6 +2935,9 @@ angular.module('ui.grid')
 
                 $scope.$evalAsync(function() {
                   self.grid.refreshCanvas(true);
+                  angular.forEach( self.grid.dataChangeCallbacks, function( callback, uid ){
+                    callback( self.grid );
+                  });
                 });
               });
           });
@@ -3251,6 +3254,7 @@ angular.module('ui.grid')
   self.styleComputations = [];
   self.viewportAdjusters = [];
   self.rowHeaderColumns = [];
+  self.dataChangeCallbacks = {};
 
   // self.visibleRowCache = [];
 
@@ -3457,6 +3461,32 @@ angular.module('ui.grid')
    */
   Grid.prototype.registerRowBuilder = function registerRowBuilder(rowBuilder) {
     this.rowBuilders.push(rowBuilder);
+  };
+
+  /**
+   * @ngdoc function
+   * @name registerDataChangeCallback
+   * @methodOf ui.grid.class:Grid
+   * @description When the data watch notices a change in the data, all the callbacks
+   * in the dataWatchCallback array will be called.
+   * @param {function(grid)} callback function to be called
+   * @returns {string} uid of the callback, can be used to deregister it again
+   */
+  Grid.prototype.registerDataChangeCallback = function registerDataChangeCallback(callback) {
+    var uid = gridUtil.nextUid();
+    this.dataChangeCallbacks[uid] = callback;
+    return uid;
+  };
+
+  /**
+   * @ngdoc function
+   * @name deregisterDataChangeCallback
+   * @methodOf ui.grid.class:Grid
+   * @description Delete the callback identified by the id.
+   * @param {string} uid uid of the callback to be deregistered
+   */
+  Grid.prototype.deregisterDataChangeCallback = function deregisterDataChangeCallback(uid) {
+    delete this.dataChangeCallbacks[uid];
   };
 
   /**
@@ -12670,15 +12700,17 @@ module.filter('px', function() {
 
           grid.api.registerMethodsFromObject(publicApi.methods);
 
-          if (grid.api.core.addToGridMenu){
-            service.addToMenu( grid );
-          } else {
-            // order of registration is not guaranteed, register in a little while
-            $interval( function() {
-              if (grid.api.core.addToGridMenu){
-                service.addToMenu( grid );
-              }             
-            }, 100, 1);
+          if ( grid.options.enableImporter && grid.options.importerShowMenu ){
+            if ( grid.api.core.addToGridMenu ){
+              service.addToMenu( grid );
+            } else {
+              // order of registration is not guaranteed, register in a little while
+              $interval( function() {
+                if (grid.api.core.addToGridMenu){
+                  service.addToMenu( grid );
+                }             
+              }, 100, 1);
+            }
           }
         },
         
@@ -12777,7 +12809,29 @@ module.filter('px', function() {
           if ( !gridOptions.importerErrorCallback ||  typeof(gridOptions.importerErrorCallback) !== 'function' ){
             delete gridOptions.importerErrorCallback;  
           }
-          
+
+          /**
+           * @ngdoc method
+           * @name importerDataAddCallback
+           * @methodOf ui.grid.importer.api:GridOptions
+           * @description A mandatory callback function that adds data to the source data array.  The grid
+           * generally doesn't add rows to the source data array, it is tidier to handle this through a user
+           * callback.
+           * 
+           * <pre>
+           *      gridOptions.importerDataAddCallback: function( grid, newObjects ) {
+           *        $scope.myData = $scope.myData.concat( newObjects );
+           *      })
+           * </pre>
+           * @param {Grid} grid the grid we're importing into, may be useful in some way
+           * @param {array} newObjects an array of new objects that you should add to your data
+           * 
+           */
+          if ( gridOptions.enableImporter === true && !gridOptions.importerDataAddCallback ) {
+            $log.error("You have not set an importerDataAddCallback, importer is disabled");
+            gridOptions.enableImporter = false;
+          }
+                    
           /**
            * @ngdoc object
            * @name importerNewObject
@@ -12799,17 +12853,10 @@ module.filter('px', function() {
            * @ngdoc property
            * @propertyOf ui.grid.importer.api:GridOptions
            * @name importerShowMenu
-           * @description Whether or not to show an item in the grid menu.  If an item
-           * is to be shown in the grid menu then an `importerInputElement` must be 
-           * provided as well.  If there is no `importerInputElement` then the menu
-           * will be automatically suppressed, otherwise defaults to true.
+           * @description Whether or not to show an item in the grid menu.  Defaults to true.
            * 
            */
-          if ( gridOptions.enableImporter && ( !gridOptions.importerInputElement || !gridOptions.importerInputElement.append ) ) {
-            gridOptions.importerShowMenu = false;
-          } else {
-            gridOptions.importerShowMenu = !!gridOptions.importerShowMenu;
-          }
+          gridOptions.importerShowMenu = gridOptions.importerShowMenu !== false;
         },
 
 
@@ -13117,30 +13164,14 @@ module.filter('px', function() {
          * @returns {object} the new object
          */
         addObjects: function( grid, newObjects ){
-          grid.options.data = grid.options.data.concat( newObjects );
-          
-          // This block replicates the data watch, but shouldn't be necessary in an ideal world
-          var promises = [];
-          if (grid.columns.length === ( grid.rowHeaderColumns ? grid.rowHeaderColumns.length : 0 ) ) {
-            if (grid.options.columnDefs.length === 0) {
-              grid.buildColumnDefsFromData(grid.options.data);
-            }
-            promises.push(grid.buildColumns()
-              .then(function() {
-                grid.preCompileCellTemplates();}
-            ));
+          if ( grid.api.rowEdit ){
+            var callbackId = grid.registerDataChangeCallback( function() {
+              grid.api.rowEdit.setRowsDirty( grid, newObjects );
+              grid.deregisterDataChangeCallback( callbackId );
+            });
           }
 
-          $q.all(promises).then(function() {
-            grid.modifyRows(grid.options.data)
-              .then(function () {
-                  grid.redrawInPlace();
-                  grid.refreshCanvas(true);
-                  if ( grid.api.rowEdit ){
-                    grid.api.rowEdit.setRowsDirty( grid, newObjects );
-                  }
-              });
-          });
+          grid.options.importerDataAddCallback( grid, newObjects );
         },
         
         
@@ -14837,7 +14868,9 @@ module.filter('px', function() {
             if (!grid.rowEditErrorRows){
               grid.rowEditErrorRows = [];
             }
-            grid.rowEditErrorRows.push( gridRow );
+            if (!service.isRowPresent( grid.rowEditErrorRows, gridRow ) ){
+              grid.rowEditErrorRows.push( gridRow );
+            }
           };
         },
         
@@ -14860,6 +14893,26 @@ module.filter('px', function() {
           });
         },
         
+        
+        /**
+         * @ngdoc method
+         * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
+         * @name isRowPresent
+         * @description  Checks whether a row is already present
+         * in the given array 
+         * @param {array} rowArray the array in which to look for the row
+         * @param {GridRow} gridRow the row that should be looked for
+         */
+        isRowPresent: function( rowArray, removeGridRow ){
+          var present = false;
+          angular.forEach( rowArray, function( gridRow, index ){
+            if ( gridRow.uid === removeGridRow.uid ){
+              present = true;
+            }
+          });
+          return present;
+        },
+
         
         /**
          * @ngdoc method

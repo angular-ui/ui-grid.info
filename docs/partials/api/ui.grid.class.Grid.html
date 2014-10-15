@@ -46,6 +46,13 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <li><h3 id="createRightContainer">createRightContainer()</h3>
 <div class="createrightcontainer"><p>creates the right render container if it doesn't already exist</p></div>
 </li>
+<li><h3 id="deregisterDataChangeCallback">deregisterDataChangeCallback(uid)</h3>
+<div class="deregisterdatachangecallback"><p>Delete the callback identified by the id.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">uid – {string} – </code>
+<p>uid of the callback to be deregistered</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="flagScrollingHorizontally">flagScrollingHorizontally()</h3>
 <div class="flagscrollinghorizontally"><p>sets isScrollingHorizontally to true and sets it to false in a debounced function</p></div>
 </li>
@@ -99,10 +106,10 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="isRTL">isRTL()</h3>
 <div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>
@@ -166,6 +173,17 @@ to alter the set of columns, as long as the count is not modified.</p><h4 id="Pa
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{Array[GridColumn]}</code>
 – <p>Updated renderable columns</p></div>
+</div>
+</li>
+<li><h3 id="registerDataChangeCallback">registerDataChangeCallback(callback)</h3>
+<div class="registerdatachangecallback"><p>When the data watch notices a change in the data, all the callbacks
+in the dataWatchCallback array will be called.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">callback – {function(grid)} – </code>
+<p>function to be called</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>uid of the callback, can be used to deregister it again</p></div>
 </div>
 </li>
 <li><h3 id="registerRowBuilder">registerRowBuilder(rowBuilder)</h3>

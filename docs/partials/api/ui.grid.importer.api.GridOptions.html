@@ -6,7 +6,24 @@
 <div class="description"><p>GridOptions for importer feature, these are available to be <br />
 set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="importerErrorCallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
+<ul class="methods"><li><h3 id="importerDataAddCallback">importerDataAddCallback(grid, newObjects)</h3>
+<div class="importerdataaddcallback"><p>A mandatory callback function that adds data to the source data array.  The grid
+generally doesn't add rows to the source data array, it is tidier to handle this through a user
+callback.</p>
+
+<pre class="prettyprint linenums">
+     gridOptions.importerDataAddCallback: function( grid, newObjects ) {
+       $scope.myData = $scope.myData.concat( newObjects );
+     })
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're importing into, may be useful in some way</p></li>
+<li><code ng:non-bindable="">newObjects – {array} – </code>
+<p>an array of new objects that you should add to your data</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="importerErrorCallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
 <div class="importererrorcallback"><p>A callback function that provides custom error handling, rather
 than the standard grid behaviour of an alert box and a console message.  You 
 might use this to internationalise the console log messages, or to write to a 
@@ -89,10 +106,7 @@ gridOptions.importerNewObject = MyRes;
 </div>
 </li>
 <li><h3 id="importerShowMenu">importerShowMenu</h3>
-<div class="importershowmenu"><p>Whether or not to show an item in the grid menu.  If an item
-is to be shown in the grid menu then an <code>importerInputElement</code> must be 
-provided as well.  If there is no <code>importerInputElement</code> then the menu
-will be automatically suppressed, otherwise defaults to true.</p></div>
+<div class="importershowmenu"><p>Whether or not to show an item in the grid menu.  Defaults to true.</p></div>
 </li>
 </ul>
 </div>
