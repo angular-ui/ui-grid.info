@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-237a1a6 - 2014-10-15
+/*! ui-grid - v3.0.0-rc.12-4db003d - 2014-10-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11737,9 +11737,11 @@ module.filter('px', function() {
         compile: function () {
           return {
             pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-              var expandableRowHeaderColDef = {name: 'expandableButtons', width: 40};
-              expandableRowHeaderColDef.cellTemplate = $templateCache.get('ui-grid/expandableRowHeader');
-              uiGridCtrl.grid.addRowHeaderColumn(expandableRowHeaderColDef);
+              if (uiGridCtrl.grid.options.expandable.enableExpandableRowHeader ) {
+                var expandableRowHeaderColDef = {name: 'expandableButtons', width: 40};
+                expandableRowHeaderColDef.cellTemplate = $templateCache.get('ui-grid/expandableRowHeader');
+                uiGridCtrl.grid.addRowHeaderColumn(expandableRowHeaderColDef);
+              }
               uiGridExpandableService.initializeGrid(uiGridCtrl.grid);
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
