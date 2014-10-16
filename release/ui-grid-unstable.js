@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-8dd5dc3 - 2014-10-15
+/*! ui-grid - v3.0.0-rc.12-843c7b2 - 2014-10-16
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -13009,6 +13009,31 @@ module.filter('px', function() {
 
           /**
            * @ngdoc method
+           * @name importerHeaderFilter
+           * @methodOf ui.grid.importer.api:GridOptions
+           * @description A callback function that will filter (usually translate) a single
+           * header.  Used when you want to match the passed in column names to the column
+           * displayName after the header filter.
+           * 
+           * Your callback routine needs to return the filtered header value. 
+           * <pre>
+           *      gridOptions.importerHeaderFilter: function( displayName ) {
+           *        return $translate.instant( displayName );
+           *      })
+           * </pre>
+           * 
+           * or:
+           * <pre>
+           *      gridOptions.importerHeaderFilter: $translate.instant
+           * </pre>
+           * @param {string} displayName the displayName that we'd like to translate
+           * @returns {string} the translated name
+           * 
+           */
+          gridOptions.importerHeaderFilter = gridOptions.importerHeaderFilter || function( displayName ) { return displayName; };
+
+          /**
+           * @ngdoc method
            * @name importerErrorCallback
            * @methodOf ui.grid.importer.api:GridOptions
            * @description A callback function that provides custom error handling, rather
@@ -13082,6 +13107,34 @@ module.filter('px', function() {
            * 
            */
           gridOptions.importerShowMenu = gridOptions.importerShowMenu !== false;
+          
+          /**
+           * @ngdoc method
+           * @methodOf ui.grid.importer.api:GridOptions
+           * @name importerObjectCallback
+           * @description A callback that massages the data for each object.  For example,
+           * you might have data stored as a code value, but display the decode.  This callback
+           * can be used to change the decoded value back into a code.  Defaults to doing nothing.
+           * @param {Grid} grid in case you need it
+           * @param {object} newObject the new object as importer has created it, modify it
+           * then return the modified version
+           * @returns {object} the modified object
+           * @example
+           * <pre>
+           *   gridOptions.importerObjectCallback = function ( grid, newObject ) {
+           *     switch newObject.status {
+           *       case 'Active':
+           *         newObject.status = 1;
+           *         break;
+           *       case 'Inactive':
+           *         newObject.status = 2;
+           *         break;
+           *     }
+           *     return newObject;
+           *   };
+           * </pre>
+           */
+          gridOptions.importerObjectCallback = gridOptions.importerObjectCallback || function( grid, newObject ) { return newObject; };
         },
 
 
@@ -13158,6 +13211,7 @@ module.filter('px', function() {
             angular.forEach( service.parseJson( grid, importFile ), function( value, index ) {
               newObject = service.newObject( grid );
               angular.extend( newObject, value );
+              newObject = grid.options.importerObjectCallback( grid, newObject );
               newObjects.push( newObject );
             });
             
@@ -13304,7 +13358,7 @@ module.filter('px', function() {
                 newObject[ headerMapping[index] ] = field;
               }
             });
-            
+            newObject = grid.options.importerObjectCallback( grid, newObject );
             newObjects.push( newObject );
           });
           
@@ -13335,7 +13389,7 @@ module.filter('px', function() {
             });
             return headers;
           } else {
-            var lookupHash = service.flattenColumnDefs( grid.options.columnDefs );
+            var lookupHash = service.flattenColumnDefs( grid, grid.options.columnDefs );
             angular.forEach( headerRow, function( value, index ) {
               if ( lookupHash[value] ) {
                 headers.push( lookupHash[value] );
@@ -13355,9 +13409,12 @@ module.filter('px', function() {
          * the displayName, name and field, with each pointing to the field or name
          * (whichever is present).  Used to lookup column headers and decide what 
          * attribute name to give to the resulting field. 
+         * @param {Grid} grid the grid we're importing into
          * @param {array} columnDefs the columnDefs that we should flatten
+         * @returns {hash} the flattened version of the column def information, allowing
+         * us to look up a value by `flattenedHash[ headerValue ]`
          */
-        flattenColumnDefs: function( columnDefs ){
+        flattenColumnDefs: function( grid, columnDefs ){
           var flattenedHash = {};
           angular.forEach( columnDefs, function( columnDef, index) {
             if ( columnDef.name ){
@@ -13370,6 +13427,10 @@ module.filter('px', function() {
             
             if ( columnDef.displayName ){
               flattenedHash[ columnDef.displayName ] = columnDef.field || columnDef.name;
+            }
+            
+            if ( columnDef.displayName && grid.options.importerHeaderFilter ){
+              flattenedHash[ grid.options.importerHeaderFilter(columnDef.displayName) ] = columnDef.field || columnDef.name;
             }
           });
           

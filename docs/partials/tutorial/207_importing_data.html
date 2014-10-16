@@ -9,12 +9,20 @@ file from a custom file picker implemented by the user.</p>
 to other file formats if demand exists.</p>
 
 <p>For json format files the received elements are assumed to match the column.field 
-attributes in your columnDefs, and are loaded into the provided entity.  Optionally
-you can provide a custom function that maps each entity as it is imported.</p>
+attributes in your columnDefs, and are loaded into the provided entity.  </p>
 
 <p>For csv files the data is mapped to the columnDefs, with columns in the heading row in the 
 csv needing to match either the column.name or column.displayName.  Optionally you can
-provide a custom function that maps headings to column.name, and this will be used instead.</p>
+provide a custom function that maps headings to column.name, and this will be used instead, 
+you could use this to implement a custom "column picker" type routine.  If you are using
+internationalisation on the headers (say, via adding a cellHeaderFilter), then you can
+also optionally pass a filter function into the <code>importerHeaderFilterCallback</code> routine.
+This routine will be called on the displayName to try to match the translated text, if
+you provide this routine it must return an immediate translation, not a promise - so if 
+using angular-translate you need to use <code>$translate.instant</code>.</p>
+
+<p>Optionally you can provide a custom function that maps the data within each entity as it is 
+imported, refer the documentation for <code>importerObjectCallback</code>.</p>
 
 <p>To use the importer you need to include the ui-grid-importer directive on
 your grid, and you must provide a <code>gridOptions.importerDataAddCallback</code> function that adds
@@ -23,7 +31,8 @@ the created objects into your data array. </p>
 <p>The options and API for importer can be found at <a href="#/api/ui.grid.importer">ui.grid.importer</a>.</p>
 
 <p>The importer adds menu items to the grid menu, to use the native UI you need to enable
-the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Example">Example</h2>
+the grid menu using the gridOption <code>enableGridMenu</code>.  You can turn the menu items off by
+setting <code>importerShowMenu: false</code>.</p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we use the native grid menu to import a file.  You need to provide a file
 from your file system to use the tutorial, you can copy either import.json or import.csv
 as a test file.</p>

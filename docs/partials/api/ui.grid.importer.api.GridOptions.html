@@ -49,6 +49,59 @@ often the file content itself or the element that is in error</p></li>
 </ul>
 </div>
 </li>
+<li><h3 id="importerHeaderFilter">importerHeaderFilter(displayName)</h3>
+<div class="importerheaderfilter"><p>A callback function that will filter (usually translate) a single
+header.  Used when you want to match the passed in column names to the column
+displayName after the header filter.</p>
+
+<p>Your callback routine needs to return the filtered header value. 
+<pre class="prettyprint linenums">
+     gridOptions.importerHeaderFilter: function( displayName ) {
+       return $translate.instant( displayName );
+     })
+</pre>
+
+<p>or:
+<pre class="prettyprint linenums">
+     gridOptions.importerHeaderFilter: $translate.instant
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">displayName – {string} – </code>
+<p>the displayName that we'd like to translate</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>the translated name</p></div>
+</div>
+</li>
+<li><h3 id="importerObjectCallback">importerObjectCallback(grid, newObject)</h3>
+<div class="importerobjectcallback"><p>A callback that massages the data for each object.  For example,
+you might have data stored as a code value, but display the decode.  This callback
+can be used to change the decoded value back into a code.  Defaults to doing nothing.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>in case you need it</p></li>
+<li><code ng:non-bindable="">newObject – {object} – </code>
+<p>the new object as importer has created it, modify it
+then return the modified version</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the modified object</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridOptions.importerObjectCallback = function ( grid, newObject ) {
+  switch newObject.status {
+    case 'Active':
+      newObject.status = 1;
+      break;
+    case 'Inactive':
+      newObject.status = 2;
+      break;
+  }
+  return newObject;
+};
+</pre></div>
+</div>
+</li>
 <li><h3 id="importerProcessHeaders">importerProcessHeaders(grid, headerArray)</h3>
 <div class="importerprocessheaders"><p>A callback function that will process headers using custom
 logic.  Set this callback function if the headers that your user will provide in their 
