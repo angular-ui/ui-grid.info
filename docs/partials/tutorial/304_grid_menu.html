@@ -16,10 +16,10 @@ want them also internationalized in the grid menu.  The translate needs to retur
 or a promise that will resolve to a string.  In the example below we create a fake 
 internationalization function that waits 1 second then prefixes each column with "col: ".</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-63" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-64"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-65" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-66"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-63" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-63">
+<pre class="prettyprint linenums" ng-set-text="index.html-65" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-65">
   <div ng-controller="MainCtrl">
     <div id="grid1" ui-grid="gridOptions" ui-grid-exporter ui-grid-selection class="grid"></div>
   </div>
@@ -99,8 +99,8 @@ internationalization function that waits 1 second then prefixes each column with
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-64"></pre>
-<script type="text/ng-template" id="scenario.js-64">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-66"></pre>
+<script type="text/ng-template" id="scenario.js-66">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   describe('grid menu', function() {
     it('grid1 should have three visible columns', function () {
@@ -133,5 +133,5 @@ internationalization function that waits 1 second then prefixes each column with
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-63" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-65" ng-eval-javascript="app.js"></div></div>
 </div>

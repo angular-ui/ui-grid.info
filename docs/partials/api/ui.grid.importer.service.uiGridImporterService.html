@@ -7,7 +7,15 @@
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="addObjects">addObjects(grid, newObjects)</h3>
 <div class="addobjects"><p>Inserts our new objects into the grid data, and
-sets the rows to dirty if the rowEdit feature is being used</p><h4 id="Parameters">Parameters</h4>
+sets the rows to dirty if the rowEdit feature is being used</p>
+
+<p>Does this by registering a watch on dataChanges, which essentially
+is waiting on the result of the grid data watch, and downstream processing.</p>
+
+<p>When the callback is called, it deregisters itself - we don't want to run
+again next time data is added.</p>
+
+<p>If we never get called, we deregister on destroy.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid we're importing into</p></li>
 <li><code ng:non-bindable="">newObjects – {array} – </code>

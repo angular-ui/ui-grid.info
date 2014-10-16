@@ -40,6 +40,16 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <li><h3 id="buildStyles">buildStyles()</h3>
 <div class="buildstyles"><p>calls each styleComputation function</p></div>
 </li>
+<li><h3 id="callDataChangeCallbacks">callDataChangeCallbacks(type)</h3>
+<div class="calldatachangecallbacks"><p>Calls the callbacks based on the type of data change that
+has occurred. Always calls the ALL callbacks, calls the ROW, EDIT and COLUMN callbacks if the 
+event type is matching, or if the type is ALL.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">type – {number} – </code>
+<p>the type of event that occurred - one of the 
+uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="createLeftContainer">createLeftContainer()</h3>
 <div class="createleftcontainer"><p>creates the left render container if it doesn't already exist</p></div>
 </li>
@@ -106,10 +116,10 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="isRTL">isRTL()</h3>
 <div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>
@@ -119,6 +129,18 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 rowBuilder to further process the row</p>
 
 <p>Rows are identified using the gridOptions.rowEquality function</p></div>
+</li>
+<li><h3 id="notifyDataChange">notifyDataChange(grid, type)</h3>
+<div class="notifydatachange"><p>Notifies us that a data change has occurred, used in the public
+api for users to tell us when they've changed data or some other event that 
+our watches cannot pick up</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid</p></li>
+<li><code ng:non-bindable="">type – {string} – </code>
+<p>the type of event that occurred - one of the 
+uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
+</ul>
+</div>
 </li>
 <li><h3 id="preCompileCellTemplates">preCompileCellTemplates()</h3>
 <div class="precompilecelltemplates"><p>precompiles all cell templates</p></div>
@@ -175,11 +197,29 @@ to alter the set of columns, as long as the count is not modified.</p><h4 id="Pa
 – <p>Updated renderable columns</p></div>
 </div>
 </li>
-<li><h3 id="registerDataChangeCallback">registerDataChangeCallback(callback)</h3>
-<div class="registerdatachangecallback"><p>When the data watch notices a change in the data, all the callbacks
-in the dataWatchCallback array will be called.</p><h4 id="Parameters">Parameters</h4>
+<li><h3 id="registerDataChangeCallback">registerDataChangeCallback(callback, types)</h3>
+<div class="registerdatachangecallback"><p>When a data change occurs, the data change callbacks of the specified type
+will be called.  The rules are:</p>
+
+<ul>
+<li>when the data watch fires, that is considered a ROW change (the data watch only notices
+added or removed rows)</li>
+<li>when the api is called to inform us of a change, the declared type of that change is used</li>
+<li>when a cell edit completes, the EDIT callbacks are triggered</li>
+<li>when the columnDef watch fires, the COLUMN callbacks are triggered</li>
+</ul>
+
+<p>For a given event:
+- ALL calls ROW, EDIT, COLUMN and ALL callbacks
+- ROW calls ROW and ALL callbacks
+- EDIT calls EDIT and ALL callbacks
+- COLUMN calls COLUMN and ALL callbacks</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">callback – {function(grid)} – </code>
 <p>function to be called</p></li>
+<li><code ng:non-bindable="">types – {array} – </code>
+<p>the types of data change you want to be informed of.  Values from 
+the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN ).  Optional and defaults to
+ALL </p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{string}</code>

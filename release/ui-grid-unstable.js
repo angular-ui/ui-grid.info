@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-11bf7bd - 2014-10-16
+/*! ui-grid - v3.0.0-rc.12-8bfee6c - 2014-10-16
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -87,7 +87,14 @@
     },
 
     // TODO(c0bra): Create full list of these somehow. NOTE: do any allow a space before or after them?
-    CURRENCY_SYMBOLS: ['ƒ', '$', '£', '$', '¤', '¥', '៛', '₩', '₱', '฿', '₫']
+    CURRENCY_SYMBOLS: ['ƒ', '$', '£', '$', '¤', '¥', '៛', '₩', '₱', '฿', '₫'],
+    
+    dataChange: {
+      ALL: 'all',
+      EDIT: 'edit',
+      ROW: 'row',
+      COLUMN: 'column'
+    }
   });
 
 })();
@@ -135,16 +142,36 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
         },
         post: function($scope, $elm, $attrs, uiGridCtrl) {
           $elm.addClass($scope.col.getColClass(false));
-          if ($scope.col.cellClass) {
-            //var contents = angular.element($elm[0].getElementsByClassName('ui-grid-cell-contents'));
+
+          var classAdded;
+          var updateClass = function( grid ){
             var contents = $elm;
+            if ( classAdded ){
+              contents.removeClass( classAdded );
+              classAdded = null;
+            }
+
             if (angular.isFunction($scope.col.cellClass)) {
-              contents.addClass($scope.col.cellClass($scope.grid, $scope.row, $scope.col, $scope.rowRenderIndex, $scope.colRenderIndex));
+              classAdded = $scope.col.cellClass($scope.grid, $scope.row, $scope.col, $scope.rowRenderIndex, $scope.colRenderIndex);
             }
             else {
-              contents.addClass($scope.col.cellClass);
+              classAdded = $scope.col.cellClass;
             }
+            contents.addClass(classAdded);
+          };
+
+          if ($scope.col.cellClass) {
+            updateClass();
           }
+          
+          // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
+          var watchUid = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN, uiGridConstants.dataChange.EDIT]);
+          
+          var deregisterFunction = function() {
+           $scope.grid.deregisterDataChangeCallback( watchUid ); 
+          };
+          
+          $scope.$on( '$destroy', deregisterFunction );
         }
       };
     }
@@ -816,6 +843,39 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
     
             var $contentsElm = angular.element( $elm[0].querySelectorAll('.ui-grid-cell-contents') );
     
+
+            // apply any headerCellClass
+            var classAdded;
+            var updateClass = function( grid ){
+              var contents = $elm;
+              if ( classAdded ){
+                contents.removeClass( classAdded );
+                classAdded = null;
+              }
+  
+              if (angular.isFunction($scope.col.headerCellClass)) {
+                classAdded = $scope.col.headerCellClass($scope.grid, $scope.row, $scope.col, $scope.rowRenderIndex, $scope.colRenderIndex);
+              }
+              else {
+                classAdded = $scope.col.headerCellClass;
+              }
+              contents.addClass(classAdded);
+            };
+  
+            if ($scope.col.headerCellClass) {
+              updateClass();
+            }
+            
+            // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
+            var watchUid = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
+
+            var deregisterFunction = function() {
+              $scope.grid.deregisterDataChangeCallback( watchUid ); 
+            };
+
+            $scope.$on( '$destroy', deregisterFunction );            
+
+
             // Figure out whether this column is sortable or not
             if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
               $scope.sortable = true;
@@ -2909,6 +2969,8 @@ angular.module('ui.grid')
 
               self.grid.preCompileCellTemplates();
 
+              self.grid.callDataChangeCallbacks(uiGridConstants.dataChange.COLUMN);
+              
               self.grid.refresh();
             });
         }
@@ -2938,9 +3000,7 @@ angular.module('ui.grid')
 
                 $scope.$evalAsync(function() {
                   self.grid.refreshCanvas(true);
-                  angular.forEach( self.grid.dataChangeCallbacks, function( callback, uid ){
-                    callback( self.grid );
-                  });
+                  self.grid.callDataChangeCallbacks(uiGridConstants.dataChange.ROW);
                 });
               });
           });
@@ -3416,6 +3476,23 @@ angular.module('ui.grid')
    * </pre>
    */
   self.api.registerEvent( 'core', 'sortChanged' );
+
+  /**
+   * @ngdoc method
+   * @name notifyDataChange
+   * @methodOf ui.grid.core.api:PublicApi
+   * @description Notify the grid that a data or config change has occurred,
+   * where that change isn't something the grid was otherwise noticing.  This 
+   * might be particularly relevant where you've changed values within the data
+   * and you'd like cell classes to be re-evaluated, or changed config within 
+   * the columnDef and you'd like headerCellClasses to be re-evaluated.
+   * @param {Grid} grid the grid
+   * @param {string} type one of the 
+   * uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN), which tells
+   * us which refreshes to fire.
+   * 
+   */
+  self.api.registerMethod( 'core', 'notifyDataChange', this.notifyDataChange );
 };
 
     /**
@@ -3464,18 +3541,41 @@ angular.module('ui.grid')
     this.rowBuilders.push(rowBuilder);
   };
 
+
   /**
    * @ngdoc function
    * @name registerDataChangeCallback
    * @methodOf ui.grid.class:Grid
-   * @description When the data watch notices a change in the data, all the callbacks
-   * in the dataWatchCallback array will be called.
+   * @description When a data change occurs, the data change callbacks of the specified type
+   * will be called.  The rules are:
+   * 
+   * - when the data watch fires, that is considered a ROW change (the data watch only notices
+   *   added or removed rows)
+   * - when the api is called to inform us of a change, the declared type of that change is used
+   * - when a cell edit completes, the EDIT callbacks are triggered
+   * - when the columnDef watch fires, the COLUMN callbacks are triggered
+   * 
+   * For a given event:
+   * - ALL calls ROW, EDIT, COLUMN and ALL callbacks
+   * - ROW calls ROW and ALL callbacks
+   * - EDIT calls EDIT and ALL callbacks
+   * - COLUMN calls COLUMN and ALL callbacks
+   * 
    * @param {function(grid)} callback function to be called
+   * @param {array} types the types of data change you want to be informed of.  Values from 
+   * the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN ).  Optional and defaults to
+   * ALL 
    * @returns {string} uid of the callback, can be used to deregister it again
    */
-  Grid.prototype.registerDataChangeCallback = function registerDataChangeCallback(callback) {
+  Grid.prototype.registerDataChangeCallback = function registerDataChangeCallback(callback, types) {
     var uid = gridUtil.nextUid();
-    this.dataChangeCallbacks[uid] = callback;
+    if ( !types ){
+      types = [uiGridConstants.dataChange.ALL];
+    }
+    if ( !Array.isArray(types)){
+      gridUtil.logError("Expected types to be an array or null in registerDataChangeCallback, value passed was: " + types );
+    }
+    this.dataChangeCallbacks[uid] = { callback: callback, types: types };
     return uid;
   };
 
@@ -3489,6 +3589,50 @@ angular.module('ui.grid')
   Grid.prototype.deregisterDataChangeCallback = function deregisterDataChangeCallback(uid) {
     delete this.dataChangeCallbacks[uid];
   };
+
+  /**
+   * @ngdoc function
+   * @name callDataChangeCallbacks
+   * @methodOf ui.grid.class:Grid
+   * @description Calls the callbacks based on the type of data change that
+   * has occurred. Always calls the ALL callbacks, calls the ROW, EDIT and COLUMN callbacks if the 
+   * event type is matching, or if the type is ALL.
+   * @param {number} type the type of event that occurred - one of the 
+   * uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)
+   */
+  Grid.prototype.callDataChangeCallbacks = function callDataChangeCallbacks(type) {
+    angular.forEach( this.dataChangeCallbacks, function( callback, uid ){
+      if ( callback.types.indexOf( uiGridConstants.dataChange.ALL ) !== -1 ||
+           callback.types.indexOf( type ) !== -1 ||
+           type === uiGridConstants.dataChange.ALL ) {
+        callback.callback( this );
+      }
+    });
+  };
+  
+  /**
+   * @ngdoc function
+   * @name notifyDataChange
+   * @methodOf ui.grid.class:Grid
+   * @description Notifies us that a data change has occurred, used in the public
+   * api for users to tell us when they've changed data or some other event that 
+   * our watches cannot pick up
+   * @param {Grid} grid the grid
+   * @param {string} type the type of event that occurred - one of the 
+   * uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)
+   */
+  Grid.prototype.notifyDataChange = function notifyDataChange(grid, type) {
+    var constants = uiGridConstants.dataChange;
+    if ( type === constants.ALL || 
+         type === constants.COLUMN ||
+         type === constants.EDIT ||
+         type === constants.ROW ){
+      grid.callDataChangeCallbacks( type );
+    } else {
+      gridUtil.logError("Notified of a data change, but the type was not recognised, so no action taken, type was: " + type);
+    }
+  };
+    
 
   /**
    * @ngdoc function
@@ -5589,6 +5733,15 @@ angular.module('ui.grid')
      */
     self.cellClass = colDef.cellClass;
 
+    /**
+     * @ngdoc property
+     * @name headerCellClass
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description headerCellClass can be a string specifying the class to append to a cell
+     * or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name
+     *
+     */
+    self.headerCellClass = colDef.headerCellClass;
 
     /**
      * @ngdoc property
@@ -10868,7 +11021,7 @@ module.filter('px', function() {
 
           function setFocused() {
             var div = $elm.find('div');
-            console.log('setFocused: ' + div[0].parentElement.className);
+            // gridUtil.logDebug('setFocused: ' + div[0].parentElement.className);
             div[0].focus();
             div.attr("tabindex", 0);
             $scope.grid.queueRefresh();
@@ -11286,7 +11439,7 @@ module.filter('px', function() {
             }
 
             function beginEditFocus(evt) {
-              console.log('begin edit');
+              // gridUtil.logDebug('begin edit');
               evt.stopPropagation();
               beginEdit();
             }
@@ -11450,6 +11603,7 @@ module.filter('px', function() {
               isFocusedBeforeEdit = false;
               inEdit = false;
               registerBeginEditEvents();
+              $scope.grid.api.core.notifyDataChange( $scope.grid, uiGridConstants.dataChange.EDIT );
             }
 
             function cancelEdit() {
@@ -12920,15 +13074,17 @@ module.filter('px', function() {
    *
    *  @description Services for importer feature
    */
-  module.service('uiGridImporterService', ['$q', 'uiGridImporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService', '$window',
-    function ($q, uiGridImporterConstants, gridUtil, $compile, $interval, i18nService, $window) {
+  module.service('uiGridImporterService', ['$q', 'uiGridConstants', 'uiGridImporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService', '$window',
+    function ($q, uiGridConstants, uiGridImporterConstants, gridUtil, $compile, $interval, i18nService, $window) {
 
       var service = {
 
-        initializeGrid: function (grid) {
+        initializeGrid: function ($scope, grid) {
 
           //add feature namespace and any properties to grid for needed state
-          grid.importer = {};
+          grid.importer = {
+            $scope: $scope 
+          };
           
           this.defaultGridOptions(grid.options);
 
@@ -13493,6 +13649,14 @@ module.filter('px', function() {
          * @description Inserts our new objects into the grid data, and
          * sets the rows to dirty if the rowEdit feature is being used
          * 
+         * Does this by registering a watch on dataChanges, which essentially
+         * is waiting on the result of the grid data watch, and downstream processing.
+         * 
+         * When the callback is called, it deregisters itself - we don't want to run
+         * again next time data is added.
+         * 
+         * If we never get called, we deregister on destroy.
+         * 
          * @param {Grid} grid the grid we're importing into
          * @param {array} newObjects the objects we want to insert into the grid data
          * @returns {object} the new object
@@ -13502,10 +13666,17 @@ module.filter('px', function() {
             var callbackId = grid.registerDataChangeCallback( function() {
               grid.api.rowEdit.setRowsDirty( grid, newObjects );
               grid.deregisterDataChangeCallback( callbackId );
-            });
+            }, [uiGridConstants.dataChange.ROW] );
+            
+            var deregisterClosure = function() {
+              grid.deregisterDataChangeCallback( callbackId );
+            };
+  
+            grid.importer.$scope.$on( '$destroy', deregisterClosure );
           }
 
           grid.options.importerDataAddCallback( grid, newObjects );
+          
         },
         
         
@@ -13571,7 +13742,7 @@ module.filter('px', function() {
         require: '^uiGrid',
         scope: false,
         link: function ($scope, $elm, $attrs, uiGridCtrl) {
-          uiGridImporterService.initializeGrid(uiGridCtrl.grid);
+          uiGridImporterService.initializeGrid($scope, uiGridCtrl.grid);
         }
       };
     }
@@ -14950,6 +15121,9 @@ module.filter('px', function() {
            *
            *  @description Public Api for rowEdit feature
            */
+          
+          grid.rowEdit = {};
+          
           var publicApi = {
             events: {
               rowEdit: {
@@ -15017,7 +15191,7 @@ module.filter('px', function() {
                  * 
                  */
                 getDirtyRows: function (grid) {
-                  return grid.rowEditDirtyRows ? grid.rowEditDirtyRows : [];
+                  return grid.rowEdit.dirtyRows ? grid.rowEdit.dirtyRows : [];
                 },
                 /**
                  * @ngdoc method
@@ -15032,7 +15206,7 @@ module.filter('px', function() {
                  * 
                  */
                 getErrorRows: function (grid) {
-                  return grid.rowEditErrorRows ? grid.rowEditErrorRows : [];
+                  return grid.rowEdit.errorRows ? grid.rowEdit.errorRows : [];
                 },
                 /**
                  * @ngdoc method
@@ -15176,8 +15350,8 @@ module.filter('px', function() {
             delete gridRow.isDirty;
             delete gridRow.isError;
             delete gridRow.rowEditSaveTimer;
-            self.removeRow( grid.rowEditErrorRows, gridRow );
-            self.removeRow( grid.rowEditDirtyRows, gridRow );
+            self.removeRow( grid.rowEdit.errorRows, gridRow );
+            self.removeRow( grid.rowEdit.dirtyRows, gridRow );
           };
         },
         
@@ -15199,11 +15373,11 @@ module.filter('px', function() {
 
             gridRow.isError = true;
             
-            if (!grid.rowEditErrorRows){
-              grid.rowEditErrorRows = [];
+            if (!grid.rowEdit.errorRows){
+              grid.rowEdit.errorRows = [];
             }
-            if (!service.isRowPresent( grid.rowEditErrorRows, gridRow ) ){
-              grid.rowEditErrorRows.push( gridRow );
+            if (!service.isRowPresent( grid.rowEdit.errorRows, gridRow ) ){
+              grid.rowEdit.errorRows.push( gridRow );
             }
           };
         },
@@ -15214,7 +15388,7 @@ module.filter('px', function() {
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
          * @name removeRow
          * @description  Removes a row from a cache of rows - either
-         * grid.rowEditErrorRows or grid.rowEditDirtyRows.  If the row
+         * grid.rowEdit.errorRows or grid.rowEdit.dirtyRows.  If the row
          * is not present silently does nothing. 
          * @param {array} rowArray the array from which to remove the row
          * @param {GridRow} gridRow the row that should be removed
@@ -15265,7 +15439,7 @@ module.filter('px', function() {
          */
         flushDirtyRows: function(grid){
           var promises = [];
-          angular.forEach(grid.rowEditDirtyRows, function( gridRow ){
+          angular.forEach(grid.rowEdit.dirtyRows, function( gridRow ){
             service.saveRow( grid, gridRow )();
             promises.push( gridRow.rowEditSavePromise );
           });
@@ -15291,13 +15465,13 @@ module.filter('px', function() {
           if ( !gridRow ){ gridUtil.logError( 'Unable to find rowEntity in grid data, dirty flag cannot be set' ); return; }
 
           if ( newValue !== previousValue || gridRow.isDirty ){
-            if ( !grid.rowEditDirtyRows ){
-              grid.rowEditDirtyRows = [];
+            if ( !grid.rowEdit.dirtyRows ){
+              grid.rowEdit.dirtyRows = [];
             }
             
             if ( !gridRow.isDirty ){
               gridRow.isDirty = true;
-              grid.rowEditDirtyRows.push( gridRow );
+              grid.rowEdit.dirtyRows.push( gridRow );
             }
             
             delete gridRow.isError;
@@ -15457,13 +15631,13 @@ module.filter('px', function() {
           myDataRows.forEach( function( value, index ){
             gridRow = grid.getRow( value );
             if ( gridRow ){
-              if ( !grid.rowEditDirtyRows ){
-                grid.rowEditDirtyRows = [];
+              if ( !grid.rowEdit.dirtyRows ){
+                grid.rowEdit.dirtyRows = [];
               }
               
               if ( !gridRow.isDirty ){
                 gridRow.isDirty = true;
-                grid.rowEditDirtyRows.push( gridRow );
+                grid.rowEdit.dirtyRows.push( gridRow );
               }
               
               delete gridRow.isError;
