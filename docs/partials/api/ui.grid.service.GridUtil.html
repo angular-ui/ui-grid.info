@@ -131,6 +131,33 @@ GridUtil.getTemplate(url).then(function (contents) {
 'object'</p></div>
 </div>
 </li>
+<li><h3 id="logDebug">logDebug(logMessage)</h3>
+<div class="logdebug"><p>wraps the $log method, allowing us to choose different
+treatment within ui-grid if we so desired.  At present we only log
+debug messages if uiGridConstants.LOG<em>DEBUG</em>MESSAGES is set to true</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">logMessage – {string} – </code>
+<p>message to be logged to the console</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="logError">logError(logMessage)</h3>
+<div class="logerror"><p>wraps the $log method, allowing us to choose different
+treatment within ui-grid if we so desired.  At present we only log
+error messages if uiGridConstants.LOG<em>ERROR</em>MESSAGES is set to true</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">logMessage – {string} – </code>
+<p>message to be logged to the console</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="logWarn">logWarn(logMessage)</h3>
+<div class="logwarn"><p>wraps the $log method, allowing us to choose different
+treatment within ui-grid if we so desired.  At present we only log
+warning messages if uiGridConstants.LOG<em>WARN</em>MESSAGES is set to true</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">logMessage – {string} – </code>
+<p>message to be logged to the console</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="newId">newId()</h3>
 <div class="newid"><p>Return a unique ID string</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{string}</code>
@@ -143,22 +170,22 @@ var id = GridUtil.newId();
 </pre></div>
 </div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, scrollLeft)</h3>
-<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p><h4 id="Parameters">Parameters</h4>
+<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element)</h3>
+<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>The element to normalize the <code>scrollLeft</code> value for</p></li>
-<li><code ng:non-bindable="">scrollLeft – {int} – </code>
-<p>The <code>scrollLeft</code> value to denormalize.</p></li>
+<p>The element to get the <code>scrollLeft</code> from.</p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{int}</code>
 – <p>A normalized scrollLeft value for the current browser.</p></div>
 </div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element)</h3>
-<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p><h4 id="Parameters">Parameters</h4>
+<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, scrollLeft)</h3>
+<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>The element to get the <code>scrollLeft</code> from.</p></li>
+<p>The element to normalize the <code>scrollLeft</code> value for</p></li>
+<li><code ng:non-bindable="">scrollLeft – {int} – </code>
+<p>The <code>scrollLeft</code> value to denormalize.</p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{int}</code>
