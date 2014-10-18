@@ -26,7 +26,10 @@ imported, refer the documentation for <code>importerObjectCallback</code>.</p>
 
 <p>To use the importer you need to include the ui-grid-importer directive on
 your grid, and you must provide a <code>gridOptions.importerDataAddCallback</code> function that adds
-the created objects into your data array. </p>
+the created objects into your data array.  You also need to have installed the csv-js library,
+<code>bower install --savedev csv-js</code>.  You can configure the csv-js library through use of globals,
+for example <code>CSV.DETECT_TYPES = false;</code>, refer to the {https://github.com/gkindel/CSV-JS csv-js documentation} 
+for more information. </p>
 
 <p>The options and API for importer can be found at <a href="#/api/ui.grid.importer">ui.grid.importer</a>.</p>
 

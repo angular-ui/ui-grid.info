@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-3a9593f - 2014-10-16
+/*! ui-grid - v3.0.0-rc.12-135cbcf - 2014-10-18
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1115,12 +1115,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             gridUtil.disableAnimations($elm);
 
             function updateColumnWidths() {
-              var asterisksArray = [],
-                  percentArray = [],
-                  manualArray = [],
-                  asteriskNum = 0,
-                  totalWidth = 0;
-
               // Get the width of the viewport
               var availableWidth = containerCtrl.colContainer.getViewportWidth();
 
@@ -1132,186 +1126,89 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               // var equalWidthColumnCount = columnCount = uiGridCtrl.grid.options.columnDefs.length;
               // var equalWidth = availableWidth / equalWidthColumnCount;
 
-              // The last column we processed
-              var lastColumn;
-
-              var manualWidthSum = 0;
-
-              var canvasWidth = 0;
-
-              var ret = '';
-
-
-              // uiGridCtrl.grid.columns.forEach(function(column, i) {
-
-              var columnCache = containerCtrl.colContainer.visibleColumnCache;
-
-              columnCache.forEach(function(column, i) {
-                // ret = ret + ' .grid' + uiGridCtrl.grid.id + ' .col' + i + ' { width: ' + equalWidth + 'px; left: ' + left + 'px; }';
-                //var colWidth = (typeof(c.width) !== 'undefined' && c.width !== undefined) ? c.width : equalWidth;
-
-                // Skip hidden columns
-                if (!column.visible) { return; }
-
-                var colWidth,
-                    isPercent = false;
-
-                if (!angular.isNumber(column.width)) {
-                  isPercent = isNaN(column.width) ? gridUtil.endsWith(column.width, "%") : false;
+              var columnCache = containerCtrl.colContainer.visibleColumnCache,
+                  canvasWidth = 0,
+                  asteriskNum = 0,
+                  hasVariableWidth = false;
+              
+              var getColWidth = function(column){
+                if (column.widthType === "manual"){ 
+                  return +column.width; 
                 }
-
-                if (angular.isString(column.width) && column.width.indexOf('*') !== -1) { //  we need to save it until the end to do the calulations on the remaining width.
-                  asteriskNum = parseInt(asteriskNum + column.width.length, 10);
-                  
-                  asterisksArray.push(column);
+                else if (column.widthType === "percent"){ 
+                  return parseInt(column.width.replace(/%/g, ''), 10) * availableWidth / 100;
                 }
-                else if (isPercent) { // If the width is a percentage, save it until the very last.
-                  percentArray.push(column);
+                else if (column.widthType === "auto"){ 
+                  var oneAsterisk = parseInt(availableWidth / asteriskNum, 10);
+                  return column.width.length * oneAsterisk; 
                 }
-                else if (angular.isNumber(column.width)) {
-                  manualWidthSum = parseInt(manualWidthSum + column.width, 10);
-                  
-                  canvasWidth = parseInt(canvasWidth, 10) + parseInt(column.width, 10);
-
-                  column.drawnWidth = column.width;
-
+              };
+              
+              // Populate / determine column width types:
+              columnCache.forEach(function(column){
+                column.widthType = null;
+                if (isFinite(+column.width)){
+                  column.widthType = "manual";
+                }
+                else if (gridUtil.endsWith(column.width, "%")){
+                  column.widthType = "percent";
+                  hasVariableWidth = true;
+                }
+                else if (angular.isString(column.width) && column.width.indexOf('*') !== -1){
+                  column.widthType = "auto";
+                  asteriskNum += column.width.length;
+                  hasVariableWidth = true;
                 }
               });
-
-              // Get the remaining width (available width subtracted by the manual widths sum)
-              var remainingWidth = availableWidth - manualWidthSum;
-
-              var i, column, colWidth;
-
-              if (percentArray.length > 0) {
-                // Pre-process to make sure they're all within any min/max values
-                for (i = 0; i < percentArray.length; i++) {
-                  column = percentArray[i];
-
-                  var percent = parseInt(column.width.replace(/%/g, ''), 10) / 100;
-
-                  colWidth = parseInt(percent * remainingWidth, 10);
-
-                  if (column.colDef.minWidth && colWidth < column.colDef.minWidth) {
-                    colWidth = column.colDef.minWidth;
-
-                    remainingWidth = remainingWidth - colWidth;
-
-                    canvasWidth += colWidth;
-                    column.drawnWidth = colWidth;
-
-                    // Remove this element from the percent array so it's not processed below
-                    percentArray.splice(i, 1);
-                  }
-                  else if (column.colDef.maxWidth && colWidth > column.colDef.maxWidth) {
-                    colWidth = column.colDef.maxWidth;
-
-                    remainingWidth = remainingWidth - colWidth;
-
-                    canvasWidth += colWidth;
-                    column.drawnWidth = colWidth;
-
-                    // Remove this element from the percent array so it's not processed below
-                    percentArray.splice(i, 1);
-                  }
+              
+              // For sorting, calculate width from first to last:
+              var colWidthPriority = ["manual", "percent", "auto"];
+              columnCache.filter(function(column){
+                // Only draw visible items with a widthType
+                return (column.visible && column.widthType); 
+              }).sort(function(a,b){
+                // Calculate widths in order, so that manual comes first, etc.
+                return colWidthPriority.indexOf(a.widthType) - colWidthPriority.indexOf(b.widthType);
+              }).forEach(function(column){
+                // Calculate widths:
+                var colWidth = getColWidth(column);
+                if (column.minWidth){
+                  colWidth = Math.max(colWidth, column.minWidth);
                 }
-
-                percentArray.forEach(function(column) {
-                  var percent = parseInt(column.width.replace(/%/g, ''), 10) / 100;
-                  var colWidth = parseInt(percent * remainingWidth, 10);
-
-                  canvasWidth += colWidth;
-
-                  column.drawnWidth = colWidth;
-                });
-              }
-
-              if (asterisksArray.length > 0) {
-                var asteriskVal = parseInt(remainingWidth / asteriskNum, 10);
-
-                 // Pre-process to make sure they're all within any min/max values
-                for (i = 0; i < asterisksArray.length; i++) {
-                  column = asterisksArray[i];
-
-                  colWidth = parseInt(asteriskVal * column.width.length, 10);
-
-                  if (column.colDef.minWidth && colWidth < column.colDef.minWidth) {
-                    colWidth = column.colDef.minWidth;
-
-                    remainingWidth = remainingWidth - colWidth;
-                    asteriskNum--;
-
-                    canvasWidth += colWidth;
-                    column.drawnWidth = colWidth;
-
-                    lastColumn = column;
-
-                    // Remove this element from the percent array so it's not processed below
-                    asterisksArray.splice(i, 1);
-                  }
-                  else if (column.colDef.maxWidth && colWidth > column.colDef.maxWidth) {
-                    colWidth = column.colDef.maxWidth;
-
-                    remainingWidth = remainingWidth - colWidth;
-                    asteriskNum--;
-
-                    canvasWidth += colWidth;
-                    column.drawnWidth = colWidth;
-
-                    // Remove this element from the percent array so it's not processed below
-                    asterisksArray.splice(i, 1);
-                  }
+                if (column.maxWidth){
+                  colWidth = Math.min(colWidth, column.maxWidth);
                 }
-
-                // Redo the asterisk value, as we may have removed columns due to width constraints
-                asteriskVal = parseInt(remainingWidth / asteriskNum, 10);
-
-                asterisksArray.forEach(function(column) {
-                  var colWidth = parseInt(asteriskVal * column.width.length, 10);
-
-                  canvasWidth += colWidth;
-
-                  column.drawnWidth = colWidth;
-                });
-              }
-
+                column.drawnWidth = Math.floor(colWidth);
+                canvasWidth += column.drawnWidth;
+              });
+              
               // If the grid width didn't divide evenly into the column widths and we have pixels left over, dole them out to the columns one by one to make everything fit
-              var leftoverWidth = availableWidth - parseInt(canvasWidth, 10);
+              var leftoverWidth = availableWidth - canvasWidth;
 
-              if (leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
-                var variableColumn = false;
-                // uiGridCtrl.grid.columns.forEach(function(col) {
-                columnCache.forEach(function(col) {
-                  if (col.width && !angular.isNumber(col.width)) {
-                    variableColumn = true;
+              if (hasVariableWidth && leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
+                var prevLeftover = leftoverWidth;
+                var remFn = function (column) {
+                  if (leftoverWidth > 0 && column.widthType === "auto" || column.widthType === "percent") {
+                    column.drawnWidth = column.drawnWidth + 1;
+                    canvasWidth = canvasWidth + 1;
+                    leftoverWidth--;
                   }
-                });
-
-                if (variableColumn) {
-                  var remFn = function (column) {
-                    if (leftoverWidth > 0) {
-                      column.drawnWidth = column.drawnWidth + 1;
-                      canvasWidth = canvasWidth + 1;
-                      leftoverWidth--;
-                    }
-                  };
-                  while (leftoverWidth > 0) {
-                    columnCache.forEach(remFn);
-                  }
+                };
+                while (leftoverWidth > 0 && leftoverWidth !== prevLeftover ) {
+                  prevLeftover = leftoverWidth;
+                  columnCache.forEach(remFn);
                 }
               }
-
-              if (canvasWidth < availableWidth) {
-                canvasWidth = availableWidth;
-              }
+              canvasWidth = Math.max(canvasWidth, availableWidth);
 
               // Build the CSS
               // uiGridCtrl.grid.columns.forEach(function (column) {
+              var ret = '';
               columnCache.forEach(function (column) {
                 ret = ret + column.getColClassDefinition();
               });
 
-              // Add the vertical scrollbar width back in to the canvas width, it's taken out in getCanvasWidth
+              // Add the vertical scrollbar width back in to the canvas width, it's taken out in getViewportWidth
               if (grid.verticalScrollbarWidth) {
                 canvasWidth = canvasWidth + grid.verticalScrollbarWidth;
               }
@@ -1350,6 +1247,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
   }]);
 
 })();
+
 (function(){
 
 angular.module('ui.grid')
@@ -3213,12 +3111,7 @@ angular.module('ui.grid').directive('uiGrid',
 
             $elm.addClass('ui-grid-pinned-container-' + $scope.side);
 
-            function updateContainerDimensions() {
-              // gridUtil.logDebug('update ' + $scope.side + ' dimensions');
-
-              var ret = '';
-
-              // Column containers
+            function updateContainerWidth() {
               if ($scope.side === 'left' || $scope.side === 'right') {
                 var cols = grid.renderContainers[$scope.side].visibleColumnCache;
                 var width = 0;
@@ -3228,6 +3121,17 @@ angular.module('ui.grid').directive('uiGrid',
                 }
 
                 myWidth = width;
+              }              
+            }
+            
+            function updateContainerDimensions() {
+              // gridUtil.logDebug('update ' + $scope.side + ' dimensions');
+
+              var ret = '';
+              
+              // Column containers
+              if ($scope.side === 'left' || $scope.side === 'right') {
+                updateContainerWidth();
 
                 // gridUtil.logDebug('myWidth', myWidth);
 
@@ -3243,6 +3147,9 @@ angular.module('ui.grid').directive('uiGrid',
             }
 
             grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
+              if ( myWidth === 0 ){
+                updateContainerWidth();
+              }
               // Subtract our own width
               adjustment.width -= myWidth;
 
@@ -6290,6 +6197,17 @@ angular.module('ui.grid')
 (function(){
 
 angular.module('ui.grid')
+  
+  /**
+   * @ngdoc function
+   * @name ui.grid.class:GridRenderContainer
+   * @description The grid has render containers, allowing the ability to have pinned columns.  If the grid
+   * is right-to-left then there may be a right render container, if left-to-right then there may 
+   * be a left render container.  There is always a body render container.
+   * @param {string} name The name of the render container ('body', 'left', or 'right')
+   * @param {Grid} grid the grid the render container is in
+   * @param {object} options the render container options
+   */
 .factory('GridRenderContainer', ['gridUtil', function(gridUtil) {
   function GridRenderContainer(name, grid, options) {
     var self = this;
@@ -6396,10 +6314,27 @@ angular.module('ui.grid')
     return this.visibleRowCache.length;
   };
 
+  /**
+   * @ngdoc function
+   * @name registerViewportAdjuster
+   * @methodOf ui.grid.class:GridRenderContainer
+   * @description Registers an adjuster to the render container's available width or height.  Adjusters are used
+   * to tell the render container that there is something else consuming space, and to adjust it's size
+   * appropriately.  
+   * @param {function} func the adjuster function we want to register
+   */
+
   GridRenderContainer.prototype.registerViewportAdjuster = function registerViewportAdjuster(func) {
     this.viewportAdjusters.push(func);
   };
 
+  /**
+   * @ngdoc function
+   * @name removeViewportAdjuster
+   * @methodOf ui.grid.class:GridRenderContainer
+   * @description Removes an adjuster, should be used when your element is destroyed
+   * @param {function} func the adjuster function we want to remove
+   */
   GridRenderContainer.prototype.removeViewportAdjuster = function registerViewportAdjuster(func) {
     var idx = this.viewportAdjusters.indexOf(func);
 
@@ -6408,6 +6343,13 @@ angular.module('ui.grid')
     }
   };
 
+  /**
+   * @ngdoc function
+   * @name getViewportAdjustment
+   * @methodOf ui.grid.class:GridRenderContainer
+   * @description Gets the adjustment based on the viewportAdjusters.  
+   * @returns {object} a hash of { height: x, width: y }.  Usually the values will be negative
+   */
   GridRenderContainer.prototype.getViewportAdjustment = function getViewportAdjustment() {
     var self = this;
 
@@ -12251,8 +12193,8 @@ module.filter('px', function() {
    *
    *  @description Services for exporter feature
    */
-  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
-    function ($q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService) {
+  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'uiGridSelectionConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
+    function ($q, uiGridExporterConstants, uiGridSelectionConstants, gridUtil, $compile, $interval, i18nService) {
 
       var service = {
 
@@ -12343,13 +12285,13 @@ module.filter('px', function() {
 
           /**
            * @ngdoc object
-           * @name exporterSuppressButton
+           * @name exporterSuppressMenu
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description Don't show the export menu button, implying the user
            * will roll their own UI for calling the exporter
            * <br/>Defaults to false
            */
-          gridOptions.exporterSuppressButton = gridOptions.exporterSuppressButton === true;
+          gridOptions.exporterSuppressMenu = gridOptions.exporterSuppressMenu === true;
           /**
            * @ngdoc object
            * @name exporterLinkTemplate
@@ -12381,13 +12323,26 @@ module.filter('px', function() {
           gridOptions.exporterLinkLabel = gridOptions.exporterLinkLabel ? gridOptions.exporterLinkLabel : 'Download CSV';
           /**
            * @ngdoc object
-           * @name exporterButtonLabel
+           * @name exporterMenuLabel
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description The text to show on the exporter menu button
            * link
            * <br/>Defaults to 'Export'
            */
-          gridOptions.exporterButtonLabel = gridOptions.exporterButtonLabel ? gridOptions.exporterButtonLabel : 'Export';
+          gridOptions.exporterMenuLabel = gridOptions.exporterMenuLabel ? gridOptions.exporterMenuLabel : 'Export';
+          /**
+           * @ngdoc object
+           * @name exporterSuppressColumns
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description Columns that should not be exported.  The selectionRowHeader is already automatically
+           * suppressed, but if you had a button column or some other "system" column that shouldn't be shown in the
+           * output then add it in this list.  You should provide an array of column names.
+           * <br/>Defaults to: []
+           * <pre>
+           *   gridOptions.exporterSuppressColumns = [ 'buttons' ];
+           * </pre>
+           */
+          gridOptions.exporterSuppressColumns = gridOptions.exporterSuppressColumns ? gridOptions.exporterSuppressColumns : [];
           /**
            * @ngdoc object
            * @name exporterPdfDefaultStyle
@@ -12483,8 +12438,53 @@ module.filter('px', function() {
            * @description Add pdf export menu items to the ui-grid grid menu, if it's present.  Defaults to true.
            */
           gridOptions.exporterMenuPdf = gridOptions.exporterMenuPdf !== undefined ? gridOptions.exporterMenuPdf : true;
+          
+          /**
+           * @ngdoc object
+           * @name exporterHeaderFilter
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description A function to apply to the header displayNames before exporting.  Useful for internationalisation,
+           * for example if you were using angular-translate you'd set this to `$translate.instant`.  Note that this
+           * call must be synchronous, it cannot be a call that returns a promise.
+           * @example
+           * <pre>
+           *   gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + displayName; };
+           * </pre>
+           * OR
+           * <pre>
+           *   gridOptions.exporterHeaderFilter = $translate.instant;
+           * </pre>
+           */
 
-
+          /**
+           * @ngdoc function
+           * @name exporterFieldCallback
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description A function to call for each field before exporting it.  Allows 
+           * massaging of raw data into a display format, for example if you have applied 
+           * filters to convert codes into decodes, or you require
+           * a specific date format in the exported content.
+           * 
+           * The method is called once for each field exported, and provides the grid, the
+           * gridCOl and the GridRow for you to use as context in massaging the data.
+           * 
+           * @param {Grid} grid provides the grid in case you have need of it
+           * @param {GridRow} row the row from which the data comes
+           * @param {GridCol} col the column from which the data comes
+           * @param {object} value the value for your massaging
+           * @returns {object} you must return the massaged value ready for exporting
+           * 
+           * @example
+           * <pre>
+           *   gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
+           *     if ( col.name === 'status' ){
+           *       value = decodeStatus( value );
+           *     }
+           *     return value;
+           *   }
+           * </pre>
+           */
+          gridOptions.exporterFieldCallback = gridOptions.exporterFieldCallback ? gridOptions.exporterFieldCallback : function( grid, row, col, value ) { return value; };
         },
 
 
@@ -12606,8 +12606,6 @@ module.filter('px', function() {
          * as a title row for the exported file, all headers have 
          * headerCellFilters applied as appropriate.
          * 
-         * TODO: filters
-         * 
          * Column headers are an array of objects, each object has
          * name, displayName, width and align attributes.  Only name is
          * used for csv, all attributes are used for pdf.
@@ -12620,13 +12618,13 @@ module.filter('px', function() {
         getColumnHeaders: function (grid, colTypes) {
           var headers = [];
           angular.forEach(grid.columns, function( gridCol, index ) {
-            if (gridCol.visible || colTypes === uiGridExporterConstants.ALL){
+            if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
+                 gridCol.name !== uiGridSelectionConstants.selectionRowHeaderColName &&
+                 grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
               headers.push({
                 name: gridCol.field,
-                displayName: gridCol.displayName,
-                // TODO: should we do something to normalise here if too wide?
+                displayName: grid.options.exporterHeaderFilter ? grid.options.exporterHeaderFilter(gridCol.displayName) : gridCol.displayName,
                 width: gridCol.drawnWidth ? gridCol.drawnWidth : gridCol.width,
-                // TODO: if/when we have an alignment attribute, use it here
                 align: gridCol.colDef.type === 'number' ? 'right' : 'left'
               });
             }
@@ -12676,8 +12674,10 @@ module.filter('px', function() {
 
               var extractedRow = [];
               angular.forEach(grid.columns, function( gridCol, index ) {
-                if (gridCol.visible || colTypes === uiGridExporterConstants.ALL){
-                  extractedRow.push(grid.getCellValue(row, gridCol));
+              if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
+                   gridCol.name !== uiGridSelectionConstants.selectionRowHeaderColName &&
+                   grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
+                  extractedRow.push( grid.options.exporterFieldCallback( grid, row, gridCol, grid.getCellValue( row, gridCol ) ) );
                 }
               });
               
@@ -13492,34 +13492,8 @@ module.filter('px', function() {
         parseCsv: function( importFile ) {
           var csv = importFile.target.result;
           
-          var reviver = function(r, c, v) { return v; };
-          var chars = csv.split(''), c = 0, cc = chars.length, start, end, table = [], row;
-          while (c < cc) {
-            table.push(row = []);
-            while (c < cc && chars[c] !== '\r' && chars[c] !== '\n' ) {
-              start = end = c;
-              if ( chars[c] === '"'){
-                start = end = ++c;
-                while (c < cc) {
-                  if ( chars[c] === '"' ) {
-                    if ( chars[c+1] !== '"') { break; }
-                    else { chars[++c] = ''; } // unescape ""
-                  }
-                  end = ++c;
-                }
-                if ( chars[c] === '"' ) { ++c; }
-                while (c < cc && chars[c] !== '\r' && chars[c] !== '\n' && chars[c] !== ',') { ++c; }
-              } else {
-                while (c < cc && chars[c] !== '\r' && chars[c] !== '\n' && chars[c] !== ',') { end = ++c; }
-              }
-              end = reviver(table.length-1, row.length, chars.slice(start, end).join(''));
-              row.push(isNaN(end) ? end : +end);
-              if (chars[c] === ',') { ++c; }
-            }
-            if (chars[c] === '\r') { ++c; }
-            if (chars[c] === '\n') { ++c; }
-          }
-          return table;
+          // use the CSV-JS library to parse
+          return CSV.parse(csv);
         },
         
 
@@ -13661,7 +13635,7 @@ module.filter('px', function() {
          * @param {array} newObjects the objects we want to insert into the grid data
          * @returns {object} the new object
          */
-        addObjects: function( grid, newObjects ){
+        addObjects: function( grid, newObjects, $scope ){
           if ( grid.api.rowEdit ){
             var callbackId = grid.registerDataChangeCallback( function() {
               grid.api.rowEdit.setRowsDirty( grid, newObjects );
@@ -13675,7 +13649,7 @@ module.filter('px', function() {
             grid.importer.$scope.$on( '$destroy', deregisterClosure );
           }
 
-          grid.options.importerDataAddCallback( grid, newObjects );
+          grid.importer.$scope.$apply( grid.options.importerDataAddCallback( grid, newObjects ) );
           
         },
         
@@ -15749,7 +15723,8 @@ module.filter('px', function() {
    *  @description constants available in selection module
    */
   module.constant('uiGridSelectionConstants', {
-    featureName: "selection"
+    featureName: "selection",
+    selectionRowHeaderColName: 'selectionRowHeaderCol'
   });
 
   /**
@@ -16165,7 +16140,7 @@ module.filter('px', function() {
               uiGridSelectionService.initializeGrid(uiGridCtrl.grid);
               if (uiGridCtrl.grid.options.enableRowHeaderSelection) {
                 var selectionRowHeaderDef = {
-                  name: 'selectionRowHeaderCol',
+                  name: uiGridSelectionConstants.selectionRowHeaderColName,
                   displayName: '',
                   width: 30,
                   cellTemplate: 'ui-grid/selectionRowHeader',
