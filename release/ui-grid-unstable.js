@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-1908307 - 2014-10-18
+/*! ui-grid - v3.0.0-rc.12-9ff0928 - 2014-10-18
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5610,7 +5610,7 @@ angular.module('ui.grid')
       self.grid.api.core.raise.sortChanged( self, self.grid.getColumnSorting() );
     };
 
-    self.minWidth = !colDef.minWidth ? 30 : colDef.minWidth;
+    self.minWidth = !colDef.minWidth ? 50 : colDef.minWidth;
     self.maxWidth = !colDef.maxWidth ? 9000 : colDef.maxWidth;
 
     //use field if it is defined; name if it is not
