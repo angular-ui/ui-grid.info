@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-135cbcf - 2014-10-18
+/*! ui-grid - v3.0.0-rc.12-1908307 - 2014-10-18
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5610,7 +5610,7 @@ angular.module('ui.grid')
       self.grid.api.core.raise.sortChanged( self, self.grid.getColumnSorting() );
     };
 
-    self.minWidth = !colDef.minWidth ? 50 : colDef.minWidth;
+    self.minWidth = !colDef.minWidth ? 30 : colDef.minWidth;
     self.maxWidth = !colDef.maxWidth ? 9000 : colDef.maxWidth;
 
     //use field if it is defined; name if it is not
@@ -15764,6 +15764,18 @@ module.filter('px', function() {
                  * @param {GridRow} row the row that was selected/deselected
                  */
                 rowSelectionChanged: function (scope, row) {
+                },
+                /**
+                 * @ngdoc event
+                 * @name rowSelectionChangedBatch
+                 * @eventOf  ui.grid.selection.api:PublicApi
+                 * @description  is raised after the row.isSelected state is changed
+                 * in bulk, if the `enableSelectionBatchEvent` option is set to true
+                 * (which it is by default).  This allows more efficient processing 
+                 * of bulk events.
+                 * @param {array} rows the rows that were selected/deselected
+                 */
+                rowSelectionChangedBatch: function (scope, rows) {
                 }
               }
             },
@@ -15835,10 +15847,14 @@ module.filter('px', function() {
                     return;
                   }
 
+                  var changedRows = [];
                   grid.rows.forEach(function (row) {
-                    row.isSelected = true;
-                    grid.api.selection.raise.rowSelectionChanged(row);
+                    if ( !row.isSelected ){
+                      row.isSelected = true;
+                      service.decideRaiseSelectionEvent( grid, row, changedRows );
+                    }
                   });
+                  service.decideRaiseSelectionBatchEvent( grid, changedRows );
                 },
                 /**
                  * @ngdoc function
@@ -15851,15 +15867,21 @@ module.filter('px', function() {
                     return;
                   }
 
+                  var changedRows = [];
                   grid.rows.forEach(function (row) {
                     if (row.visible) {
-                      row.isSelected = true;
-                      grid.api.selection.raise.rowSelectionChanged(row);
+                      if (!row.isSelected){
+                        row.isSelected = true;
+                        service.decideRaiseSelectionEvent( grid, row, changedRows );
+                      }
                     } else {
-                      row.isSelected = false;
-                      grid.api.selection.raise.rowSelectionChanged(row);
+                      if (row.isSelected){
+                        row.isSelected = false;
+                        service.decideRaiseSelectionEvent( grid, row, changedRows );
+                      }
                     }
                   });
+                  service.decideRaiseSelectionBatchEvent( grid, changedRows );
                 },
                 /**
                  * @ngdoc function
@@ -15995,6 +16017,17 @@ module.filter('px', function() {
            *  <br/>Defaults to true
            */
           gridOptions.enableSelectAll = gridOptions.enableSelectAll !== false;
+          /**
+           *  @ngdoc object
+           *  @name enableSelectionBatchEvent
+           *  @propertyOf  ui.grid.selection.api:GridOptions
+           *  @description If selected rows are changed in bulk, either via the API or
+           *  via the selectAll checkbox, then a separate event is fired.  Setting this
+           *  option to false will cause the rowSelectionChanged event to be called multiple times
+           *  instead  
+           *  <br/>Defaults to true
+           */
+          gridOptions.enableSelectionBatchEvent = gridOptions.enableSelectionBatchEvent !== false;
         },
 
         /**
@@ -16052,14 +16085,19 @@ module.filter('px', function() {
             fromRow = toRow;
             toRow = tmp;
           }
+          
+          var changedRows = [];
           for (var i = fromRow; i <= toRow; i++) {
             var rowToSelect = grid.renderContainers.body.visibleRowCache[i];
             if (rowToSelect) {
-              rowToSelect.isSelected = true;
-              grid.selection.lastSelectedRow = rowToSelect;
-              grid.api.selection.raise.rowSelectionChanged(rowToSelect);
+              if ( !rowToSelect.isSelected ){
+                rowToSelect.isSelected = true;
+                grid.selection.lastSelectedRow = rowToSelect;
+                service.decideRaiseSelectionEvent( grid, row, changedRows );
+              }
             }
           }
+          service.decideRaiseSelectionBatchEvent( grid, changedRows );
         },
         /**
          * @ngdoc function
@@ -16082,13 +16120,49 @@ module.filter('px', function() {
          * @param {Grid} grid grid object
          */
         clearSelectedRows: function (grid) {
+          var changedRows = [];
           service.getSelectedRows(grid).forEach(function (row) {
-            row.isSelected = false;
-            grid.api.selection.raise.rowSelectionChanged(row);
+            if ( row.isSelected ){
+              row.isSelected = false;
+              service.decideRaiseSelectionEvent( grid, row, changedRows );
+            }
           });
-        }
-
-
+          service.decideRaiseSelectionBatchEvent( grid, changedRows );
+        },
+        
+        /**
+         * @ngdoc function
+         * @name decideRaiseSelectionEvent
+         * @methodOf  ui.grid.selection.service:uiGridSelectionService
+         * @description Decides whether to raise a single event or a batch event
+         * @param {Grid} grid grid object
+         * @param {GridRow} row row that has changed
+         * @param {array} changedRows an array to which we can append the changed
+         * row if we're doing batch events
+         */
+        decideRaiseSelectionEvent: function( grid, row, changedRows ){
+          if ( !grid.options.enableSelectionBatchEvent ){
+            grid.api.selection.raise.rowSelectionChanged(row);
+          } else {
+            changedRows.push(row);
+          }
+        },
+        
+        /**
+         * @ngdoc function
+         * @name raiseSelectionEvent
+         * @methodOf  ui.grid.selection.service:uiGridSelectionService
+         * @description Decides whether we need to raise a batch event, and 
+         * raises it if we do.
+         * @param {Grid} grid grid object
+         * @param {array} changedRows an array of changed rows, only populated
+         * if we're doing batch events
+         */
+        decideRaiseSelectionBatchEvent: function( grid, changedRows ){
+          if ( changedRows.length > 0 ){
+            grid.api.selection.raise.rowSelectionChangedBatch(changedRows);
+          }
+        }        
       };
 
       return service;

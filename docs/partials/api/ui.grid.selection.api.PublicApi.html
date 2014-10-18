@@ -87,6 +87,18 @@ rather than rows currently rendered on the screen.</p><h4 id="Parameters">Parame
 </ul>
 </div>
 </li>
+<li><h3 id="rowSelectionChangedBatch">rowSelectionChangedBatch</h3>
+<div class="rowselectionchangedbatch"><p>is raised after the row.isSelected state is changed
+in bulk, if the <code>enableSelectionBatchEvent</code> option is set to true
+(which it is by default).  This allows more efficient processing 
+of bulk events.</p><div class="inline"></div>
+<div class="inline"></div>
+<h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rows – {array} – </code>
+<p>the rows that were selected/deselected</p></li>
+</ul>
+</div>
+</li>
 </ul>
 </div>
 </div>

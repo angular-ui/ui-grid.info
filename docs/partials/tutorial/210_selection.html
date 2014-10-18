@@ -4,11 +4,15 @@
 <div><p>This grid example uses the ui-grid-selection directive to row selection. To enable, you must include the 'ui.grid.selection' 
 module and you must include the ui-grid-selection directive on your grid element.</p>
 
-<p>Uses the gridOptions.onRegisterApi callback to register the rowSelectionChanged event and log when the row is selected.</p>
+<p>Uses the gridOptions.onRegisterApi callback to register the rowSelectionChanged event and log when the row is selected.
+By default the selection feature will divide selection changes into batch events and single events, there are
+two different events provided in the api.  By setting <code>enableSelectionBatchEvent: false</code> you can cause it to 
+instead just call the single event in a loop - which may be useful if you're doing client rather than server
+side processing of the changes.</p>
 
 <p>By default the module will provide a row header with checkboxes that allow selection of individual rows.  If you set
 the <code>enableRowHeaderSelection</code> gridOption to false, then the row header is hidden and a click on the row will
-result in selection of that row.</p>
+result in selection of that row.  You can see that in this tutorial for grid1 by looking at your javascript console.</p>
 
 <p>Setting the <code>multiSelect</code> gridOption to true will allow selecting multiple rows, setting to false will allow selection
 of only one row at a time.</p>
@@ -116,6 +120,11 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
           $scope.gridApi = gridApi;
           gridApi.selection.on.rowSelectionChanged($scope,function(row){
             var msg = 'row selected ' + row.isSelected;
+            $log.log(msg);
+          });
+
+          gridApi.selection.on.rowSelectionChangedBatch($scope,function(rows){
+            var msg = 'rows changed ' + rows.length;
             $log.log(msg);
           });
         };

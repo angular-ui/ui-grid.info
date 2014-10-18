@@ -12,10 +12,33 @@
 </ul>
 </div>
 </li>
+<li><h3 id="decideRaiseSelectionEvent">decideRaiseSelectionEvent(grid, row, changedRows)</h3>
+<div class="decideraiseselectionevent"><p>Decides whether to raise a single event or a batch event</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>row that has changed</p></li>
+<li><code ng:non-bindable="">changedRows – {array} – </code>
+<p>an array to which we can append the changed
+row if we're doing batch events</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="getSelectedRows">getSelectedRows(grid)</h3>
 <div class="getselectedrows"><p>Returns all the selected rows</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="raiseSelectionEvent">raiseSelectionEvent(grid, changedRows)</h3>
+<div class="raiseselectionevent"><p>Decides whether we need to raise a batch event, and 
+raises it if we do.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">changedRows – {array} – </code>
+<p>an array of changed rows, only populated
+if we're doing batch events</p></li>
 </ul>
 </div>
 </li>
