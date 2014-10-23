@@ -1,0 +1,43 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>We get a lot of questions about fonts, and it seems to be a pain point for many users.  To date all
+of these problems have been diagnosed to a misconfigured build setup for the end user.</p>
+
+<p>This tutorial addresses the basics of the configuration.</p>
+
+<p>Key points here are:</p>
+
+<ol>
+<li>Fonts are a derivative of font-awesome via fontello, and are used for the dropdown icons and 
+various menu buttons and the like.  When they're not working they show a "chinese looking" character.  </li>
+<li>The tutorial pages generally show the fonts correctly.  If a tutorial page, when served from
+ui-grid.info is not showing fonts correctly, then this is likely a defect with ui-grid.  If it's 
+working on ui-grid.info, but not in your application, then it's likely a defect in your build configuration</li>
+<li>The fonts <strong>never</strong> work on plunkrs.  This isn't a defect, it's a configuration issue where the
+plunkr blocks "cross-domain" resource requests - it won't serve fonts from ui-grid.info when
+the plunkr itself is on <code>plunkr.co</code>.  The fact that plunkrs don't show fonts doesn't make this 
+an issue with ui-grid, it's still likely an issue with your configuration.  :-)</li>
+</ol>
+
+<p>When you download and install ui-grid, you'll get a series of files:</p>
+
+<ul>
+<li><code>ui-grid.js</code></li>
+<li><code>ui-grid.css</code></li>
+<li><code>ui-grid.eot</code></li>
+<li><code>ui-grid.svg</code></li>
+<li><code>ui-grid.ttf</code></li>
+<li><code>ui-grid.woff</code></li>
+</ul>
+
+<p>The last four files are the font files.  These generally need to be inserted into your local build process,
+as they will need to be copied to your <code>assets</code> folder, your <code>fonts</code> folder or some other similar location. 
+The instructions for configuring this are different for each build setup, but your build environment should
+have come with some method for configuring this - usually a Gruntfile.js, a build.config.js, or some form of
+gulp configuration.</p>
+
+<p>If you are seeking to diagnose why you're not getting your fonts, you can typically look at your Chrome developer
+tools, and you'll see a network request being issued for one of the font files, which then gives an error not
+found.  As a first step, try manually copying the font files into that location.  If your application now works,
+then your goal is to work out how to configure your build process to do that automatically for you.</p></div>

@@ -790,6 +790,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "116_fonts_and_installation",
+      "shortName": "116 Fonts and Installation",
+      "type": "overview",
+      "keywords": "__never__ about addresses all an and application are as assets at automatically basics be been being blocks build but buttons can character chinese chrome co come config configuration configure configuring copied copying correctly cross-domain css date defect derivative developer diagnose diagnosed different do doesn don download dropdown each end environment eot error fact files first folder font font-awesome fontello fonts for form found four from generally get getting gives goal gruntfile gulp have here how icons if in info inserted install installation instructions into is isn issue issued it itself js key last like likely ll local location look looking lot make manually many menu method misconfigured need network not now of on one or other out overview page pages pain plunkr plunkrs point points problems process questions re request requests resource see seeking seems series serve served setup should show showing similar some step still svg that the then these they this to tools try ttf tutorial typically ui-grid used user users usually various via we when where which why will with woff won work working works you your"
+    },
+    {
+      "section": "tutorial",
       "id": "120_RTL",
       "shortName": "120 RTL Support",
       "type": "overview",
