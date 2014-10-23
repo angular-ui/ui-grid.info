@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-4cc3cc5 - 2014-10-23
+/*! ui-grid - v3.0.0-rc.12-6265f61 - 2014-10-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7961,11 +7961,11 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       }
     }
     // Only A has a priority
-    else if (a.sort.priority) {
+    else if (a.sort.priority || a.sort.priority === 0) {
       return -1;
     }
     // Only B has a priority
-    else if (b.sort.priority) {
+    else if (b.sort.priority || b.sort.priority === 0) {
       return 1;
     }
     // Neither has a priority
@@ -13867,8 +13867,8 @@ module.filter('px', function() {
        */
 
       loadData: function (grid) {
-        grid.api.infiniteScroll.raise.needLoadMoreData();
-        grid.options.loadTimout = true;
+		grid.options.loadTimout = true;
+        grid.api.infiniteScroll.raise.needLoadMoreData();        
       },
 
       /**
