@@ -42,7 +42,7 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 </li>
 <li><h3 id="callDataChangeCallbacks">callDataChangeCallbacks(type)</h3>
 <div class="calldatachangecallbacks"><p>Calls the callbacks based on the type of data change that
-has occurred. Always calls the ALL callbacks, calls the ROW, EDIT and COLUMN callbacks if the 
+has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, and COLUMN callbacks if the 
 event type is matching, or if the type is ALL.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">type – {number} – </code>
 <p>the type of event that occurred - one of the 
@@ -59,7 +59,7 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
 <li><h3 id="deregisterDataChangeCallback">deregisterDataChangeCallback(uid)</h3>
 <div class="deregisterdatachangecallback"><p>Delete the callback identified by the id.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">uid – {string} – </code>
-<p>uid of the callback to be deregistered</p></li>
+<p>the uid of the function that is to be deregistered</p></li>
 </ul>
 </div>
 </li>

@@ -15,6 +15,7 @@ show the aggregation but without a label.  Refer the third column in the example
 <pre class="prettyprint linenums" ng-set-text="index.html-24" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-24">
   <div ng-controller="MainCtrl">
+    <button id="footerButton" class="btn btn-success" ng-click="gridOptions.showFooter = !gridOptions.showFooter">Toggle Footer</button>
     <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
