@@ -482,6 +482,41 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.pagination",
+      "shortName": "pagination",
+      "type": "overview",
+      "keywords": "api grid module overview pagination provides support this to ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.pagination.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api are available be class displayed enable enablepagination feature for grid gridoptions number object of page pagination per rows rowsperpage set should that the these this to true ui ui-grid using"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.pagination.api:PublicAPI",
+      "shortName": "PublicAPI",
+      "type": "object",
+      "keywords": "api current feature first for getpage gettotalpages grid if method moves next nextpage not number object of on page pages pagination possible previous previouspage public re returns the to total ui we"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.pagination.directive:uiGridPagination",
+      "shortName": "uiGridPagination",
+      "type": "directive",
+      "keywords": "adds api directive div grid pagination support to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.pagination.service:uiGridPaginationService",
+      "shortName": "uiGridPaginationService",
+      "type": "service",
+      "keywords": "api attaches certain feature for grid initializegrid method pagination service the to ui want we with work"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.pinning",
       "shortName": "pinning",
       "type": "overview",
@@ -899,6 +934,13 @@ NG_DOCS={
       "shortName": "213 Auto-Resizing",
       "type": "overview",
       "keywords": "$http $log $scope about add adding address affect age and angular app application auto-resize auto-resizing autoresize btn btn-success button by changed changes checker city class columndefs company container controller could css data dependencies directive displayname element email enable feature floor friend friends function get getelementsbyclassname grid gridoptions has height html id if in include index interval it its itself js json main mainctrl math module name negatively newheight newwidth ng-click ng-controller of on or overview performance phone pinnedleft pinnedright potentially px random randomsize resize sees site size state street success that the this to tutorial type ui ui-grid ui-grid-auto-resize use var when width will works your zip"
+    },
+    {
+      "section": "tutorial",
+      "id": "214_pagination",
+      "shortName": "214 Pagination",
+      "type": "overview",
+      "keywords": "$http $scope angular app be browsed btn btn-success button can class columndefs company controller css data displayed enabled function gender get getpage gettotalpages grid gridapi gridoptions html in index is js json main mainctrl module name next nextpage ng-click ng-controller onregisterapi overview page pages pagination previous previouspage selector success that the tutorial type ui ui-grid ui-grid-pagination using var when width"
     },
     {
       "section": "tutorial",
