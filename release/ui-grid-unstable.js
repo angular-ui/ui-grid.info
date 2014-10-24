@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-67b08d8 - 2014-10-23
+/*! ui-grid - v3.0.0-rc.12-d2e36bc - 2014-10-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -16514,7 +16514,7 @@ module.filter('px', function() {
             }
 
             function registerRowSelectionEvents() {
-              $elm.on('click', function (evt) {
+              $elm.on('click touchend', function (evt) {
                 if (evt.shiftKey) {
                   uiGridSelectionService.shiftSelect($scope.grid, $scope.row, $scope.grid.options.multiSelect);
                 }
@@ -16532,6 +16532,7 @@ module.filter('px', function() {
       }]);
 
 })();
+
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
 
