@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-113f4dd - 2014-10-24
+/*! ui-grid - v3.0.0-rc.12-51d052e - 2014-10-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9198,14 +9198,14 @@ module.filter('px', function() {
   }]);
 })();
 (function () {
-  angular.module('ui.grid').config(['$provide', function($provide) {
-    $provide.decorator('i18nService', ['$delegate', function($delegate) {
+  angular.module('ui.grid').config(['$provide', function ($provide) {
+    $provide.decorator('i18nService', ['$delegate', function ($delegate) {
       $delegate.add('de', {
         aggregate: {
           label: 'eintrag'
         },
         groupPanel: {
-          description: 'Ziehen Sie eine Spaltenüberschrift hierhin um nach dieser Spalte zu gruppieren.'
+          description: 'Ziehen Sie eine Spaltenüberschrift hierhin, um nach dieser Spalte zu gruppieren.'
         },
         search: {
           placeholder: 'Suche...',
@@ -9221,38 +9221,44 @@ module.filter('px', function() {
         menu: {
           text: 'Spalten auswählen:'
         },
+        sort: {
+          ascending: 'aufsteigend sortieren',
+          descending: 'absteigend sortieren',
+          remove: 'Sortierung zurücksetzen'
+        },
         column: {
           hide: 'Spalte ausblenden'
         },
         aggregation: {
-          count: 'gesamt reihen: ',
+          count: 'Zeilen insgesamt: ',
           sum: 'gesamt: ',
-          avg: 'durchschnitt: ',
+          avg: 'Durchschnitt: ',
           min: 'min: ',
           max: 'max: '
         },
         gridMenu: {
-          columns: 'Columns:',
-          importerTitle: 'Import file',
-          exporterAllAsCsv: 'Export all data as csv',
-          exporterVisibleAsCsv: 'Export visible data as csv',
-          exporterSelectedAsCsv: 'Export selected data as csv',
-          exporterAllAsPdf: 'Export all data as pdf',
-          exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          columns: 'Spalten:',
+          importerTitle: 'Datei importieren',
+          exporterAllAsCsv: 'Alle Daten als CSV exportieren',
+          exporterVisibleAsCsv: 'sichtbare Daten als CSV exportieren',
+          exporterSelectedAsCsv: 'markierte Daten als CSV exportieren',
+          exporterAllAsPdf: 'Alle Daten als PDF exportieren',
+          exporterVisibleAsPdf: 'sichtbare Daten als PDF exportieren',
+          exporterSelectedAsPdf: 'markierte Daten als CSV exportieren'
         },
         importer: {
-          noHeaders: 'Column names were unable to be derived, does the file have a header?',
-          noObjects: 'Objects were not able to be derived, was there data in the file other than headers?',
-          invalidCsv: 'File was unable to be processed, is it valid CSV?',
-          invalidJson: 'File was unable to be processed, is it valid Json?',
-          jsonNotArray: 'Imported json file must contain an array, aborting.'
+          noHeaders: 'Es konnten keine Spaltennamen ermittelt werden. Sind in der Datei Spaltendefinitionen enthalten?',
+          noObjects: 'Es konnten keine Zeileninformationen gelesen werden, Sind in der Datei außer den Spaltendefinitionen auch Daten enthalten?',
+          invalidCsv: 'Die Datei konnte nicht eingelesen werden, ist es eine gültige CSV-Datei?',
+          invalidJson: 'Die Datei konnte nicht eingelesen werden. Enthält sie gültiges JSON?',
+          jsonNotArray: 'Die importierte JSON-Datei muß ein Array enthalten. Breche Import ab.'
         }
       });
       return $delegate;
     }]);
-}]);
+  }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
