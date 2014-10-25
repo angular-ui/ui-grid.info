@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-971a57f - 2014-10-25
+/*! ui-grid - v3.0.0-rc.12-cc3c41b - 2014-10-25
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -683,11 +683,11 @@ input[type="text"].ui-grid-filter-input {
 }
 @font-face {
   font-family: 'ui-grid';
-  src: url('ui-grid.eot');
-  src: url('ui-grid.eot#iefix') format('embedded-opentype'),
-       url('ui-grid.woff') format('woff'),
-       url('ui-grid.ttf?') format('truetype'),
-       url('ui-grid.svg?#ui-grid') format('svg');
+  src: url('{@font-path}ui-grid.eot');
+  src: url('{@font-path}ui-grid.eot#iefix') format('embedded-opentype'),
+       url('{@font-path}ui-grid.woff') format('woff'),
+       url('{@font-path}ui-grid.ttf?') format('truetype'),
+       url('{@font-path}ui-grid.svg?#ui-grid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -980,5 +980,10 @@ input[type="text"].ui-grid-filter-input {
 //Border to be applied to editors when the input value or invalid
 @invalidValueBorder: 1px solid rgb(252, 143, 143);
 @validValueBorder: 1px solid @borderColor;
+
+/**
+* @section font library path
+*/
+@font-path: '';
 
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
