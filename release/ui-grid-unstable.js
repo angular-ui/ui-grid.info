@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-cc3c41b - 2014-10-25
+/*! ui-grid - v3.0.0-rc.12-42fde15 - 2014-10-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12392,6 +12392,27 @@ module.filter('px', function() {
           gridOptions.exporterPdfTableHeaderStyle = gridOptions.exporterPdfTableHeaderStyle ? gridOptions.exporterPdfTableHeaderStyle : { bold: true, fontSize: 12, color: 'black' };
           /**
            * @ngdoc object
+           * @name exporterPdfHeaderStyle
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The header style in pdfMake format
+           * <br/>Defaults to:
+           * <pre>
+           *   {
+           *     bold: true,
+           *     fontSize: 14
+           *   }
+           * </pre>
+           */
+          gridOptions.exporterPdfHeaderStyle = gridOptions.exporterPdfHeaderStyle ? gridOptions.exporterPdfHeaderStyle : { bold: true, fontSize: 14 };
+          /**
+           * @ngdoc object
+           * @name exporterPdfHeader
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The header text for pdf exports
+           */
+          gridOptions.exporterPdfHeader = gridOptions.exporterPdfHeader ? gridOptions.exporterPdfHeader : null;
+          /**
+           * @ngdoc object
            * @name exporterPdfOrientation
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description The orientation, should be a valid pdfMake value,
@@ -12872,6 +12893,11 @@ module.filter('px', function() {
           
           if ( grid.options.exporterPdfLayout ){
             docDefinition.layout = grid.options.exporterPdfLayout;
+          }
+          
+          if ( grid.options.exporterPdfHeader ){
+            docDefinition.content.unshift( { text: grid.options.exporterPdfHeader, style: 'headerStyle' } );
+            docDefinition.styles.headerStyle = grid.options.exporterPdfHeaderStyle;
           }
           
           return docDefinition;
