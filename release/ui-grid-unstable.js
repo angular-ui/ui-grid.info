@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-51d052e - 2014-10-24
+/*! ui-grid - v3.0.0-rc.12-971a57f - 2014-10-25
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10217,9 +10217,9 @@ module.filter('px', function() {
     };
   };
 
-  DIRECTIVE_ALIASES.forEach(function (alias) {
-    module.directive(alias, ['$parse', 'i18nService', 'i18nConstants', uitDirective]);
-  });
+  angular.forEach( DIRECTIVE_ALIASES, function ( alias ) {
+    module.directive( alias, ['$parse', 'i18nService', 'i18nConstants', uitDirective] );
+  } );
 
   // optional filter syntax
   var uitFilter = function ($parse, i18nService, i18nConstants) {
@@ -10230,9 +10230,10 @@ module.filter('px', function() {
     };
   };
 
-  FILTER_ALIASES.forEach(function (alias) {
-    module.filter(alias, ['$parse', 'i18nService', 'i18nConstants', uitFilter]);
-  });
+  angular.forEach( FILTER_ALIASES, function ( alias ) {
+    module.filter( alias, ['$parse', 'i18nService', 'i18nConstants', uitFilter] );
+  } );
+
 
 })();
 (function () {
