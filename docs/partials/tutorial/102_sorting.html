@@ -18,7 +18,7 @@ on the existing column if you don't want to sort by it any more.  </p>
 <p>When sorting using the headers, clicking on a header removes all other sorts unless you shift-click.</p>
 
 <h3>Source</h3>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-19" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-19" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-20"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-19" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-19">
@@ -26,7 +26,16 @@ on the existing column if you don't want to sort by it any more.  </p>
       Click on a column header to sort by that column. (The third column has sorting disabled.)
       <br>
       <br>
-      <div id="grid1" ui-grid="gridOptions" class="grid"></div>
+      <div id="grid1" ui-grid="gridOptions1" class="grid"></div>
+
+      <br>
+      You can set an initial sort state for the grid by defining the `sort` property on your column definitions. 
+      The `direction` sub-property says which way to sort, and the `priority` says what order to sort the columns 
+      in (lower priority gets sorted first).
+      <br>
+      <br>
+
+      <div id="grid2" ui-grid="gridOptions2" class="grid"></div>
     </div>
   </script>
 </div>
@@ -44,8 +53,8 @@ on the existing column if you don't want to sort by it any more.  </p>
 <script type="text/ng-template" id="app.js">
     var app = angular.module('app', ['ngAnimate', 'ui.grid']);
 
-    app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
-      $scope.gridOptions = {
+    app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
+      $scope.gridOptions1 = {
         enableSorting: true,
         columnDefs: [
           { field: 'name' },
@@ -54,48 +63,7 @@ on the existing column if you don't want to sort by it any more.  </p>
         ]
       };
 
-      $http.get('/data/100.json')
-        .success(function(data) {
-          $scope.gridOptions.data = data;
-        });
-    }]);
-  </script>
-</div>
-</div><h3>Demo</h3>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-19" ng-eval-javascript="app.js"></div>
-
-<h1 id="inital-sort">Initial Sort State</h2>
-
-<p>You can set an initial sort state for the grid by defining the <code>sort</code> property on your column definitions. 
-The <code>direction</code> sub-property says which way to sort, and the <code>priority</code> says what order to sort the columns 
-in (lower priority gets sorted first).</p>
-
-<h3>Source</h3>
-<div source-edit="app2" source-edit-deps="angular.js app2.js" source-edit-html="index2.html" source-edit-css="main2.css" source-edit-js="app2.js" source-edit-unit="" source-edit-scenario="scenario.js-20"></div>
-<div class="tabbable"><div class="tab-pane" title="index2.html">
-<pre class="prettyprint linenums" ng-set-text="index2.html"></pre>
-<script type="text/ng-template" id="index2.html">
-    <div ng-controller="MainCtrl">
-      <div id="grid2" ui-grid="gridOptions" class="grid"></div>
-    </div>
-  </script>
-</div>
-<div class="tab-pane" title="main2.css">
-<pre class="prettyprint linenums" ng-set-text="main2.css"></pre>
-<style type="text/css" id="main2.css">
-    .grid {
-      width: 500px;
-      height: 200px;
-    }
-  </style>
-</div>
-<div class="tab-pane" title="app2.js">
-<pre class="prettyprint linenums" ng-set-text="app2.js"></pre>
-<script type="text/ng-template" id="app2.js">
-    var app = angular.module('app2', ['ngAnimate', 'ui.grid']);
-
-    app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
-      $scope.gridOptions = {
+       $scope.gridOptions2 = {
         enableSorting: true,
         onRegisterApi: function( gridApi ) {
           $scope.gridApi = gridApi;
@@ -111,7 +79,7 @@ in (lower priority gets sorted first).</p>
           {
             field: 'gender',
             sort: {
-              direction: 'asc',
+              direction: uiGridConstants.ASC,
               priority: 0,
             },
             
@@ -124,16 +92,16 @@ in (lower priority gets sorted first).</p>
                   return 0;
                 }
                 if( a === 'male' ) {
-                  return -1;
+                  return 1;
                 }
                 if( b === 'male' ) {
-                  return 1;
-                }
-                if( a == 'female' ) {
                   return -1;
                 }
-                if( b === 'female' ) {
+                if( a == 'female' ) {
                   return 1;
+                }
+                if( b === 'female' ) {
+                  return -1;
                 }
                 return 0;
               }
@@ -143,9 +111,10 @@ in (lower priority gets sorted first).</p>
         ]
       };
 
-      $http.get('/data/100.json')
+     $http.get('/data/100.json')
         .success(function(data) {
-          $scope.gridOptions.data = data;
+          $scope.gridOptions1.data = data;
+          $scope.gridOptions2.data = data;
         });
     }]);
   </script>
@@ -248,4 +217,4 @@ in (lower priority gets sorted first).</p>
   </script>
 </div>
 </div><h3>Demo</h3>
-<div class="well doc-example-live animator-container" ng-embed-app="app2" ng-set-html="index2.html" ng-eval-javascript="app2.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-19" ng-eval-javascript="app.js"></div></div>
