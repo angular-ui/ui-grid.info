@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-0681caa - 2014-10-26
+/*! ui-grid - v3.0.0-rc.12-4516e8f - 2014-10-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -16594,7 +16594,9 @@ module.filter('px', function() {
             }
 
             function registerRowSelectionEvents() {
-              $elm.on('click touchend', function (evt) {
+              var touchStartTime = 0;
+              var touchTimeout = 300;
+              var selectCells = function(evt){
                 if (evt.shiftKey) {
                   uiGridSelectionService.shiftSelect($scope.grid, $scope.row, $scope.grid.options.multiSelect);
                 }
@@ -16605,6 +16607,24 @@ module.filter('px', function() {
                   uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
                 }
                 $scope.$apply();
+              };
+
+              $elm.on('touchstart', function(event) {
+                touchStartTime = (new Date()).getTime();
+              });
+
+              $elm.on('touchend', function (evt) {
+                var touchEndTime = (new Date()).getTime();
+                var touchTime = touchEndTime - touchStartTime;
+
+                if (touchTime < touchTimeout ) {
+                  // short touch
+                  selectCells(evt);
+                }
+              });
+
+              $elm.on('click', function (evt) {
+                selectCells(evt);
               });
             }
           }
