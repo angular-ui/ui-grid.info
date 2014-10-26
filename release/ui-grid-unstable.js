@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-4b92760 - 2014-10-25
+/*! ui-grid - v3.0.0-rc.12-0681caa - 2014-10-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -649,7 +649,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 (function () {
   'use strict';
 
-  angular.module('ui.grid').directive('uiGridFooterCell', ['$timeout', 'gridUtil', '$compile', function ($timeout, gridUtil, $compile) {
+  angular.module('ui.grid').directive('uiGridFooterCell', ['$timeout', 'gridUtil', 'uiGridConstants', '$compile',
+  function ($timeout, gridUtil, uiGridConstants, $compile) {
     var uiGridFooterCell = {
       priority: 0,
       scope: {
@@ -685,6 +686,35 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             $scope.grid = uiGridCtrl.grid;
 
             $elm.addClass($scope.col.getColClass(false));
+
+            // apply any footerCellClass
+            var classAdded;
+            var updateClass = function( grid ){
+              var contents = $elm;
+              if ( classAdded ){
+                contents.removeClass( classAdded );
+                classAdded = null;
+              }
+  
+              if (angular.isFunction($scope.col.footerCellClass)) {
+                classAdded = $scope.col.footerCellClass($scope.grid, $scope.row, $scope.col, $scope.rowRenderIndex, $scope.colRenderIndex);
+              }
+              else {
+                classAdded = $scope.col.footerCellClass;
+              }
+              contents.addClass(classAdded);
+            };
+  
+            if ($scope.col.footerCellClass) {
+              updateClass();
+            }
+
+            // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
+            var watchUid = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
+
+            $scope.$on( '$destroy', function() {
+              $scope.grid.deregisterDataChangeCallback( watchUid ); 
+            });
           }
         };
       }
@@ -5626,6 +5656,16 @@ angular.module('ui.grid')
 
     self.aggregationType = angular.isDefined(colDef.aggregationType) ? colDef.aggregationType : null;
     self.footerCellTemplate = angular.isDefined(colDef.footerCellTemplate) ? colDef.footerCellTemplate : null;
+
+    /**
+     * @ngdoc property
+     * @name footerCellClass
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description footerCellClass can be a string specifying the class to append to a cell
+     * or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name
+     *
+     */
+    self.footerCellClass = colDef.footerCellClass;
 
     /**
      * @ngdoc property
