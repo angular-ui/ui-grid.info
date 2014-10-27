@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-6fa2e47 - 2014-10-27
+/*! ui-grid - v3.0.0-rc.12-499036c - 2014-10-27
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1159,6 +1159,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               var columnCache = containerCtrl.colContainer.visibleColumnCache,
                   canvasWidth = 0,
                   asteriskNum = 0,
+                  leftoverWidth = availableWidth,
                   hasVariableWidth = false;
               
               var getColWidth = function(column){
@@ -1169,7 +1170,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   return parseInt(column.width.replace(/%/g, ''), 10) * availableWidth / 100;
                 }
                 else if (column.widthType === "auto"){ 
-                  var oneAsterisk = parseInt(availableWidth / asteriskNum, 10);
+                  var oneAsterisk = parseInt(leftoverWidth / asteriskNum, 10);
                   return column.width.length * oneAsterisk; 
                 }
               };
@@ -1210,11 +1211,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 }
                 column.drawnWidth = Math.floor(colWidth);
                 canvasWidth += column.drawnWidth;
+                leftoverWidth -= column.drawnWidth;
               });
               
               // If the grid width didn't divide evenly into the column widths and we have pixels left over, dole them out to the columns one by one to make everything fit
-              var leftoverWidth = availableWidth - canvasWidth;
-
               if (hasVariableWidth && leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
                 var prevLeftover = leftoverWidth;
                 var remFn = function (column) {
@@ -5620,7 +5620,11 @@ angular.module('ui.grid')
             self.width = parseInt(colDef.width.match(/^(\d+)$/)[1], 10);
           }
           // Otherwise it should be a string of asterisks
-          else if (!colDef.width.match(/^\*+$/)) {
+          else if (colDef.width.match(/^\*+$/)) {
+            self.width = colDef.width;
+          }
+          // No idea, throw an Error
+          else {
             throw new Error(parseErrorMsg);
           }
         }
