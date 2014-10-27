@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-2266b5f - 2014-10-27
+/*! ui-grid - v3.0.0-rc.12-6fa2e47 - 2014-10-27
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -16490,7 +16490,8 @@ module.filter('px', function() {
                   width: 30,
                   cellTemplate: 'ui-grid/selectionRowHeader',
                   headerCellTemplate: 'ui-grid/selectionHeaderCell',
-                  enableColumnResizing: false
+                  enableColumnResizing: false,
+                  enableColumnMenu: false
                 };
 
                 uiGridCtrl.grid.addRowHeaderColumn(selectionRowHeaderDef);
