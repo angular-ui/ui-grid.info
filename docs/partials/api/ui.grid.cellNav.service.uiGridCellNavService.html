@@ -52,7 +52,27 @@ from gridApi.grid</p></li>
 </div>
 </li>
 <li><h3 id="scrollToInternal">scrollToInternal(grid, $scope, gridRow, gridCol)</h3>
-<div class="scrolltointernal"><p>Like scrollTo, but takes gridRow and gridCol</p><h4 id="Parameters">Parameters</h4>
+<div class="scrolltointernal"><p>Like scrollTo, but takes gridRow and gridCol.
+In calculating the scroll height we have to deal with wanting
+0% for the first row, and 100% for the last row.  Normal maths
+for a 10 row list would return 1/10 = 10% for the first row, so 
+we need to tweak the numbers to add an extra 10% somewhere.  The
+formula if we're trying to get to row 0 in a 10 row list (assuming our
+index is zero based, so the last row is row 9) is:
+<pre class="prettyprint linenums">
+  0 + 0 / 10 = 0%
+</pre>
+
+<p>To get to row 9 (i.e. the last row) in the same list, we want to 
+go to:
+<pre class="prettyprint linenums">
+ ( 9 + 1 ) / 10 = 100%
+</pre>
+So we need to apportion one whole row within the overall grid scroll, 
+the formula is:
+<pre class="prettyprint linenums">
+  ( index + ( index / (total rows - 1) ) / total rows
+</pre><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid you'd like to act upon, usually available
 from gridApi.grid</p></li>

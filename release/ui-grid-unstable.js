@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-4516e8f - 2014-10-26
+/*! ui-grid - v3.0.0-rc.12-2266b5f - 2014-10-27
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10798,7 +10798,27 @@ module.filter('px', function() {
          * @ngdoc method
          * @methodOf ui.grid.cellNav.service:uiGridCellNavService
          * @name scrollToInternal
-         * @description Like scrollTo, but takes gridRow and gridCol
+         * @description Like scrollTo, but takes gridRow and gridCol.
+         * In calculating the scroll height we have to deal with wanting
+         * 0% for the first row, and 100% for the last row.  Normal maths
+         * for a 10 row list would return 1/10 = 10% for the first row, so 
+         * we need to tweak the numbers to add an extra 10% somewhere.  The
+         * formula if we're trying to get to row 0 in a 10 row list (assuming our
+         * index is zero based, so the last row is row 9) is:
+         * <pre>
+         *   0 + 0 / 10 = 0%
+         * </pre>
+         * 
+         * To get to row 9 (i.e. the last row) in the same list, we want to 
+         * go to:
+         * <pre>
+         *  ( 9 + 1 ) / 10 = 100%
+         * </pre>
+         * So we need to apportion one whole row within the overall grid scroll, 
+         * the formula is:
+         * <pre>
+         *   ( index + ( index / (total rows - 1) ) / total rows
+         * </pre>
          * @param {Grid} grid the grid you'd like to act upon, usually available
          * from gridApi.grid
          * @param {object} $scope a scope we can broadcast events from
@@ -10809,7 +10829,10 @@ module.filter('px', function() {
           var args = {};
 
           if (gridRow !== null) {
-            args.y = { percentage: grid.renderContainers.body.visibleRowCache.indexOf(gridRow) / grid.renderContainers.body.visibleRowCache.length };
+            var seekRowIndex = grid.renderContainers.body.visibleRowCache.indexOf(gridRow);
+            var totalRows = grid.renderContainers.body.visibleRowCache.length;
+            var percentage = ( seekRowIndex + ( seekRowIndex / ( totalRows - 1 ) ) ) / totalRows;
+            args.y = { percentage:  percentage  };
           }
 
           if (gridCol !== null) {
