@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-499036c - 2014-10-27
+/*! ui-grid - v3.0.0-rc.12-bb0ac1b - 2014-10-28
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -684,6 +684,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
             //$elm.addClass($scope.col.getColClass(false));
             $scope.grid = uiGridCtrl.grid;
+            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             $elm.addClass($scope.col.getColClass(false));
 
@@ -745,6 +746,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.grid = uiGridCtrl.grid;
             $scope.colContainer = containerCtrl.colContainer;
+            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             containerCtrl.footer = $elm;
 
@@ -856,6 +858,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             var renderContainerCtrl = controllers[1];
 
             $scope.grid = uiGridCtrl.grid;
+            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             $scope.renderContainer = uiGridCtrl.grid.renderContainers[renderContainerCtrl.containerId];
             
@@ -1089,6 +1092,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.grid = uiGridCtrl.grid;
             $scope.colContainer = containerCtrl.colContainer;
+            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             containerCtrl.header = $elm;
             containerCtrl.colContainer.header = $elm;
