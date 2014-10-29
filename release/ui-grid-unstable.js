@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-6703fbf - 2014-10-29
+/*! ui-grid - v3.0.0-rc.12-d2e1364 - 2014-10-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -16377,7 +16377,7 @@ module.filter('px', function() {
               if ( !rowToSelect.isSelected ){
                 rowToSelect.isSelected = true;
                 grid.selection.lastSelectedRow = rowToSelect;
-                service.decideRaiseSelectionEvent( grid, row, changedRows );
+                service.decideRaiseSelectionEvent( grid, rowToSelect, changedRows );
               }
             }
           }
