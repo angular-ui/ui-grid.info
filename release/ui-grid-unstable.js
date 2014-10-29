@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-d2e1364 - 2014-10-29
+/*! ui-grid - v3.0.0-rc.12-9b25e26 - 2014-10-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1163,6 +1163,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               var columnCache = containerCtrl.colContainer.visibleColumnCache,
                   canvasWidth = 0,
                   asteriskNum = 0,
+                  oneAsterisk = 0,
                   leftoverWidth = availableWidth,
                   autoWidth = 0,
                   hasVariableWidth = false;
@@ -1174,8 +1175,12 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 else if (column.widthType === "percent"){ 
                   return parseInt(column.width.replace(/%/g, ''), 10) * availableWidth / 100;
                 }
-                else if (column.widthType === "auto"){ 
-                  var oneAsterisk = parseInt(leftoverWidth / asteriskNum, 10);
+                else if (column.widthType === "auto"){
+                  // leftOverWidth is subtracted from after each call to this
+                  // function so we need to calculate oneAsterisk size only once
+                  if (oneAsterisk === 0) {
+                    oneAsterisk = parseInt(leftoverWidth / asteriskNum, 10);
+                  }
                   return column.width.length * oneAsterisk; 
                 }
               };
