@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-3ed7a30 - 2014-10-28
+/*! ui-grid - v3.0.0-rc.12-6703fbf - 2014-10-29
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1164,6 +1164,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   canvasWidth = 0,
                   asteriskNum = 0,
                   leftoverWidth = availableWidth,
+                  autoWidth = 0,
                   hasVariableWidth = false;
               
               var getColWidth = function(column){
@@ -1215,14 +1216,18 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 }
                 column.drawnWidth = Math.floor(colWidth);
                 canvasWidth += column.drawnWidth;
-                leftoverWidth -= column.drawnWidth;
+                if (column.widthType === "auto") {
+                  autoWidth += column.drawnWidth;
+                } else {
+                  leftoverWidth -= column.drawnWidth;
+                }
               });
-              
+              leftoverWidth = leftoverWidth - autoWidth;
               // If the grid width didn't divide evenly into the column widths and we have pixels left over, dole them out to the columns one by one to make everything fit
               if (hasVariableWidth && leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
                 var prevLeftover = leftoverWidth;
                 var remFn = function (column) {
-                  if (leftoverWidth > 0 && column.widthType === "auto" || column.widthType === "percent") {
+                  if (leftoverWidth > 0 && (column.widthType === "auto" || column.widthType === "percent")) {
                     column.drawnWidth = column.drawnWidth + 1;
                     canvasWidth = canvasWidth + 1;
                     leftoverWidth--;
