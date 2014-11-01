@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-9b25e26 - 2014-10-29
+/*! ui-grid - v3.0.0-rc.12-5baad33 - 2014-11-01
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1165,7 +1165,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   asteriskNum = 0,
                   oneAsterisk = 0,
                   leftoverWidth = availableWidth,
-                  autoWidth = 0,
                   hasVariableWidth = false;
               
               var getColWidth = function(column){
@@ -1221,16 +1220,11 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 }
                 column.drawnWidth = Math.floor(colWidth);
                 canvasWidth += column.drawnWidth;
-                if (column.widthType === "auto") {
-                  autoWidth += column.drawnWidth;
-                } else {
-                  leftoverWidth -= column.drawnWidth;
-                }
+                leftoverWidth -= column.drawnWidth;
               });
-              leftoverWidth = leftoverWidth - autoWidth;
+
               // If the grid width didn't divide evenly into the column widths and we have pixels left over, dole them out to the columns one by one to make everything fit
               if (hasVariableWidth && leftoverWidth > 0 && canvasWidth > 0 && canvasWidth < availableWidth) {
-                var prevLeftover = leftoverWidth;
                 var remFn = function (column) {
                   if (leftoverWidth > 0 && (column.widthType === "auto" || column.widthType === "percent")) {
                     column.drawnWidth = column.drawnWidth + 1;
@@ -1238,10 +1232,11 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                     leftoverWidth--;
                   }
                 };
-                while (leftoverWidth > 0 && leftoverWidth !== prevLeftover ) {
+                var prevLeftover = 0;
+                do {
                   prevLeftover = leftoverWidth;
                   columnCache.forEach(remFn);
-                }
+                } while (leftoverWidth > 0 && leftoverWidth !== prevLeftover );
               }
               canvasWidth = Math.max(canvasWidth, availableWidth);
 
@@ -9682,6 +9677,72 @@ module.filter('px', function() {
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
+      $delegate.add('it', {
+        aggregate: {
+          label: 'elementi'
+        },
+        groupPanel: {
+          description: 'Trascina un\'intestazione all\'interno del gruppo della colonna.'
+        },
+        search: {
+          placeholder: 'Ricerca...',
+          showingItems: 'Mostra:',
+          selectedItems: 'Selezionati:',
+          totalItems: 'Totali:',
+          size: 'Tot Pagine:',
+          first: 'Prima',
+          next: 'Prossima',
+          previous: 'Precedente',
+          last: 'Ultima'
+        },
+        menu: {
+          text: 'Scegli le colonne:'
+        },
+        sort: {
+          ascending: 'Asc.',
+          descending: 'Desc.',
+          remove: 'Annulla ordinamento'
+        },
+        column: {
+          hide: 'Nascondi'
+        },
+        aggregation: {
+          count: 'righe totali: ',
+          sum: 'tot: ',
+          avg: 'media: ',
+          min: 'minimo: ',
+          max: 'massimo: '
+        },
+        pinning: {
+         pinLeft: 'Blocca a sx',
+          pinRight: 'Blocca a dx',
+          unpin: 'Blocca in alto'
+        },
+        gridMenu: {
+          columns: 'Colonne:',
+          importerTitle: 'Importa',
+          exporterAllAsCsv: 'Esporta tutti i dati in CSV',
+          exporterVisibleAsCsv: 'Esporta i dati visibili in CSV',
+          exporterSelectedAsCsv: 'Esporta i dati selezionati in CSV',
+          exporterAllAsPdf: 'Esporta tutti i dati in PDF',
+          exporterVisibleAsPdf: 'Esporta i dati visibili in PDF',
+          exporterSelectedAsPdf: 'Esporta i dati selezionati in PDF'
+        },
+        importer: {
+          noHeaders: 'Impossibile reperire i nomi delle colonne, sicuro che siano indicati all\'interno del file?',
+          noObjects: 'Impossibile reperire gli oggetti, sicuro che siano indicati all\'interno del file?',
+          invalidCsv: 'Impossibile elaborare il file, sicuro che sia un CSV?',
+          invalidJson: 'Impossibile elaborare il file, sicuro che sia un JSON valido?',
+          jsonNotArray: 'Errore! Il file JSON da importare deve contenere un array.'
+        }
+      });
+      return $delegate;
+    }]);
+  }]);
+})();
+(function () {
+  angular.module('ui.grid').config(['$provide', function($provide) {
+    $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('nl', {
         aggregate: {
           label: 'items'
@@ -12957,6 +13018,7 @@ module.filter('px', function() {
           
           var docDefinition = {
             pageOrientation: grid.options.exporterPdfOrientation,
+            pageSize: grid.options.exporterPdfPageSize,
             content: [{
               style: 'tableStyle',
               table: {
@@ -14728,12 +14790,38 @@ module.filter('px', function() {
          *  <br/>Defaults to false
          */
         if (colDef.pinnedLeft) {
-          col.renderContainer = 'left';
-          col.grid.createLeftContainer();
+          if (col.width === '*') {
+            // Need to refresh so the width can be calculated.
+            col.grid.refresh()
+                .then(function () {
+                    col.renderContainer = 'left';
+                    // Need to calculate the width. If col.drawnWidth is used instead then the width
+                    // will be 100% if it's the first column, 50% if it's the second etc.
+                    col.width = col.grid.canvasWidth / col.grid.columns.length;
+                    col.grid.createLeftContainer();
+            });
+          }
+          else {
+            col.renderContainer = 'left';
+            col.grid.createLeftContainer();
+          }
         }
         else if (colDef.pinnedRight) {
-          col.renderContainer = 'right';
-          col.grid.createRightContainer();
+            if (col.width === '*') {
+                // Need to refresh so the width can be calculated.
+                col.grid.refresh()
+                    .then(function () {
+                        col.renderContainer = 'right';
+                        // Need to calculate the width. If col.drawnWidth is used instead then the width
+                        // will be 100% if it's the first column, 50% if it's the second etc.
+                        col.width = col.grid.canvasWidth / col.grid.columns.length;
+                        col.grid.createRightContainer();
+                    });
+            }
+            else {
+                col.renderContainer = 'right';
+                col.grid.createRightContainer();
+            }
         }
 
         if (!colDef.enablePinning) {
