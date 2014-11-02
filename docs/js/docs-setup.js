@@ -552,6 +552,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.resizeColumns.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "api column feature for grid object public resize resizecolumns ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.resizeColumns.directive:uiGridColumnResizer",
       "shortName": "uiGridColumnResizer",
       "type": "directive",
