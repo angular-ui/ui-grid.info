@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-e9d03bb - 2014-11-02
+/*! ui-grid - v3.0.0-rc.12-384edfa - 2014-11-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5923,7 +5923,7 @@ angular.module('ui.grid')
         return self.getAggregationText('aggregation.max', Math.max.apply(null, cellValues));
       }
       else {
-        return null;
+        return '\u00A0';
       }
     };
     
