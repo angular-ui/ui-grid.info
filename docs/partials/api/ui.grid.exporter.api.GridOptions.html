@@ -72,6 +72,22 @@ link
 <li><h3 id="exporterMenuPdf">exporterMenuPdf</h3>
 <div class="exportermenupdf"><p>Add pdf export menu items to the ui-grid grid menu, if it's present.  Defaults to true.</p></div>
 </li>
+<li><h3 id="exporterPdfCustomFormatter">exporterPdfCustomFormatter</h3>
+<div class="exporterpdfcustomformatter"><p>A custom callback routine that changes the pdf document, adding any
+custom styling or content that is supported by pdfMake.  Takes in the complete docDefinition, and
+must return an updated docDefinition ready for pdfMake.</p><h4 id="Example">Example</h4>
+<div class="example"><p>In this example we add a style to the style array, so that we can use it in our
+footer definition.
+<pre class="prettyprint linenums">
+  gridOptions.exporterPdfCustomFormatter = function ( docDefinition ) {
+    docDefinition.styles.footerStyle = { bold: true, fontSize: 10 };
+    return docDefinition;
+  }
+
+  gridOptions.exporterPdfFooter = { text: 'My footer', style: 'footerStyle' }
+</pre></div>
+</div>
+</li>
 <li><h3 id="exporterPdfDefaultStyle">exporterPdfDefaultStyle</h3>
 <div class="exporterpdfdefaultstyle"><p>The default style in pdfMake format
 <br/>Defaults to:
@@ -81,17 +97,44 @@ link
   }
 </pre></div>
 </li>
-<li><h3 id="exporterPdfHeader">exporterPdfHeader</h3>
-<div class="exporterpdfheader"><p>The header text for pdf exports</p></div>
-</li>
-<li><h3 id="exporterPdfHeaderStyle">exporterPdfHeaderStyle</h3>
-<div class="exporterpdfheaderstyle"><p>The header style in pdfMake format
-<br/>Defaults to:
+<li><h3 id="exporterPdfFooter">exporterPdfFooter</h3>
+<div class="exporterpdffooter"><p>The header section for pdf exports.  Can be
+simple text:
 <pre class="prettyprint linenums">
-  {
-    bold: true,
-    fontSize: 14
-  }
+  gridOptions.exporterPdfFooter = 'My Footer';
+</pre>
+Can be a more complex object in pdfMake format:
+<pre class="prettyprint linenums">
+  gridOptions.exporterPdfFooter = {
+    columns: [
+      'Left part',
+      { text: 'Right part', alignment: 'right' }
+    ]
+  };
+</pre>
+Or can be a function, allowing page numbers and the like
+<pre class="prettyprint linenums">
+  gridOptions.exporterPdfFooter: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; };
+</pre></div>
+</li>
+<li><h3 id="exporterPdfHeader">exporterPdfHeader</h3>
+<div class="exporterpdfheader"><p>The header section for pdf exports.  Can be
+simple text:
+<pre class="prettyprint linenums">
+  gridOptions.exporterPdfHeader = 'My Header';
+</pre>
+Can be a more complex object in pdfMake format:
+<pre class="prettyprint linenums">
+  gridOptions.exporterPdfHeader = {
+    columns: [
+      'Left part',
+      { text: 'Right part', alignment: 'right' }
+    ]
+  };
+</pre>
+Or can be a function, allowing page numbers and the like
+<pre class="prettyprint linenums">
+  gridOptions.exporterPdfHeader: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; };
 </pre></div>
 </li>
 <li><h3 id="exporterPdfMaxGridWidth">exporterPdfMaxGridWidth</h3>
