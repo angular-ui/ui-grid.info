@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-3311646 - 2014-11-04
+/*! ui-grid - v3.0.0-rc.12-90eaeff - 2014-11-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -9402,6 +9402,11 @@ module.filter('px', function() {
         menu: {
           text: 'Elegir columnas:'
         },
+        sort: {
+          ascending: 'Orden Ascendente',
+          descending: 'Orden Descendente',
+          remove: 'Sin Ordenar'
+        },
         column: {
           hide: 'Ocultar la columna'
         },
@@ -9411,6 +9416,11 @@ module.filter('px', function() {
           avg: 'media: ',
           min: 'min: ',
           max: 'max: '
+        },
+        pinning: {
+          pinLeft: 'Fijar a la Izquierda',
+          pinRight: 'Fijar a la Derecha',
+          unpin: 'Quitar Fijación'
         },
         gridMenu: {
           columns: 'Columnas:',
