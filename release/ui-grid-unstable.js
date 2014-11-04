@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-12bb4b6 - 2014-11-03
+/*! ui-grid - v3.0.0-rc.12-3311646 - 2014-11-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12494,6 +12494,15 @@ module.filter('px', function() {
           gridOptions.exporterSuppressColumns = gridOptions.exporterSuppressColumns ? gridOptions.exporterSuppressColumns : [];
           /**
            * @ngdoc object
+           * @name exporterCsvColumnSeparator
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The character to use as column separator
+           * link
+           * <br/>Defaults to ','
+           */
+          gridOptions.exporterCsvColumnSeparator = gridOptions.exporterCsvColumnSeparator ? gridOptions.exporterCsvColumnSeparator : ',';
+          /**
+           * @ngdoc object
            * @name exporterPdfDefaultStyle
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description The default style in pdfMake format
@@ -12802,7 +12811,7 @@ module.filter('px', function() {
         csvExport: function (grid, rowTypes, colTypes, $elm) {
           var exportColumnHeaders = this.getColumnHeaders(grid, colTypes);
           var exportData = this.getData(grid, rowTypes, colTypes);
-          var csvContent = this.formatAsCsv(exportColumnHeaders, exportData);
+          var csvContent = this.formatAsCsv(exportColumnHeaders, exportData, grid.options.exporterCsvColumnSeparator);
           
           if ( !$elm && grid.options.exporterCsvLinkElement ){
             $elm = grid.options.exporterCsvLinkElement;
@@ -12919,14 +12928,14 @@ module.filter('px', function() {
          * an array of column data
          * @returns {string} csv the formatted csv as a string
          */
-        formatAsCsv: function (exportColumnHeaders, exportData) {
+        formatAsCsv: function (exportColumnHeaders, exportData, separator) {
           var self = this;
           
           var bareHeaders = exportColumnHeaders.map(function(header){return header.displayName;});
           
-          var csv = self.formatRowAsCsv(this)(bareHeaders) + '\n';
+          var csv = self.formatRowAsCsv(this, separator)(bareHeaders) + '\n';
           
-          csv += exportData.map(this.formatRowAsCsv(this)).join('\n');
+          csv += exportData.map(this.formatRowAsCsv(this, separator)).join('\n');
           
           return csv;
         },
@@ -12941,9 +12950,9 @@ module.filter('px', function() {
          * @param {array} row the row to be turned into a csv string
          * @returns {string} a csv-ified version of the row
          */
-        formatRowAsCsv: function ( exporter ) {
-          return function( row ) {
-            return row.map(exporter.formatFieldAsCsv).join(',');
+        formatRowAsCsv: function (exporter, separator) {
+          return function (row) {
+            return row.map(exporter.formatFieldAsCsv).join(separator);
           };
         },
         
