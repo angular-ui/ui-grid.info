@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.12-90eaeff - 2014-11-04
+/*! ui-grid - v3.0.0-rc.12-49a62f8 - 2014-11-04
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -575,7 +575,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
        * an infinite loop
        */
       $scope.hideMenu = function( broadcastTrigger ) {
-        delete $scope.col;
+        // delete $scope.col;
         $scope.menuShown = false;
         
         if ( !broadcastTrigger ){
