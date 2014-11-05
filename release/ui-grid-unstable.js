@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.14 - 2014-11-05
+/*! ui-grid - v3.0.0-rc.14-f7ea294 - 2014-11-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -94,6 +94,11 @@
       EDIT: 'edit',
       ROW: 'row',
       COLUMN: 'column'
+    },
+    scrollbars: {
+      NEVER: 0,
+      ALWAYS: 1,
+      WHEN_NEEDED: 2
     }
   });
 
@@ -1977,8 +1982,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
           $elm.addClass('vertical');
 
-          grid.verticalScrollbarWidth = scrollBarWidth;
-          colContainer.verticalScrollbarWidth = scrollBarWidth;
+          grid.verticalScrollbarWidth = grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.WHEN_NEEDED ? 0 : scrollBarWidth;
+          colContainer.verticalScrollbarWidth = grid.verticalScrollbarWidth;
 
           // Save the initial scroll position for use in scroll events
           previousScrollPosition = $elm[0].scrollTop;
@@ -1990,8 +1995,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           $elm.addClass('horizontal');
 
           // Save this scrollbar's dimension in the grid properties
-          grid.horizontalScrollbarHeight = scrollBarWidth;
-          rowContainer.horizontalScrollbarHeight = scrollBarWidth;
+          grid.horizontalScrollbarHeight = grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.WHEN_NEEDED ? 0 : scrollBarWidth;
+          rowContainer.horizontalScrollbarHeight = grid.horizontalScrollbarHeight;
 
           // Save the initial scroll position for use in scroll events
           previousScrollPosition = gridUtil.normalizeScrollLeft($elm);
@@ -2021,9 +2026,10 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
           // gridUtil.logDebug('headerHeight in scrollbar', headerHeight);
 
+          var ondemand  = grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.WHEN_NEEDED ? "overflow-y:auto;" : "";
           // var ret = '.grid' + uiGridCtrl.grid.id + ' .ui-grid-native-scrollbar.vertical .contents { height: ' + h + 'px; }';
           var ret = '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical .contents { height: ' + contentHeight + 'px; }';
-          ret += '\n .grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical { height: ' + height + 'px; top: ' + headerHeight + 'px}';
+          ret += '\n .grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.vertical { height: ' + height + 'px; top: ' + headerHeight + 'px;' +ondemand +'}';
 
           elmMaxScroll = contentHeight;
 
@@ -2037,12 +2043,12 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
         function updateNativeHorizontalScrollbar() {
           var w = colContainer.getCanvasWidth();
 
-          // Scrollbar needs to be negatively positioned beyond the bottom of the relatively-positioned render container
-          var bottom = (scrollBarWidth * -1) + gridBottomBorder;
+          var bottom = gridBottomBorder;
           if (grid.options.showFooter) {
             bottom -= 1;
           }
-          var ret = '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.horizontal { bottom: ' + bottom + 'px; }';
+          var ondemand = grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.WHEN_NEEDED ? "overflow-x:auto" : "";
+          var ret = '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.horizontal { bottom: ' + bottom + 'px;' +ondemand + ' }';
           ret += '.grid' + grid.id + ' .ui-grid-render-container-' + containerCtrl.containerId + ' .ui-grid-native-scrollbar.horizontal .contents { width: ' + w + 'px; }';
 
           elmMaxScroll = w;
@@ -2205,7 +2211,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
         colContainerName: '=',
         bindScrollHorizontal: '=',
         bindScrollVertical: '=',
-        enableScrollbars: '='
+        enableVerticalScrollbar: '=',
+        enableHorizontalScrollbar: '='
       },
       controller: 'uiGridRenderContainer as RenderContainer',
       compile: function () {
@@ -3056,7 +3063,12 @@ angular.module('ui.grid').directive('uiGrid',
               // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
               if (grid.gridHeight < grid.options.rowHeight) {
                 // Figure out the new height
-                var newHeight = grid.options.minRowsToShow * grid.options.rowHeight;
+                var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
+                var headerHeight = grid.options.hideHeader ? 0 : grid.options.headerRowHeight;
+                var footerHeight = grid.options.showFooter ? grid.options.footerRowHeight : 0;
+                var scrollbarHeight = grid.options.enableScrollbars ? gridUtil.getScrollbarWidth() : 0;
+
+                var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight;
 
                 $elm.css('height', newHeight + 'px');
 
@@ -3550,7 +3562,7 @@ angular.module('ui.grid')
            type === uiGridConstants.dataChange.ALL ) {
         callback.callback( this );
       }
-    });
+    }, this);
   };
   
   /**
@@ -5975,7 +5987,7 @@ angular.module('ui.grid')
   (function(){
 
 angular.module('ui.grid')
-.factory('GridOptions', ['gridUtil', function(gridUtil) {
+.factory('GridOptions', ['gridUtil','uiGridConstants', function(gridUtil,uiGridConstants) {
 
   /**
    * @ngdoc function
@@ -6168,12 +6180,21 @@ angular.module('ui.grid')
   
       /**
        * @ngdoc boolean
-       * @name enableScrollbars
+       * @name enableVerticalScrollbar
        * @propertyOf ui.grid.class:GridOptions
-       * @description True by default. When enabled, this settings enable vertical
-       * and horizontal scrollbar for grid.
+       * @description uiGridConstants.scrollbar.ALWAYS by default. This settings controls the vertical scrollbar for the grid.
+       * Supported values: uiGridConstants.scrollbar.ALWAYS, uiGridConstants.scrollbar.NEVER, uiGridConstants.scrollbar.WHEN_NEEDED.
        */
-      baseOptions.enableScrollbars = baseOptions.enableScrollbars !== false;
+      baseOptions.enableVerticalScrollbar = typeof(baseOptions.enableVerticalScrollbar) !== "undefined" ? baseOptions.enableVerticalScrollbar : uiGridConstants.scrollbars.ALWAYS;
+      
+      /**
+       * @ngdoc boolean
+       * @name enableHorizontalScrollbar
+       * @propertyOf ui.grid.class:GridOptions
+       * @description uiGridConstants.scrollbar.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
+       * Supported values: uiGridConstants.scrollbar.ALWAYS, uiGridConstants.scrollbar.NEVER, uiGridConstants.scrollbar.WHEN_NEEDED.
+       */
+      baseOptions.enableHorizontalScrollbar = typeof(baseOptions.enableHorizontalScrollbar) !== "undefined" ? baseOptions.enableHorizontalScrollbar : uiGridConstants.scrollbars.ALWAYS;
   
       // Columns can't be smaller than 10 pixels
       baseOptions.minimumColumnSize = typeof(baseOptions.minimumColumnSize) !== "undefined" ? baseOptions.minimumColumnSize : 10;
@@ -16947,7 +16968,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
     "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
     "    }\n" +
     "\n" +
-    "    {{ grid.customStyles }}</style><div ui-grid-menu-button ng-if=\"grid.options.enableGridMenu\"></div><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-scrollbars=\"grid.options.enableScrollbars\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenus\"></div><div ng-transclude></div></div>"
+    "    {{ grid.customStyles }}</style><div ui-grid-menu-button ng-if=\"grid.options.enableGridMenu\"></div><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-horizontal-scrollbar=\"grid.options.enableHorizontalScrollbar\" enable-vertical-scrollbar=\"grid.options.enableVerticalScrollbar\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenus\"></div><div ng-transclude></div></div>"
   );
 
 
@@ -16997,7 +17018,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showFooter\"></div><!-- native scrolling --><div ui-grid-native-scrollbar ng-if=\"enableScrollbars\" type=\"vertical\"></div><div ui-grid-native-scrollbar ng-if=\"enableScrollbars\" type=\"horizontal\"></div></div>"
+    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showFooter\"></div><!-- native scrolling --><div ui-grid-native-scrollbar ng-if=\"enableVerticalScrollbar\" type=\"vertical\"></div><div ui-grid-native-scrollbar ng-if=\"enableHorizontalScrollbar\" type=\"horizontal\"></div></div>"
   );
 
 

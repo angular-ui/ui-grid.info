@@ -64,6 +64,10 @@ menu within each column.</p></div>
 boxes to each column header, allowing filtering within the column for the entire grid.
 Filtering can then be disabled on individual columns using the columnDefs. </p></div>
 </li>
+<li><h3 id="enableHorizontalScrollbar">enableHorizontalScrollbar</h3>
+<div class="enablehorizontalscrollbar"><p>uiGridConstants.scrollbar.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
+Supported values: uiGridConstants.scrollbar.ALWAYS, uiGridConstants.scrollbar.NEVER, uiGridConstants.scrollbar.WHEN_NEEDED.</p></div>
+</li>
 <li><h3 id="enableRowHashing">enableRowHashing</h3>
 <div class="enablerowhashing"><p>True by default. When enabled, this setting allows uiGrid to add
 <code>$$hashKey</code>-type properties (similar to Angular) to elements in the <code>data</code> array. This allows
@@ -73,14 +77,14 @@ the grid to maintain state while vastly speeding up the process of altering <cod
 you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
 and are altering the data set often.</p></div>
 </li>
-<li><h3 id="enableScrollbars">enableScrollbars</h3>
-<div class="enablescrollbars"><p>True by default. When enabled, this settings enable vertical
-and horizontal scrollbar for grid.</p></div>
-</li>
 <li><h3 id="enableSorting">enableSorting</h3>
 <div class="enablesorting"><p>True by default. When enabled, this setting adds sort
 widgets to the column headers, allowing sorting of the data for the entire grid.
 Sorting can then be disabled on individual columns using the columnDefs.</p></div>
+</li>
+<li><h3 id="enableVerticalScrollbar">enableVerticalScrollbar</h3>
+<div class="enableverticalscrollbar"><p>uiGridConstants.scrollbar.ALWAYS by default. This settings controls the vertical scrollbar for the grid.
+Supported values: uiGridConstants.scrollbar.ALWAYS, uiGridConstants.scrollbar.NEVER, uiGridConstants.scrollbar.WHEN_NEEDED.</p></div>
 </li>
 <li><h3 id="excludeProperties">excludeProperties</h3>
 <div class="excludeproperties"><p>Array of property names in data to ignore when auto-generating column names.  Provides the
