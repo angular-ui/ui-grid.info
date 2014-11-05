@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.13 - 2014-11-05
+/*! ui-grid - v3.0.0-rc.14-8d86b06 - 2014-11-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3550,7 +3550,7 @@ angular.module('ui.grid')
            type === uiGridConstants.dataChange.ALL ) {
         callback.callback( this );
       }
-    });
+    }, this);
   };
   
   /**
