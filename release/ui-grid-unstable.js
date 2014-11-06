@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.14-f7ea294 - 2014-11-05
+/*! ui-grid - v3.0.0-rc.14-bb45941 - 2014-11-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3063,12 +3063,7 @@ angular.module('ui.grid').directive('uiGrid',
               // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
               if (grid.gridHeight < grid.options.rowHeight) {
                 // Figure out the new height
-                var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
-                var headerHeight = grid.options.hideHeader ? 0 : grid.options.headerRowHeight;
-                var footerHeight = grid.options.showFooter ? grid.options.footerRowHeight : 0;
-                var scrollbarHeight = grid.options.enableScrollbars ? gridUtil.getScrollbarWidth() : 0;
-
-                var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight;
+                var newHeight = grid.options.minRowsToShow * grid.options.rowHeight;
 
                 $elm.css('height', newHeight + 'px');
 
