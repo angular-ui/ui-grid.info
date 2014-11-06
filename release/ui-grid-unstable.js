@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.14-bb45941 - 2014-11-06
+/*! ui-grid - v3.0.0-rc.14-5341b3c - 2014-11-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -603,9 +603,11 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
       });
       
       $scope.$on('menu-shown', function() {
-        uiGridColumnMenuService.repositionMenu( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement );
-        delete $scope.colElementPosition;
-        delete $scope.columnElement;
+        $timeout( function() {
+          uiGridColumnMenuService.repositionMenu( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement );
+          delete $scope.colElementPosition;
+          delete $scope.columnElement;
+        }, 200);
       });
 
  
@@ -1731,31 +1733,13 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           $scope.shown = true;
 
           $timeout( function() {
-            menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
-            $animate = gridUtil.enableAnimations(menuMid);
-            if ( $animate ){
-              $scope.shownMid = true;
-              $animate.removeClass(menuMid, 'ng-hide', function() {
-                $scope.$emit('menu-shown');
-              });
-            } else {
-              $scope.shownMid = true;
-              $scope.$emit('menu-shown');
-            }
+            $scope.shownMid = true;
+            $scope.$emit('menu-shown');
           });
         } else if ( !$scope.shownMid ) {
           // we're probably doing a hide then show, so we don't need to wait for ng-if
-          menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
-          $animate = gridUtil.enableAnimations(menuMid);
-          if ( $animate ){
-            $scope.shownMid = true;
-            $animate.removeClass(menuMid, 'ng-hide', function() {
-              $scope.$emit('menu-shown');
-            });
-          } else {
-            $scope.shownMid = true;
-            $scope.$emit('menu-shown');
-          }
+          $scope.shownMid = true;
+          $scope.$emit('menu-shown');
         }
 
         var docEventType = 'click';
@@ -1783,21 +1767,13 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
            * The user may have clicked on the menu again whilst
            * we're waiting, so we check that the mid isn't shown before applying the ng-if.
            */
-          menuMid = $elm[0].querySelectorAll( '.ui-grid-menu-mid' );
-          $animate = gridUtil.enableAnimations(menuMid);
-
-          if ( $animate ){
-            $scope.shownMid = false;
-            $animate.addClass(menuMid, 'ng-hide', function() {
-              if ( !$scope.shownMid ){
-                $scope.shown = false;
-                $scope.$emit('menu-hidden');
-              }
-            });
-          } else {
-            $scope.shownMid = false;
-            $scope.shown = false;
-          }
+          $scope.shownMid = false;
+          $timeout( function() {
+            if ( !$scope.shownMid ){
+              $scope.shown = false;
+              $scope.$emit('menu-hidden');
+            }
+          }, 200);
         }
 
         angular.element(document).off('click touchstart', applyHideMenu);
@@ -3063,7 +3039,12 @@ angular.module('ui.grid').directive('uiGrid',
               // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
               if (grid.gridHeight < grid.options.rowHeight) {
                 // Figure out the new height
-                var newHeight = grid.options.minRowsToShow * grid.options.rowHeight;
+                var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
+                var headerHeight = grid.options.hideHeader ? 0 : grid.options.headerRowHeight;
+                var footerHeight = grid.options.showFooter ? grid.options.footerRowHeight : 0;
+                var scrollbarHeight = grid.options.enableScrollbars ? gridUtil.getScrollbarWidth() : 0;
+
+                var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight;
 
                 $elm.css('height', newHeight + 'px');
 
@@ -12263,7 +12244,13 @@ module.filter('px', function() {
 
                   function updateRowContainerWidth() {
                       var grid = $scope.grid;
-                      var colWidth = grid.getColumn('expandableButtons').width;
+                      var colWidth = 0;
+                      angular.forEach(grid.columns, function (column) {
+                          if (column.renderContainer === 'left') {
+                            colWidth += column.width;
+                          }
+                      });
+                      colWidth = Math.floor(colWidth);
                       return '.grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.colContainer.name + ', .grid' + grid.id +
                           ' .ui-grid-pinned-container-' + $scope.colContainer.name + ' .ui-grid-render-container-' + $scope.colContainer.name +
                           ' .ui-grid-viewport .ui-grid-canvas .ui-grid-row { width: ' + colWidth + 'px; }';
@@ -16740,7 +16727,7 @@ module.filter('px', function() {
                 var selectionRowHeaderDef = {
                   name: uiGridSelectionConstants.selectionRowHeaderColName,
                   displayName: '',
-                  width: 30,
+                  width: 40,
                   cellTemplate: 'ui-grid/selectionRowHeader',
                   headerCellTemplate: 'ui-grid/selectionHeaderCell',
                   enableColumnResizing: false,

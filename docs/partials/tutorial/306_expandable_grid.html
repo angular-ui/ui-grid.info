@@ -37,6 +37,10 @@ provided following events and methods fos subGrids:</p>
     </div>
     <div ui-grid="gridOptions" ui-grid-pinning ui-grid-expandable class="grid"></div>
   </div>
+  Expandable rows works with checkboxes from selection and left pins
+  <div ng-controller="SecondCtrl">
+     <div ui-grid="gridOptions" ui-grid-pinning ui-grid-expandable ui-grid-selection class="grid"></div>
+  </div>
 </script>
 </div>
 <div class="tab-pane" title="expandableRowTemplate.html">
@@ -57,7 +61,7 @@ provided following events and methods fos subGrids:</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid', 'ui.grid.expandable']);
+  var app = angular.module('app', ['ui.grid', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning']);
 
   app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.gridOptions = {
@@ -66,7 +70,7 @@ provided following events and methods fos subGrids:</p>
     }
 
     $scope.gridOptions.columnDefs = [
-      { name: 'id'},
+      { name: 'id' },
       { name: 'name'},
       { name: 'age'},
       { name: 'address.city'}
@@ -95,6 +99,32 @@ provided following events and methods fos subGrids:</p>
         $scope.gridApi.expandable.collapseAllRows();
       }
   }]);
+
+  app.controller('SecondCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+        $scope.gridOptions = {
+          enableRowSelection: true,
+          expandableRowTemplate: 'expandableRowTemplate.html',
+          expandableRowHeight: 150
+        }
+
+        $scope.gridOptions.columnDefs = [
+          { name: 'id', pinnedLeft:true },
+          { name: 'name'},
+          { name: 'age'},
+          { name: 'address.city'}
+        ];
+
+        $http.get('/data/500_complex.json')
+          .success(function(data) {
+            for(i = 0; i < data.length; i++){
+              data[i].subGridOptions = {
+                columnDefs: [ {name:"Id", field:"id"},{name:"Name", field:"name"} ],
+                data: data[i].friends
+              }
+            }
+            $scope.gridOptions.data = data;
+          });
+      }]);
 </script>
 </div>
 </div><h4>Demo</h4>
