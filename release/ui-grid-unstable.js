@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.14-5341b3c - 2014-11-06
+/*! ui-grid - v3.0.0-rc.14-4f3eb26 - 2014-11-06
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -14475,7 +14475,7 @@ module.filter('px', function() {
               if ($scope.col.colDef.enableColumnMoving) {
 
                 var mouseDownHandler = function (evt) {
-                  if (evt.toElement.className !== 'ui-grid-icon-angle-down') {
+                  if (evt.target.className !== 'ui-grid-icon-angle-down' && evt.target.tagName !== 'I') {
 
                     //Cloning header cell and appending to current header cell.
                     var movingElm = $elm.clone();
