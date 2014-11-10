@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.14-55abeab - 2014-11-07
+/*! ui-grid - v3.0.0-rc.14-f0e4a7a - 2014-11-10
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3044,7 +3044,23 @@ angular.module('ui.grid').directive('uiGrid',
                 var footerHeight = grid.options.showFooter ? grid.options.footerRowHeight : 0;
                 var scrollbarHeight = grid.options.enableScrollbars ? gridUtil.getScrollbarWidth() : 0;
 
-                var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight;
+                var maxNumberOfFilters = 0;
+                // Calculates the maximum number of filters in the columns
+                angular.forEach(grid.options.columnDefs, function(col) {
+                  if (col.hasOwnProperty('filter')) {
+                    if (maxNumberOfFilters < 1) {
+                        maxNumberOfFilters = 1;
+                    }
+                  }
+                  else if (col.hasOwnProperty('filters')) {
+                    if (maxNumberOfFilters < col.filters.length) {
+                        maxNumberOfFilters = col.filters.length;
+                    }
+                  }
+                });
+                var filterHeight = maxNumberOfFilters * headerHeight;
+
+                var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight + filterHeight;
 
                 $elm.css('height', newHeight + 'px');
 
@@ -3867,8 +3883,39 @@ angular.module('ui.grid')
   Grid.prototype.modifyRows = function modifyRows(newRawData) {
     var self = this,
         i,
+        rowhash,
+        found,
         newRow;
-
+    if ((self.options.useExternalSorting || self.getColumnSorting().length === 0) && newRawData.length > 0) {
+        var oldRowHash = self.rowHashMap;
+        if (!oldRowHash) {
+           oldRowHash = {get: function(){return null;}};
+        }
+        self.createRowHashMap();
+        rowhash = self.rowHashMap;
+        var wasEmpty = self.rows.length === 0;
+        self.rows.length = 0;
+        for (i = 0; i < newRawData.length; i++) {
+            var newRawRow = newRawData[i];
+            found = oldRowHash.get(newRawRow);
+            if (found) {
+              newRow = found.row; 
+            }
+            else {
+              newRow = self.processRowBuilders(new GridRow(newRawRow, i, self));
+            }
+            self.rows.push(newRow);
+            rowhash.put(newRawRow, {
+                i: i,
+                entity: newRawRow,
+                row:newRow
+            });
+        }
+        //now that we have data, it is save to assign types to colDefs
+        if (wasEmpty) {
+           self.assignTypes();
+        }
+    } else {
     if (self.rows.length === 0 && newRawData.length > 0) {
       if (self.options.enableRowHashing) {
         if (!self.rowHashMap) {
@@ -3907,7 +3954,7 @@ angular.module('ui.grid')
         if (!self.rowHashMap) {
           self.createRowHashMap();
         }
-        var rowhash = self.rowHashMap;
+        rowhash = self.rowHashMap;
         
         // Make sure every new row has a hash
         for (i = 0; i < newRawData.length; i++) {
@@ -3920,7 +3967,7 @@ angular.module('ui.grid')
           }
 
           // See if the new row is already in the rowhash
-          var found = rowhash.get(newRow);
+          found = rowhash.get(newRow);
           // If so...
           if (found) {
             // See if it's already being used by as GridRow
@@ -3984,6 +4031,7 @@ angular.module('ui.grid')
 
       // Reset the rows length!
       self.rows.length = 0;
+    }
     }
     
     var p1 = $q.when(self.processRowsProcessors(self.rows))
@@ -9404,7 +9452,7 @@ module.filter('px', function() {
           placeholder: 'Buscar...',
           showingItems: 'Artículos Mostrados:',
           selectedItems: 'Artículos Seleccionados:',
-          totalItems: 'Total Artículos:',
+          totalItems: 'Artículos Totales:',
           size: 'Tamaño de Página:',
           first: 'Primera Página',
           next: 'Página Siguiente',
@@ -9423,7 +9471,7 @@ module.filter('px', function() {
           hide: 'Ocultar la columna'
         },
         aggregation: {
-          count: 'total filas: ',
+          count: 'filas totales: ',
           sum: 'total: ',
           avg: 'media: ',
           min: 'min: ',
@@ -9445,11 +9493,11 @@ module.filter('px', function() {
           exporterSelectedAsPdf: 'Exportar selección como pdf'
         },
         importer: {
-          noHeaders: 'No fue posible derivar nombres de columnas, ¿tiene encabezados el archivo?',
-          noObjects: 'No fue posible obtener registros, ¿existe información aparte de los encabezados?',
+          noHeaders: 'No fue posible derivar los nombres de las columnas, ¿tiene encabezados el archivo?',
+          noObjects: 'No fue posible obtener registros, ¿contiene datos el archivo, aparte de los encabezados?',
           invalidCsv: 'No fue posible procesar el archivo, ¿es un CSV válido?',
           invalidJson: 'No fue posible procesar el archivo, ¿es un Json válido?',
-          jsonNotArray: 'Archivo json importado debe contener un arreglo, abortando.'
+          jsonNotArray: 'El archivo json importado debe contener un array, abortando.'
         }
       });
       return $delegate;
