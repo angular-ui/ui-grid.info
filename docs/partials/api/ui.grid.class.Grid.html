@@ -50,6 +50,14 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
 </ul>
 </div>
 </li>
+<li><h3 id="columnRefreshCallback">columnRefreshCallback(name)</h3>
+<div class="columnrefreshcallback"><p>refreshes the grid when a column refresh
+is notified, which triggers handling of the visible flag </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
+<p>column name</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="createLeftContainer">createLeftContainer()</h3>
 <div class="createleftcontainer"><p>creates the left render container if it doesn't already exist</p></div>
 </li>
@@ -116,10 +124,10 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="isRTL">isRTL()</h3>
 <div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>

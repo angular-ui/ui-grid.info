@@ -370,6 +370,21 @@ gridTestUtils.headerCell('myGrid', 2);
 </pre></div>
 </div>
 </li>
+<li><h3 id="resizeHeaderCell">resizeHeaderCell(gridId, colNumber)</h3>
+<div class="resizeheadercell"><p>Drags the left resizer border towards the column menu button,
+which will perform a column resizing.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to adjust</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+which left resizer border you wish to drag (this will increase the size of colNumber-1).</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.resizeHeaderCell('myGrid', 1);
+</pre></div>
+</div>
+</li>
 <li><h3 id="shiftClickHeaderCell">shiftClickHeaderCell(gridId, colNumber)</h3>
 <div class="shiftclickheadercell"><p>Shift-clicks on the header of the specified column,
 which would usually result in adding a second column to the sort </p><h4 id="Parameters">Parameters</h4>

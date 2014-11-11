@@ -7,17 +7,17 @@ of setting gridOptions.data to a string value that specifies an object on your s
 
 <p>All features are enabled to get an idea of performance</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-77" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-77" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-78"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-77" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-77">
   <div ng-controller="MainCtrl">
-    <button type="button" class="btn btn-success" ng-click="refreshData()">Refresh Data</button>  <strong>Calls Pending:</strong> <span ng-bind="callsPending"></span>
+    <button id="refreshButton" type="button" class="btn btn-success" ng-click="refreshData()">Refresh Data</button>  <strong>Calls Pending:</strong> <span ng-bind="callsPending"></span>
     <br>
     <br>
     <strong>{{ myData.length }} rows</strong>
     <br>
-    <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-resize-columns ui-grid-pinning ui-grid-selection class="grid"></div>
+    <div id="grid1" ui-grid="gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-resize-columns ui-grid-pinning ui-grid-selection class="grid"></div>
   </div>
 </script>
 </div>
@@ -102,6 +102,20 @@ of setting gridOptions.data to a string value that specifies an object on your s
     };
 
   }]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-78"></pre>
+<script type="text/ng-template" id="scenario.js-78">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+
+    describe('a grid with all features', function () {
+      it('should not duplicate the menu options for pinning when resizing a column', function () {
+        element( by.id('refreshButton') ).click();
+        gridTestUtils.resizeHeaderCell( 'grid1', 1 );
+        gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 5)
+      });
+    });
 </script>
 </div>
 </div><h4>Demo</h4>

@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.14-e616cf4 - 2014-11-10
+/*! ui-grid - v3.0.0-rc.15 - 2014-11-11
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -883,6 +883,23 @@ input[type="text"].ui-grid-filter-input {
 .ui-grid[dir=rtl] .ui-grid-footer-cell:first-child .ui-grid-vertical-bar,
 .ui-grid[dir=rtl] .ui-grid-cell:first-child .ui-grid-vertical-bar {
   width: 0;
+}
+
+.ui-grid[dir=rtl] .ui-grid-menu-button {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  right: auto;
+  background: @headerBackgroundColor;
+  border: @gridBorderWidth solid @borderColor;
+  cursor: pointer;
+  min-height: 27px;
+  font-weight: normal;
+}
+
+.ui-grid[dir=rtl] .ui-grid-menu-button .ui-grid-menu {
+  left: 0;
+  right: auto;
 }
 // .ui-grid-sortarrow {
 //   fill: @sortArrowBackgroundColor; 
