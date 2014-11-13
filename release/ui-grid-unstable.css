@@ -266,6 +266,9 @@ input[type="text"].ui-grid-filter-input:hover {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
+.ui-grid-render-container:focus {
+  outline: none;
+}
 .ui-grid-viewport {
   min-height: 20px;
   position: relative;
@@ -805,7 +808,7 @@ input[type="text"].ui-grid-filter-input:hover {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-.ui-grid-cell-contents:focus {
+.ui-grid-cell-focus {
   outline: 0;
   background-color: #b3c4c7;
 }

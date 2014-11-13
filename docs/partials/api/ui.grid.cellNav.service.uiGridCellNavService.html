@@ -51,6 +51,21 @@ from gridApi.grid</p></li>
 </ul>
 </div>
 </li>
+<li><h3 id="scrollToIfNecessary">scrollToIfNecessary(grid, $scope, gridRow, gridCol)</h3>
+<div class="scrolltoifnecessary"><p>Scrolls the grid to make a certain row and column combo visible,
+in the case that it is not completely visible on the screen already.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid you'd like to act upon, usually available
+from gridApi.grid</p></li>
+<li><code ng:non-bindable="">$scope – {object} – </code>
+<p>a scope we can broadcast events from</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>row to make visible</p></li>
+<li><code ng:non-bindable="">gridCol – {GridCol} – </code>
+<p>column to make visible</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="scrollToInternal">scrollToInternal(grid, $scope, gridRow, gridCol)</h3>
 <div class="scrolltointernal"><p>Like scrollTo, but takes gridRow and gridCol.
 In calculating the scroll height we have to deal with wanting

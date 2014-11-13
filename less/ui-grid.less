@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.15-75bd9f0 - 2014-11-13
+/*! ui-grid - v3.0.0-rc.15-93015b5 - 2014-11-13
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -89,6 +89,11 @@
   // overflow: hidden;
 
   .border-radius(0, @gridBorderRadius, @gridBorderRadius, 0);
+
+  // Prevent an outline from showing if we focus the render container element
+  &:focus {
+    outline: none;
+  }
 }
 
 .ui-grid-viewport {

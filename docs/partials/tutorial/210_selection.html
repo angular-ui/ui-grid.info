@@ -31,7 +31,9 @@ you to select all visible rows.  Note that the selectAll does not watch for new 
 function and you add data to the grid, you need to check <code>grid.api.selection.getSelectAllState</code>, and if it is currently
 ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> after your data has been added.</p>
 
-<p>The selectAll box can be disabled by setting <code>enableSelectAll</code> to false. </p><h2 id="Example">Example</h2>
+<p>The selectAll box can be disabled by setting <code>enableSelectAll</code> to false.</p>
+
+<p>You can set the selection row header column width by setting 'selectionRowHeaderWidth' option.</p><h2 id="Example">Example</h2>
 <div class="example"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.</p>
 
 <h4>Source</h4>
@@ -76,7 +78,8 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
     app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
       $scope.gridOptions = { 
         enableRowSelection: true,
-        enableSelectAll: true
+        enableSelectAll: true,
+        selectionRowHeaderWidth: 35
       };
 
       $scope.gridOptions.columnDefs = [
