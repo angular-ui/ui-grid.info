@@ -219,7 +219,7 @@ docsApp.serviceFactory.openPlunkr = function(templateMerge, formPostData, loaded
       if (file.content && file.name != 'index.html') {
         if (file.name === 'app.js') {
           var contents = file.content;
-          contents = contents.replace(/(\/data.+?\.json)/g, "https://rawgit.com/angular-ui/ui-grid.info/gh-pages$1");
+          contents = contents.replace(/(\/data.+?\.json)/g, "https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages$1");
           postData['files[' + file.name + ']'] = contents;
         }
         else {

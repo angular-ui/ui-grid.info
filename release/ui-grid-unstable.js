@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.15 - 2014-11-11
+/*! ui-grid - v3.0.0-rc.15-75bd9f0 - 2014-11-13
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10462,119 +10462,140 @@ module.filter('px', function() {
 
 
 })();
-(function () {
+(function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('zh-cn', {
         aggregate: {
-          label: '条目'
+          label: '行'
         },
         groupPanel: {
-          description: '拖曳表头到此处以进行分组'
+          description: '拖曳表头到此处进行分组'
         },
         search: {
-          placeholder: '搜索...',
-          showingItems: '当前显示条目：',
-          selectedItems: '选中条目：',
-          totalItems: '条目总数：',
-          size: '每页显示数：',
-          first: '回到首页',
+          placeholder: '查找',
+          showingItems: '已显示行数：',
+          selectedItems: '已选择行数：',
+          totalItems: '总行数：',
+          size: '每页显示行数：',
+          first: '首页',
           next: '下一页',
           previous: '上一页',
-          last: '前往尾页'
+          last: '末页'
         },
         menu: {
-          text: '数据分组与选择列：'
+          text: '选择列：'
+        },
+        sort: {
+          ascending: '升序',
+          descending: '降序',
+          remove: '取消排序'
         },
         column: {
           hide: '隐藏列'
         },
         aggregation: {
-          count: 'total rows: ',
-          sum: 'total: ',
-          avg: 'avg: ',
-          min: 'min: ',
-          max: 'max: '
+          count: '计数：',
+          sum: '求和：',
+          avg: '均值：',
+          min: '最小值：',
+          max: '最大值：'
+        },
+        pinning: {
+          pinLeft: '左侧固定',
+          pinRight: '右侧固定',
+          unpin: '取消固定'
         },
         gridMenu: {
-          columns: 'Columns:',
-          importerTitle: 'Import file',
-          exporterAllAsCsv: 'Export all data as csv',
-          exporterVisibleAsCsv: 'Export visible data as csv',
-          exporterSelectedAsCsv: 'Export selected data as csv',
-          exporterAllAsPdf: 'Export all data as pdf',
-          exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          columns: '列：',
+          importerTitle: '导入文件',
+          exporterAllAsCsv: '导出全部数据到CSV',
+          exporterVisibleAsCsv: '导出可见数据到CSV',
+          exporterSelectedAsCsv: '导出已选数据到CSV',
+          exporterAllAsPdf: '导出全部数据到PDF',
+          exporterVisibleAsPdf: '导出可见数据到PDF',
+          exporterSelectedAsPdf: '导出已选数据到PDF'
         },
         importer: {
-          noHeaders: 'Column names were unable to be derived, does the file have a header?',
-          noObjects: 'Objects were not able to be derived, was there data in the file other than headers?',
-          invalidCsv: 'File was unable to be processed, is it valid CSV?',
-          invalidJson: 'File was unable to be processed, is it valid Json?',
-          jsonNotArray: 'Imported json file must contain an array, aborting.'
+          noHeaders: '无法获取列名，确定文件包含表头？',
+          noObjects: '无法获取数据，确定文件包含数据？',
+          invalidCsv: '无法处理文件，确定是合法的CSV文件？',
+          invalidJson: '无法处理文件，确定是合法的JSON文件？',
+          jsonNotArray: '导入的文件不是JSON数组！'
         }
       });
       return $delegate;
     }]);
-}]);
+  }]);
 })();
 
-(function () {
+(function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('zh-tw', {
         aggregate: {
-          label: '筆'
+          label: '行'
         },
         groupPanel: {
-          description: '拖拉表頭到此處以進行分組'
+          description: '拖曳表頭到此處進行分組'
         },
         search: {
-          placeholder: '搜尋...',
-          showingItems: '目前顯示筆數：',
-          selectedItems: '選取筆數：',
-          totalItems: '總筆數：',
-          size: '每頁顯示：',
-          first: '第一頁',
-          next: '下一頁',
-          previous: '上一頁',
-          last: '最後頁'
+          placeholder: '查找',
+          showingItems: '已顯示行數：',
+          selectedItems: '已選擇行數：',
+          totalItems: '總行數：',
+          size: '每頁顯示行數：',
+          first: '首頁',
+          next: '下壹頁',
+          previous: '上壹頁',
+          last: '末頁'
         },
         menu: {
-          text: '選擇欄位：'
+          text: '選擇列：'
+        },
+        sort: {
+          ascending: '升序',
+          descending: '降序',
+          remove: '取消排序'
         },
         column: {
-          hide: '隐藏列'
+          hide: '隱藏列'
         },
         aggregation: {
-          count: 'total rows: ',
-          sum: 'total: ',
-          avg: 'avg: ',
-          min: 'min: ',
-          max: 'max: '
+          count: '計數：',
+          sum: '求和：',
+          avg: '均值：',
+          min: '最小值：',
+          max: '最大值：'
+        },
+        pinning: {
+          pinLeft: '左側固定',
+          pinRight: '右側固定',
+          unpin: '取消固定'
         },
         gridMenu: {
-          columns: 'Columns:',
-          importerTitle: 'Import file',
-          exporterAllAsCsv: 'Export all data as csv',
-          exporterVisibleAsCsv: 'Export visible data as csv',
-          exporterSelectedAsCsv: 'Export selected data as csv',
-          exporterAllAsPdf: 'Export all data as pdf',
-          exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          columns: '列：',
+          importerTitle: '導入文件',
+          exporterAllAsCsv: '導出全部數據到CSV',
+          exporterVisibleAsCsv: '導出可見數據到CSV',
+          exporterSelectedAsCsv: '導出已選數據到CSV',
+          exporterAllAsPdf: '導出全部數據到PDF',
+          exporterVisibleAsPdf: '導出可見數據到PDF',
+          exporterSelectedAsPdf: '導出已選數據到PDF'
         },
         importer: {
-          noHeaders: 'Column names were unable to be derived, does the file have a header?',
-          noObjects: 'Objects were not able to be derived, was there data in the file other than headers?',
-          invalidCsv: 'File was unable to be processed, is it valid CSV?',
-          invalidJson: 'File was unable to be processed, is it valid Json?',
-          jsonNotArray: 'Imported json file must contain an array, aborting.'
+          noHeaders: '無法獲取列名，確定文件包含表頭？',
+          noObjects: '無法獲取數據，確定文件包含數據？',
+          invalidCsv: '無法處理文件，確定是合法的CSV文件？',
+          invalidJson: '無法處理文件，確定是合法的JSON文件？',
+          jsonNotArray: '導入的文件不是JSON數組！'
         }
       });
       return $delegate;
     }]);
-}]);
+  }]);
 })();
+
 (function() {
   'use strict';
   /**
@@ -15015,6 +15036,7 @@ module.filter('px', function() {
         }
 
         var pinColumnLeftAction = {
+          name: 'ui.grid.pinning.pinLeft',
           title: i18nService.get().pinning.pinLeft,
           icon: 'ui-grid-icon-left-open',
           shown: function () {
@@ -15035,6 +15057,7 @@ module.filter('px', function() {
         };
 
         var pinColumnRightAction = {
+          name: 'ui.grid.pinning.pinRight',
           title: i18nService.get().pinning.pinRight,
           icon: 'ui-grid-icon-right-open',
           shown: function () {
@@ -15056,6 +15079,7 @@ module.filter('px', function() {
         };
 
         var removePinAction = {
+          name: 'ui.grid.pinning.unpin',
           title: i18nService.get().pinning.unpin,
           icon: 'ui-grid-icon-cancel',
           shown: function () {
@@ -15073,13 +15097,13 @@ module.filter('px', function() {
           }
         };
 
-        if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'title', 'Pin Left')) {
+        if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'name', 'ui.grid.pinning.pinLeft')) {
           col.menuItems.push(pinColumnLeftAction);
         }
-        if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'title', 'Pin Right')) {
+        if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'name', 'ui.grid.pinning.pinRight')) {
           col.menuItems.push(pinColumnRightAction);
         }
-        if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'title', 'Unpin')) {
+        if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'name', 'ui.grid.pinning.unpin')) {
           col.menuItems.push(removePinAction);
         }
       }
@@ -15107,6 +15131,7 @@ module.filter('px', function() {
 
 
 })();
+
 (function(){
   'use strict';
 
