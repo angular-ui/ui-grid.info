@@ -1,0 +1,58 @@
+<h1><code ng:non-bindable="">uiGridPaging</code>
+<span class="hint">(directive in module <code ng:non-bindable="">ui.grid.paging</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Adds paging features to grid</p></div>
+<h2 id="Usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;div ui-grid-paging&gt;
+   ...
+&lt;/div&gt;</pre>
+</div>
+<h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-4" source-edit-css="" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-4" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-4">
+<div ng-controller="MainCtrl">
+<div ui-grid="gridOptions" ui-grid-paging></div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+var app = angular.module('app', ['ui.grid', 'ui.grid.paging']);
+
+app.controller('MainCtrl', ['$scope', function ($scope) {
+   $scope.data = [
+     { name: 'Alex', car: 'Toyota' },
+     { name: 'Sam', car: 'Lexus' },
+     { name: 'Joe', car: 'Dodge' },
+     { name: 'Bob', car: 'Buick' },
+     { name: 'Cindy', car: 'Ford' },
+     { name: 'Brian', car: 'Audi' },
+     { name: 'Malcom', car: 'Mercedes Benz' },
+     { name: 'Dave', car: 'Ford' },
+     { name: 'Stacey', car: 'Audi' },
+     { name: 'Amy', car: 'Acura' },
+     { name: 'Scott', car: 'Toyota' },
+     { name: 'Ryan', car: 'BMW' },
+   ];
+
+   $scope.gridOptions = {
+     data: 'data',
+     pagingPageSizes: [5, 10, 25],
+     pagingPageSize: 5,
+     columnDefs: [
+       {name: 'name'},
+       {name: 'car'}
+     ];
+    }
+ }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-4" ng-eval-javascript="app.js"></div></div>
+</div>

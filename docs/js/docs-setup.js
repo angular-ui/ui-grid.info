@@ -93,7 +93,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions",
       "shortName": "GridOptions",
       "type": "function",
-      "keywords": "$delegate $provide $resource $scope $translate acting action active add added adding adds addtogridmenu adjusted advantage again all allow allowing allows also altering alternative always am an and angular angular-translate angularjs any api application aquamarine are array as at attribute attributes auto-generating automatically available background-color backwards be becomes been behaviour being better binding boolean boxes but by can case cases center changes class col colcontainer coldef column columndef columndefs columns common compare compared compatibility complex conditions config configure contain content context controller controls converts core could current custom customisation data decorator default defaultoptions defaults define defined described developer disable disabled display displayname displays div do documented does doesn dynamic each either elements empty enablecolumnmenus enabled enablefiltering enablehorizontalscrollbar enablerowhashing enablesorting enableverticalscrollbar end entire entitya entityb equality event events example exclude excludeproperties executing existing exists external factory false features field field1 field2 file filter filterchange filtering fired fires first fnone follow footer footer_template footertemplate for format from function functions generate get getexternalscopes getrowidentity getsafetext github grid gridmenu gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoptions grids gridutil handle handles has have header header_template headers headertemplate height hide hideheader hit horizontal how html i18nservice id identifying identity if ignore ignored implemented in include included individual infinite infinitescrollpercentage information inline integer internal internationalization into inverse is it item items large list listen logic look maintain management may menu menus method minimum minrowstoshow modified modify more most must mydata name names necessary never new nextuid ng-click ng-repeat no not note null number numbers object objects of often on one only operate option options or out over overlaid overridden pass percentage performance place point precompiled pretty prevents process promise properties property provide provided provides providing query rather refer remove removefromgridmenu rendered renderedcolumns replace request requested required resulting return returns row row_template rowequality rowidentity rows rowtemplate scroll scrollbar scrollbars second section server set setting settings should show shown simplify some sort sorter sorting source sourced specify speeding standard starting state static still string stripped style supported suppresses tailor take takes template text-align than that the their then they this title to tojson track true tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uigridconstants unique uniquely up updated use used useexternalfiltering useexternalsorting users uses using value values var vastly vertical visibility visible want way we what when when_needed whenever where whether which while widgets will with within working x_ you your"
+      "keywords": "$delegate $provide $resource $scope $translate acting action active add added adding adds addtogridmenu adjusted advantage again all allow allowing allows also altering alternative always am an and angular angular-translate angularjs any api application aquamarine are array as at attribute attributes auto-generating automatically available background-color backwards be becomes been behaviour being better binding boolean boxes but by can case cases center changes class client col colcontainer coldef column columndef columndefs columns common compare compared compatibility complex conditions config configure contain content context controller controls converts core could current custom customisation data decorator default defaultoptions defaults define defined described developer disable disabled disables display displayname displays div do documented does doesn dynamic each either elements empty enablecolumnmenus enabled enablefiltering enablehorizontalscrollbar enablepaging enablerowhashing enables enablesorting enableverticalscrollbar end entire entitya entityb equality event events example exclude excludeproperties executing existing exists external factory false features field field1 field2 file filter filterchange filtering fired fires first fnone follow footer footer_template footertemplate for format from function functions generate get getexternalscopes getrowidentity getsafetext github grid gridmenu gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoptions grids gridutil handle handles has have header header_template headers headertemplate height hide hideheader hit horizontal how html i18nservice id identifying identity if ignore ignored implemented in include included individual infinite infinitescrollpercentage information inline integer internal internationalization into inverse is it item items large list listen logic look maintain management may menu menus method minimum minrowstoshow modified modify more most must mydata name names necessary needs never new nextuid ng-click ng-repeat no not note null number numbers object objects of often on one only operate option options or out over overlaid overridden page pager paging pagingchanged pagingcurrentpage pagingpagesize pagingpagesizes pagingtemplate pass percentage performance place point precompiled pretty prevents process promise properties property provide provided provides providing query rather refer remove removefromgridmenu rendered renderedcolumns replace request requested required resulting return returns row row_template rowequality rowidentity rows rowtemplate scroll scrollbar scrollbars second section server set setting settings should show shown side simplify size sizes some sort sorter sorting source sourced specify speeding standard starting state static still string stripped style supported suppresses tailor take takes template text-align than that the their then they this title to tojson total totalitems track true tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uigridconstants unique uniquely up updated use used useexternalfiltering useexternalpaging useexternalsorting user users uses using value values var vastly vertical visibility visible want way we what when when_needed whenever where whether which while widgets will with within working x_ you your"
     },
     {
       "section": "api",
@@ -114,7 +114,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "action against all always an and any api are array as back be cache calculations calls can changed class clear clearrowinvisible clears col column come current currently data each emits entity evaluated event exists field fielda filter findrow for force forces found from function getentityqualifiedcolfield getqualifiedcolfield getvisiblerows grid gridoptions gridrow gridrows height ie if in index individual instance instead invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified rather reference refresh refreshes relation rendered resulting return returning returns right row rows rowsvisiblechanged scope setrowinvisible sets should than that the then this to todo true ui uid uniqueid using viewmodel visibility visible which will your"
+      "keywords": "action against always an and any api array as back be calculations calls can changed class clear clearrowinvisible clears col column current currently data each emits entity evaluated event exists field fielda filter findrow for force forces found from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow height ie if in index individual instance invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified reference refresh refreshes relation rendered resulting returning returns right row rowsvisiblechanged scope setrowinvisible sets that the then this to todo true ui uid uniqueid using viewmodel visibility visible which will your"
     },
     {
       "section": "api",
@@ -514,6 +514,41 @@ NG_DOCS={
       "shortName": "uiGridPaginationService",
       "type": "service",
       "keywords": "api attaches certain feature for grid initializegrid method pagination service the to ui want we with work"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.paging",
+      "shortName": "paging",
+      "type": "overview",
+      "keywords": "api grid module overview paging provides support this to ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.paging.api:PublicAPI",
+      "shortName": "PublicAPI",
+      "type": "object",
+      "keywords": "api feature for grid object paging public the ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.paging.directive:uiGridPager",
+      "shortName": "uiGridPager",
+      "type": "directive",
+      "keywords": "api directive div for grid handling paging panel ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.paging.directive:uiGridPaging",
+      "shortName": "uiGridPaging",
+      "type": "directive",
+      "keywords": "$scope acura adds alex amy angular api app audi benz bmw bob brian buick car cindy columndefs controller data dave directive div dodge features ford function grid gridoptions html index joe js lexus mainctrl malcom mercedes module name ng-controller paging pagingpagesize pagingpagesizes ryan sam scott stacey to toyota ui ui-grid ui-grid-paging var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.paging.service:uiGridPagingService",
+      "shortName": "uiGridPagingService",
+      "type": "service",
+      "keywords": "and api attaches calls certain changed client feature for grid initializegrid method number page paging pagingchanged raises refresh requested service side size the to ui uigridpagingservice want we which with work"
     },
     {
       "section": "api",
@@ -951,6 +986,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "215_paging",
+      "shortName": "215 Paging",
+      "type": "overview",
+      "keywords": "$http $scope angular app be browsed built can class columndefs company controller css data displayed enabled function gender get grid gridoptions html in index is js json main mainctrl module name ng-controller overview pages paging pagingpagesize pagingpagesizes selector success that the tutorial ui ui-grid ui-grid-paging using var when width"
+    },
+    {
+      "section": "tutorial",
       "id": "301_custom_row_template",
       "shortName": "301 Custom Row Template",
       "type": "overview",
@@ -1046,6 +1088,13 @@ NG_DOCS={
       "shortName": "313 Custom Interpolation Symbols",
       "type": "overview",
       "keywords": "$http $interpolate $interpolateprovider $scope and angular angularjs any app application automatically break change changing class columndefs combining company config controller css custom custom-interpolation-symbol data default detect else enablesorting endsym endsymbol event expecting false field foo for frameworks function gender get grid gridoptions height html in index inside interpolation it js json like likely main mainctrl means module name ng-controller nganimate normal or other overview re requires signify something sometimes startsym startsymbol stuff success symbols templates that the then this to transform true tutorial ui ui-grid unlikely use uses values var whoohoo width will with you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "314_external_paging",
+      "shortName": "314 External Paging",
+      "type": "overview",
+      "keywords": "$http $scope and angular app asc be break browsed built callback can case class columndefs combined company controller core css data default desc direction displayed else enabled enablesorting external false firstrow for function gender get getpage grid gridapi gridoptions handle html if in index is js json length load main mainctrl module name newpage ng-controller null on onregisterapi overview page pagenumber pages pagesize paging pagingchanged pagingoptions pagingpagesize pagingpagesizes selector set shows slice sort sortchanged sortcolumns sorting success switch that the this to totalitems true tutorial ui ui-grid ui-grid-paging uigridconstants url useexternalpaging useexternalsorting using var when width"
     },
     {
       "section": "tutorial",
