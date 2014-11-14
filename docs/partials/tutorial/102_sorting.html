@@ -21,9 +21,6 @@ on the existing column if you don't want to sort by it any more.  </p>
 you change the data "behind the scenes" and want the sort to be recalculated, you can notify the grid that your
 data has changed by calling <code>gridApi.core.notifyDataChange( grid, uiGridUtils.dataChange.EDIT )</code></p>
 
-<p>In the example we provide a button that toggles the gender of Alexander Foley on the top grid to demonstrate this,
-you can see this if you sort by gender then name (using shift click), so that Alexander is at the top of the grid.</p>
-
 <h3>Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-21"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -31,6 +28,10 @@ you can see this if you sort by gender then name (using shift click), so that Al
 <script type="text/ng-template" id="index.html-20">
     <div ng-controller="MainCtrl">
       Click on a column header to sort by that column. (The third column has sorting disabled.)
+      To demonstrate the live sorting we provide a button that toggles the gender of Alexander Foley.
+      Sort by gender (ASC - so click twice) then name (using shift click), so that Alexander is at the top of the grid,
+      then click the toggleGender button.
+
       <br>
       <br>
       <button id='toggleGender' ng-click='toggleGender()'>Toggle Gender</button>
