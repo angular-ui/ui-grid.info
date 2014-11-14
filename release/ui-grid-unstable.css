@@ -227,7 +227,7 @@
   right: initial;
   left: 0;
 }
-.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"] {
+.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"].right {
   right: initial;
   left: 10px;
 }
