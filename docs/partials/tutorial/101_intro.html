@@ -62,10 +62,10 @@ while executing very complex features only when you need them.</p>
  </li>
 </ul><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-18" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-19"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-17" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-18"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-18" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-18">
+<pre class="prettyprint linenums" ng-set-text="index.html-17" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-17">
   <div ng-controller="MainCtrl">
     <div id="grid1" ui-grid="{ data: myData }" class="grid"></div>
   </div>
@@ -111,8 +111,8 @@ while executing very complex features only when you need them.</p>
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-19"></pre>
-<script type="text/ng-template" id="scenario.js-19">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-18"></pre>
+<script type="text/ng-template" id="scenario.js-18">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   it('grid should have three visible rows', function () {
     gridTestUtils.expectRowCount( 'grid1', 3 );
@@ -145,5 +145,5 @@ while executing very complex features only when you need them.</p>
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-18" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-17" ng-eval-javascript="app.js"></div></div>
 </div>
