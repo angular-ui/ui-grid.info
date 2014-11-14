@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-1aa6727 - 2014-11-14
+/*! ui-grid - v3.0.0-rc.16-e6a5a51 - 2014-11-14
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -658,7 +658,7 @@ input[type="text"].ui-grid-filter-input {
     bottom: 0;
     right: 0;
 
-    [class^="ui-grid-icon"].right {
+    [class^="ui-grid-icon"] {
       position: absolute;
       top: 50%;
       line-height: 32px;
@@ -670,6 +670,17 @@ input[type="text"].ui-grid-filter-input {
         opacity: 1;
       }
     }
+  }
+}
+
+// Position filter-cancel button on the left for rtl grids
+.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button {
+  right: initial;
+  left: 0;
+
+  [class^="ui-grid-icon"] {
+    right: initial;
+    left: 10px;
   }
 }
 

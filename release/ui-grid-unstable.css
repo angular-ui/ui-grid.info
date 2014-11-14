@@ -212,7 +212,7 @@
   bottom: 0;
   right: 0;
 }
-.ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"].right {
+.ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"] {
   position: absolute;
   top: 50%;
   line-height: 32px;
@@ -220,8 +220,16 @@
   right: 10px;
   opacity: 0.66;
 }
-.ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"].right:hover {
+.ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"]:hover {
   opacity: 1;
+}
+.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button {
+  right: initial;
+  left: 0;
+}
+.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"] {
+  right: initial;
+  left: 10px;
 }
 input[type="text"].ui-grid-filter-input {
   padding: 0;
