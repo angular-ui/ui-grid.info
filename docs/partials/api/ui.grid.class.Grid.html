@@ -52,7 +52,9 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
 </li>
 <li><h3 id="columnRefreshCallback">columnRefreshCallback(name)</h3>
 <div class="columnrefreshcallback"><p>refreshes the grid when a column refresh
-is notified, which triggers handling of the visible flag </p><h4 id="Parameters">Parameters</h4>
+is notified, which triggers handling of the visible flag. 
+This is called on uiGridConstants.dataChange.COLUMN, and is 
+registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
 <p>column name</p></li>
 </ul>
@@ -161,6 +163,15 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{GridRow}</code>
 – <p>the gridRow with all additional behavior added</p></div>
+</div>
+</li>
+<li><h3 id="processRowsCallback">processRowsCallback(name)</h3>
+<div class="processrowscallback"><p>calls the row processors, specifically
+intended to reset the sorting when an edit is called,
+registered as a dataChangeCallback on uiGridConstants.dataChange.EDIT</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
+<p>column name</p></li>
+</ul>
 </div>
 </li>
 <li><h3 id="queueRefresh">queueRefresh()</h3>

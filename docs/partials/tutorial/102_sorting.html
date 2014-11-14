@@ -17,15 +17,23 @@ on the existing column if you don't want to sort by it any more.  </p>
 
 <p>When sorting using the headers, clicking on a header removes all other sorts unless you shift-click.</p>
 
+<p>The sort is automatically recalculated when you edit a field (the edit feature calls the dataChange api to notify of a data change).  If
+you change the data "behind the scenes" and want the sort to be recalculated, you can notify the grid that your
+data has changed by calling <code>gridApi.core.notifyDataChange( grid, uiGridUtils.dataChange.EDIT )</code></p>
+
+<p>In the example we provide a button that toggles the gender of Alexander Foley on the top grid to demonstrate this,
+you can see this if you sort by gender then name (using shift click), so that Alexander is at the top of the grid.</p>
+
 <h3>Source</h3>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-19" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-20"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-21"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-19" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-19">
+<pre class="prettyprint linenums" ng-set-text="index.html-20" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-20">
     <div ng-controller="MainCtrl">
       Click on a column header to sort by that column. (The third column has sorting disabled.)
       <br>
       <br>
+      <button id='toggleGender' ng-click='toggleGender()'>Toggle Gender</button>
       <div id="grid1" ui-grid="gridOptions1" class="grid"></div>
 
       <br>
@@ -60,13 +68,25 @@ on the existing column if you don't want to sort by it any more.  </p>
           { field: 'name' },
           { field: 'gender' },
           { field: 'company', enableSorting: false }
-        ]
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.grid1Api = gridApi;
+        }
+      };
+      
+      $scope.toggleGender = function() {
+        if( $scope.gridOptions1.data[64].gender === 'male' ) {
+          $scope.gridOptions1.data[64].gender = 'female';
+        } else {
+          $scope.gridOptions1.data[64].gender = 'male';
+        };
+        $scope.grid1Api.core.notifyDataChange( $scope.grid1Api.grid, uiGridConstants.dataChange.EDIT );
       };
 
        $scope.gridOptions2 = {
         enableSorting: true,
         onRegisterApi: function( gridApi ) {
-          $scope.gridApi = gridApi;
+          $scope.grid2Api = gridApi;
         },
         columnDefs: [
           {
@@ -84,7 +104,7 @@ on the existing column if you don't want to sort by it any more.  </p>
             },
             
             sortingAlgorithm: function(a, b) {
-              var nulls = $scope.gridApi.core.sortHandleNulls(a, b);
+              var nulls = $scope.grid2Api.core.sortHandleNulls(a, b);
               if( nulls !== null ) {
                 return nulls;
               } else {
@@ -120,8 +140,8 @@ on the existing column if you don't want to sort by it any more.  </p>
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-20"></pre>
-<script type="text/ng-template" id="scenario.js-20">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-21"></pre>
+<script type="text/ng-template" id="scenario.js-21">
     var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
     
     describe('first grid on the page, no default sort', function() {
@@ -194,6 +214,19 @@ on the existing column if you don't want to sort by it any more.  </p>
         gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 0, 3 );
         gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 3 );
       });
+
+      it('toggle gender, expect Alexander Foley to move around', function() {
+        // sort gender asc, then name
+        gridTestUtils.clickHeaderCell( 'grid1', 1 );
+        gridTestUtils.clickHeaderCell( 'grid1', 1 );
+        gridTestUtils.shiftClickHeaderCell( 'grid1', 0 );
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Alexander Foley' );
+        element(by.id('toggleGender')).click();
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Anthony Joyner' );
+        element(by.id('toggleGender')).click();
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Alexander Foley' );
+      });
+
     });
 
 
@@ -217,4 +250,4 @@ on the existing column if you don't want to sort by it any more.  </p>
   </script>
 </div>
 </div><h3>Demo</h3>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-19" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-20" ng-eval-javascript="app.js"></div></div>

@@ -68,6 +68,9 @@ Filtering can then be disabled on individual columns using the columnDefs. </p><
 <div class="enablehorizontalscrollbar"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
 Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER, uiGridConstants.scrollbars.WHEN_NEEDED.</p></div>
 </li>
+<li><h3 id="enablePaging">enablePaging</h3>
+<div class="enablepaging"><p>Enables paging, defaults to true</p></div>
+</li>
 <li><h3 id="enableRowHashing">enableRowHashing</h3>
 <div class="enablerowhashing"><p>True by default. When enabled, this setting allows uiGrid to add
 <code>$$hashKey</code>-type properties (similar to Angular) to elements in the <code>data</code> array. This allows
@@ -155,6 +158,22 @@ is requested by the infinite scroll</p></div>
 <li><h3 id="minRowsToShow">minRowsToShow</h3>
 <div class="minrowstoshow"><p>Minimum number of rows to show when the grid doesn't have a defined height. Defaults to "10".</p></div>
 </li>
+<li><h3 id="pagingCurrentPage">pagingCurrentPage</h3>
+<div class="pagingcurrentpage"><p>Current page number
+default 1</p></div>
+</li>
+<li><h3 id="pagingPageSize">pagingPageSize</h3>
+<div class="pagingpagesize"><p>Page size
+defaults to the first item in pagingPageSizes, or 0 if pagingPageSizes is empty</p></div>
+</li>
+<li><h3 id="pagingPageSizes">pagingPageSizes</h3>
+<div class="pagingpagesizes"><p>Array of page sizes
+defaults to [250, 500, 1000]</p></div>
+</li>
+<li><h3 id="pagingTemplate">pagingTemplate</h3>
+<div class="pagingtemplate"><p>a custom template for the pager.  The default
+is ui-grid/ui-grid-paging</p></div>
+</li>
 <li><h3 id="rowTemplate">rowTemplate</h3>
 <div class="rowtemplate"><p>'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
 custom row template.  Can be set to either the name of a template file:
@@ -164,12 +183,19 @@ inline html
 or the id of a precompiled template (TBD how to use this) can be provided. <br />
 </br>Refer to the custom row template tutorial for more information.</p></div>
 </li>
+<li><h3 id="totalItems">totalItems</h3>
+<div class="totalitems"><p>Total number of items, set automatically when client side paging, needs set by user for server side paging</p></div>
+</li>
 <li><h3 id="useExternalFiltering">useExternalFiltering</h3>
 <div class="useexternalfiltering"><p>False by default. When enabled, this setting suppresses the internal filtering.
 All UI logic will still operate, allowing filter conditions to be set and modified.</p>
 
 <p>The external filter logic can listen for the <code>filterChange</code> event, which fires whenever
 a filter has been adjusted.</p></div>
+</li>
+<li><h3 id="useExternalPaging">useExternalPaging</h3>
+<div class="useexternalpaging"><p>Disables client side paging. When true, handle the pagingChanged event and set data and totalItems
+defaults to false</p></div>
 </li>
 <li><h3 id="useExternalSorting">useExternalSorting</h3>
 <div class="useexternalsorting"><p>Prevents the internal sorting from executing.  Events will
