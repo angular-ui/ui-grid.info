@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-178c43b - 2014-11-16
+/*! ui-grid - v3.0.0-rc.16-e9e307b - 2014-11-16
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -7291,9 +7291,9 @@ angular.module('ui.grid')
            *
            */
           if (!colDef.headerCellTemplate) {
-            col.headerCellTemplate = 'ui-grid/uiGridHeaderCell';
+            col.providedHeaderCellTemplate = 'ui-grid/uiGridHeaderCell';
           } else {
-            col.headerCellTemplate = colDef.headerCellTemplate;
+            col.providedHeaderCellTemplate = colDef.headerCellTemplate;
           }
 
           /**
@@ -7306,12 +7306,12 @@ angular.module('ui.grid')
            *
            */
           if (!colDef.cellTemplate) {
-            col.cellTemplate = 'ui-grid/uiGridCell';
+            col.providedCellTemplate = 'ui-grid/uiGridCell';
           } else {
-            col.cellTemplate = colDef.cellTemplate;
+            col.providedCellTemplate = colDef.cellTemplate;
           }
 
-          col.cellTemplatePromise = gridUtil.getTemplate(col.cellTemplate);
+          col.cellTemplatePromise = gridUtil.getTemplate(col.providedCellTemplate);
           templateGetPromises.push(col.cellTemplatePromise
             .then(
               function (template) {
@@ -7322,7 +7322,7 @@ angular.module('ui.grid')
               })
           );
 
-          templateGetPromises.push(gridUtil.getTemplate(col.headerCellTemplate)
+          templateGetPromises.push(gridUtil.getTemplate(col.providedHeaderCellTemplate)
               .then(
               function (template) {
                 col.headerCellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.headerCellFilter ? "|" + col.headerCellFilter : "");
