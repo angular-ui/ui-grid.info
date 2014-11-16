@@ -223,14 +223,6 @@
 .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"]:hover {
   opacity: 1;
 }
-.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button {
-  right: initial;
-  left: 0;
-}
-.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"].right {
-  right: initial;
-  left: 10px;
-}
 input[type="text"].ui-grid-filter-input {
   padding: 0;
   margin: 0;
@@ -683,6 +675,14 @@ input[type="text"].ui-grid-filter-input:hover {
   left: 0;
   right: auto;
 }
+.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button {
+  right: initial;
+  left: 0;
+}
+.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"] {
+  right: initial;
+  left: 10px;
+}
 /*
    Animation example, for spinners
 */
@@ -982,10 +982,9 @@ div.ui-grid-cell input.ng-valid {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 35px;
   width: 100%;
-  padding-top: 2px;
-  padding-bottom: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 .ui-grid-pager-container {
   float: left;
@@ -1005,14 +1004,14 @@ div.ui-grid-cell input.ng-valid {
   width: 50px;
   vertical-align: top;
 }
-.ui-grid-pager-control .ui-grid-pager-first-bar {
+.ui-grid-pager-control .first-bar {
   width: 10px;
   border-left: 2px solid #4d4d4d;
   margin-top: -6px;
   height: 12px;
   margin-left: -3px;
 }
-.ui-grid-pager-control .ui-grid-pager-first-triangle {
+.ui-grid-pager-control .first-triangle {
   width: 0;
   height: 0;
   border-style: solid;
@@ -1020,13 +1019,13 @@ div.ui-grid-cell input.ng-valid {
   border-color: transparent #4d4d4d transparent transparent;
   margin-left: 2px;
 }
-.ui-grid-pager-control .ui-grid-pager-next-triangle {
+.ui-grid-pager-control .next-triangle {
   margin-left: 1px;
 }
-.ui-grid-pager-control .ui-grid-pager-prev-triangle {
+.ui-grid-pager-control .prev-triangle {
   margin-left: 0;
 }
-.ui-grid-pager-control .ui-grid-pager-last-triangle {
+.ui-grid-pager-control .last-triangle {
   width: 0;
   height: 0;
   border-style: solid;
@@ -1034,7 +1033,7 @@ div.ui-grid-cell input.ng-valid {
   border-color: transparent transparent transparent #4d4d4d;
   margin-left: -1px;
 }
-.ui-grid-pager-control .ui-grid-pager-last-bar {
+.ui-grid-pager-control .last-bar {
   width: 10px;
   border-left: 2px solid #4d4d4d;
   margin-top: -6px;
@@ -1053,9 +1052,13 @@ div.ui-grid-cell input.ng-valid {
 }
 .ui-grid-pager-count-container {
   float: right;
+  margin-top: 4px;
+  min-width: 50px;
 }
 .ui-grid-pager-count-container .ui-grid-pager-count {
   margin-right: 10px;
+  margin-left: 10px;
+  float: right;
 }
 
 /* This file contains variable declarations (do not remove this line) */
