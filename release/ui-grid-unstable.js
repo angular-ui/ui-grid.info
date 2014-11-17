@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-e257751 - 2014-11-17
+/*! ui-grid - v3.0.0-rc.16-3f91e1e - 2014-11-17
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -4148,7 +4148,7 @@ angular.module('ui.grid')
     var self = this;
 
     self.rowBuilders.forEach(function (builder) {
-      builder.call(self, gridRow, self.gridOptions);
+      builder.call(self, gridRow, self.options);
     });
 
     return gridRow;
