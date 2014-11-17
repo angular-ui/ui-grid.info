@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-e9e307b - 2014-11-16
+/*! ui-grid - v3.0.0-rc.16-e257751 - 2014-11-17
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12607,8 +12607,8 @@ module.filter('px', function() {
     }]);
 
   module.directive('uiGridExpandableRow',
-  ['uiGridExpandableService', '$timeout', '$compile', 'uiGridConstants','gridUtil','$interval',
-    function (uiGridExpandableService, $timeout, $compile, uiGridConstants, gridUtil, $interval) {
+  ['uiGridExpandableService', '$timeout', '$compile', 'uiGridConstants','gridUtil','$interval', '$log',
+    function (uiGridExpandableService, $timeout, $compile, uiGridConstants, gridUtil, $interval, $log) {
 
       return {
         replace: false,
@@ -12620,6 +12620,14 @@ module.filter('px', function() {
             pre: function ($scope, $elm, $attrs, uiGridCtrl) {
               gridUtil.getTemplate($scope.grid.options.expandableRowTemplate).then(
                 function (template) {
+                  if ($scope.grid.options.expandableRowScope) {
+                    var expandableRowScope = $scope.grid.options.expandableRowScope;
+                    for (var property in expandableRowScope) {
+                      if (expandableRowScope.hasOwnProperty(property)) {
+                        $scope[property] = expandableRowScope[property];
+                      }
+                    }
+                  }
                   var expandedRowElement = $compile(template)($scope);
                   $elm.append(expandedRowElement);
                   $scope.row.expandedRendered = true;
@@ -14924,7 +14932,13 @@ module.filter('px', function() {
                       var currentElmLeft = movingElm[0].getBoundingClientRect().left - 1;
                       var currentElmRight = movingElm[0].getBoundingClientRect().right;
                       var changeValue = evt.pageX - previousMouseX;
-                      var newElementLeft = currentElmLeft - gridLeft + changeValue;
+                      var newElementLeft;
+                      if (gridUtil.detectBrowser() === 'ie') {
+                        newElementLeft = currentElmLeft + changeValue;
+                      }
+                      else {
+                        newElementLeft = currentElmLeft - gridLeft + changeValue;
+                      }
                       newElementLeft = newElementLeft < rightMoveLimit ? newElementLeft : rightMoveLimit;
                       if ((currentElmLeft >= gridLeft || changeValue > 0) && (currentElmRight <= rightMoveLimit || changeValue < 0)) {
                         movingElm.css({visibility: 'visible', 'left': newElementLeft + 'px'});

@@ -10,7 +10,8 @@ and you must include the <code>ui-grid-edit</code> directive on your grid elemen
 on an input editor, and tab, left or right arrows, enter or esc for a dropdown.</p>
 
 <p>By default an input element is provided, with numeric, date and checkbox editors for fields specified as <code>'number'</code>, <code>'date'</code>
-and <code>'boolean'</code> types, for all other fields a simple text editor is provided.</p>
+and <code>'boolean'</code> types, for all other fields a simple text editor is provided. (A point to note about date editors is that for date editors
+to be enabled the datatype of the variable should also be "Date").</p>
 
 <p>A dropdown editor is also available, through setting the <code>editableCellTemplate</code> on the <code>columnDef</code> to <code>'ui-grid/dropdownEditor'</code>.
 When using a dropdown editor you need to provide an options array through the <code>editDropDownOptionsArray</code> property on the <code>columnDef</code>.
