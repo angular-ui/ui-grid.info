@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-39d2633 - 2014-11-18
+/*! ui-grid - v3.0.0-rc.16-3c0434b - 2014-11-20
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -14680,7 +14680,7 @@ module.filter('px', function() {
    *  @name ui.grid.moveColumns.service:uiGridMoveColumnService
    *  @description Service for column moving feature.
    */
-  module.service('uiGridMoveColumnService', ['$q', '$timeout', function ($q, $timeout) {
+  module.service('uiGridMoveColumnService', ['$q', '$timeout', '$log', function ($q, $timeout, $log) {
 
     var service = {
       initializeGrid: function (grid) {
@@ -14781,7 +14781,7 @@ module.filter('px', function() {
         var findPositionForRenderIndex = function (index) {
           var position = index;
           for (var i = 0; i <= position; i++) {
-            if ((angular.isDefined(columns[i].colDef.visible) && columns[i].colDef.visible === false) || columns[i].isRowHeader === true) {
+            if ((angular.isDefined(columns[i].colDef.visible) && columns[i].colDef.visible === false)) {
               position++;
             }
           }
@@ -15028,20 +15028,22 @@ module.filter('px', function() {
                           }
                         }
                         else if (totalMouseMovement === 0) {
-                          //sort the current column
-                          var add = false;
-                          if (evt.shiftKey) {
-                            add = true;
-                          }
+                          if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
+                            //sort the current column
+                            var add = false;
+                            if (evt.shiftKey) {
+                              add = true;
+                            }
 
-                          // Sort this column then rebuild the grid's rows
-                          uiGridCtrl.grid.sortColumn($scope.col, add)
-                            .then(function () {
-                              if (uiGridCtrl.columnMenuScope) {
-                                uiGridCtrl.columnMenuScope.hideMenu();
-                              }
-                              uiGridCtrl.grid.refresh();
-                            });
+                            // Sort this column then rebuild the grid's rows
+                            uiGridCtrl.grid.sortColumn($scope.col, add)
+                              .then(function () {
+                                if (uiGridCtrl.columnMenuScope) {
+                                  uiGridCtrl.columnMenuScope.hideMenu();
+                                }
+                                uiGridCtrl.grid.refresh();
+                              });
+                          }
                         }
 
                         $document.off('mousemove', mouseMoveHandler);
