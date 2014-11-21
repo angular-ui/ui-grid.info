@@ -49,6 +49,9 @@ The individual options available in columnDefs are documented in the
 <div class="example"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre></div>
 </div>
 </li>
+<li><h3 id="columnVirtualizationThreshold">columnVirtualizationThreshold</h3>
+<div class="columnvirtualizationthreshold"><p>Turn virtualization on when number of columns goes over this number, defaults to 10</p></div>
+</li>
 <li><h3 id="data">data</h3>
 <div class="data"><p>(mandatory) Array of data to be rendered into the grid, providing the data source or data binding for 
 the grid.  The most common case is an array of objects, where each object has a number of attributes.
@@ -89,6 +92,14 @@ Sorting can then be disabled on individual columns using the columnDefs.</p></di
 <div class="enableverticalscrollbar"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the vertical scrollbar for the grid.
 Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER, uiGridConstants.scrollbars.WHEN_NEEDED.</p></div>
 </li>
+<li><h3 id="excessColumns">excessColumns</h3>
+<div class="excesscolumns"><p>Extra columns to to render outside of the viewport, which helps with smoothness of scrolling.
+Defaults to 4</p></div>
+</li>
+<li><h3 id="excessRows">excessRows</h3>
+<div class="excessrows"><p>Extra rows to to render outside of the viewport, which helps with smoothness of scrolling.
+Defaults to 4</p></div>
+</li>
 <li><h3 id="excludeProperties">excludeProperties</h3>
 <div class="excludeproperties"><p>Array of property names in data to ignore when auto-generating column names.  Provides the
 inverse of columnDefs - columnDefs is a list of columns to include, excludeProperties is a list of columns
@@ -97,6 +108,9 @@ to exclude. </p>
 <p>If columnDefs is defined, this will be ignored.</p>
 
 <p>Defaults to ['$$hashKey']</p></div>
+</li>
+<li><h3 id="footerRowHeight">footerRowHeight</h3>
+<div class="footerrowheight"><p>The height of the footer in pixels</p></div>
 </li>
 <li><h3 id="footerTemplate">footerTemplate</h3>
 <div class="footertemplate"><p>(optional) Null by default. When provided, this setting uses a custom footer
@@ -131,6 +145,9 @@ gridOptions = {
 </pre></div>
 </div>
 </li>
+<li><h3 id="headerRowHeight">headerRowHeight</h3>
+<div class="headerrowheight"><p>The height of the header in pixels, defaults to 30</p></div>
+</li>
 <li><h3 id="headerTemplate">headerTemplate</h3>
 <div class="headertemplate"><p>Null by default. When provided, this setting uses a custom header
 template, rather than the default template. Can be set to either the name of a template file:
@@ -151,12 +168,24 @@ current 'ui-grid-header.html' template in github as your starting point.</p></di
 standard header template with '<div>
 </div>', resulting in no header being shown.</p></div>
 </li>
+<li><h3 id="horizontalScrollThreshold">horizontalScrollThreshold</h3>
+<div class="horizontalscrollthreshold"><p>Defaults to 4</p></div>
+</li>
 <li><h3 id="infiniteScrollPercentage">infiniteScrollPercentage</h3>
 <div class="infinitescrollpercentage"><p>This setting controls at what percentage of the scroll more data
 is requested by the infinite scroll</p></div>
 </li>
+<li><h3 id="maxVisibleColumnCount">maxVisibleColumnCount</h3>
+<div class="maxvisiblecolumncount"><p>Defaults to 200</p></div>
+</li>
+<li><h3 id="maxVisibleRowCount">maxVisibleRowCount</h3>
+<div class="maxvisiblerowcount"><p>Defaults to 200</p></div>
+</li>
 <li><h3 id="minRowsToShow">minRowsToShow</h3>
 <div class="minrowstoshow"><p>Minimum number of rows to show when the grid doesn't have a defined height. Defaults to "10".</p></div>
+</li>
+<li><h3 id="minimumColumnSize">minimumColumnSize</h3>
+<div class="minimumcolumnsize"><p>Columns can't be smaller than this, defaults to 10 pixels</p></div>
 </li>
 <li><h3 id="pagingCurrentPage">pagingCurrentPage</h3>
 <div class="pagingcurrentpage"><p>Current page number
@@ -174,6 +203,9 @@ defaults to [250, 500, 1000]</p></div>
 <div class="pagingtemplate"><p>a custom template for the pager.  The default
 is ui-grid/ui-grid-paging</p></div>
 </li>
+<li><h3 id="rowHeight">rowHeight</h3>
+<div class="rowheight"><p>The height of the row in pixels, defaults to 30</p></div>
+</li>
 <li><h3 id="rowTemplate">rowTemplate</h3>
 <div class="rowtemplate"><p>'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
 custom row template.  Can be set to either the name of a template file:
@@ -182,6 +214,15 @@ inline html
 <pre class="prettyprint linenums">  $scope.gridOptions.rowTemplate = '&lt;div style="background-color: aquamarine" ng-click="getExternalScopes().fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;';</pre>
 or the id of a precompiled template (TBD how to use this) can be provided. <br />
 </br>Refer to the custom row template tutorial for more information.</p></div>
+</li>
+<li><h3 id="scrollThreshold">scrollThreshold</h3>
+<div class="scrollthreshold"><p>Defaults to 4</p></div>
+</li>
+<li><h3 id="scrollThrottle">scrollThrottle</h3>
+<div class="scrollthrottle"><p>Default time to throttle scroll events to, defaults to 70ms</p></div>
+</li>
+<li><h3 id="showFooter">showFooter</h3>
+<div class="showfooter"><p>Whether or not to show the footer, defaults to false</p></div>
 </li>
 <li><h3 id="totalItems">totalItems</h3>
 <div class="totalitems"><p>Total number of items, set automatically when client side paging, needs set by user for server side paging</p></div>
@@ -202,6 +243,9 @@ defaults to false</p></div>
 still be fired when the sort changes, and the sort information on
 the columns will be updated, allowing an external sorter (for example,
 server sorting) to be implemented.  Defaults to false. </p></div>
+</li>
+<li><h3 id="virtualizationThreshold">virtualizationThreshold</h3>
+<div class="virtualizationthreshold"><p>Turn virtualization on when number of data elements goes over this number, defaults to 20</p></div>
 </li>
 </ul>
 </div>
