@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-7fb46d6 - 2014-11-21
+/*! ui-grid - v3.0.0-rc.16-938e06a - 2014-11-21
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10229,7 +10229,7 @@ module.filter('px', function() {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('sv', {
         aggregate: {
-          label: 'artiklar'
+          label: 'Artiklar'
         },
         groupPanel: {
           description: 'Dra en kolumnrubrik hit och släpp den för att gruppera efter den kolumnen.'
@@ -10284,12 +10284,17 @@ module.filter('px', function() {
           invalidCsv: 'Filen kunde inte behandlas, är den en giltig CSV?',
           invalidJson: 'Filen kunde inte behandlas, är den en giltig JSON?',
           jsonNotArray: 'Importerad JSON-fil måste innehålla ett fält. Import avbruten.'
+        },
+        paging: {
+          sizes: 'Artiklar per sida',
+          totalItems: 'Artiklar'
         }
       });
       return $delegate;
     }]);
   }]);
 })();
+
 /**
  * @ngdoc overview
  * @name ui.grid.i18n
