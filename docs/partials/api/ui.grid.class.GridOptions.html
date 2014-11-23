@@ -11,7 +11,7 @@ developer to configure the behaviour of their ui-grid</p></div>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="getRowIdentity">getRowIdentity()</h3>
-<div class="getrowidentity"><p>This function returns the identity value uniquely identifying this row.</p>
+<div class="getrowidentity"><p>This function returns the identity value uniquely identifying this row, if one is not present it does not set it.</p>
 
 <p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p></div>
 </li>
@@ -26,7 +26,7 @@ to compare on any data item property or function</p><h4 id="Parameters">Paramete
 </div>
 </li>
 <li><h3 id="rowIdentity">rowIdentity()</h3>
-<div class="rowidentity"><p>This function is used to get and, if necessary, set the value uniquely identifying this row.</p>
+<div class="rowidentity"><p>This function is used to get and, if necessary, set the value uniquely identifying this row (i.e. if an identity is not present it will set one).</p>
 
 <p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one</p></div>
 </li>

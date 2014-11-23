@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-00dd706 - 2014-11-23
+/*! ui-grid - v3.0.0-rc.16-b69c8dc - 2014-11-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3915,8 +3915,9 @@ angular.module('ui.grid')
      * @param {object} rowEntity the gridOptions.data array element instance
      */
     Grid.prototype.getRow = function getRow(rowEntity) {
+      var self = this;
       var rows = this.rows.filter(function (row) {
-        return row.entity === rowEntity;
+        return self.options.rowEquality(row.entity, rowEntity);
       });
       return rows.length > 0 ? rows[0] : null;
     };
@@ -6181,7 +6182,7 @@ angular.module('ui.grid')
        * @ngdoc function
        * @name rowIdentity
        * @methodOf ui.grid.class:GridOptions
-       * @description This function is used to get and, if necessary, set the value uniquely identifying this row.
+       * @description This function is used to get and, if necessary, set the value uniquely identifying this row (i.e. if an identity is not present it will set one).
        * 
        * By default it returns the `$$hashKey` property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one
        */
@@ -6193,7 +6194,7 @@ angular.module('ui.grid')
        * @ngdoc function
        * @name getRowIdentity
        * @methodOf ui.grid.class:GridOptions
-       * @description This function returns the identity value uniquely identifying this row.
+       * @description This function returns the identity value uniquely identifying this row, if one is not present it does not set it.
        * 
        * By default it returns the `$$hashKey` property but can be overridden to use any property or set of properties you want.
        */
