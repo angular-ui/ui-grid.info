@@ -22,21 +22,14 @@ filters to convert codes into decodes, or you require
 a specific date format in the exported content.</p>
 
 <p>The method is called once for each field exported, and provides the grid, the
-gridCol and the GridRow for you to use as context in massaging the data.</p>
-
-<p>Note that the format of the passed in value is along the lines of:
-<pre class="prettyprint linenums">
-  { value: 'cellValue', alignment: 'left' }
-</pre>
-
-<p>Your returned value needs to follow that format.</p><h4 id="Returns">Returns</h4>
+gridCol and the GridRow for you to use as context in massaging the data.</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{object}</code>
 – <p>you must return the massaged value ready for exporting</p></div>
 <h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
 gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
   if ( col.name === 'status' ){
-    value = { value: decodeStatus( value ) };
+    value = decodeStatus( value );
   }
   return value;
 }

@@ -4,7 +4,10 @@
 <div><p>You can dynamically add and remove columns, the grid watches the column defs and
 updates appropriately.  The columns are by default shown in the order of the columnDefs,
 although if/when the column move feature arrives the end user will be able to alter 
-that default.</p><h2 id="Example">Example</h2>
+that default.</p>
+
+<p>You can dynamically change the display name on a column (along with some other column
+def properties), and call the notifyDataChange api to force an update. </p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-38" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-39"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -21,6 +24,7 @@ that default.</p><h2 id="Example">Example</h2>
     <button id="button_splice" class="btn" ng-click="splice()">Splice</button>
     <button id="button_unsplice" class="btn" ng-click="unsplice()">Remove Middle</button>
     <button id="button_toggle_visible" class="btn" ng-click="toggleVisible()">Toggle Visible</button>
+    <button id="button_toggle_display_name" class="btn" ng-click="toggleDisplayName()">Toggle Display Name</button>
     <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
@@ -63,6 +67,15 @@ that default.</p><h2 id="Example">Example</h2>
   
     $scope.unsplice = function() {
       $scope.columns.splice(1, 1);
+    }
+    
+    $scope.toggleDisplayName = function() {
+      if( $scope.columns[1].displayName === 'GENDER' ){
+        $scope.columns[1].displayName = 'Gender';
+      } else {
+        $scope.columns[1].displayName = 'GENDER';
+      }
+      $scope.gridApi.core.notifyDataChange( $scope.gridApi.grid,  uiGridConstants.dataChange.COLUMN );
     }
     
     $scope.toggleVisible = function() {
@@ -116,6 +129,14 @@ that default.</p><h2 id="Example">Example</h2>
       element(by.id('button_toggle_visible')).click();
       gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Name' );
+    });     
+
+    it('toggle display name should change column header', function () {
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
+      element(by.id('button_toggle_display_name')).click();
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'GENDER' );
+      element(by.id('button_toggle_display_name')).click();
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
     });     
   });    
 </script>
