@@ -53,7 +53,15 @@ property in the data source.  Should be an angular expression that evaluates aga
 array element.  Can be a complex expression: <code>employee.address.city</code>, or can be a function: <code>employee.getFullAddress()</code>.    * See the angular docs on binding expressions.    *</p></div>
 </li>
 <li><h3 id="filter">filter</h3>
-<div class="filter"><p>Specify a single filter field on this column.</p><h4 id="Example">Example</h4>
+<div class="filter"><p>Specify a single filter field on this column.</p>
+
+<p>A filter consists of a condition, a term, and a placeholder:
+- condition defines how rows are chosen as matching the filter term. This can be set to
+one of the constants in uiGridConstants.filter, or you can supply a custom filter function
+that gets passed the following arguments: [searchTerm, cellValue, row, column].
+- term: If set, the filter field will be pre-populated
+with this value.
+- placeholder: String that will be set to the <code>&lt;input&gt;.placeholder</code> attribute.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
 {
   field: 'field1',
@@ -86,6 +94,16 @@ array element.  Can be a complex expression: <code>employee.address.city</code>,
 <li><h3 id="footerCellClass">footerCellClass</h3>
 <div class="footercellclass"><p>footerCellClass can be a string specifying the class to append to a cell
 or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name</p></div>
+</li>
+<li><h3 id="footerCellFilter">footerCellFilter</h3>
+<div class="footercellfilter"><p>footerCellFilter is a filter to apply to the content of the column footer</p><h4 id="Example">Example</h4>
+<div class="example"><p><pre>
+gridOptions.columnDefs[0].footerCellFilter = 'date'</p></div>
+</div>
+</li>
+<li><h3 id="footerCellTemplate">footerCellTemplate</h3>
+<div class="footercelltemplate"><p>a custom template for the footer for this column.  The default
+is ui-grid/uiGridFooterCell</p></div>
 </li>
 <li><h3 id="headerCellClass">headerCellClass</h3>
 <div class="headercellclass"><p>headerCellClass can be a string specifying the class to append to a cell
@@ -167,9 +185,6 @@ in the menu.</p></div>
 grid will guess the type.  Add this only if the grid guessing is not to your
 satisfaction.  Refer to <a href="#/api/ui.grid.service:GridUtil.guessType">gridUtil.guessType</a> for
 a list of values the grid knows about.</p></div>
-</li>
-<li><h3 id="filter">filter</h3>
-<div class="filter"><p>An object defining filtering for a column.</p></div>
 </li>
 <li><h3 id="visible">visible</h3>
 <div class="visible"><p>sets whether or not the column is visible

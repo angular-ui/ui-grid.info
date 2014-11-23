@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-56db1dc - 2014-11-23
+/*! ui-grid - v3.0.0-rc.16-7d14ead - 2014-11-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -670,23 +670,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
       compile: function compile(tElement, tAttrs, transclude) {
         return {
           pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            function compileTemplate(template) {
-              gridUtil.getTemplate(template).then(function (contents) {
-                var linkFunction = $compile(contents);
-                var html = linkFunction($scope);
-                $elm.append(html);
-              });
-            }
-
-            //compile the footer template
-            if ($scope.col.footerCellTemplate) {
-              //compile the custom template
-              compileTemplate($scope.col.footerCellTemplate);
-            }
-            else {
-              //use default template
-              compileTemplate('ui-grid/uiGridFooterCell');
-            }
+            var cellFooter = $compile($scope.col.footerCellTemplate)($scope);
+            $elm.append(cellFooter);
           },
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
             //$elm.addClass($scope.col.getColClass(false));
@@ -5458,24 +5443,6 @@ angular.module('ui.grid')
    * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...' }</pre>
    *
    */
-
-  /** 
-   * @ngdoc property
-   * @name filter
-   * @propertyOf ui.grid.class:GridOptions.columnDef
-   * @description Specify a single filter field on this column.
-   * @example
-   * <pre>$scope.gridOptions.columnDefs = [ 
-   *   {
-   *     field: 'field1',
-   *     filter: {
-   *       condition: uiGridConstants.filter.STARTS_WITH,
-   *       placeholder: 'starts with...'
-   *     }
-   *   }
-   * ]; </pre>
-   *
-   */
     
   /**
    * @ngdoc method
@@ -5816,6 +5783,18 @@ angular.module('ui.grid')
      */
     self.headerCellFilter = colDef.headerCellFilter ? colDef.headerCellFilter : "";
 
+    /**
+     * @ngdoc property
+     * @name footerCellFilter
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description footerCellFilter is a filter to apply to the content of the column footer
+     * @example
+     * <pre>
+     *   gridOptions.columnDefs[0].footerCellFilter = 'date'
+     *
+     */
+    self.footerCellFilter = colDef.footerCellFilter ? colDef.footerCellFilter : "";
+
     self.visible = gridUtil.isNullOrUndefined(colDef.visible) || colDef.visible;
 
     self.headerClass = colDef.headerClass;
@@ -5856,37 +5835,32 @@ angular.module('ui.grid')
       defaultFilters.push({});
     }
 
-    /**
-     * @ngdoc object
-     * @name ui.grid.class:GridOptions.columnDef.filter
-     * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description An object defining filtering for a column.
-     */    
-
-    /**
+    /** 
      * @ngdoc property
-     * @name condition
-     * @propertyOf ui.grid.class:GridOptions.columnDef.filter
-     * @description Defines how rows are chosen as matching the filter term. This can be set to
+     * @name filter
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description Specify a single filter field on this column.
+     * 
+     * A filter consists of a condition, a term, and a placeholder:
+     * - condition defines how rows are chosen as matching the filter term. This can be set to
      * one of the constants in uiGridConstants.filter, or you can supply a custom filter function
      * that gets passed the following arguments: [searchTerm, cellValue, row, column].
-     */
-    
-    /**
-     * @ngdoc property
-     * @name term
-     * @propertyOf ui.grid.class:GridOptions.columnDef.filter
-     * @description If set, the filter field will be pre-populated
+     * - term: If set, the filter field will be pre-populated
      * with this value.
+     * - placeholder: String that will be set to the `<input>.placeholder` attribute.
+     * @example
+     * <pre>$scope.gridOptions.columnDefs = [ 
+     *   {
+     *     field: 'field1',
+     *     filter: {
+     *       condition: uiGridConstants.filter.STARTS_WITH,
+     *       placeholder: 'starts with...'
+     *     }
+     *   }
+     * ]; </pre>
+     *
      */
-
-    /**
-     * @ngdoc property
-     * @name placeholder
-     * @propertyOf ui.grid.class:GridOptions.columnDef.filter
-     * @description String that will be set to the <input>.placeholder attribute.
-     */
-
+  
     /*
 
       self.filters = [
@@ -6000,26 +5974,26 @@ angular.module('ui.grid')
       return self.aggregationType(visibleRows, self);
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.count) {
-      return self.getAggregationText('aggregation.count', self.grid.getVisibleRowCount());
+      return self.grid.getVisibleRowCount();
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.sum) {
       angular.forEach(cellValues, function (value) {
         result += value;
       });
-      return self.getAggregationText('aggregation.sum', result);
+      return result;
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.avg) {
       angular.forEach(cellValues, function (value) {
         result += value;
       });
       result = result / cellValues.length;
-      return self.getAggregationText('aggregation.avg', result);
+      return result;
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.min) {
-      return self.getAggregationText('aggregation.min', Math.min.apply(null, cellValues));
+      return Math.min.apply(null, cellValues);
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.max) {
-      return self.getAggregationText('aggregation.max', Math.max.apply(null, cellValues));
+      return Math.max.apply(null, cellValues);
     }
     else {
       return '\u00A0';
@@ -6038,19 +6012,31 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name getAggregationText
    * @methodOf ui.grid.class:GridColumn
-   * @description converts the aggregation value into a text string, including 
-   * i18n and deciding whether or not to display based on colDef.aggregationHideLabel
+   * @description Gets the aggregation label using i18n, including 
+   * deciding whether or not to display based on colDef.aggregationHideLabel
    * 
    * @param {string} label the i18n lookup value to use for the column label
-   * @param {number} value the calculated aggregate value for this column
    * 
    */
-  GridColumn.prototype.getAggregationText = function ( label, value ) {
+  GridColumn.prototype.getAggregationText = function () {
     var self = this;
     if ( self.colDef.aggregationHideLabel ){
-      return value;
+      return '';
     } else {
-      return i18nService.getSafeText(label) + value;
+      switch ( self.colDef.aggregationType ){
+        case uiGridConstants.aggregationTypes.count:
+          return i18nService.getSafeText('aggregation.count');
+        case uiGridConstants.aggregationTypes.sum:
+          return i18nService.getSafeText('aggregation.sum');
+        case uiGridConstants.aggregationTypes.avg:
+          return i18nService.getSafeText('aggregation.avg');
+        case uiGridConstants.aggregationTypes.min:
+          return i18nService.getSafeText('aggregation.min');
+        case uiGridConstants.aggregationTypes.max:
+          return i18nService.getSafeText('aggregation.max');
+        default:
+          return '';
+      }
     }
   };
 
@@ -7404,6 +7390,20 @@ angular.module('ui.grid')
             col.providedCellTemplate = colDef.cellTemplate;
           }
 
+          /**
+           * @ngdoc property
+           * @name footerCellTemplate
+           * @propertyOf ui.grid.class:GridOptions.columnDef
+           * @description a custom template for the footer for this column.  The default
+           * is ui-grid/uiGridFooterCell
+           *
+           */
+          if (!colDef.footerCellTemplate) {
+            col.providedFooterCellTemplate = 'ui-grid/uiGridFooterCell';
+          } else {
+            col.providedFooterCellTemplate = colDef.footerCellTemplate;
+          }
+
           col.cellTemplatePromise = gridUtil.getTemplate(col.providedCellTemplate);
           templateGetPromises.push(col.cellTemplatePromise
             .then(
@@ -7422,6 +7422,16 @@ angular.module('ui.grid')
               },
               function (res) {
                 throw new Error("Couldn't fetch/use colDef.headerCellTemplate '" + colDef.headerCellTemplate + "'");
+              })
+          );
+
+          templateGetPromises.push(gridUtil.getTemplate(col.providedFooterCellTemplate)
+              .then(
+              function (template) {
+                col.footerCellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.footerCellFilter ? "|" + col.footerCellFilter : "");
+              },
+              function (res) {
+                throw new Error("Couldn't fetch/use colDef.footerCellTemplate '" + colDef.footerCellTemplate + "'");
               })
           );
 
@@ -17906,7 +17916,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridFooterCell',
-    "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div>{{ col.getAggregationValue() }}</div></div>"
+    "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div>{{ col.getAggregationText() + ( col.getAggregationValue() CUSTOM_FILTERS ) }}</div></div>"
   );
 
 
