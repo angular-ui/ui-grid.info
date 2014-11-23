@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-38e1973 - 2014-11-23
+/*! ui-grid - v3.0.0-rc.16-f1d20b2 - 2014-11-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5806,6 +5806,17 @@ angular.module('ui.grid')
     self.enableSorting = typeof(colDef.enableSorting) !== 'undefined' ? colDef.enableSorting : true;
     self.sortingAlgorithm = colDef.sortingAlgorithm;
 
+    /**
+     * @ngdoc property
+     * @name enableFiltering
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description turn off filtering for an individual column, where
+     * you've turned on filtering for the overall grid
+     * @example
+     * <pre>
+     *   gridOptions.columnDefs[0].enableFiltering = false;
+     *
+     */
     // Turn on filtering by default (it's disabled by default at the Grid level)
     self.enableFiltering = typeof(colDef.enableFiltering) !== 'undefined' ? colDef.enableFiltering : true;
 
