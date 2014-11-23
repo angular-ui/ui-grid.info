@@ -61,7 +61,9 @@ one of the constants in uiGridConstants.filter, or you can supply a custom filte
 that gets passed the following arguments: [searchTerm, cellValue, row, column].
 - term: If set, the filter field will be pre-populated
 with this value.
-- placeholder: String that will be set to the <code>&lt;input&gt;.placeholder</code> attribute.</p><h4 id="Example">Example</h4>
+- placeholder: String that will be set to the <code>&lt;input&gt;.placeholder</code> attribute.
+- noTerm: set this to true if you have defined a custom function in condition, and
+your custom function doesn't require a term (so it can run even when the term is null)</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
 {
   field: 'field1',
