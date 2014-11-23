@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-b69c8dc - 2014-11-23
+/*! ui-grid - v3.0.0-rc.16-56db1dc - 2014-11-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -17989,7 +17989,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionHeaderCell',
-    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\"></ui-grid-selection-select-all-buttons></div></div>"
+    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\"></ui-grid-selection-select-all-buttons>&nbsp;</div></div>"
   );
 
 
@@ -18004,7 +18004,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionSelectAllButtons',
-    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\">&nbsp;</div>"
+    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\"></div>"
   );
 
 }]);
