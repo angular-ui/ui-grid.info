@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-f1d20b2 - 2014-11-23
+/*! ui-grid - v3.0.0-rc.16-8f7ee4c - 2014-11-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1819,7 +1819,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
   var uiGridMenuItem = {
     priority: 0,
     scope: {
-      title: '=',
+      name: '=',
       active: '=',
       action: '=',
       icon: '=',
@@ -7637,7 +7637,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     // Term to search for.
     var term = rowSearcher.stripTerm(filter);
 
-    if (term === null || term === undefined || term === '') {
+    if ( !filter.noTerm && (term === null || term === undefined || term === '')) {
       return true;
     }
 
@@ -17939,12 +17939,12 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridMenu',
-    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-mid\" ng-show=\"shownMid\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" title=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div></div>"
+    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-mid\" ng-show=\"shownMid\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" name=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div></div>"
   );
 
 
   $templateCache.put('ui-grid/uiGridMenuItem',
-    "<li class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active' : active() }\"><i ng-class=\"icon\"></i> {{ title }}</li>"
+    "<li class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active' : active() }\"><i ng-class=\"icon\"></i> {{ name }}</li>"
   );
 
 
