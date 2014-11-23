@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-8f7ee4c - 2014-11-23
+/*! ui-grid - v3.0.0-rc.16-f258825 - 2014-11-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -909,11 +909,20 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               $scope.sortable = false;
             }
     
+            // Figure out whether this column is filterable or not
             if (uiGridCtrl.grid.options.enableFiltering && $scope.col.enableFiltering) {
               $scope.filterable = true;
             }
             else {
               $scope.filterable = false;
+            }
+            
+            // figure out whether we support column menus
+            if ($scope.col.grid.options && $scope.col.grid.options.enableColumnMenus !== false && 
+                    $scope.col.colDef && $scope.col.colDef.enableColumnMenu !== false){
+              $scope.colMenu = true;
+            } else {
+              $scope.colMenu = false;
             }
     
             function handleClick(evt) {
@@ -950,38 +959,39 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             *
             */
 
-            // Long-click (for mobile)
-            var cancelMousedownTimeout;
-            var mousedownStartTime = 0;
-            $contentsElm.on('mousedown touchstart', function(event) {
-              if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
-                event = event.originalEvent;
-              }
-    
-              // Don't show the menu if it's not the left button
-              if (event.button && event.button !== 0) {
-                return;
-              }
-    
-              mousedownStartTime = (new Date()).getTime();
-    
-              cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
-    
-              cancelMousedownTimeout.then(function () {
-                if ($scope.col.grid.options && $scope.col.grid.options.enableColumnMenus !== false && 
-                    $scope.col.colDef && $scope.col.colDef.enableColumnMenu !== false) {
-                  uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm, event);
+            if ( $scope.sortable || $scope.colMenu ){
+              // Long-click (for mobile)
+              var cancelMousedownTimeout;
+              var mousedownStartTime = 0;
+              $contentsElm.on('mousedown touchstart', function(event) {
+                if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
+                  event = event.originalEvent;
                 }
+      
+                // Don't show the menu if it's not the left button
+                if (event.button && event.button !== 0) {
+                  return;
+                }
+      
+                mousedownStartTime = (new Date()).getTime();
+      
+                cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
+      
+                cancelMousedownTimeout.then(function () {
+                  if ( $scope.colMenu ) {
+                    uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm, event);
+                  }
+                });
               });
-            });
-    
-            $contentsElm.on('mouseup touchend', function () {
-              $timeout.cancel(cancelMousedownTimeout);
-            });
-
-            $scope.$on('$destroy', function () {
-              $contentsElm.off('mousedown touchstart');
-            });
+      
+              $contentsElm.on('mouseup touchend', function () {
+                $timeout.cancel(cancelMousedownTimeout);
+              });
+  
+              $scope.$on('$destroy', function () {
+                $contentsElm.off('mousedown touchstart');
+              });              
+            }
 
 
             $scope.toggleMenu = function($event) {
