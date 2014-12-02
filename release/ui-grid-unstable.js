@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-eb6a2ad - 2014-12-02
+/*! ui-grid - v3.0.0-rc.16-cc7841b - 2014-12-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -15116,7 +15116,6 @@ module.filter('px', function() {
 
                       //Increase width of moving column, in case the rightmost column was moved and its width was
                       //decreased because of overflow
-                      previousMouseX = evt.pageX;
                       if (reducedWidth < $scope.col.drawnWidth) {
                         reducedWidth += Math.abs(changeValue);
                         movingElm.css({'width': reducedWidth + 'px'});
@@ -15129,7 +15128,8 @@ module.filter('px', function() {
                         cloneElement();
                       }
                       else if (elmCloned) {
-                        moveElement(changeValue);
+                       moveElement(changeValue);
+                       previousMouseX = evt.pageX;
                       }
                     };
 
