@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-e409c54 - 2014-12-02
+/*! ui-grid - v3.0.0-rc.16-a647c34 - 2014-12-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -15068,7 +15068,8 @@ module.filter('px', function() {
               if ($scope.col.colDef.enableColumnMoving) {
 
                 var mouseDownHandler = function (evt) {
-                  if (evt.target.className !== 'ui-grid-icon-angle-down' && evt.target.tagName !== 'I') {
+                  if (evt.target.className !== 'ui-grid-icon-angle-down' && evt.target.tagName !== 'I' &&
+                      evt.target.className.indexOf('ui-grid-filter-input') < 0) {
 
                     //Setting some variables required for calculations.
                     var gridLeft = $scope.grid.element[0].getBoundingClientRect().left;
