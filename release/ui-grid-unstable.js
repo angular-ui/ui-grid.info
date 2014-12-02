@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-9bfa6e3 - 2014-12-02
+/*! ui-grid - v3.0.0-rc.16-e409c54 - 2014-12-02
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -1100,19 +1100,12 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             containerCtrl.header = $elm;
             containerCtrl.colContainer.header = $elm;
-
-            /**
-             * @ngdoc property
-             * @name hideHeader
-             * @propertyOf ui.grid.class:GridOptions
-             * @description Null by default. When set to true, this setting will replace the
-             * standard header template with '<div></div>', resulting in no header being shown.
-             */
             
             var headerTemplate;
-            if ($scope.grid.options.hideHeader){
+            if (!$scope.grid.options.showHeader) {
               headerTemplate = emptyTemplate;
-            } else {
+            }
+            else {
               headerTemplate = ($scope.grid.options.headerTemplate) ? $scope.grid.options.headerTemplate : defaultTemplate;            
             }
 
@@ -1995,8 +1988,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           // Update the vertical scrollbar's content height so it's the same as the canvas
           var contentHeight = rowContainer.getCanvasHeight();
 
-          // TODO(c0bra): set scrollbar `top` by height of header row
-          // var headerHeight = gridUtil.outerElementHeight(containerCtrl.header);
+          //var headerHeight = gridUtil.outerElementHeight(containerCtrl.header);
           var headerHeight = colContainer.headerHeight ? colContainer.headerHeight : grid.headerHeight;
 
           // gridUtil.logDebug('headerHeight in scrollbar', headerHeight);
@@ -3054,7 +3046,7 @@ angular.module('ui.grid').directive('uiGrid',
               if (grid.gridHeight < grid.options.rowHeight) {
                 // Figure out the new height
                 var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
-                var headerHeight = grid.options.hideHeader ? 0 : grid.options.headerRowHeight;
+                var headerHeight = grid.options.showHeader ? grid.options.headerRowHeight : 0;
                 var footerHeight = grid.options.showFooter ? grid.options.footerRowHeight : 0;
                 var scrollbarHeight = grid.options.enableScrollbars ? gridUtil.getScrollbarWidth() : 0;
 
@@ -6210,7 +6202,18 @@ angular.module('ui.grid')
       baseOptions.getRowIdentity = baseOptions.getRowIdentity || function getRowIdentity(row) {
         return row.$$hashKey;
       };
-  
+
+      /**
+       * @ngdoc property
+       * @name showHeader
+       * @propertyOf ui.grid.class:GridOptions
+       * @description True by default. When set to false, this setting will replace the
+       * standard header template with '<div></div>', resulting in no header being shown.
+       *
+       * It will also set the `headerRowHeight` option to 0.
+       */
+      baseOptions.showHeader = typeof(baseOptions.showHeader) !== "undefined" ? baseOptions.showHeader : true;
+
       /**
        * @ngdoc property
        * @name headerRowHeight
@@ -6218,7 +6221,12 @@ angular.module('ui.grid')
        * @description The height of the header in pixels, defaults to 30
        *
        */
-      baseOptions.headerRowHeight = typeof(baseOptions.headerRowHeight) !== "undefined" ? baseOptions.headerRowHeight : 30;
+      if (!baseOptions.showHeader) {
+        baseOptions.headerRowHeight = 0;
+      }
+      else {
+        baseOptions.headerRowHeight = typeof(baseOptions.headerRowHeight) !== "undefined" ? baseOptions.headerRowHeight : 30;
+      }
 
       /**
        * @ngdoc property

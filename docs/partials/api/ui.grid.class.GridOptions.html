@@ -163,11 +163,6 @@ If you want no header at all, you can set to an empty div:
 you want to tailor the existing column headers, then you should look at the
 current 'ui-grid-header.html' template in github as your starting point.</p></div>
 </li>
-<li><h3 id="hideHeader">hideHeader</h3>
-<div class="hideheader"><p>Null by default. When set to true, this setting will replace the
-standard header template with '<div>
-</div>', resulting in no header being shown.</p></div>
-</li>
 <li><h3 id="horizontalScrollThreshold">horizontalScrollThreshold</h3>
 <div class="horizontalscrollthreshold"><p>Defaults to 4</p></div>
 </li>
@@ -223,6 +218,13 @@ or the id of a precompiled template (TBD how to use this) can be provided. <br /
 </li>
 <li><h3 id="showFooter">showFooter</h3>
 <div class="showfooter"><p>Whether or not to show the footer, defaults to false</p></div>
+</li>
+<li><h3 id="showHeader">showHeader</h3>
+<div class="showheader"><p>True by default. When set to false, this setting will replace the
+standard header template with '<div>
+</div>', resulting in no header being shown.</p>
+
+<p>It will also set the <code>headerRowHeight</code> option to 0.</p></div>
 </li>
 <li><h3 id="totalItems">totalItems</h3>
 <div class="totalitems"><p>Total number of items, set automatically when client side paging, needs set by user for server side paging</p></div>
