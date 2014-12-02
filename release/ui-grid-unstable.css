@@ -1221,7 +1221,7 @@ div.ui-grid-cell input.ng-valid {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-.ui-grid-row-selected .ui-grid-cell {
+.ui-grid-row-selected > div.ui-grid-cell {
   background-color: #c9dde1 !important;
 }
 .ui-grid-disable-selection {
