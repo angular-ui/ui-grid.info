@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-a54c663 - 2014-12-05
+/*! ui-grid - v3.0.0-rc.16-9c495da - 2014-12-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -10816,11 +10816,11 @@ module.filter('px', function() {
         // Initialize the dimensions
         getDimensions();
 
-        var canceler;
+        var resizeTimeoutId;
         function startTimeout() {
-          $timeout.cancel(canceler);
+          clearTimeout(resizeTimeoutId);
 
-          canceler = $timeout(function () {
+          resizeTimeoutId = setTimeout(function () {
             var newGridHeight = gridUtil.elementHeight($elm);
             var newGridWidth = gridUtil.elementWidth($elm);
 
@@ -10828,12 +10828,14 @@ module.filter('px', function() {
               uiGridCtrl.grid.gridHeight = newGridHeight;
               uiGridCtrl.grid.gridWidth = newGridWidth;
 
-              uiGridCtrl.grid.refresh()
-                .then(function () {
-                  getDimensions();
+              $scope.$apply(function () {
+                uiGridCtrl.grid.refresh()
+                  .then(function () {
+                    getDimensions();
 
-                  startTimeout();
-                });
+                    startTimeout();
+                  });
+              });
             }
             else {
               startTimeout();
@@ -10844,7 +10846,7 @@ module.filter('px', function() {
         startTimeout();
 
         $scope.$on('$destroy', function() {
-          $timeout.cancel(canceler);
+          clearTimeout(resizeTimeoutId);
         });
       }
     };
