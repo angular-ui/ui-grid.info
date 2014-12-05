@@ -79,7 +79,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridApi",
       "shortName": "GridApi",
       "type": "function",
-      "keywords": "ability acol again all allow allowed and api array be binds callbackfn cellnav class components defaults disables disabling enables event eventname eventnameone eventnametwo eventobjectmap events execute executes feature featurename features for format from function functions given grid gridapi in inside listener listenerfunc listenerfuncs listenerfunctions listeners map method methodname methodnameone methodnametwo methods must name names navigate new objectmap of oldrowcol on or other our owns provides public raise raises register registerevent registereventsfromobject registermethod registermethodsfromobject registers same scrollto simple something specified still suppress suppressevents that the then these this thisarg to ui use used var via were while will"
+      "keywords": "$log $scope ability acol add again all allow allowed and api array be binds callback callbackfn cellnav class components defaults disables disabling enables event eventname eventnameone eventnametwo eventobjectmap events execute executes feature featurename features for format from function functions get given grid gridapi gridoptions in inside it listen listener listenerfunc listenerfuncs listenerfunctions listeners log map method methodname methodnameone methodnametwo methods must name names navigate navigation new objectmap of oldrowcol on onregisterapi or other our owns prepended provides public raise raises register registerevent registereventsfromobject registermethod registermethodsfromobject registers same scrollto simple something specified still suppress suppressevents that the then these this thisarg to ui use used var via were while will you"
     },
     {
       "section": "api",
@@ -926,7 +926,7 @@ NG_DOCS={
       "id": "203_pinning",
       "shortName": "203 Pinning",
       "type": "overview",
-      "keywords": "$http $log $scope about address age allows and angular app city class column columndefs company controller css data directive displayname element email enable feature friend friends function get grid gridoptions height html id include index js json left main mainctrl module must name ng-controller on or overview phone pin pinnedleft pinnedright pinning right state street success the to tutorial ui ui-grid ui-grid-pinning user var width you your zip"
+      "keywords": "$http $log $scope about address age allows also and angular app below city class column columndefs company controller css data definition directive disable displayname element email enable enablepinning example feature friend friends function get grid gridoptions height html id in include index is it js json left level main mainctrl module must name ng-controller note on or overview phone pin pinnedleft pinnedright pinning possible right state street success the to tutorial ui ui-grid ui-grid-pinning user var width you your zip"
     },
     {
       "section": "tutorial",

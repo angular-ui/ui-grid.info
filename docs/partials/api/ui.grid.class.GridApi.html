@@ -4,7 +4,16 @@
 </h1>
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>GridApi provides the ability to register public methods events inside the grid and allow
-for other components to use the api via featureName.methodName and featureName.on.eventName(function(args){}</p></div>
+for other components to use the api via featureName.raise.methodName and featureName.on.eventName(function(args){}.
+<br/>
+To listen to events, you must add a callback to gridOptions.onRegisterApi
+<pre class="prettyprint linenums">
+  $scope.gridOptions.onRegisterApi = function(gridApi){
+     gridApi.cellNav.on.navigate($scope,function(newRowCol, oldRowCol){
+         $log.log('navigation event');
+     });
+  };
+</pre></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridApi(grid);</pre>
 <h3 id="Parameters">Parameters</h3>
@@ -14,7 +23,8 @@ for other components to use the api via featureName.methodName and featureName.o
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="registerEvent">registerEvent(featureName, eventName)</h3>
-<div class="registerevent"><p>Registers a new event for the given feature</p><h4 id="Parameters">Parameters</h4>
+<div class="registerevent"><p>Registers a new event for the given feature.  The event will get a
+.raise and .on prepended to it</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">featureName – {string} – </code>
 <p>name of the feature that raises the event</p></li>
 <li><code ng:non-bindable="">eventName – {string} – </code>

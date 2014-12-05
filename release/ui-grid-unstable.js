@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-a647c34 - 2014-12-02
+/*! ui-grid - v3.0.0-rc.16-a54c663 - 2014-12-05
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -5058,7 +5058,16 @@ angular.module('ui.grid')
          * @ngdoc function
          * @name ui.grid.class:GridApi
          * @description GridApi provides the ability to register public methods events inside the grid and allow
-         * for other components to use the api via featureName.methodName and featureName.on.eventName(function(args){}
+         * for other components to use the api via featureName.raise.methodName and featureName.on.eventName(function(args){}.
+         * <br/>
+         * To listen to events, you must add a callback to gridOptions.onRegisterApi
+         * <pre>
+         *   $scope.gridOptions.onRegisterApi = function(gridApi){
+         *      gridApi.cellNav.on.navigate($scope,function(newRowCol, oldRowCol){
+         *          $log.log('navigation event');
+         *      });
+         *   };
+         * </pre>
          * @param {object} grid grid that owns api
          */
         var GridApi = function GridApi(grid) {
@@ -5131,7 +5140,7 @@ angular.module('ui.grid')
            * @methodOf  ui.grid.core.api:PublicApi
            * @description Returns all visible rows
            * @param {Grid} grid the grid you want to get visible rows from
-           * @returns {array} an array of gridRow 
+           * @returns {array} an array of gridRow
            */
           this.registerMethod( 'core', 'getVisibleRows', this.grid.getVisibleRows );
           
@@ -5144,9 +5153,9 @@ angular.module('ui.grid')
            * to say which rows changed (unlike in the selection feature).
            * We can plausibly know which row was changed when setRowInvisible
            * is called, but in that situation the user already knows which row
-           * they changed.  When a filter runs we don't know what changed, 
+           * they changed.  When a filter runs we don't know what changed,
            * and that is the one that would have been useful.
-           * 
+           *
            */
           this.registerEvent( 'core', 'rowsVisibleChanged' );
         };
@@ -5208,7 +5217,8 @@ angular.module('ui.grid')
          * @ngdoc function
          * @name registerEvent
          * @methodOf ui.grid.class:GridApi
-         * @description Registers a new event for the given feature
+         * @description Registers a new event for the given feature.  The event will get a
+         * .raise and .on prepended to it
          * @param {string} featureName name of the feature that raises the event
          * @param {string} eventName  name of the event
          */
@@ -5978,13 +5988,18 @@ angular.module('ui.grid')
     var self = this;
     var result = 0;
     var visibleRows = self.grid.getVisibleRows();
-    var cellValues = [];
-    angular.forEach(visibleRows, function (row) {
-      var cellValue = self.grid.getCellValue(row, self);
-      if (angular.isNumber(cellValue)) {
-        cellValues.push(cellValue);
-      }
-    });
+
+    var cellValues = function(){
+      var values = [];
+      angular.forEach(visibleRows, function (row) {
+        var cellValue = self.grid.getCellValue(row, self);
+        if (angular.isNumber(cellValue)) {
+          values.push(cellValue);
+        }
+      });
+      return values;
+    };
+
     if (angular.isFunction(self.aggregationType)) {
       return self.aggregationType(visibleRows, self);
     }
@@ -5992,23 +6007,23 @@ angular.module('ui.grid')
       return self.grid.getVisibleRowCount();
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.sum) {
-      angular.forEach(cellValues, function (value) {
+      angular.forEach(cellValues(), function (value) {
         result += value;
       });
       return result;
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.avg) {
-      angular.forEach(cellValues, function (value) {
+      angular.forEach(cellValues(), function (value) {
         result += value;
       });
-      result = result / cellValues.length;
+      result = result / cellValues().length;
       return result;
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.min) {
-      return Math.min.apply(null, cellValues);
+      return Math.min.apply(null, cellValues());
     }
     else if (self.aggregationType === uiGridConstants.aggregationTypes.max) {
-      return Math.max.apply(null, cellValues);
+      return Math.max.apply(null, cellValues());
     }
     else {
       return '\u00A0';
