@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-rc.16-9c495da - 2014-12-05
+/*! ui-grid - v3.0.0-RC.17-1e98d62 - 2014-12-09
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3005,11 +3005,13 @@ angular.module('ui.grid').directive('uiGrid',
     '$templateCache',
     'gridUtil',
     '$window',
+    'uiGridConstants',
     function(
       $compile,
       $templateCache,
       gridUtil,
-      $window
+      $window,
+      uiGridConstants
       ) {
       return {
         templateUrl: 'ui-grid/ui-grid',
@@ -3048,7 +3050,11 @@ angular.module('ui.grid').directive('uiGrid',
                 var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
                 var headerHeight = grid.options.showHeader ? grid.options.headerRowHeight : 0;
                 var footerHeight = grid.options.showFooter ? grid.options.footerRowHeight : 0;
-                var scrollbarHeight = grid.options.enableScrollbars ? gridUtil.getScrollbarWidth() : 0;
+                
+                var scrollbarHeight = 0;
+                if (grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.ALWAYS) {
+                  scrollbarHeight = gridUtil.getScrollbarWidth();
+                }
 
                 var maxNumberOfFilters = 0;
                 // Calculates the maximum number of filters in the columns
@@ -6042,9 +6048,10 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name getAggregationText
    * @methodOf ui.grid.class:GridColumn
-   * @description Gets the aggregation label using i18n, including 
-   * deciding whether or not to display based on colDef.aggregationHideLabel
-   * 
+   * @description Gets the aggregation label from colDef.aggregationLabel if
+   * specified or by using i18n, including deciding whether or not to display
+   * based on colDef.aggregationHideLabel.
+   *
    * @param {string} label the i18n lookup value to use for the column label
    * 
    */
@@ -6052,7 +6059,11 @@ angular.module('ui.grid')
     var self = this;
     if ( self.colDef.aggregationHideLabel ){
       return '';
-    } else {
+    }
+    else if ( self.colDef.aggregationLabel ) {
+      return self.colDef.aggregationLabel;
+    }
+    else {
       switch ( self.colDef.aggregationType ){
         case uiGridConstants.aggregationTypes.count:
           return i18nService.getSafeText('aggregation.count');
