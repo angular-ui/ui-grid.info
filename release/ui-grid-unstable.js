@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18 - 2014-12-09
+/*! ui-grid - v3.0.0-RC.18-0b660b5 - 2014-12-10
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2412,8 +2412,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 event = event.originalEvent;
               }
 
-              event.preventDefault();
-
               $document.unbind('touchmove', touchmove);
               $document.unbind('touchend', touchend);
               $document.unbind('touchcancel', touchend);
@@ -2477,8 +2475,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 if (event.originalEvent) {
                   event = event.originalEvent;
                 }
-
-                event.preventDefault();
 
                 uiGridCtrl.scrollbars.forEach(function (sbar) {
                   sbar.addClass('ui-grid-scrollbar-visible');
@@ -2605,6 +2601,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
   }]);
 
 })();
+
 (function(){
   'use strict';
 
