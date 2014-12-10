@@ -35,7 +35,7 @@ editing json files) got bored of filtering after the first 10 or so rows, and de
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ui.grid']);
+    var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
     app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridConstants', function ($scope, $http, $interval, uiGridConstants) {
 

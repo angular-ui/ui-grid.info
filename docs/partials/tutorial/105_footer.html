@@ -32,7 +32,7 @@ show the aggregation but without a label.  Refer the third column in the example
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
   app.controller('MainCtrl', ['$scope','uiGridConstants', '$http', function ($scope, uiGridConstants, $http) {
   var data = [];

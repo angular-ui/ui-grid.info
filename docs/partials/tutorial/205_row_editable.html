@@ -74,7 +74,7 @@ each save will take 3 seconds to complete.  Any row saved with a gender of "male
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'addressFormatter']);
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'addressFormatter']);
 
     angular.module('addressFormatter', []).filter('address', function () {
       return function (input) {

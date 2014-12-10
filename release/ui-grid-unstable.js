@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-0b660b5 - 2014-12-10
+/*! ui-grid - v3.0.0-RC.18-654e0ce - 2014-12-10
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -925,10 +925,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               $scope.colMenu = false;
             }
     
-            function handleClick(evt) {
+            function handleClick(event) {
               // If the shift key is being held down, add this column to the sort
               var add = false;
-              if (evt.shiftKey) {
+              if (event.shiftKey) {
                 add = true;
               }
     
@@ -959,11 +959,17 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             *
             */
 
-            if ( $scope.sortable || $scope.colMenu ){
+            if ($scope.sortable || $scope.colMenu) {
               // Long-click (for mobile)
               var cancelMousedownTimeout;
               var mousedownStartTime = 0;
-              $contentsElm.on('mousedown touchstart', function(event) {
+
+              var downEvent = gridUtil.isTouchEnabled() ? 'touchstart' : 'mousedown';
+              $contentsElm.on(downEvent, function(event) {
+                gridUtil.logDebug('mouse event', event.type);
+
+                event.stopPropagation();
+
                 if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
                   event = event.originalEvent;
                 }
@@ -983,19 +989,20 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   }
                 });
               });
-      
-              $contentsElm.on('mouseup touchend', function () {
+        
+              var upEvent = gridUtil.isTouchEnabled() ? 'touchend' : 'mouseup';
+              $contentsElm.on(upEvent, function () {
                 $timeout.cancel(cancelMousedownTimeout);
               });
   
               $scope.$on('$destroy', function () {
                 $contentsElm.off('mousedown touchstart');
-              });              
+              });
             }
 
 
-            $scope.toggleMenu = function($event) {
-              $event.stopPropagation();
+            $scope.toggleMenu = function(event) {
+              event.stopPropagation();
     
               // If the menu is already showing...
               if (uiGridCtrl.columnMenuScope.menuShown) {
@@ -1019,8 +1026,11 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
     
             // If this column is sortable, add a click event handler
             if ($scope.sortable) {
-              $contentsElm.on('click touchend', function(evt) {
-                evt.stopPropagation();
+              var clickEvent = gridUtil.isTouchEnabled() ? 'touchend' : 'click';
+              $contentsElm.on(clickEvent, function(event) {
+                gridUtil.logDebug('mouse event 2', event.type);
+
+                event.stopPropagation();
     
                 $timeout.cancel(cancelMousedownTimeout);
     
@@ -1028,11 +1038,13 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 var mousedownTime = mousedownEndTime - mousedownStartTime;
     
                 if (mousedownTime > mousedownTimeout) {
+                  gridUtil.logDebug('long click');
                   // long click, handled above with mousedown
                 }
                 else {
                   // short click
-                  handleClick(evt);
+                  gridUtil.logDebug('short click');
+                  handleClick(event);
                 }
               });
     
@@ -2467,7 +2479,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 }, decelerateInterval);
               }
 
-              decelerate();
+              // decelerate();
             }
 
             if (GridUtil.isTouchEnabled()) {
@@ -12061,8 +12073,10 @@ module.filter('px', function() {
    *
    */
   module.directive('uiGridCell',
-    ['$compile', '$injector', 'uiGridConstants', 'uiGridEditConstants', 'gridUtil', '$parse', 'uiGridEditService',
-      function ($compile, $injector, uiGridConstants, uiGridEditConstants, gridUtil, $parse, uiGridEditService) {
+    ['$compile', '$injector', '$timeout', 'uiGridConstants', 'uiGridEditConstants', 'gridUtil', '$parse', 'uiGridEditService',
+      function ($compile, $injector, $timeout, uiGridConstants, uiGridEditConstants, gridUtil, $parse, uiGridEditService) {
+        var touchstartTimeout = 500;
+
         return {
           priority: -100, // run after default uiGridCell directive
           restrict: 'A',
@@ -12078,6 +12092,7 @@ module.filter('px', function() {
             var inEdit = false;
             var isFocusedBeforeEdit = false;
             var cellModel;
+            var cancelTouchstartTimeout;
 
             registerBeginEditEvents();
 
@@ -12087,6 +12102,37 @@ module.filter('px', function() {
               if ($scope.col.colDef.enableCellEditOnFocus) {
                 $elm.find('div').on('focus', beginEditFocus);
               }
+
+              // Add touchstart handling. If the users starts a touch and it doesn't end after X milliseconds, then start the edit
+              $elm.on('touchstart', touchStart);
+            }
+
+            function touchStart(event) {
+              // jQuery masks events
+              if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
+                event = event.originalEvent;
+              }
+
+              // Bind touchend handler
+              $elm.on('touchend', touchEnd);
+
+              // Start a timeout
+              cancelTouchstartTimeout = $timeout(function() { }, touchstartTimeout);
+
+              // Timeout's done! Start the edit
+              cancelTouchstartTimeout.then(function () {
+                // Use setTimeout to start the edit because beginEdit expects to be outside of $digest
+                setTimeout(beginEdit, 0);
+
+                // Undbind the touchend handler, we don't need it anymore
+                $elm.off('touchend', touchEnd);
+              });
+            }
+
+            // Cancel any touchstart timeout
+            function touchEnd(event) {
+              $timeout.cancel(cancelTouchstartTimeout);
+              $elm.off('touchend', touchEnd);
             }
 
             function cancelBeginEditEvents() {
@@ -12095,6 +12141,7 @@ module.filter('px', function() {
               if ($scope.col.colDef.enableCellEditOnFocus) {
                 $elm.find('div').off('focus', beginEditFocus);
               }
+              $elm.off('touchstart', touchStart);
             }
 
             function beginEditFocus(evt) {
@@ -12326,8 +12373,8 @@ module.filter('px', function() {
    *
    */
   module.directive('uiGridEditor',
-    ['uiGridConstants', 'uiGridEditConstants',
-      function (uiGridConstants, uiGridEditConstants) {
+    ['gridUtil', 'uiGridConstants', 'uiGridEditConstants',
+      function (gridUtil, uiGridConstants, uiGridEditConstants) {
         return {
           scope: true,
           require: ['?^uiGrid', '?^uiGridRenderContainer'],
@@ -16290,6 +16337,19 @@ module.filter('px', function() {
   module.directive('uiGridColumnResizer', ['$document', 'gridUtil', 'uiGridConstants', 'columnBounds', 'uiGridResizeColumnsService', function ($document, gridUtil, uiGridConstants, columnBounds, uiGridResizeColumnsService) {
     var resizeOverlay = angular.element('<div class="ui-grid-resize-overlay"></div>');
 
+    var downEvent, upEvent, moveEvent;
+
+    if (gridUtil.isTouchEnabled()) {
+      downEvent = 'touchstart';
+      upEvent = 'touchend';
+      moveEvent = 'touchmove';
+    }
+    else {
+      downEvent = 'mousedown';
+      upEvent = 'mouseup';
+      moveEvent = 'mousemove';
+    }
+
     var resizer = {
       priority: 0,
       scope: {
@@ -16348,7 +16408,7 @@ module.filter('px', function() {
           if (event.originalEvent) { event = event.originalEvent; }
           event.preventDefault();
 
-          x = event.clientX - gridLeft;
+          x = (event.targetTouches ? event.targetTouches[0] : event).clientX - gridLeft;
 
           if (x < 0) { x = 0; }
           else if (x > uiGridCtrl.grid.gridWidth) { x = uiGridCtrl.grid.gridWidth; }
@@ -16406,12 +16466,12 @@ module.filter('px', function() {
           resizeOverlay.remove();
 
           // Resize the column
-          x = event.clientX - gridLeft;
+          x = (event.changedTouches ? event.changedTouches[0] : event).clientX - gridLeft;
           var xDiff = x - startX;
 
           if (xDiff === 0) {
-            $document.off('mouseup', mouseup);
-            $document.off('mousemove', mousemove);
+            $document.off(upEvent, mouseup);
+            $document.off(moveEvent, mousemove);
             return;
           }
 
@@ -16458,11 +16518,11 @@ module.filter('px', function() {
 
           uiGridResizeColumnsService.fireColumnSizeChanged(uiGridCtrl.grid, col.colDef, xDiff);
 
-          $document.off('mouseup', mouseup);
-          $document.off('mousemove', mousemove);
+          $document.off(upEvent, mouseup);
+          $document.off(moveEvent, mousemove);
         }
 
-        $elm.on('mousedown', function(event, args) {
+        $elm.on(downEvent, function(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
           event.stopPropagation();
 
@@ -16471,7 +16531,7 @@ module.filter('px', function() {
           gridLeft = uiGridCtrl.grid.element[0].getBoundingClientRect().left;
 
           // Get the starting X position, which is the X coordinate of the click minus the grid's offset
-          startX = event.clientX - gridLeft;
+          startX = (event.targetTouches ? event.targetTouches[0] : event).clientX - gridLeft;
 
           // Append the resizer overlay
           uiGridCtrl.grid.element.append(resizeOverlay);
@@ -16480,8 +16540,8 @@ module.filter('px', function() {
           resizeOverlay.css({ left: startX });
 
           // Add handlers for mouse move and up events
-          $document.on('mouseup', mouseup);
-          $document.on('mousemove', mousemove);
+          $document.on(upEvent, mouseup);
+          $document.on(moveEvent, mousemove);
         });
 
         // On doubleclick, resize to fit all rendered cells
@@ -16566,10 +16626,10 @@ module.filter('px', function() {
         });
 
         $elm.on('$destroy', function() {
-          $elm.off('mousedown');
+          $elm.off(downEvent);
           $elm.off('dblclick');
-          $document.off('mousemove', mousemove);
-          $document.off('mouseup', mouseup);
+          $document.off(moveEvent, mousemove);
+          $document.off(upEvent, mouseup);
         });
       }
     };
@@ -18012,7 +18072,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-click=\"$event.stopPropagation()\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel\" ng-show=\"!!colFilter.term\">&nbsp;</i><!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" class=\"ui-grid-column-menu-button\" ng-click=\"toggleMenu($event)\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel\" ng-show=\"!!colFilter.term\">&nbsp;</i><!-- use !! because angular interprets 'f' as false --></div></div></div>"
   );
 
 

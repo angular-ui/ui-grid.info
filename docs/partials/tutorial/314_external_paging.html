@@ -26,7 +26,7 @@
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ui.grid', 'ui.grid.paging']);
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.paging']);
 
     app.controller('MainCtrl', [
     '$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {

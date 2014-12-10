@@ -48,7 +48,7 @@ Only one ui-i18n directive is allowed.  The current language setting is stored i
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
   app.controller('MainCtrl', ['$scope', 'i18nService', '$http', function ($scope, i18nService, $http) {
       $scope.langs = i18nService.getAllLangs();

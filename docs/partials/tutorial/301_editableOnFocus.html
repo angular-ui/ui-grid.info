@@ -30,7 +30,7 @@ See api docs for default navigation keys and how you can override.</p><h2 id="Ex
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.cellNav']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav']);
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {  };

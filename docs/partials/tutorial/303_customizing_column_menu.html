@@ -48,7 +48,7 @@ the column menu entirely using the <code>enableColumnMenu: false</code> columnDe
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngAnimate', 'ui.grid']);
+  var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid']);
 
   app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
     $scope.blargh = function() {

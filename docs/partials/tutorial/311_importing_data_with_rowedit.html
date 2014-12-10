@@ -38,7 +38,7 @@ and can be edited to save without error.</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ngAnimate', 'ui.grid', 'ui.grid.importer', 'ui.grid.rowEdit', 'ui.grid.edit']);
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.importer', 'ui.grid.rowEdit', 'ui.grid.edit']);
 
     app.controller('MainCtrl', ['$scope', '$http', '$interval', '$q', function ($scope, $http, $interval, $q) {
       $scope.data = [];

@@ -58,7 +58,7 @@ internationalization function that waits 1 second then prefixes each column with
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid', 'ui.grid.exporter', 'ui.grid.selection']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.exporter', 'ui.grid.selection']);
 
   app.controller('MainCtrl', ['$scope', '$http', '$interval', '$q', function ($scope, $http, $interval, $q) {
     var fakeI18n = function( title ){

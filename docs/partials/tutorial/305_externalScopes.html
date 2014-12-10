@@ -36,9 +36,9 @@ property that exists on your scope.
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
-  app.controller('MainCtrl', ['$scope', '$log', function ($scope, $log) {
+  app.controller('MainCtrl', ['$scope', '$log', '$http', function ($scope, $log, $http) {
 
    $scope.myViewModel = {
       someProp:'abc',
@@ -50,12 +50,12 @@ property that exists on your scope.
    $scope.gridOptions = {};
 
      $scope.gridOptions.columnDefs = [
-           { name: 'firstName' },
-           { name: 'lastName'},
+           { name: 'name' },
+           { name: 'gender'},
            { name: 'ShowScope',
                cellTemplate:'<button class="btn primary" ng-click="getExternalScopes().showMe()">Click Me</button>' }
          ];
-
+   /*
    $scope.gridOptions.data = [
       {
           "firstName": "Cox",
@@ -76,6 +76,13 @@ property that exists on your scope.
           "employed": false
       }
   ];
+  */
+
+  $http.get('/data/100.json')
+    .success(function(data) {
+      $scope.gridOptions.data = data;
+    });
+
   }]);
 </script>
 </div>

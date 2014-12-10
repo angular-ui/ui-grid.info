@@ -43,7 +43,7 @@ the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Exampl
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ngAnimate', 'ui.grid', 'ui.grid.selection', 'ui.grid.exporter']);
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.selection', 'ui.grid.exporter']);
 
     app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
       $scope.gridOptions = {

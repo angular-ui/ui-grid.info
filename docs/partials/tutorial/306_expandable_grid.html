@@ -64,7 +64,7 @@ provided following events and methods fos subGrids:</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ui.grid', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning']);
 
   app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.gridOptions = {
