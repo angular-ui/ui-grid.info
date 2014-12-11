@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-da0d0fb - 2014-12-10
+/*! ui-grid - v3.0.0-RC.18-1f66e2a - 2014-12-11
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2063,7 +2063,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
             var yDiff = previousScrollPosition - newScrollTop;
 
-            var vertScrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
+            var vertScrollLength = rowContainer.getVerticalScrollLength();
 
             // Subtract the h. scrollbar height from the vertical length if it's present
             if (grid.horizontalScrollbarHeight && grid.horizontalScrollbarHeight > 0) {
@@ -2145,13 +2145,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           if ($scope.type === 'vertical') {
             if (args.y && typeof(args.y.percentage) !== 'undefined' && args.y.percentage !== undefined) {
               grid.flagScrollingVertically();
-              var vertScrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
-
-              var newScrollTop = Math.max(0, args.y.percentage * vertScrollLength);
-
-              $elm[0].scrollTop = newScrollTop;
-
-
+              $elm[0].scrollTop = Math.max(0, args.y.percentage * rowContainer.getVerticalScrollLength());
             }
           }
           else if ($scope.type === 'horizontal') {
@@ -2256,7 +2250,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               if (args.y && $scope.bindScrollVertical) {
                 containerCtrl.prevScrollArgs = args;
 
-                var scrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
+                var scrollLength = rowContainer.getVerticalScrollLength();
 
                 // Add the height of the native horizontal scrollbar, if it's there. Otherwise it will mask over the final row
                 if (grid.horizontalScrollbarHeight && grid.horizontalScrollbarHeight > 0) {
@@ -2344,7 +2338,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 var scrollYAmount = newEvent.deltaY * -120;
 
                 // Get the scroll percentage
-                var scrollYPercentage = (containerCtrl.viewport[0].scrollTop + scrollYAmount) / (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
+                var scrollYPercentage = (containerCtrl.viewport[0].scrollTop + scrollYAmount) / rowContainer.getVerticalScrollLength();
 
                 // Keep scrollPercentage within the range 0-1.
                 if (scrollYPercentage < 0) { scrollYPercentage = 0; }
@@ -2400,7 +2394,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               var args = { target: event.target };
 
               if (deltaY !== 0) {
-                var scrollYPercentage = (scrollTopStart + deltaY) / (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
+                var scrollYPercentage = (scrollTopStart + deltaY) / rowContainer.getVerticalScrollLength();
 
                 if (scrollYPercentage > 1) { scrollYPercentage = 1; }
                 else if (scrollYPercentage < 0) { scrollYPercentage = 0; }
@@ -2451,7 +2445,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                   var args = { target: event.target };
 
                   if (scrollYLength !== 0) {
-                    var scrollYPercentage = (containerCtrl.viewport[0].scrollTop + scrollYLength) / (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
+                    var scrollYPercentage = (containerCtrl.viewport[0].scrollTop + scrollYLength) / rowContainer.getVerticalScrollLength();
 
                     args.y = { percentage: scrollYPercentage, pixels: scrollYLength };
                   }
@@ -2793,7 +2787,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               var yDiff = newScrollTop - rowContainer.prevScrollTop;
 
               // uiGridCtrl.fireScrollingEvent({ y: { pixels: diff } });
-              var vertScrollLength = (rowContainer.getCanvasHeight() - rowContainer.getViewportHeight());
+              var vertScrollLength = rowContainer.getVerticalScrollLength();
               // var vertScrollPercentage = (uiGridCtrl.prevScrollTop + yDiff) / vertScrollLength;
               vertScrollPercentage = newScrollTop / vertScrollLength;
 
@@ -6731,6 +6725,10 @@ angular.module('ui.grid')
     return ret;
   };
 
+  GridRenderContainer.prototype.getVerticalScrollLength = function getVerticalScrollLength() {
+    return this.getCanvasHeight() - this.getViewportHeight();
+  };
+
   GridRenderContainer.prototype.getCanvasWidth = function getCanvasWidth() {
     var self = this;
 
@@ -6815,13 +6813,10 @@ angular.module('ui.grid')
     var rowCache = self.visibleRowCache;
 
     var maxRowIndex = rowCache.length - minRows;
-    self.maxRowIndex = maxRowIndex;
-
-    var curRowIndex = self.prevRowScrollIndex;
 
     // Calculate the scroll percentage according to the scrollTop location, if no percentage was provided
     if ((typeof(scrollPercentage) === 'undefined' || scrollPercentage === null) && scrollTop) {
-      scrollPercentage = scrollTop / self.getCanvasHeight();
+      scrollPercentage = scrollTop / self.getVerticalScrollLength();
     }
     
     var rowIndex = Math.ceil(Math.min(maxRowIndex, maxRowIndex * scrollPercentage));
