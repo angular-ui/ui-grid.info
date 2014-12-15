@@ -3,7 +3,7 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>Column Definition for edit feature, these are available to be 
+<div class="description"><p>Column Definition for edit feature, these are available to be
 set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p></div>
 <div class="member property"><h2 id="Properties">Properties</h2>
 <ul class="properties"><li><h3 id="cellEditableCondition">cellEditableCondition</h3>
@@ -21,9 +21,9 @@ function($scope){
 of the dropdown.  For example if you were using angular-translate you might set this
 to <code>'translate'</code></p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
-$scope.gridOptions = { 
+$scope.gridOptions = {
   columnDefs: [
-    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status', editDropdownFilter: 'translate' }
   ],
@@ -35,9 +35,9 @@ $scope.gridOptions = {
 in the editDropdownOptionsArray.  Defaults
 to 'id'</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
-$scope.gridOptions = { 
+$scope.gridOptions = {
   columnDefs: [
-    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
   ],
@@ -49,14 +49,31 @@ $scope.gridOptions = {
 [ {id: xxx, value: xxx} ], which is populated
 into the edit dropdown</p></div>
 </li>
+<li><h3 id="editDropdownRowEntityOptionsArrayPath">editDropdownRowEntityOptionsArrayPath</h3>
+<div class="editdropdownrowentityoptionsarraypath"><p>a path to a property on row.entity containing an
+array of values in the format
+[ {id: xxx, value: xxx} ], which will be used to populate
+the edit dropdown.  This can be used when the dropdown values are dependent on
+the backing row entity.
+If this property is set then editDropdownOptionsArray will be ignored.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  columnDefs: [
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
+      editDropdownRowEntityOptionsArrayPath: 'foo.bars[0].baz',
+      editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
+  ],
+</pre></div>
+</div>
+</li>
 <li><h3 id="editDropdownValueLabel">editDropdownValueLabel</h3>
 <div class="editdropdownvaluelabel"><p>the label for the "value" field
 in the editDropdownOptionsArray.  Defaults
 to 'value'</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
-$scope.gridOptions = { 
+$scope.gridOptions = {
   columnDefs: [
-    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+    {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
   ],

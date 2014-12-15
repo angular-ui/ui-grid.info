@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-1f66e2a - 2014-12-11
+/*! ui-grid - v3.0.0-RC.18-ef78823 - 2014-12-15
 * Copyright (c) 2014 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -759,7 +759,7 @@ input[type="text"].ui-grid-filter-input {
 .ui-grid-menu-button {
   z-index: 2;
   position: absolute;
-  right: 0;  
+  right: 0;
   background: @headerBackgroundColor;
   border: @gridBorderWidth solid @borderColor;
   cursor: pointer;
@@ -773,6 +773,11 @@ input[type="text"].ui-grid-filter-input {
 
 .ui-grid-menu-button .ui-grid-menu {
   right: 0;
+  .ui-grid-menu-mid {
+    overflow-y: scroll;
+    max-height: 300px;
+    border: @gridBorderWidth solid @borderColor;
+  }
 }
 
 .ui-grid-menu {

@@ -182,6 +182,21 @@ is requested by the infinite scroll</p></div>
 <li><h3 id="minimumColumnSize">minimumColumnSize</h3>
 <div class="minimumcolumnsize"><p>Columns can't be smaller than this, defaults to 10 pixels</p></div>
 </li>
+<li><h3 id="onRegisterApi">onRegisterApi</h3>
+<div class="onregisterapi"><p>A callback that returns the gridApi once the grid is instantiated, which is 
+then used to interact with the grid programatically.</p>
+
+<p>Note that the gridApi.core.renderingComplete event is identical to this 
+callback, but has the advantage that it can be called from multiple places
+if needed</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+$scope.gridOptions.onRegisterApi = function ( gridApi ) {
+  $scope.gridApi = gridApi;
+  $scope.gridApi.selection.selectAllRows( $scope.gridApi.grid );
+};
+</pre></div>
+</div>
+</li>
 <li><h3 id="pagingCurrentPage">pagingCurrentPage</h3>
 <div class="pagingcurrentpage"><p>Current page number
 default 1</p></div>

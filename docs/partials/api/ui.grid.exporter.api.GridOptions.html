@@ -11,6 +11,11 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a><
 link
 <br/>Defaults to ','</p></div>
 </li>
+<li><h3 id="exporterCsvFilename">exporterCsvFilename</h3>
+<div class="exportercsvfilename"><p>The default filename to use when saving the downloaded csv
+link.  This will only work in some browsers.
+<br/>Defaults to 'download.csv'</p></div>
+</li>
 <li><h3 id="exporterCsvLinkElement">exporterCsvLinkElement</h3>
 <div class="exportercsvlinkelement"><p>The element that the csv link should be placed into.
 Mandatory if using the native UI.</p></div>
@@ -39,13 +44,23 @@ gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
 <li><h3 id="exporterHeaderFilter">exporterHeaderFilter</h3>
 <div class="exporterheaderfilter"><p>A function to apply to the header displayNames before exporting.  Useful for internationalisation,
 for example if you were using angular-translate you'd set this to <code>$translate.instant</code>.  Note that this
-call must be synchronous, it cannot be a call that returns a promise.</p><h4 id="Example">Example</h4>
+call must be synchronous, it cannot be a call that returns a promise.</p>
+
+<p>Behaviour can be changed to pass in <code>name</code> instead of <code>displayName</code> through use of <code>exporterHeaderFilterUseName: true</code>.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
-gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + displayName; };
+gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + name; };
 </pre>
 OR
 <pre class="prettyprint linenums">
 gridOptions.exporterHeaderFilter = $translate.instant;
+</pre></div>
+</div>
+</li>
+<li><h3 id="exporterHeaderFilterUseName">exporterHeaderFilterUseName</h3>
+<div class="exporterheaderfilterusename"><p>Defaults to false, which leads to <code>displayName</code> being passed into the headerFilter.
+If set to true, then will pass <code>name</code> instead.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridOptions.exporterHeaderFilterUseName = true;
 </pre></div>
 </div>
 </li>

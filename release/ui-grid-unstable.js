@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-1f66e2a - 2014-12-11
+/*! ui-grid - v3.0.0-RC.18-ef78823 - 2014-12-15
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -966,8 +966,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
               var downEvent = gridUtil.isTouchEnabled() ? 'touchstart' : 'mousedown';
               $contentsElm.on(downEvent, function(event) {
-                gridUtil.logDebug('mouse event', event.type);
-
                 event.stopPropagation();
 
                 if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
@@ -1028,8 +1026,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             if ($scope.sortable) {
               var clickEvent = gridUtil.isTouchEnabled() ? 'touchend' : 'click';
               $contentsElm.on(clickEvent, function(event) {
-                gridUtil.logDebug('mouse event 2', event.type);
-
                 event.stopPropagation();
     
                 $timeout.cancel(cancelMousedownTimeout);
@@ -1038,12 +1034,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 var mousedownTime = mousedownEndTime - mousedownStartTime;
     
                 if (mousedownTime > mousedownTimeout) {
-                  gridUtil.logDebug('long click');
                   // long click, handled above with mousedown
                 }
                 else {
                   // short click
-                  gridUtil.logDebug('short click');
                   handleClick(event);
                 }
               });
@@ -4338,6 +4332,7 @@ angular.module('ui.grid')
         }
       }
     }
+    self.api.core.raise.rowsRendered(this.api);
   };
 
   /**
@@ -5167,6 +5162,14 @@ angular.module('ui.grid')
            *
            */
           this.registerEvent( 'core', 'rowsVisibleChanged' );
+
+          /**
+           * @ngdoc event
+           * @name rowsRendered
+           * @eventOf  ui.grid.core.api:PublicApi
+           * @description  is raised after the cache of visible rows is changed.
+           */
+          this.registerEvent( 'core', 'rowsRendered' );
         };
 
         /**
@@ -6092,7 +6095,7 @@ angular.module('ui.grid')
 
   GridColumn.prototype.getCompiledElementFn = function () {
     var self = this;
-    
+
     return self.compiledElementFnDefer.promise;
   };
 
@@ -6139,6 +6142,26 @@ angular.module('ui.grid')
    */
   return {
     initialize: function( baseOptions ){
+      /**
+       * @ngdoc function
+       * @name onRegisterApi
+       * @propertyOf ui.grid.class:GridOptions
+       * @description A callback that returns the gridApi once the grid is instantiated, which is 
+       * then used to interact with the grid programatically.
+       * 
+       * Note that the gridApi.core.renderingComplete event is identical to this 
+       * callback, but has the advantage that it can be called from multiple places
+       * if needed
+       * 
+       * @example
+       * <pre>
+       *   $scope.gridOptions.onRegisterApi = function ( gridApi ) {
+       *     $scope.gridApi = gridApi;
+       *     $scope.gridApi.selection.selectAllRows( $scope.gridApi.grid );
+       *   };
+       * </pre>
+       * 
+       */
       baseOptions.onRegisterApi = baseOptions.onRegisterApi || angular.noop();
   
       /**
@@ -10211,21 +10234,21 @@ module.filter('px', function() {
           hide: 'спрятать столбец'
         },
         aggregation: {
-          count: 'total rows: ',
-          sum: 'total: ',
-          avg: 'avg: ',
-          min: 'min: ',
-          max: 'max: '
+          count: 'всего строк: ',
+          sum: 'итого: ',
+          avg: 'среднее: ',
+          min: 'мин: ',
+          max: 'макс: '
         },
         gridMenu: {
-          columns: 'Columns:',
+          columns: 'Столбцы:',
           importerTitle: 'Import file',
-          exporterAllAsCsv: 'Export all data as csv',
-          exporterVisibleAsCsv: 'Export visible data as csv',
-          exporterSelectedAsCsv: 'Export selected data as csv',
-          exporterAllAsPdf: 'Export all data as pdf',
-          exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          exporterAllAsCsv: 'Экспортировать всё в CSV',
+          exporterVisibleAsCsv: 'Экспортировать видимые данные в CSV',
+          exporterSelectedAsCsv: 'Экспортировать выбранные данные в CSV',
+          exporterAllAsPdf: 'Экспортировать всё в PDF',
+          exporterVisibleAsPdf: 'Экспортировать видимые данные в PDF',
+          exporterSelectedAsPdf: 'Экспортировать выбранные данные в PDF'
         },
         importer: {
           noHeaders: 'Column names were unable to be derived, does the file have a header?',
@@ -10239,6 +10262,7 @@ module.filter('px', function() {
     }]);
   }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -11801,7 +11825,7 @@ module.filter('px', function() {
                  * @param {object} colDef the column that was edited
                  */
                 cancelCellEdit: function (rowEntity, colDef) {
-                }                
+                }
               }
             },
             methods: {
@@ -11820,7 +11844,7 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name ui.grid.edit.api:GridOptions
            *
-           *  @description Options for configuring the edit feature, these are available to be  
+           *  @description Options for configuring the edit feature, these are available to be
            *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
 
@@ -11828,15 +11852,15 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name enableCellEdit
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @description If defined, sets the default value for the editable flag on each individual colDefs 
-           *  if their individual enableCellEdit configuration is not defined. Defaults to undefined.  
+           *  @description If defined, sets the default value for the editable flag on each individual colDefs
+           *  if their individual enableCellEdit configuration is not defined. Defaults to undefined.
            */
 
           /**
            *  @ngdoc object
            *  @name cellEditableCondition
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @description If specified, either a value or function to be used by all columns before editing.  
+           *  @description If specified, either a value or function to be used by all columns before editing.
            *  If falsy, then editing of cell is not allowed.
            *  @example
            *  <pre>
@@ -11852,7 +11876,7 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name editableCellTemplate
            *  @propertyOf  ui.grid.edit.api:GridOptions
-           *  @description If specified, cellTemplate to use as the editor for all columns.  
+           *  @description If specified, cellTemplate to use as the editor for all columns.
            *  <br/> defaults to 'ui-grid/cellTextEditor'
            */
 
@@ -11882,7 +11906,7 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name ui.grid.edit.api:ColumnDef
            *
-           *  @description Column Definition for edit feature, these are available to be 
+           *  @description Column Definition for edit feature, these are available to be
            *  set using the ui-grid {@link ui.grid.class:GridOptions.columnDef gridOptions.columnDefs}
            */
 
@@ -11900,7 +11924,7 @@ module.filter('px', function() {
            *  @name cellEditableCondition
            *  @propertyOf  ui.grid.edit.api:ColumnDef
            *  @description If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.
-           *  @example 
+           *  @example
            *  <pre>
            *  function($scope){
            *    //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
@@ -12176,7 +12200,7 @@ module.filter('px', function() {
             }
 
             function shouldEdit(col, row) {
-              return !row.isSaving && 
+              return !row.isSaving &&
                 ( angular.isFunction(col.colDef.cellEditableCondition) ?
                     col.colDef.cellEditableCondition($scope) :
                     col.colDef.cellEditableCondition );
@@ -12190,7 +12214,7 @@ module.filter('px', function() {
              *  @description an array of values in the format
              *  [ {id: xxx, value: xxx} ], which is populated
              *  into the edit dropdown
-             * 
+             *
              */
             /**
              *  @ngdoc property
@@ -12201,14 +12225,35 @@ module.filter('px', function() {
              *  to 'id'
              *  @example
              *  <pre>
-             *    $scope.gridOptions = { 
+             *    $scope.gridOptions = {
              *      columnDefs: [
-             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
              *          editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
              *          editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
              *      ],
              *  </pre>
-             * 
+             *
+             */
+            /**
+             *  @ngdoc property
+             *  @name editDropdownRowEntityOptionsArrayPath
+             *  @propertyOf ui.grid.edit.api:ColumnDef
+             *  @description a path to a property on row.entity containing an
+             *  array of values in the format
+             *  [ {id: xxx, value: xxx} ], which will be used to populate
+             *  the edit dropdown.  This can be used when the dropdown values are dependent on
+             *  the backing row entity.
+             *  If this property is set then editDropdownOptionsArray will be ignored.
+             *  @example
+             *  <pre>
+             *    $scope.gridOptions = {
+             *      columnDefs: [
+             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
+             *          editDropdownRowEntityOptionsArrayPath: 'foo.bars[0].baz',
+             *          editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
+             *      ],
+             *  </pre>
+             *
              */
             /**
              *  @ngdoc property
@@ -12219,14 +12264,14 @@ module.filter('px', function() {
              *  to 'value'
              *  @example
              *  <pre>
-             *    $scope.gridOptions = { 
+             *    $scope.gridOptions = {
              *      columnDefs: [
-             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
              *          editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
              *          editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
              *      ],
              *  </pre>
-             * 
+             *
              */
             /**
              *  @ngdoc property
@@ -12237,14 +12282,14 @@ module.filter('px', function() {
              *  to `'translate'`
              *  @example
              *  <pre>
-             *    $scope.gridOptions = { 
+             *    $scope.gridOptions = {
              *      columnDefs: [
-             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor', 
+             *        {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
              *          editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
              *          editDropdownIdLabel: 'code', editDropdownValueLabel: 'status', editDropdownFilter: 'translate' }
              *      ],
              *  </pre>
-             * 
+             *
              */
             function beginEdit() {
               // If we are already editing, then just skip this so we don't try editing twice...
@@ -12262,8 +12307,8 @@ module.filter('px', function() {
 
               html = $scope.col.editableCellTemplate;
               html = html.replace(uiGridConstants.MODEL_COL_FIELD, $scope.row.getQualifiedColField($scope.col));
-              
-              var optionFilter = $scope.col.colDef.editDropdownFilter ? '|' + $scope.col.colDef.editDropdownFilter : ''; 
+
+              var optionFilter = $scope.col.colDef.editDropdownFilter ? '|' + $scope.col.colDef.editDropdownFilter : '';
               html = html.replace(uiGridConstants.CUSTOM_FILTERS, optionFilter);
 
               $scope.inputType = 'text';
@@ -12278,10 +12323,16 @@ module.filter('px', function() {
                   $scope.inputType = 'date';
                   break;
               }
-              
-              $scope.editDropdownOptionsArray = $scope.col.colDef.editDropdownOptionsArray;
-              $scope.editDropdownIdLabel = $scope.col.colDef.editDropdownIdLabel ? $scope.col.colDef.editDropdownIdLabel : 'id';  
-              $scope.editDropdownValueLabel = $scope.col.colDef.editDropdownValueLabel ? $scope.col.colDef.editDropdownValueLabel : 'value';  
+
+              var editDropdownRowEntityOptionsArrayPath = $scope.col.colDef.editDropdownRowEntityOptionsArrayPath;
+              if (editDropdownRowEntityOptionsArrayPath) {
+                $scope.editDropdownOptionsArray =  resolveObjectFromPath($scope.row.entity, editDropdownRowEntityOptionsArrayPath);
+              }
+              else {
+                $scope.editDropdownOptionsArray = $scope.col.colDef.editDropdownOptionsArray;
+              }
+              $scope.editDropdownIdLabel = $scope.col.colDef.editDropdownIdLabel ? $scope.col.colDef.editDropdownIdLabel : 'id';
+              $scope.editDropdownValueLabel = $scope.col.colDef.editDropdownValueLabel ? $scope.col.colDef.editDropdownValueLabel : 'value';
 
               var cellElement;
               $scope.$apply(function () {
@@ -12347,6 +12398,24 @@ module.filter('px', function() {
               endEdit(true);
             }
 
+            // resolves a string path against the given object
+            // shamelessly borrowed from
+            // http://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
+            function resolveObjectFromPath(object, path) {
+              path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+              path = path.replace(/^\./, '');           // strip a leading dot
+              var a = path.split('.');
+              while (a.length) {
+                  var n = a.shift();
+                  if (n in object) {
+                      object = object[n];
+                  } else {
+                      return;
+                  }
+              }
+              return object;
+            }
+
           }
         };
       }]);
@@ -12392,9 +12461,9 @@ module.filter('px', function() {
                   });
                 });
 
-               
+
                $scope.deepEdit = false;
-               
+
                $scope.stopEdit = function (evt) {
                   if ($scope.inputForm && !$scope.inputForm.$valid) {
                     evt.stopPropagation();
@@ -12513,8 +12582,8 @@ module.filter('px', function() {
         }
       };
     }]);
-    
-    
+
+
   /**
    *  @ngdoc directive
    *  @name ui.grid.edit.directive:uiGridEditDropdown
@@ -12552,7 +12621,7 @@ module.filter('px', function() {
                   });
                 });
 
-               
+
                 $scope.stopEdit = function (evt) {
                   // no need to validate a dropdown - invalid values shouldn't be
                   // available in the list
@@ -12590,7 +12659,7 @@ module.filter('px', function() {
             };
           }
         };
-      }]);    
+      }]);
 
 })();
 
@@ -12997,7 +13066,8 @@ module.filter('px', function() {
     SELECTED: 'selected',
     CSV_CONTENT: 'CSV_CONTENT',
     LINK_LABEL: 'LINK_LABEL',
-    BUTTON_LABEL: 'BUTTON_LABEL'
+    BUTTON_LABEL: 'BUTTON_LABEL',
+    FILE_NAME: 'FILE_NAME'
   });
 
   /**
@@ -13171,6 +13241,15 @@ module.filter('px', function() {
           gridOptions.exporterCsvColumnSeparator = gridOptions.exporterCsvColumnSeparator ? gridOptions.exporterCsvColumnSeparator : ',';
           /**
            * @ngdoc object
+           * @name exporterCsvFilename
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The default filename to use when saving the downloaded csv
+           * link.  This will only work in some browsers.
+           * <br/>Defaults to 'download.csv'
+           */
+          gridOptions.exporterCsvFilename = gridOptions.exporterCsvFilename ? gridOptions.exporterCsvFilename : 'download.csv';
+          /**
+           * @ngdoc object
            * @name exporterPdfDefaultStyle
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description The default style in pdfMake format
@@ -13336,21 +13415,39 @@ module.filter('px', function() {
           
           /**
            * @ngdoc object
+           * @name exporterHeaderFilterUseName
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description Defaults to false, which leads to `displayName` being passed into the headerFilter.
+           * If set to true, then will pass `name` instead.
+           * 
+           * 
+           * @example
+           * <pre>
+           *   gridOptions.exporterHeaderFilterUseName = true;
+           * </pre>
+           */
+          gridOptions.exporterHeaderFilterUseName = gridOptions.exporterHeaderFilterUseName === true;          
+
+          /**
+           * @ngdoc object
            * @name exporterHeaderFilter
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description A function to apply to the header displayNames before exporting.  Useful for internationalisation,
            * for example if you were using angular-translate you'd set this to `$translate.instant`.  Note that this
            * call must be synchronous, it cannot be a call that returns a promise.
+           * 
+           * Behaviour can be changed to pass in `name` instead of `displayName` through use of `exporterHeaderFilterUseName: true`.
+           * 
            * @example
            * <pre>
-           *   gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + displayName; };
+           *   gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + name; };
            * </pre>
            * OR
            * <pre>
            *   gridOptions.exporterHeaderFilter = $translate.instant;
            * </pre>
            */
-
+          
           /**
            * @ngdoc function
            * @name exporterFieldCallback
@@ -13518,7 +13615,7 @@ module.filter('px', function() {
                  grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
               headers.push({
                 name: gridCol.field,
-                displayName: grid.options.exporterHeaderFilter ? grid.options.exporterHeaderFilter(gridCol.displayName) : gridCol.displayName,
+                displayName: grid.options.exporterHeaderFilter ? ( grid.options.exporterHeaderFilterUseName ? grid.options.exporterHeaderFilter(gridCol.name) : grid.options.exporterHeaderFilter(gridCol.displayName) ) : gridCol.displayName,
                 width: gridCol.drawnWidth ? gridCol.drawnWidth : gridCol.width,
                 align: gridCol.colDef.type === 'number' ? 'right' : 'left'
               });
@@ -13693,6 +13790,10 @@ module.filter('px', function() {
               template.children("a").attr("href", 
                   template.children("a").attr("href").replace(
                       uiGridExporterConstants.CSV_CONTENT, encodeURIComponent(csvContent)));
+
+              template.children("a").attr("download", 
+                  template.children("a").attr("download").replace(
+                      uiGridExporterConstants.FILE_NAME, grid.options.exporterCsvFilename));
             
             var newElm = $compile(template)(grid.exporter.$scope);
             targetElm.append(newElm);
@@ -13774,11 +13875,11 @@ module.filter('px', function() {
           }
           
           if ( grid.options.exporterPdfHeader ){
-            docDefinition.content.unshift( grid.options.exporterPdfHeader );
+            docDefinition.header = grid.options.exporterPdfHeader;
           }
           
           if ( grid.options.exporterPdfFooter ){
-            docDefinition.content.push( grid.options.exporterPdfFooter );
+            docDefinition.footer = grid.options.exporterPdfFooter;
           }
           
           if ( grid.options.exporterPdfCustomFormatter ){
@@ -14039,7 +14140,7 @@ module.filter('px', function() {
                  * File object
                  */
                 importFile: function ( grid, fileObject ) {
-                  service.importFile( grid, fileObject );
+                  service.importThisFile( grid, fileObject );
                 }
               }
             }
@@ -15016,7 +15117,7 @@ module.filter('px', function() {
         var findPositionForRenderIndex = function (index) {
           var position = index;
           for (var i = 0; i <= position; i++) {
-            if (angular.isDefined(columns[i]) && angular.isDefined(columns[i].colDef.visible) && columns[i].colDef.visible === false) {
+            if (angular.isDefined(columns[i]) && ((angular.isDefined(columns[i].colDef.visible) && columns[i].colDef.visible === false) || columns[i].isRowHeader === true)) {
               position++;
             }
           }
@@ -15154,7 +15255,7 @@ module.filter('px', function() {
 
                       //Cloning header cell and appending to current header cell.
                       movingElm = $elm.clone();
-                      $elm.append(movingElm);
+                      $elm.parent().append(movingElm);
 
                       //Left of cloned element should be aligned to original header cell.
                       movingElm.addClass('movingColumn');
@@ -15168,9 +15269,6 @@ module.filter('px', function() {
                         movingElementStyles.width = reducedWidth + 'px';
                       }
                       movingElm.css(movingElementStyles);
-
-                      //Binding the mouseup event handler
-                      $document.on('mouseup', mouseUpHandler);
                     };
 
                     var moveElement = function(changeValue) {
@@ -15194,8 +15292,8 @@ module.filter('px', function() {
                         movingElm.css({visibility: 'visible', 'left': newElementLeft + 'px'});
                       }
                       else {
-                        changeValue *= 5;
-                        uiGridCtrl.fireScrollingEvent({ x: { pixels: changeValue * 2.5} });
+                        changeValue *= 6;
+                        uiGridCtrl.fireScrollingEvent({ x: { pixels: changeValue * 4} });
                       }
                       totalMouseMovement += changeValue;
 
@@ -15218,11 +15316,14 @@ module.filter('px', function() {
                       }
                     };
 
-                    // On scope destroy, remove the mouse event handlers from the document body
+/*
+//Commenting these lines as they are creating trouble with column moving when grid has huge scroll
+ // On scope destroy, remove the mouse event handlers from the document body
                     $scope.$on('$destroy', function () {
                       $document.off('mousemove', mouseMoveHandler);
                       $document.off('mouseup', mouseUpHandler);
                     });
+*/
                     $document.on('mousemove', mouseMoveHandler);
 
                     var mouseUpHandler = function (evt) {
@@ -15314,6 +15415,8 @@ module.filter('px', function() {
                       });
                     };
 
+                    //Binding the mouseup event handler
+                    $document.on('mouseup', mouseUpHandler);
                   }
                 };
                 $elm.on('mousedown', mouseDownHandler);
@@ -15422,18 +15525,19 @@ module.filter('px', function() {
           if (!grid.options.enablePagination) {
             return renderableRows;
           }
+          var visibleRows = renderableRows.filter(function(row) { return row.visible; });
           grid.pagination.totalPages = Math.max(
             1,
-            Math.ceil(renderableRows.length / grid.options.rowsPerPage)
+            Math.ceil(visibleRows.length / grid.options.rowsPerPage)
           );
 
           var firstRow = (grid.pagination.page - 1) * grid.options.rowsPerPage;
-          if (firstRow >= renderableRows.length) {
+          if (firstRow >= visibleRows.length) {
             grid.pagination.page = grid.pagination.totalPages;
             firstRow = (grid.pagination.page - 1) * grid.options.rowsPerPage;
           }
 
-          return renderableRows.slice(
+          return visibleRows.slice(
             firstRow,
             firstRow + grid.options.rowsPerPage
           );
@@ -15562,9 +15666,16 @@ module.filter('px', function() {
             //client side paging
             var pageSize = parseInt(grid.options.pagingPageSize, 10);
             var currentPage = parseInt(grid.options.pagingCurrentPage, 10);
+            
+            var visibleRows = renderableRows.filter(function (row) { return row.visible; });
+            grid.options.totalItems = visibleRows.length;
 
             var firstRow = (currentPage - 1) * pageSize;
-            return renderableRows.slice(firstRow, firstRow + pageSize);
+            if (firstRow > visibleRows.length) {
+              currentPage = grid.options.pagingCurrentPage = 1;
+              firstRow = (currentPage - 1) * pageSize;
+            }
+            return visibleRows.slice(firstRow, firstRow + pageSize);
           });
 
         },
@@ -18120,7 +18231,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/csvLink',
-    "<span class=\"ui-grid-exporter-csv-link-span\"><a href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>"
+    "<span class=\"ui-grid-exporter-csv-link-span\"><a href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\" download=\"FILE_NAME\">LINK_LABEL</a></span>"
   );
 
 

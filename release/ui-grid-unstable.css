@@ -520,6 +520,11 @@ input[type="text"].ui-grid-filter-input:hover {
 .ui-grid-menu-button .ui-grid-menu {
   right: 0;
 }
+.ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid {
+  overflow-y: scroll;
+  max-height: 300px;
+  border: 1px solid #d4d4d4;
+}
 .ui-grid-menu {
   z-index: 2;
   position: fixed;
