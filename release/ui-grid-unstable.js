@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-6afe789 - 2014-12-16
+/*! ui-grid - v3.0.0-RC.18-7701771 - 2014-12-16
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -17921,6 +17921,7 @@ module.filter('px', function() {
                   name: uiGridSelectionConstants.selectionRowHeaderColName,
                   displayName: '',
                   width:  uiGridCtrl.grid.options.selectionRowHeaderWidth,
+                  minWidth: 10,
                   cellTemplate: 'ui-grid/selectionRowHeader',
                   headerCellTemplate: 'ui-grid/selectionHeaderCell',
                   enableColumnResizing: false,
