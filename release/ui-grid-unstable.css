@@ -79,34 +79,6 @@
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-.ui-grid-group-panel {
-  background: #f3f3f3;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
-  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
-  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
-  background: -o-linear-gradient(#ffffff, #eeeeee);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
-  border-bottom: 1px solid #d4d4d4;
-  -webkit-border-top-right-radius: -1px;
-  -webkit-border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
-  -webkit-border-top-left-radius: -1px;
-  -moz-border-radius-topright: -1px;
-  -moz-border-radius-bottomright: 0;
-  -moz-border-radius-bottomleft: 0;
-  -moz-border-radius-topleft: -1px;
-  border-top-right-radius: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: -1px;
-  -moz-background-clip: padding-box;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  min-height: 30px;
-}
-.ui-grid-header-group-panel .hidden {
-  display: none;
-}
 .ui-grid-header-viewport {
   overflow: hidden;
 }
@@ -419,35 +391,6 @@ input[type="text"].ui-grid-filter-input:hover {
   -moz-background-clip: padding-box;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-}
-.ui-grid-group-panel {
-  background: #f3f3f3;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
-  background: -ms-linear-gradient(bottom, #eeeeee, #ffffff);
-  background: -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%);
-  background: -o-linear-gradient(#ffffff, #eeeeee);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
-  border-bottom: 1px solid #d4d4d4;
-  border-top: 1px solid #d4d4d4;
-  -webkit-border-top-right-radius: -1px;
-  -webkit-border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
-  -webkit-border-top-left-radius: -1px;
-  -moz-border-radius-topright: -1px;
-  -moz-border-radius-bottomright: 0;
-  -moz-border-radius-bottomleft: 0;
-  -moz-border-radius-topleft: -1px;
-  border-top-right-radius: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: -1px;
-  -moz-background-clip: padding-box;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  min-height: 30px;
-}
-.ui-grid-footer-group-panel .hidden {
-  display: none;
 }
 .ui-grid-footer-viewport {
   overflow: hidden;
