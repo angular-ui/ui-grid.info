@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-3fa149f - 2014-12-16
+/*! ui-grid - v3.0.0-RC.18-6afe789 - 2014-12-16
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -18256,7 +18256,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionHeaderCell',
-    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\"></ui-grid-selection-select-all-buttons>&nbsp;</div></div>"
+    "<div><div class=\"ui-grid-vertical-bar\">&nbsp;</div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\"></ui-grid-selection-select-all-buttons></div></div>"
   );
 
 
