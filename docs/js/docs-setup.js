@@ -842,7 +842,7 @@ NG_DOCS={
       "id": "111_cellClass",
       "shortName": "111 CellClass",
       "type": "overview",
-      "keywords": "$http $scope and angular app assigned background background-color be blue can cell cellclass class col color colrenderindex column columndef columndefs columns company controller css data datacell describe each enablesorting equals example expect expectcellvaluematch expectheadercolumncount field first for formatted function get getcellvalue getcssvalue grid grid1 gridoptions gridtestutils has have height html id if in index it js json main mainctrl module name ng-controller nganimate ngtouch on one or override overview red require return returning rgba row rowrenderindex scenario should spec success text the this to toequal true tutorial two ui ui-grid var velity visible we which width will yellow"
+      "keywords": "$http $scope acusage and angular app as assigned background background-color be blue by can cell cellclass check class clickheadercell col color colour colrenderindex column columndef columndefs columns company controller css data datacell describe each enablesorting equals example expect expectcellvaluematch expectheadercolumncount field first for formatted function get getcellvalue getcssvalue grid grid1 gridoptions gridtestutils has have height html id if in index is it js json longer main mainctrl module name ng-controller nganimate ngtouch no on one or override overview red require return returning rgba row rowrenderindex same scenario should shouldn so sort spec success text the this to toequal true tutorial two ui ui-grid var velity visible we which width will yellow"
     },
     {
       "section": "tutorial",
