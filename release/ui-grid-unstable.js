@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-0721aec - 2014-12-16
+/*! ui-grid - v3.0.0-RC.18-54c418a - 2014-12-17
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -3764,7 +3764,8 @@ angular.module('ui.grid')
         self.columns.splice(index + headerOffset, 0, col);
       }
       else {
-        col.updateColumnDef(colDef);
+        // tell updateColumnDef that the column was pre-existing
+        col.updateColumnDef(colDef, false);
       }
 
       self.columnBuilders.forEach(function (builder) {
@@ -5483,7 +5484,7 @@ angular.module('ui.grid')
     self.grid = grid;
     self.uid = uid;
 
-    self.updateColumnDef(colDef);
+    self.updateColumnDef(colDef, true );
   }
 
 
@@ -5681,8 +5682,11 @@ angular.module('ui.grid')
    * @description Moves settings from the columnDef down onto the column,
    * and sets properties as appropriate
    * @param {ColumnDef} colDef the column def to look in for the property value
+   * @param {boolean} isNew whether the column is being newly created, if not
+   * we're updating an existing column, and some items such as the sort shouldn't
+   * be copied down
    */ 
-  GridColumn.prototype.updateColumnDef = function(colDef) {
+  GridColumn.prototype.updateColumnDef = function(colDef, isNew) {
     var self = this;
 
     self.colDef = colDef;
@@ -5824,8 +5828,6 @@ angular.module('ui.grid')
     self.headerClass = colDef.headerClass;
     //self.cursor = self.sortable ? 'pointer' : 'default';
 
-    self.visible = true;
-
     // Turn on sorting by default
     self.enableSorting = typeof(colDef.enableSorting) !== 'undefined' ? colDef.enableSorting : true;
     self.sortingAlgorithm = colDef.sortingAlgorithm;
@@ -5847,8 +5849,10 @@ angular.module('ui.grid')
     // self.menuItems = colDef.menuItems;
     self.setPropertyOrDefault(colDef, 'menuItems', []);
 
-    // Use the column definition sort if we were passed it
-    self.setPropertyOrDefault(colDef, 'sort');
+    // Use the column definition sort if we were passed it, but only if this is a newly added column
+    if ( isNew ){
+      self.setPropertyOrDefault(colDef, 'sort');
+    }
 
     // Set up default filters array for when one is not provided.
     //   In other words, this (in column def):
@@ -5913,8 +5917,13 @@ angular.module('ui.grid')
 
     */
 
-    self.setPropertyOrDefault(colDef, 'filter');
-    self.setPropertyOrDefault(colDef, 'filters', defaultFilters);
+    // Only set filter if this is a newly added column, if we're updating an existing
+    // column then we don't want to put the default filter back if the user may have already
+    // removed it.
+    if ( isNew ) {
+      self.setPropertyOrDefault(colDef, 'filter');
+      self.setPropertyOrDefault(colDef, 'filters', defaultFilters);
+    }
 
     // Remove this column from the grid sorting, include inside build columns so has
     // access to self - all seems a bit dodgy but doesn't work otherwise so have left

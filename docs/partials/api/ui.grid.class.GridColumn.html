@@ -73,11 +73,15 @@ setting the defaultValue if the value cannot be found on the colDef</p><h4 id="P
 <li><h3 id="showColumn">showColumn()</h3>
 <div class="showcolumn"><p>Makes the column visible by setting colDef.visible = true</p></div>
 </li>
-<li><h3 id="updateColumnDef">updateColumnDef(colDef)</h3>
+<li><h3 id="updateColumnDef">updateColumnDef(colDef, isNew)</h3>
 <div class="updatecolumndef"><p>Moves settings from the columnDef down onto the column,
 and sets properties as appropriate</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
 <p>the column def to look in for the property value</p></li>
+<li><code ng:non-bindable="">isNew – {boolean} – </code>
+<p>whether the column is being newly created, if not
+we're updating an existing column, and some items such as the sort shouldn't
+be copied down</p></li>
 </ul>
 </div>
 </li>
