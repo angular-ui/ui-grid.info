@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-54e1bc2 - 2014-12-17
+/*! ui-grid - v3.0.0-RC.18-9bbcfb3 - 2014-12-19
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -12385,18 +12385,19 @@ module.filter('px', function() {
               var optionFilter = $scope.col.colDef.editDropdownFilter ? '|' + $scope.col.colDef.editDropdownFilter : '';
               html = html.replace(uiGridConstants.CUSTOM_FILTERS, optionFilter);
 
-              $scope.inputType = 'text';
+              var inputType = 'text';
               switch ($scope.col.colDef.type){
                 case 'boolean':
-                  $scope.inputType = 'checkbox';
+                  inputType = 'checkbox';
                   break;
                 case 'number':
-                  $scope.inputType = 'number';
+                  inputType = 'number';
                   break;
                 case 'date':
-                  $scope.inputType = 'date';
+                  inputType = 'date';
                   break;
               }
+              html = html.replace('INPUT_TYPE', inputType);
 
               var editDropdownRowEntityOptionsArrayPath = $scope.col.colDef.editDropdownRowEntityOptionsArrayPath;
               if (editDropdownRowEntityOptionsArrayPath) {
@@ -12611,7 +12612,7 @@ module.filter('px', function() {
    *  model is invalid date or value of input is entered wrong.
    *
    */
-    module.directive('input', ['$filter', function ($filter) {
+    module.directive('uiGridEditor', ['$filter', function ($filter) {
       function parseDateString(dateString) {
         if (typeof(dateString) === 'undefined' || dateString === '') {
           return null;
@@ -12630,7 +12631,7 @@ module.filter('px', function() {
         return new Date(year, (month - 1), day);
       }
       return {
-        restrict: 'E',
+        priority: -100, // run after default uiGridEditor directive
         require: '?ngModel',
         link: function (scope, element, attrs, ngModel) {
 
@@ -18278,7 +18279,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/cellEditor',
-    "<div><form name=\"inputForm\"><input type=\"{{inputType}}\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
+    "<div><form name=\"inputForm\"><input type=\"INPUT_TYPE\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
   );
 
 
