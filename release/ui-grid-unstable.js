@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-82074e8 - 2014-12-19
+/*! ui-grid - v3.0.0-RC.18-079f358 - 2014-12-19
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -6880,15 +6880,13 @@ angular.module('ui.grid')
     
     var newRange = [];
     if (rowCache.length > self.grid.options.virtualizationThreshold) {
-      if (!(typeof(scrollTop) === 'undefined' || scrollTop === null)) {
-        // Have we hit the threshold going down?
-        if (self.prevScrollTop < scrollTop && rowIndex < self.prevRowScrollIndex + self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
-          return;
-        }
-        //Have we hit the threshold going up?
-        if (self.prevScrollTop > scrollTop && rowIndex > self.prevRowScrollIndex - self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
-          return;
-        }
+      // Have we hit the threshold going down?
+      if (self.prevScrollTop < scrollTop && rowIndex < self.prevRowScrollIndex + self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
+        return;
+      }
+      //Have we hit the threshold going up?
+      if (self.prevScrollTop > scrollTop && rowIndex > self.prevRowScrollIndex - self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
+        return;
       }
 
       var rangeStart = Math.max(0, rowIndex - self.grid.options.excessRows);
