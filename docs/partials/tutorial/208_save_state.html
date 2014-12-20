@@ -1,0 +1,133 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The save state feature allows you to save the current look of the grid
+and restore it upon returning to the grid.</p>
+
+<p>For example, you may have an application where your user can reorder the columns,
+adjust column widths, apply sorts and filters, and select a specific cell.  The user
+might adjust their grid to look as they wish, and then navigate to another page.  When 
+the user returns to the page with the grid, they might expect it to look like it
+did when they left.  The save state feature permits this.</p>
+
+<p>There are two core methods:</p>
+
+<ul>
+<li>save, which packages the current grid state into an object which the calling application 
+then stores somewhere (a cookie, session state, a database)</li>
+<li>restore, which takes a grid state object, and returns the grid to the state that 
+is stored in that object</li>
+</ul>
+
+<p>Note that the saveState functionality deliberately sets out to store the transient state - 
+the information that isn't held in gridOptions nor columnDefs.  The calling application is responsible for
+storing gridOptions and columnDefs (and must have had them in order to render the grid the first time).</p>
+
+<p>The feature also provides some options that control what is saved.  All options are true by
+default:</p>
+
+<ul>
+<li>saveWidths</li>
+<li>saveOrder</li>
+<li>saveScroll</li>
+<li>saveFocus</li>
+<li>saveVisible</li>
+<li>saveSort</li>
+<li>saveFilter</li>
+</ul><h2 id="Example">Example</h2>
+<div class="example"><p>In this example we provide a button to save the grid state.  You can then modify the grid layout
+to something different, and use the restore button to set the grid back the way it was.</p>
+
+<h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-57" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-58"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-57" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-57">
+    <div ng-controller="MainCtrl">
+      <div id="grid1" ui-grid="gridOptions" ui-grid-save-state ui-grid-selection ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns class="grid"></div>
+      <button id="save" type="button" class="btn btn-success" ng-click="saveState()">Save</button>
+      <button id="restore" type="button" class="btn btn-success" ng-click="restoreState()">Restore</button>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 400px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.saveState', 'ui.grid.selection', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.moveColumns' ]);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+      $scope.gridOptions = {
+        saveFocus: false,
+        saveScroll: true,
+        enableFiltering: true,
+        onRegisterApi: function(gridApi){ 
+          $scope.gridApi = gridApi;
+        }
+      };
+      $scope.state = {};
+      
+      $scope.saveState = function() {
+        $scope.state = $scope.gridApi.saveState.save();
+      };
+
+      $scope.restoreState = function() {
+        $scope.gridApi.saveState.restore( $scope, $scope.state );
+      };
+ 
+      $http.get('/data/100.json')
+        .success(function(data) {
+          $scope.gridOptions.data = data;
+        });
+    }]);
+  </script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-58"></pre>
+<script type="text/ng-template" id="scenario.js-58">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+    describe( '208 save state', function() {
+      it('Set a sort and a filter, save state, hide a column and remove sort and filter, set another sort and filter, restore the state', function () {
+        gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+
+        gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Name' );
+        gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
+        gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Company' );
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Ethel Price' );
+        
+        gridTestUtils.clickColumnMenuSortAsc( 'grid1', 2 );
+        gridTestUtils.enterFilterInColumn( 'grid1', 1, 'female' );
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Freda Mason' );
+        
+        element(by.id('save')).click();
+        
+        gridTestUtils.clickColumnMenuRemoveSort( 'grid1', 2 );
+        gridTestUtils.cancelFilterInColumn( 'grid1', 1 );
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Ethel Price' );
+
+        gridTestUtils.clickColumnMenuSortAsc( 'grid1', 0 );
+        gridTestUtils.enterFilterInColumn( 'grid1', 2, 'Gee' );
+        gridTestUtils.clickColumnMenuHide( 'grid1', 1 );
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Alexander Foley' );
+        gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
+        
+        element(by.id('restore')).click();
+        
+        gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+        gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'Freda Mason' );
+      });
+  
+    });
+  </script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-57" ng-eval-javascript="app.js"></div></div>
+</div>

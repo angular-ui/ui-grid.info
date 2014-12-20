@@ -1,0 +1,136 @@
+<h1><code ng:non-bindable="">uiGridSaveStateService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid.saveState</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Services for saveState feature</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="findRowByIdentity">findRowByIdentity(grid, rowVal)</h3>
+<div class="findrowbyidentity"><p>Finds a row given it's identity value, returns the first found row
+if any are found, otherwise returns null if no rows are found.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">rowVal – {object} – </code>
+<p>the row we'd like to find</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{gridRow}</code>
+– <p>the found row, or null if none found</p></div>
+</div>
+</li>
+<li><h3 id="getRowVal">getRowVal(grid, gridRow)</h3>
+<div class="getrowval"><p>Helper function that gets either the rowNum or
+the saveRowIdentity, given a gridRow </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid the row is in</p></li>
+<li><code ng:non-bindable="">gridRow – {GridRow} – </code>
+<p>the row we want the rowNum for</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>an object containing { identity: true/false, row: rowNumber/rowIdentity }</p></div>
+</div>
+</li>
+<li><h3 id="restore">restore(grid, $scope, state)</h3>
+<div class="restore"><p>Applies the provided state to the grid</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">$scope – {scope} – </code>
+<p>a scope that we can broadcast on</p></li>
+<li><code ng:non-bindable="">state – {object} – </code>
+<p>the state we'd like to restore</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="restoreColumns">restoreColumns(grid, columnsState)</h3>
+<div class="restorecolumns"><p>Restores the columns, including order, visible, width
+sort and filters.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">columnsState – {object} – </code>
+<p>the list of columns we had before, with their state</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="restoreScrollFocus">restoreScrollFocus(grid, $scope, scrollFocusState)</h3>
+<div class="restorescrollfocus"><p>Scrolls to the position that was saved.  If focus is true, then
+sets focus to the specified row/col.  If focus is false, then scrolls to the 
+specified row/col.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">$scope – {scope} – </code>
+<p>a scope that we can broadcast on</p></li>
+<li><code ng:non-bindable="">scrollFocusState – {object} – </code>
+<p>the scroll/focus state ready to be restored</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="restoreSelection">restoreSelection(grid, selectionState)</h3>
+<div class="restoreselection"><p>Selects the rows that are provided in the selection
+state.  If you are using <code>saveRowIdentity</code> and more than one row matches the identity
+function then only the first is selected.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">selectionState – {object} – </code>
+<p>the selection state ready to be restored</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="save">save(grid)</h3>
+<div class="save"><p>Saves the current grid state into an object, and
+passes that object back to the caller</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to save</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the state ready to be saved</p></div>
+</div>
+</li>
+<li><h3 id="saveColumns">saveColumns(grid)</h3>
+<div class="savecolumns"><p>Saves the column setup, including sort, filters, ordering
+and column widths.</p>
+
+<p>Works through the current columns, storing them in order.  Stores the
+column name, then the visible flag, width, sort and filters for each column.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to save</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>the columns state ready to be saved</p></div>
+</div>
+</li>
+<li><h3 id="saveScrollFocus">saveScrollFocus(grid)</h3>
+<div class="savescrollfocus"><p>Saves the currently scroll or focus.</p>
+
+<p>If cellNav isn't present then does nothing - we can't return
+to the scroll position without cellNav anyway.</p>
+
+<p>If the cellNav module is present, and saveFocus is true, then
+it saves the currently focused cell.  If rowIdentity is present
+then saves using rowIdentity, otherwise saves visibleRowNum.</p>
+
+<p>If the cellNav module is not present, and saveScroll is true, then
+it approximates the current scroll row and column, and saves that.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to save</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the selection state ready to be saved</p></div>
+</div>
+</li>
+<li><h3 id="saveSelection">saveSelection(grid)</h3>
+<div class="saveselection"><p>Saves the currently selected rows, if the selection feature is enabled</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to save</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the selection state ready to be saved</p></div>
+</div>
+</li>
+</ul>
+</div>
+</div>

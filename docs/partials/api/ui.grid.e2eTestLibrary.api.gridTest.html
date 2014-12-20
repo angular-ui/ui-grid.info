@@ -43,6 +43,23 @@ gridTestUtils.clickColumnMenu('myGrid', 0, 0);
 </pre></div>
 </div>
 </li>
+<li><h3 id="clickColumnMenuHide">clickColumnMenuHide(gridId, colNumber)</h3>
+<div class="clickcolumnmenuhide"><p>Clicks on the hide item within the specified
+column menu.  Although it feels cumbersome to write lots of individual
+"click this menu item" helpers, it is quite useful if the column menus are
+changed to not have to go to every test script and change the menu item number  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>the id of the grid that you want to inspect</p></li>
+<li><code ng:non-bindable="">colNumber – {integer} – </code>
+<p>the number of the column (within the visible columns)
+that you want to hide</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.clickColumnMenuHide('myGrid', 0);
+</pre></div>
+</div>
+</li>
 <li><h3 id="clickColumnMenuRemoveSort">clickColumnMenuRemoveSort(gridId, colNumber)</h3>
 <div class="clickcolumnmenuremovesort"><p>Clicks on the remove sort item within the specified
 column menu.  Although it feels cumbersome to write lots of individual
@@ -127,7 +144,8 @@ gridTestUtils.clickHeaderCell('myGrid', 0);
 </li>
 <li><h3 id="dataCell">dataCell(gridId, fetchRow, fetchCol)</h3>
 <div class="datacell"><p>Internal method used to return a dataCell element
-given the grid and column</p><h4 id="Parameters">Parameters</h4>
+given the grid and column, note it only returns from the 'body'
+render container</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
 <p>the id of the grid that you want to inspect</p></li>
 <li><code ng:non-bindable="">fetchRow – {integer} – </code>
