@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-983f289 - 2014-12-21
+/*! ui-grid - v3.0.0-RC.18-e5f8dfa - 2014-12-21
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -46,6 +46,8 @@
       WIN: 91,
       MAC: 91,
       FN: null,
+      PG_UP: 33,
+      PG_DOWN: 34,
       UP: 38,
       DOWN: 40,
       LEFT: 37,
@@ -94,7 +96,8 @@
       ALL: 'all',
       EDIT: 'edit',
       ROW: 'row',
-      COLUMN: 'column'
+      COLUMN: 'column',
+      OPTIONS: 'options'
     },
     scrollbars: {
       NEVER: 0,
@@ -2986,7 +2989,6 @@ angular.module('ui.grid')
         }
       }
 
-
       $scope.$on('$destroy', function() {
         dataWatchCollectionDereg();
         columnDefWatchCollectionDereg();
@@ -3568,16 +3570,18 @@ angular.module('ui.grid')
    * - when the api is called to inform us of a change, the declared type of that change is used
    * - when a cell edit completes, the EDIT callbacks are triggered
    * - when the columnDef watch fires, the COLUMN callbacks are triggered
+   * - when the options watch fires, the OPTIONS callbacks are triggered
    * 
    * For a given event:
-   * - ALL calls ROW, EDIT, COLUMN and ALL callbacks
+   * - ALL calls ROW, EDIT, COLUMN, OPTIONS and ALL callbacks
    * - ROW calls ROW and ALL callbacks
    * - EDIT calls EDIT and ALL callbacks
    * - COLUMN calls COLUMN and ALL callbacks
+   * - OPTIONS calls OPTIONS and ALL callbacks
    * 
    * @param {function(grid)} callback function to be called
    * @param {array} types the types of data change you want to be informed of.  Values from 
-   * the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN ).  Optional and defaults to
+   * the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN, OPTIONS ).  Optional and defaults to
    * ALL 
    * @returns {string} uid of the callback, can be used to deregister it again
    */
@@ -3609,10 +3613,10 @@ angular.module('ui.grid')
    * @name callDataChangeCallbacks
    * @methodOf ui.grid.class:Grid
    * @description Calls the callbacks based on the type of data change that
-   * has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, and COLUMN callbacks if the 
+   * has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, COLUMN and OPTIONS callbacks if the 
    * event type is matching, or if the type is ALL.
    * @param {number} type the type of event that occurred - one of the 
-   * uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)
+   * uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)
    */
   Grid.prototype.callDataChangeCallbacks = function callDataChangeCallbacks(type, options) {
     angular.forEach( this.dataChangeCallbacks, function( callback, uid ){
@@ -3640,7 +3644,8 @@ angular.module('ui.grid')
     if ( type === constants.ALL || 
          type === constants.COLUMN ||
          type === constants.EDIT ||
-         type === constants.ROW ){
+         type === constants.ROW ||
+         type === constants.OPTIONS ){
       grid.callDataChangeCallbacks( type );
     } else {
       gridUtil.logError("Notified of a data change, but the type was not recognised, so no action taken, type was: " + type);
@@ -6195,15 +6200,21 @@ angular.module('ui.grid')
    *
    * To provide default options for all of the grids within your application, use an angular
    * decorator to modify the GridOptions factory.
-   * <pre>app.config(function($provide){
-   *    $provide.decorator('GridOptions',function($delegate){
-   *      return function(){
-   *        var defaultOptions = new $delegate();
-   *        defaultOptions.excludeProperties = ['id' ,'$$hashKey'];
-   *        return defaultOptions;
-   *      };
-   *    })
-   *  })</pre>
+   * <pre>
+   * app.config(function($provide){
+   *   $provide.decorator('GridOptions',function($delegate){
+   *     var gridOptions;
+   *     gridOptions = angular.copy($delegate);
+   *     gridOptions.initialize = function(options) {
+   *       var initOptions;
+   *       initOptions = $delegate.initialize(options);
+   *       initOptions.enableColumnMenus = false;
+   *       return initOptions;
+   *     };
+   *     return gridOptions;
+   *   });
+   * });
+   * </pre>
    */
   return {
     initialize: function( baseOptions ){
@@ -10976,7 +10987,7 @@ module.filter('px', function() {
   module.constant('uiGridCellNavConstants', {
     FEATURE_NAME: 'gridCellNav',
     CELL_NAV_EVENT: 'cellNav',
-    direction: {LEFT: 0, RIGHT: 1, UP: 2, DOWN: 3},
+    direction: {LEFT: 0, RIGHT: 1, UP: 2, DOWN: 3, PG_UP: 4, PG_DOWN: 5},
     EVENT_TYPE: {
       KEYDOWN: 0,
       CLICK: 1
@@ -11000,6 +11011,7 @@ module.filter('px', function() {
         this.columns = colContainer.visibleColumnCache;
         this.leftColumns = leftColContainer ? leftColContainer.visibleColumnCache : [];
         this.rightColumns = rightColContainer ? rightColContainer.visibleColumnCache : [];
+        this.bodyContainer = rowContainer;
       };
 
       /** returns focusable columns of all containers */
@@ -11021,6 +11033,10 @@ module.filter('px', function() {
             return this.getRowColUp(curRow, curCol);
           case uiGridCellNavConstants.direction.DOWN:
             return this.getRowColDown(curRow, curCol);
+          case uiGridCellNavConstants.direction.PG_UP:
+            return this.getRowColPageUp(curRow, curCol);
+          case uiGridCellNavConstants.direction.PG_DOWN:
+            return this.getRowColPageDown(curRow, curCol);
         }
 
       };
@@ -11096,6 +11112,26 @@ module.filter('px', function() {
         }
       };
 
+      UiGridCellNav.prototype.getRowColPageDown = function (curRow, curCol) {
+        var focusableCols = this.getFocusableCols();
+        var curColIndex = focusableCols.indexOf(curCol);
+        var curRowIndex = this.rows.indexOf(curRow);
+
+        //could not find column in focusable Columns so set it to 0
+        if (curColIndex === -1) {
+          curColIndex = 0;
+        }
+
+        var pageSize = this.bodyContainer.minRowsToRender();
+        if (curRowIndex >= this.rows.length - pageSize) {
+          return new RowCol(this.rows[this.rows.length - 1], focusableCols[curColIndex]); //return last row
+        }
+        else {
+          //down one page
+          return new RowCol(this.rows[curRowIndex + pageSize], focusableCols[curColIndex]);
+        }
+      };
+
       UiGridCellNav.prototype.getRowColUp = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
         var curColIndex = focusableCols.indexOf(curCol);
@@ -11115,6 +11151,25 @@ module.filter('px', function() {
         }
       };
 
+      UiGridCellNav.prototype.getRowColPageUp = function (curRow, curCol) {
+        var focusableCols = this.getFocusableCols();
+        var curColIndex = focusableCols.indexOf(curCol);
+        var curRowIndex = this.rows.indexOf(curRow);
+
+        //could not find column in focusable Columns so set it to 0
+        if (curColIndex === -1) {
+          curColIndex = 0;
+        }
+
+        var pageSize = this.bodyContainer.minRowsToRender();
+        if (curRowIndex - pageSize < 0) {
+          return new RowCol(this.rows[0], focusableCols[curColIndex]); //return first row
+        }
+        else {
+          //up one page
+          return new RowCol(this.rows[curRowIndex - pageSize], focusableCols[curColIndex]);
+        }
+      };
       return UiGridCellNav;
     }]);
 
@@ -11249,13 +11304,21 @@ module.filter('px', function() {
           }
 
           if (evt.keyCode === uiGridConstants.keymap.UP ||
-            (evt.keyCode === uiGridConstants.keymap.ENTER && evt.shiftKey)) {
+            (evt.keyCode === uiGridConstants.keymap.ENTER && evt.shiftKey) ) {
             return uiGridCellNavConstants.direction.UP;
+          }
+
+          if (evt.keyCode === uiGridConstants.keymap.PG_UP){
+            return uiGridCellNavConstants.direction.PG_UP;
           }
 
           if (evt.keyCode === uiGridConstants.keymap.DOWN ||
             evt.keyCode === uiGridConstants.keymap.ENTER) {
             return uiGridCellNavConstants.direction.DOWN;
+          }
+          
+          if (evt.keyCode === uiGridConstants.keymap.PG_DOWN){
+            return uiGridCellNavConstants.direction.PG_DOWN;
           }
 
           return null;
@@ -16064,7 +16127,7 @@ module.filter('px', function() {
 
         /**
          *  @ngdoc object
-         *  @name enableRowSelection
+         *  @name enablePinning
          *  @propertyOf  ui.grid.pinning.api:GridOptions
          *  @description Enable pinning for the entire grid.  
          *  <br/>Defaults to true
@@ -18711,45 +18774,74 @@ module.filter('px', function() {
           scope: false,
           link: function ($scope, $elm, $attrs) {
 
-            if ($scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection) {
-              $elm.addClass('ui-grid-disable-selection');
-              registerRowSelectionEvents();
-            }
+            var touchStartTime = 0;
+            var touchTimeout = 300;
+            var selectCells = function(evt){
+              if (evt.shiftKey) {
+                uiGridSelectionService.shiftSelect($scope.grid, $scope.row, $scope.grid.options.multiSelect);
+              }
+              else if (evt.ctrlKey || evt.metaKey) {
+                uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
+              }
+              else {
+                uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
+              }
+              $scope.$apply();
+            };
+
+            var touchStart = function(evt){
+              touchStartTime = (new Date()).getTime();
+            };
+            
+            var touchEnd = function(evt) {
+              var touchEndTime = (new Date()).getTime();
+              var touchTime = touchEndTime - touchStartTime;
+
+              if (touchTime < touchTimeout ) {
+                // short touch
+                selectCells(evt);
+              }
+            };
 
             function registerRowSelectionEvents() {
-              var touchStartTime = 0;
-              var touchTimeout = 300;
-              var selectCells = function(evt){
-                if (evt.shiftKey) {
-                  uiGridSelectionService.shiftSelect($scope.grid, $scope.row, $scope.grid.options.multiSelect);
-                }
-                else if (evt.ctrlKey || evt.metaKey) {
-                  uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
-                }
-                else {
-                  uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
-                }
-                $scope.$apply();
-              };
-
-              $elm.on('touchstart', function(event) {
-                touchStartTime = (new Date()).getTime();
-              });
-
-              $elm.on('touchend', function (evt) {
-                var touchEndTime = (new Date()).getTime();
-                var touchTime = touchEndTime - touchStartTime;
-
-                if (touchTime < touchTimeout ) {
-                  // short touch
-                  selectCells(evt);
-                }
-              });
-
-              $elm.on('click', function (evt) {
-                selectCells(evt);
-              });
+              if ($scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection) {
+                $elm.addClass('ui-grid-disable-selection');
+                $elm.on('touchstart', touchStart);
+                $elm.on('touchend', touchEnd);
+                $elm.on('click', selectCells);
+  
+                $scope.registered = true;
+              }
             }
+            
+            function deregisterRowSelectionEvents() {
+              if ($scope.registered){
+                $elm.removeClass('ui-grid-disable-selection');
+
+                $elm.off('touchstart', touchStart);
+                $elm.off('touchend', touchEnd);
+                $elm.off('click', selectCells);
+  
+                $scope.registered = false;
+              }
+            }
+            
+            registerRowSelectionEvents();
+            // register a dataChange callback so that we can change the selection configuration dynamically
+            // if the user changes the options
+            var callbackId = $scope.grid.registerDataChangeCallback( function() {
+              if ( $scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection &&
+                   !$scope.registered ){
+                registerRowSelectionEvents();
+              } else if ( ( !$scope.grid.options.enableRowSelection || $scope.grid.options.enableRowHeaderSelection ) &&
+                          $scope.registered ){
+                deregisterRowSelectionEvents();
+              }
+            }, [uiGridConstants.dataChange.OPTIONS] );
+            
+            $scope.$on( '$destroy', function() {
+              $scope.grid.deregisterDataChangCallback( callbackId );
+            });
           }
         };
       }]);

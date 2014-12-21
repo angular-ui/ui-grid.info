@@ -42,11 +42,11 @@ columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
 </li>
 <li><h3 id="callDataChangeCallbacks">callDataChangeCallbacks(type)</h3>
 <div class="calldatachangecallbacks"><p>Calls the callbacks based on the type of data change that
-has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, and COLUMN callbacks if the 
+has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, COLUMN and OPTIONS callbacks if the 
 event type is matching, or if the type is ALL.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">type – {number} – </code>
 <p>the type of event that occurred - one of the 
-uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
+uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p></li>
 </ul>
 </div>
 </li>
@@ -226,18 +226,20 @@ added or removed rows)</li>
 <li>when the api is called to inform us of a change, the declared type of that change is used</li>
 <li>when a cell edit completes, the EDIT callbacks are triggered</li>
 <li>when the columnDef watch fires, the COLUMN callbacks are triggered</li>
+<li>when the options watch fires, the OPTIONS callbacks are triggered</li>
 </ul>
 
 <p>For a given event:
-- ALL calls ROW, EDIT, COLUMN and ALL callbacks
+- ALL calls ROW, EDIT, COLUMN, OPTIONS and ALL callbacks
 - ROW calls ROW and ALL callbacks
 - EDIT calls EDIT and ALL callbacks
-- COLUMN calls COLUMN and ALL callbacks</p><h4 id="Parameters">Parameters</h4>
+- COLUMN calls COLUMN and ALL callbacks
+- OPTIONS calls OPTIONS and ALL callbacks</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">callback – {function(grid)} – </code>
 <p>function to be called</p></li>
 <li><code ng:non-bindable="">types – {array} – </code>
 <p>the types of data change you want to be informed of.  Values from 
-the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN ).  Optional and defaults to
+the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN, OPTIONS ).  Optional and defaults to
 ALL </p></li>
 </ul>
 <h4 id="Returns">Returns</h4>

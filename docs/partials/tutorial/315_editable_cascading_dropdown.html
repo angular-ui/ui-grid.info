@@ -1,0 +1,141 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>It is possible to use the edit feature and the dropdown options array to build a cascading
+dropdown setup, where the options in the second dropdown depend on the selection in the 
+first dropdown.  Thanks to @ajain27 for the sample code.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-84" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-84" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-84">
+  <div ng-controller="MainCtrl">
+    <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+    <br>
+    <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+    <br>
+    <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 600px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {};
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'name', displayName: 'Name', width: '20%' },
+      { name: 'gender', displayName: 'Gender', editableCellTemplate: 'ui-grid/dropdownEditor', width: '20%',
+        cellFilter: 'mapGender', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [
+          { id: 1, gender: 'male' },
+          { id: 2, gender: 'female' }
+        ] 
+      },
+      { name: 'company', displayName: 'Company', width: '30%' },
+      { name: 'size', displayName: 'Clothes Size', width: '20%', editableCellTemplate: 'ui-grid/dropdownEditor',
+        cellFilter: 'mapSize', editDropdownValueLabel: 'size', editDropdownRowEntityOptionsArrayPath: 'sizeOptions' }
+    ];
+    
+    $scope.maleSizeDropdownOptions = [
+      { id: 1, size: 'SM' },
+      { id: 2, size: 'M' },
+      { id: 3, size: 'L' },
+      { id: 4, size: 'XL' },
+      { id: 5, size: 'XXL' }
+    ];
+
+    $scope.femaleSizeDropdownOptions = [
+      { id: 6, size: '8' },
+      { id: 7, size: '10' },
+      { id: 8, size: '12' },
+      { id: 9, size: '14' },
+      { id: 10, size: '16' }
+    ];
+
+   $scope.gridOptions.onRegisterApi = function(gridApi){
+      //set gridApi on scope
+      $scope.gridApi = gridApi;
+      gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+        if( colDef.name === 'gender' ){
+          if( newValue === 1 ){
+            rowEntity.sizeOptions = $scope.maleSizeDropdownOptions;
+          } else {
+            rowEntity.sizeOptions = $scope.femaleSizeDropdownOptions;
+          }
+        }
+      });
+    };
+
+    $http.get('/data/100.json')
+    .success(function(data) {
+      // massage the default data to give us a coded gender and a size
+      for(i = 0; i < data.length; i++){
+        if ( data[i].gender === 'male' ) {
+          data[i].gender = 1;
+          data[i].size = Math.floor(Math.random() * (5 - 1)) + 1;
+          data[i].sizeOptions = $scope.maleSizeDropdownOptions;
+        } else {
+          data[i].gender = 2;
+          data[i].size = Math.floor(Math.random() * (10 - 5)) + 5;
+          data[i].sizeOptions = $scope.femaleSizeDropdownOptions;
+        }
+      }
+      $scope.gridOptions.data = data;
+    });
+  }])
+
+  .filter('mapGender', function() {
+    var genderHash = {
+      1: 'male',
+      2: 'female'
+    };
+
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return genderHash[input];
+      }
+    };
+  })
+
+  .filter('mapSize', function() {
+    var sizeHash = {
+      1: 'SM',
+      2: 'M',
+      3: 'L',
+      4: 'XL',
+      5: 'XXL',
+      6: '8',
+      7: '10',
+      8: '12',
+      9: '14',
+      10: '16'
+    };
+
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return sizeHash[input];
+      }
+    };
+  })
+});
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-84" ng-eval-javascript="app.js"></div></div>
+</div>
