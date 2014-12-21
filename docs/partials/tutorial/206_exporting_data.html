@@ -13,7 +13,9 @@ available through:
 <p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>.</p>
 
 <p>The exporter adds menu items to the grid menu, to use the native UI you need to enable
-the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Example">Example</h2>
+the grid menu using the gridOption <code>enableGridMenu</code></p>
+
+<p>Note that the option to export selected data is only visible if you have data selected.</p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we use the native grid menu buttons, and we show both the pdf and csv export options.</p>
 
 <h4>Source</h4>
@@ -22,11 +24,6 @@ the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Exampl
 <pre class="prettyprint linenums" ng-set-text="index.html-55" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-55">
     <div ng-controller="MainCtrl">
-      <div class="custom-csv-link-location">
-        <label>Your CSV will show below:</label>
-        <span class="ui-grid-exporter-csv-link">&nbsp</span>
-      </div>
-      
       <div ui-grid="gridOptions" ui-grid-selection ui-grid-exporter class="grid"></div>
     </div>
   </script>
@@ -54,7 +51,7 @@ the grid menu using the gridOption <code>enableGridMenu</code></p><h2 id="Exampl
         ],
         enableGridMenu: true,
         enableSelectAll: true,
-        exporterLinkLabel: 'get your csv here',
+        exporterCsvFilename: 'myFile.csv',
         exporterPdfDefaultStyle: {fontSize: 9},
         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
         exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},

@@ -36,7 +36,7 @@ for any column that is a %</p><h4 id="Parameters">Parameters</h4>
 – <p>an array of header widths</p></div>
 </div>
 </li>
-<li><h3 id="csvExport">csvExport(grid, rowTypes, colTypes, $elm)</h3>
+<li><h3 id="csvExport">csvExport(grid, rowTypes, colTypes)</h3>
 <div class="csvexport"><p>Exports rows from the grid in csv format, 
 the data exported is selected based on the provided options</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
@@ -49,9 +49,18 @@ uiGridExporterConstants.SELECTED</p></li>
 <p>which columns to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
 uiGridExporterConstants.SELECTED</p></li>
-<li><code ng:non-bindable="">$elm – {element} – </code>
-<p>(Optional) A UI element into which the
-resulting download link will be placed. </p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="downloadFile">downloadFile(fileName, csvContent)</h3>
+<div class="downloadfile"><p>Triggers download of a csv file.  Logic provided
+by @cssensei (from his colleagues at https://github.com/ifeelgoods) in issue #2391</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">fileName – {string} – </code>
+<p>the filename we'd like our file to be
+given</p></li>
+<li><code ng:non-bindable="">csvContent – {string} – </code>
+<p>the csv content that we'd like to 
+download as a file</p></li>
 </ul>
 </div>
 </li>
@@ -188,22 +197,6 @@ an array of column data</p></li>
 <div class="returns"><code ng:non-bindable="">{object}</code>
 – <p>a pdfMake format document definition, ready 
 for generation</p></div>
-</div>
-</li>
-<li><h3 id="renderCsvLink">renderCsvLink(grid, csvContent, $elm)</h3>
-<div class="rendercsvlink"><p>Creates a download link with the csv content, 
-putting it into the default exporter element, or into the element
-passed in if provided</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">csvContent – {string} – </code>
-<p>the csv content that we'd like to 
-make available as a download link</p></li>
-<li><code ng:non-bindable="">$elm – {element} – </code>
-<p>(Optional) A UI element into which the
-resulting download link will be placed.  If not provided, the
-link is put into the default exporter element. </p></li>
-</ul>
 </div>
 </li>
 </ul>

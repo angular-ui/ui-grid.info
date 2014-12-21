@@ -21,6 +21,9 @@ on the existing column if you don't want to sort by it any more.  </p>
 you change the data "behind the scenes" and want the sort to be recalculated, you can notify the grid that your
 data has changed by calling <code>gridApi.core.notifyDataChange( grid, uiGridUtils.dataChange.EDIT )</code></p>
 
+<p>If you set a default sort, you can prevent the user from removing that sort by setting <code>suppressRemoveSort: true</code>
+for that column.  This will let the user change the direction of the sort, but take away the option to remove the sort.</p>
+
 <h3>Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-21" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-22"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -103,7 +106,7 @@ data has changed by calling <code>gridApi.core.notifyDataChange( grid, uiGridUti
               direction: uiGridConstants.ASC,
               priority: 0,
             },
-            
+            suppressRemoveSort: true,
             sortingAlgorithm: function(a, b) {
               var nulls = $scope.grid2Api.core.sortHandleNulls(a, b);
               if( nulls !== null ) {
@@ -245,6 +248,17 @@ data has changed by calling <code>gridApi.core.notifyDataChange( grid, uiGridUti
       it('grid should be sorted by default', function () {
         gridTestUtils.expectCellValueMatch( 'grid2', 0, 0, 'Yvonne Parsons' );
         gridTestUtils.expectCellValueMatch( 'grid2', 1, 0, 'Velma Fry' );
+      });
+      
+      it('sort on second column can\'t be removed when cycle through header clicks', function () {
+        gridTestUtils.clickHeaderCell( 'grid2', 0 );
+        gridTestUtils.expectCellValueMatch( 'grid2', 0, 0, 'Cora Chase' );
+
+        gridTestUtils.clickHeaderCell( 'grid2', 1 );
+        gridTestUtils.expectCellValueMatch( 'grid2', 0, 0, 'Herring Pierce' );
+        
+        gridTestUtils.clickHeaderCell( 'grid2', 1 );
+        gridTestUtils.expectCellValueMatch( 'grid2', 0, 0, 'Cora Chase' );
       });
     });
 
