@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-e5f8dfa - 2014-12-21
+/*! ui-grid - v3.0.0-RC.18-cf70e90 - 2014-12-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -18840,7 +18840,7 @@ module.filter('px', function() {
             }, [uiGridConstants.dataChange.OPTIONS] );
             
             $scope.$on( '$destroy', function() {
-              $scope.grid.deregisterDataChangCallback( callbackId );
+              $scope.grid.deregisterDataChangeCallback( callbackId );
             });
           }
         };
