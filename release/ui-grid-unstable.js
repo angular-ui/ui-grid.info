@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-cf70e90 - 2014-12-22
+/*! ui-grid - v3.0.0-RC.18-ed95cfe - 2014-12-22
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -196,8 +196,8 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
             rowWatchDereg(); 
           };
           
-          
           $scope.$on( '$destroy', deregisterFunction );
+          $elm.on( '$destroy', deregisterFunction );
         }
       };
     }
@@ -2686,18 +2686,46 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             $scope.grid = uiGridCtrl.grid;
             $scope.colContainer = containerCtrl.colContainer;
 
-            grid.getRowTemplateFn.then(function (templateFn) {
-              templateFn($scope, function(clonedElement, scope) {
-                $elm.replaceWith(clonedElement);
+            // Function for attaching the template to this scope
+            var clonedElement, cloneScope;
+            function compileTemplate() {
+              var compiledElementFn = $scope.row.compiledElementFn;
+
+              // Create a new scope for the contents of this row, so we can destroy it later if need be
+              var newScope = $scope.$new();
+
+              compiledElementFn(newScope, function (newElm, scope) {
+                // If we already have a cloned element, we need to remove it and destroy its scope
+                if (clonedElement) {
+                  clonedElement.remove();
+                  cloneScope.$destroy();
+                }
+
+                // Empty the row and append the new element
+                $elm.empty().append(newElm);
+
+                // Save the new cloned element and scope
+                clonedElement = newElm;
+                cloneScope = newScope;
               });
+            }
+
+            // Initially attach the compiled template to this scope
+            compileTemplate();
+
+            // If the row's compiled element function changes, we need to replace this element's contents with the new compiled template
+            $scope.$watch('row.compiledElementFn', function (newFunc, oldFunc) {
+              if (newFunc !== oldFunc) {
+                compileTemplate();
+              }
             });
           },
           post: function($scope, $elm, $attrs, controllers) {
             var uiGridCtrl = controllers[0];
             var containerCtrl = controllers[1];
 
-            //add optional reference to externalScopes function to scope
-            //so it can be retrieved in lower elements
+            // Sdd optional reference to externalScopes function to scope
+            //   so it can be retrieved in lower elements
             $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
           }
         };
@@ -7465,6 +7493,9 @@ angular.module('ui.grid')
 
           grid.registerColumnBuilder(service.defaultColumnBuilder);
 
+          // Row builder for custom row templates
+          grid.registerRowBuilder(service.rowTemplateAssigner);
+
           // Reset all rows to visible initially
           grid.registerRowsProcessor(function allRowsVisible(rows) {
             rows.forEach(function (row) {
@@ -7601,8 +7632,49 @@ angular.module('ui.grid')
           col.compiledElementFnDefer = $q.defer();
 
           return $q.all(templateGetPromises);
-        }
+        },
 
+        rowTemplateAssigner: function rowTemplateAssigner(row) {
+          var grid = this;
+
+          // Row has no template assigned to it
+          if (!row.rowTemplate) {
+            // Use the default row template from the grid
+            row.rowTemplate = grid.options.rowTemplate;
+
+            // Use the grid's function for fetching the compiled row template function
+            row.getRowTemplateFn = grid.getRowTemplateFn;
+
+            // Get the compiled row template function...
+            grid.getRowTemplateFn.then(function (rowTemplateFn) {
+              // And assign it to the row
+              row.compiledElementFn = rowTemplateFn;
+            });
+          }
+          // Row has its own template assigned
+          else {
+            // Create a promise for the compiled row template function
+            var perRowTemplateFnPromise = $q.defer();
+            row.getRowTemplateFn = perRowTemplateFnPromise.promise;
+
+            // Get the row template
+            gridUtil.getTemplate(row.rowTemplate)
+              .then(function (template) {
+                // Compile the template
+                var rowTemplateFn = $compile(template);
+
+                // Assign the compiled template function to this row
+                row.compiledElementFn = rowTemplateFn;
+
+                // Resolve the compiled template function promise
+                perRowTemplateFnPromise.resolve(rowTemplateFn);
+              },
+              function (res) {
+                // Todo handle response error here?
+                throw new Error("Couldn't fetch/use row template '" + row.rowTemplate + "'");
+              });
+          }
+        }
       };
 
       //class definitions (moved to separate factories)
