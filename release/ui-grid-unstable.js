@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-ed95cfe - 2014-12-22
+/*! ui-grid - v3.0.0-RC.18-b1a57b6 - 2014-12-23
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -186,6 +186,7 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
             }
           };
 
+          // TODO(c0bra): Turn this into a deep array watch
           var colWatchDereg = $scope.$watch( 'col', cellChangeFunction );
           var rowWatchDereg = $scope.$watch( 'row', cellChangeFunction );
           
@@ -2689,24 +2690,26 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             // Function for attaching the template to this scope
             var clonedElement, cloneScope;
             function compileTemplate() {
-              var compiledElementFn = $scope.row.compiledElementFn;
+              $scope.row.getRowTemplateFn.then(function (compiledElementFn) {
+                // var compiledElementFn = $scope.row.compiledElementFn;
 
-              // Create a new scope for the contents of this row, so we can destroy it later if need be
-              var newScope = $scope.$new();
+                // Create a new scope for the contents of this row, so we can destroy it later if need be
+                var newScope = $scope.$new();
 
-              compiledElementFn(newScope, function (newElm, scope) {
-                // If we already have a cloned element, we need to remove it and destroy its scope
-                if (clonedElement) {
-                  clonedElement.remove();
-                  cloneScope.$destroy();
-                }
+                compiledElementFn(newScope, function (newElm, scope) {
+                  // If we already have a cloned element, we need to remove it and destroy its scope
+                  if (clonedElement) {
+                    clonedElement.remove();
+                    cloneScope.$destroy();
+                  }
 
-                // Empty the row and append the new element
-                $elm.empty().append(newElm);
+                  // Empty the row and append the new element
+                  $elm.empty().append(newElm);
 
-                // Save the new cloned element and scope
-                clonedElement = newElm;
-                cloneScope = newScope;
+                  // Save the new cloned element and scope
+                  clonedElement = newElm;
+                  cloneScope = newScope;
+                });
               });
             }
 
@@ -2714,7 +2717,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             compileTemplate();
 
             // If the row's compiled element function changes, we need to replace this element's contents with the new compiled template
-            $scope.$watch('row.compiledElementFn', function (newFunc, oldFunc) {
+            $scope.$watch('row.getRowTemplateFn', function (newFunc, oldFunc) {
               if (newFunc !== oldFunc) {
                 compileTemplate();
               }
@@ -7644,12 +7647,6 @@ angular.module('ui.grid')
 
             // Use the grid's function for fetching the compiled row template function
             row.getRowTemplateFn = grid.getRowTemplateFn;
-
-            // Get the compiled row template function...
-            grid.getRowTemplateFn.then(function (rowTemplateFn) {
-              // And assign it to the row
-              row.compiledElementFn = rowTemplateFn;
-            });
           }
           // Row has its own template assigned
           else {
@@ -7662,10 +7659,7 @@ angular.module('ui.grid')
               .then(function (template) {
                 // Compile the template
                 var rowTemplateFn = $compile(template);
-
-                // Assign the compiled template function to this row
-                row.compiledElementFn = rowTemplateFn;
-
+                
                 // Resolve the compiled template function promise
                 perRowTemplateFnPromise.resolve(rowTemplateFn);
               },
@@ -7674,6 +7668,8 @@ angular.module('ui.grid')
                 throw new Error("Couldn't fetch/use row template '" + row.rowTemplate + "'");
               });
           }
+
+          return row.getRowTemplateFn;
         }
       };
 
