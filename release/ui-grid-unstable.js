@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-b1a57b6 - 2014-12-23
+/*! ui-grid - v3.0.0-RC.18-d6b8ff9 - 2014-12-24
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2192,6 +2192,11 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           if (args.target && (args.target === $elm || angular.element(args.target).hasClass('ui-grid-native-scrollbar'))) {
             return;
           }
+          
+          // Don't listen to scrolls from other grids
+          if (args.grid && args.grid.id !== grid.id){
+            return;
+          }
 
           // Set the source of the scroll event in our scope so it's available in our 'scroll' event handler
           $scope.scrollSource = args.target;
@@ -2300,6 +2305,11 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             }
 
             function scrollHandler (evt, args) {
+              // exit if not for this grid
+              if (args.grid && args.grid.id !== grid.id){
+                return;
+              }
+              
               // Vertical scroll
               if (args.y && $scope.bindScrollVertical) {
                 containerCtrl.prevScrollArgs = args;
@@ -3033,6 +3043,7 @@ angular.module('ui.grid')
       /* Event Methods */
 
       self.fireScrollingEvent = gridUtil.throttle(function(args) {
+        args.grid = args.grid || self.grid;
         $scope.$broadcast(uiGridConstants.events.GRID_SCROLL, args);
       }, self.grid.options.scrollThrottle, {trailing: true});
 
@@ -11511,6 +11522,8 @@ module.filter('px', function() {
          */
         scrollToInternal: function (grid, $scope, gridRow, gridCol) {
           var args = {};
+          
+          args.grid = grid;
 
           if (gridRow !== null) {
             var seekRowIndex = grid.renderContainers.body.visibleRowCache.indexOf(gridRow);
@@ -11542,6 +11555,8 @@ module.filter('px', function() {
          */
         scrollToIfNecessary: function (grid, $scope, gridRow, gridCol) {
           var args = {};
+          
+          args.grid = grid;
 
           // Alias the visible row and column caches 
           var visRowCache = grid.renderContainers.body.visibleRowCache;
@@ -11862,6 +11877,11 @@ module.filter('px', function() {
 
               // When there's a scroll event we need to make sure to re-focus the right row, because the cell contents may have changed
               $scope.$on(uiGridConstants.events.GRID_SCROLL, function (evt, args) {
+                // Skip if not this grid that the event was broadcast for
+                if (args.grid && args.grid.id !== uiGridCtrl.grid.id) {
+                  return;
+                }
+
                 // Skip if there's no currently-focused cell
                 if (uiGridCtrl.grid.api.cellNav.getFocusedCell() == null) {
                   return;
@@ -18348,6 +18368,7 @@ module.filter('px', function() {
                     }
                   });
                   service.decideRaiseSelectionBatchEvent( grid, changedRows );
+                  grid.selection.selectAll = true;
                 },
                 /**
                  * @ngdoc function
@@ -18375,6 +18396,7 @@ module.filter('px', function() {
                     }
                   });
                   service.decideRaiseSelectionBatchEvent( grid, changedRows );
+                  grid.selection.selectAll = true;
                 },
                 /**
                  * @ngdoc function
@@ -18559,6 +18581,8 @@ module.filter('px', function() {
             row.isSelected = !selected;
             if (row.isSelected === true) {
               grid.selection.lastSelectedRow = row;
+            } else {
+              grid.selection.selectAll = false;
             }
             grid.api.selection.raise.rowSelectionChanged(row);
           }
@@ -18628,6 +18652,7 @@ module.filter('px', function() {
             }
           });
           service.decideRaiseSelectionBatchEvent( grid, changedRows );
+          grid.selection.selectAll = false;
         },
         
         /**
@@ -18907,7 +18932,7 @@ module.filter('px', function() {
               }
             }, [uiGridConstants.dataChange.OPTIONS] );
             
-            $scope.$on( '$destroy', function() {
+            $elm.on( '$destroy', function() {
               $scope.grid.deregisterDataChangeCallback( callbackId );
             });
           }

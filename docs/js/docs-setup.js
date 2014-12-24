@@ -1017,7 +1017,7 @@ NG_DOCS={
       "id": "211_two_grids",
       "shortName": "211 Two grids on a page",
       "type": "overview",
-      "keywords": "$http $log $scope an and angular app are check class controller correct css data demonstrates describe display each element example expectheadercolumncount first firstgrid from function get grid gridoptions grids gridtestutils has height how html id index isolated it js json main mainctrl menus module name ng-controller ngtouch on other out over overview page protractor puts rendered require same scenario scroll second secondctrl secondgrid selection spec still success that the they this to tutorial two ui ui-grid ui-grid-selection var width working"
+      "keywords": "$http $log $scope an and angular app are btn btn-success button cellnav check class colindex columndefs controller correct css data demonstrates describe display each element example expectheadercolumncount first firstgrid from function get grid gridapi gridoptions grids gridtestutils has height how html id index isolated it js json main mainctrl menus module name ng-click ng-controller ngtouch on onregisterapi other out over overview page protractor puts rendered require row rowindex same scenario scroll scrollto second secondctrl secondgrid selection spec still success that the they this to tutorial two type ui ui-grid ui-grid-cellnav ui-grid-selection var width working"
     },
     {
       "section": "tutorial",

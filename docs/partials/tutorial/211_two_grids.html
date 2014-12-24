@@ -9,10 +9,11 @@ each other.</p><h2 id="Example">Example</h2>
 <pre class="prettyprint linenums" ng-set-text="index.html-60" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-60">
   <div ng-controller="MainCtrl">
-    <div id="firstGrid" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+    <button type="button" class="btn btn-success" ng-click="scrollTo(20,0)">Scroll To Row 20</button>
+    <div id="firstGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
   </div>
   <div ng-controller="SecondCtrl">
-    <div id="secondGrid" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+    <div id="secondGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
   </div>
 </script>
 </div>
@@ -28,10 +29,18 @@ each other.</p><h2 id="Example">Example</h2>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.selection']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.selection', 'ui.grid.cellNav']);
 
   app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
-    $scope.gridOptions = {};
+    $scope.gridOptions = {
+      onRegisterApi: function(gridApi){
+        $scope.gridApi = gridApi;
+      }
+    };
+    
+    $scope.scrollTo = function( rowIndex, colIndex ) {
+      $scope.gridApi.cellNav.scrollTo( $scope, $scope.gridOptions.data[rowIndex], $scope.gridOptions.columnDefs[colIndex]); 
+    };
 
     $http.get('/data/100.json')
       .success(function(data) {
