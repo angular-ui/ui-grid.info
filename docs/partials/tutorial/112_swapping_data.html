@@ -36,9 +36,11 @@
     $scope.swapData = function() {
       if ($scope.gridOpts.data === data1) {
         $scope.gridOpts.data = data2;
+        $scope.gridOpts.columnDefs = columnDefs2;
       }
       else {
         $scope.gridOpts.data = data1;
+        $scope.gridOpts.columnDefs = columnDefs1;
       }
     };
 
@@ -48,7 +50,8 @@
                   "firstName": "New " + n,
                   "lastName": "Person " + n,
                   "company": "abc",
-                  "employed": true
+                  "employed": true,
+                  "gender": "male"
                 });
     };
 
@@ -63,36 +66,51 @@
       data2 = angular.copy(origdata2);
 
       $scope.gridOpts.data = data1;
+      $scope.gridOpts.columnDefs = columnDefs1;
     }
 
+    var columnDefs1 = [
+      { name: 'firstName' },
+      { name: 'lastName' },
+      { name: 'company' },
+      { name: 'gender' }
+    ];
+    
     var data1 = [
       {
         "firstName": "Cox",
         "lastName": "Carney",
         "company": "Enormo",
-        "employed": true
+        "gender": "male"
       },
       {
         "firstName": "Lorraine",
         "lastName": "Wise",
         "company": "Comveyer",
-        "employed": false
+        "gender": "female"
       },
       {
         "firstName": "Nancy",
         "lastName": "Waters",
         "company": "Fuelton",
-        "employed": false
+        "gender": "female"
       },
       {
         "firstName": "Misty",
         "lastName": "Oneill",
         "company": "Letpro",
-        "employed": false
+        "gender": "female"
       }
     ];
 
     var origdata1 = angular.copy(data1);
+
+    var columnDefs2 = [
+      { name: 'firstName' },
+      { name: 'lastName' },
+      { name: 'company' },
+      { name: 'employed' }
+    ];
 
     var data2 = [
       {
@@ -136,6 +154,7 @@
     var origdata2 = angular.copy(data2);
 
     $scope.gridOpts = {
+      columnDefs: columnDefs1,
       data: data1
     };
   }]);
@@ -152,8 +171,8 @@
 
     it('swap data and data changes', function () {
       gridTestUtils.expectRowCount( 'grid1', 4 );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'Carney', 'Enormo', 'true' ] );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'false' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'Carney', 'Enormo', 'male' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'female' ] );
       
       element( by.id( "swapData" ) ).click();
       gridTestUtils.expectRowCount( 'grid1', 6 );
@@ -162,8 +181,8 @@
 
       element( by.id( "swapData" ) ).click();
       gridTestUtils.expectRowCount( 'grid1', 4 );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'Carney', 'Enormo', 'true' ] );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'false' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'Carney', 'Enormo', 'male' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'female' ] );
     });
     
     it('add data and data changes', function () {
@@ -171,11 +190,11 @@
       
       element( by.id( "addData" ) ).click();
       gridTestUtils.expectRowCount( 'grid1', 5 );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 4, [ 'New 5', 'Person 5', 'abc', 'true' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 4, [ 'New 5', 'Person 5', 'abc', 'male' ] );
 
       element( by.id( "addData" ) ).click();
       gridTestUtils.expectRowCount( 'grid1', 6 );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 5, [ 'New 6', 'Person 6', 'abc', 'true' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 5, [ 'New 6', 'Person 6', 'abc', 'male' ] );
     });
 
     it('remove data and data changes', function () {
@@ -183,7 +202,7 @@
       
       element( by.id( "removeFirstRow" ) ).click();
       gridTestUtils.expectRowCount( 'grid1', 3 );
-      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Lorraine', 'Wise', 'Comveyer', 'false' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Lorraine', 'Wise', 'Comveyer', 'female' ] );
     });      
   });    
 </script>
