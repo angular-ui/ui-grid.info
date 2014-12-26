@@ -471,7 +471,7 @@ NG_DOCS={
       "id": "ui.grid.moveColumns.directive:uiGridHeaderCell",
       "shortName": "uiGridHeaderCell",
       "type": "directive",
-      "keywords": "able also and api as at be capability case cell cloned cloning column coned directive div event events exists extreme grid header headercell horizontal in invoke is it left mouse mousedown mousemove mouseup move movecolumns moved movement moves moving now of on or position provide reaches receiving released removed reposition repositioned repositioning right scroll scrolling stacks that the to top triggered ui uigridheadercell where"
+      "keywords": "able also and api as at be capability case cell cloned cloning column directive div event events exists extreme grid header headercell horizontal in invoke is it left mouse mousedown mousemove mouseup move movecolumns moved movement moves moving now of on or position provide reaches receiving released removed reposition repositioned repositioning right scroll scrolling stacks that the to top triggered ui uigridheadercell where"
     },
     {
       "section": "api",

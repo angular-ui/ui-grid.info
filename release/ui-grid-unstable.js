@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-92a8836 - 2014-12-25
+/*! ui-grid - v3.0.0-RC.18-54b0501 - 2014-12-26
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -14999,10 +14999,12 @@ module.filter('px', function() {
         templateUrl: 'ui-grid/importerMenuItem',
         link: function ($scope, $elm, $attrs, uiGridCtrl) {
           var handleFileSelect = function( event ){
-            if (event.srcElement.files.length === 1) {
+            var target = event.srcElement || event.target;
+            
+            if (target && target.files && target.files.length === 1) {
               var fileObject = event.srcElement.files[0];
               uiGridImporterService.importThisFile( grid, fileObject );
-              event.srcElement.form.reset();
+              target.form.reset();
             }
           };
 
@@ -15439,7 +15441,7 @@ module.filter('px', function() {
    *
    *  On receiving mouseDown event headerCell is cloned, now as the mouse moves the cloned header cell also moved in the grid.
    *  In case the moving cloned header cell reaches the left or right extreme of grid, grid scrolling is triggered (if horizontal scroll exists).
-   *  On mouseUp event column is repositioned at position where mouse is released and coned header cell is removed.
+   *  On mouseUp event column is repositioned at position where mouse is released and cloned header cell is removed.
    *
    *  Events that invoke cloning of header cell:
    *    - mousedown
