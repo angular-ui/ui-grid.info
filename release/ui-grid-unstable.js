@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-54b0501 - 2014-12-26
+/*! ui-grid - v3.0.0-RC.18-85cd75b - 2014-12-27
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11106,6 +11106,13 @@ module.filter('px', function() {
         });
       };
 
+      /** returns focusable rows */
+      UiGridCellNav.prototype.getFocusableRows = function () {
+        return this.rows.filter(function(row) {
+          return row.allowCellFocus !== false;
+        });
+      };
+
       UiGridCellNav.prototype.getNextRowCol = function (direction, curRow, curCol) {
         switch (direction) {
           case uiGridCellNavConstants.direction.LEFT:
@@ -11126,8 +11133,9 @@ module.filter('px', function() {
 
       UiGridCellNav.prototype.getRowColLeft = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
+        var focusableRows = this.getFocusableRows();
         var curColIndex = focusableCols.indexOf(curCol);
-        var curRowIndex = this.rows.indexOf(curRow);
+        var curRowIndex = focusableRows.indexOf(curRow);
 
         //could not find column in focusable Columns so set it to 1
         if (curColIndex === -1) {
@@ -11143,7 +11151,7 @@ module.filter('px', function() {
           }
           else {
             //up one row and far right column
-            return new RowCol(this.rows[curRowIndex - 1], focusableCols[nextColIndex]);
+            return new RowCol(focusableRows[curRowIndex - 1], focusableCols[nextColIndex]);
           }
         }
         else {
@@ -11153,8 +11161,9 @@ module.filter('px', function() {
 
       UiGridCellNav.prototype.getRowColRight = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
+        var focusableRows = this.getFocusableRows();
         var curColIndex = focusableCols.indexOf(curCol);
-        var curRowIndex = this.rows.indexOf(curRow);
+        var curRowIndex = focusableRows.indexOf(curRow);
 
         //could not find column in focusable Columns so set it to 0
         if (curColIndex === -1) {
@@ -11163,12 +11172,12 @@ module.filter('px', function() {
         var nextColIndex = curColIndex === focusableCols.length - 1 ? 0 : curColIndex + 1;
 
         if (nextColIndex < curColIndex) {
-          if (curRowIndex === this.rows.length - 1) {
+          if (curRowIndex === focusableRows.length - 1) {
             return new RowCol(curRow, focusableCols[nextColIndex]); //return same row
           }
           else {
             //down one row and far left column
-            return new RowCol(this.rows[curRowIndex + 1], focusableCols[nextColIndex]);
+            return new RowCol(focusableRows[curRowIndex + 1], focusableCols[nextColIndex]);
           }
         }
         else {
@@ -11178,27 +11187,29 @@ module.filter('px', function() {
 
       UiGridCellNav.prototype.getRowColDown = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
+        var focusableRows = this.getFocusableRows();
         var curColIndex = focusableCols.indexOf(curCol);
-        var curRowIndex = this.rows.indexOf(curRow);
+        var curRowIndex = focusableRows.indexOf(curRow);
 
         //could not find column in focusable Columns so set it to 0
         if (curColIndex === -1) {
           curColIndex = 0;
         }
 
-        if (curRowIndex === this.rows.length - 1) {
+        if (curRowIndex === focusableRows.length - 1) {
           return new RowCol(curRow, focusableCols[curColIndex]); //return same row
         }
         else {
           //down one row
-          return new RowCol(this.rows[curRowIndex + 1], focusableCols[curColIndex]);
+          return new RowCol(focusableRows[curRowIndex + 1], focusableCols[curColIndex]);
         }
       };
 
       UiGridCellNav.prototype.getRowColPageDown = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
+        var focusableRows = this.getFocusableRows();
         var curColIndex = focusableCols.indexOf(curCol);
-        var curRowIndex = this.rows.indexOf(curRow);
+        var curRowIndex = focusableRows.indexOf(curRow);
 
         //could not find column in focusable Columns so set it to 0
         if (curColIndex === -1) {
@@ -11206,19 +11217,20 @@ module.filter('px', function() {
         }
 
         var pageSize = this.bodyContainer.minRowsToRender();
-        if (curRowIndex >= this.rows.length - pageSize) {
-          return new RowCol(this.rows[this.rows.length - 1], focusableCols[curColIndex]); //return last row
+        if (curRowIndex >= focusableRows.length - pageSize) {
+          return new RowCol(focusableRows[focusableRows.length - 1], focusableCols[curColIndex]); //return last row
         }
         else {
           //down one page
-          return new RowCol(this.rows[curRowIndex + pageSize], focusableCols[curColIndex]);
+          return new RowCol(focusableRows[curRowIndex + pageSize], focusableCols[curColIndex]);
         }
       };
 
       UiGridCellNav.prototype.getRowColUp = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
+        var focusableRows = this.getFocusableRows();
         var curColIndex = focusableCols.indexOf(curCol);
-        var curRowIndex = this.rows.indexOf(curRow);
+        var curRowIndex = focusableRows.indexOf(curRow);
 
         //could not find column in focusable Columns so set it to 0
         if (curColIndex === -1) {
@@ -11230,14 +11242,15 @@ module.filter('px', function() {
         }
         else {
           //up one row
-          return new RowCol(this.rows[curRowIndex - 1], focusableCols[curColIndex]);
+          return new RowCol(focusableRows[curRowIndex - 1], focusableCols[curColIndex]);
         }
       };
 
       UiGridCellNav.prototype.getRowColPageUp = function (curRow, curCol) {
         var focusableCols = this.getFocusableCols();
+        var focusableRows = this.getFocusableRows();
         var curColIndex = focusableCols.indexOf(curCol);
-        var curRowIndex = this.rows.indexOf(curRow);
+        var curRowIndex = focusableRows.indexOf(curRow);
 
         //could not find column in focusable Columns so set it to 0
         if (curColIndex === -1) {
@@ -11246,11 +11259,11 @@ module.filter('px', function() {
 
         var pageSize = this.bodyContainer.minRowsToRender();
         if (curRowIndex - pageSize < 0) {
-          return new RowCol(this.rows[0], focusableCols[curColIndex]); //return first row
+          return new RowCol(focusableRows[0], focusableCols[curColIndex]); //return first row
         }
         else {
           //up one page
-          return new RowCol(this.rows[curRowIndex - pageSize], focusableCols[curColIndex]);
+          return new RowCol(focusableRows[curRowIndex - pageSize], focusableCols[curColIndex]);
         }
       };
       return UiGridCellNav;
@@ -11399,7 +11412,7 @@ module.filter('px', function() {
             evt.keyCode === uiGridConstants.keymap.ENTER) {
             return uiGridCellNavConstants.direction.DOWN;
           }
-          
+
           if (evt.keyCode === uiGridConstants.keymap.PG_DOWN){
             return uiGridCellNavConstants.direction.PG_DOWN;
           }
@@ -11485,14 +11498,14 @@ module.filter('px', function() {
             gridCol = grid.getColumn(colDef.name ? colDef.name : colDef.field);
           }
           this.scrollToInternal(grid, $scope, gridRow, gridCol);
-          
+
           var rowCol = { row: gridRow, col: gridCol };
 
           // Broadcast the navigation
           grid.cellNav.broadcastCellNav(rowCol);
-          
+
         },
-        
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.cellNav.service:uiGridCellNavService
@@ -11500,20 +11513,20 @@ module.filter('px', function() {
          * @description Like scrollTo, but takes gridRow and gridCol.
          * In calculating the scroll height we have to deal with wanting
          * 0% for the first row, and 100% for the last row.  Normal maths
-         * for a 10 row list would return 1/10 = 10% for the first row, so 
+         * for a 10 row list would return 1/10 = 10% for the first row, so
          * we need to tweak the numbers to add an extra 10% somewhere.  The
          * formula if we're trying to get to row 0 in a 10 row list (assuming our
          * index is zero based, so the last row is row 9) is:
          * <pre>
          *   0 + 0 / 10 = 0%
          * </pre>
-         * 
-         * To get to row 9 (i.e. the last row) in the same list, we want to 
+         *
+         * To get to row 9 (i.e. the last row) in the same list, we want to
          * go to:
          * <pre>
          *  ( 9 + 1 ) / 10 = 100%
          * </pre>
-         * So we need to apportion one whole row within the overall grid scroll, 
+         * So we need to apportion one whole row within the overall grid scroll,
          * the formula is:
          * <pre>
          *   ( index + ( index / (total rows - 1) ) / total rows
@@ -11526,7 +11539,7 @@ module.filter('px', function() {
          */
         scrollToInternal: function (grid, $scope, gridRow, gridCol) {
           var args = {};
-          
+
           args.grid = grid;
 
           if (gridRow !== null) {
@@ -11559,10 +11572,10 @@ module.filter('px', function() {
          */
         scrollToIfNecessary: function (grid, $scope, gridRow, gridCol) {
           var args = {};
-          
+
           args.grid = grid;
 
-          // Alias the visible row and column caches 
+          // Alias the visible row and column caches
           var visRowCache = grid.renderContainers.body.visibleRowCache;
           var visColCache = grid.renderContainers.body.visibleColumnCache;
 
@@ -11598,7 +11611,7 @@ module.filter('px', function() {
           if (gridRow !== null) {
             // This is the index of the row we want to scroll to, within the list of rows that can be visible
             var seekRowIndex = visRowCache.indexOf(gridRow);
-            
+
             // Total vertical scroll length of the grid
             var scrollLength = (grid.renderContainers.body.getCanvasHeight() - grid.renderContainers.body.getViewportHeight());
 
@@ -11641,7 +11654,7 @@ module.filter('px', function() {
           if (gridCol !== null) {
             // This is the index of the row we want to scroll to, within the list of rows that can be visible
             var seekColumnIndex = visColCache.indexOf(gridCol);
-            
+
             // Total vertical scroll length of the grid
             var horizScrollLength = (grid.renderContainers.body.getCanvasWidth() - grid.renderContainers.body.getViewportWidth());
 
@@ -11715,20 +11728,20 @@ module.filter('px', function() {
           if (!upToCol) {
             return width;
           }
-          
+
           var lastIndex = grid.renderContainers.body.visibleColumnCache.indexOf( upToCol );
-          
+
           // total column widths up-to but not including the passed in column
           grid.renderContainers.body.visibleColumnCache.forEach( function( col, index ) {
             if ( index < lastIndex ){
-              width += col.drawnWidth;  
+              width += col.drawnWidth;
             }
           });
-          
+
           // pro-rata the final column based on % of total columns.
           var percentage = lastIndex === 0 ? 0 : (lastIndex + 1) / grid.renderContainers.body.visibleColumnCache.length;
           width += upToCol.drawnWidth * percentage;
-           
+
           return width;
         }
       };
@@ -11941,7 +11954,7 @@ module.filter('px', function() {
           }
 
           setTabEnabled();
-          
+
           // When a cell is clicked, broadcast a cellNav event saying that this row+col combo is now focused
           $elm.find('div').on('click', function (evt) {
             uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col));
@@ -11987,6 +12000,7 @@ module.filter('px', function() {
     }]);
 
 })();
+
 (function () {
   'use strict';
 
@@ -18281,8 +18295,9 @@ module.filter('px', function() {
                  * @eventOf  ui.grid.selection.api:PublicApi
                  * @description  is raised after the row.isSelected state is changed
                  * @param {GridRow} row the row that was selected/deselected
+                 * @param {Event} event object if raised from an event
                  */
-                rowSelectionChanged: function (scope, row) {
+                rowSelectionChanged: function (scope, row, evt) {
                 },
                 /**
                  * @ngdoc event
@@ -18290,11 +18305,12 @@ module.filter('px', function() {
                  * @eventOf  ui.grid.selection.api:PublicApi
                  * @description  is raised after the row.isSelected state is changed
                  * in bulk, if the `enableSelectionBatchEvent` option is set to true
-                 * (which it is by default).  This allows more efficient processing 
+                 * (which it is by default).  This allows more efficient processing
                  * of bulk events.
                  * @param {array} rows the rows that were selected/deselected
+                 * @param {Event} event object if raised from an event
                  */
-                rowSelectionChangedBatch: function (scope, rows) {
+                rowSelectionChangedBatch: function (scope, rows, evt) {
                 }
               }
             },
@@ -18306,11 +18322,12 @@ module.filter('px', function() {
                  * @methodOf  ui.grid.selection.api:PublicApi
                  * @description Toggles data row as selected or unselected
                  * @param {object} rowEntity gridOptions.data[] array instance
+                 * @param {Event} event object if raised from an event
                  */
-                toggleRowSelection: function (rowEntity) {
+                toggleRowSelection: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
                   if (row !== null) {
-                    service.toggleRowSelection(grid, row, grid.options.multiSelect, grid.options.noUnselect);
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
                 /**
@@ -18319,11 +18336,12 @@ module.filter('px', function() {
                  * @methodOf  ui.grid.selection.api:PublicApi
                  * @description Select the data row
                  * @param {object} rowEntity gridOptions.data[] array instance
+                 * @param {Event} event object if raised from an event
                  */
-                selectRow: function (rowEntity) {
+                selectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
                   if (row !== null && !row.isSelected) {
-                    service.toggleRowSelection(grid, row, grid.options.multiSelect, grid.options.noUnselect);
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
                 /**
@@ -18335,11 +18353,12 @@ module.filter('px', function() {
                  * visible means of those rows that are theoretically visible (i.e. not filtered),
                  * rather than rows currently rendered on the screen.
                  * @param {number} index index within the rowsVisible array
+                 * @param {Event} event object if raised from an event
                  */
-                selectRowByVisibleIndex: function ( rowNum ) {
+                selectRowByVisibleIndex: function ( rowNum, evt ) {
                   var row = grid.renderContainers.body.visibleRowCache[rowNum];
                   if (row !== null && typeof(row) !== 'undefined' && !row.isSelected) {
-                    service.toggleRowSelection(grid, row, grid.options.multiSelect, grid.options.noUnselect);
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
                 /**
@@ -18348,11 +18367,12 @@ module.filter('px', function() {
                  * @methodOf  ui.grid.selection.api:PublicApi
                  * @description UnSelect the data row
                  * @param {object} rowEntity gridOptions.data[] array instance
+                 * @param {Event} event object if raised from an event
                  */
-                unSelectRow: function (rowEntity) {
+                unSelectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
                   if (row !== null && row.isSelected) {
-                    service.toggleRowSelection(grid, row, grid.options.multiSelect, grid.options.noUnselect);
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
                 /**
@@ -18360,8 +18380,9 @@ module.filter('px', function() {
                  * @name selectAllRows
                  * @methodOf  ui.grid.selection.api:PublicApi
                  * @description Selects all rows.  Does nothing if multiSelect = false
+                 * @param {Event} event object if raised from an event
                  */
-                selectAllRows: function () {
+                selectAllRows: function (evt) {
                   if (grid.options.multiSelect === false) {
                     return;
                   }
@@ -18370,10 +18391,10 @@ module.filter('px', function() {
                   grid.rows.forEach(function (row) {
                     if ( !row.isSelected ){
                       row.isSelected = true;
-                      service.decideRaiseSelectionEvent( grid, row, changedRows );
+                      service.decideRaiseSelectionEvent( grid, row, changedRows, evt );
                     }
                   });
-                  service.decideRaiseSelectionBatchEvent( grid, changedRows );
+                  service.decideRaiseSelectionBatchEvent( grid, changedRows, evt );
                   grid.selection.selectAll = true;
                 },
                 /**
@@ -18381,8 +18402,9 @@ module.filter('px', function() {
                  * @name selectAllVisibleRows
                  * @methodOf  ui.grid.selection.api:PublicApi
                  * @description Selects all visible rows.  Does nothing if multiSelect = false
+                 * @param {Event} event object if raised from an event
                  */
-                selectAllVisibleRows: function () {
+                selectAllVisibleRows: function (evt) {
                   if (grid.options.multiSelect === false) {
                     return;
                   }
@@ -18392,16 +18414,16 @@ module.filter('px', function() {
                     if (row.visible) {
                       if (!row.isSelected){
                         row.isSelected = true;
-                        service.decideRaiseSelectionEvent( grid, row, changedRows );
+                        service.decideRaiseSelectionEvent( grid, row, changedRows, evt );
                       }
                     } else {
                       if (row.isSelected){
                         row.isSelected = false;
-                        service.decideRaiseSelectionEvent( grid, row, changedRows );
+                        service.decideRaiseSelectionEvent( grid, row, changedRows, evt );
                       }
                     }
                   });
-                  service.decideRaiseSelectionBatchEvent( grid, changedRows );
+                  service.decideRaiseSelectionBatchEvent( grid, changedRows, evt );
                   grid.selection.selectAll = true;
                 },
                 /**
@@ -18409,9 +18431,10 @@ module.filter('px', function() {
                  * @name clearSelectedRows
                  * @methodOf  ui.grid.selection.api:PublicApi
                  * @description Unselects all rows
+                 * @param {Event} event object if raised from an event
                  */
-                clearSelectedRows: function () {
-                  service.clearSelectedRows(grid);
+                clearSelectedRows: function (evt) {
+                  service.clearSelectedRows(grid, evt);
                 },
                 /**
                  * @ngdoc function
@@ -18465,7 +18488,7 @@ module.filter('px', function() {
                 getSelectAllState: function () {
                   return grid.selection.selectAll;
                 }
-                
+
               }
             }
           };
@@ -18482,7 +18505,7 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name ui.grid.selection.api:GridOptions
            *
-           *  @description GridOptions for selection feature, these are available to be  
+           *  @description GridOptions for selection feature, these are available to be
            *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
 
@@ -18544,7 +18567,7 @@ module.filter('px', function() {
            *  @description If selected rows are changed in bulk, either via the API or
            *  via the selectAll checkbox, then a separate event is fired.  Setting this
            *  option to false will cause the rowSelectionChanged event to be called multiple times
-           *  instead  
+           *  instead
            *  <br/>Defaults to true
            */
           gridOptions.enableSelectionBatchEvent = gridOptions.enableSelectionBatchEvent !== false;
@@ -18565,22 +18588,23 @@ module.filter('px', function() {
          * @description Toggles row as selected or unselected
          * @param {Grid} grid grid object
          * @param {GridRow} row row to select or deselect
+         * @param {Event} event object if resulting from event
          * @param {bool} multiSelect if false, only one row at time can be selected
          * @param {bool} noUnselect if true then rows cannot be unselected
          */
-        toggleRowSelection: function (grid, row, multiSelect, noUnselect) {
+        toggleRowSelection: function (grid, row, evt, multiSelect, noUnselect) {
           var selected = row.isSelected;
 
           if (!multiSelect && !selected) {
-            service.clearSelectedRows(grid);
+            service.clearSelectedRows(grid, evt);
           } else if (!multiSelect && selected) {
             var selectedRows = service.getSelectedRows(grid);
             if (selectedRows.length > 1) {
               selected = false; // Enable reselect of the row
-              service.clearSelectedRows(grid);
+              service.clearSelectedRows(grid, evt);
             }
           }
-          
+
           if (selected && noUnselect){
             // don't deselect the row 
           } else {
@@ -18590,7 +18614,7 @@ module.filter('px', function() {
             } else {
               grid.selection.selectAll = false;
             }
-            grid.api.selection.raise.rowSelectionChanged(row);
+            grid.api.selection.raise.rowSelectionChanged(row, evt);
           }
         },
         /**
@@ -18600,9 +18624,10 @@ module.filter('px', function() {
          * @description selects a group of rows from the last selected row using the shift key
          * @param {Grid} grid grid object
          * @param {GridRow} clicked row
+         * @param {Event} event object if raised from an event
          * @param {bool} multiSelect if false, does nothing this is for multiSelect only
          */
-        shiftSelect: function (grid, row, multiSelect) {
+        shiftSelect: function (grid, row, evt, multiSelect) {
           if (!multiSelect) {
             return;
           }
@@ -18615,7 +18640,7 @@ module.filter('px', function() {
             fromRow = toRow;
             toRow = tmp;
           }
-          
+
           var changedRows = [];
           for (var i = fromRow; i <= toRow; i++) {
             var rowToSelect = grid.renderContainers.body.visibleRowCache[i];
@@ -18623,11 +18648,11 @@ module.filter('px', function() {
               if ( !rowToSelect.isSelected ){
                 rowToSelect.isSelected = true;
                 grid.selection.lastSelectedRow = rowToSelect;
-                service.decideRaiseSelectionEvent( grid, rowToSelect, changedRows );
+                service.decideRaiseSelectionEvent( grid, rowToSelect, changedRows, evt );
               }
             }
           }
-          service.decideRaiseSelectionBatchEvent( grid, changedRows );
+          service.decideRaiseSelectionBatchEvent( grid, changedRows, evt );
         },
         /**
          * @ngdoc function
@@ -18648,19 +18673,20 @@ module.filter('px', function() {
          * @methodOf  ui.grid.selection.service:uiGridSelectionService
          * @description Clears all selected rows
          * @param {Grid} grid grid object
+         * @param {Event} event object if raised from an event
          */
-        clearSelectedRows: function (grid) {
+        clearSelectedRows: function (grid, evt) {
           var changedRows = [];
           service.getSelectedRows(grid).forEach(function (row) {
             if ( row.isSelected ){
               row.isSelected = false;
-              service.decideRaiseSelectionEvent( grid, row, changedRows );
+              service.decideRaiseSelectionEvent( grid, row, changedRows, evt );
             }
           });
-          service.decideRaiseSelectionBatchEvent( grid, changedRows );
+          service.decideRaiseSelectionBatchEvent( grid, changedRows, evt );
           grid.selection.selectAll = false;
         },
-        
+
         /**
          * @ngdoc function
          * @name decideRaiseSelectionEvent
@@ -18669,31 +18695,33 @@ module.filter('px', function() {
          * @param {Grid} grid grid object
          * @param {GridRow} row row that has changed
          * @param {array} changedRows an array to which we can append the changed
+         * @param {Event} event object if raised from an event
          * row if we're doing batch events
          */
-        decideRaiseSelectionEvent: function( grid, row, changedRows ){
+        decideRaiseSelectionEvent: function( grid, row, changedRows, evt ){
           if ( !grid.options.enableSelectionBatchEvent ){
-            grid.api.selection.raise.rowSelectionChanged(row);
+            grid.api.selection.raise.rowSelectionChanged(row, evt);
           } else {
             changedRows.push(row);
           }
         },
-        
+
         /**
          * @ngdoc function
          * @name raiseSelectionEvent
          * @methodOf  ui.grid.selection.service:uiGridSelectionService
-         * @description Decides whether we need to raise a batch event, and 
+         * @description Decides whether we need to raise a batch event, and
          * raises it if we do.
          * @param {Grid} grid grid object
          * @param {array} changedRows an array of changed rows, only populated
+         * @param {Event} event object if raised from an event
          * if we're doing batch events
          */
-        decideRaiseSelectionBatchEvent: function( grid, changedRows ){
+        decideRaiseSelectionBatchEvent: function( grid, changedRows, evt ){
           if ( changedRows.length > 0 ){
-            grid.api.selection.raise.rowSelectionChangedBatch(changedRows);
+            grid.api.selection.raise.rowSelectionChangedBatch(changedRows, evt);
           }
-        }        
+        }
       };
 
       return service;
@@ -18778,13 +18806,13 @@ module.filter('px', function() {
           var self = uiGridCtrl.grid;
           $scope.selectButtonClick = function(row, evt) {
             if (evt.shiftKey) {
-              uiGridSelectionService.shiftSelect(self, row, self.options.multiSelect);
+              uiGridSelectionService.shiftSelect(self, row, evt, self.options.multiSelect);
             }
             else if (evt.ctrlKey || evt.metaKey) {
-              uiGridSelectionService.toggleRowSelection(self, row, self.options.multiSelect, self.options.noUnselect); 
+              uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect);
             }
             else {
-              uiGridSelectionService.toggleRowSelection(self, row, (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect);
+              uiGridSelectionService.toggleRowSelection(self, row, evt, (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect);
             }
           };
         }
@@ -18800,17 +18828,17 @@ module.filter('px', function() {
         scope: false,
         link: function($scope, $elm, $attrs, uiGridCtrl) {
           var self = $scope.col.grid;
-          
+
           $scope.headerButtonClick = function(row, evt) {
             if ( self.selection.selectAll ){
-              uiGridSelectionService.clearSelectedRows(self);
+              uiGridSelectionService.clearSelectedRows(self, evt);
               if ( self.options.noUnselect ){
-                self.api.selection.selectRowByVisibleIndex(0);
+                self.api.selection.selectRowByVisibleIndex(0, evt);
               }
               self.selection.selectAll = false;
             } else {
               if ( self.options.multiSelect ){
-                self.api.selection.selectAllVisibleRows();
+                self.api.selection.selectAllVisibleRows(evt);
                 self.selection.selectAll = true;
               }
             }
@@ -18877,13 +18905,13 @@ module.filter('px', function() {
             var touchTimeout = 300;
             var selectCells = function(evt){
               if (evt.shiftKey) {
-                uiGridSelectionService.shiftSelect($scope.grid, $scope.row, $scope.grid.options.multiSelect);
+                uiGridSelectionService.shiftSelect($scope.grid, $scope.row, evt, $scope.grid.options.multiSelect);
               }
               else if (evt.ctrlKey || evt.metaKey) {
-                uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
+                uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt, $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
               }
               else {
-                uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
+                uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
               }
               $scope.$apply();
             };
@@ -18891,7 +18919,7 @@ module.filter('px', function() {
             var touchStart = function(evt){
               touchStartTime = (new Date()).getTime();
             };
-            
+
             var touchEnd = function(evt) {
               var touchEndTime = (new Date()).getTime();
               var touchTime = touchEndTime - touchStartTime;
@@ -18908,11 +18936,11 @@ module.filter('px', function() {
                 $elm.on('touchstart', touchStart);
                 $elm.on('touchend', touchEnd);
                 $elm.on('click', selectCells);
-  
+
                 $scope.registered = true;
               }
             }
-            
+
             function deregisterRowSelectionEvents() {
               if ($scope.registered){
                 $elm.removeClass('ui-grid-disable-selection');
@@ -18920,24 +18948,24 @@ module.filter('px', function() {
                 $elm.off('touchstart', touchStart);
                 $elm.off('touchend', touchEnd);
                 $elm.off('click', selectCells);
-  
+
                 $scope.registered = false;
               }
             }
-            
+
             registerRowSelectionEvents();
             // register a dataChange callback so that we can change the selection configuration dynamically
             // if the user changes the options
             var callbackId = $scope.grid.registerDataChangeCallback( function() {
               if ( $scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection &&
-                   !$scope.registered ){
+                !$scope.registered ){
                 registerRowSelectionEvents();
               } else if ( ( !$scope.grid.options.enableRowSelection || $scope.grid.options.enableRowHeaderSelection ) &&
-                          $scope.registered ){
+                $scope.registered ){
                 deregisterRowSelectionEvents();
               }
             }, [uiGridConstants.dataChange.OPTIONS] );
-            
+
             $elm.on( '$destroy', function() {
               $scope.grid.deregisterDataChangeCallback( callbackId );
             });

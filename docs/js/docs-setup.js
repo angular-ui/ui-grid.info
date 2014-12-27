@@ -723,7 +723,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "add all allow and api are array as automatically by call check checkbox clearselectedrows context ctrlkey current currently data does doesn entity explicitly extra false feature filtered first for function get getselectallstate getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if in index instance is it ll means modifierkeystomultiselect multiple multiselect need not nothing object of on only or public rather references rendered returns row rowentity rows rowsvisible screen select selectall selectallrows selectallvisiblerows selected selectedrow selection selectrow selectrowbyvisibleindex selects set setmodifierkeystomultiselect setmultiselect sets setvisible shiftkey so specified specify than that the then theoretically this those ticked to togglerowselection toggles true ui unselect unselected unselectrow unselects used using visible when whether within you"
+      "keywords": "add all allow an and api are array as automatically by call check checkbox clearselectedrows context ctrlkey current currently data does doesn entity event explicitly extra false feature filtered first for from function get getselectallstate getselectedgridrows getselectedrows grid gridoption gridoptions gridrows if in index instance is it ll means modifierkeystomultiselect multiple multiselect need not nothing object of on only or public raised rather references rendered returns row rowentity rows rowsvisible screen select selectall selectallrows selectallvisiblerows selected selectedrow selection selectrow selectrowbyvisibleindex selects set setmodifierkeystomultiselect setmultiselect sets setvisible shiftkey so specified specify than that the then theoretically this those ticked to togglerowselection toggles true ui unselect unselected unselectrow unselects used using visible when whether within you"
     },
     {
       "section": "api",
@@ -758,7 +758,7 @@ NG_DOCS={
       "id": "ui.grid.selection.service:uiGridSelectionService",
       "shortName": "uiGridSelectionService",
       "type": "service",
-      "keywords": "all an and api append array as at batch be can cannot changed changedrows clears clearselectedrows clicked decideraiseselectionevent decides deselect do does doing event events false features for from function getselectedrows grid group has if is it key last multiselect need nothing nounselect object of one only or populated raise raises raiseselectionevent re returns row rows select selected selection selects service services shift shiftselect single that the then this time to togglerowselection toggles true ui unselected using we whether which"
+      "keywords": "all an and api append array as at batch be can cannot changed changedrows clears clearselectedrows clicked decideraiseselectionevent decides deselect do does doing event events false features for from function getselectedrows grid group has if is it key last multiselect need nothing nounselect object of one only or populated raise raised raises raiseselectionevent re resulting returns row rows select selected selection selects service services shift shiftselect single that the then this time to togglerowselection toggles true ui unselected using we whether which"
     },
     {
       "section": "api",

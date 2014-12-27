@@ -5,21 +5,25 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Services for selection features</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="clearSelectedRows">clearSelectedRows(grid)</h3>
+<ul class="methods"><li><h3 id="clearSelectedRows">clearSelectedRows(grid, event)</h3>
 <div class="clearselectedrows"><p>Clears all selected rows</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
+<li><code ng:non-bindable="">event – {Event} – </code>
+<p>object if raised from an event</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="decideRaiseSelectionEvent">decideRaiseSelectionEvent(grid, row, changedRows)</h3>
+<li><h3 id="decideRaiseSelectionEvent">decideRaiseSelectionEvent(grid, row, changedRows, event)</h3>
 <div class="decideraiseselectionevent"><p>Decides whether to raise a single event or a batch event</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">row – {GridRow} – </code>
 <p>row that has changed</p></li>
 <li><code ng:non-bindable="">changedRows – {array} – </code>
-<p>an array to which we can append the changed
+<p>an array to which we can append the changed</p></li>
+<li><code ng:non-bindable="">event – {Event} – </code>
+<p>object if raised from an event
 row if we're doing batch events</p></li>
 </ul>
 </div>
@@ -31,34 +35,40 @@ row if we're doing batch events</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="raiseSelectionEvent">raiseSelectionEvent(grid, changedRows)</h3>
-<div class="raiseselectionevent"><p>Decides whether we need to raise a batch event, and 
+<li><h3 id="raiseSelectionEvent">raiseSelectionEvent(grid, changedRows, event)</h3>
+<div class="raiseselectionevent"><p>Decides whether we need to raise a batch event, and
 raises it if we do.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">changedRows – {array} – </code>
-<p>an array of changed rows, only populated
+<p>an array of changed rows, only populated</p></li>
+<li><code ng:non-bindable="">event – {Event} – </code>
+<p>object if raised from an event
 if we're doing batch events</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="shiftSelect">shiftSelect(grid, clicked, multiSelect)</h3>
+<li><h3 id="shiftSelect">shiftSelect(grid, clicked, event, multiSelect)</h3>
 <div class="shiftselect"><p>selects a group of rows from the last selected row using the shift key</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">clicked – {GridRow} – </code>
 <p>row</p></li>
+<li><code ng:non-bindable="">event – {Event} – </code>
+<p>object if raised from an event</p></li>
 <li><code ng:non-bindable="">multiSelect – {bool} – </code>
 <p>if false, does nothing this is for multiSelect only</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="toggleRowSelection">toggleRowSelection(grid, row, multiSelect, noUnselect)</h3>
+<li><h3 id="toggleRowSelection">toggleRowSelection(grid, row, event, multiSelect, noUnselect)</h3>
 <div class="togglerowselection"><p>Toggles row as selected or unselected</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">row – {GridRow} – </code>
 <p>row to select or deselect</p></li>
+<li><code ng:non-bindable="">event – {Event} – </code>
+<p>object if resulting from event</p></li>
 <li><code ng:non-bindable="">multiSelect – {bool} – </code>
 <p>if false, only one row at time can be selected</p></li>
 <li><code ng:non-bindable="">noUnselect – {bool} – </code>
