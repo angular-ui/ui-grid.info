@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-85cd75b - 2014-12-27
+/*! ui-grid - v3.0.0-RC.18-7a4f777 - 2014-12-27
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -11106,6 +11106,22 @@ module.filter('px', function() {
         });
       };
 
+      /**
+       *  @ngdoc object
+       *  @name ui.grid.cellNav.api:GridRow
+       *
+       *  @description GridRow settings for cellNav feature, these are available to be
+       *  set only internally (for example, by other features)
+       */
+
+      /**
+       *  @ngdoc object
+       *  @name allowCellFocus
+       *  @propertyOf  ui.grid.cellNav.api:GridRow
+       *  @description Enable focus on a cell within this row.  If set to false then no cells
+       *  in this row can be focused - group header rows as an example would set this to false.
+       *  <br/>Defaults to true
+       */
       /** returns focusable rows */
       UiGridCellNav.prototype.getFocusableRows = function () {
         return this.rows.filter(function(row) {
@@ -11442,7 +11458,7 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name allowCellFocus
            *  @propertyOf  ui.grid.cellNav.api:ColumnDef
-           *  @description Enable focus on a cell.
+           *  @description Enable focus on a cell within this column.
            *  <br/>Defaults to true
            */
           colDef.allowCellFocus = colDef.allowCellFocus === undefined ? true : colDef.allowCellFocus;

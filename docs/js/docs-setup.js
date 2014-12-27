@@ -23,7 +23,14 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "allowcellfocus api are available be cell cellnav class column columndef columndefs definitions enable feature focus for grid gridoptions object on set the these to true ui ui-grid using"
+      "keywords": "allowcellfocus api are available be cell cellnav class column columndef columndefs definitions enable feature focus for grid gridoptions object on set the these this to true ui ui-grid using within"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellNav.api:GridRow",
+      "shortName": "GridRow",
+      "type": "object",
+      "keywords": "allowcellfocus an api are as available be by can cell cellnav cells enable example false feature features focus focused for grid gridrow group header if in internally no object on only other row rows set settings then these this to true ui within would"
     },
     {
       "section": "api",
