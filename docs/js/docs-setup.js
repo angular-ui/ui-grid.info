@@ -202,6 +202,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.edit.api:GridRow",
+      "shortName": "GridRow",
+      "type": "object",
+      "keywords": "api are available be by disable edit editing enable enablecelledit example feature features for grid gridrow group grouping header internally might object on only options other row rows set these to ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.edit.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
@@ -293,6 +300,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.exporter.api:ColumnDef",
+      "shortName": "ColumnDef",
+      "type": "object",
+      "keywords": "alignment any api be can center column columndef exported exporter exporterpdfalign for grid into left like object option or other pdf pdfmake property right settings specific the this ui valid when you"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.exporter.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
@@ -300,10 +314,10 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.exporter.api:GridOptions.columnDef",
-      "shortName": "columnDef",
+      "id": "ui.grid.exporter.api:GridRow",
+      "shortName": "GridRow",
       "type": "object",
-      "keywords": "alignment any api be can center column columndef exported exporter exporterpdfalign for grid into left like object option or other pdf pdfmake property right settings specific the this ui valid when you"
+      "keywords": "api don export exporter exporterenableexporting false for grid gridrow if notwithstanding object or other row set settings then this to true ui visible"
     },
     {
       "section": "api",
@@ -331,7 +345,7 @@ NG_DOCS={
       "id": "ui.grid.exporter.service:uiGridExporterService",
       "shortName": "uiGridExporterService",
       "type": "service",
-      "keywords": "add adds addtomenu adjust align alignment all allow allowing an and any api applied appropriate are around array as at attributes base based basic be browser by calculatepdfheaderwidths call casting cellfilters cells colleagues coltypes column columns com consumable content contribute csv csv-ified csvcontent csvexport current data definition dependency determines different displayname document don download downloadfile drawn drawnwidth each everything export exportcolumnheaders exportdata exported exporter exportheaders exports extra feature field file filename for format formatascsv formatfieldascsv formatrowascsv formatrowaspdf formats formatted from function generation getcolumnheaders getdata gets given got grid gridwidth has have header headercellfilters headers heuristic his https if in including information installed into is issue items like logic mainly may maybe meaning menu must name need new not note numeric object objects of on only opens options or our overall pass pdf pdf-able pdfexport pdfmake plus provided quotes ready renderaspdf renders resulting row rows rowtypes select selected sends service services should single so string string-ified strings take that the them then they this title to triggers turned type ui uigridexporterconstants use used user valid value values version visible we when where which width widths window with"
+      "keywords": "add adds addtomenu adjust align alignment all allow allowing an and any api applied appropriate are around array as at attributes base based basic be browser by calculatepdfheaderwidths call casting cellfilters cells colleagues coltypes column columns com consumable content contribute csv csv-ified csvcontent csvexport current data definition dependency determines different displayname document don download downloadfile drawn drawnwidth each everything export exportcolumnheaders exportdata exported exporter exporterenableexporting exportheaders exports extra false feature field file filename for format formatascsv formatfieldascsv formatrowascsv formatrowaspdf formats formatted from function generation getcolumnheaders getdata gets given got grid gridwidth has have header headercellfilters headers heuristic his https if in including information installed into is issue items like logic mainly marked may maybe meaning menu must name need new not note numeric object objects of on only opens options or our overall pass pdf pdf-able pdfexport pdfmake plus provided quotes ready renderaspdf renders resulting row rows rowtypes select selected sends service services should single so string string-ified strings take that the them then they this title to triggers turned type ui uigridexporterconstants use used user valid value values version visible we when where which width widths will window with"
     },
     {
       "section": "api",
@@ -724,6 +738,13 @@ NG_DOCS={
       "shortName": "GridOptions",
       "type": "object",
       "keywords": "all allow always and api are at available be being bulk called can cause changed checkbox class column conjunction create ctrlkey custom different either enable enablerowheaderselection enablerowselection enableselectall enableselectionbatchevent entire event false feature fired for from grid gridapi gridoptions header if in instead is modifierkeystomultiselect multiple multiselect nounselect object of only option or prevent requires row rows rowselectionchanged select selectall selected selection selectionrowheader selectionrowheaderwidth selectrow separate set setting shiftkey single the then these this times to top true ui ui-grid unselect unselected used using via when width will with works you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.selection.api:GridRow",
+      "shortName": "GridRow",
+      "type": "object",
+      "keywords": "api be by code enable enableselection example feature for grid gridrow group grouping header internal might not object only options row rows selectable selection set settable the this to true ui"
     },
     {
       "section": "api",

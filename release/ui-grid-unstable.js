@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-7a4f777 - 2014-12-27
+/*! ui-grid - v3.0.0-RC.18-a1cd3c5 - 2014-12-31
 * Copyright (c) 2014 ; License: MIT */
 (function () {
   'use strict';
@@ -2393,7 +2393,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             // Scroll the render container viewport when the mousewheel is used
             $elm.bind('wheel mousewheel DomMouseScroll MozMousePixelScroll', function(evt) {
               // use wheelDeltaY
-              evt.preventDefault();
 
               var newEvent = GridUtil.normalizeWheelEvent(evt);
 
@@ -2423,10 +2422,14 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
                 args.x = { percentage: scrollXPercentage, pixels: scrollXAmount };
               }
-              
+
+              // Let the parent container scroll if the grid is already at the top/bottom
+              if ((args.y.percentage !== 0 && args.y.percentage !== 1) || (args.x.percentage !== 0 && args.x.percentage !== 1)) {
+                evt.preventDefault();
+              }
+
               uiGridCtrl.fireScrollingEvent(args);
             });
-            
 
             var startY = 0,
             startX = 0,
@@ -3820,7 +3823,7 @@ angular.module('ui.grid')
         self.buildColumns()
           .then( function() {
             self.preCompileCellTemplates();
-            self.handleWindowResize();
+            self.refresh();
           });
       });
   };
@@ -12387,6 +12390,22 @@ module.filter('px', function() {
    *    - uiGridConstants.events.GRID_SCROLL
    *
    */
+
+  /**
+   *  @ngdoc object
+   *  @name ui.grid.edit.api:GridRow
+   *
+   *  @description GridRow options for edit feature, these are available to be
+   *  set internally only, by other features
+   */
+
+  /**
+   *  @ngdoc object
+   *  @name enableCellEdit
+   *  @propertyOf  ui.grid.edit.api:GridRow
+   *  @description enable editing on row, grouping for example might disable editing on group header rows
+   */
+
   module.directive('uiGridCell',
     ['$compile', '$injector', '$timeout', 'uiGridConstants', 'uiGridEditConstants', 'gridUtil', '$parse', 'uiGridEditService',
       function ($compile, $injector, $timeout, uiGridConstants, uiGridEditConstants, gridUtil, $parse, uiGridEditService) {
@@ -12398,7 +12417,7 @@ module.filter('px', function() {
           scope: false,
           require: '?^uiGrid',
           link: function ($scope, $elm, $attrs, uiGridCtrl) {
-            if (!$scope.col.colDef.enableCellEdit) {
+            if (!$scope.col.colDef.enableCellEdit || $scope.row.enableCellEdit === false) {
               return;
             }
 
@@ -13461,7 +13480,7 @@ module.filter('px', function() {
            */
           /**
            * @ngdoc object
-           * @name ui.grid.exporter.api:GridOptions.columnDef
+           * @name ui.grid.exporter.api:ColumnDef
            * @description ColumnDef settings for exporter
            */
           /**
@@ -13876,18 +13895,35 @@ module.filter('px', function() {
         
         /** 
          * @ngdoc property
-         * @propertyOf ui.grid.exporter.api:GridOptions.columnDef
+         * @propertyOf ui.grid.exporter.api:ColumnDef
          * @name exporterPdfAlign
          * @description the alignment you'd like for this specific column when
          * exported into a pdf.  Can be 'left', 'right', 'center' or any other
          * valid pdfMake alignment option.
          */
+
+
+        /**
+         * @ngdoc object
+         * @name ui.grid.exporter.api:GridRow
+         * @description GridRow settings for exporter
+         */
+        /**
+         * @ngdoc object
+         * @name exporterEnableExporting
+         * @propertyOf  ui.grid.exporter.api:GridRow
+         * @description If set to false, then don't export this row, notwithstanding visible or 
+         * other settings
+         * <br/>Defaults to true
+         */
+
         /**
          * @ngdoc function
          * @name getData
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
          * @description Gets data from the grid based on the provided options,
-         * all cells have cellFilters applied as appropriate
+         * all cells have cellFilters applied as appropriate.  Any rows marked
+         * `exporterEnableExporting: false` will not be exported
          * @param {Grid} grid the grid from which data should be exported
          * @param {string} rowTypes which rows to export, valid values are
          * uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
@@ -13919,20 +13955,22 @@ module.filter('px', function() {
           
           angular.forEach(rows, function( row, index ) {
 
-            var extractedRow = [];
-            angular.forEach(grid.columns, function( gridCol, index ) {
-            if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
-                 gridCol.name !== uiGridSelectionConstants.selectionRowHeaderColName &&
-                 grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
-                var extractedField = { value: grid.options.exporterFieldCallback( grid, row, gridCol, grid.getCellValue( row, gridCol ) ) };
-                if ( gridCol.colDef.exporterPdfAlign ) {
-                  extractedField.alignment = gridCol.colDef.exporterPdfAlign;                 
+            if (row.exporterEnableExporting !== false) {
+              var extractedRow = [];
+              angular.forEach(grid.columns, function( gridCol, index ) {
+              if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
+                   gridCol.name !== uiGridSelectionConstants.selectionRowHeaderColName &&
+                   grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
+                  var extractedField = { value: grid.options.exporterFieldCallback( grid, row, gridCol, grid.getCellValue( row, gridCol ) ) };
+                  if ( gridCol.colDef.exporterPdfAlign ) {
+                    extractedField.alignment = gridCol.colDef.exporterPdfAlign;                 
+                  }
+                  extractedRow.push(extractedField);
                 }
-                extractedRow.push(extractedField);
-              }
-            });
-            
-            data.push(extractedRow);
+              });
+              
+              data.push(extractedRow);
+            }
           });
           
           return data;
@@ -18342,7 +18380,7 @@ module.filter('px', function() {
                  */
                 toggleRowSelection: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null) {
+                  if (row !== null && row.enableSelection !== false) {
                     service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
@@ -18356,7 +18394,7 @@ module.filter('px', function() {
                  */
                 selectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && !row.isSelected) {
+                  if (row !== null && !row.isSelected && row.enableSelection !== false) {
                     service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
@@ -18373,7 +18411,7 @@ module.filter('px', function() {
                  */
                 selectRowByVisibleIndex: function ( rowNum, evt ) {
                   var row = grid.renderContainers.body.visibleRowCache[rowNum];
-                  if (row !== null && typeof(row) !== 'undefined' && !row.isSelected) {
+                  if (row !== null && typeof(row) !== 'undefined' && !row.isSelected && row.enableSelection !== false) {
                     service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
@@ -18405,7 +18443,7 @@ module.filter('px', function() {
 
                   var changedRows = [];
                   grid.rows.forEach(function (row) {
-                    if ( !row.isSelected ){
+                    if ( !row.isSelected && row.enableSelection !== false ){
                       row.isSelected = true;
                       service.decideRaiseSelectionEvent( grid, row, changedRows, evt );
                     }
@@ -18428,7 +18466,7 @@ module.filter('px', function() {
                   var changedRows = [];
                   grid.rows.forEach(function (row) {
                     if (row.visible) {
-                      if (!row.isSelected){
+                      if (!row.isSelected && row.enableSelection !== false){
                         row.isSelected = true;
                         service.decideRaiseSelectionEvent( grid, row, changedRows, evt );
                       }
@@ -18524,6 +18562,23 @@ module.filter('px', function() {
            *  @description GridOptions for selection feature, these are available to be
            *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
+
+          /**
+           *  @ngdoc object
+           *  @name ui.grid.selection.api:GridRow
+           *
+           *  @description GridRow options for selection feature
+           */
+          /**
+           *  @ngdoc object
+           *  @name enableSelection
+           *  @propertyOf  ui.grid.selection.api:GridRow
+           *  @description Enable row selection for this row, only settable by internal code.
+           * 
+           *  The grouping feature, for example, might set group header rows to not be selectable.
+           *  <br/>Defaults to true
+           */
+
 
           /**
            *  @ngdoc object
@@ -18623,7 +18678,7 @@ module.filter('px', function() {
 
           if (selected && noUnselect){
             // don't deselect the row 
-          } else {
+          } else if (row.enableSelection !== false) {
             row.isSelected = !selected;
             if (row.isSelected === true) {
               grid.selection.lastSelectedRow = row;
@@ -18661,7 +18716,7 @@ module.filter('px', function() {
           for (var i = fromRow; i <= toRow; i++) {
             var rowToSelect = grid.renderContainers.body.visibleRowCache[i];
             if (rowToSelect) {
-              if ( !rowToSelect.isSelected ){
+              if ( !rowToSelect.isSelected && rowToSelect.enableSelection !== false ){
                 rowToSelect.isSelected = true;
                 grid.selection.lastSelectedRow = rowToSelect;
                 service.decideRaiseSelectionEvent( grid, rowToSelect, changedRows, evt );

@@ -149,7 +149,8 @@ uiGridExporterConstants.SELECTED</p></li>
 </li>
 <li><h3 id="getData">getData(grid, rowTypes, colTypes)</h3>
 <div class="getdata"><p>Gets data from the grid based on the provided options,
-all cells have cellFilters applied as appropriate</p><h4 id="Parameters">Parameters</h4>
+all cells have cellFilters applied as appropriate.  Any rows marked
+<code>exporterEnableExporting: false</code> will not be exported</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid from which data should be exported</p></li>
 <li><code ng:non-bindable="">rowTypes – {string} – </code>
