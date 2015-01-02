@@ -1,22 +1,28 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>When pagination is enabled, the data is displayed in pages that can be browsed using a page selector.</p><h2 id="Example">Example</h2>
+<div><p>When pagination is enabled, the data is displayed in pages that can be browsed using using the built in pagination selector.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-64" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-64" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-64">
   <div ng-controller="MainCtrl">
-    <p>Page: {{ gridApi.pagination.getPage() }}</p>
-    <p>Total pages: {{ gridApi.pagination.getTotalPages() }}</p>
-    <button type="button" class="btn btn-success" ng-click="gridApi.pagination.previousPage()">
+    <p><strong>Grid with native pagination controls</strong></p>
+    <div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
+    <br /><br />
+    <p><strong>Grid pagination controlled via the API</strong></p>
+    <div ui-grid="gridOptions2" ui-grid-pagination class="grid"></div>
+    <p>Current page: {{ gridApi2.pagination.getPage() }} of {{ gridApi2.pagination.getTotalPages() }}</p>
+    <button type="button" class="btn btn-success" ng-click="gridApi2.pagination.previousPage()">
       previous page
     </button>
-    <button type="button" class="btn btn-success" ng-click="gridApi.pagination.nextPage()">
+    <button type="button" class="btn btn-success" ng-click="gridApi2.pagination.nextPage()">
       next page
     </button>
-    <div ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+    <button type="button" class="btn btn-success" ng-click="gridApi2.pagination.seek(3)">
+      go to page 3
+    </button>
   </div>
 </script>
 </div>
@@ -24,7 +30,7 @@
 <pre class="prettyprint linenums" ng-set-text="main.css"></pre>
 <style type="text/css" id="main.css">
   .grid {
-    width: 500px;
+    width: 600px;
   }
 </style>
 </div>
@@ -34,22 +40,35 @@
   var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pagination']);
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.gridOptions = {};
+    $scope.gridOptions1 = {
+      paginationPageSizes: [25, 50, 75],
+      paginationPageSize: 25,
+      columnDefs: [
+        { name: 'name' },
+        { name: 'gender' },
+        { name: 'company' }
+      ]
+    };
 
-    $scope.gridOptions.columnDefs = [
-      { name:'name'},
-      { name:'gender' },
-      { name:'company' }
-    ];
+    $scope.gridOptions2 = {
+      enablePaginationControls: false,
+      paginationPageSize: 25,
+      columnDefs: [
+        { name: 'name' },
+        { name: 'gender' },
+        { name: 'company' }
+      ]
+    };
 
-    $scope.gridOptions.onRegisterApi = function (gridApi) {
-      $scope.gridApi = gridApi;
+    $scope.gridOptions2.onRegisterApi = function (gridApi) {
+      $scope.gridApi2 = gridApi;
     }
 
     $http.get('/data/100.json')
-      .success(function(data) {
-        $scope.gridOptions.data = data;
-      });
+    .success(function (data) {
+      $scope.gridOptions1.data = data;
+      $scope.gridOptions2.data = data;
+    });
   }]);
 </script>
 </div>

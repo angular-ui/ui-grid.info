@@ -17,6 +17,27 @@
 <li><h3 id="previousPage">previousPage()</h3>
 <div class="previouspage"><p>Moves to the previous page, if we're not on the first page</p></div>
 </li>
+<li><h3 id="seek">seek(page)</h3>
+<div class="seek"><p>Moves to the requested page</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">page – {int} – </code>
+<p>The number of the page that should be displayed</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="member event"><h2 id="Events">Events</h2>
+<ul class="events"><li><h3 id="paginationChanged">paginationChanged</h3>
+<div class="paginationchanged"><p>This event fires when the pageSize or currentPage changes</p><div class="inline"></div>
+<div class="inline"></div>
+<h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">currentPage – {int} – </code>
+<p>requested page number</p></li>
+<li><code ng:non-bindable="">pageSize – {int} – </code>
+<p>requested page size</p></li>
+</ul>
+</div>
+</li>
 </ul>
 </div>
 </div>

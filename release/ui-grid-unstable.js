@@ -1,5 +1,5 @@
-/*! ui-grid - v3.0.0-RC.18-a1cd3c5 - 2014-12-31
-* Copyright (c) 2014 ; License: MIT */
+/*! ui-grid - v3.0.0-RC.18-f8a68cc - 2015-01-02
+* Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
   angular.module('ui.grid.i18n', []);
@@ -9842,7 +9842,7 @@ module.filter('px', function() {
           invalidJson: 'File was unable to be processed, is it valid Json?',
           jsonNotArray: 'Imported json file must contain an array, aborting.'
         },
-        paging: {
+        pagination: {
           sizes: 'items per page',
           totalItems: 'items'
         }
@@ -9851,6 +9851,7 @@ module.filter('px', function() {
     }]);
   }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -10547,7 +10548,7 @@ module.filter('px', function() {
           invalidJson: 'Filen kunde inte behandlas, är den en giltig JSON?',
           jsonNotArray: 'Importerad JSON-fil måste innehålla ett fält. Import avbruten.'
         },
-        paging: {
+        pagination: {
           sizes: 'Artiklar per sida',
           totalItems: 'Artiklar'
         }
@@ -15720,7 +15721,7 @@ module.filter('px', function() {
     }]);
 })();
 
-(function () {
+(function() {
   'use strict';
 
   /**
@@ -15732,7 +15733,7 @@ module.filter('px', function() {
    * #ui.grid.pagination
    * This module provides pagination support to ui-grid
    */
-  var module = angular.module('ui.grid.pagination', ['ui.grid']);
+  var module = angular.module('ui.grid.pagination', ['ng', 'ui.grid']);
 
   /**
    * @ngdoc service
@@ -15740,211 +15741,113 @@ module.filter('px', function() {
    *
    * @description Service for the pagination feature
    */
-  module.service('uiGridPaginationService', function () {
-    var service = {
-
-      /**
-       * @ngdoc method
-       * @name initializeGrid
-       * @methodOf ui.grid.pagination.service:uiGridPaginationService
-       * @description Attaches the service to a certain grid
-       * @param {Grid} grid The grid we want to work with
-       */
-      initializeGrid: function (grid) {
-        service.defaultGridOptions(grid.options);
-        grid.pagination = {page: 1, totalPages: 1};
-
-        /**
-         * @ngdoc object
-         * @name ui.grid.pagination.api:PublicAPI
-         *
-         * @description Public API for the pagination feature
-         */
-        var publicApi = {
-          methods: {
-            pagination: {
-              /**
-               * @ngdoc method
-               * @name getPage
-               * @methodOf ui.grid.pagination.api:PublicAPI
-               * @description Returns the number of the current page
-               */
-              getPage: function () {
-                return grid.pagination.page;
-              },
-              /**
-               * @ngdoc method
-               * @name getTotalPages
-               * @methodOf ui.grid.pagination.api:PublicAPI
-               * @description Returns the total number of pages
-               */
-              getTotalPages: function () {
-                return grid.pagination.totalPages;
-              },
-              /**
-               * @ngdoc method
-               * @name nextPage
-               * @methodOf ui.grid.pagination.api:PublicAPI
-               * @description Moves to the next page, if possible
-               */
-              nextPage: function () {
-                grid.pagination.page++;
-                grid.refresh();
-              },
-              /**
-               * @ngdoc method
-               * @name previousPage
-               * @methodOf ui.grid.pagination.api:PublicAPI
-               * @description Moves to the previous page, if we're not on the first page
-               */
-              previousPage: function () {
-                grid.pagination.page = Math.max(1, grid.pagination.page - 1);
-                grid.refresh();
-              },
-              seek: function (page) {
-                if (!angular.isNumber(page) || page < 1) {
-                  throw 'Invalid page number: ' + page;
-                }
-
-                grid.pagination.page = page;
-                grid.refresh();
-              }
-            }
-          }
-        };
-        grid.api.registerMethodsFromObject(publicApi.methods);
-        grid.registerRowsProcessor(function (renderableRows) {
-          if (!grid.options.enablePagination) {
-            return renderableRows;
-          }
-          var visibleRows = renderableRows.filter(function(row) { return row.visible; });
-          grid.pagination.totalPages = Math.max(
-            1,
-            Math.ceil(visibleRows.length / grid.options.rowsPerPage)
-          );
-
-          var firstRow = (grid.pagination.page - 1) * grid.options.rowsPerPage;
-          if (firstRow >= visibleRows.length) {
-            grid.pagination.page = grid.pagination.totalPages;
-            firstRow = (grid.pagination.page - 1) * grid.options.rowsPerPage;
-          }
-
-          return visibleRows.slice(
-            firstRow,
-            firstRow + grid.options.rowsPerPage
-          );
-        });
-      },
-
-      defaultGridOptions: function (gridOptions) {
-        /**
-         *  @ngdoc object
-         *  @name ui.grid.pagination.api:GridOptions
-         *
-         *  @description GridOptions for the pagination feature, these are available to be
-         *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
-         */
-
-        /**
-         *  @ngdoc object
-         *  @name enablePagination
-         *  @propertyOf  ui.grid.pagination.api:GridOptions
-         *  @description Enable pagination for this grid
-         *  <br/>Defaults to true
-         */
-        gridOptions.enablePagination = gridOptions.enablePagination !== false;
-
-        /**
-         *  @ngdoc object
-         *  @name rowsPerPage
-         *  @propertyOf  ui.grid.pagination.api:GridOptions
-         *  @description The number of rows that should be displayed per page
-         *  <br/>Defaults to 10
-         */
-        gridOptions.rowsPerPage = angular.isNumber(gridOptions.rowsPerPage) ? gridOptions.rowsPerPage : 10;
-      }
-    };
-
-    return service;
-  });
-
-  /**
-   * @ngdoc directive
-   * @name ui.grid.pagination.directive:uiGridPagination
-   * @element div
-   * @restrict A
-   *
-   * @description Adds pagination support to a grid.
-   */
-  module.directive('uiGridPagination', ['uiGridPaginationService', function (uiGridPaginationService) {
-    return {
-      priority: -400,
-      scope: false,
-      require: '^uiGrid',
-      link: {
-        pre: function (scope, element, attrs, uiGridCtrl) {
-          uiGridPaginationService.initializeGrid(uiGridCtrl.grid);
-        }
-      }
-    };
-  }]);
-})();
-
-(function() {
-  'use strict';
-  /**
-   * @ngdoc overview
-   * @name ui.grid.paging
-   *
-   * @description
-   *
-   * #ui.grid.paging
-   * This module provides paging support to ui-grid
-   */
-   
-  var module = angular.module('ui.grid.paging', ['ui.grid']);
-
-  /**
-   * @ngdoc service
-   * @name ui.grid.paging.service:uiGridPagingService
-   *
-   * @description Service for the paging feature
-   */
-  module.service('uiGridPagingService', ['gridUtil', 
+  module.service('uiGridPaginationService', ['gridUtil',
     function (gridUtil) {
       var service = {
-      /**
-       * @ngdoc method
-       * @name initializeGrid
-       * @methodOf ui.grid.paging.service:uiGridPagingService
-       * @description Attaches the service to a certain grid
-       * @param {Grid} grid The grid we want to work with
-       */
+        /**
+         * @ngdoc method
+         * @name initializeGrid
+         * @methodOf ui.grid.pagination.service:uiGridPaginationService
+         * @description Attaches the service to a certain grid
+         * @param {Grid} grid The grid we want to work with
+         */
         initializeGrid: function (grid) {
           service.defaultGridOptions(grid.options);
 
           /**
           * @ngdoc object
-          * @name ui.grid.paging.api:PublicAPI
+          * @name ui.grid.pagination.api:PublicAPI
           *
-          * @description Public API for the paging feature
+          * @description Public API for the pagination feature
           */
           var publicApi = {
             events: {
-              paging: {
+              pagination: {
               /**
                * @ngdoc event
-               * @name pagingChanged
-               * @eventOf ui.grid.paging.api:PublicAPI
+               * @name paginationChanged
+               * @eventOf ui.grid.pagination.api:PublicAPI
                * @description This event fires when the pageSize or currentPage changes
-               * @param {currentPage} requested page number
-               * @param {pageSize} requested page size 
+               * @param {int} currentPage requested page number
+               * @param {int} pageSize requested page size
                */
-                pagingChanged: function (currentPage, pageSize) { }
+                paginationChanged: function (currentPage, pageSize) { }
               }
             },
             methods: {
-              paging: {
+              pagination: {
+                /**
+                 * @ngdoc method
+                 * @name getPage
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Returns the number of the current page
+                 */
+                getPage: function () {
+                  return grid.options.enablePagination ? grid.options.paginationCurrentPage : null;
+                },
+                /**
+                 * @ngdoc method
+                 * @name getTotalPages
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Returns the total number of pages
+                 */
+                getTotalPages: function () {
+                  if (!grid.options.enablePagination) {
+                    return null;
+                  }
+
+                  return (grid.options.totalItems === 0) ? 1 : Math.ceil(grid.options.totalItems / grid.options.paginationPageSize);
+                },
+                /**
+                 * @ngdoc method
+                 * @name nextPage
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Moves to the next page, if possible
+                 */
+                nextPage: function () {
+                  if (!grid.options.enablePagination) {
+                    return;
+                  }
+
+                  if (grid.options.totalItems > 0) {
+                    grid.options.paginationCurrentPage = Math.min(
+                      grid.options.paginationCurrentPage + 1,
+                      publicApi.methods.pagination.getTotalPages()
+                    );
+                  } else {
+                    grid.options.paginationCurrentPage++;
+                  }
+                },
+                /**
+                 * @ngdoc method
+                 * @name previousPage
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Moves to the previous page, if we're not on the first page
+                 */
+                previousPage: function () {
+                  if (!grid.options.enablePagination) {
+                    return;
+                  }
+
+                  grid.options.paginationCurrentPage = Math.max(grid.options.paginationCurrentPage - 1, 1);
+                },
+                /**
+                 * @ngdoc method
+                 * @name seek
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Moves to the requested page
+                 * @param {int} page The number of the page that should be displayed
+                 */
+                seek: function (page) {
+                  if (!grid.options.enablePagination) {
+                    return;
+                  }
+                  if (!angular.isNumber(page) || page < 1) {
+                    throw 'Invalid page number: ' + page;
+                  }
+
+                  grid.options.paginationCurrentPage = Math.min(page, publicApi.methods.pagination.getTotalPages());
+                }
               }
             }
           };
@@ -15952,19 +15855,19 @@ module.filter('px', function() {
           grid.api.registerEventsFromObject(publicApi.events);
           grid.api.registerMethodsFromObject(publicApi.methods);
           grid.registerRowsProcessor(function (renderableRows) {
-            if (grid.options.useExternalPaging || !grid.options.enablePaging) {
+            if (grid.options.useExternalPagination || !grid.options.enablePagination) {
               return renderableRows;
             }
-            //client side paging
-            var pageSize = parseInt(grid.options.pagingPageSize, 10);
-            var currentPage = parseInt(grid.options.pagingCurrentPage, 10);
+            //client side pagination
+            var pageSize = parseInt(grid.options.paginationPageSize, 10);
+            var currentPage = parseInt(grid.options.paginationCurrentPage, 10);
             
             var visibleRows = renderableRows.filter(function (row) { return row.visible; });
             grid.options.totalItems = visibleRows.length;
 
             var firstRow = (currentPage - 1) * pageSize;
             if (firstRow > visibleRows.length) {
-              currentPage = grid.options.pagingCurrentPage = 1;
+              currentPage = grid.options.paginationCurrentPage = 1;
               firstRow = (currentPage - 1) * pageSize;
             }
             return visibleRows.slice(firstRow, firstRow + pageSize);
@@ -15973,77 +15876,101 @@ module.filter('px', function() {
         },
         defaultGridOptions: function (gridOptions) {
           /**
-           * @ngdoc property
-           * @name enablePaging
-           * @propertyOf ui.grid.class:GridOptions
-           * @description Enables paging, defaults to true
+           * @ngdoc object
+           * @name ui.grid.pagination.api:GridOptions
+           *
+           * @description GridOptions for the pagination feature, these are available to be
+           * set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
-          gridOptions.enablePaging = gridOptions.enablePaging !== false;
+
           /**
            * @ngdoc property
-           * @name useExternalPaging
-           * @propertyOf ui.grid.class:GridOptions
-           * @description Disables client side paging. When true, handle the pagingChanged event and set data and totalItems
-           * defaults to false
-           */           
-          gridOptions.useExternalPaging = gridOptions.useExternalPaging === true;
+           * @name enablePagination
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Enables pagination, defaults to true
+           */
+          gridOptions.enablePagination = gridOptions.enablePagination !== false;
+          /**
+           * @ngdoc property
+           * @name enablePaginationControls
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Enables the paginator at the bottom of the grid. Turn this off, if you want to implement your
+           *              own controls outside the grid.
+           */
+          gridOptions.enablePaginationControls = gridOptions.enablePaginationControls !== false;
+          /**
+           * @ngdoc property
+           * @name useExternalPagination
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Disables client side pagination. When true, handle the paginationChanged event and set data
+           *              and totalItems, defaults to `false`
+           */
+          gridOptions.useExternalPagination = gridOptions.useExternalPagination === true;
           /**
            * @ngdoc property
            * @name totalItems
-           * @propertyOf ui.grid.class:GridOptions
-           * @description Total number of items, set automatically when client side paging, needs set by user for server side paging
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Total number of items, set automatically when client side pagination, needs set by user
+           *              for server side pagination
            */
           if (gridUtil.isNullOrUndefined(gridOptions.totalItems)) {
             gridOptions.totalItems = 0;
           }
           /**
            * @ngdoc property
-           * @name pagingPageSizes
-           * @propertyOf ui.grid.class:GridOptions
-           * @description Array of page sizes
-           * defaults to [250, 500, 1000]
+           * @name paginationPageSizes
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Array of page sizes, defaults to `[250, 500, 1000]`
            */
-          if (gridUtil.isNullOrUndefined(gridOptions.pagingPageSizes)) {
-            gridOptions.pagingPageSizes = [250, 500, 1000];
+          if (gridUtil.isNullOrUndefined(gridOptions.paginationPageSizes)) {
+            gridOptions.paginationPageSizes = [250, 500, 1000];
           }
           /**
            * @ngdoc property
-           * @name pagingPageSize
-           * @propertyOf ui.grid.class:GridOptions
-           * @description Page size
-           * defaults to the first item in pagingPageSizes, or 0 if pagingPageSizes is empty
+           * @name paginationPageSize
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Page size, defaults to the first item in paginationPageSizes, or 0 if paginationPageSizes is empty
            */
-          if (gridUtil.isNullOrUndefined(gridOptions.pagingPageSize)) {
-            if (gridOptions.pagingPageSizes.length > 0) {
-              gridOptions.pagingPageSize = gridOptions.pagingPageSizes[0];
+          if (gridUtil.isNullOrUndefined(gridOptions.paginationPageSize)) {
+            if (gridOptions.paginationPageSizes.length > 0) {
+              gridOptions.paginationPageSize = gridOptions.paginationPageSizes[0];
             } else {              
-              gridOptions.pagingPageSize = 0;
+              gridOptions.paginationPageSize = 0;
             }
           }
           /**
            * @ngdoc property
-           * @name pagingCurrentPage
-           * @propertyOf ui.grid.class:GridOptions
-           * @description Current page number
-           * default 1
+           * @name paginationCurrentPage
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Current page number, defaults to 1
            */
-          if (gridUtil.isNullOrUndefined(gridOptions.pagingCurrentPage)) {
-            gridOptions.pagingCurrentPage = 1;
+          if (gridUtil.isNullOrUndefined(gridOptions.paginationCurrentPage)) {
+            gridOptions.paginationCurrentPage = 1;
+          }
+
+          /**
+           * @ngdoc property
+           * @name paginationTemplate
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description A custom template for the pager, defaults to `ui-grid/pagination`
+           */
+          if (gridUtil.isNullOrUndefined(gridOptions.paginationTemplate)) {
+            gridOptions.paginationTemplate = 'ui-grid/pagination';
           }
         },
         /**
          * @ngdoc method
-         * @methodOf ui.grid.paging.service:uiGridPagingService
-         * @name uiGridPagingService
-         * @description  Raises pagingChanged and calls refresh for client side paging
-         * @param {grid} the grid for which the paging changed
-         * @param {currentPage} requested page number
-         * @param {pageSize} requested page size 
+         * @methodOf ui.grid.pagination.service:uiGridPaginationService
+         * @name uiGridPaginationService
+         * @description  Raises paginationChanged and calls refresh for client side pagination
+         * @param {Grid} grid the grid for which the pagination changed
+         * @param {int} currentPage requested page number
+         * @param {int} pageSize requested page size
          */
-        onPagingChanged: function (grid, currentPage, pageSize) {
-            grid.api.paging.raise.pagingChanged(currentPage, pageSize);
-            if (!grid.options.useExternalPaging) {
-              grid.refresh(); //client side paging
+        onPaginationChanged: function (grid, currentPage, pageSize) {
+            grid.api.pagination.raise.paginationChanged(currentPage, pageSize);
+            if (!grid.options.useExternalPagination) {
+              grid.refresh(); //client side pagination
             }
         }
       };
@@ -16053,15 +15980,15 @@ module.filter('px', function() {
   ]);
   /**
    *  @ngdoc directive
-   *  @name ui.grid.paging.directive:uiGridPaging
+   *  @name ui.grid.pagination.directive:uiGridPagination
    *  @element div
    *  @restrict A
    *
-   *  @description Adds paging features to grid
+   *  @description Adds pagination features to grid
    *  @example
    <example module="app">
    <file name="app.js">
-   var app = angular.module('app', ['ui.grid', 'ui.grid.paging']);
+   var app = angular.module('app', ['ui.grid', 'ui.grid.pagination']);
 
    app.controller('MainCtrl', ['$scope', function ($scope) {
       $scope.data = [
@@ -16081,8 +16008,8 @@ module.filter('px', function() {
 
       $scope.gridOptions = {
         data: 'data',
-        pagingPageSizes: [5, 10, 25],
-        pagingPageSize: 5,
+        paginationPageSizes: [5, 10, 25],
+        paginationPageSize: 5,
         columnDefs: [
           {name: 'name'},
           {name: 'car'}
@@ -16092,43 +16019,28 @@ module.filter('px', function() {
    </file>
    <file name="index.html">
    <div ng-controller="MainCtrl">
-   <div ui-grid="gridOptions" ui-grid-paging></div>
+   <div ui-grid="gridOptions" ui-grid-pagination></div>
    </div>
    </file>
    </example>
    */
-  module.directive('uiGridPaging', ['gridUtil', 'uiGridPagingService', 
-    function (gridUtil, uiGridPagingService) {
-    /**
-     * @ngdoc property
-     * @name pagingTemplate
-     * @propertyOf ui.grid.class:GridOptions
-     * @description a custom template for the pager.  The default
-     * is ui-grid/ui-grid-paging
-     */
-      var defaultTemplate = 'ui-grid/ui-grid-paging';
-
+  module.directive('uiGridPagination', ['gridUtil', 'uiGridPaginationService',
+    function (gridUtil, uiGridPaginationService) {
       return {
         priority: -200,
         scope: false,
         require: 'uiGrid',
-        compile: function ($scope, $elm, $attr, uiGridCtrl) {
-          return {
-            pre: function ($scope, $elm, $attr, uiGridCtrl) {
+        link: {
+          pre: function ($scope, $elm, $attr, uiGridCtrl) {
+            uiGridPaginationService.initializeGrid(uiGridCtrl.grid);
 
-              uiGridPagingService.initializeGrid(uiGridCtrl.grid);
-
-              var pagingTemplate = uiGridCtrl.grid.options.pagingTemplate || defaultTemplate;
-              gridUtil.getTemplate(pagingTemplate)
-                .then(function (contents) {
-                  var template = angular.element(contents);
-                  $elm.append(template);
-                  uiGridCtrl.innerCompile(template);
-                });
-            },
-            post: function ($scope, $elm, $attr, uiGridCtrl) {
-            }
-          };
+            gridUtil.getTemplate(uiGridCtrl.grid.options.paginationTemplate)
+              .then(function (contents) {
+                var template = angular.element(contents);
+                $elm.append(template);
+                uiGridCtrl.innerCompile(template);
+              });
+          }
         }
       };
     }
@@ -16136,23 +16048,23 @@ module.filter('px', function() {
 
   /**
    *  @ngdoc directive
-   *  @name ui.grid.paging.directive:uiGridPager
+   *  @name ui.grid.pagination.directive:uiGridPager
    *  @element div
    *
-   *  @description Panel for handling paging
+   *  @description Panel for handling pagination
    */
-  module.directive('uiGridPager', ['uiGridPagingService', 'uiGridConstants', 'gridUtil', 'i18nService',
-    function (uiGridPagingService, uiGridConstants, gridUtil, i18nService) {
+  module.directive('uiGridPager', ['uiGridPaginationService', 'uiGridConstants', 'gridUtil', 'i18nService',
+    function (uiGridPaginationService, uiGridConstants, gridUtil, i18nService) {
       return {
         priority: -200,
         scope: true,
         require: '^uiGrid',
         link: function ($scope, $elm, $attr, uiGridCtrl) {
-
-          $scope.sizesLabel = i18nService.getSafeText('paging.sizes');
-          $scope.totalItemsLabel = i18nService.getSafeText('paging.totalItems');
+          $scope.paginationApi = uiGridCtrl.grid.api.pagination;
+          $scope.sizesLabel = i18nService.getSafeText('pagination.sizes');
+          $scope.totalItemsLabel = i18nService.getSafeText('pagination.totalItems');
           
-          var options = $scope.grid.options;
+          var options = uiGridCtrl.grid.options;
           
           uiGridCtrl.grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
             adjustment.height = adjustment.height - gridUtil.elementHeight($elm);
@@ -16160,43 +16072,35 @@ module.filter('px', function() {
           });
           
           uiGridCtrl.grid.registerDataChangeCallback(function (grid) {
-            if (!grid.options.useExternalPaging) {
+            if (!grid.options.useExternalPagination) {
               grid.options.totalItems = grid.rows.length;
             }
           }, [uiGridConstants.dataChange.ROW]);
 
           var setShowing = function () {
-            $scope.showingLow = ((options.pagingCurrentPage - 1) * options.pagingPageSize) + 1;
-            $scope.showingHigh = Math.min(options.pagingCurrentPage * options.pagingPageSize, options.totalItems);
+            $scope.showingLow = ((options.paginationCurrentPage - 1) * options.paginationPageSize) + 1;
+            $scope.showingHigh = Math.min(options.paginationCurrentPage * options.paginationPageSize, options.totalItems);
           };
 
-          var getMaxPages = function () {
-            return (options.totalItems === 0) ? 1 : Math.ceil(options.totalItems / options.pagingPageSize);
-          };
+          var deregT = $scope.$watch('grid.options.totalItems + grid.options.paginationPageSize', setShowing);
 
-          var deregT = $scope.$watch('grid.options.totalItems + grid.options.pagingPageSize', function () {
-              $scope.currentMaxPages = getMaxPages();
-              setShowing();
-            }
-          );
-
-          var deregP = $scope.$watch('grid.options.pagingCurrentPage + grid.options.pagingPageSize', function (newValues, oldValues) {
+          var deregP = $scope.$watch('grid.options.paginationCurrentPage + grid.options.paginationPageSize', function (newValues, oldValues) {
               if (newValues === oldValues) { 
                 return; 
               }
 
-              if (!angular.isNumber(options.pagingCurrentPage) || options.pagingCurrentPage < 1) {
-                options.pagingCurrentPage = 1;
+              if (!angular.isNumber(options.paginationCurrentPage) || options.paginationCurrentPage < 1) {
+                options.paginationCurrentPage = 1;
                 return;
               }
 
-              if (options.totalItems > 0 && options.pagingCurrentPage > getMaxPages()) {
-                options.pagingCurrentPage = getMaxPages();
+              if (options.totalItems > 0 && options.paginationCurrentPage > $scope.paginationApi.getTotalPages()) {
+                options.paginationCurrentPage = $scope.paginationApi.getTotalPages();
                 return;
               }
 
               setShowing();
-              uiGridPagingService.onPagingChanged($scope.grid, options.pagingCurrentPage, options.pagingPageSize);
+              uiGridPaginationService.onPaginationChanged($scope.grid, options.paginationCurrentPage, options.paginationPageSize);
             }
           );
 
@@ -16205,29 +16109,9 @@ module.filter('px', function() {
             deregP();
           });
 
-          $scope.pageForward = function () {
-            if (options.totalItems > 0) {
-              options.pagingCurrentPage = Math.min(options.pagingCurrentPage + 1, $scope.currentMaxPages);
-            } else {
-              options.pagingCurrentPage++;
-            }
-          };
-
-          $scope.pageBackward = function () {
-            options.pagingCurrentPage = Math.max(options.pagingCurrentPage - 1, 1);
-          };
-
-          $scope.pageToFirst = function () {
-            options.pagingCurrentPage = 1;
-          };
-
-          $scope.pageToLast = function () {
-            options.pagingCurrentPage = $scope.currentMaxPages;
-          };
-
           $scope.cantPageForward = function () {
             if (options.totalItems > 0) {
-              return options.pagingCurrentPage >= $scope.currentMaxPages;
+              return options.paginationCurrentPage >= $scope.paginationApi.getTotalPages();
             } else {
               return options.data.length < 1;
             }
@@ -16242,13 +16126,14 @@ module.filter('px', function() {
           };
           
           $scope.cantPageBackward = function () {
-            return options.pagingCurrentPage <= 1;
+            return options.paginationCurrentPage <= 1;
           };
         }
       };
     }
   ]);
 })();
+
 (function () {
   'use strict';
 
@@ -19201,8 +19086,8 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('ui-grid/ui-grid-paging',
-    "<div class=\"ui-grid-pager-panel\" ui-grid-pager><div class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" ng-click=\"pageToFirst()\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle\"><div class=\"first-bar\"></div></div></button> <button type=\"button\" ng-click=\"pageBackward()\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle prev-triangle\"></div></button> <input type=\"number\" ng-model=\"grid.options.pagingCurrentPage\" min=\"1\" max=\"{{currentMaxPages}}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"currentMaxPages > 0\">/ {{currentMaxPages}}</span> <button type=\"button\" ng-click=\"pageForward()\" ng-disabled=\"cantPageForward()\"><div class=\"last-triangle next-triangle\"></div></button> <button type=\"button\" ng-click=\"pageToLast()\" ng-disabled=\"cantPageToLast()\"><div class=\"last-triangle\"><div class=\"last-bar\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\"><select ng-model=\"grid.options.pagingPageSize\" ng-options=\"o as o for o in grid.options.pagingPageSizes\"></select><span class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{showingLow}} - {{showingHigh}} of {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
+  $templateCache.put('ui-grid/pagination',
+    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" ng-click=\"paginationApi.seek(1)\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle\"><div class=\"first-bar\"></div></div></button> <button type=\"button\" ng-click=\"paginationApi.previousPage()\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle prev-triangle\"></div></button> <input type=\"number\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\">/ {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" ng-click=\"paginationApi.nextPage()\" ng-disabled=\"cantPageForward()\"><div class=\"last-triangle next-triangle\"></div></button> <button type=\"button\" ng-click=\"paginationApi.seek(paginationApi.getTotalPages())\" ng-disabled=\"cantPageToLast()\"><div class=\"last-triangle\"><div class=\"last-bar\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\"><select ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{showingLow}} - {{showingHigh}} of {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
   );
 
 
