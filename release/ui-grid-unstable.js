@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-d9b2314 - 2015-01-06
+/*! ui-grid - v3.0.0-RC.18-d25e989 - 2015-01-08
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -14044,14 +14044,14 @@ module.filter('px', function() {
       
           // IE10+
           if (navigator.msSaveBlob) {
-            return navigator.msSaveBlob(new Blob([csvContent], {
+            return navigator.msSaveBlob(new Blob(["\ufeff", csvContent], {
               type: strMimeType
             }), fileName);
           }
       
           //html5 A[download]
           if ('download' in a) {
-            var blob = new Blob([csvContent], {
+            var blob = new Blob(["\ufeff", csvContent], {
               type: strMimeType
             });
             rawFile = URL.createObjectURL(blob);
