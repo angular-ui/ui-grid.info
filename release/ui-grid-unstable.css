@@ -244,13 +244,13 @@ input[type="text"].ui-grid-filter-input:hover {
 .ui-grid-viewport {
   min-height: 20px;
   position: relative;
-  overflow: hidden;
 }
 .ui-grid-viewport :focus {
   outline: none;
 }
 .ui-grid-canvas {
   position: relative;
+  padding-top: 1px;
 }
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;

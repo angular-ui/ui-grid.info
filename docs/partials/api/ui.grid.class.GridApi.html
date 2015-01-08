@@ -24,7 +24,9 @@ To listen to events, you must add a callback to gridOptions.onRegisterApi
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="registerEvent">registerEvent(featureName, eventName)</h3>
 <div class="registerevent"><p>Registers a new event for the given feature.  The event will get a
-.raise and .on prepended to it</p><h4 id="Parameters">Parameters</h4>
+.raise and .on prepended to it
+<br>
+the .on.event returns a dereg funtion that will remove the listener</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">featureName – {string} – </code>
 <p>name of the feature that raises the event</p></li>
 <li><code ng:non-bindable="">eventName – {string} – </code>
