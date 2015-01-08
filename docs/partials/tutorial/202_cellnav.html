@@ -14,7 +14,10 @@ The tab key and shift-tab keys continue to function.</p>
 <p>Provides an example of requesting a scroll to a specific row or column programatically - useful for
 remembering the state of a page and scrolling back to that position when a user returns.</p>
 
-<p>Provides an example of scrolling to and setting the focus on a specific cell, using the scrollToFocus api.</p><h2 id="Example">Example</h2>
+<p>Provides an example of scrolling to and setting the focus on a specific cell, using the scrollToFocus api.</p>
+
+<p>Provides an example of utilizing the modifierKeysToMultiSelectCells option and getCurrentSelection API function to
+extract values of selected cells.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-51" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -26,6 +29,8 @@ remembering the state of a page and scrolling back to that position when a user 
     <button type="button" class="btn btn-success" ng-click="scrollTo(50,7)">Scroll To Row 50, Balance</button>
     <button type="button" class="btn btn-success" ng-click="scrollToFocus(50,7)">Focus Row 50, Balance</button>
     <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
+    <button type="button" class="btn btn-success" ng-click="getCurrentSelection()">Get Current focused cell values</button>
+    <input type="text" ng-model="printSelection" placeholder="Click the 'Get current focused cell values' button to print cell values of selection here" class="printSelection">
     <br>
     <br>
     <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-pinning class="grid"></div>
@@ -39,6 +44,10 @@ remembering the state of a page and scrolling back to that position when a user 
     width: 500px;
     height: 400px;
   }
+  .printSelection {
+      width: 600px;
+      margin-top: 10px;
+  }
 </style>
 </div>
 <div class="tab-pane" title="app.js">
@@ -48,7 +57,7 @@ remembering the state of a page and scrolling back to that position when a user 
 
   app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.gridOptions = {};
-
+    $scope.gridOptions.modifierKeysToMultiSelectCells = true;
     $scope.gridOptions.columnDefs = [
       { name: 'id', width:'150' },
       { name: 'name', width:'200' },
@@ -75,6 +84,15 @@ remembering the state of a page and scrolling back to that position when a user 
         if(rowCol !== null) {
             $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.name;
         }
+      };
+
+      $scope.getCurrentSelection = function() {
+        var values = [];
+        var currentSelection = $scope.gridApi.cellNav.getCurrentSelection();
+        for (var i = 0; i < currentSelection.length; i++) {
+          values.push(currentSelection[i].row.entity[currentSelection[i].col.name])
+        }
+        $scope.printSelection = values.toString();
       };
       
       $scope.scrollTo = function( rowIndex, colIndex ) {

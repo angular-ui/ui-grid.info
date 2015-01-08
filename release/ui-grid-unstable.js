@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-b934cbb - 2015-01-08
+/*! ui-grid - v3.0.0-RC.18-2ebd4c0 - 2015-01-08
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -11277,6 +11277,9 @@ module.filter('px', function() {
           //create variables for state
           grid.cellNav = {};
           grid.cellNav.lastRowCol = null;
+          grid.cellNav.focusedCells = [];
+
+          service.defaultGridOptions(grid.options);
 
           /**
            *  @ngdoc object
@@ -11340,6 +11343,38 @@ module.filter('px', function() {
                  */
                 getFocusedCell: function () {
                   return grid.cellNav.lastRowCol;
+                },
+
+                /**
+                 * @ngdoc function
+                 * @name getCurrentSelection
+                 * @methodOf  ui.grid.cellNav.api:PublicApi
+                 * @description returns an array containing the current selection
+                 * <br> array is empty if no selection has occurred
+                 */
+                getCurrentSelection: function () {
+                  return grid.cellNav.focusedCells;
+                },
+
+                /**
+                 * @ngdoc function
+                 * @name rowColSelectIndex
+                 * @methodOf  ui.grid.cellNav.api:PublicApi
+                 * @description returns the index in the order in which the RowCol was selected, returns -1 if the RowCol
+                 * isn't selected
+                 * @param {object} rowCol the rowCol to evaluate
+                 */
+                rowColSelectIndex: function (rowCol) {
+                  //return gridUtil.arrayContainsObjectWithProperty(grid.cellNav.focusedCells, 'col.uid', rowCol.col.uid) &&
+                  var index = -1;
+                  for (var i = 0; i < grid.cellNav.focusedCells.length; i++) {
+                    if (grid.cellNav.focusedCells[i].col.uid === rowCol.col.uid &&
+                      grid.cellNav.focusedCells[i].row.uid === rowCol.row.uid) {
+                      index = i;
+                      break;
+                    }
+                  }
+                  return index;
                 }
               }
             }
@@ -11348,6 +11383,26 @@ module.filter('px', function() {
           grid.api.registerEventsFromObject(publicApi.events);
 
           grid.api.registerMethodsFromObject(publicApi.methods);
+
+        },
+
+        defaultGridOptions: function (gridOptions) {
+          /**
+           *  @ngdoc object
+           *  @name ui.grid.cellNav.api:GridOptions
+           *
+           *  @description GridOptions for cellNav feature, these are available to be
+           *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
+           */
+
+          /**
+           *  @ngdoc object
+           *  @name modifierKeysToMultiSelectCells
+           *  @propertyOf  ui.grid.cellNav.api:GridOptions
+           *  @description Enable multiple cell selection only when using the ctrlKey or shiftKey.
+           *  <br/>Defaults to false
+           */
+          gridOptions.modifierKeysToMultiSelectCells = gridOptions.modifierKeysToMultiSelectCells === true;
 
         },
 
@@ -11536,11 +11591,11 @@ module.filter('px', function() {
             var seekRowIndex = grid.renderContainers.body.visibleRowCache.indexOf(gridRow);
             var totalRows = grid.renderContainers.body.visibleRowCache.length;
             var percentage = ( seekRowIndex + ( seekRowIndex / ( totalRows - 1 ) ) ) / totalRows;
-            args.y = { percentage:  percentage  };
+            args.y = { percentage: percentage  };
           }
 
           if (gridCol !== null) {
-            args.x = { percentage: this.getLeftWidth(grid, gridCol) / this.getLeftWidth(grid, grid.renderContainers.body.visibleColumnCache[grid.renderContainers.body.visibleColumnCache.length - 1] ) };
+            args.x = { percentage: this.getLeftWidth(grid, gridCol) / this.getLeftWidth(grid, grid.renderContainers.body.visibleColumnCache[grid.renderContainers.body.visibleColumnCache.length - 1]) };
           }
 
           if (args.y || args.x) {
@@ -11794,19 +11849,33 @@ module.filter('px', function() {
               };
 
               //  gridUtil.logDebug('uiGridEdit preLink');
-              uiGridCtrl.cellNav.broadcastCellNav = grid.cellNav.broadcastCellNav = function (newRowCol) {
-                _scope.$broadcast(uiGridCellNavConstants.CELL_NAV_EVENT, newRowCol);
-                uiGridCtrl.cellNav.broadcastFocus(newRowCol);
+              uiGridCtrl.cellNav.broadcastCellNav = grid.cellNav.broadcastCellNav = function (newRowCol, modifierDown) {
+                modifierDown = !(modifierDown === undefined || !modifierDown);
+                uiGridCtrl.cellNav.broadcastFocus(newRowCol, modifierDown);
+                _scope.$broadcast(uiGridCellNavConstants.CELL_NAV_EVENT, newRowCol, modifierDown);
               };
 
-              uiGridCtrl.cellNav.broadcastFocus = function (rowCol) {
-                var row = rowCol.row,
-                    col = rowCol.col;
+              uiGridCtrl.cellNav.broadcastFocus = function (rowCol, modifierDown) {
+                modifierDown = !(modifierDown === undefined || !modifierDown);
 
-                if (grid.cellNav.lastRowCol === null || (grid.cellNav.lastRowCol.row !== row || grid.cellNav.lastRowCol.col !== col)) {
+                var row = rowCol.row,
+                  col = rowCol.col;
+
+                var rowColSelectIndex = uiGridCtrl.grid.api.cellNav.rowColSelectIndex(rowCol);
+
+                if (grid.cellNav.lastRowCol === null || rowColSelectIndex === -1) {
                   var newRowCol = new RowCol(row, col);
                   grid.api.cellNav.raise.navigate(newRowCol, grid.cellNav.lastRowCol);
                   grid.cellNav.lastRowCol = newRowCol;
+                  if (uiGridCtrl.grid.options.modifierKeysToMultiSelectCells && modifierDown) {
+                    grid.cellNav.focusedCells.push(rowCol);
+                  } else {
+                    grid.cellNav.focusedCells = [rowCol];
+                  }
+                } else if (grid.options.modifierKeysToMultiSelectCells && modifierDown &&
+                  rowColSelectIndex >= 0) {
+
+                  grid.cellNav.focusedCells.splice(rowColSelectIndex, 1);
                 }
               };
 
@@ -11860,11 +11929,12 @@ module.filter('px', function() {
           return {
             post: function ($scope, $elm, $attrs, controllers) {
               var uiGridCtrl = controllers[0],
-                  renderContainerCtrl = controllers[1],
-                  cellNavController = controllers[2];
+                 renderContainerCtrl = controllers[1],
+                 cellNavController = controllers[2];
 
               // Skip attaching cell-nav specific logic if the directive is not attached above us
               if (!cellNavController) { return; }
+
 
               var containerId = renderContainerCtrl.containerId;
 
@@ -11947,23 +12017,28 @@ module.filter('px', function() {
 
           // When a cell is clicked, broadcast a cellNav event saying that this row+col combo is now focused
           $elm.find('div').on('click', function (evt) {
-            uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col));
+            uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col), evt.ctrlKey || evt.metaKey);
 
             evt.stopPropagation();
           });
 
           // This event is fired for all cells.  If the cell matches, then focus is set
-          $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, function (evt, rowCol) {
+          $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, function (evt, rowCol, modifierDown) {
             if (rowCol.row === $scope.row &&
               rowCol.col === $scope.col) {
-              setFocused();
+              if (uiGridCtrl.grid.options.modifierKeysToMultiSelectCells && modifierDown &&
+                uiGridCtrl.grid.api.cellNav.rowColSelectIndex(rowCol) === -1) {
+                clearFocus();
+              } else {
+                setFocused();
+              }
 
               // This cellNav event came from a keydown event so we can safely refocus
               if (rowCol.hasOwnProperty('eventType') && rowCol.eventType === uiGridCellNavConstants.EVENT_TYPE.KEYDOWN) {
                 $elm.find('div')[0].focus();
               }
             }
-            else {
+            else if (!(uiGridCtrl.grid.options.modifierKeysToMultiSelectCells && modifierDown)) {
               clearFocus();
             }
           });

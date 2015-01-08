@@ -27,6 +27,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.cellNav.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api are available be cell cellnav class ctrlkey enable false feature for grid gridoptions modifierkeystomultiselectcells multiple object only or selection set shiftkey the these to ui ui-grid using when"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.cellNav.api:GridRow",
       "shortName": "GridRow",
       "type": "object",
@@ -37,7 +44,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "$scope and api array brings broadcast can cell cellnav coldef column current data does events feature focus focused for from function getfocusedcell grid gridoptions has have if instance into is last make no not null object occurred public returns row rowentity scope scrollto scrolltofocus selection set sets specified that the to ui value view visible we"
+      "keywords": "$scope an and api array brings broadcast can cell cellnav coldef column containing current data does empty evaluate events feature focus focused for from function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scope scrollto scrolltofocus selected selection set sets specified that the to ui value view visible was we which"
     },
     {
       "section": "api",
@@ -961,7 +968,7 @@ NG_DOCS={
       "id": "202_cellnav",
       "shortName": "202 Cell Navigation",
       "type": "overview",
-      "keywords": "$http $log $scope add address age allowcellfocus allowing allows an and angular api app around arrow back balance be btn btn-success button callback cell cellnav city class col coldef colindex column columndefs combined company continue controller css current currentfocused data deep directive displayname down edit editable editing element email enable enter entity event example false feature focus focusable focused for function get getcurrentfocus getfocusedcell grid gridapi gridoptions guid height html id if in include index info is js json key keys left left-right log main mainctrl mode module move msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller ngtouch null of old oldrowcol on on_cellnav onregisterapi or overview page pg-down pg-up phone pinning position programatically provides re register remembering requesting returns right row rowcol rowindex scroll scrolling scrollto scrolltofocus setting shift-enter shift-tab specific state subsumed success tab text that the this to tojson tutorial type ui ui-grid ui-grid-cellnav ui-grid-pinning up useful user uses using var when width will with within you your"
+      "keywords": "$http $log $scope add address age allowcellfocus allowing allows an and angular api app around arrow back balance be btn btn-success button callback cell cellnav cells city class click col coldef colindex column columndefs combined company continue controller css current currentfocused currentselection data deep directive displayname down edit editable editing element email enable enter entity event example extract false feature focus focusable focused for function get getcurrentfocus getcurrentselection getfocusedcell grid gridapi gridoptions guid height here html id if in include index info is js json key keys left left-right length log main mainctrl margin-top mode modifierkeystomultiselectcells module move msg must name navigate navigated navigation new newrowcol ng-bind ng-click ng-controller ng-model ngtouch null of old oldrowcol on on_cellnav onregisterapi option or overview page pg-down pg-up phone pinning placeholder position print printselection programatically provides push re register remembering requesting returns right row rowcol rowindex scroll scrolling scrollto scrolltofocus selected selection setting shift-enter shift-tab specific state subsumed success tab text that the this to tojson tostring true tutorial type ui ui-grid ui-grid-cellnav ui-grid-pinning up useful user uses using utilizing values var when width will with within you your"
     },
     {
       "section": "tutorial",

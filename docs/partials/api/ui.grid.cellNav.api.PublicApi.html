@@ -5,9 +5,21 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Public Api for cellNav feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getFocusedCell">getFocusedCell()</h3>
+<ul class="methods"><li><h3 id="getCurrentSelection">getCurrentSelection()</h3>
+<div class="getcurrentselection"><p>returns an array containing the current selection
+<br> array is empty if no selection has occurred</p></div>
+</li>
+<li><h3 id="getFocusedCell">getFocusedCell()</h3>
 <div class="getfocusedcell"><p>returns the current (or last if Grid does not have focus) focused row and column
 <br> value is null if no selection has occurred</p></div>
+</li>
+<li><h3 id="rowColSelectIndex">rowColSelectIndex(rowCol)</h3>
+<div class="rowcolselectindex"><p>returns the index in the order in which the RowCol was selected, returns -1 if the RowCol
+isn't selected</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">rowCol – {object} – </code>
+<p>the rowCol to evaluate</p></li>
+</ul>
+</div>
 </li>
 <li><h3 id="scrollTo">scrollTo($scope, rowEntity, colDef)</h3>
 <div class="scrollto"><p>brings the specified row and column into view</p><h4 id="Parameters">Parameters</h4>
