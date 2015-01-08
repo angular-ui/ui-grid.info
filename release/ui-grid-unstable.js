@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-2ebd4c0 - 2015-01-08
+/*! ui-grid - v3.0.0-RC.18-0b48c1a - 2015-01-08
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -15116,7 +15116,7 @@ module.filter('px', function() {
             var target = event.srcElement || event.target;
             
             if (target && target.files && target.files.length === 1) {
-              var fileObject = event.srcElement.files[0];
+              var fileObject = target.files[0];
               uiGridImporterService.importThisFile( grid, fileObject );
               target.form.reset();
             }
