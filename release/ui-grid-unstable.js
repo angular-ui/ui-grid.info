@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-d023360 - 2015-01-09
+/*! ui-grid - v3.0.0-RC.18-97dbff8 - 2015-01-09
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -14370,7 +14370,7 @@ module.filter('px', function() {
       
           //html5 A[download]
           if ('download' in a) {
-            var blob = new Blob(["\ufeff", csvContent], {
+            var blob = new Blob([csvContent], {
               type: strMimeType
             });
             rawFile = URL.createObjectURL(blob);
