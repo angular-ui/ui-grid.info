@@ -49,6 +49,9 @@ The individual options available in columnDefs are documented in the
 <div class="example"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre></div>
 </div>
 </li>
+<li><h3 id="columnFooterHeight">columnFooterHeight</h3>
+<div class="columnfooterheight"><p>The height of the footer rows (column footer and grid footer) in pixels</p></div>
+</li>
 <li><h3 id="columnVirtualizationThreshold">columnVirtualizationThreshold</h3>
 <div class="columnvirtualizationthreshold"><p>Turn virtualization on when number of columns goes over this number, defaults to 10</p></div>
 </li>
@@ -105,9 +108,6 @@ to exclude. </p>
 <p>If columnDefs is defined, this will be ignored.</p>
 
 <p>Defaults to ['$$hashKey']</p></div>
-</li>
-<li><h3 id="footerRowHeight">footerRowHeight</h3>
-<div class="footerrowheight"><p>The height of the footer in pixels</p></div>
 </li>
 <li><h3 id="footerTemplate">footerTemplate</h3>
 <div class="footertemplate"><p>(optional) Null by default. When provided, this setting uses a custom footer
@@ -209,8 +209,13 @@ or the id of a precompiled template (TBD how to use this) can be provided. <br /
 <li><h3 id="scrollThrottle">scrollThrottle</h3>
 <div class="scrollthrottle"><p>Default time to throttle scroll events to, defaults to 70ms</p></div>
 </li>
-<li><h3 id="showFooter">showFooter</h3>
-<div class="showfooter"><p>Whether or not to show the footer, defaults to false</p></div>
+<li><h3 id="showColumnFooter">showColumnFooter</h3>
+<div class="showcolumnfooter"><p>Whether or not to show the column footer, defaults to false
+The column footer displays column aggregates</p></div>
+</li>
+<li><h3 id="showGridFooter">showGridFooter</h3>
+<div class="showgridfooter"><p>Whether or not to show the footer, defaults to false
+The footer display Total Rows and Visible Rows (filtered rows)</p></div>
 </li>
 <li><h3 id="showHeader">showHeader</h3>
 <div class="showheader"><p>True by default. When set to false, this setting will replace the

@@ -392,6 +392,10 @@ input[type="text"].ui-grid-filter-input:hover {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
+.ui-grid-grid-footer {
+  float: left;
+  width: 100%;
+}
 .ui-grid-footer-viewport {
   overflow: hidden;
 }
