@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-97dbff8 - 2015-01-09
+/*! ui-grid - v3.0.0-RC.18-5602b87 - 2015-01-12
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -4433,6 +4433,7 @@ angular.module('ui.grid')
     for (var i in self.renderContainers) {
       var container = self.renderContainers[i];
 
+      container.canvasHeightShouldUpdate = true;
       container.visibleRowCache.length = 0;
     }
     
@@ -4611,6 +4612,23 @@ angular.module('ui.grid')
     });
 
     return self.refreshCanceller;
+  };
+
+  /**
+   * @ngdoc function
+   * @name updateCanvasHeight
+   * @methodOf ui.grid.class:Grid
+   * @description flags all render containers to update their canvas height
+   */
+  Grid.prototype.updateCanvasHeight = function updateCanvasHeight() {
+    var self = this;
+
+    for (var containerId in self.renderContainers) {
+      if (self.renderContainers.hasOwnProperty(containerId)) {
+        var container = self.renderContainers[containerId];
+        container.canvasHeightShouldUpdate = true;
+      }
+    }
   };
 
   /**
@@ -5324,9 +5342,15 @@ angular.module('ui.grid')
            */
           this.registerEvent( 'core', 'scrollEvent' );
 
-
-
-
+          /**
+           * @ngdoc event
+           * @name canvasHeightChanged
+           * @eventOf  ui.grid.core.api:PublicApi
+           * @description  is raised when the canvas height has changed
+           * <br/>
+           * arguments: oldHeight, newHeight
+           */
+          this.registerEvent( 'core', 'canvasHeightChanged');
         };
 
         /**
@@ -6738,6 +6762,22 @@ angular.module('ui.grid')
 
     self.viewportAdjusters = [];
 
+    /**
+     *  @ngdoc boolean
+     *  @name canvasHeightShouldUpdate
+     *  @propertyOf  ui.grid.class:GridRenderContainer
+     *  @description flag to signal that container should recalculate the canvas size
+     */
+    self.canvasHeightShouldUpdate = true;
+
+    /**
+     *  @ngdoc boolean
+     *  @name canvasHeight
+     *  @propertyOf  ui.grid.class:GridRenderContainer
+     *  @description last calculated canvas height value
+     */
+    self.$$canvasHeight = 0;
+
     if (options && angular.isObject(options)) {
       angular.extend(self, options);
     }
@@ -6909,20 +6949,38 @@ angular.module('ui.grid')
     return viewPortWidth;
   };
 
+
+  /**
+   * @ngdoc function
+   * @name getCanvasHeight
+   * @methodOf ui.grid.class:GridRenderContainer
+   * @description Returns the total canvas height.   Only recalculates if canvasHeightShouldUpdate = false
+   * @returns {number} total height of all the visible rows in the container
+   */
   GridRenderContainer.prototype.getCanvasHeight = function getCanvasHeight() {
     var self = this;
 
-    var ret =  0;
+    if (!self.canvasHeightShouldUpdate) {
+      return self.$$canvasHeight;
+    }
+
+    var oldCanvasHeight = self.$$canvasHeight;
+
+    self.$$canvasHeight =  0;
 
     self.visibleRowCache.forEach(function(row){
-      ret += row.height;
+      self.$$canvasHeight += row.height;
     });
 
     if (typeof(self.grid.horizontalScrollbarHeight) !== 'undefined' && self.grid.horizontalScrollbarHeight !== undefined && self.grid.horizontalScrollbarHeight > 0) {
-      ret = ret - self.grid.horizontalScrollbarHeight;
+      self.$$canvasHeight =  self.$$canvasHeight - self.grid.horizontalScrollbarHeight;
     }
 
-    return ret;
+    self.canvasHeightShouldUpdate = false;
+
+    self.grid.api.core.raise.canvasHeightChanged(oldCanvasHeight, self.$$canvasHeight);
+
+    return self.$$canvasHeight;
   };
 
   GridRenderContainer.prototype.getVerticalScrollLength = function getVerticalScrollLength() {
@@ -7462,14 +7520,29 @@ angular.module('ui.grid')
     // Default to true
     this.visible = true;
 
-  /**
-    *  @ngdoc object
-    *  @name height
-    *  @propertyOf  ui.grid.class:GridRow
-    *  @description height of each individual row
-    */
-    this.height = grid.options.rowHeight;
+
+    this.$$height = grid.options.rowHeight;
+
   }
+
+    /**
+     *  @ngdoc object
+     *  @name height
+     *  @propertyOf  ui.grid.class:GridRow
+     *  @description height of each individual row. changing the height will flag all
+     *  row renderContainers to recalculate their canvas height
+     */
+    Object.defineProperty(GridRow.prototype, 'height', {
+      get: function() {
+        return this.$$height;
+      },
+      set: function(height) {
+        if (height !== this.$$height) {
+          this.grid.updateCanvasHeight();
+          this.$$height = height;
+        }
+      }
+    });
 
   /**
    * @ngdoc function
@@ -13296,7 +13369,7 @@ module.filter('px', function() {
 
   /**
    *  @ngdoc service
-   *  @name ui.grid.edit.service:uiGridExpandableService
+   *  @name ui.grid.expandable.service:uiGridExpandableService
    *
    *  @description Services for the expandable grid
    */
@@ -13364,7 +13437,6 @@ module.filter('px', function() {
          *  @description Options for configuring the expandable feature, these are available to be  
          *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
          */
-
         var publicApi = {
           events: {
             expandable: {
@@ -13438,7 +13510,7 @@ module.filter('px', function() {
         row.isExpanded = !row.isExpanded;
 
         if (row.isExpanded) {
-          row.height = row.grid.options.rowHeight + grid.options.expandableRowHeight; 
+          row.height = row.grid.options.rowHeight + grid.options.expandableRowHeight;
         }
         else {
           row.height = row.grid.options.rowHeight;
@@ -13505,6 +13577,61 @@ module.filter('px', function() {
       };
     }]);
 
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.expandable.directive:uiGrid
+   *  @description stacks on the uiGrid directive to register child grid with parent row when child is created
+   */
+  module.directive('uiGrid', ['uiGridExpandableService', '$templateCache',
+    function (uiGridExpandableService, $templateCache) {
+      return {
+        replace: true,
+        priority: 1000,
+        require: '^uiGrid',
+        scope: false,
+        compile: function () {
+          return {
+            pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+
+              uiGridCtrl.grid.api.core.on.renderingComplete($scope, function() {
+                //if a parent grid row is on the scope, then add the parentRow property to this childGrid
+                if ($scope.row && $scope.row.grid && $scope.row.grid.options && $scope.row.grid.options.enableExpandable) {
+
+                  /**
+                   *  @ngdoc directive
+                   *  @name ui.grid.expandable.class:Grid
+                   *  @description Additional Grid properties added by expandable module
+                   */
+
+                  /**
+                   *  @ngdoc object
+                   *  @name parentRow
+                   *  @propertyOf ui.grid.expandable.class:Grid
+                   *  @description reference to the expanded parent row that owns this grid
+                   */
+                  uiGridCtrl.grid.parentRow = $scope.row;
+
+                  //todo: adjust height on parent row when child grid height changes. we need some sort of gridHeightChanged event
+                 // uiGridCtrl.grid.core.on.canvasHeightChanged($scope, function(oldHeight, newHeight) {
+                 //   uiGridCtrl.grid.parentRow = newHeight;
+                 // });
+                }
+
+              });
+            },
+            post: function ($scope, $elm, $attrs, uiGridCtrl) {
+
+            }
+          };
+        }
+      };
+    }]);
+
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.expandable.directive:uiGridExpandableRow
+   *  @description directive to render the expandable row template
+   */
   module.directive('uiGridExpandableRow',
   ['uiGridExpandableService', '$timeout', '$compile', 'uiGridConstants','gridUtil','$interval', '$log',
     function (uiGridExpandableService, $timeout, $compile, uiGridConstants, gridUtil, $interval, $log) {
@@ -13543,6 +13670,11 @@ module.filter('px', function() {
       };
     }]);
 
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.expandable.directive:uiGridRow
+   *  @description stacks on the uiGridRow directive to add support for expandable rows
+   */
   module.directive('uiGridRow',
     ['$compile', 'gridUtil', '$templateCache',
       function ($compile, gridUtil, $templateCache) {
@@ -13594,6 +13726,12 @@ module.filter('px', function() {
         };
       }]);
 
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.expandable.directive:uiGridViewport
+   *  @description stacks on the uiGridViewport directive to append the expandable row html elements to the
+   *  default gridRow template
+   */
   module.directive('uiGridViewport',
     ['$compile', 'gridUtil', '$templateCache',
       function ($compile, gridUtil, $templateCache) {

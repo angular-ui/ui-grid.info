@@ -86,7 +86,7 @@ NG_DOCS={
       "id": "ui.grid.class:Grid",
       "shortName": "Grid",
       "type": "function",
-      "keywords": "$parse-able $scope access accessor add added additional addrowheadercolumn adds again all already alter always an and any api appended are array as asc ascending assign assigntypes at automatically based be been behavior being block boolean browser build buildcolumndefsfromdata buildcolumns buildstyles by callback callbacks calldatachangecallbacks called calls can cannot canvas cell chance change changed class col coldef column columnbuilder columnbuilders columndef columndefinition columndefs columnrefreshcallback columns columnsprocessor completes considered container contains count created createleftcontainer createrightcontainer creates criteria current currently data datachange datachangecallback debounced declared def defaults defined definitions delete deregister deregisterdatachangecallback deregistered desc descending direction directions directive document doesn each edit either element emits etc event exclude exist existing exists expected false field fires first flag flagscrollinghorizontally flagscrollingvertically for from function functional further getcellvalue getcoldef getcolumn getcolumnsorting getgridqualifiedcolfield getrow gets given grid gridcolumn gridoptions gridrow handlewindowresize handling has hasleftcontainer hasleftcontainercolumns hasrightcontainercolumns having header horizontally id identified if in inform informed instance intended into is isrtl isscrollinghorizontally isscrollingvertically it iterate its js left leftcontainer load long main maintain map matching method methods modified modifyrows name needed newrawdata not note notices notified notifies notifydatachange object objects occurred occurs of on one only optional optionally options or other our parameter particular pass per pick populates position precompilecelltemplates precompiles present process processes processor processors processrowbuilders processrowscallback promise properties property prototype provided public queuerefresh redraw redrawcanvas reference refresh refreshed refreshes refreshrows register registercolumnbuilder registercolumnsprocessor registerdatachangecallback registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removed removerowsprocessor removes render renderable rendered reset resetcolumnsorting resetting resizes resolved resources return returns right rightcontainer righttoleft row rowbuilder rowbuilders rowentity rowequality rows rules screen scroll scrolling set sets some sort sortchanged sortcolumn sorted sorting specifically specified state stylecomputation supplies tbd tell templates that the they this through to todo triggered triggers true type types ui uid uigridconstants unsorted up updated us use used users uses using value values ve vertically via viewmodel visible want watch watches when whenever which will window with within you"
+      "keywords": "$parse-able $scope access accessor add added additional addrowheadercolumn adds again all already alter always an and any api appended are array as asc ascending assign assigntypes at automatically based be been behavior being block boolean browser build buildcolumndefsfromdata buildcolumns buildstyles by callback callbacks calldatachangecallbacks called calls can cannot canvas cell chance change changed class col coldef column columnbuilder columnbuilders columndef columndefinition columndefs columnrefreshcallback columns columnsprocessor completes considered container containers contains count created createleftcontainer createrightcontainer creates criteria current currently data datachange datachangecallback debounced declared def defaults defined definitions delete deregister deregisterdatachangecallback deregistered desc descending direction directions directive document doesn each edit either element emits etc event exclude exist existing exists expected false field fires first flag flags flagscrollinghorizontally flagscrollingvertically for from function functional further getcellvalue getcoldef getcolumn getcolumnsorting getgridqualifiedcolfield getrow gets given grid gridcolumn gridoptions gridrow handlewindowresize handling has hasleftcontainer hasleftcontainercolumns hasrightcontainercolumns having header height horizontally id identified if in inform informed instance intended into is isrtl isscrollinghorizontally isscrollingvertically it iterate its js left leftcontainer load long main maintain map matching method methods modified modifyrows name needed newrawdata not note notices notified notifies notifydatachange object objects occurred occurs of on one only optional optionally options or other our parameter particular pass per pick populates position precompilecelltemplates precompiles present process processes processor processors processrowbuilders processrowscallback promise properties property prototype provided public queuerefresh redraw redrawcanvas reference refresh refreshed refreshes refreshrows register registercolumnbuilder registercolumnsprocessor registerdatachangecallback registered registerrowbuilder registerrowsprocessor registerstylecomputation remove removed removerowsprocessor removes render renderable rendered reset resetcolumnsorting resetting resizes resolved resources return returns right rightcontainer righttoleft row rowbuilder rowbuilders rowentity rowequality rows rules screen scroll scrolling set sets some sort sortchanged sortcolumn sorted sorting specifically specified state stylecomputation supplies tbd tell templates that the their they this through to todo triggered triggers true type types ui uid uigridconstants unsorted up update updatecanvasheight updated us use used users uses using value values ve vertically via viewmodel visible want watch watches when whenever which will window with within you"
     },
     {
       "section": "api",
@@ -121,14 +121,14 @@ NG_DOCS={
       "id": "ui.grid.class:GridRenderContainer",
       "shortName": "GridRenderContainer",
       "type": "function",
-      "keywords": "ability adjust adjuster adjusters adjustment allowing always an and api appropriately are available based be body class columns consuming container containers destroyed element else func function gets getviewportadjustment grid has hash have height if in is it left left-to-right may name negative of on options or pinned register registers registerviewportadjuster remove removes removeviewportadjuster render right right-to-left should size something space tell that the then there to ui used usually values viewportadjusters want we when width will your"
+      "keywords": "ability adjust adjuster adjusters adjustment all allowing always an and api appropriately are available based be body boolean calculated canvas canvasheight canvasheightshouldupdate class columns consuming container containers destroyed element else false flag func function getcanvasheight gets getviewportadjustment grid has hash have height if in is it last left left-to-right may name negative of on only options or pinned recalculate recalculates register registers registerviewportadjuster remove removes removeviewportadjuster render returns right right-to-left rows should signal size something space tell that the then there to total ui used usually value values viewportadjusters visible want we when width will your"
     },
     {
       "section": "api",
       "id": "ui.grid.class:GridRow",
       "shortName": "GridRow",
       "type": "function",
-      "keywords": "action against always an and any api array as back be calculations calls can changed class clear clearrowinvisible clears col column current currently data each emits entity evaluated event exists field fielda filter findrow for force forces found from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow height ie if in index individual instance invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified reference refresh refreshes relation rendered resulting returning returns right row rowsvisiblechanged scope setrowinvisible sets that the then this to todo true ui uid uniqueid using viewmodel visibility visible which will your"
+      "keywords": "action against all always an and any api array as back be calculations calls can canvas changed changing class clear clearrowinvisible clears col column current currently data each emits entity evaluated event exists field fielda filter findrow flag for force forces found from function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow height ie if in index individual instance invisible is it item logical marks minus name necessarily needs normal not object of on one one-to-one override parent path position qualified recalculate reference refresh refreshes relation rendercontainers rendered resulting returning returns right row rowsvisiblechanged scope setrowinvisible sets that the their then this to todo true ui uid uniqueid using viewmodel visibility visible which will your"
     },
     {
       "section": "api",
@@ -279,13 +279,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.edit.service:uiGridExpandableService",
-      "shortName": "uiGridExpandableService",
-      "type": "service",
-      "keywords": "api edit expandable for grid service services the ui"
-    },
-    {
-      "section": "api",
       "id": "ui.grid.expandable",
       "shortName": "expandable",
       "type": "overview",
@@ -304,6 +297,48 @@ NG_DOCS={
       "shortName": "PublicApi",
       "type": "object",
       "keywords": "all api collapse collapseallrows data entity expand expandable expandallrows feature for grid gridapi method object public row rowentity specific subgrids the to toggle togglerowexpansion ui want you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.class:Grid",
+      "shortName": "Grid",
+      "type": "directive",
+      "keywords": "added additional api by class directive expandable expanded grid module object owns parent parentrow properties reference row that the this to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.directive:uiGrid",
+      "shortName": "uiGrid",
+      "type": "directive",
+      "keywords": "api child created directive expandable grid is on parent register row stacks the to ui uigrid when with"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.directive:uiGridExpandableRow",
+      "shortName": "uiGridExpandableRow",
+      "type": "directive",
+      "keywords": "api directive expandable grid render row template the to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.directive:uiGridRow",
+      "shortName": "uiGridRow",
+      "type": "directive",
+      "keywords": "add api directive expandable for grid on rows stacks support the to ui uigridrow"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.directive:uiGridViewport",
+      "shortName": "uiGridViewport",
+      "type": "directive",
+      "keywords": "api append default directive elements expandable grid gridrow html on row stacks template the to ui uigridviewport"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.service:uiGridExpandableService",
+      "shortName": "uiGridExpandableService",
+      "type": "service",
+      "keywords": "api expandable for grid service services the ui"
     },
     {
       "section": "api",

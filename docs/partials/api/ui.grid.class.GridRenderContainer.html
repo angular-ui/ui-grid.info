@@ -18,7 +18,13 @@ be a left render container.  There is always a body render container.</p></div>
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getViewportAdjustment">getViewportAdjustment()</h3>
+<ul class="methods"><li><h3 id="getCanvasHeight">getCanvasHeight()</h3>
+<div class="getcanvasheight"><p>Returns the total canvas height.   Only recalculates if canvasHeightShouldUpdate = false</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{number}</code>
+– <p>total height of all the visible rows in the container</p></div>
+</div>
+</li>
+<li><h3 id="getViewportAdjustment">getViewportAdjustment()</h3>
 <div class="getviewportadjustment"><p>Gets the adjustment based on the viewportAdjusters.  </p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{object}</code>
 – <p>a hash of { height: x, width: y }.  Usually the values will be negative</p></div>
@@ -39,6 +45,15 @@ appropriately.  </p><h4 id="Parameters">Parameters</h4>
 <p>the adjuster function we want to remove</p></li>
 </ul>
 </div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="canvasHeight">canvasHeight</h3>
+<div class="canvasheight"><p>last calculated canvas height value</p></div>
+</li>
+<li><h3 id="canvasHeightShouldUpdate">canvasHeightShouldUpdate</h3>
+<div class="canvasheightshouldupdate"><p>flag to signal that container should recalculate the canvas size</p></div>
 </li>
 </ul>
 </div>
