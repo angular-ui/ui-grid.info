@@ -62,21 +62,28 @@ array element.  Can be a complex expression: <code>employee.address.city</code>,
 <li><h3 id="filter">filter</h3>
 <div class="filter"><p>Specify a single filter field on this column.</p>
 
-<p>A filter consists of a condition, a term, and a placeholder:
-- condition defines how rows are chosen as matching the filter term. This can be set to
+<p>A filter consists of a condition, a term, and a placeholder:</p>
+
+<ul>
+<li>condition defines how rows are chosen as matching the filter term. This can be set to
 one of the constants in uiGridConstants.filter, or you can supply a custom filter function
-that gets passed the following arguments: [searchTerm, cellValue, row, column].
-- term: If set, the filter field will be pre-populated
-with this value.
-- placeholder: String that will be set to the <code>&lt;input&gt;.placeholder</code> attribute.
-- noTerm: set this to true if you have defined a custom function in condition, and
-your custom function doesn't require a term (so it can run even when the term is null)</p><h4 id="Example">Example</h4>
+that gets passed the following arguments: [searchTerm, cellValue, row, column].</li>
+<li>term: If set, the filter field will be pre-populated
+with this value.</li>
+<li>placeholder: String that will be set to the <code>&lt;input&gt;.placeholder</code> attribute.</li>
+<li>noTerm: set this to true if you have defined a custom function in condition, and
+your custom function doesn't require a term (so it can run even when the term is null)</li>
+<li>flags: only flag currently available is <code>caseSensitive</code>, set to false if you don't want
+case sensitive matching</li>
+</ul><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
 {
   field: 'field1',
   filter: {
+    term: 'xx',
     condition: uiGridConstants.filter.STARTS_WITH,
-    placeholder: 'starts with...'
+    placeholder: 'starts with...',
+    flags: { caseSensitive: false }
   }
 }
 ]; </pre></div>
@@ -88,8 +95,10 @@ your custom function doesn't require a term (so it can run even when the term is
 {
   field: 'field1', filters: [
     {
+      term: 'aa',
       condition: uiGridConstants.filter.STARTS_WITH,
-      placeholder: 'starts with...'
+      placeholder: 'starts with...',
+      flags: { caseSensitive: false }
     },
     {
       condition: uiGridConstants.filter.ENDS_WITH,

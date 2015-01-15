@@ -6,6 +6,20 @@ adds a settings icon in the top right of the grid, which floats above the column
 menu by default gives access to show/hide columns, but can be customised to show additional
 actions.  </p>
 
+<p>You can customize a the menu and provide your own functionality.  Each menu item can have:</p>
+
+<ul>
+<li><code>shown</code>: a function that determines whether or not to display the item</li>
+<li><code>title</code>: the title you'd like to have displayed for the menu item (note that you can also 
+use i18n on this through the <code>gridMenuTitleFilter</code> setting)</li>
+<li><code>icon</code>: an icon you'd like displayed alongside the item</li>
+<li><code>action</code>: a function that will be called when the menu is clicked</li>
+<li><code>active</code>: a function that highlights the item (giving a toggle type effect - see the sort on the column menus for an example)</li>
+<li><code>context</code>: by default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the 
+property <code>grid</code> (accessible through <code>this.grid</code>.  You can pass in your own context by supplying 
+the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</li>
+</ul>
+
 <p>The exporter feature also adds menu items to this menu.  The <code>exporterMenuCsv</code> option is set
 to false, which suppresses csv export.  The 'export selected rows' option is only available
 if at least one row is selected.</p>

@@ -1,11 +1,19 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>You can customize a column's menu and provide your own functionality.</p>
+<div><p>You can customize a column's menu and provide your own functionality.  Each menu item can have:</p>
 
-<p>By default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the 
+<ul>
+<li><code>shown</code>: a function that determines whether or not to display the item</li>
+<li><code>title</code>: the title you'd like to have displayed for the menu item (note that you can also 
+use i18n on this through the <code>gridMenuTitleFilter</code> setting)</li>
+<li><code>icon</code>: an icon you'd like displayed alongside the item</li>
+<li><code>action</code>: a function that will be called when the menu is clicked</li>
+<li><code>active</code>: a function that highlights the item (giving a toggle type effect - see the sort on the column menus for an example)</li>
+<li><code>context</code>: by default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the 
 property <code>grid</code> (accessible through <code>this.grid</code>.  You can pass in your own context by supplying 
-the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</p>
+the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</li>
+</ul>
 
 <p>The column menu will add the column's <code>GridColumn</code> object to the context as <code>this.context.col</code>. 
 You can then show/hide the the menu item based on conditions that use the grid and column.  You could 

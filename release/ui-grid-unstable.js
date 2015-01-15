@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-d2e0710 - 2015-01-13
+/*! ui-grid - v3.0.0-RC.18-9738258 - 2015-01-15
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -5674,7 +5674,7 @@ angular.module('ui.grid')
    * @propertyOf ui.grid.class:GridColumn
    * @description Filter on this column.  
    * @example
-   * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...' }</pre>
+   * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', flags: { caseSensitive: false } }</pre>
    *
    */
     
@@ -5812,8 +5812,10 @@ angular.module('ui.grid')
    *   {
    *     field: 'field1', filters: [
    *       {
+   *         term: 'aa',
    *         condition: uiGridConstants.filter.STARTS_WITH,
-   *         placeholder: 'starts with...'
+   *         placeholder: 'starts with...',
+   *         flags: { caseSensitive: false }
    *       },
    *       {
    *         condition: uiGridConstants.filter.ENDS_WITH,
@@ -5836,7 +5838,8 @@ angular.module('ui.grid')
    *   {
    *     term: 'foo', // ngModel for <input>
    *     condition: uiGridConstants.filter.STARTS_WITH,
-   *     placeholder: 'starts with...'
+   *     placeholder: 'starts with...',
+   *     flags: { caseSensitive: false }
    *   },
    *   {
    *     term: 'baz',
@@ -6090,6 +6093,7 @@ angular.module('ui.grid')
      * @description Specify a single filter field on this column.
      * 
      * A filter consists of a condition, a term, and a placeholder:
+     * 
      * - condition defines how rows are chosen as matching the filter term. This can be set to
      * one of the constants in uiGridConstants.filter, or you can supply a custom filter function
      * that gets passed the following arguments: [searchTerm, cellValue, row, column].
@@ -6098,13 +6102,17 @@ angular.module('ui.grid')
      * - placeholder: String that will be set to the `<input>.placeholder` attribute.
      * - noTerm: set this to true if you have defined a custom function in condition, and
      * your custom function doesn't require a term (so it can run even when the term is null)
+     * - flags: only flag currently available is `caseSensitive`, set to false if you don't want
+     * case sensitive matching
      * @example
      * <pre>$scope.gridOptions.columnDefs = [ 
      *   {
      *     field: 'field1',
      *     filter: {
+     *       term: 'xx',
      *       condition: uiGridConstants.filter.STARTS_WITH,
-     *       placeholder: 'starts with...'
+     *       placeholder: 'starts with...',
+     *       flags: { caseSensitive: false }
      *     }
      *   }
      * ]; </pre>
