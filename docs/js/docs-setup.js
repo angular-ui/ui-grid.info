@@ -352,7 +352,7 @@ NG_DOCS={
       "id": "ui.grid.exporter.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
-      "keywords": "alignment any api be can center column columndef exported exporter exporterpdfalign for grid into left like object option or other pdf pdfmake property right settings specific the this ui valid when you"
+      "keywords": "alignment and any api be by can center column columndef expandable export exported exporter exporterpdfalign exportersuppressexport for grid into left like object option or other pdf pdfmake property right selection settings specific suppresses the this ui used valid when you"
     },
     {
       "section": "api",

@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-9c80f56 - 2015-01-15
+/*! ui-grid - v3.0.0-RC.18-fb59224 - 2015-01-15
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -13590,7 +13590,14 @@ module.filter('px', function() {
           return {
             pre: function ($scope, $elm, $attrs, uiGridCtrl) {
               if ( uiGridCtrl.grid.options.enableExpandableRowHeader !== false ) {
-                var expandableRowHeaderColDef = {name: 'expandableButtons', displayName: '', enableColumnResizing: false, width: 40};
+                var expandableRowHeaderColDef = {
+                  name: 'expandableButtons', 
+                  displayName: '', 
+                  exporterSuppressExport: true, 
+                  enableColumnResizing: false, 
+                  enableColumnMenu: false,
+                  width: 40
+                };
                 expandableRowHeaderColDef.cellTemplate = $templateCache.get('ui-grid/expandableRowHeader');
                 uiGridCtrl.grid.addRowHeaderColumn(expandableRowHeaderColDef);
               }
@@ -14320,6 +14327,13 @@ module.filter('px', function() {
         },
         
         
+        /** 
+         * @ngdoc property
+         * @propertyOf ui.grid.exporter.api:ColumnDef
+         * @name exporterSuppressExport
+         * @description Suppresses export for this column.  Used by selection and expandable.
+         */
+
         /**
          * @ngdoc function
          * @name getColumnHeaders
@@ -14341,7 +14355,7 @@ module.filter('px', function() {
           var headers = [];
           angular.forEach(grid.columns, function( gridCol, index ) {
             if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
-                 gridCol.name !== uiGridSelectionConstants.selectionRowHeaderColName &&
+                 gridCol.colDef.exporterSuppressExport !== true &&
                  grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
               headers.push({
                 name: gridCol.field,
@@ -14422,7 +14436,7 @@ module.filter('px', function() {
               var extractedRow = [];
               angular.forEach(grid.columns, function( gridCol, index ) {
               if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
-                   gridCol.name !== uiGridSelectionConstants.selectionRowHeaderColName &&
+                   gridCol.colDef.exporterSuppressExport !== true &&
                    grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
                   var extractedField = { value: grid.options.exporterFieldCallback( grid, row, gridCol, grid.getCellValue( row, gridCol ) ) };
                   if ( gridCol.colDef.exporterPdfAlign ) {
@@ -19262,7 +19276,8 @@ module.filter('px', function() {
                   cellTemplate: 'ui-grid/selectionRowHeader',
                   headerCellTemplate: 'ui-grid/selectionHeaderCell',
                   enableColumnResizing: false,
-                  enableColumnMenu: false
+                  enableColumnMenu: false,
+                  exporterSuppressExport: true 
                 };
 
                 uiGridCtrl.grid.addRowHeaderColumn(selectionRowHeaderDef);
