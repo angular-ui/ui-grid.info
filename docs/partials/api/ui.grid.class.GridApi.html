@@ -26,7 +26,19 @@ To listen to events, you must add a callback to gridOptions.onRegisterApi
 <div class="registerevent"><p>Registers a new event for the given feature.  The event will get a
 .raise and .on prepended to it
 <br>
-the .on.event returns a dereg funtion that will remove the listener</p><h4 id="Parameters">Parameters</h4>
+.raise.eventName() - takes no arguments
+<br/>
+<br/>
+.on.eventName(scope, callBackFn, _this)
+<br/>
+scope - a scope reference to add a deregister call to the scopes .$on('destroy')
+<br/>
+callBackFn - The function to call
+<br/>
+_this - optional this context variable for callbackFn. If omitted, grid.api will be used for the context
+<br/>
+.on.eventName returns a dereg funtion that will remove the listener.  It's not necessary to use it as the listener
+will be removed when the scope is destroyed.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">featureName – {string} – </code>
 <p>name of the feature that raises the event</p></li>
 <li><code ng:non-bindable="">eventName – {string} – </code>
@@ -50,7 +62,7 @@ eventObjectMap must be in this format (multiple features allowed)
 </ul>
 </div>
 </li>
-<li><h3 id="registerMethod">registerMethod(featureName, methodName, callBackFn, thisArg)</h3>
+<li><h3 id="registerMethod">registerMethod(featureName, methodName, callBackFn, _this)</h3>
 <div class="registermethod"><p>Registers a new event for the given feature</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">featureName – {string} – </code>
 <p>name of the feature</p></li>
@@ -58,12 +70,12 @@ eventObjectMap must be in this format (multiple features allowed)
 <p>name of the method</p></li>
 <li><code ng:non-bindable="">callBackFn – {object} – </code>
 <p>function to execute</p></li>
-<li><code ng:non-bindable="">thisArg – {object} – </code>
-<p>binds callBackFn 'this' to thisArg.  Defaults to gridApi.grid</p></li>
+<li><code ng:non-bindable="">_this – {object} – </code>
+<p>binds callBackFn 'this' to _this.  Defaults to gridApi.grid</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="registerMethodsFromObject">registerMethodsFromObject(eventObjectMap, thisArg)</h3>
+<li><h3 id="registerMethodsFromObject">registerMethodsFromObject(eventObjectMap, _this)</h3>
 <div class="registermethodsfromobject"><p>Registers features and methods from a simple objectMap.
 eventObjectMap must be in this format (multiple features allowed)
 <br>
@@ -74,8 +86,8 @@ eventObjectMap must be in this format (multiple features allowed)
        }</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">eventObjectMap – {object} – </code>
 <p>map of feature/event names</p></li>
-<li><code ng:non-bindable="">thisArg – {object} – </code>
-<p>binds this to thisArg for all functions.  Defaults to gridApi.grid</p></li>
+<li><code ng:non-bindable="">_this – {object} – </code>
+<p>binds this to _this for all functions.  Defaults to gridApi.grid</p></li>
 </ul>
 </div>
 </li>
