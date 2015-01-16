@@ -289,14 +289,14 @@ NG_DOCS={
       "id": "ui.grid.expandable.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "$scope _this_ allows and api application are available be buttons class collapsing configuring custom defaults enableexpandable enableexpandablerowheader expandable expandablerowheight expandablerowtemplate expanded expanding false feature for going grid gridoptions grids height html if implies in mandatory method modes not object of off on options or pixels provide re row rowheader set show specific subgrid subgrids template the then these to true turn ui ui-grid use using whether within you your"
+      "keywords": "$scope _this_ allows and api application are available be buttons class collapsing column configuring custom defaults enableexpandable enableexpandablerowheader expandable expandablerowheaderwidth expandablerowheight expandablerowtemplate expanded expanding false feature for going grid gridoptions grids height html if implies in mandatory method modes not object of off on options or pixels provide re row rowheader set show specific subgrid subgrids template the then these to true turn ui ui-grid use using whether width within you your"
     },
     {
       "section": "api",
       "id": "ui.grid.expandable.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "all api collapse collapseallrows data entity expand expandable expandallrows feature for grid gridapi method object public row rowentity specific subgrids the to toggle togglerowexpansion ui want you"
+      "keywords": "all api collapse collapseallrows data entity expand expandable expandallrows feature for grid gridapi method object public row rowentity specific subgrids the to toggle toggleallrows togglerowexpansion ui want you"
     },
     {
       "section": "api",
