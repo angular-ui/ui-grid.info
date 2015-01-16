@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-fe38be0 - 2015-01-16
+/*! ui-grid - v3.0.0-RC.18-1cf5065 - 2015-01-16
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -17231,7 +17231,9 @@ module.filter('px', function() {
           uiGridCtrl.grid.buildColumns()
             .then(function() {
               // Then refresh the grid canvas, rebuilding the styles so that the scrollbar updates its size
-              uiGridCtrl.grid.refreshCanvas(true);
+              uiGridCtrl.grid.refreshCanvas(true).then( function() {
+                uiGridCtrl.grid.refresh();
+              });
             });
         }
 
