@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-57dd848 - 2015-01-16
+/*! ui-grid - v3.0.0-RC.18-315609c - 2015-01-16
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -3211,7 +3211,7 @@ angular.module('ui.grid').directive('uiGrid',
                 grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
                 grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
-                grid.queueRefresh();
+                grid.refreshCanvas(true);
               }
 
               angular.element($window).on('resize', gridResize);
