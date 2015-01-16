@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-3292e3f - 2015-01-16
+/*! ui-grid - v3.0.0-RC.18-9d5da34 - 2015-01-16
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -101,8 +101,8 @@
     },
     scrollbars: {
       NEVER: 0,
-      ALWAYS: 1,
-      WHEN_NEEDED: 2
+      ALWAYS: 1
+      //WHEN_NEEDED: 2
     }
   });
 
@@ -6670,7 +6670,7 @@ angular.module('ui.grid')
        * @name enableVerticalScrollbar
        * @propertyOf ui.grid.class:GridOptions
        * @description uiGridConstants.scrollbars.ALWAYS by default. This settings controls the vertical scrollbar for the grid.
-       * Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER, uiGridConstants.scrollbars.WHEN_NEEDED.
+       * Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER
        */
       baseOptions.enableVerticalScrollbar = typeof(baseOptions.enableVerticalScrollbar) !== "undefined" ? baseOptions.enableVerticalScrollbar : uiGridConstants.scrollbars.ALWAYS;
       
@@ -6679,7 +6679,7 @@ angular.module('ui.grid')
        * @name enableHorizontalScrollbar
        * @propertyOf ui.grid.class:GridOptions
        * @description uiGridConstants.scrollbars.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
-       * Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER, uiGridConstants.scrollbars.WHEN_NEEDED.
+       * Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER
        */
       baseOptions.enableHorizontalScrollbar = typeof(baseOptions.enableHorizontalScrollbar) !== "undefined" ? baseOptions.enableHorizontalScrollbar : uiGridConstants.scrollbars.ALWAYS;
   
@@ -6773,7 +6773,7 @@ angular.module('ui.grid')
    * @param {Grid} grid the grid the render container is in
    * @param {object} options the render container options
    */
-.factory('GridRenderContainer', ['gridUtil', function(gridUtil) {
+.factory('GridRenderContainer', ['gridUtil', 'uiGridConstants', function(gridUtil, uiGridConstants) {
   function GridRenderContainer(name, grid, options) {
     var self = this;
 
@@ -7480,24 +7480,22 @@ angular.module('ui.grid')
     var styles = {};
 
     if (self.name === 'body') {
-      styles['overflow-x'] = 'scroll';
+      styles['overflow-x'] = self.grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll';
       if (self.grid.hasRightContainerColumns()) {
         styles['overflow-y'] = 'hidden';
       }
       else {
-        styles['overflow-y'] = 'scroll';
+        styles['overflow-y'] = self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll';
       }
     }
     else if (self.name === 'left') {
       styles['overflow-x'] = 'hidden';
-      styles['overflow-y'] = 'hidden';
+      styles['overflow-y'] = self.grid.isRTL() ? (self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll') : 'hidden';
     }
     else {
       styles['overflow-x'] = 'hidden';
-      styles['overflow-y'] = 'scroll';
+      styles['overflow-y'] = !self.grid.isRTL() ? (self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll') : 'hidden';
     }
-
-    // if (self.grid.isRTL()) {
 
     return styles;
 
