@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-db48c95 - 2015-01-16
+/*! ui-grid - v3.0.0-RC.18-fe38be0 - 2015-01-16
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -3258,7 +3258,7 @@ angular.module('ui.grid').directive('uiGrid',
                 var width = 0;
                 for (var i = 0; i < cols.length; i++) {
                   var col = cols[i];
-                  width += col.drawnWidth;
+                  width += col.drawnWidth || col.width || 0;
                 }
 
                 myWidth = width;
@@ -3288,7 +3288,7 @@ angular.module('ui.grid').directive('uiGrid',
             }
 
             grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
-              if ( myWidth === 0 ){
+              if ( myWidth === 0 || !myWidth ){
                 updateContainerWidth();
               }
               // Subtract our own width
