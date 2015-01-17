@@ -835,7 +835,7 @@ NG_DOCS={
       "id": "ui.grid.service:rowSearcher",
       "shortName": "rowSearcher",
       "type": "service",
-      "keywords": "across against all and api asterisk based beginning column columns condition conditions constant contains defaults ending ends_with filter filters for from function get getterm given grid gridcolumns gridrows guess guesscondition if in inside instance its leading matches meets not object on or parsed process remove representing return row rows run search searchcolumn searching service starting starts_with strings stripterm term the to trailing trims true ui use uses value whether whitespace with"
+      "keywords": "across against all an and any api apply array as asterisk based be beginning but can cell col column columns condition conditions constant contains could data defaults do don else ending ends_with everywhere exp filter filters flags for foreach from function get getterm given grid gridcolumns gridrows guess guesscondition has here if in inside instance into invisible it its leading less loops marking match matches matching meets module much new not object of on one or parsed parsing passed performance pre-parsed pre-processing preparsed process provided re reg remove representing return returning row rows run runcolumnfilter runs search searchcolumn searching sensitive service setupfilters since single specific starting starts_with stays store stored strings stripped stripterm term test that the there this to trailing trims true ui use uses using value visible want was we whether whitespace with working"
     },
     {
       "section": "api",
