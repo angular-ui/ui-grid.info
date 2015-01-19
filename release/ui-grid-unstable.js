@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-7a5866d - 2015-01-17
+/*! ui-grid - v3.0.0-RC.18-270d031 - 2015-01-19
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -4458,7 +4458,7 @@ angular.module('ui.grid')
       var container = self.renderContainers[i];
 
       container.canvasHeightShouldUpdate = true;
-      container.visibleRowCache.length = 0;
+      container.visibleRowCache = [];
     }
     
     // rows.forEach(function (row) {
