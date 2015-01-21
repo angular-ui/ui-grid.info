@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-270d031 - 2015-01-19
+/*! ui-grid - v3.0.0-RC.18-35375f2 - 2015-01-21
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -13024,6 +13024,8 @@ module.filter('px', function() {
                 endEdit(true);
                 $scope.grid.api.edit.raise.afterCellEdit($scope.row.entity, $scope.col.colDef, cellModel($scope), origCellValue);
                 deregOnGridScroll();
+                deregOnEndCellEdit();
+                deregOnCancelCellEdit();
               });
 
               //end editing
@@ -13031,12 +13033,16 @@ module.filter('px', function() {
                 endEdit(retainFocus);
                 $scope.grid.api.edit.raise.afterCellEdit($scope.row.entity, $scope.col.colDef, cellModel($scope), origCellValue);
                 deregOnEndCellEdit();
+                deregOnGridScroll();
+                deregOnCancelCellEdit();
               });
 
               //cancel editing
               var deregOnCancelCellEdit = $scope.$on(uiGridEditConstants.events.CANCEL_CELL_EDIT, function () {
                 cancelEdit();
                 deregOnCancelCellEdit();
+                deregOnGridScroll();
+                deregOnEndCellEdit();
               });
 
               $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT);
