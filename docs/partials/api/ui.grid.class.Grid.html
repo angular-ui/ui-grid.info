@@ -320,7 +320,12 @@ by this column only</p></li>
 </ul>
 </div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="isScrollingHorizontally">isScrollingHorizontally</h3>
+<ul class="properties"><li><h3 id="appScope">appScope</h3>
+<div class="appscope"><p>reference to the application scope (the parent scope of the ui-grid element).  Assigned in ui-grid controller
+<br/>
+use gridOptions.appScopeProvider to override the default assignment of $scope.$parent with any reference</p></div>
+</li>
+<li><h3 id="isScrollingHorizontally">isScrollingHorizontally</h3>
 <div class="isscrollinghorizontally"><p>set to true when Grid is scrolling horizontally. Set to false via debounced method</p></div>
 </li>
 <li><h3 id="isScrollingVertically">isScrollingVertically</h3>

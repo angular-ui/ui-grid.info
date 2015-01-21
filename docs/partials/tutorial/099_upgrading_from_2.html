@@ -85,10 +85,11 @@ $scope.gridOptions.columnDefs = [...];
 
 <p>In 2.x you would use <code>row.getProperty(col.field)</code> within a cellTemplate to get the value of a cell. In 3.0 this has changed to <code>grid.getCellValue(row, col)</code>.</p>
 
-<h3 id="externalscopesmustbedeclared">External scopes must be declared</h4>
+<h3 id="gridnowusesisolatescope">Grid now uses isolate scope</h4>
 
 <p>The grid now uses an isolate scope, meaning that the scope on your controller is not directly accessible
-to widgets that you include in the grid.  You now need to declare an external scope (refer associated tutorial).</p>
+to widgets that you include in the grid.  You can get the parent scope used by the ui-grid element in any template
+with the grid.appScope property.  {{grid.appScope}}</p>
 
 <pre class="prettyprint linenums">
 $scope.gridOptions = {
@@ -106,23 +107,9 @@ $scope.gridOptions = {
     columnDefs: [
       {field: 'id', displayName: 'Id'},
       {field: 'name', displayName: 'Name'},
-      {name: 'edit', displayName: 'Edit', cellTemplate: '&lt;button id="editBtn" type="button" class="btn-small" ng-click="getExternalScopes().edit(row.entity)" &gt;Edit&lt;/button&gt; '}
+      {name: 'edit', displayName: 'Edit', cellTemplate: '&lt;button id="editBtn" type="button" class="btn-small" ng-click="grid.appScope.edit(row.entity)" &gt;Edit&lt;/button&gt; '}
     ]    
   };
-</pre>
-
-<p>You also need to declare the external scope within your controller:
-<pre class="prettyprint linenums">
-  $scope.myScope = {
-    edit: function( row ) {
-      // do something
-    }
-  };
-</pre>
-
-<p>And on the grid directive:
-<pre class="prettyprint linenums">
-  &lt;div class="gridStyle" ui-grid="gridOptions" external-scopes="myScope" &gt;&lt;/div&gt;
 </pre>
 
 <h3 id="separatefeatures">Separate features</h4>

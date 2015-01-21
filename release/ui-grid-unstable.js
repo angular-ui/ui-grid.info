@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-35375f2 - 2015-01-21
+/*! ui-grid - v3.0.0-RC.18-7f336d4 - 2015-01-21
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -698,7 +698,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
           post: function ($scope, $elm, $attrs, uiGridCtrl) {
             //$elm.addClass($scope.col.getColClass(false));
             $scope.grid = uiGridCtrl.grid;
-            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             $elm.addClass($scope.col.getColClass(false));
 
@@ -760,7 +759,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.grid = uiGridCtrl.grid;
             $scope.colContainer = containerCtrl.colContainer;
-            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             containerCtrl.footer = $elm;
 
@@ -824,7 +822,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
           pre: function ($scope, $elm, $attrs, uiGridCtrl) {
 
             $scope.grid = uiGridCtrl.grid;
-            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             var footerTemplate = ($scope.grid.options.gridFooterTemplate) ? $scope.grid.options.gridFooterTemplate : defaultTemplate;
             gridUtil.getTemplate(footerTemplate)
@@ -910,7 +907,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             var renderContainerCtrl = controllers[1];
 
             $scope.grid = uiGridCtrl.grid;
-            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
             $scope.renderContainer = uiGridCtrl.grid.renderContainers[renderContainerCtrl.containerId];
             
@@ -1165,7 +1161,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.grid = uiGridCtrl.grid;
             $scope.colContainer = containerCtrl.colContainer;
-            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
 
 
 
@@ -2746,12 +2741,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             });
           },
           post: function($scope, $elm, $attrs, controllers) {
-            var uiGridCtrl = controllers[0];
-            var containerCtrl = controllers[1];
 
-            // Sdd optional reference to externalScopes function to scope
-            //   so it can be retrieved in lower elements
-            $scope.getExternalScopes = uiGridCtrl.getExternalScopes;
           }
         };
       }
@@ -2952,15 +2942,14 @@ angular.module('ui.grid')
 
       var self = this;
 
-      // Extend options with ui-grid attribute reference
       self.grid = gridClassFactory.createGrid($scope.uiGrid);
+
+      //assign $scope.$parent if appScope not already assigned
+      self.grid.appScope = self.grid.appScope || $scope.$parent;
+
       $elm.addClass('grid' + self.grid.id);
       self.grid.rtl = gridUtil.getStyles($elm[0])['direction'] === 'rtl';
 
-
-      //add optional reference to externalScopes function to controller
-      //so it can be retrieved in lower elements that have isolate scope
-      self.getExternalScopes = $scope.getExternalScopes;
 
       // angular.extend(self.grid.options, );
 
@@ -3082,8 +3071,6 @@ angular.module('ui.grid')
  *  @element div
  *  @restrict EA
  *  @param {Object} uiGrid Options for the grid to use
- *  @param {Object=} external-scopes Add external-scopes='someScopeObjectYouNeed' attribute so you can access
- *            your scopes from within any custom templatedirective.  You access by $scope.getExternalScopes() function
  *
  *  @description Create a very basic grid.
  *
@@ -3123,8 +3110,7 @@ angular.module('ui.grid').directive('uiGrid',
       return {
         templateUrl: 'ui-grid/ui-grid',
         scope: {
-          uiGrid: '=',
-          getExternalScopes: '&?externalScopes' //optional functionwrapper around any needed external scope instances
+          uiGrid: '='
         },
         replace: true,
         transclude: true,
@@ -3345,6 +3331,16 @@ angular.module('ui.grid')
   
     // Get default options
     self.options = GridOptions.initialize( options );
+
+    /**
+     * @ngdoc object
+     * @name appScope
+     * @propertyOf ui.grid.class:Grid
+     * @description reference to the application scope (the parent scope of the ui-grid element).  Assigned in ui-grid controller
+     * <br/>
+     * use gridOptions.appScopeProvider to override the default assignment of $scope.$parent with any reference
+     */
+    self.appScope = self.options.appScopeProvider;
   
     self.headerHeight = self.options.headerRowHeight;
 
@@ -6744,11 +6740,20 @@ angular.module('ui.grid')
        * custom row template.  Can be set to either the name of a template file:
        * <pre> $scope.gridOptions.rowTemplate = 'row_template.html';</pre>
        * inline html 
-       * <pre>  $scope.gridOptions.rowTemplate = '<div style="background-color: aquamarine" ng-click="getExternalScopes().fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell></div>';</pre>
+       * <pre>  $scope.gridOptions.rowTemplate = '<div style="background-color: aquamarine" ng-click="grid.appScope.fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell></div>';</pre>
        * or the id of a precompiled template (TBD how to use this) can be provided.  
        * </br>Refer to the custom row template tutorial for more information.
        */
       baseOptions.rowTemplate = baseOptions.rowTemplate || 'ui-grid/ui-grid-row';
+
+      /**
+       * @ngdoc object
+       * @name appScopeProvider
+       * @propertyOf ui.grid.class:GridOptions
+       * @description by default, the parent scope of the ui-grid element will be assigned to grid.appScope
+       * this property allows you to assign any reference you want to grid.appScope
+       */
+      baseOptions.appScopeProvider = baseOptions.appScopeProvider || null;
       
       return baseOptions;
     }     

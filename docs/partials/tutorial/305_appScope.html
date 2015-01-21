@@ -1,0 +1,94 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>UI-Grid uses isolate scope, so there is no access to your application scope variables from a row or cell template.
+By default, the parent scope of the ui-grid element is assigned to a property on $scope.grid named appScope.
+<br/>
+<br/>
+If you need another reference other than $scope.$parent, then use gridOptions.appScopeProvider. This reference
+will be assigned to grid.appScope.
+<br/>
+<br/>
+$scope.grid.appScope is available in all templates that the grid uses.
+<br/>
+In a template, you access the scope using grid.appScope property
+<pre class="prettyprint linenums">
+    ng-click="grid.appScope.showMe()"
+</pre><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-72" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-72" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-72">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="gridOptions" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$log', '$http', function ($scope, $log, $http) {
+
+
+   $scope.someProp = 'abc',
+   $scope.showMe = function(){
+                     alert($scope.someProp);
+                  };
+
+   $scope.gridOptions = {};
+
+   //you can override the default assignment if you wish
+   //$scope.gridOptions.appScopeProvider = someOtherReference;
+
+     $scope.gridOptions.columnDefs = [
+           { name: 'name' },
+           { name: 'gender'},
+           { name: 'ShowScope',
+               cellTemplate:'<button class="btn primary" ng-click="grid.appScope.showMe()">Click Me</button>' }
+         ];
+   /*
+   $scope.gridOptions.data = [
+      {
+          "firstName": "Cox",
+          "lastName": "Carney",
+          "company": "Enormo",
+          "employed": true
+      },
+      {
+          "firstName": "Lorraine",
+          "lastName": "Wise",
+          "company": "Comveyer",
+          "employed": false
+      },
+      {
+          "firstName": "Nancy",
+          "lastName": "Waters",
+          "company": "Fuelton",
+          "employed": false
+      }
+  ];
+  */
+
+  $http.get('/data/100.json')
+    .success(function(data) {
+      $scope.gridOptions.data = data;
+    });
+
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-72" ng-eval-javascript="app.js"></div></div>
+</div>

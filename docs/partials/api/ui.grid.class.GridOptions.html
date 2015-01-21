@@ -41,6 +41,10 @@ remove again, which can simplify management of which items are included
 in the menu when.  (Noting that in most cases the shown and active functions
 provide a better way to handle visibility of menu items)</p></div>
 </li>
+<li><h3 id="appScopeProvider">appScopeProvider</h3>
+<div class="appscopeprovider"><p>by default, the parent scope of the ui-grid element will be assigned to grid.appScope
+this property allows you to assign any reference you want to grid.appScope</p></div>
+</li>
 <li><h3 id="columnDefs">columnDefs</h3>
 <div class="columndefs"><p>Array of columnDef objects.  Only required property is name.
 The individual options available in columnDefs are documented in the
@@ -199,7 +203,7 @@ $scope.gridOptions.onRegisterApi = function ( gridApi ) {
 custom row template.  Can be set to either the name of a template file:
 <pre class="prettyprint linenums"> $scope.gridOptions.rowTemplate = 'row_template.html';</pre>
 inline html 
-<pre class="prettyprint linenums">  $scope.gridOptions.rowTemplate = '&lt;div style="background-color: aquamarine" ng-click="getExternalScopes().fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;';</pre>
+<pre class="prettyprint linenums">  $scope.gridOptions.rowTemplate = '&lt;div style="background-color: aquamarine" ng-click="grid.appScope.fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;';</pre>
 or the id of a precompiled template (TBD how to use this) can be provided. <br />
 </br>Refer to the custom row template tutorial for more information.</p></div>
 </li>
