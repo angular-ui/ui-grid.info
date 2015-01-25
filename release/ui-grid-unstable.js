@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-409c3fc - 2015-01-25
+/*! ui-grid - v3.0.0-RC.18-a54e9a9 - 2015-01-25
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -11657,6 +11657,19 @@ module.filter('px', function() {
 
                 /**
                  * @ngdoc function
+                 * @name scrollToFocus
+                 * @methodOf  ui.grid.cellNav.api:PublicApi
+                 * @description brings the specified row and column fully into view if it isn't already
+                 * @param {object} $scope a scope we can broadcast events from
+                 * @param {GridRow} row grid row that we should make fully visible
+                 * @param {GridCol} col grid col to make fully visible
+                 */
+                scrollToIfNecessary: function ($scope, row, col) {
+                  service.scrollToIfNecessary(grid, $scope, row, col);
+                },
+
+                /**
+                 * @ngdoc function
                  * @name getFocusedCell
                  * @methodOf  ui.grid.cellNav.api:PublicApi
                  * @description returns the current (or last if Grid does not have focus) focused row and column
@@ -12987,6 +13000,11 @@ module.filter('px', function() {
                 return;
               }
 
+              // if the cell isn't fully visible, and cellNav is present, scroll it to be fully visible before we start
+              if ( $scope.grid.api.cellNav ){
+                $scope.grid.api.cellNav.scrollToIfNecessary( $scope, $scope.row, $scope.col );
+              }
+              
               cellModel = $parse($scope.row.getQualifiedColField($scope.col));
               //get original value from the cell
               origCellValue = cellModel($scope);

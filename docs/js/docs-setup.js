@@ -44,7 +44,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "$scope an and api array brings broadcast can cell cellnav coldef column containing current data does empty evaluate events feature focus focused for from function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scope scrollto scrolltofocus selected selection set sets specified that the to ui value view visible was we which"
+      "keywords": "$scope already an and api array brings broadcast can cell cellnav col coldef column containing current data does empty evaluate events feature focus focused for from fully function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn it last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scope scrollto scrolltofocus selected selection set sets should specified that the to ui value view visible was we which"
     },
     {
       "section": "api",
