@@ -8,7 +8,7 @@
 <pre class="prettyprint linenums" ng-set-text="index.html-45" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-45">
   <div ng-controller="MainCtrl">
-    <div ui-grid="gridOptions" class="grid" dir="rtl" ui-grid-pinning></div>
+    <div ui-grid="gridOptions" class="grid" dir="rtl" ui-grid-pinning ui-grid-resize-columns></div>
   </div>
 </script>
 </div>
@@ -24,7 +24,7 @@
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.resizeColumns']);
 
   app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.gridOptions = {

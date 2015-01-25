@@ -152,6 +152,25 @@ and returns a promise</p><h4 id="Parameters">Parameters</h4>
 in turn, when called, returns a promise relating to the save callback</p></div>
 </div>
 </li>
+<li><h3 id="setRowsDirty">setRowsDirty(grid, dataRows)</h3>
+<div class="setrowsdirty"><p>Sets each of the rows passed in dataRows
+to be dirty.  note that if you have only just inserted the
+rows into your data you will need to wait for a $digest cycle
+before the gridRows are present - so often you would wrap this
+call in a $interval or $timeout
+<pre class="prettyprint linenums">
+     $interval( function() {
+       gridApi.rowEdit.setRowsDirty( myDataRows);
+     }, 0, 1);
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which rows should be set dirty</p></li>
+<li><code ng:non-bindable="">dataRows – {array} – </code>
+<p>the data entities for which the gridRows
+should be set dirty.  </p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="setSavePromise">setSavePromise(grid, rowEntity, savePromise)</h3>
 <div class="setsavepromise"><p>Sets the promise associated with the row save, mandatory that
 the saveRow event handler calls this method somewhere before returning.

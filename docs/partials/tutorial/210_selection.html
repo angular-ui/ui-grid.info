@@ -157,7 +157,7 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
       $scope.toggleRowSelection = function() {
         $scope.gridApi.selection.clearSelectedRows();
         $scope.gridOptions.enableRowSelection = !$scope.gridOptions.enableRowSelection;
-        $scope.gridApi.core.notifyDataChange( $scope.gridApi.grid, uiGridConstants.dataChange.OPTIONS);
+        $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
       };
 
       $http.get('/data/500_complex.json')

@@ -57,15 +57,13 @@ to call this manually</p><h4 id="Returns">Returns</h4>
 – <p>promise that is resolved when render completes?</p></div>
 </div>
 </li>
-<li><h3 id="notifyDataChange">notifyDataChange(grid, type)</h3>
+<li><h3 id="notifyDataChange">notifyDataChange(type)</h3>
 <div class="notifydatachange"><p>Notify the grid that a data or config change has occurred,
 where that change isn't something the grid was otherwise noticing.  This 
 might be particularly relevant where you've changed values within the data
 and you'd like cell classes to be re-evaluated, or changed config within 
 the columnDef and you'd like headerCellClasses to be re-evaluated.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid</p></li>
-<li><code ng:non-bindable="">type – {string} – </code>
+<ul class="parameters"><li><code ng:non-bindable="">type – {string} – </code>
 <p>one of the 
 uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN), which tells
 us which refreshes to fire.</p></li>

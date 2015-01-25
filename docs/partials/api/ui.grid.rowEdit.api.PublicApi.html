@@ -5,49 +5,37 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Public Api for rowEdit feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="flushDirtyRows">flushDirtyRows(grid)</h3>
+<ul class="methods"><li><h3 id="flushDirtyRows">flushDirtyRows()</h3>
 <div class="flushdirtyrows"><p>Triggers a save event for all currently dirty rows, could
 be used where user presses a save button or navigates away from the page
 <pre class="prettyprint linenums">
      gridApi.rowEdit.flushDirtyRows(grid)
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>the grid for which dirty rows should be flushed</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
+</pre><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{promise}</code>
 – <p>a promise that represents the aggregate of all
 of the individual save promises - i.e. it will be resolved when all
 the individual save promises have been resolved.</p></div>
 </div>
 </li>
-<li><h3 id="getDirtyRows">getDirtyRows(grid)</h3>
+<li><h3 id="getDirtyRows">getDirtyRows()</h3>
 <div class="getdirtyrows"><p>Returns all currently dirty rows
 <pre class="prettyprint linenums">
      gridApi.rowEdit.getDirtyRows(grid)
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>the grid for which dirty rows should be returned</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
+</pre><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{array}</code>
 – <p>An array of gridRows that are currently dirty</p></div>
 </div>
 </li>
-<li><h3 id="getErrorRows">getErrorRows(grid)</h3>
+<li><h3 id="getErrorRows">getErrorRows()</h3>
 <div class="geterrorrows"><p>Returns all currently errored rows
 <pre class="prettyprint linenums">
      gridApi.rowEdit.getErrorRows(grid)
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>the grid for which errored rows should be returned</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
+</pre><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{array}</code>
 – <p>An array of gridRows that are currently in error</p></div>
 </div>
 </li>
-<li><h3 id="setRowsDirty">setRowsDirty(grid, dataRows)</h3>
+<li><h3 id="setRowsDirty">setRowsDirty(dataRows)</h3>
 <div class="setrowsdirty"><p>Sets each of the rows passed in dataRows
 to be dirty.  note that if you have only just inserted the
 rows into your data you will need to wait for a $digest cycle
@@ -58,42 +46,19 @@ call in a $interval or $timeout
        gridApi.rowEdit.setRowsDirty(grid, myDataRows);
      }, 0, 1);
 </pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>the grid for which rows should be set dirty</p></li>
-<li><code ng:non-bindable="">dataRows – {array} – </code>
+<ul class="parameters"><li><code ng:non-bindable="">dataRows – {array} – </code>
 <p>the data entities for which the gridRows
 should be set dirty.  </p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="setRowsDirty">setRowsDirty(grid, dataRows)</h3>
-<div class="setrowsdirty"><p>Sets each of the rows passed in dataRows
-to be dirty.  note that if you have only just inserted the
-rows into your data you will need to wait for a $digest cycle
-before the gridRows are present - so often you would wrap this
-call in a $interval or $timeout
-<pre class="prettyprint linenums">
-     $interval( function() {
-       gridApi.rowEdit.setRowsDirty(grid, myDataRows);
-     }, 0, 1);
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>the grid for which rows should be set dirty</p></li>
-<li><code ng:non-bindable="">dataRows – {array} – </code>
-<p>the data entities for which the gridRows
-should be set dirty.  </p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="setSavePromise">setSavePromise(grid, rowEntity, savePromise)</h3>
+<li><h3 id="setSavePromise">setSavePromise(rowEntity, savePromise)</h3>
 <div class="setsavepromise"><p>Sets the promise associated with the row save, mandatory that
 the saveRow event handler calls this method somewhere before returning.
 <pre class="prettyprint linenums">
      gridApi.rowEdit.setSavePromise(grid, rowEntity)
 </pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>the grid for which dirty rows should be returned</p></li>
-<li><code ng:non-bindable="">rowEntity – {object} – </code>
+<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
 <p>a data row from the grid for which a save has
 been initiated</p></li>
 <li><code ng:non-bindable="">savePromise – {promise} – </code>
