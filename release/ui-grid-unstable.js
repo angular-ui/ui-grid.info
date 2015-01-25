@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-3c2863b - 2015-01-25
+/*! ui-grid - v3.0.0-RC.18-6ce71ff - 2015-01-25
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -174,7 +174,7 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
           }
           
           // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
-          var watchUid = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN, uiGridConstants.dataChange.EDIT]);
+          var dataChangeDereg = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN, uiGridConstants.dataChange.EDIT]);
           
           // watch the col and row to see if they change - which would indicate that we've scrolled or sorted or otherwise
           // changed the row/col that this cell relates to, and we need to re-evaluate cell classes and maybe other things
@@ -192,7 +192,7 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
           
           
           var deregisterFunction = function() {
-            $scope.grid.deregisterDataChangeCallback( watchUid );
+            dataChangeDereg();
             colWatchDereg();
             rowWatchDereg(); 
           };
@@ -725,11 +725,9 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             }
 
             // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
-            var watchUid = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
+            var dataChangeDereg = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
 
-            $scope.$on( '$destroy', function() {
-              $scope.grid.deregisterDataChangeCallback( watchUid ); 
-            });
+            $scope.$on( '$destroy', dataChangeDereg );
           }
         };
       }
@@ -949,13 +947,9 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             }
             
             // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
-            var watchUid = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
+            var dataChangeDereg = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
 
-            var deregisterFunction = function() {
-              $scope.grid.deregisterDataChangeCallback( watchUid ); 
-            };
-
-            $scope.$on( '$destroy', deregisterFunction );            
+            $scope.$on( '$destroy', dataChangeDereg );            
 
 
             // Figure out whether this column is sortable or not
@@ -3655,7 +3649,7 @@ angular.module('ui.grid')
    * @param {array} types the types of data change you want to be informed of.  Values from 
    * the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN, OPTIONS ).  Optional and defaults to
    * ALL 
-   * @returns {string} uid of the callback, can be used to deregister it again
+   * @returns {function} deregister function - a function that can be called to deregister this callback
    */
   Grid.prototype.registerDataChangeCallback = function registerDataChangeCallback(callback, types, _this) {
     var uid = gridUtil.nextUid();
@@ -3666,18 +3660,12 @@ angular.module('ui.grid')
       gridUtil.logError("Expected types to be an array or null in registerDataChangeCallback, value passed was: " + types );
     }
     this.dataChangeCallbacks[uid] = { callback: callback, types: types, _this:_this };
-    return uid;
-  };
-
-  /**
-   * @ngdoc function
-   * @name deregisterDataChangeCallback
-   * @methodOf ui.grid.class:Grid
-   * @description Delete the callback identified by the id.
-   * @param {string} uid the uid of the function that is to be deregistered
-   */
-  Grid.prototype.deregisterDataChangeCallback = function deregisterDataChangeCallback(uid) {
-    delete this.dataChangeCallbacks[uid];
+    
+    var self = this;
+    var deregisterFunction = function() {
+      delete self.dataChangeCallbacks[uid];
+    };
+    return deregisterFunction;
   };
 
   /**
@@ -15458,16 +15446,12 @@ module.filter('px', function() {
          */
         addObjects: function( grid, newObjects, $scope ){
           if ( grid.api.rowEdit ){
-            var callbackId = grid.registerDataChangeCallback( function() {
+            var dataChangeDereg = grid.registerDataChangeCallback( function() {
               grid.api.rowEdit.setRowsDirty( newObjects );
-              grid.deregisterDataChangeCallback( callbackId );
+              dataChangeDereg();
             }, [uiGridConstants.dataChange.ROW] );
             
-            var deregisterClosure = function() {
-              grid.deregisterDataChangeCallback( callbackId );
-            };
-  
-            grid.importer.$scope.$on( '$destroy', deregisterClosure );
+            grid.importer.$scope.$on( '$destroy', dataChangeDereg );
           }
 
           grid.importer.$scope.$apply( grid.options.importerDataAddCallback( grid, newObjects ) );
@@ -16569,11 +16553,13 @@ module.filter('px', function() {
             return adjustment;
           });
           
-          uiGridCtrl.grid.registerDataChangeCallback(function (grid) {
+          var dataChangeDereg = uiGridCtrl.grid.registerDataChangeCallback(function (grid) {
             if (!grid.options.useExternalPagination) {
               grid.options.totalItems = grid.rows.length;
             }
           }, [uiGridConstants.dataChange.ROW]);
+          
+          $scope.$on('$destroy', dataChangeDereg);
 
           var setShowing = function () {
             $scope.showingLow = ((options.paginationCurrentPage - 1) * options.paginationPageSize) + 1;
@@ -17088,13 +17074,9 @@ module.filter('px', function() {
                 $timeout(displayResizers);
               };
               
-              var callbackId = grid.registerDataChangeCallback( waitDisplay, [uiGridConstants.dataChange.COLUMN] );
+              var dataChangeDereg = grid.registerDataChangeCallback( waitDisplay, [uiGridConstants.dataChange.COLUMN] );
               
-              var deregisterClosure = function() {
-                grid.deregisterDataChangeCallback( callbackId );
-              };
-
-              $scope.$on( '$destroy', deregisterClosure );
+              $scope.$on( '$destroy', dataChangeDereg );
             }
           }
         };
@@ -19456,7 +19438,7 @@ module.filter('px', function() {
             registerRowSelectionEvents();
             // register a dataChange callback so that we can change the selection configuration dynamically
             // if the user changes the options
-            var callbackId = $scope.grid.registerDataChangeCallback( function() {
+            var dataChangeDereg = $scope.grid.registerDataChangeCallback( function() {
               if ( $scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection &&
                 !$scope.registered ){
                 registerRowSelectionEvents();
@@ -19466,9 +19448,7 @@ module.filter('px', function() {
               }
             }, [uiGridConstants.dataChange.OPTIONS] );
 
-            $elm.on( '$destroy', function() {
-              $scope.grid.deregisterDataChangeCallback( callbackId );
-            });
+            $elm.on( '$destroy', dataChangeDereg);
           }
         };
       }]);
