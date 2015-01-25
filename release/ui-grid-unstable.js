@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-4944557 - 2015-01-25
+/*! ui-grid - v3.0.0-RC.18-9720ba5 - 2015-01-25
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -8214,7 +8214,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
 
     // Get the column value for this row
     var value = grid.getCellValue(row, column);
-
+    
     // If the filter's condition is a RegExp, then use it
     if (filter.condition instanceof RegExp) {
       return filter.condition.test(value);
@@ -8241,6 +8241,17 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       return filter.exactRE.test(value);
     }
     
+    if (filter.condition === uiGridConstants.filter.NOT_EQUAL) {
+      return angular.equals(value, term);
+    }
+
+    if (typeof(value) === 'number'){
+      var tempFloat = parseFloat(term);
+      if (!isNaN(tempFloat)) {
+        term = tempFloat;
+      }
+    }
+
     if (filter.condition === uiGridConstants.filter.GREATER_THAN) {
       return (value > term);
     }
@@ -8257,10 +8268,6 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       return (value <= term);
     }
     
-    if (filter.condition === uiGridConstants.filter.NOT_EQUAL) {
-      return angular.equals(value, term);
-    }
-
     return true;
   };
 
