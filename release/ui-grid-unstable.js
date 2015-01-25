@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-2582503 - 2015-01-25
+/*! ui-grid - v3.0.0-RC.18-409c3fc - 2015-01-25
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -12280,10 +12280,12 @@ module.filter('px', function() {
                 if (uiGridCtrl.grid.api.cellNav.getFocusedCell() == null) {
                   return;
                 }
-
+                
                 // We have to wrap in TWO timeouts so that we run AFTER the scroll event is resolved.
                 $timeout(function () {
                   $timeout(function () {
+
+/* No longer trying to retain focus when scroll - too many side effects, particularly with editOnFocus
                     // Get the last row+col combo
                     var lastRowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
 
@@ -12293,12 +12295,16 @@ module.filter('px', function() {
                     if ($document.activeElement === $document.body) {
                       $elm[0].focus();
                     }
+*/
+                    // make a dummy roCol
+                    var rowCol = { col: { uid: null }, row: { uid: null } };
 
-                    // Re-broadcast a cellNav event so we re-focus the right cell
-                    uiGridCtrl.cellNav.broadcastCellNav(lastRowCol);
+                    // broadcast a cellNav event so we clear the focus on all cells
+                    uiGridCtrl.cellNav.broadcastCellNav(rowCol);
                   });
                 });
-              });
+              });  
+             
             }
           };
         }
