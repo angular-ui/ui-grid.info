@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-6ce71ff - 2015-01-25
+/*! ui-grid - v3.0.0-RC.18-4944557 - 2015-01-25
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -8579,8 +8579,8 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     if ( nulls !== null ){
       return nulls;
     } else {
-      var strA = a.toLowerCase(),
-          strB = b.toLowerCase();
+      var strA = a.toString().toLowerCase(),
+          strB = b.toString().toLowerCase();
   
       return strA === strB ? 0 : (strA < strB ? -1 : 1);
     }
