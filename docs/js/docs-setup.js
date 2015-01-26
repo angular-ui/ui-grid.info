@@ -982,7 +982,7 @@ NG_DOCS={
       "id": "120_RTL",
       "shortName": "120 RTL Support",
       "type": "overview",
-      "keywords": "$http $scope angular app class columndefs company controller css data dir field field1 field10 field11 field12 field13 field14 field15 field2 field3 field4 field5 field6 field7 field8 field9 function gender get grid gridoptions height html index js json languages main mainctrl module name ng-controller ngtouch overview resizecolumns rtl success support supports the tutorial ui ui-grid ui-grid-pinning ui-grid-resize-columns var width"
+      "keywords": "$http $scope angular app class columndefs company controller css data dir field field1 field10 field11 field12 field13 field14 field15 field2 field3 field4 field5 field6 field7 field8 field9 function gender get grid gridoptions height html index js json languages main mainctrl module name ng-controller ngtouch overview pinning resizecolumns rtl selection success support supports the tutorial ui ui-grid ui-grid-pinning ui-grid-resize-columns var width"
     },
     {
       "section": "tutorial",
