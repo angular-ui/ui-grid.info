@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-a54e9a9 - 2015-01-25
+/*! ui-grid - v3.0.0-RC.18-d5229e6 - 2015-01-26
 * Copyright (c) 2015 ; License: MIT */
 .ui-grid-animate-spin {
   -moz-animation: ui-grid-spin 2s infinite linear;
@@ -170,7 +170,7 @@
   box-sizing: border-box;
 
   &:last-child {
-    border-right: 0;
+    // border-right: 0;
   }
 }
 
@@ -412,12 +412,6 @@
   }
 }
 
-// Make vertical bar in header row fill the height of the cell completely
-.ui-grid-footer .ui-grid-vertical-bar {
-  top: 0;
-  bottom: 0;
-}
-
 input[type="text"].ui-grid-filter-input {
   padding: 0;
   margin: 0;
@@ -560,6 +554,8 @@ input[type="text"].ui-grid-filter-input {
   top: 0;
   bottom: 0;
   background-color: inherit;
+  border-right: @gridBorderWidth solid;
+  border-color: @headerVerticalBarColor;
 
   .user-select(none);
 
@@ -839,77 +835,81 @@ input[type="text"].ui-grid-filter-input {
     height: 17px;
   }
 }
-.ui-grid[dir=rtl] .ui-grid-header-cell,
-.ui-grid[dir=rtl] .ui-grid-footer-cell,
-.ui-grid[dir=rtl] .ui-grid-cell {
-  float: right !important;
-}
+.ui-grid[dir=rtl] {
 
-// .ui-grid[dir=rtl] .ui-grid-scrollbar-vertical {
-//   right: inherit;
-//   left: 4px;
-// }
-
-.ui-grid[dir=rtl] .ui-grid-scrollbar-horizontal {
-  left: inherit;
-  right: 0;
-}
-
-.ui-grid[dir=rtl] .ui-grid-native-scrollbar.vertical {
-  left: 0;
-  right: inherit;
-}
-
-.ui-grid[dir=rtl] .ui-grid-column-menu-button {
-  position: absolute;
-  left: 1px;
-  top: 0;
-  right: inherit;
-}
-
-.ui-grid[dir=rtl] .ui-grid-cell:first-child,
-.ui-grid[dir=rtl] .ui-grid-header-cell:first-child,
-.ui-grid[dir=rtl] .ui-grid-footer-cell:first-child {
-  border-right: 0;
-}
-
-.ui-grid[dir=rtl] .ui-grid-cell:last-child {
-  border-right: @gridBorderWidth solid;
-  border-color: @borderColor;
-}
-
-.ui-grid[dir=rtl] .ui-grid-header-cell:first-child .ui-grid-vertical-bar,
-.ui-grid[dir=rtl] .ui-grid-footer-cell:first-child .ui-grid-vertical-bar,
-.ui-grid[dir=rtl] .ui-grid-cell:first-child .ui-grid-vertical-bar {
-  width: 0;
-}
-
-.ui-grid[dir=rtl] .ui-grid-menu-button {
-  z-index: 2;
-  position: absolute;
-  left: 0;
-  right: auto;
-  background: @headerBackgroundColor;
-  border: @gridBorderWidth solid @borderColor;
-  cursor: pointer;
-  min-height: 27px;
-  font-weight: normal;
-}
-
-.ui-grid[dir=rtl] .ui-grid-menu-button .ui-grid-menu {
-  left: 0;
-  right: auto;
-}
-
-// Position filter-cancel button on the left for rtl grids
-.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button {
-  right: initial;
-  left: 0;
-
-  [class^="ui-grid-icon"] {
-    right: initial;
-    left: 10px;
+  .ui-grid-header-cell,
+  .ui-grid-footer-cell,
+  .ui-grid-cell {
+    float: right !important;
   }
+
+  // .ui-grid-scrollbar-vertical {
+  //   right: inherit;
+  //   left: 4px;
+  // }
+
+  .ui-grid-scrollbar-horizontal {
+    left: inherit;
+    right: 0;
+  }
+
+  .ui-grid-native-scrollbar.vertical {
+    left: 0;
+    right: inherit;
+  }
+
+  .ui-grid-column-menu-button {
+    position: absolute;
+    left: 1px;
+    top: 0;
+    right: inherit;
+  }
+
+  .ui-grid-cell:first-child,
+  .ui-grid-header-cell:first-child,
+  .ui-grid-footer-cell:first-child {
+    border-right: 0;
+  }
+
+  .ui-grid-cell:last-child, .ui-grid-header-cell:last-child  {
+    border-left: @gridBorderWidth solid;
+    border-color: @borderColor;
+  }
+
+  .ui-grid-header-cell:first-child .ui-grid-vertical-bar,
+  .ui-grid-footer-cell:first-child .ui-grid-vertical-bar,
+  .ui-grid-cell:first-child .ui-grid-vertical-bar {
+    width: 0;
+  }
+
+  .ui-grid-menu-button {
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    right: auto;
+    background: @headerBackgroundColor;
+    border: @gridBorderWidth solid @borderColor;
+    cursor: pointer;
+    min-height: 27px;
+    font-weight: normal;
+  }
+
+  .ui-grid-menu-button .ui-grid-menu {
+    left: 0;
+    right: auto;
+  }
+
+  // Position filter-cancel button on the left for rtl grids
+  .ui-grid-filter-container .ui-grid-filter-button {
+    right: initial;
+    left: 0;
+
+    [class^="ui-grid-icon"] {
+      right: initial;
+      left: 10px;
+    }
+  }
+
 }
 // .ui-grid-sortarrow {
 //   fill: @sortArrowBackgroundColor; 

@@ -100,6 +100,8 @@
   top: 0;
   bottom: 0;
   background-color: inherit;
+  border-right: 1px solid;
+  border-color: #d4d4d4;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -316,9 +318,6 @@ input[type="text"].ui-grid-filter-input:hover {
   border-color: #d4d4d4;
   box-sizing: border-box;
 }
-.ui-grid-cell:last-child {
-  border-right: 0;
-}
 .ui-grid-cell-contents {
   padding: 5px;
   -moz-box-sizing: border-box;
@@ -424,10 +423,6 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 .ui-grid-footer-cell:last-child {
   border-right: 0;
-}
-.ui-grid-footer .ui-grid-vertical-bar {
-  top: 0;
-  bottom: 0;
 }
 input[type="text"].ui-grid-filter-input {
   padding: 0;
@@ -606,8 +601,9 @@ input[type="text"].ui-grid-filter-input:hover {
 .ui-grid[dir=rtl] .ui-grid-footer-cell:first-child {
   border-right: 0;
 }
-.ui-grid[dir=rtl] .ui-grid-cell:last-child {
-  border-right: 1px solid;
+.ui-grid[dir=rtl] .ui-grid-cell:last-child,
+.ui-grid[dir=rtl] .ui-grid-header-cell:last-child {
+  border-left: 1px solid;
   border-color: #d4d4d4;
 }
 .ui-grid[dir=rtl] .ui-grid-header-cell:first-child .ui-grid-vertical-bar,
@@ -630,11 +626,11 @@ input[type="text"].ui-grid-filter-input:hover {
   left: 0;
   right: auto;
 }
-.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button {
+.ui-grid[dir=rtl] .ui-grid-filter-container .ui-grid-filter-button {
   right: initial;
   left: 0;
 }
-.ui-grid[dir="rtl"] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"] {
+.ui-grid[dir=rtl] .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"] {
   right: initial;
   left: 10px;
 }
