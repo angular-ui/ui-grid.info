@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-3982864 - 2015-01-27
+/*! ui-grid - v3.0.0-RC.18-9f80768 - 2015-01-28
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -15916,6 +15916,7 @@ module.filter('px', function() {
                           }
                         }
 
+/*
                         else if (totalMouseMovement === 0) {
                           if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
                             //sort the current column
@@ -15934,6 +15935,7 @@ module.filter('px', function() {
                               });
                           }
                         }
+*/
 
                         $document.off('mousemove', mouseMoveHandler);
                         $document.off('mouseup', mouseUpHandler);
