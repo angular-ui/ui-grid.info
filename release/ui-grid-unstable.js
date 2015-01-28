@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-9f80768 - 2015-01-28
+/*! ui-grid - v3.0.0-RC.18-e9600ed - 2015-01-28
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -15586,7 +15586,7 @@ module.filter('px', function() {
              * @methodOf  ui.grid.moveColumns.api:PublicApi
              * @description Method can be used to change column position.
              * <pre>
-             *      gridApi.colMovable.on.moveColumn(oldPosition, newPosition)
+             *      gridApi.colMovable.moveColumn(oldPosition, newPosition)
              * </pre>
              * @param {integer} originalPosition of the column
              * @param {integer} finalPosition of the column
@@ -15594,6 +15594,20 @@ module.filter('px', function() {
             colMovable: {
               moveColumn: function (originalPosition, finalPosition) {
                 var columns = grid.columns;
+                if (!angular.isNumber(originalPosition) || !angular.isNumber(finalPosition)) {
+                  console.log('Please provide valid values for originalPosition and finalPosition');
+                  return;
+                }
+                var nonMovableColumns = 0;
+                for (var i = 0; i < columns.length; i++) {
+                  if ((angular.isDefined(columns[i].colDef.visible) && columns[i].colDef.visible === false) || columns[i].isRowHeader === true) {
+                    nonMovableColumns++;
+                  }
+                }
+                if (originalPosition >= (columns.length - nonMovableColumns) || finalPosition >= (columns.length - nonMovableColumns)) {
+                  console.log('Invalid values for originalPosition, finalPosition');
+                  return;
+                }
                 var findPositionForRenderIndex = function (index) {
                   var position = index;
                   for (var i = 0; i <= position; i++) {
@@ -15763,7 +15777,7 @@ module.filter('px', function() {
 
                 $scope.$on(uiGridConstants.events.COLUMN_HEADER_CLICK, function (event, args) {
 
-                  if (args.columnName === $scope.col.colDef.name) {
+                  if (args.columnName === $scope.col.colDef.name && !$scope.col.renderContainer) {
 
                     var evt = args.event;
                     if (evt.target.className !== 'ui-grid-icon-angle-down' && evt.target.tagName !== 'I' &&
@@ -15915,7 +15929,6 @@ module.filter('px', function() {
                             ($scope.grid, columnIndex, columns.length - 1);
                           }
                         }
-
 /*
                         else if (totalMouseMovement === 0) {
                           if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
@@ -15924,7 +15937,6 @@ module.filter('px', function() {
                             if (evt.shiftKey) {
                               add = true;
                             }
-
                             // Sort this column then rebuild the grid's rows
                             uiGridCtrl.grid.sortColumn($scope.col, add)
                               .then(function () {
@@ -15936,7 +15948,6 @@ module.filter('px', function() {
                           }
                         }
 */
-
                         $document.off('mousemove', mouseMoveHandler);
                         $document.off('mouseup', mouseUpHandler);
                       };

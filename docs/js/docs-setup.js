@@ -534,7 +534,7 @@ NG_DOCS={
       "id": "ui.grid.moveColumns.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "api be can change colmovable column feature finalposition for grid gridapi method movecolumn movecolumns moving newposition object of on originalposition position public the to ui used"
+      "keywords": "api be can change colmovable column feature finalposition for grid gridapi method movecolumn movecolumns moving newposition object of originalposition position public the to ui used"
     },
     {
       "section": "api",
@@ -1171,7 +1171,7 @@ NG_DOCS={
       "id": "310_column_moving",
       "shortName": "310 Column Moving",
       "type": "overview",
-      "keywords": "$http $scope age all allows and angular app be by can class colmovable column columndefs columns controller css data default definitions different directive disable dragging dropping either element email enable enablecolumnmoving enabled feature for function gender get grid gridapi gridoptions height html id include index it js json main mainctrl method module movecolumn movecolumns moving must name newposition ng-controller ngtouch of on options or overview position property repositioned specific specifically success the them this to tutorial ui ui-grid ui-grid-move-columns used using var width will you your"
+      "keywords": "$http $scope age all allows also alternatively and angular app be by can class colmovable column columndefs columns controller css data default definitions different directive disable dragging dropping either element email enable enablecolumnmoving enabled feature for from function gender get grid gridapi gridoptions height html id in include index it js json leftmost main mainctrl method module move movecolumn movecolumns moving must name newposition ng-controller ngtouch number of on options or overview position property ranging repositioned rightmost specific specifically success the them to tutorial ui ui-grid ui-grid-move-columns up used var visible width will you your"
     },
     {
       "section": "tutorial",

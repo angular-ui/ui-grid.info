@@ -8,8 +8,9 @@ and you must include the <code>ui-grid-move-columns</code> directive on your gri
 of grid options can be used. To specifically enable or disable column moving for a specific column property <code>enableColumnMoving</code>
 of column definitions can be used.</p>
 
-<p>Columns can be repositioned by either dragging and dropping them to specific position or by using this gridApi method
-<code>gridApi.colMovable.moveColumn(oldPosition, newPosition)</code>.</p><h2 id="Example">Example</h2>
+<p>Columns can be repositioned by either dragging and dropping them to specific position. Alternatively, gridApi method
+<code>gridApi.colMovable.moveColumn(oldPosition, newPosition)</code> can also be used to move columns. The column position ranging from 0
+(in the leftmost) up to number of visible columns in the grid (in the rightmost).</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-78" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
