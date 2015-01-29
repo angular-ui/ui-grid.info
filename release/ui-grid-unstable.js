@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-e9600ed - 2015-01-28
+/*! ui-grid - v3.0.0-RC.18-e4b2293 - 2015-01-29
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -2071,6 +2071,9 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               if (args.x && $scope.bindScrollHorizontal) {
                 containerCtrl.prevScrollArgs = args;
                 var newScrollLeft = args.getNewScrollLeft(colContainer,containerCtrl.viewport);
+
+                // Make the current horizontal scroll position available in the $scope
+                $scope.newScrollLeft = newScrollLeft;                
 
                 if (containerCtrl.headerViewport) {
                   containerCtrl.headerViewport.scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.headerViewport, newScrollLeft);
@@ -6877,6 +6880,8 @@ angular.module('ui.grid')
     
     var newRange = [];
     if (columnCache.length > self.grid.options.columnVirtualizationThreshold && self.getCanvasWidth() > self.getViewportWidth()) {
+      /* Commented the following lines because otherwise the moved column wasn't visible immediately on the new position
+       * in the case of many columns with horizontal scroll, one had to scroll left or right and then return in order to see it
       // Have we hit the threshold going down?
       if (self.prevScrollLeft < scrollLeft && colIndex < self.prevColumnScrollIndex + self.grid.options.horizontalScrollThreshold && colIndex < maxColumnIndex) {
         return;
@@ -6884,7 +6889,7 @@ angular.module('ui.grid')
       //Have we hit the threshold going up?
       if (self.prevScrollLeft > scrollLeft && colIndex > self.prevColumnScrollIndex - self.grid.options.horizontalScrollThreshold && colIndex < maxColumnIndex) {
         return;
-      }
+      }*/
 
       var rangeStart = Math.max(0, colIndex - self.grid.options.excessColumns);
       var rangeEnd = Math.min(columnCache.length, colIndex + minCols + self.grid.options.excessColumns);
@@ -15819,6 +15824,15 @@ module.filter('px', function() {
                         //Hide column menu
                         uiGridCtrl.fireEvent('hide-menu');
 
+                        //Calculate total column width
+                        var columns = $scope.grid.columns;
+                        var totalColumnWidth = 0;
+                        for (var i = 0; i < columns.length; i++) {
+                          if (angular.isUndefined(columns[i].colDef.visible) || columns[i].colDef.visible === true) {
+                            totalColumnWidth += columns[i].drawnWidth || columns[i].width || columns[i].colDef.width;
+                          }
+                        }
+
                         //Calculate new position of left of column
                         var currentElmLeft = movingElm[0].getBoundingClientRect().left - 1;
                         var currentElmRight = movingElm[0].getBoundingClientRect().right;
@@ -15835,13 +15849,31 @@ module.filter('px', function() {
                         if ((currentElmLeft >= gridLeft || changeValue > 0) && (currentElmRight <= rightMoveLimit || changeValue < 0)) {
                           movingElm.css({visibility: 'visible', 'left': newElementLeft + 'px'});
                         }
-                        else {
+                        else if (totalColumnWidth > Math.ceil(uiGridCtrl.grid.gridWidth)) {
                           changeValue *= 8;
                           var scrollEvent = new ScrollEvent($scope.col.grid, null, null, 'uiGridHeaderCell.moveElement');
                           scrollEvent.x = {pixels: changeValue};
                           scrollEvent.fireScrollingEvent();
                         }
-                        totalMouseMovement += changeValue;
+
+                        //Calculate total width of columns on the left of the moving column and the mouse movement
+                        var totalColumnsLeftWidth = 0;
+                        for (var il = 0; il < columns.length; il++) {
+                          if (angular.isUndefined(columns[il].colDef.visible) || columns[il].colDef.visible === true) {
+                            if (columns[il].colDef.name !== $scope.col.colDef.name) {
+                              totalColumnsLeftWidth += columns[il].drawnWidth || columns[il].width || columns[il].colDef.width;
+                            }
+                            else {
+                              break;
+                            }
+                          }
+                        }
+                        if ($scope.newScrollLeft === undefined) {
+                          totalMouseMovement += changeValue;
+                        }
+                        else {
+                          totalMouseMovement = $scope.newScrollLeft + newElementLeft - totalColumnsLeftWidth;
+                        }
 
                         //Increase width of moving column, in case the rightmost column was moved and its width was
                         //decreased because of overflow
@@ -15852,6 +15884,9 @@ module.filter('px', function() {
                       };
 
                       var mouseMoveHandler = function (evt) {
+                        //Disable text selection in Chrome during column move
+                        document.onselectstart = function() { return false; };
+
                         var changeValue = evt.pageX - previousMouseX;
                         if (!elmCloned && Math.abs(changeValue) > 50) {
                           cloneElement();
@@ -15873,6 +15908,8 @@ module.filter('px', function() {
                       $document.on('mousemove', mouseMoveHandler);
 
                       var mouseUpHandler = function (evt) {
+                        //Re-enable text selection after column move
+                        document.onselectstart = null;
 
                         //Remove the cloned element on mouse up.
                         if (movingElm) {
