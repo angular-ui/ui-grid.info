@@ -1,4 +1,4 @@
-/*! ui-grid - v3.0.0-RC.18-e4b2293 - 2015-01-29
+/*! ui-grid - v3.0.0-RC.18-04d2fa6 - 2015-01-29
 * Copyright (c) 2015 ; License: MIT */
 (function () {
   'use strict';
@@ -150,7 +150,8 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
           }
         },
         post: function($scope, $elm, $attrs, uiGridCtrl) {
-          $elm.addClass($scope.col.getColClass(false));
+          var initColClass = $scope.col.getColClass(false);
+          $elm.addClass(initColClass);
 
           var classAdded;
           var updateClass = function( grid ){
@@ -182,6 +183,14 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
             if ( n !== o ) {
               if ( classAdded || $scope.col.cellClass ){
                 updateClass();
+              }
+
+              // See if the column's internal class has changed
+              var newColClass = $scope.col.getColClass(false);
+              if (newColClass !== initColClass) {
+                $elm.removeClass(initColClass);
+                $elm.addClass(newColClass);
+                initColClass = newColClass;
               }
             }
           };
@@ -909,7 +918,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.renderContainer = uiGridCtrl.grid.renderContainers[renderContainerCtrl.containerId];
             
-            $elm.addClass($scope.col.getColClass(false));
+            var initColClass = $scope.col.getColClass(false);
+            $elm.addClass(initColClass);
     
             // Hide the menu by default
             $scope.menuShown = false;
@@ -944,6 +954,18 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               var rightMostContainer = $scope.grid.renderContainers['right'] ? $scope.grid.renderContainers['right'] : $scope.grid.renderContainers['body'];
               $scope.isLastCol = ( $scope.col === rightMostContainer.visibleColumnCache[ rightMostContainer.visibleColumnCache.length - 1 ] );
             };
+
+            $scope.$watch('col', function (n, o) {
+              if (n !== o) {
+                // See if the column's internal class has changed
+                var newColClass = $scope.col.getColClass(false);
+                if (newColClass !== initColClass) {
+                  $elm.removeClass(initColClass);
+                  $elm.addClass(newColClass);
+                  initColClass = newColClass;
+                }
+              }
+            });
   
             updateClass();
             
@@ -2689,7 +2711,7 @@ angular.module('ui.grid')
       function columnDefsWatchFunction(n, o) {
         if (n && n !== o) {
           self.grid.options.columnDefs = n;
-          self.grid.buildColumns()
+          self.grid.buildColumns({ orderByColumnDefs: true })
             .then(function(){
 
               self.grid.preCompileCellTemplates();
@@ -3564,9 +3586,19 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:Grid
    * @description creates GridColumn objects from the columnDefinition.  Calls each registered
    * columnBuilder to further process the column
+   * @param {object} options  An object contains options to use when building columns
+   *
+   * * **orderByColumnDefs**: defaults to **false**. When true, `buildColumns` will reorder existing columns according to the order within the column definitions.
+   *
    * @returns {Promise} a promise to load any needed column resources
    */
-  Grid.prototype.buildColumns = function buildColumns() {
+  Grid.prototype.buildColumns = function buildColumns(opts) {
+    var options = {
+      orderByColumnDefs: false
+    };
+
+    angular.extend(options, opts);
+
     // gridUtil.logDebug('buildColumns');
     var self = this;
     var builderPromises = [];
@@ -3608,7 +3640,36 @@ angular.module('ui.grid')
         builderPromises.push(builder.call(self, colDef, col, self.options));
       });
     });
-    
+
+    /*** Reorder columns if necessary ***/
+    if (!!options.orderByColumnDefs) {
+      // Create a shallow copy of the columns as a cache
+      var columnCache = self.columns.slice(0);
+
+      // We need to allow for the "row headers" when mapping from the column defs array to the columns array
+      //   If we have a row header in columns[0] and don't account for it we'll overwrite it with the column in columnDefs[0]
+      var rowHeaderOffset = self.rowHeaderColumns.length;
+
+      // Go through all the column defs
+      for (i = 0; i < self.options.columnDefs.length; i++) {
+        // If the column at this index has a different name than the column at the same index in the column defs...
+        if (self.columns[i + rowHeaderOffset].name !== self.options.columnDefs[i].name) {
+          // Replace the one in the cache with the appropriate column
+          columnCache[i + rowHeaderOffset] = self.getColumn(self.options.columnDefs[i].name);
+        }
+        else {
+          // Otherwise just copy over the one from the initial columns
+          columnCache[i + rowHeaderOffset] = self.columns[i + rowHeaderOffset];
+        }
+      }
+
+      // Empty out the columns array, non-destructively
+      self.columns.length = 0;
+
+      // And splice in the updated, ordered columns from the cache
+      Array.prototype.splice.apply(self.columns, [0, 0].concat(columnCache));
+    }
+
     return $q.all(builderPromises).then(function(){
       if (self.rows.length > 0){
         self.assignTypes();
@@ -5405,7 +5466,7 @@ angular.module('ui.grid')
     self.grid = grid;
     self.uid = uid;
 
-    self.updateColumnDef(colDef, true );
+    self.updateColumnDef(colDef, true);
   }
 
 

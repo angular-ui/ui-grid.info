@@ -30,9 +30,17 @@ this prototype.  One instance of Grid is created per Grid directive instance.</p
 </ul>
 </div>
 </li>
-<li><h3 id="buildColumns">buildColumns()</h3>
+<li><h3 id="buildColumns">buildColumns(options)</h3>
 <div class="buildcolumns"><p>creates GridColumn objects from the columnDefinition.  Calls each registered
-columnBuilder to further process the column</p><h4 id="Returns">Returns</h4>
+columnBuilder to further process the column</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">options – {object} – </code>
+<p>An object contains options to use when building columns</p>
+
+<ul>
+<li><strong>orderByColumnDefs</strong>: defaults to <strong>false</strong>. When true, <code>buildColumns</code> will reorder existing columns according to the order within the column definitions.</li>
+</ul></li>
+</ul>
+<h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{Promise}</code>
 – <p>a promise to load any needed column resources</p></div>
 </div>
