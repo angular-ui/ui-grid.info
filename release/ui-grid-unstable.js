@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-d6eec4c - 2015-01-29
+ * ui-grid - v3.0.0-RC.18-deb8e11 - 2015-01-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12045,12 +12045,10 @@ module.filter('px', function() {
           return {
             post: function ($scope, $elm, $attrs, controllers) {
               var uiGridCtrl = controllers[0],
-                 renderContainerCtrl = controllers[1],
-                 cellNavController = controllers[2];
+                 renderContainerCtrl = controllers[1];
 
               // Skip attaching cell-nav specific logic if the directive is not attached above us
-              if (!cellNavController) { return; }
-
+              if (!uiGridCtrl.grid.api.cellNav) { return; }
 
               var containerId = renderContainerCtrl.containerId;
 
@@ -12122,14 +12120,11 @@ module.filter('px', function() {
       return {
         priority: -150, // run after default uiGridCell directive and ui.grid.edit uiGridCell
         restrict: 'A',
-        require: ['^uiGrid', '?^uiGridCellnav'],
+        require: '^uiGrid',
         scope: false,
-        link: function ($scope, $elm, $attrs, controllers) {
-          var uiGridCtrl = controllers[0],
-              cellNavController = controllers[1];
-
+        link: function ($scope, $elm, $attrs, uiGridCtrl) {
           // Skip attaching cell-nav specific logic if the directive is not attached above us
-          if (!cellNavController) { return; }
+          if (!uiGridCtrl.grid.api.cellNav) { return; }
 
           if (!$scope.col.colDef.allowCellFocus) {
             return;
