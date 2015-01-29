@@ -1,5 +1,8 @@
-/*! ui-grid - v3.0.0-RC.18-04d2fa6 - 2015-01-29
-* Copyright (c) 2015 ; License: MIT */
+/*!
+ * ui-grid - v3.0.0-RC.18-d6eec4c - 2015-01-29
+ * Copyright (c) 2015 ; License: MIT 
+ */
+
 (function () {
   'use strict';
   angular.module('ui.grid.i18n', []);
