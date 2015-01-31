@@ -1210,6 +1210,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "316_dynamic_data_changes",
+      "shortName": "316 Dynamic Data Changes and Watchers",
+      "type": "overview",
+      "keywords": "actually adding aim aims all amount and angularjs anything approach approaches appropriate are aren as automatically avoid be because been being binding calculated call called calls can cell cellclasses cells change changed changes changing columns content cycle data development different digest doesn don dynamic each edited elements evaluated event every examples expect explicitly fake first for found frequent full general gitter grid has have if illusion improve in includes instances intended is it large length like ll looks made main maintain manual manually missing more need needed needs notifydatachange number numbers occurs of on once only other overview performance place plus properties quickly rather recalculated reduce referred removing render rendered rendering row rows rowtemplates scroll scrollbar scrolling see seeks set so some such takes tell than that the there therefore they this those times to tutorial tutorials two ui-grid unworkable updated updates upshot via virtualisation visibility visible watchers watches way we were when whenever work would you your"
+    },
+    {
+      "section": "tutorial",
       "id": "401_AllFeatures",
       "shortName": "401 All Features",
       "type": "overview",
