@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-96daac0 - 2015-02-01
+ * ui-grid - v3.0.0-RC.18-1f786b9 - 2015-02-03
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8073,7 +8073,8 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     }
 
     if (filter.condition === uiGridConstants.filter.NOT_EQUAL) {
-      return angular.equals(value, term);
+      var regex = new RegExp('^' + term + '$');
+      return !regex.exec(value);
     }
 
     if (typeof(value) === 'number'){
@@ -19019,6 +19020,15 @@ module.filter('px', function() {
            *  <br/>GridOptions.showFooter must also be set to true.
            */
           gridOptions.enableFooterTotalSelected = gridOptions.enableFooterTotalSelected !== false;
+
+          /**
+           *  @ngdoc object
+           *  @name isRowSelectable
+           *  @propertyOf  ui.grid.selection.api:GridOptions
+           *  @description Makes it possible to specify a method that evaluates for each and sets its "enableSelection" property.
+           */
+
+          gridOptions.isRowSelectable = angular.isDefined(gridOptions.isRowSelectable) ? gridOptions.isRowSelectable : angular.noop;
         },
 
         /**
@@ -19225,6 +19235,12 @@ module.filter('px', function() {
                 };
 
                 uiGridCtrl.grid.addRowHeaderColumn(selectionRowHeaderDef);
+              }
+              
+              if (uiGridCtrl.grid.options.isRowSelectable !== angular.noop) {
+                uiGridCtrl.grid.registerRowBuilder(function(row, options) {
+                  row.enableSelection = uiGridCtrl.grid.options.isRowSelectable(row);
+                });
               }
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
