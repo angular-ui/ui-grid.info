@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-79a91d6 - 2015-02-04
+ * ui-grid - v3.0.0-RC.18-fc79fc9 - 2015-02-04
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11041,10 +11041,6 @@ module.filter('px', function() {
           invalidCsv: '无法处理文件，确定是合法的CSV文件？',
           invalidJson: '无法处理文件，确定是合法的JSON文件？',
           jsonNotArray: '导入的文件不是JSON数组！'
-        },
-        pagination: {
-          sizes: '行每页',
-          totalItems: '行'
         }
       });
       return $delegate;
@@ -11112,10 +11108,6 @@ module.filter('px', function() {
           invalidCsv: '無法處理文件，確定是合法的CSV文件？',
           invalidJson: '無法處理文件，確定是合法的JSON文件？',
           jsonNotArray: '導入的文件不是JSON數組！'
-        },
-        pagination: {
-          sizes: '行每頁',
-          totalItems: '行'
         }
       });
       return $delegate;
