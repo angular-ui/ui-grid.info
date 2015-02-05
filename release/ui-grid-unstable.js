@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-a212760 - 2015-02-05
+ * ui-grid - v3.0.0-RC.18-9d630cb - 2015-02-05
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8173,7 +8173,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     for (var i = 0; i < colsLength; i++) {
       var col = columns[i];
       
-      if (typeof(col.filters) !== 'undefined' && ( col.filters.length > 1 || col.filters.length === 1 && col.filters[0].term ) ) {
+      if (typeof(col.filters) !== 'undefined' && ( col.filters.length > 1 || col.filters.length === 1 && ( typeof(col.filters[0].term) !== 'undefined' && col.filters[0].term || col.filters[0].noTerm ) ) ) {
         filterData.push( { col: col, filters: rowSearcher.setupFilters(col.filters) } );
       }
       else if (typeof(col.filter) !== 'undefined' && col.filter && ( typeof(col.filter.term) !== 'undefined' && col.filter.term || col.filter.noTerm ) ) {
