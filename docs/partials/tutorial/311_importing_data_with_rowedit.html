@@ -11,7 +11,10 @@ not accepted by the server.</p>
 
 <p>If you want to allow the user to look at the data before the saves kick off, consider
 setting the rowEditWaitInterval to -1, which will suppress the auto-save, and require
-you to manually call flushDirtyRows() once the user has made a save request.</p><h2 id="Example">Example</h2>
+you to manually call flushDirtyRows() once the user has made a save request.</p>
+
+<p>In this example we also use a custom file picker to trigger the import, as well
+as the grid menu.</p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we use the rowEdit feature to save the rows as they are created.
 As with the rowEdit tutorial, any records with a gender of 'male' give an error,
 and can be edited to save without error.</p>
@@ -22,6 +25,7 @@ and can be edited to save without error.</p>
 <pre class="prettyprint linenums" ng-set-text="index.html-79" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-79">
     <div ng-controller="MainCtrl">
+      <form><input type="file" class="file-chooser" id="files" name="files[]" /></form>
       <div ui-grid="gridOptions" ui-grid-importer class="grid" ui-grid-edit ui-grid-row-edit></div>
     </div>
   </script>
@@ -57,7 +61,7 @@ and can be edited to save without error.</p>
       $scope.saveRow = function( rowEntity ) {
         // create a fake promise - normally you'd use the promise returned by $http or $resource
         var promise = $q.defer();
-        $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity, promise.promise );
+        $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
        
         // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
         $interval( function() {
@@ -67,8 +71,25 @@ and can be edited to save without error.</p>
             promise.resolve();
           }
         }, 3000, 1);
-      }; 
+      };
+      
+      var handleFileSelect = function( event ){
+        var target = event.srcElement || event.target;
+        
+        if (target && target.files && target.files.length === 1) {
+          var fileObject = target.files[0];
+          $scope.gridApi.importer.importFile( fileObject );
+          target.form.reset();
+        }
+      };
 
+      var fileChooser = document.querySelectorAll('.file-chooser');
+      
+      if ( fileChooser.length !== 1 ){
+        console.log('Found > 1 or < 1 file choosers within the menu item, error, cannot continue');
+      } else {
+        fileChooser[0].addEventListener('change', handleFileSelect, false);  // TODO: why the false on the end?  Google  
+      }
     }]);
   </script>
 </div>
