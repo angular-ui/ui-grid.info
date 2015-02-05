@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-9d630cb - 2015-02-05
+ * ui-grid - v3.0.0-RC.18-37d6acd - 2015-02-05
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -669,6 +669,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         $scope.grid.refresh();
         $scope.hideMenu();
         $scope.grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+        $scope.grid.api.core.raise.columnVisibilityChanged( $scope.col );        
       };
     },
     
@@ -1697,6 +1698,7 @@ angular.module('ui.grid')
       
       gridCol.grid.refresh();
       gridCol.grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+      gridCol.grid.api.core.raise.columnVisibilityChanged( gridCol );
     }
   };
   
@@ -3258,6 +3260,24 @@ angular.module('ui.grid')
      * </pre>
      */
     self.api.registerEvent( 'core', 'sortChanged' );
+  
+      /**
+     * @ngdoc function
+     * @name columnVisibilityChanged
+     * @methodOf  ui.grid.core.api:PublicApi
+     * @description The visibility of a column has changed,
+     * the column itself is passed out as a parameter of the event. 
+     * 
+     * @param {GridCol} column the column that changed
+     * 
+     * @example
+     * <pre>
+     *      gridApi.core.on.columnVisibilityChanged( $scope, function (column) {
+     *        // do something
+     *      } );
+     * </pre>
+     */
+    self.api.registerEvent( 'core', 'columnVisibilityChanged' );
   
     /**
      * @ngdoc method

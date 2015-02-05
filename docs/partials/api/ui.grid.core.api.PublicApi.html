@@ -39,6 +39,20 @@ TODO: if a filter is active then we can't just set it to visible?</p><h4 id="Par
 </ul>
 </div>
 </li>
+<li><h3 id="columnVisibilityChanged">columnVisibilityChanged(column)</h3>
+<div class="columnvisibilitychanged"><p>The visibility of a column has changed,
+the column itself is passed out as a parameter of the event. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">column – {GridCol} – </code>
+<p>the column that changed</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridApi.core.on.columnVisibilityChanged( $scope, function (column) {
+  // do something
+} );
+</pre></div>
+</div>
+</li>
 <li><h3 id="getVisibleRows">getVisibleRows(grid)</h3>
 <div class="getvisiblerows"><p>Returns all visible rows</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
