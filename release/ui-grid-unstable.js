@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-9928328 - 2015-02-05
+ * ui-grid - v3.0.0-RC.18-a1082af - 2015-02-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2206,6 +2206,11 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 scrollEvent.x = { percentage: scrollXPercentage, pixels: deltaX };
               }
 
+              // Let the parent container scroll if the grid is already at the top/bottom
+              if ((scrollEvent.y && scrollEvent.y.percentage !== 0 && scrollEvent.y.percentage !== 1) ||
+                  (scrollEvent.x && scrollEvent.x.percentage !== 0 && scrollEvent.x.percentage !== 1)) {
+                event.preventDefault();
+              }
               scrollEvent.fireScrollingEvent();
             }
             
