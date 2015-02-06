@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-2529731 - 2015-02-06
+ * ui-grid - v3.0.0-RC.18-0fa8c48 - 2015-02-06
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -345,24 +345,6 @@ input[type="text"].ui-grid-filter-input:hover {
   background-color: #F0F0EE !important;
   border-bottom: solid 1px #d4d4d4;
 }
-.ui-grid-native-scrollbar {
-  position: absolute;
-  overflow: scroll;
-}
-.ui-grid-native-scrollbar.vertical {
-  top: 0;
-  right: 0;
-  height: 100%;
-  overflow-x: hidden;
-  width: 17px;
-}
-.ui-grid-native-scrollbar.horizontal {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow-y: hidden;
-  height: 17px;
-}
 .ui-grid-footer-panel-background {
   background: #f3f3f3;
   background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff));
@@ -586,14 +568,6 @@ input[type="text"].ui-grid-filter-input:hover {
 .ui-grid[dir=rtl] .ui-grid-footer-cell,
 .ui-grid[dir=rtl] .ui-grid-cell {
   float: right !important;
-}
-.ui-grid[dir=rtl] .ui-grid-scrollbar-horizontal {
-  left: inherit;
-  right: 0;
-}
-.ui-grid[dir=rtl] .ui-grid-native-scrollbar.vertical {
-  left: 0;
-  right: inherit;
 }
 .ui-grid[dir=rtl] .ui-grid-column-menu-button {
   position: absolute;

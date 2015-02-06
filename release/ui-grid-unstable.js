@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-2529731 - 2015-02-06
+ * ui-grid - v3.0.0-RC.18-0fa8c48 - 2015-02-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2283,10 +2283,10 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                   event = event.originalEvent;
                 }
 
-                uiGridCtrl.scrollbars.forEach(function (sbar) {
-                  sbar.addClass('ui-grid-scrollbar-visible');
-                  sbar.addClass('ui-grid-scrolling');
-                });
+                //uiGridCtrl.scrollbars.forEach(function (sbar) {
+                //  sbar.addClass('ui-grid-scrollbar-visible');
+                //  sbar.addClass('ui-grid-scrolling');
+                //});
 
                 moveStart = new Date();
                 startY = event.targetTouches[0].screenY;
@@ -19694,7 +19694,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></div><!-- native scrolling --><!--<div ui-grid-native-scrollbar ng-if=\"enableVerticalScrollbar\" type=\"vertical\"></div>--><!--<div ui-grid-native-scrollbar ng-if=\"enableHorizontalScrollbar\" type=\"horizontal\"></div>--></div>"
+    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></div></div>"
   );
 
 

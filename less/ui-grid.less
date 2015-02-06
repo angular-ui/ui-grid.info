@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-2529731 - 2015-02-06
+ * ui-grid - v3.0.0-RC.18-0fa8c48 - 2015-02-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -744,7 +744,6 @@ input[type="text"].ui-grid-filter-input {
 
 
 
-
 .ui-grid-menu-button {
   z-index: 2;
   position: absolute;
@@ -815,51 +814,12 @@ input[type="text"].ui-grid-filter-input {
   }
 }
 
-.ui-grid-native-scrollbar {
-  position: absolute;
-  overflow: scroll;
-
-  &.vertical {
-    top: 0;
-    right: 0;
-    height: 100%;
-    overflow-x: hidden;
-
-    // Default width, will update in code
-    width: 17px;
-  }
-
-  &.horizontal {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow-y: hidden;
-
-    // Default height, will update in code
-    height: 17px;
-  }
-}
 .ui-grid[dir=rtl] {
 
   .ui-grid-header-cell,
   .ui-grid-footer-cell,
   .ui-grid-cell {
     float: right !important;
-  }
-
-  // .ui-grid-scrollbar-vertical {
-  //   right: inherit;
-  //   left: 4px;
-  // }
-
-  .ui-grid-scrollbar-horizontal {
-    left: inherit;
-    right: 0;
-  }
-
-  .ui-grid-native-scrollbar.vertical {
-    left: 0;
-    right: inherit;
   }
 
   .ui-grid-column-menu-button {
