@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-48fd502 - 2015-02-10
+ * ui-grid - v3.0.0-RC.18-232a0a0 - 2015-02-10
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11658,12 +11658,11 @@ module.filter('px', function() {
                  * @name scrollTo
                  * @methodOf  ui.grid.cellNav.api:PublicApi
                  * @description brings the specified row and column into view
-                 * @param {object} $scope a scope we can broadcast events from
                  * @param {object} rowEntity gridOptions.data[] array instance to make visible
                  * @param {object} colDef to make visible
                  */
-                scrollTo: function ($scope, rowEntity, colDef) {
-                  service.scrollTo(grid, $scope, rowEntity, colDef);
+                scrollTo: function (rowEntity, colDef) {
+                  service.scrollTo(grid, rowEntity, colDef);
                 },
 
                 /**
@@ -11672,12 +11671,11 @@ module.filter('px', function() {
                  * @methodOf  ui.grid.cellNav.api:PublicApi
                  * @description brings the specified row and column into view, and sets focus
                  * to that cell
-                 * @param {object} $scope a scope we can broadcast events from
                  * @param {object} rowEntity gridOptions.data[] array instance to make visible and set focus
                  * @param {object} colDef to make visible and set focus
                  */
-                scrollToFocus: function ($scope, rowEntity, colDef) {
-                  service.scrollToFocus(grid, $scope, rowEntity, colDef);
+                scrollToFocus: function (rowEntity, colDef) {
+                  service.scrollToFocus(grid, rowEntity, colDef);
                 },
 
                 /**
@@ -11685,12 +11683,11 @@ module.filter('px', function() {
                  * @name scrollToFocus
                  * @methodOf  ui.grid.cellNav.api:PublicApi
                  * @description brings the specified row and column fully into view if it isn't already
-                 * @param {object} $scope a scope we can broadcast events from
                  * @param {GridRow} row grid row that we should make fully visible
                  * @param {GridCol} col grid col to make fully visible
                  */
-                scrollToIfNecessary: function ($scope, row, col) {
-                  service.scrollToIfNecessary(grid, $scope, row, col);
+                scrollToIfNecessary: function (row, col) {
+                  service.scrollToIfNecessary(grid, row, col);
                 },
 
                 /**
@@ -11862,11 +11859,10 @@ module.filter('px', function() {
          * row and column is in view
          * @param {Grid} grid the grid you'd like to act upon, usually available
          * from gridApi.grid
-         * @param {object} $scope a scope we can broadcast events from
          * @param {object} rowEntity gridOptions.data[] array instance to make visible
          * @param {object} colDef to make visible
          */
-        scrollTo: function (grid, $scope, rowEntity, colDef) {
+        scrollTo: function (grid, rowEntity, colDef) {
           var gridRow = null, gridCol = null;
 
           if (rowEntity !== null && typeof(rowEntity) !== 'undefined' ) {
@@ -11876,7 +11872,7 @@ module.filter('px', function() {
           if (colDef !== null && typeof(colDef) !== 'undefined' ) {
             gridCol = grid.getColumn(colDef.name ? colDef.name : colDef.field);
           }
-          this.scrollToInternal(grid, $scope, gridRow, gridCol);
+          this.scrollToInternal(grid, gridRow, gridCol);
         },
 
         /**
@@ -11887,11 +11883,10 @@ module.filter('px', function() {
          * row and column is in view, and set focus to the cell in that row and column
          * @param {Grid} grid the grid you'd like to act upon, usually available
          * from gridApi.grid
-         * @param {object} $scope a scope we can broadcast events from
          * @param {object} rowEntity gridOptions.data[] array instance to make visible and set focus to
          * @param {object} colDef to make visible and set focus to
          */
-        scrollToFocus: function (grid, $scope, rowEntity, colDef) {
+        scrollToFocus: function (grid, rowEntity, colDef) {
           var gridRow = null, gridCol = null;
 
           if (rowEntity !== null) {
@@ -11901,7 +11896,7 @@ module.filter('px', function() {
           if (colDef !== null) {
             gridCol = grid.getColumn(colDef.name ? colDef.name : colDef.field);
           }
-          this.scrollToInternal(grid, $scope, gridRow, gridCol);
+          this.scrollToInternal(grid, gridRow, gridCol);
 
           var rowCol = { row: gridRow, col: gridCol };
 
@@ -11937,11 +11932,10 @@ module.filter('px', function() {
          * </pre>
          * @param {Grid} grid the grid you'd like to act upon, usually available
          * from gridApi.grid
-         * @param {object} $scope a scope we can broadcast events from
          * @param {GridRow} gridRow row to make visible
          * @param {GridCol} gridCol column to make visible
          */
-        scrollToInternal: function (grid, $scope, gridRow, gridCol) {
+        scrollToInternal: function (grid, gridRow, gridCol) {
           var scrollEvent = new ScrollEvent(grid,null,null,'uiGridCellNavService.scrollToInternal');
 
           if (gridRow !== null) {
@@ -11968,12 +11962,11 @@ module.filter('px', function() {
          *   in the case that it is not completely visible on the screen already.
          * @param {Grid} grid the grid you'd like to act upon, usually available
          * from gridApi.grid
-         * @param {object} $scope a scope we can broadcast events from
          * @param {GridRow} gridRow row to make visible
          * @param {GridCol} gridCol column to make visible
          */
-        scrollToIfNecessary: function (grid, $scope, gridRow, gridCol) {
-          var scrollEvent = new ScrollEvent(grid,null,null,'uiGridCellNavService.scrollToIfNecessary');
+        scrollToIfNecessary: function (grid, gridRow, gridCol) {
+          var scrollEvent = new ScrollEvent(grid, 'uiGridCellNavService.scrollToIfNecessary');
 
           // Alias the visible row and column caches
           var visRowCache = grid.renderContainers.body.visibleRowCache;
@@ -12257,7 +12250,7 @@ module.filter('px', function() {
                   uiGridCtrl.cellNav.broadcastCellNav(rowCol);
 
                   // Scroll to the new cell, if it's not completely visible within the render container's viewport
-                  uiGridCellNavService.scrollToIfNecessary(grid, $scope, rowCol.row, rowCol.col);
+                  uiGridCellNavService.scrollToIfNecessary(grid, rowCol.row, rowCol.col);
 
                   evt.stopPropagation();
                   evt.preventDefault();

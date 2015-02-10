@@ -44,7 +44,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "$scope already an and api array brings broadcast can cell cellnav col coldef column containing current data does empty evaluate events feature focus focused for from fully function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn it last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scope scrollto scrolltofocus selected selection set sets should specified that the to ui value view visible was we which"
+      "keywords": "already an and api array brings cell cellnav col coldef column containing current data does empty evaluate feature focus focused for fully function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn it last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scrollto scrolltofocus selected selection set sets should specified that the to ui value view visible was we which"
     },
     {
       "section": "api",
@@ -79,7 +79,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.service:uiGridCellNavService",
       "shortName": "uiGridCellNavService",
       "type": "service",
-      "keywords": "$scope act add adds already an and angular any api apportion apportionment are array available based broadcast but calc calculating can case cell cellnav cellnavcolumnbuilder cells certain coldef column columnbuilder columns combo completely current data deal decoraterendercontainers decorates decorator determines direction docs don drawn event events exclude extra features first focus for formula from function functions get getdirection getleftwidth given go grid gridapi gridcol gridoptions gridrow have height if in include including index instance is it key keydown last like list load make maps maths method navigation need needed normal not numbered numbers of on one or our overall override promise properties re rendercontainers resolved return row rowentity rows same scope screen scroll scrolls scrollto scrolltofocus scrolltoifnecessary scrolltointernal service services set so somewhere specified such takes templates that the this to total totalnumbercols trying tweak ui up upon uptocol use usually view visible want wanting we when which whole width will with within would you zero"
+      "keywords": "act add adds already an and angular any api apportion apportionment are array available based but calc calculating case cell cellnav cellnavcolumnbuilder cells certain coldef column columnbuilder columns combo completely current data deal decoraterendercontainers decorates decorator determines direction docs don drawn event exclude extra features first focus for formula from function functions get getdirection getleftwidth given go grid gridapi gridcol gridoptions gridrow have height if in include including index instance is it key keydown last like list load make maps maths method navigation need needed normal not numbered numbers of on one or our overall override promise properties re rendercontainers resolved return row rowentity rows same screen scroll scrolls scrollto scrolltofocus scrolltoifnecessary scrolltointernal service services set so somewhere specified such takes templates that the this to total totalnumbercols trying tweak ui up upon uptocol use usually view visible want wanting we when which whole width will with within would you zero"
     },
     {
       "section": "api",
