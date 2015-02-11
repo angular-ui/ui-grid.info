@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-RC.18-232a0a0 - 2015-02-10
+ * ui-grid - v3.0.0-RC.18-1938669 - 2015-02-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12377,14 +12377,6 @@ module.filter('px', function() {
                         
                         needFocus = false;
                       });
-                    });
-                  } else {
-                    $timeout(function() {
-                      // make a dummy roCol
-                      var rowCol = { col: { uid: null }, row: { uid: null } };
-    
-                      // broadcast a cellNav event so we clear the focus on all cells
-                      uiGridCtrl.cellNav.broadcastCellNav(rowCol);
                     });
                   }
                 }
