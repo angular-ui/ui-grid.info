@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19 - 2015-02-11
+ * ui-grid - v3.0.0-rc.19-ad47a7f - 2015-02-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2166,9 +2166,9 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 if ((scrollEvent.y && scrollEvent.y.percentage !== 0 && scrollEvent.y.percentage !== 1 && containerCtrl.viewport[0].scrollTop !== 0 ) ||
                     (scrollEvent.x && scrollEvent.x.percentage !== 0 && scrollEvent.x.percentage !== 1)) {
                   evt.preventDefault();
+                  scrollEvent.fireThrottledScrollingEvent();
               }
-
-              scrollEvent.fireThrottledScrollingEvent();
+              
             });
 
             var startY = 0,
