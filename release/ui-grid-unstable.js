@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-ad47a7f - 2015-02-12
+ * ui-grid - v3.0.0-rc.19-98cb0f0 - 2015-02-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -9957,7 +9957,7 @@ module.filter('px', function() {
     $provide.decorator('i18nService', ['$delegate', function ($delegate) {
       $delegate.add('de', {
         aggregate: {
-          label: 'eintrag'
+          label: 'Eintrag'
         },
         groupPanel: {
           description: 'Ziehen Sie eine Spaltenüberschrift hierhin, um nach dieser Spalte zu gruppieren.'
@@ -9991,6 +9991,11 @@ module.filter('px', function() {
           min: 'min: ',
           max: 'max: '
         },
+        pinning: {
+            pinLeft: 'Links anheften',
+            pinRight: 'Rechts anheften',
+            unpin: 'Lösen'
+        },
         gridMenu: {
           columns: 'Spalten:',
           importerTitle: 'Datei importieren',
@@ -10007,6 +10012,10 @@ module.filter('px', function() {
           invalidCsv: 'Die Datei konnte nicht eingelesen werden, ist es eine gültige CSV-Datei?',
           invalidJson: 'Die Datei konnte nicht eingelesen werden. Enthält sie gültiges JSON?',
           jsonNotArray: 'Die importierte JSON-Datei muß ein Array enthalten. Breche Import ab.'
+        },
+        pagination: {
+            sizes: 'Einträge pro Seite',
+            totalItems: 'Einträge'
         }
       });
       return $delegate;
