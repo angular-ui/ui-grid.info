@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-4381ca5 - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-78a4b43 - 2015-02-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2167,12 +2167,12 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
               // todo: this isn't working when scrolling down.  it works fine for up.  tested on Chrome
               // Let the parent container scroll if the grid is already at the top/bottom
-              if ((scrollEvent.y && scrollEvent.y.percentage !== 0 && scrollEvent.y.percentage !== 1 && containerCtrl.viewport[0].scrollTop !== 0 ) ||
+              if ((scrollEvent.y && scrollEvent.y.percentage !== 0 && scrollEvent.y.percentage !== 1) ||
                  (scrollEvent.x && scrollEvent.x.percentage !== 0 && scrollEvent.x.percentage !== 1)) {
-                   event.preventDefault();
-              }
 
-              scrollEvent.fireThrottledScrollingEvent();
+                  event.preventDefault();
+                  scrollEvent.fireThrottledScrollingEvent();
+              }
             });
 
             $elm.bind('$destroy', function() {
