@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-5580ccb - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-fee00cd - 2015-02-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1193,10 +1193,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             $scope.grid = uiGridCtrl.grid;
             $scope.colContainer = containerCtrl.colContainer;
 
-
-
-            containerCtrl.header = $elm;
-            containerCtrl.colContainer.header = $elm;
+            updateHeaderReferences();
             
             var headerTemplate;
             if (!$scope.grid.options.showHeader) {
@@ -1206,19 +1203,17 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               headerTemplate = ($scope.grid.options.headerTemplate) ? $scope.grid.options.headerTemplate : defaultTemplate;            
             }
 
-             gridUtil.getTemplate(headerTemplate)
+            gridUtil.getTemplate(headerTemplate)
               .then(function (contents) {
                 var template = angular.element(contents);
                 
                 var newElm = $compile(template)($scope);
                 $elm.replaceWith(newElm);
 
-                // Replace the reference to the container's header element with this new element
-                containerCtrl.header = newElm;
-                containerCtrl.colContainer.header = newElm;
-
                 // And update $elm to be the new element
                 $elm = newElm;
+
+                updateHeaderReferences();
 
                 if (containerCtrl) {
                   // Inject a reference to the header viewport (if it exists) into the grid controller for use in the horizontal scroll handler below
@@ -1229,6 +1224,19 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   }
                 }
               });
+
+            function updateHeaderReferences() {
+              containerCtrl.header = containerCtrl.colContainer.header = $elm;
+
+              var headerCanvases = $elm[0].getElementsByClassName('ui-grid-header-canvas');
+
+              if (headerCanvases.length > 0) {
+                containerCtrl.headerCanvas = containerCtrl.colContainer.headerCanvas = headerCanvases[0];
+              }
+              else {
+                containerCtrl.headerCanvas = null;
+              }
+            }
           },
 
           post: function ($scope, $elm, $attrs, controllers) {
@@ -2206,12 +2214,12 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-viewport { width: ' + footerViewportWidth + 'px; }';
 
               // If the render container has an "explicit" header height (such as in the case that its header is smaller than the other headers and needs to be explicitly set to be the same, ue thae)
-              if (renderContainer.explicitHeaderHeight !== undefined && renderContainer.explicitHeaderHeight !== null && renderContainer.explicitHeaderHeight > 0) {
-                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.explicitHeaderHeight + 'px; }';
+              if (renderContainer.explicitHeaderCanvasHeight !== undefined && renderContainer.explicitHeaderCanvasHeight !== null && renderContainer.explicitHeaderCanvasHeight > 0) {
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.explicitHeaderCanvasHeight + 'px; }';
               }
-              // Otherwise if the render container has an INNER header height, use that on the header cells (so that all the header cells are the same height and those that have less elements don't have undersized borders)
-              else if (renderContainer.innerHeaderHeight !== undefined && renderContainer.innerHeaderHeight !== null && renderContainer.innerHeaderHeight > 0) {
-                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.innerHeaderHeight + 'px; }';
+              // // Otherwise if the render container has an INNER header height, use that on the header cells (so that all the header cells are the same height and those that have less elements don't have undersized borders)
+              else if (renderContainer.headerCanvasHeight !== undefined && renderContainer.headerCanvasHeight !== null && renderContainer.headerCanvasHeight > 0) {
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.headerCanvasHeight + 'px; }';
               }
 
               return ret;
@@ -4819,12 +4827,24 @@ angular.module('ui.grid')
           continue;
         }
 
-        if (container.header) {
+        if (container.header || container.headerCanvas) {
           containerHeadersToRecalc.push(container);
         }
       }
     }
 
+    /*
+     *
+     * Here we loop through the headers, measuring each element as well as any header "canvas" it has within it.
+     *
+     * If any header is less than the largest header height, it will be resized to that so that we don't have headers
+     * with different heights, which looks like a rendering problem
+     *
+     * We'll do the same thing with the header canvases, and give the header CELLS an explicit height if their canvas
+     * is smaller than the largest canvas height. That was header cells without extra controls like filtering don't
+     * appear shorter than other cells.
+     *
+     */
     if (containerHeadersToRecalc.length > 0) {
       // Putting in a timeout as it's not calculating after the grid element is rendered and filled out
       $timeout(function() {
@@ -4834,7 +4854,8 @@ angular.module('ui.grid')
         var rebuildStyles = false;
 
         // Get all the header heights
-        var maxHeight = 0;
+        var maxHeaderHeight = 0;
+        var maxHeaderCanvasHeight = 0;
         var i, container;
         for (i = 0; i < containerHeadersToRecalc.length; i++) {
           container = containerHeadersToRecalc[i];
@@ -4864,8 +4885,24 @@ angular.module('ui.grid')
             container.innerHeaderHeight = innerHeaderHeight;
 
             // Save the largest header height for use later
-            if (innerHeaderHeight > maxHeight) {
-              maxHeight = innerHeaderHeight;
+            if (innerHeaderHeight > maxHeaderHeight) {
+              maxHeaderHeight = innerHeaderHeight;
+            }
+          }
+
+          if (container.headerCanvas) {
+            var oldHeaderCanvasHeight = container.headerCanvasHeight;
+            var headerCanvasHeight = gridUtil.outerElementHeight(container.headerCanvas);
+
+            container.headerCanvasHeight = parseInt(headerCanvasHeight, 10);
+
+            if (oldHeaderCanvasHeight !== headerCanvasHeight) {
+              rebuildStyles = true;
+            }
+
+            // Save the largest header canvas height for use later
+            if (headerCanvasHeight > maxHeaderCanvasHeight) {
+              maxHeaderCanvasHeight = headerCanvasHeight;
             }
           }
         }
@@ -4875,8 +4912,12 @@ angular.module('ui.grid')
           container = containerHeadersToRecalc[i];
 
           // If this header's height is less than another header's height, then explicitly set it so they're the same and one isn't all offset and weird looking
-          if (container.headerHeight < maxHeight) {
-            container.explicitHeaderHeight = maxHeight;
+          if (container.headerHeight < maxHeaderHeight) {
+            container.explicitHeaderHeight = maxHeaderHeight;
+          }
+
+          if (container.headerCanvasHeight < maxHeaderCanvasHeight) {
+            container.explicitHeaderCanvasHeight = maxHeaderCanvasHeight;
           }
         }
 
