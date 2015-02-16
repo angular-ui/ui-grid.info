@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-e099c5b - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-cf86090 - 2015-02-16
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -112,6 +112,9 @@
   -ms-user-select: none;
   user-select: none;
   width: 0;
+}
+.ui-grid-header-cell:last-child {
+  border-right: 0;
 }
 .ui-grid-header-cell .sortable {
   cursor: pointer;
@@ -324,6 +327,9 @@ input[type="text"].ui-grid-filter-input:hover {
   border-right: 1px solid;
   border-color: #d4d4d4;
   box-sizing: border-box;
+}
+.ui-grid-cell:last-child {
+  border-right: 0;
 }
 .ui-grid-cell-contents {
   padding: 5px;
@@ -584,8 +590,8 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 .ui-grid[dir=rtl] .ui-grid-cell:last-child,
 .ui-grid[dir=rtl] .ui-grid-header-cell:last-child {
-  border-left: 1px solid;
-  border-color: #d4d4d4;
+  border-right: 1px solid #d4d4d4;
+  border-left: 0;
 }
 .ui-grid[dir=rtl] .ui-grid-header-cell:first-child .ui-grid-vertical-bar,
 .ui-grid[dir=rtl] .ui-grid-footer-cell:first-child .ui-grid-vertical-bar,
@@ -1112,6 +1118,15 @@ div.ui-grid-cell input.ng-valid {
 }
 .ui-grid-column-resizer.right {
   right: 0;
+}
+.ui-grid-header-cell:last-child .ui-grid-column-resizer.right {
+  border-right: 1px solid #d4d4d4;
+}
+.ui-grid[dir=rtl] .ui-grid-header-cell:last-child .ui-grid-column-resizer.right {
+  border-right: 0;
+}
+.ui-grid[dir=rtl] .ui-grid-header-cell:last-child .ui-grid-column-resizer.left {
+  border-left: 1px solid #d4d4d4;
 }
 .ui-grid.column-resizing {
   cursor: col-resize;

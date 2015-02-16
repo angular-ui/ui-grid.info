@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-e099c5b - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-cf86090 - 2015-02-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1244,7 +1244,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             function updateColumnWidths() {
               // Get the width of the viewport
-              var availableWidth = containerCtrl.colContainer.getViewportWidth();
+              var availableWidth = containerCtrl.colContainer.getViewportWidth() - grid.scrollbarWidth;
 
               //if (typeof(uiGridCtrl.grid.verticalScrollbarWidth) !== 'undefined' && uiGridCtrl.grid.verticalScrollbarWidth !== undefined && uiGridCtrl.grid.verticalScrollbarWidth > 0) {
               //  availableWidth = availableWidth + uiGridCtrl.grid.verticalScrollbarWidth;
@@ -7061,7 +7061,7 @@ angular.module('ui.grid')
         totalWidth = 0;
 
     // Get the width of the viewport
-    var availableWidth = self.getViewportWidth();
+    var availableWidth = self.getViewportWidth() - self.grid.scrollbarWidth;
 
     //if (typeof(self.grid.verticalScrollbarWidth) !== 'undefined' && self.grid.verticalScrollbarWidth !== undefined && self.grid.verticalScrollbarWidth > 0) {
     //  availableWidth = availableWidth + self.grid.verticalScrollbarWidth;
