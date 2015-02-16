@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-fee00cd - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-4381ca5 - 2015-02-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2215,11 +2215,11 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
               // If the render container has an "explicit" header height (such as in the case that its header is smaller than the other headers and needs to be explicitly set to be the same, ue thae)
               if (renderContainer.explicitHeaderCanvasHeight !== undefined && renderContainer.explicitHeaderCanvasHeight !== null && renderContainer.explicitHeaderCanvasHeight > 0) {
-                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.explicitHeaderCanvasHeight + 'px; }';
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { min-height: ' + renderContainer.explicitHeaderCanvasHeight + 'px; }';
               }
-              // // Otherwise if the render container has an INNER header height, use that on the header cells (so that all the header cells are the same height and those that have less elements don't have undersized borders)
+              // Otherwise if the render container has an INNER header height, use that on the header cells (so that all the header cells are the same height and those that have less elements don't have undersized borders)
               else if (renderContainer.headerCanvasHeight !== undefined && renderContainer.headerCanvasHeight !== null && renderContainer.headerCanvasHeight > 0) {
-                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { height: ' + renderContainer.headerCanvasHeight + 'px; }';
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { min-height: ' + renderContainer.headerCanvasHeight + 'px; }';
               }
 
               return ret;
