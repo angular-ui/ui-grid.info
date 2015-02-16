@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-cf86090 - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-5580ccb - 2015-02-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2144,7 +2144,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 scrollEvent.y = { percentage: scrollYPercentage, pixels: scrollYAmount };
               }
               if (event.deltaX !== 0) {
-                var scrollXAmount = event.deltaX * -1 * event.deltaFactor;
+                var scrollXAmount = event.deltaX * event.deltaFactor;
 
                 // Get the scroll percentage
                 var scrollLeft = gridUtil.normalizeScrollLeft(containerCtrl.viewport);
