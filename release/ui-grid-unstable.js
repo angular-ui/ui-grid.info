@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-78a4b43 - 2015-02-16
+ * ui-grid - v3.0.0-rc.19-0fc6b21 - 2015-02-18
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13185,7 +13185,7 @@ module.filter('px', function() {
 
               // if the cell isn't fully visible, and cellNav is present, scroll it to be fully visible before we start
               if ( $scope.grid.api.cellNav ){
-                $scope.grid.api.cellNav.scrollToIfNecessary( $scope, $scope.row, $scope.col );
+                $scope.grid.api.cellNav.scrollToIfNecessary( $scope.row, $scope.col );
               }
               
               cellModel = $parse($scope.row.getQualifiedColField($scope.col));
