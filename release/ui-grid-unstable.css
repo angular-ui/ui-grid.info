@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-0fc6b21 - 2015-02-18
+ * ui-grid - v3.0.0-rc.19-735af76 - 2015-02-20
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -86,9 +86,6 @@
 .ui-grid-header-viewport {
   overflow: hidden;
 }
-.ui-grid-header-canvas {
-  position: relative;
-}
 .ui-grid-header-canvas:before,
 .ui-grid-header-canvas:after {
   content: "";
@@ -98,15 +95,22 @@
 .ui-grid-header-canvas:after {
   clear: both;
 }
+.ui-grid-header-cell-wrapper {
+  position: relative;
+  display: table;
+  box-sizing: border-box;
+  height: 100%;
+}
+.ui-grid-header-cell-row {
+  display: table-row;
+}
 .ui-grid-header-cell {
   position: relative;
   box-sizing: border-box;
-  float: left;
-  top: 0;
-  bottom: 0;
   background-color: inherit;
   border-right: 1px solid;
   border-color: #d4d4d4;
+  display: table-cell;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -408,13 +412,22 @@ input[type="text"].ui-grid-filter-input:hover {
 .ui-grid-footer-canvas:after {
   clear: both;
 }
+.ui-grid-footer-cell-wrapper {
+  position: relative;
+  display: table;
+  box-sizing: border-box;
+  height: 100%;
+}
+.ui-grid-footer-cell-row {
+  display: table-row;
+}
 .ui-grid-footer-cell {
   overflow: hidden;
-  float: left;
   background-color: inherit;
   border-right: 1px solid;
   border-color: #d4d4d4;
   box-sizing: border-box;
+  display: table-cell;
 }
 .ui-grid-footer-cell:last-child {
   border-right: 0;

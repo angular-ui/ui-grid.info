@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-0fc6b21 - 2015-02-18
+ * ui-grid - v3.0.0-rc.19-735af76 - 2015-02-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2117,7 +2117,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 var newScrollLeft = args.getNewScrollLeft(colContainer,containerCtrl.viewport);
 
                 // Make the current horizontal scroll position available in the $scope
-                $scope.newScrollLeft = newScrollLeft;                
+                $scope.newScrollLeft = newScrollLeft;
 
                 if (containerCtrl.headerViewport) {
                   containerCtrl.headerViewport.scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.headerViewport, newScrollLeft);
@@ -2127,7 +2127,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                   containerCtrl.footerViewport.scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.footerViewport, newScrollLeft);
                 }
 
-                //scroll came from somewhere else, so the viewport must be positioned
+                // Scroll came from somewhere else, so the viewport must be positioned
                 if (args.source !== ScrollEvent.Sources.ViewPortScroll) {
                   containerCtrl.viewport[0].scrollLeft = newScrollLeft;
                 }
@@ -2206,21 +2206,16 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-canvas { width: ' + canvasWidth + 'px; height: ' + canvasHeight + 'px; }';
 
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-canvas { width: ' + (canvasWidth + grid.scrollbarWidth) + 'px; }';
+
+              if (renderContainer.explicitHeaderCanvasHeight) {
+                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-canvas { height: ' + renderContainer.explicitHeaderCanvasHeight + 'px; }';
+              }
               
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-viewport { width: ' + viewportWidth + 'px; height: ' + viewportHeight + 'px; }';
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-viewport { width: ' + headerViewportWidth + 'px; }';
 
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-canvas { width: ' + canvasWidth + grid.scrollbarWidth + 'px; }';
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-viewport { width: ' + footerViewportWidth + 'px; }';
-
-              // If the render container has an "explicit" header height (such as in the case that its header is smaller than the other headers and needs to be explicitly set to be the same, ue thae)
-              if (renderContainer.explicitHeaderCanvasHeight !== undefined && renderContainer.explicitHeaderCanvasHeight !== null && renderContainer.explicitHeaderCanvasHeight > 0) {
-                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { min-height: ' + renderContainer.explicitHeaderCanvasHeight + 'px; }';
-              }
-              // Otherwise if the render container has an INNER header height, use that on the header cells (so that all the header cells are the same height and those that have less elements don't have undersized borders)
-              else if (renderContainer.headerCanvasHeight !== undefined && renderContainer.headerCanvasHeight !== null && renderContainer.headerCanvasHeight > 0) {
-                ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-cell { min-height: ' + renderContainer.headerCanvasHeight + 'px; }';
-              }
 
               return ret;
             }
@@ -2237,57 +2232,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
   }]);
 
   module.controller('uiGridRenderContainer', ['$scope', 'gridUtil', function ($scope, gridUtil) {
-    var self = this;
-
-    self.rowStyle = function (index) {
-      var renderContainer = $scope.grid.renderContainers[$scope.containerId];
-
-      var styles = {};
-      
-      if (!renderContainer.disableRowOffset) {
-        if (index === 0 && self.currentTopRow !== 0) {
-          // The row offset-top is just the height of the rows above the current top-most row, which are no longer rendered
-          var hiddenRowWidth = ($scope.rowContainer.currentTopRow) *
-            $scope.rowContainer.visibleRowCache[$scope.rowContainer.currentTopRow].height;
-
-          // return { 'margin-top': hiddenRowWidth + 'px' };
-          //gridUtil.logDebug('margin-top ' + hiddenRowWidth );
-          styles['margin-top'] = hiddenRowWidth + 'px';
-        }
-      }
-      
-      if (!renderContainer.disableColumnOffset && $scope.colContainer.currentFirstColumn !== 0) {
-        if ($scope.grid.isRTL()) {
-          styles['margin-right'] = $scope.colContainer.columnOffset + 'px';
-        }
-        else {
-          styles['margin-left'] = $scope.colContainer.columnOffset + 'px';
-        }
-      }
-
-      return styles;
-    };
-
-    self.columnStyle = function (index) {
-      var renderContainer = $scope.grid.renderContainers[$scope.containerId];
-
-      var self = this;
-
-      if (!renderContainer.disableColumnOffset) {
-        if (index === 0 && $scope.colContainer.currentFirstColumn !== 0) {
-          var offset = $scope.colContainer.columnOffset;
-
-          if ($scope.grid.isRTL()) {
-            return { 'margin-right': offset + 'px' };
-          }
-          else {
-            return { 'margin-left': offset + 'px' }; 
-          }
-        }
-      }
-
-      return null;
-    };
+    
   }]);
 
 })();
@@ -2659,7 +2604,7 @@ angular.module('ui.grid')
             self.grid.modifyRows(newData)
               .then(function () {
                 // if (self.viewport) {
-                  self.grid.redrawInPlace();
+                  self.grid.redrawInPlace(true);
                 // }
 
                 $scope.$evalAsync(function() {
@@ -4946,9 +4891,10 @@ angular.module('ui.grid')
    * @name redrawCanvas
    * @methodOf ui.grid.class:Grid
    * @description Redraw the rows and columns based on our current scroll position
+   * @param {boolean} [rowsAdded] Optional to indicate rows are added and the scroll percentage must be recalculated
    * 
    */
-  Grid.prototype.redrawInPlace = function redrawInPlace() {
+  Grid.prototype.redrawInPlace = function redrawInPlace(rowsAdded) {
     // gridUtil.logDebug('redrawInPlace');
     
     var self = this;
@@ -4957,9 +4903,15 @@ angular.module('ui.grid')
       var container = self.renderContainers[i];
 
       // gridUtil.logDebug('redrawing container', i);
-
-      container.adjustRows(null, container.prevScrolltopPercentage, true);
-      container.adjustColumns(null, container.prevScrollleftPercentage);
+      
+      if (rowsAdded) {
+        container.adjustRows(container.prevScrollTop, null);
+        container.adjustColumns(container.prevScrollTop, null);
+      }
+      else {
+        container.adjustRows(null, container.prevScrolltopPercentage);
+        container.adjustColumns(null, container.prevScrollleftPercentage);
+      }
     }
   };
 
@@ -5972,7 +5924,7 @@ angular.module('ui.grid')
    * @description Returns the class definition for th column
    */
   GridColumn.prototype.getColClassDefinition = function () {
-    return ' .grid' + this.grid.id + ' ' + this.getColClass(true) + ' { width: ' + this.drawnWidth + 'px; }';
+    return ' .grid' + this.grid.id + ' ' + this.getColClass(true) + ' { min-width: ' + this.drawnWidth + 'px; max-width: ' + this.drawnWidth + 'px; }';
   };
 
   /**
@@ -7075,10 +7027,10 @@ angular.module('ui.grid')
     return styles;
   };
 
-  GridRenderContainer.prototype.columnStyle = function (index) {
+  GridRenderContainer.prototype.headerCellWrapperStyle = function () {
     var self = this;
     
-    if (index === 0 && self.currentFirstColumn !== 0) {
+    if (self.currentFirstColumn !== 0) {
       var offset = self.columnOffset;
 
       if (self.grid.isRTL()) {
@@ -18800,9 +18752,9 @@ module.filter('px', function() {
 
           if ( colDef || entity ) {          
             if (scrollFocusState.focus ){
-              grid.api.cellNav.scrollToFocus( $scope, entity, colDef );
+              grid.api.cellNav.scrollToFocus( entity, colDef );
             } else {
-              grid.api.cellNav.scrollTo( $scope, entity, colDef );
+              grid.api.cellNav.scrollTo( entity, colDef );
             }
           }
         },
@@ -19801,7 +19753,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('ui-grid/ui-grid-footer',
-    "<div class=\"ui-grid-footer-panel ui-grid-footer-aggregates-row\"><div class=\"ui-grid-footer ui-grid-footer-viewport\"><div class=\"ui-grid-footer-canvas\"><div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-footer-cell col=\"col\" render-index=\"$index\" class=\"ui-grid-footer-cell ui-grid-clearfix\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div></div>"
+    "<div class=\"ui-grid-footer-panel ui-grid-footer-aggregates-row\"><div class=\"ui-grid-footer ui-grid-footer-viewport\"><div class=\"ui-grid-footer-canvas\"><div class=\"ui-grid-footer-cell-wrapper\" ng-style=\"colContainer.headerCellWrapperStyle()\"><div class=\"ui-grid-footer-cell-row\"><div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-footer-cell col=\"col\" render-index=\"$index\" class=\"ui-grid-footer-cell ui-grid-clearfix\"></div></div></div></div></div></div>"
   );
 
 
@@ -19816,7 +19768,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div class=\"ui-grid-header\"><div class=\"ui-grid-top-panel\"><div class=\"ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell ui-grid-clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\" ng-style=\"$index === 0 && colContainer.columnStyle($index)\"></div></div></div><div ui-grid-menu></div></div></div>"
+    "<div class=\"ui-grid-header\"><div class=\"ui-grid-top-panel\"><div class=\"ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell-wrapper\" ng-style=\"colContainer.headerCellWrapperStyle()\"><div class=\"ui-grid-header-cell-row\"><div class=\"ui-grid-header-cell ui-grid-clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-header-cell col=\"col\" render-index=\"$index\"></div></div></div></div></div><div ui-grid-menu></div></div></div>"
   );
 
 
@@ -19912,7 +19864,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridViewport',
-    "<div class=\"ui-grid-viewport\" ng-style=\"containerCtrl.colContainer.getViewPortStyle()\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"containerCtrl.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+    "<div class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewPortStyle()\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
   );
 
 

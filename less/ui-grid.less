@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-0fc6b21 - 2015-02-18
+ * ui-grid - v3.0.0-rc.19-735af76 - 2015-02-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -402,15 +402,25 @@
   // .border-radius(@gridBorderRadius, 0, 0, @gridBorderRadius);
 }
 
+.ui-grid-footer-cell-wrapper {
+  position: relative;
+  display: table;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.ui-grid-footer-cell-row {
+  display: table-row;
+}
+
 .ui-grid-footer-cell {
   overflow: hidden;
-  // position: absolute;
   // position: relative; // NOTE: removing so border is visible
-  float: left;
   background-color: inherit;
   border-right: @gridBorderWidth solid;
   border-color: @borderColor;
   box-sizing: border-box;
+  display: table-cell;
 
   &:last-child {
     border-right: 0;
@@ -537,7 +547,6 @@ input[type="text"].ui-grid-filter-input {
 }
 
 .ui-grid-header-canvas {
-  position: relative;
 
   // Clearfix for floating header cells
   &:before, &:after {
@@ -553,15 +562,24 @@ input[type="text"].ui-grid-filter-input {
   // .border-radius(@gridBorderRadius, 0, 0, @gridBorderRadius);
 }
 
+.ui-grid-header-cell-wrapper {
+  position: relative;
+  display: table;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.ui-grid-header-cell-row {
+  display: table-row;
+}
+
 .ui-grid-header-cell {
   position: relative;
   box-sizing: border-box;
-  float: left;
-  top: 0;
-  bottom: 0;
   background-color: inherit;
   border-right: @gridBorderWidth solid;
   border-color: @headerVerticalBarColor;
+  display: table-cell;
 
   &:last-child {
     border-right: 0;
