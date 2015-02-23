@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-d841b92 - 2015-02-23
+ * ui-grid - v3.0.0-rc.19-09f478c - 2015-02-23
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2397,6 +2397,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
       return {
         replace: true,
         scope: {},
+        controllerAs: 'Viewport',
         templateUrl: 'ui-grid/uiGridViewport',
         require: ['^uiGrid', '^uiGridRenderContainer'],
         link: function($scope, $elm, $attrs, controllers) {
@@ -2477,7 +2478,34 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               }
               scrollEvent.fireScrollingEvent();
           });
-        }
+        },
+        controller: ['$scope', function ($scope) {
+          this.rowStyle = function (index) {
+            var rowContainer = $scope.rowContainer;
+            var colContainer = $scope.colContainer;
+
+            var styles = {};
+
+            if (index === 0 && rowContainer.currentTopRow !== 0) {
+              // The row offset-top is just the height of the rows above the current top-most row, which are no longer rendered
+              var hiddenRowWidth = (rowContainer.currentTopRow) * rowContainer.grid.options.rowHeight;
+
+              // return { 'margin-top': hiddenRowWidth + 'px' };
+              styles['margin-top'] = hiddenRowWidth + 'px';
+            }
+
+            if (colContainer.currentFirstColumn !== 0) {
+              if (colContainer.grid.isRTL()) {
+                styles['margin-right'] = colContainer.columnOffset + 'px';
+              }
+              else {
+                styles['margin-left'] = colContainer.columnOffset + 'px';
+              }
+            }
+
+            return styles;
+          };
+        }]
       };
     }
   ]);
@@ -2813,6 +2841,8 @@ angular.module('ui.grid').directive('uiGrid',
 
 (function(){
   'use strict';
+
+  // TODO: rename this file to ui-grid-pinned-container.js
 
   angular.module('ui.grid').directive('uiGridPinnedContainer', ['gridUtil', function (gridUtil) {
     return {
@@ -7002,31 +7032,6 @@ angular.module('ui.grid')
     this.currentFirstColumn = renderedRange[0];
 
     this.setRenderedColumns(columnArr);
-  };
-
-  GridRenderContainer.prototype.rowStyle = function (index) {
-    var self = this;
-
-    var styles = {};
-    
-    if (index === 0 && self.currentTopRow !== 0) {
-      // The row offset-top is just the height of the rows above the current top-most row, which are no longer rendered
-      var hiddenRowWidth = (self.currentTopRow) * self.grid.options.rowHeight;
-
-      // return { 'margin-top': hiddenRowWidth + 'px' };
-      styles['margin-top'] = hiddenRowWidth + 'px';
-    }
-
-    if (self.currentFirstColumn !== 0) {
-      if (self.grid.isRTL()) {
-        styles['margin-right'] = self.columnOffset + 'px';
-      }
-      else {
-        styles['margin-left'] = self.columnOffset + 'px';
-      }
-    }
-
-    return styles;
   };
 
   GridRenderContainer.prototype.headerCellWrapperStyle = function () {
@@ -19866,7 +19871,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridViewport',
-    "<div class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewPortStyle()\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"rowContainer.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+    "<div class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewPortStyle()\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
   );
 
 
