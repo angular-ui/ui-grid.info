@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-735af76 - 2015-02-20
+ * ui-grid - v3.0.0-rc.19-dd6dc15 - 2015-02-23
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3683,8 +3683,8 @@ angular.module('ui.grid')
             return 0;
           }
           else {
-            var numA = a.match(nameRE)[1];
-            var numB = b.match(nameRE)[1];
+            var numA = a.displayName.match(nameRE)[1];
+            var numB = b.displayName.match(nameRE)[1];
 
             return parseInt(numA, 10) > parseInt(numB, 10) ? 1 : -1;
           }
