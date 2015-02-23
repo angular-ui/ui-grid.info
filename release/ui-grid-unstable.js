@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.19-09f478c - 2015-02-23
+ * ui-grid - v3.0.0-rc.19-4c32e3d - 2015-02-23
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1143,14 +1143,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
                   if (n !== o) {
                     uiGridCtrl.grid.api.core.raise.filterChanged();
-                    uiGridCtrl.grid.refresh()
-                      .then(function () {
-                        if (uiGridCtrl.prevScrollArgs && uiGridCtrl.prevScrollArgs.y && uiGridCtrl.prevScrollArgs.y.percentage) {
-                          var scrollEvent = new ScrollEvent(uiGridCtrl.grid,null,null,'uiGridHeaderCell.toggleMenu');
-                          scrollEvent.y.percentage = uiGridCtrl.prevScrollArgs.y.percentage;
-                          scrollEvent.fireScrollingEvent();
-                        }
-                      });
+                    uiGridCtrl.grid.refresh(true);
                   }
                 }));  
               });
@@ -4731,11 +4724,9 @@ angular.module('ui.grid')
    * @name refresh
    * @methodOf ui.grid.class:Grid
    * @description Refresh the rendered grid on screen.
-   * 
+   * @params {boolean} [rowsAltered] Optional flag for refreshing when the number of rows has changed.
    */
-  Grid.prototype.refresh = function refresh() {
-    // gridUtil.logDebug('grid refresh');
-    
+  Grid.prototype.refresh = function refresh(rowsAltered) {
     var self = this;
     
     var p1 = self.processRowsProcessors(self.rows).then(function (renderableRows) {
@@ -4747,11 +4738,11 @@ angular.module('ui.grid')
     });
 
     return $q.all([p1, p2]).then(function () {
-      self.redrawInPlace();
+      self.redrawInPlace(rowsAltered);
 
       self.refreshCanvas(true);
     });
-  };  
+  };
   
   /**
    * @ngdoc function
