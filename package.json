@@ -1,0 +1,16 @@
+{
+  "name": "ui-grid.info",
+  "private": true,
+  "version": "0.0.0",
+  "description": "ui-grid.info",
+  "dependencies": {
+    
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angular-ui/ui-grid.info.git"
+  },
+  "author": "",
+  "license": "MIT"
+}
