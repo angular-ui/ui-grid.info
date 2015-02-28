@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-39ace13 - 2015-02-28
+ * ui-grid - v3.0.0-rc.20-9246af8 - 2015-02-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -472,6 +472,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
       var positionData = {};
       positionData.left = $columnElement[0].offsetLeft;
       positionData.top = $columnElement[0].offsetTop;
+      positionData.parentLeft = $columnElement[0].offsetParent.offsetLeft;
 
       // Get the grid scrollLeft
       positionData.offset = 0;
@@ -532,7 +533,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
         }
       }
       
-      var left = positionData.left + renderContainerOffset - containerScrollLeft + positionData.width - myWidth + paddingRight;
+      var left = positionData.left + renderContainerOffset - containerScrollLeft + positionData.parentLeft + positionData.width - myWidth + paddingRight;
       if (left < positionData.offset){
         left = positionData.offset;
       }
