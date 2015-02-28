@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-8d1729e - 2015-02-28
+ * ui-grid - v3.0.0-rc.20-39ace13 - 2015-02-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3472,7 +3472,7 @@ angular.module('ui.grid')
   Grid.prototype.addRowHeaderColumn = function addRowHeaderColumn(colDef) {
     var self = this;
     //self.createLeftContainer();
-    var rowHeaderCol = new GridColumn(colDef, self.rowHeaderColumns.length, self);
+    var rowHeaderCol = new GridColumn(colDef, gridUtil.nextUid(), self);
     rowHeaderCol.isRowHeader = true;
     if (self.isRTL()) {
       self.createRightContainer();
