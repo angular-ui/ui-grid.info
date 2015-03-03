@@ -14,7 +14,7 @@ language:
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://ui-grid.info/blog
-root: /
+root: /blog/
 permalink: :title/
 tag_dir: tags
 archive_dir: archives
@@ -23,7 +23,7 @@ code_dir: downloads/code
 
 # Directory
 source_dir: source
-public_dir: public
+public_dir: ../blog
 
 # Writing
 new_post_name: :title.md # File name of new posts

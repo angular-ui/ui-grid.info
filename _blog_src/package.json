@@ -10,6 +10,7 @@
     "grunt-contrib-connect": "^0.9.0",
     "grunt": "^0.4.5",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-contrib-stylus": "^0.20.0"
+    "grunt-contrib-stylus": "^0.20.0",
+    "hexo-generator-cherrypick": "https://github.com/c0bra/hexo-generator-cherrypick/tarball/0.0.1"
   }
 }
