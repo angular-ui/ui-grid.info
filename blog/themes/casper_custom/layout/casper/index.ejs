@@ -1,0 +1,30 @@
+
+<main class="content" role="main">
+  <% page.posts.each(function(post) { %>
+  <article class="post">
+    <header class="post-header">
+      <%- partial('post/meta', {post: post}) %>
+      <h2 class="post-title"><a href="<%- config.root %><%- post.path %>"><%- post.title %></a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+      <% if (post.excerpt){ %>
+        <%- post.excerpt %>
+      <% } else { %>
+        <%- post.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 220) %>
+      <% } %>
+      </p>
+      <% if (theme.excerpt_link) { %>
+      <p>
+          <a href="<%- config.root %><%- post.path %>" class="excerpt-link"><%= theme.excerpt_link %>...</a>
+      </p>
+      <% } %>
+    </section>
+  </article>
+  <% }); %>
+  <nav class="pagination" role="pagination">
+    <% if (page.prev) { %><a class="newer-posts" href="<%- url_for(page.prev_link) %>">← Newer Posts</a><% } %>
+    <span class="page-number">Page <%- page.current %> of <%- page.total %></span>
+    <% if (page.next) { %><a class="older-posts" href="<%- url_for(page.next_link) %>">Older Posts →</a><% } %>
+  </nav>
+</main>

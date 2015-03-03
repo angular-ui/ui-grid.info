@@ -1,0 +1,9 @@
+<header class="site-head" <% if (theme.cover) { %> style="background-image: url(<%- theme.cover %>)" <% } %>>
+    <div class="vertical">
+        <div class="site-head-content inner">
+            <% if (theme.logo) { %> <a class="blog-logo" href="<%- config.root %>"><img src="<%- theme.logo %>" alt="Blog Logo"/></a> <% } %>
+            <h1 class="blog-title"><%- config.title %></h1>
+            <h2 class="blog-description"><%- config.subtitle %></h2>
+        </div>
+    </div>
+</header>
