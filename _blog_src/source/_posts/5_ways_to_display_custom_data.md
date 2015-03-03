@@ -1,4 +1,5 @@
-title: 5 Ways to Customize Your Data in UI-Grid
+author: Brian
+title: 5 Ways to Customize Your UI-Grid Data
 date: 2015-02-27 10:55:01
 tags:
  - customize
