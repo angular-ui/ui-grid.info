@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-0b29072 - 2015-02-28
+ * ui-grid - v3.0.0-rc.20-2b635fb - 2015-03-03
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14906,6 +14906,7 @@ module.filter('px', function() {
           var a = D.createElement('a');
           var strMimeType = 'application/octet-stream;charset=utf-8';
           var rawFile;
+          var ieVersion;
       
           if (!fileName) {
             var currentDate = new Date();
@@ -14914,7 +14915,8 @@ module.filter('px', function() {
                        currentDate.getMinutes() + currentDate.getSeconds() + ".csv";
           }
 
-          if (this.isIE() < 10) {
+          ieVersion = this.isIE();
+          if (ieVersion && ieVersion < 10) {
             var frame = D.createElement('iframe');
             document.body.appendChild(frame);
         
