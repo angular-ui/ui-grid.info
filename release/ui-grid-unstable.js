@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-2b635fb - 2015-03-03
+ * ui-grid - v3.0.0-rc.20-5f155b2 - 2015-03-03
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18911,8 +18911,8 @@ module.filter('px', function() {
               
               grid.columns[currentIndex].width = columnState.width;
 
-              if ( !angular.equals(grid.columns[currentIndex].sort, columnState.sort && 
-                   !( grid.columns[currentIndex].sort === undefined && angular.isEmpty(columnState.sort) ) ) ){
+              if ( !angular.equals(grid.columns[currentIndex].sort, columnState.sort) &&
+                   !( grid.columns[currentIndex].sort === undefined && angular.isEmpty(columnState.sort) ) ){
                 grid.columns[currentIndex].sort = angular.copy( columnState.sort );
                 grid.api.core.raise.sortChanged();
               }
