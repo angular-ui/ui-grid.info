@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-5f155b2 - 2015-03-03
+ * ui-grid - v3.0.0-rc.20-b7d6928 - 2015-03-04
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12664,7 +12664,6 @@ module.filter('px', function() {
           });
 
           $elm.find('div').on('focus', function (evt) {
-            console.log('cellNav focus');
             uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col), evt.ctrlKey || evt.metaKey);
           });
 
@@ -12686,7 +12685,6 @@ module.filter('px', function() {
 
               // This cellNav event came from a keydown event so we can safely refocus
               if (rowCol.hasOwnProperty('eventType') && rowCol.eventType === uiGridCellNavConstants.EVENT_TYPE.KEYDOWN) {
-                console.log('focus from navEvent');
                 $elm.find('div')[0].focus();
               }
             }
