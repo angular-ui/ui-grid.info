@@ -9,7 +9,7 @@
   <meta name="MobileOptimized" content="320" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>5 Ways to Customize Your UI-Grid Data | UI Grid</title>
+  <title>3 Ways to Customize Your UI-Grid Data | UI Grid</title>
 
   <meta name="generator" content="UI Grid">
 
@@ -83,7 +83,7 @@
   </a>
 </span>
 
-        <h1 class="post-title">5 Ways to Customize Your UI-Grid Data</h1>
+        <h1 class="post-title">3 Ways to Customize Your UI-Grid Data</h1>
 
         <br>
 
@@ -91,50 +91,35 @@
           <!-- 5 ways to display data the way you want -->
 <p>Getting your data displayed just right can be a huge pain.</p>
 <p>You might just want to format some numbers, or you might want to embed something complex like a chart or custom directive.</p>
-<p>In this post outline five different tactics you can use to get your data <strong>just the way you want it</strong>.</p>
+<p>In this post outline three different tactics you can use to get your data <strong>just the way you want it</strong>:</p>
 <ul>
 <li>Bindings</li>
-<li>Cell Filters</li>
-<li>Cell Templates</li>
+<li>Cell Filters,</li>
+<li>and Cell Templates</li>
 </ul>
 <h2 id="Bindings">Bindings</h2>
 <p>UI Grid columns can be bound to any sort of Angular expression, as well as property names that would normally break an expression:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line">  { field: <span class="string">'first-name'</span> }, <span class="comment">/* Yes, you can use hyphens, plus signs, etc */</span></div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/*</span></div><div class="line">    Yes, you can use hyphens, plus signs, etc.</div><div class="line"></div><div class="line">    Normally something like 0 would bomb but UI Grid pre-processes</div><div class="line">    your bindings to make sure they work correctly.</div><div class="line">  */</div><div class="line">  { field: <span class="string">'first-name'</span> }, </div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
 
 <h2 id="Cell_Filters">Cell Filters</h2>
-<p>Cell filters can transform the displayed value for a column while leaving the model intact. In this plunker the amount column contains floating point values, but we only want to display the integer part. A simple cellFilter will alter the displayed value the way we want.</p>
+<p>Cell filters can transform the displayed value for a column while leaving the model intact. In this plunker the amount column contains floating point values, but we only want to display the integer part. A simple cellFilter that uses <code>.toFixed()</code> will alter the displayed value the way we want.</p>
 <iframe src="http://embed.plnkr.co/BjLqXGiUI8nQFwvijduh/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
 
-
-
 <h3 id="Passing_Arguments">Passing Arguments</h3>
-<h3 id="Using_Scope">Using Scope</h3>
+<p>In the third column I am using two different fields. The column itself is bound to the same field as the second column, but on the filter I am passing the scope like so: <code>cellFilter: &#39;currencyFilter:this&#39;</code>.  Using the <code>this</code> argument on your filter will pass the scope.</p>
+<p>Then I can lookup the currency symbol I want using the currency field from the row.</p>
+<p>If you double-click a cell in the Currency column you’ll see that the raw value is still available to be edited. Cell filters only change your displayed value!</p>
 <h2 id="Cell_Templates">Cell Templates</h2>
+<p>Column definitions take a <code>cellTemplate</code> argument you can use to give your cells a custom template. You can specify it a few different ways, with a url (relative or absolute), an Angular template ID, a string/Angular element, or a promise.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'name-template.html'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'myTemplateId'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: $.get(<span class="string">'url-to-your-template.html'</span>) }</div><div class="line">};</div></pre></td></tr></table></figure>
+
 <h3 id="Custom_Directives">Custom Directives</h3>
+<p>You can put absolutely anything in your cell templates, but in order to make it look good there’s just one thing to remember. Wrapping your cell in an element using the class <code>.ui-grid-cell-contents</code> will apply the proper CSS settings like padding, overflow, etc., and make sure your cell fits in its space nicely.</p>
+<iframe src="http://embed.plnkr.co/irskqERheTOiFql82QFC/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<p>Here I’ve used d3.js, nvd3.js, and angular-nvd3.js to create sparkline charts in my cells.</p>
 
 
-          
-          <!-- Begin MailChimp Signup Form -->
-<!-- <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css"> -->
-
-
-
-<div id="mc_embed_signup" class="mailchimp_form">
-  <form class="form-inline" action="//ui-grid.us8.list-manage.com/subscribe/post?u=cd04613434129cb711cd99965&amp;id=969c1199dd" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div id="mc_embed_signup_scroll">
-      <label for="mce-EMAIL">Send me that flowchart!</label>
-      <br>
-      <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
-      <input type="hidden" class="form-control" value="5_ways_customized_data" name="SIGNUP" id="SIGNUP">
-      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-      <div style="position: absolute; left: -5000px;"><input type="text" name="b_cd04613434129cb711cd99965_969c1199dd" tabindex="-1" value=""></div>
-      <br>
-      <br>
-      <div class="clear"><input type="submit" class="btn btn-success" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"></div>
-    </div>
-  </form>
-</div>
-<!--End mc_embed_signup-->
           
         </section>
 
@@ -145,15 +130,15 @@
 </section>
           <section class="share">
   <h4>Share this post</h4>
-  <a class="fa fa-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+  <a class="fa fa-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/3_ways_to_customize_data/"
      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
       <span class="hidden">Twitter</span>
   </a>
-  <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+  <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/3_ways_to_customize_data/"
      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
       <span class="hidden">Facebook</span>
   </a>
-  <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+  <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/3_ways_to_customize_data/"
      onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
       <span class="hidden">Google+</span>
   </a>

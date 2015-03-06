@@ -28,6 +28,10 @@ body {
   margin-top: 60px;
 }
 
+.post-content ul {
+  margin-left: 20px;
+}
+
 /* The author credit area after the post */
 .post-footer {
     position: relative;
@@ -77,8 +81,15 @@ body {
 
 /* Mailchimp form */
 
-.mailchimp_form {
+.mailchimp-form-container {
   margin-top: 50px;
+}
+
+.mailchimp-form {
+  border: 2px solid #dce4ec;
+  border-radius: 4px;
+  float: left;
+  padding: 20px;
 }
 
 /*------------------------------------------
