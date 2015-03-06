@@ -9,9 +9,10 @@
         <%- partial('post/meta') %>
         <h1 class="post-title"><%- post.title %></h1>
         <% if (author) { %>
-          <em>Posted by <strong><%= author %></strong> on <%= post.date.format('MMMM Do YYYY') %></em>
-          <br>
+          <em>Posted by <strong><%= author %></strong></em>
         <% } %>
+        <br>
+        <br>
         <br>
 
         <section class="post-content">

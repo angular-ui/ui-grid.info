@@ -1,6 +1,6 @@
 
 body {
-  padding-top: 80px;
+  padding-top: 0px;
 }
 
 .posts-header {
@@ -36,4 +36,45 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gs
   text-align: center;
   margin-top: 30px;
   margin-bottom: 0;
+}
+
+/* Pagination */
+
+/* The main wrapper for our pagination links */
+.paging {
+  text-align: center;
+  /*position: relative;*/
+  /*width: 80%;
+  max-width: 700px;
+  margin: 4rem auto;*/
+  /*font-family: 'Open Sans', sans-serif;*/
+  /*font-size: 1.3rem;*/
+  color: #9EABB3;
+  margin-top: 4rem;
+}
+
+.paging a {
+  color: #9EABB3;
+}
+
+/* Push the previous/next links out to the left/right */
+.older-posts,
+.newer-posts {
+    /*position: absolute;
+    display: inline-block;*/
+    padding: 0 15px;
+    border: #EBF2F6 2px solid;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: border ease 0.3s;
+}
+
+.page-number {
+    display: inline-block;
+    padding: 2px 0;
+}
+
+.older-posts:hover,
+.newer-posts:hover {
+    border-color: #9EABB3;
 }

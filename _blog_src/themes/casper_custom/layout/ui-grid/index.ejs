@@ -36,7 +36,7 @@
   </article>
   <% }); %>
 
-  <nav class="pagination row" role="pagination">
+  <nav class="row pagination" role="pagination">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <% if (page.prev) { %><a class="newer-posts" href="<%- url_for(page.prev_link) %>">← Newer Posts</a><% } %>
       <span class="page-number">Page <%- page.current %> of <%- page.total %></span>

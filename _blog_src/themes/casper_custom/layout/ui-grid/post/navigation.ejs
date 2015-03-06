@@ -1,0 +1,21 @@
+<nav class="row paging" role="pagination">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <div class="col-lg-5 col-md5">
+      <% if (page.prev) { %>
+      <a class="older-posts" href="<%- url_for(page.prev.path) %>">
+          ← <%- page.prev.title %>
+      </a>
+      <% } %>
+    </div>
+
+    <!-- <span class="page-number col-lg-1 col-md-1">•</span> -->
+
+    <div class="col-lg-5 col-md5">
+      <% if (page.next) { %>
+      <a class="newer-posts pull-right" href="<%- url_for(page.next.path) %>">
+          <%- page.next.title %> →
+      </a>
+      <% } %>
+    </div>
+  </div>
+</nav>
