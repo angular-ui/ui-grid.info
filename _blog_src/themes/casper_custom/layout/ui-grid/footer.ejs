@@ -1,0 +1,33 @@
+<hr>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center">
+          <li>
+            <a href="<%= url_for('/atom.xml') %>">
+              <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/angular-ui/ng-grid">
+              <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <p class="copyright text-muted">Copyright © UI Grid <span class="copyright-date">2015</span></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementsByClassName('copyright-date')[0].innerHTML = (new Date()).getYear() + 1900;
+</script>

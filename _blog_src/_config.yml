@@ -102,3 +102,8 @@ excerpt_link: Read More
 
 # Miscellaneous
 rss:
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20

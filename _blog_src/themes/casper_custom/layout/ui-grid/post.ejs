@@ -1,0 +1,30 @@
+
+<% permalink = config.url + config.root + post.path %>
+<% author = post.author || config.author %>
+
+<main class="container" role="main">
+  <article>
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <%- partial('post/meta') %>
+        <h1 class="post-title"><%- post.title %></h1>
+        <% if (author) { %>
+          <em>Posted by <strong><%= author %></strong> on <%= post.date.format('MMMM Do YYYY') %></em>
+          <br>
+        <% } %>
+        <br>
+
+        <section class="post-content">
+          <%- post.content %>
+        </section>
+
+        <footer class="post-footer">
+          <%- partial('post/author') %>
+          <%- partial('post/share') %>
+        </footer>
+      </div>
+    </div>
+  </article>
+  <%- partial('post/navigation') %>
+  <%- partial('post/comments') %>
+</main>

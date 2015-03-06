@@ -1,0 +1,39 @@
+
+body {
+  padding-top: 80px;
+}
+
+.posts-header {
+  text-transform: uppercase;
+}
+
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gsc-search-button 
+{
+  box-sizing: content-box;
+  line-height: normal;
+}
+
+.post-search-form input.gsc-search-button.gsc-search-button-v2 {
+  background-color: #18bc9c;
+  border-color: #2ca78f;
+}
+
+.site-footer {
+  padding: 50px 0 65px;
+}
+
+.site-footer .list-inline {
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer .list-inline a {
+  color: #2c3e50;
+}
+
+.site-footer .copyright {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 0;
+}

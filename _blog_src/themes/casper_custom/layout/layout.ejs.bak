@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-<%- partial('ui-grid/head') %>
+<%- partial('casper/head') %>
 <% if (typeof page.title == 'undefined') { %>
 <body class="home-template">
 <% } else { %>
 <body class="post-template">
 <% } %>
-  <%- partial('ui-grid/header') %>
+  <%- partial('casper/header') %>
   <%- body %>
-  <%- partial('ui-grid/footer') %>
+  <%- partial('casper/footer') %>
   <%- partial('casper/after_all') %>
 </body>
 </html>
