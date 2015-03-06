@@ -3,9 +3,21 @@ body {
   padding-top: 0px;
 }
 
+/*------------------------------------------
+    Posts
+--------------------------------------------*/
+
 .posts-header {
   text-transform: uppercase;
 }
+
+.post-content {
+  font-size: 18px;
+}
+
+/*------------------------------------------
+    Google search form
+--------------------------------------------*/
 
 input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gsc-search-button 
 {
@@ -17,6 +29,10 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gs
   background-color: #18bc9c;
   border-color: #2ca78f;
 }
+
+/*------------------------------------------
+    Footer
+--------------------------------------------*/
 
 .site-footer {
   padding: 50px 0 65px;
@@ -38,7 +54,9 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gs
   margin-bottom: 0;
 }
 
-/* Pagination */
+/*------------------------------------------
+    Pagination
+--------------------------------------------*/
 
 /* The main wrapper for our pagination links */
 .paging {
@@ -78,3 +96,180 @@ input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gs
 .newer-posts:hover {
     border-color: #9EABB3;
 }
+
+
+/* Hexo: Syntax Highlighter */
+
+figure.highlight {
+    background: #23241f;
+    border-radius:0.3em;
+    border:1px solid #e1e1e1;
+    line-height:1.45em;
+    font-size:.9em;
+    margin-bottom:2.1em;
+    /*color:#222;*/
+    overflow:auto;
+    white-space:pre;
+    word-wrap:normal;
+}
+figure.highlight figcaption {
+    padding: 7px 10px;
+    font-size: .8em;
+}
+figure.highlight table {
+    width:100%;
+    margin: 0;
+}
+figure.highlight table > tbody > tr > td, figure.highlight table > tbody > tr > td {
+    padding: 0;
+    background: #23241f !important;
+}
+figure.highlight table > tbody > tr > td, figure.highlight table > tbody > tr > td > pre {
+    background: #23241f !important;
+}
+figure.highlight table > tbody > tr > td.gutter {
+    max-width: 40px;
+    text-align: right;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+figure.highlight pre {
+    border: none;
+    margin: 0;
+}
+
+
+/* Theme: Solarized - Github
+ * More theme here: http://softwaremaniacs.org/media/soft/highlight/test.html
+ */
+/*pre .comment,
+pre .template_comment,
+.diff pre .header,
+pre .javadoc {
+  color: #998;
+  font-style: italic
+}
+
+pre .keyword,
+.css .rule pre .keyword,
+pre .winutils,
+.javascript pre .title,
+.nginx pre .title,
+pre .subst,
+pre .request,
+pre .status {
+  color: #333;
+  font-weight: bold
+}
+
+pre .number,
+pre .hexcolor,
+.ruby pre .constant {
+  color: #099;
+}
+
+pre .string,
+pre .tag pre .value,
+pre .phpdoc,
+.tex pre .formula {
+  color: #d14
+}
+
+pre .title,
+pre .id,
+.coffeescript pre .params,
+.scss pre .preprocessor {
+  color: #900;
+  font-weight: bold
+}
+
+.javascript pre .title,
+.lisp pre .title,
+.clojure pre .title,
+pre .subst {
+  font-weight: normal
+}
+
+pre .class pre .title,
+.haskell pre .type,
+.vhdl pre .literal,
+.tex pre .command {
+  color: #458;
+  font-weight: bold
+}
+
+pre .tag,
+pre .tag pre .title,
+pre .rules pre .property,
+.django pre .tag pre .keyword {
+  color: #000080;
+  font-weight: normal
+}
+
+pre .attribute,
+pre .variable,
+.lisp pre .body {
+  color: #008080
+}
+
+pre .regexp {
+  color: #009926
+}
+
+pre .symbol,
+.ruby pre .symbol pre .string,
+.lisp pre .keyword,
+.tex pre .special,
+pre .prompt {
+  color: #990073
+}
+
+pre .built_in,
+.lisp pre .title,
+.clojure pre .built_in {
+  color: #0086b3
+}
+
+pre .preprocessor,
+pre .pragma,
+pre .pi,
+pre .doctype,
+pre .shebang,
+pre .cdata {
+  color: #999;
+  font-weight: bold
+}
+
+pre .deletion {
+  background: #fdd
+}
+
+pre .addition {
+  background: #dfd
+}
+
+.diff pre .change {
+  background: #0086b3
+}
+
+pre .chunk {
+  color: #aaa
+}
+*/
+
+
+/* Github */
+
+/*.gist table {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.gist .line-number {
+    min-width: 25px;
+    font-size: 1.1rem;
+}*/

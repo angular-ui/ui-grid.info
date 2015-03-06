@@ -1,13 +1,14 @@
 <% if (is_post()) { %>
 <span class="post-meta text-muted">
-      <time datetime="<%= date_xml(post.date) %>" itemprop="datePublished">
-          <%= date(post.date, 'MMMM Do YYYY') %>
-      </time>
-    <% if (post.tags && post.tags.length){ %>
-    <% count = post.tags.length %>
-    | <% post.tags.forEach(function(tag, index) { %>
-    <a href='<%= config.root + tag.path %>'><%= tag.name %></a><% if (count !== index+1) { %>,<% } %>
-    <% }); %>
+    <time datetime="<%= date_xml(post.date) %>" itemprop="datePublished">
+        <%= date(post.date, 'MMMM Do YYYY') %>
+    </time>
+    <!-- TODO: Turning off tags on posts for now, turn on later maybe? -->
+    <% if (false && post.tags && post.tags.length){ %>
+      <% count = post.tags.length %>
+      | <% post.tags.forEach(function(tag, index) { %>
+      <a href='<%= config.root + tag.path %>'><%= tag.name %></a><% if (count !== index+1) { %>,<% } %>
+      <% }); %>
     <% } %>
 </span>
 <span class="pull-right">

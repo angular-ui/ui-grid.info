@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>UI Grid - Blog</title>
-<link rel="stylesheet" href="/docs/css/bootstrap-flatly.min.css" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="/css/site.css" />
-<link rel="stylesheet" href="/blog/css/site.css" />
-<link rel="stylesheet" href="//ui-grid.info/release/ui-grid-unstable.min.css" />
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="An AngularJS data grid" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tag: display | UI Grid</title>
+
+  <meta name="generator" content="UI Grid">
+
+  <link rel="stylesheet" href="/docs/css/bootstrap-flatly.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/blog/css/site.css" />
+  <!-- <link rel="stylesheet" href="/blog/css/screen.css" /> -->
+  <link rel="stylesheet" href="//ui-grid.info/release/ui-grid-unstable.min.css" />
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css"> -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
+  
+</head>
 
 <body class="home-template">
 
@@ -64,13 +83,8 @@
     <section class="post-excerpt">
       <p>
       
-        
-cellFilter
-cellTemplate
-Binding to a function
-
-
-
+        Getting your data displayed just right can be a huge pain. You might just want to format some numbers or you might want to embed something more complex like a chart or custom directive.
+In this post outline five differen
       
       </p>
       
@@ -123,6 +137,16 @@ Binding to a function
   document.getElementsByClassName('copyright-date')[0].innerHTML = (new Date()).getYear() + 1900;
 </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+$(document).ready(function() {
+    $('.highlight .code pre').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+</script>
 
 <script type="text/javascript" src="/blog/js/jquery.fitvids.js"></script>
 <script type="text/javascript" src="/blog/js/index.js"></script>

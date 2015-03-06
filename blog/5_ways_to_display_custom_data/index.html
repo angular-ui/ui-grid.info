@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>UI Grid - Blog</title>
-<link rel="stylesheet" href="/docs/css/bootstrap-flatly.min.css" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
-<link rel="stylesheet" href="/css/site.css" />
-<link rel="stylesheet" href="/blog/css/site.css" />
-<link rel="stylesheet" href="//ui-grid.info/release/ui-grid-unstable.min.css" />
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="An AngularJS data grid" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>5 Ways to Customize Your UI-Grid Data | UI Grid</title>
+
+  <meta name="generator" content="UI Grid">
+
+  <link rel="stylesheet" href="/docs/css/bootstrap-flatly.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/blog/css/site.css" />
+  <!-- <link rel="stylesheet" href="/blog/css/screen.css" /> -->
+  <link rel="stylesheet" href="//ui-grid.info/release/ui-grid-unstable.min.css" />
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css"> -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
+  
+</head>
 
 <body class="post-template">
 
@@ -51,16 +70,10 @@
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         
 <span class="post-meta text-muted">
-      <time datetime="2015-02-27T16:55:01.000Z" itemprop="datePublished">
-          February 27th 2015
-      </time>
-    
-    
-    | 
-    <a href='/blog/tags/customize/'>customize</a>,
-    
-    <a href='/blog/tags/display/'>display</a>
-    
+    <time datetime="2015-02-27T16:55:01.000Z" itemprop="datePublished">
+        February 27th 2015
+    </time>
+    <!-- TODO: Turning off tags on posts for now, turn on later maybe? -->
     
 </span>
 <span class="pull-right">
@@ -68,21 +81,14 @@
 </span>
 
         <h1 class="post-title">5 Ways to Customize Your UI-Grid Data</h1>
-        
-          <em>Posted by <strong>Brian</strong></em>
-        
-        <br>
+
         <br>
         <br>
 
         <section class="post-content">
-          <ol>
-<li>cellFilter</li>
-<li>cellTemplate</li>
-<li>Binding to a function</li>
-<li></li>
-</ol>
-
+          <p>Getting your data displayed just right can be a huge pain. You might just want to format some numbers or you might want to embed something more complex like a chart or custom directive.</p>
+<p>In this post outline five different tactics you can use to get your data <strong>just the way you want it</strong>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">$initHighlight</span><span class="params">(block, flags)</span> </span>{</div><div class="line">  <span class="keyword">try</span> {</div><div class="line">    <span class="keyword">if</span> (block.className.search(<span class="regexp">/\bno\-highlight\b/</span>) != -<span class="number">1</span>)</div><div class="line">      <span class="keyword">return</span> processBlock(block.function, <span class="literal">true</span>, <span class="number">0x0F</span>) + <span class="string">' class=""'</span>;</div><div class="line">  } <span class="keyword">catch</span> (e) {</div><div class="line">    <span class="comment">/* handle exception */</span></div><div class="line">    <span class="keyword">var</span> e4x =</div><div class="line">        <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>Example</span></div><div class="line">            <span class="tag">&lt;<span class="title">p</span>&gt;</span>1234<span class="tag">&lt;/<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</div><div class="line">  }</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> / <span class="number">2</span>; i &lt; classes.length; i++) {</div><div class="line">    <span class="keyword">if</span> (checkCondition(classes[i]) === <span class="literal">undefined</span>)</div><div class="line">      <span class="keyword">return</span> <span class="regexp">/\d+[\s/]/g</span>;</div><div class="line">  }</div><div class="line">  <span class="built_in">console</span>.log(<span class="built_in">Array</span>.every(classes, <span class="built_in">Boolean</span>));</div><div class="line">}</div></pre></td></tr></table></figure>
         </section>
 
         <footer class="post-footer">
@@ -91,19 +97,19 @@
     <p></p>
 </section>
           <section class="share">
-    <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
-       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-        <span class="hidden">Twitter</span>
-    </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
-       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-        <span class="hidden">Facebook</span>
-    </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
-       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-        <span class="hidden">Google+</span>
-    </a>
+  <h4>Share this post</h4>
+  <a class="icon-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
 </section>
         </footer>
       </div>
@@ -113,19 +119,11 @@
   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
     <div class="col-lg-5 col-md5">
       
-      <a class="older-posts" href="/blog/hello-world/">
-          ← Hello World 2
-      </a>
-      
     </div>
 
     <!-- <span class="page-number col-lg-1 col-md-1">•</span> -->
 
     <div class="col-lg-5 col-md5">
-      
-      <a class="newer-posts pull-right" href="/blog/test/">
-          Test →
-      </a>
       
     </div>
   </div>
@@ -168,6 +166,16 @@
   document.getElementsByClassName('copyright-date')[0].innerHTML = (new Date()).getYear() + 1900;
 </script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+$(document).ready(function() {
+    $('.highlight .code pre').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+</script>
 
 <script type="text/javascript" src="/blog/js/jquery.fitvids.js"></script>
 <script type="text/javascript" src="/blog/js/index.js"></script>

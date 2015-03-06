@@ -4,9 +4,9 @@
 
 # Site
 # UI-Grid Blog
-title: 
-subtitle:
-description:
+title: UI Grid
+subtitle: An AngularJS data grid
+description: "Tips, tricks and news for UI Grid"
 author: UI Grid Team
 email: uigridteam@gmail.com
 language:
@@ -90,7 +90,7 @@ deploy:
   type:
 
 sitemap:
-  path: sitemap.xml
+  path: ../sitemap.xml
 
 # casper theme config
 cover:

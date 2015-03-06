@@ -20,7 +20,7 @@
         <% if (post.excerpt){ %>
           <%- post.excerpt %>
         <% } else { %>
-          <%- post.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 220) %>
+          <%- truncate(post.content, { length: 220, separator: ' '}) %>
         <% } %>
         </p>
         <p class="clearfix">
@@ -34,9 +34,13 @@
       </section>
     </div>
   </article>
+
+  <br>
+  <br>
+
   <% }); %>
 
-  <nav class="row pagination" role="pagination">
+  <nav class="row paging" role="pagination">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <% if (page.prev) { %><a class="newer-posts" href="<%- url_for(page.prev_link) %>">← Newer Posts</a><% } %>
       <span class="page-number">Page <%- page.current %> of <%- page.total %></span>
