@@ -19,7 +19,7 @@ out-of-the-box, which are defined by <code>uiGridConstants.filter.*</code>. See 
 <p>If you want to create your own filtering logic, the <code>condition</code> field of the <code>filter</code> object can also be a function that gets run for each 
 row. Such a function has the following signature:</p>
 
-<pre><code class="Javascript">function myCustomSorter(searchTerm, cellValue, row, column) {
+<pre><code class="javascript">function myCustomSorter(searchTerm, cellValue, row, column) {
   // Custom logic that returns true if `row`
   // passes the filter and false if it should
   // be filtered out
