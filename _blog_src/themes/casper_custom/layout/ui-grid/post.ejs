@@ -10,10 +10,13 @@
         <h1 class="post-title"><%- post.title %></h1>
 
         <br>
-        <br>
 
         <section class="post-content">
           <%- post.content %>
+
+          <% if (page.mailchimp_tag) { %>
+          <%- partial('post/mailchimp') %>
+          <% } %>
         </section>
 
         <footer class="post-footer">

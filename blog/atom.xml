@@ -4,7 +4,7 @@
   <subtitle><![CDATA[An AngularJS data grid]]></subtitle>
   <link href="/blog/atom.xml" rel="self"/>
   <link href="http://ui-grid.info/blog/"/>
-  <updated>2015-03-06T18:22:44.415Z</updated>
+  <updated>2015-03-06T20:39:30.206Z</updated>
   <id>http://ui-grid.info/blog/</id>
   
   <author>
@@ -19,12 +19,35 @@
     <link href="http://ui-grid.info/blog/5_ways_to_display_custom_data/"/>
     <id>http://ui-grid.info/blog/5_ways_to_display_custom_data/</id>
     <published>2015-02-27T16:55:01.000Z</published>
-    <updated>2015-03-06T18:22:42.000Z</updated>
-    <content type="html"><![CDATA[<p>Getting your data displayed just right can be a huge pain. You might just want to format some numbers or you might want to embed something more complex like a chart or custom directive.</p>
+    <updated>2015-03-06T20:31:43.000Z</updated>
+    <content type="html"><![CDATA[<!-- 5 ways to display data the way you want -->
+<p>Getting your data displayed just right can be a huge pain.</p>
+<p>You might just want to format some numbers, or you might want to embed something complex like a chart or custom directive.</p>
 <p>In this post outline five different tactics you can use to get your data <strong>just the way you want it</strong>.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">$initHighlight</span><span class="params">(block, flags)</span> </span>{</div><div class="line">  <span class="keyword">try</span> {</div><div class="line">    <span class="keyword">if</span> (block.className.search(<span class="regexp">/\bno\-highlight\b/</span>) != -<span class="number">1</span>)</div><div class="line">      <span class="keyword">return</span> processBlock(block.function, <span class="literal">true</span>, <span class="number">0x0F</span>) + <span class="string">' class=""'</span>;</div><div class="line">  } <span class="keyword">catch</span> (e) {</div><div class="line">    <span class="comment">/* handle exception */</span></div><div class="line">    <span class="keyword">var</span> e4x =</div><div class="line">        <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>Example</span></div><div class="line">            <span class="tag">&lt;<span class="title">p</span>&gt;</span>1234<span class="tag">&lt;/<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</div><div class="line">  }</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> / <span class="number">2</span>; i &lt; classes.length; i++) {</div><div class="line">    <span class="keyword">if</span> (checkCondition(classes[i]) === <span class="literal">undefined</span>)</div><div class="line">      <span class="keyword">return</span> <span class="regexp">/\d+[\s/]/g</span>;</div><div class="line">  }</div><div class="line">  <span class="built_in">console</span>.log(<span class="built_in">Array</span>.every(classes, <span class="built_in">Boolean</span>));</div><div class="line">}</div></pre></td></tr></table></figure>]]></content>
+<ul>
+<li>Bindings</li>
+<li>Cell Filters</li>
+<li>Cell Templates</li>
+</ul>
+<h2 id="Bindings">Bindings</h2>
+<p>UI Grid columns can be bound to any sort of Angular expression, as well as property names that would normally break an expression:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line">  { field: <span class="string">'first-name'</span> }, <span class="comment">/* Yes, you can use hyphens, plus signs, etc */</span></div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<h2 id="Cell_Filters">Cell Filters</h2>
+<p>Cell filters can transform the displayed value for a column while leaving the model intact. In this plunker the amount column contains floating point values, but we only want to display the integer part. A simple cellFilter will alter the displayed value the way we want.</p>
+<iframe src="http://embed.plnkr.co/BjLqXGiUI8nQFwvijduh/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+
+
+<h3 id="Passing_Arguments">Passing Arguments</h3>
+<h3 id="Using_Scope">Using Scope</h3>
+<h2 id="Cell_Templates">Cell Templates</h2>
+<h3 id="Custom_Directives">Custom Directives</h3>
+]]></content>
     <summary type="html">
-    <![CDATA[<p>Getting your data displayed just right can be a huge pain. You might just want to format some numbers or you might want to embed somethin]]>
+    <![CDATA[<!-- 5 ways to display data the way you want -->
+<p>Getting your data displayed just right can be a huge pain.</p>
+<p>You might just want to]]>
     </summary>
     
       <category term="customize" scheme="http://ui-grid.info/blog/tags/customize/"/>

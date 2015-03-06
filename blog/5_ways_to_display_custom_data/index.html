@@ -77,18 +77,65 @@
     
 </span>
 <span class="pull-right">
-  <a href="/blog/">Back to blog home</a>
+  <a href="/blog/">
+    <i class="fa fa-chevron-left"></i>
+    Back to main page
+  </a>
 </span>
 
         <h1 class="post-title">5 Ways to Customize Your UI-Grid Data</h1>
 
         <br>
-        <br>
 
         <section class="post-content">
-          <p>Getting your data displayed just right can be a huge pain. You might just want to format some numbers or you might want to embed something more complex like a chart or custom directive.</p>
+          <!-- 5 ways to display data the way you want -->
+<p>Getting your data displayed just right can be a huge pain.</p>
+<p>You might just want to format some numbers, or you might want to embed something complex like a chart or custom directive.</p>
 <p>In this post outline five different tactics you can use to get your data <strong>just the way you want it</strong>.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">$initHighlight</span><span class="params">(block, flags)</span> </span>{</div><div class="line">  <span class="keyword">try</span> {</div><div class="line">    <span class="keyword">if</span> (block.className.search(<span class="regexp">/\bno\-highlight\b/</span>) != -<span class="number">1</span>)</div><div class="line">      <span class="keyword">return</span> processBlock(block.function, <span class="literal">true</span>, <span class="number">0x0F</span>) + <span class="string">' class=""'</span>;</div><div class="line">  } <span class="keyword">catch</span> (e) {</div><div class="line">    <span class="comment">/* handle exception */</span></div><div class="line">    <span class="keyword">var</span> e4x =</div><div class="line">        <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>Example</span></div><div class="line">            <span class="tag">&lt;<span class="title">p</span>&gt;</span>1234<span class="tag">&lt;/<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</div><div class="line">  }</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> / <span class="number">2</span>; i &lt; classes.length; i++) {</div><div class="line">    <span class="keyword">if</span> (checkCondition(classes[i]) === <span class="literal">undefined</span>)</div><div class="line">      <span class="keyword">return</span> <span class="regexp">/\d+[\s/]/g</span>;</div><div class="line">  }</div><div class="line">  <span class="built_in">console</span>.log(<span class="built_in">Array</span>.every(classes, <span class="built_in">Boolean</span>));</div><div class="line">}</div></pre></td></tr></table></figure>
+<ul>
+<li>Bindings</li>
+<li>Cell Filters</li>
+<li>Cell Templates</li>
+</ul>
+<h2 id="Bindings">Bindings</h2>
+<p>UI Grid columns can be bound to any sort of Angular expression, as well as property names that would normally break an expression:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line">  { field: <span class="string">'first-name'</span> }, <span class="comment">/* Yes, you can use hyphens, plus signs, etc */</span></div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<h2 id="Cell_Filters">Cell Filters</h2>
+<p>Cell filters can transform the displayed value for a column while leaving the model intact. In this plunker the amount column contains floating point values, but we only want to display the integer part. A simple cellFilter will alter the displayed value the way we want.</p>
+<iframe src="http://embed.plnkr.co/BjLqXGiUI8nQFwvijduh/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+
+
+<h3 id="Passing_Arguments">Passing Arguments</h3>
+<h3 id="Using_Scope">Using Scope</h3>
+<h2 id="Cell_Templates">Cell Templates</h2>
+<h3 id="Custom_Directives">Custom Directives</h3>
+
+
+          
+          <!-- Begin MailChimp Signup Form -->
+<!-- <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css"> -->
+
+
+
+<div id="mc_embed_signup" class="mailchimp_form">
+  <form class="form-inline" action="//ui-grid.us8.list-manage.com/subscribe/post?u=cd04613434129cb711cd99965&amp;id=969c1199dd" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+      <label for="mce-EMAIL">Send me that flowchart!</label>
+      <br>
+      <input type="text" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address" required>
+      <input type="hidden" class="form-control" value="5_ways_customized_data" name="SIGNUP" id="SIGNUP">
+      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+      <div style="position: absolute; left: -5000px;"><input type="text" name="b_cd04613434129cb711cd99965_969c1199dd" tabindex="-1" value=""></div>
+      <br>
+      <br>
+      <div class="clear"><input type="submit" class="btn btn-success" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"></div>
+    </div>
+  </form>
+</div>
+<!--End mc_embed_signup-->
+          
         </section>
 
         <footer class="post-footer">
@@ -98,15 +145,15 @@
 </section>
           <section class="share">
   <h4>Share this post</h4>
-  <a class="icon-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+  <a class="fa fa-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
       <span class="hidden">Twitter</span>
   </a>
-  <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+  <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
       <span class="hidden">Facebook</span>
   </a>
-  <a class="icon-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
+  <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/5_ways_to_display_custom_data/"
      onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
       <span class="hidden">Google+</span>
   </a>
