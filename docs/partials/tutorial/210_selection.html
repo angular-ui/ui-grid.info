@@ -34,7 +34,8 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
 <p>The selectAll box can be disabled by setting <code>enableSelectAll</code> to false.</p>
 
 <p>You can set the selection row header column width by setting 'selectionRowHeaderWidth' option.</p><h2 id="Example">Example</h2>
-<div class="example"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.</p>
+<div class="example"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.  The first example
+auto-selects the first row once the data is loaded.</p>
 
 <h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-62" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
@@ -77,7 +78,7 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
 <script type="text/ng-template" id="app.js">
     var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.selection']);
 
-    app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+    app.controller('MainCtrl', ['$scope', '$http', '$log', '$timeout', function ($scope, $http, $log, $timeout) {
       $scope.gridOptions = { 
         enableRowSelection: true,
         enableSelectAll: true,
@@ -98,6 +99,11 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
       $http.get('/data/500_complex.json')
         .success(function(data) {
           $scope.gridOptions.data = data;
+          $timeout(function() {
+            if($scope.gridApi.selection.selectRow){
+              $scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);
+            }
+          });
         });
 
         $scope.info = {};
