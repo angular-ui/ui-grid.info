@@ -7,7 +7,7 @@ The "blog" uses [hexo](http://hexo.io) to generate a pretty simple static site.
 
 To use it you need to install hexo:
 
-    npm install -g hexo
+    npm install -g hexo@2.8.3
 
 Then install dependencies in both the parent and _blog_src directories. This needs to be done bcause hexo's cwd needs to be the blog source directory.
 
