@@ -1,0 +1,35 @@
+<h1><code ng:non-bindable="">ColumnDef</code>
+<span class="hint">(api in module <code ng:non-bindable="">ui.grid.grouping</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>ColumnDef for grouping feature, these are available to be 
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p></div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="enableGrouping">enableGrouping</h3>
+<div class="enablegrouping"><p>Enable grouping on this column
+<br/>Defaults to true.</p></div>
+</li>
+<li><h3 id="grouping">grouping</h3>
+<div class="grouping"><p>Set the grouping for a column.  Format is:</p>
+
+<pre><code>  {
+    groupPriority: &lt;number, starts at 0, if less than 0 or undefined then we're aggregating in this column&gt;,
+    aggregation: &lt;one of uiGridGroupingConstants.aggregation.XXXX&gt;
+  }
+</code></pre>
+
+<p>We group in the priority order given, this will also put these columns to the high order of the sort irrespective
+of the sort priority given them.  If there is no sort defined then we sort ascending, if there is a sort defined then
+we use that sort.</p>
+
+<p>If the groupPriority is undefined or less than 0, then we expect to be aggregating, and we look at the aggregation
+types to determine what sort of aggregation we can do.  Values are in the constants file, but include SUM, COUNT, MAX, MIN</p>
+
+<p>groupPriorities should generally be sequential, if they're not then the next time getGrouping is called we'll renumber them
+to be sequential.
+<br/>Defaults to undefined.</p></div>
+</li>
+</ul>
+</div>
+</div>

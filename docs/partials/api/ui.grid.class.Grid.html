@@ -127,10 +127,10 @@ registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters<
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainerColumns">hasLeftContainerColumns()</h3>
 <div class="hasleftcontainercolumns"><p>returns true if leftContainer has columns</p></div>
@@ -179,8 +179,11 @@ registered as a dataChangeCallback on uiGridConstants.dataChange.EDIT</p><h4 id=
 </ul>
 </div>
 </li>
+<li><h3 id="queueGridRefresh">queueGridRefresh()</h3>
+<div class="queuegridrefresh"><p>queues a grid refresh, a way of debouncing all the refreshes we might otherwise issue</p></div>
+</li>
 <li><h3 id="queueRefresh">queueRefresh()</h3>
-<div class="queuerefresh"><p>todo: @c0bra can you document this method?</p></div>
+<div class="queuerefresh"><p>queues a grid refreshCanvas, a way of debouncing all the refreshes we might otherwise issue</p></div>
 </li>
 <li><h3 id="redrawCanvas">redrawCanvas()</h3>
 <div class="redrawcanvas"><p>TBD</p><h4 id="Returns">Returns</h4>

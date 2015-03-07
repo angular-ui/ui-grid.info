@@ -1,0 +1,47 @@
+<h1><code ng:non-bindable="">grouping</code>
+<span class="hint">(grid in module <code ng:non-bindable="">ui.grid.grouping</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Grid properties and functions added for grouping</p></div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="expandAll">expandAll</h3>
+<div class="expandall"><p>Whether or not the expandAll box is selected</p></div>
+</li>
+<li><h3 id="numberLevels">numberLevels</h3>
+<div class="numberlevels"><p>Total number of grouping levels currently turned on (i.e. number
+of grouped columns)</p></div>
+</li>
+<li><h3 id="rowExpandedStates">rowExpandedStates</h3>
+<div class="rowexpandedstates"><p>Hash that holds all the expanded states based on the group
+columns.  So if I've grouped on two columns - gender and age - then I might
+expect this object to contain:</p>
+
+<pre><code>  {
+    male: {
+      state: 'expanded',
+      10: { state: 'expanded' },
+      11: { state: 'collapsed' },
+      19: { state: 'expanded' },
+      20: { state: 'collapsed' }
+    },
+    female: {
+      state: 'collapsed',
+      15: { state: 'expanded' },
+      18: { state: 'collapsed' },
+      38: { state: 'expanded' }
+    }
+  }
+</code></pre>
+
+<p>Missing values are false - meaning they aren't expanded.</p>
+
+<p>This is used because the rowProcessors run every time the grid is refreshed, so
+we'd lose the expanded state every time the grid was refreshed.  This instead gives
+us a reliable lookup that persists across rowProcessors.</p>
+
+<p>The hash gets reset when the group conditions change.</p></div>
+</li>
+</ul>
+</div>
+</div>

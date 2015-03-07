@@ -21,10 +21,10 @@ show the aggregation but without a label.  Refer the third column in the example
 <p><br/>
 You can override the default grid footer template with gridOptions.footerTemplate.  Copy the default ui-grid-footer.html from the source as your starting point.  <i>This is not demonstrated in this tutorial.</i></p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-26" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-27"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-27" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-28"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-26" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-26">
+<pre class="prettyprint linenums" ng-set-text="index.html-27" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-27">
   <div ng-controller="MainCtrl">
     <button id="footerButton" class="btn btn-success" ng-click="gridOptions.showGridFooter = !gridOptions.showGridFooter; $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);">Toggle Grid Footer</button>
     <button class="btn btn-success" ng-click="gridOptions.showColumnFooter = !gridOptions.showColumnFooter; $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);">Toggle Column Footer</button>
@@ -79,8 +79,8 @@ You can override the default grid footer template with gridOptions.footerTemplat
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-27"></pre>
-<script type="text/ng-template" id="scenario.js-27">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-28"></pre>
+<script type="text/ng-template" id="scenario.js-28">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   describe( '105 footer', function() {
     /*
@@ -130,5 +130,5 @@ You can override the default grid footer template with gridOptions.footerTemplat
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-26" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-27" ng-eval-javascript="app.js"></div></div>
 </div>
