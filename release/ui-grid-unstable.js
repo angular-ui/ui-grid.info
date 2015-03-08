@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-0eacb56 - 2015-03-08
+ * ui-grid - v3.0.0-rc.20-e012778 - 2015-03-08
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3070,19 +3070,52 @@ angular.module('ui.grid')
      * @name refresh
      * @methodOf ui.grid.core.api:PublicApi
      * @description Refresh the rendered grid on screen.
+     * The refresh method re-runs both the columnProcessors and the
+     * rowProcessors, as well as calling refreshCanvas to update all
+     * the grid sizing.  In general you should prefer to use queueGridRefresh
+     * instead, which is basically a debounced version of refresh.
+     * 
+     * If you only want to resize the grid, not regenerate all the rows
+     * and columns, you should consider directly calling refreshCanvas instead.
      * 
      */
     self.api.registerMethod( 'core', 'refresh', this.refresh );
   
     /**
      * @ngdoc function
+     * @name queueGridRefresh
+     * @methodOf ui.grid.core.api:PublicApi
+     * @description Request a refresh of the rendered grid on screen, if multiple
+     * calls to queueGridRefresh are made within a digest cycle only one will execute.
+     * The refresh method re-runs both the columnProcessors and the
+     * rowProcessors, as well as calling refreshCanvas to update all
+     * the grid sizing.  In general you should prefer to use queueGridRefresh
+     * instead, which is basically a debounced version of refresh.
+     * 
+     */
+    self.api.registerMethod( 'core', 'queueGridRefresh', this.queueGridRefresh );
+  
+    /**
+     * @ngdoc function
      * @name refreshRows
      * @methodOf ui.grid.core.api:PublicApi
-     * @description Refresh the rendered grid on screen?  Note: not functional at present
+     * @description Runs only the rowProcessors, columns remain as they were.
+     * It then calls redrawInPlace and refreshCanvas, which adjust the grid sizing.
      * @returns {promise} promise that is resolved when render completes?
      * 
      */
     self.api.registerMethod( 'core', 'refreshRows', this.refreshRows );
+  
+    /**
+     * @ngdoc function
+     * @name queueRefresh
+     * @methodOf ui.grid.core.api:PublicApi
+     * @description Requests execution of refreshCanvas, if multiple requests are made
+     * during a digest cycle only one will run.  RefreshCanvas updates the grid sizing.
+     * @returns {promise} promise that is resolved when render completes?
+     * 
+     */
+    self.api.registerMethod( 'core', 'refreshRows', this.queueRefresh );
   
     /**
      * @ngdoc function
@@ -3375,7 +3408,7 @@ angular.module('ui.grid')
    */
   Grid.prototype.columnRefreshCallback = function columnRefreshCallback( grid ){
     grid.buildColumns();
-    grid.refresh();
+    grid.queueGridRefresh();
   };
 
 
@@ -3389,7 +3422,7 @@ angular.module('ui.grid')
    * @param {string} name column name
    */
   Grid.prototype.processRowsCallback = function processRowsCallback( grid ){
-    grid.refreshRows();
+    grid.queueGridRefresh();
   };
     
 
@@ -3488,7 +3521,7 @@ angular.module('ui.grid')
         self.buildColumns()
           .then( function() {
             self.preCompileCellTemplates();
-            self.refresh();
+            self.queueGridRefresh();
           });
       });
   };
@@ -4765,9 +4798,9 @@ angular.module('ui.grid')
 
   /**
    * @ngdoc function
-   * @name redrawCanvas
+   * @name refreshCanvas
    * @methodOf ui.grid.class:Grid
-   * @description TBD
+   * @description Builds all styles and recalculates much of the grid sizing
    * @params {object} buildStyles optional parameter.  Use TBD
    * @returns {promise} promise that is resolved when the canvas
    * has been refreshed
@@ -13978,7 +14011,7 @@ module.filter('px', function() {
           }
         });
         grid.expandable.expandedAll = true;
-        grid.refresh();
+        grid.queueGridRefresh();
       },
       
       collapseAllRows: function(grid) {
@@ -13988,7 +14021,7 @@ module.filter('px', function() {
           }
         });
         grid.expandable.expandedAll = false;
-        grid.refresh();
+        grid.queueGridRefresh();
       },
 
       toggleAllRows: function(grid) {
@@ -16295,6 +16328,8 @@ module.filter('px', function() {
           headerRow.groupLevel = stateIndex;
           headerRow.groupHeader = true;
           headerRow.internalRow = true;
+          headerRow.enableEditing = false;
+          headerRow.enableSelection = false;
           groupingProcessingState[stateIndex].initialised = true;
           groupingProcessingState[stateIndex].currentValue = newValue;
           groupingProcessingState[stateIndex].currentGroupHeader = headerRow;
@@ -17758,7 +17793,7 @@ module.filter('px', function() {
           columns[newPosition] = originalColumn;
           $timeout(function () {
             grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-            grid.refresh();
+            grid.queueGridRefresh();
             grid.api.colMovable.raise.columnPositionChanged(originalColumn.colDef, originalPosition, newPosition);
           });
         }
@@ -18324,7 +18359,7 @@ module.filter('px', function() {
         onPaginationChanged: function (grid, currentPage, pageSize) {
             grid.api.pagination.raise.paginationChanged(currentPage, pageSize);
             if (!grid.options.useExternalPagination) {
-              grid.refresh(); //client side pagination
+              grid.queueGridRefresh(); //client side pagination
             }
         }
       };
@@ -19065,7 +19100,7 @@ module.filter('px', function() {
             .then(function() {
               // Then refresh the grid canvas, rebuilding the styles so that the scrollbar updates its size
               uiGridCtrl.grid.refreshCanvas(true).then( function() {
-                uiGridCtrl.grid.refresh();
+                uiGridCtrl.grid.queueGridRefresh();
               });
             });
         }
@@ -20177,7 +20212,7 @@ module.filter('px', function() {
             service.restoreSelection( grid, state.selection );
           }
           
-          grid.refresh();
+          grid.queueGridRefresh();
         },
         
         

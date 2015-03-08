@@ -185,13 +185,6 @@ registered as a dataChangeCallback on uiGridConstants.dataChange.EDIT</p><h4 id=
 <li><h3 id="queueRefresh">queueRefresh()</h3>
 <div class="queuerefresh"><p>queues a grid refreshCanvas, a way of debouncing all the refreshes we might otherwise issue</p></div>
 </li>
-<li><h3 id="redrawCanvas">redrawCanvas()</h3>
-<div class="redrawcanvas"><p>TBD</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>promise that is resolved when the canvas
-has been refreshed</p></div>
-</div>
-</li>
 <li><h3 id="redrawCanvas">redrawCanvas([rowsAdded])</h3>
 <div class="redrawcanvas"><p>Redraw the rows and columns based on our current scroll position</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">[rowsAdded] – {boolean} – </code>
@@ -201,6 +194,13 @@ has been refreshed</p></div>
 </li>
 <li><h3 id="refresh">refresh()</h3>
 <div class="refresh"><p>Refresh the rendered grid on screen.</p></div>
+</li>
+<li><h3 id="refreshCanvas">refreshCanvas()</h3>
+<div class="refreshcanvas"><p>Builds all styles and recalculates much of the grid sizing</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>promise that is resolved when the canvas
+has been refreshed</p></div>
+</div>
 </li>
 <li><h3 id="refreshRows">refreshRows()</h3>
 <div class="refreshrows"><p>Refresh the rendered rows on screen?  Note: not functional at present </p><h4 id="Returns">Returns</h4>

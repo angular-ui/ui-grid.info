@@ -84,24 +84,36 @@ us which refreshes to fire.</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="refresh">refresh()</h3>
-<div class="refresh"><p>Refresh the rendered grid on screen.</p></div>
+<li><h3 id="queueGridRefresh">queueGridRefresh()</h3>
+<div class="queuegridrefresh"><p>Request a refresh of the rendered grid on screen, if multiple
+calls to queueGridRefresh are made within a digest cycle only one will execute.
+The refresh method re-runs both the columnProcessors and the
+rowProcessors, as well as calling refreshCanvas to update all
+the grid sizing.  In general you should prefer to use queueGridRefresh
+instead, which is basically a debounced version of refresh.</p></div>
 </li>
-<li><h3 id="refreshRows">refreshRows()</h3>
-<div class="refreshrows"><p>Refresh the rendered grid on screen?  Note: not functional at present</p><h4 id="Returns">Returns</h4>
+<li><h3 id="queueRefresh">queueRefresh()</h3>
+<div class="queuerefresh"><p>Requests execution of refreshCanvas, if multiple requests are made
+during a digest cycle only one will run.  RefreshCanvas updates the grid sizing.</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{promise}</code>
 – <p>promise that is resolved when render completes?</p></div>
 </div>
 </li>
-<li><h3 id="removeFromGridMenu">removeFromGridMenu(grid, id)</h3>
-<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id. Assumes
-that the id is unique, removes only the last instance of that id. Does nothing if
-the specified id is not found</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid on which we are acting</p></li>
-<li><code ng:non-bindable="">id – {string} – </code>
-<p>the id we'd like to remove from the menu</p></li>
-</ul>
+<li><h3 id="refresh">refresh()</h3>
+<div class="refresh"><p>Refresh the rendered grid on screen.
+The refresh method re-runs both the columnProcessors and the
+rowProcessors, as well as calling refreshCanvas to update all
+the grid sizing.  In general you should prefer to use queueGridRefresh
+instead, which is basically a debounced version of refresh.</p>
+
+<p>If you only want to resize the grid, not regenerate all the rows
+and columns, you should consider directly calling refreshCanvas instead.</p></div>
+</li>
+<li><h3 id="refreshRows">refreshRows()</h3>
+<div class="refreshrows"><p>Runs only the rowProcessors, columns remain as they were.
+It then calls redrawInPlace and refreshCanvas, which adjust the grid sizing.</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>promise that is resolved when render completes?</p></div>
 </div>
 </li>
 <li><h3 id="removeFromGridMenu">removeFromGridMenu(grid, id)</h3>
@@ -110,6 +122,17 @@ that the id is unique, removes only the last instance of that id.  Does nothing 
 the specified id is not found.  If there is no gridMenuScope or registeredMenuItems
 then do nothing silently - the desired result is those menu items not be present and they
 aren't.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid on which we are acting</p></li>
+<li><code ng:non-bindable="">id – {string} – </code>
+<p>the id we'd like to remove from the menu</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="removeFromGridMenu">removeFromGridMenu(grid, id)</h3>
+<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id. Assumes
+that the id is unique, removes only the last instance of that id. Does nothing if
+the specified id is not found</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid on which we are acting</p></li>
 <li><code ng:non-bindable="">id – {string} – </code>
