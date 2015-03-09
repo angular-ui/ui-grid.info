@@ -1,7 +1,11 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>Using a grid in a modal popup</p><h2 id="Example">Example</h2>
+<div><p>Using a grid in a modal popup.</p>
+
+<p>In some cases, and in particular with the bootstrap modal, you may find that your grid renders smaller than the
+available width.  This is because the bootstrap modal animates the initial render and the grid renders whilst the 
+modal is still animating - the available space isn't as expected.  You can correct this by calling <code>handleWindowResize</code>. </p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-34" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-35"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -26,12 +30,16 @@
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
-  app.controller('MainCtrl', ['$rootScope', '$scope', '$http', 'modal', function ($rootScope, $scope, $http, modal) {
+  app.controller('MainCtrl', ['$rootScope', '$scope', '$http', 'modal', '$timeout', function ($rootScope, $scope, $http, modal, $timeout) {
     var myModal = new modal();
 
     $scope.hideGrid = true;
 
-    $rootScope.gridOptions = {  };
+    $rootScope.gridOptions = {
+      onRegisterApi: function (gridApi) {
+        $scope.gridApi = gridApi;
+      }
+    };
 
     $http.get('/data/100.json')
       .success(function(data) {
@@ -40,6 +48,11 @@
 
     $scope.showModal = function() {
       myModal.open();
+      
+      // call resize after modal finishes opening - usually only necessary on a bootstrap modal
+      $timeout( function() {
+        $scope.gridApi.core.handleWindowResize();
+      });
     };
   }]);
 

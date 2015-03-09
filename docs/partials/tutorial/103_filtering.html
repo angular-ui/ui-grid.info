@@ -124,6 +124,7 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
     $http.get('/data/500_complex.json')
       .success(function(data) {
         $scope.gridOptions.data = data;
+        $scope.gridOptions.data[0].age = -5;
       });
   }]);
 </script>
