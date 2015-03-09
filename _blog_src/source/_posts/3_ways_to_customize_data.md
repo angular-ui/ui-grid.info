@@ -70,6 +70,10 @@ var columnDefs = [
 };
 {% endcodeblock %}
 
+### Links and Buttons ###
+
+### Tooltips ###
+
 ### Custom Directives ###
 
 You can put absolutely anything in your cell templates, but in order to make it look good there's just one thing to remember. Wrapping your cell in an element using the class `.ui-grid-cell-contents` will apply the proper CSS settings like padding, overflow, etc., and make sure your cell fits in its space nicely.
