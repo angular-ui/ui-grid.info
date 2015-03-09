@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-52d881d - 2015-03-09
+ * ui-grid - v3.0.0-rc.20-ae3be68 - 2015-03-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17659,7 +17659,7 @@ module.filter('px', function() {
    *  @name ui.grid.moveColumns.service:uiGridMoveColumnService
    *  @description Service for column moving feature.
    */
-  module.service('uiGridMoveColumnService', ['$q', '$timeout', '$log', 'ScrollEvent', 'uiGridConstants', function ($q, $timeout, $log, ScrollEvent, uiGridConstants) {
+  module.service('uiGridMoveColumnService', ['$q', '$timeout', '$log', 'ScrollEvent', 'uiGridConstants', 'gridUtil', function ($q, $timeout, $log, ScrollEvent, uiGridConstants, gridUtil) {
 
     var service = {
       initializeGrid: function (grid) {
@@ -17710,7 +17710,7 @@ module.filter('px', function() {
               moveColumn: function (originalPosition, finalPosition) {
                 var columns = grid.columns;
                 if (!angular.isNumber(originalPosition) || !angular.isNumber(finalPosition)) {
-                  console.log('Please provide valid values for originalPosition and finalPosition');
+                  gridUtil.logError('MoveColumn: Please provide valid values for originalPosition and finalPosition');
                   return;
                 }
                 var nonMovableColumns = 0;
@@ -17720,7 +17720,7 @@ module.filter('px', function() {
                   }
                 }
                 if (originalPosition >= (columns.length - nonMovableColumns) || finalPosition >= (columns.length - nonMovableColumns)) {
-                  console.log('Invalid values for originalPosition, finalPosition');
+                  gridUtil.logError('MoveColumn: Invalid values for originalPosition, finalPosition');
                   return;
                 }
                 var findPositionForRenderIndex = function (index) {
