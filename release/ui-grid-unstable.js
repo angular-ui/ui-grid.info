@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-ae3be68 - 2015-03-09
+ * ui-grid - v3.0.0-rc.20-f82c65b - 2015-03-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -15105,7 +15105,11 @@ module.filter('px', function() {
           var exportData = this.getData(grid, rowTypes, colTypes);
           var docDefinition = this.prepareAsPdf(grid, exportColumnHeaders, exportData);
           
-          pdfMake.createPdf(docDefinition).open();
+          if (this.isIE()) {
+            pdfMake.createPdf(docDefinition).download();
+          } else {
+            pdfMake.createPdf(docDefinition).open();
+          }
         },
         
         
