@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-706ff99 - 2015-03-09
+ * ui-grid - v3.0.0-rc.20-fce3552 - 2015-03-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14477,6 +14477,16 @@ module.filter('px', function() {
           gridOptions.exporterCsvFilename = gridOptions.exporterCsvFilename ? gridOptions.exporterCsvFilename : 'download.csv';
           /**
            * @ngdoc object
+           * @name exporterOlderExcelCompatibility
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description Some versions of excel don't like the utf-16 BOM on the front, and it comes
+           * through as ï»¿ in the first column header.  Setting this option to false will suppress this, at the
+           * expense of proper utf-16 handling in applications that do recognise the BOM
+           * <br/>Defaults to false
+           */
+          gridOptions.exporterOlderExcelCompatibility = gridOptions.exporterOlderExcelCompatibility === true; 
+          /**
+           * @ngdoc object
            * @name exporterPdfDefaultStyle
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description The default style in pdfMake format
@@ -14796,7 +14806,7 @@ module.filter('px', function() {
           var exportData = this.getData(grid, rowTypes, colTypes);
           var csvContent = this.formatAsCsv(exportColumnHeaders, exportData, grid.options.exporterCsvColumnSeparator);
           
-          this.downloadFile (grid.options.exporterCsvFilename, csvContent);
+          this.downloadFile (grid.options.exporterCsvFilename, csvContent, grid.options.exporterOlderExcelCompatibility);
         },
         
         
@@ -15017,8 +15027,9 @@ module.filter('px', function() {
          * given
          * @param {string} csvContent the csv content that we'd like to 
          * download as a file
+         * @param {boolean} exporterOlderExcelCompatibility whether or not we put a utf-16 BOM on the from (\uFEFF)
          */
-        downloadFile: function (fileName, csvContent) {
+        downloadFile: function (fileName, csvContent, exporterOlderExcelCompatibility) {
           var D = document;
           var a = D.createElement('a');
           var strMimeType = 'application/octet-stream;charset=utf-8';
@@ -15049,16 +15060,12 @@ module.filter('px', function() {
         
           // IE10+
           if (navigator.msSaveBlob) {
-            return navigator.msSaveBlob(new Blob(["\ufeff", csvContent], {
-              type: strMimeType
-            }), fileName);
+            return navigator.msSaveBlob(new Blob(["\uFEFF", csvContent], { type: strMimeType } ), fileName);
           }
       
           //html5 A[download]
           if ('download' in a) {
-            var blob = new Blob([csvContent], {
-              type: strMimeType
-            });
+            var blob = new Blob(["\uFEFF", csvContent], { type: strMimeType } );
             rawFile = URL.createObjectURL(blob);
             a.setAttribute('download', fileName);
           } else {

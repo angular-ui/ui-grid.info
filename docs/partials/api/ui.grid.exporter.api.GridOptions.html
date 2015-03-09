@@ -71,6 +71,12 @@ link
 <li><h3 id="exporterMenuPdf">exporterMenuPdf</h3>
 <div class="exportermenupdf"><p>Add pdf export menu items to the ui-grid grid menu, if it's present.  Defaults to true.</p></div>
 </li>
+<li><h3 id="exporterOlderExcelCompatibility">exporterOlderExcelCompatibility</h3>
+<div class="exporterolderexcelcompatibility"><p>Some versions of excel don't like the utf-16 BOM on the front, and it comes
+through as ï»¿ in the first column header.  Setting this option to false will suppress this, at the
+expense of proper utf-16 handling in applications that do recognise the BOM
+<br/>Defaults to false</p></div>
+</li>
 <li><h3 id="exporterPdfCustomFormatter">exporterPdfCustomFormatter</h3>
 <div class="exporterpdfcustomformatter"><p>A custom callback routine that changes the pdf document, adding any
 custom styling or content that is supported by pdfMake.  Takes in the complete docDefinition, and
