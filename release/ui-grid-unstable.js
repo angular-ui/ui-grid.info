@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-fce3552 - 2015-03-09
+ * ui-grid - v3.0.0-rc.20-a659ad5 - 2015-03-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6047,8 +6047,9 @@ angular.module('ui.grid')
       var values = [];
       angular.forEach(visibleRows, function (row) {
         var cellValue = self.grid.getCellValue(row, self);
-        if (angular.isNumber(cellValue)) {
-          values.push(cellValue);
+        var cellNumber = Number(cellValue);
+        if (!isNaN(cellNumber)) {
+          values.push(cellNumber);
         }
       });
       return values;
