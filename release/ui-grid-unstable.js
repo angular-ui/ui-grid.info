@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-79d7f3a - 2015-03-09
+ * ui-grid - v3.0.0-rc.20-dfb451a - 2015-03-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -4962,7 +4962,7 @@ angular.module('ui.grid')
       
       if (rowsAdded) {
         container.adjustRows(container.prevScrollTop, null);
-        container.adjustColumns(container.prevScrollTop, null);
+        container.adjustColumns(container.prevScrollLeft, null);
       }
       else {
         container.adjustRows(null, container.prevScrolltopPercentage);
