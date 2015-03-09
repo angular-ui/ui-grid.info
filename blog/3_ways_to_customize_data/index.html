@@ -94,8 +94,9 @@
 <p>In this post outline three different tactics you can use to get your data <strong>just the way you want it</strong>:</p>
 <ul>
 <li>Bindings</li>
-<li>Cell Filters,</li>
-<li>and Cell Templates</li>
+<li>Cell Filters</li>
+<li>Cell Templates<br><strong> Links
+</strong> Buttons<br>** Custom directives</li>
 </ul>
 <h2 id="Bindings">Bindings</h2>
 <p>UI Grid columns can be bound to any sort of Angular expression, as well as property names that would normally break an expression:</p>
@@ -113,8 +114,28 @@
 <p>Column definitions take a <code>cellTemplate</code> argument you can use to give your cells a custom template. You can specify it a few different ways, with a url (relative or absolute), an Angular template ID, a string/Angular element, or a promise.</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'name-template.html'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'myTemplateId'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: $.get(<span class="string">'url-to-your-template.html'</span>) }</div><div class="line">};</div></pre></td></tr></table></figure>
 
+<h3 id="Bindings_in_Cell_Templates">Bindings in Cell Templates</h3>
+<p>There are a couple options for your binding your row’s data in your template. You can access the <code>row</code> object which is in the local scope; <code>row.entity</code> will contain the reference to your object, so if you want the “name” field, you can bind like so: .</p>
+<p>If you’ve <em>already</em> defined your binding in your column definition you can use one of UI Grid’s placeholders: <code>{{ COL_FIELD }}</code>. UI Grid will automatically replace COL_FIELD with the appropriate binding. If you need to two-way bind to your row, like when you’re using the edit feature, you’ll need to use the <code>MODEL_COL_FIELD</code> placeholder.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  {</div><div class="line">    field: <span class="string">'image_url'</span>,</div><div class="line">    cellTemplate: <span class="string">'&lt;div class="ui-grid-cell-contents"&gt;&lt;img src="{{ COL_FIELD }}" /&gt;&lt;/div&gt;'</span></div><div class="line">  }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<h3 id="Links_and_Buttons">Links and Buttons</h3>
+<p>Links are simple, just use regular old HTML. Wrapping your cell in an element using the class <code>.ui-grid-cell-contents</code> will apply the proper CSS settings like padding, overflow, etc., and make sure your cell fits in its space nicely.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  {</div><div class="line">    field: <span class="string">'email'</span>,</div><div class="line">    cellTemplate: <span class="string">'&lt;div class="ui-grid-cell-contents"&gt;&lt;a href="mailto:{{ COL_FIELD }}"&gt;Send E-Mail&lt;/a&gt;&lt;/div&gt;'</span></div><div class="line">  }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<p>In the plunker below I’m using a basic cellTemplate to bind both the first and last name fields into one column. On the second column I’m using a simple link like above (note: none of these emails are real).</p>
+<p>On the third one, I’m using a template that’s referenced in index.html. If you check the bottom of that file you’ll see the template inside a <code>&lt;script type=&quot;text/ng-template&quot;&gt;</code> tag. Any tags of that type will put automatically put into the template cache (<code>$templateCache</code>) by Angular, with the id you specify.</p>
+<p>Also in the third column template you can see I’m using a variable called <code>grid.appScope</code>. Anywhere in your templates, <code>grid.appScope</code> will be bound to the parent scope of your grid. I use it to bind my button to a function in my controller that will open a new window with a url to google maps with the address in it (note: most if not all of these address will not exist).</p>
+<iframe src="http://embed.plnkr.co/ciExi4w6706sbO4esU0q/" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<h3 id="Tooltips">Tooltips</h3>
+<p>Tooltips are a little bit different because they float over your content. By default the grid’s cells are set to hide any overflow, so if you just pop a tooltip in there it won’t show up and you’ll probably be very confused. If you just add some custom overflow CSS it should fix your problem.</p>
+<p>Hover over the names in the plunker below:</p>
+<iframe src="http://embed.plnkr.co/v7a1W5mFHHaG894IDLTK/" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<p>Tooltips cannot overflow beyond the constraints of the viewport, so they won’t show above the first row or below the bottom row, for example.</p>
 <h3 id="Custom_Directives">Custom Directives</h3>
-<p>You can put absolutely anything in your cell templates, but in order to make it look good there’s just one thing to remember. Wrapping your cell in an element using the class <code>.ui-grid-cell-contents</code> will apply the proper CSS settings like padding, overflow, etc., and make sure your cell fits in its space nicely.</p>
+<p>You can put absolutely anything in your cell templates, just remember to use <code>.ui-grid-cell-contents</code> if you’re not applying your own custom cell CSS.</p>
 <iframe src="http://embed.plnkr.co/irskqERheTOiFql82QFC/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
 
 <p>Here I’ve used d3.js, nvd3.js, and angular-nvd3.js to create sparkline charts in my cells.</p>

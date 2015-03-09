@@ -111,7 +111,13 @@ Also in the third column template you can see I'm using a variable called `grid.
 
 ### Tooltips ###
 
+Tooltips are a little bit different because they float over your content. By default the grid's cells are set to hide any overflow, so if you just pop a tooltip in there it won't show up and you'll probably be very confused. If you just add some custom overflow CSS it should fix your problem.
 
+Hover over the names in the plunker below:
+
+{% iframe http://embed.plnkr.co/v7a1W5mFHHaG894IDLTK/ %}
+
+Tooltips cannot overflow beyond the constraints of the viewport, so they won't show above the first row or below the bottom row, for example.
 
 ### Custom Directives ###
 
