@@ -26,7 +26,12 @@ that say a csv file contains utf-16 content.  Most other applications, and newer
 do use it successfully.  If you have a problem with getting <code>ï»¿</code> as the first few characters in
 an Excel spreadsheet after csv import, you can try setting <code>exporterOlderExcelCompatibility: true</code></p>
 
-<p>Note that some other applications will then have problems instead.</p><h2 id="Example">Example</h2>
+<p>Note that some other applications will then have problems instead.</p>
+
+<p>You may find that you have problems including pdfMake in your toolchain - it sometimes breaks when 
+minified.  If you have this problem it is recommended to instead include pdfmake.js and vfs_fonts.js
+as assets (or the equivalent minified versions), and then include them as a script in your application
+rather than as part of a minification of your entire javascript library.</p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we use the native grid menu buttons, and we show both the pdf and csv export options.</p>
 
 <h4>Source</h4>
