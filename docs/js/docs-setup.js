@@ -44,7 +44,7 @@ NG_DOCS={
       "id": "ui.grid.cellNav.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "already an and api array brings cell cellnav col coldef column containing current data does empty evaluate feature focus focused for fully function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn it last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scrollto scrolltofocus selected selection set sets should specified that the to ui value view visible was we which"
+      "keywords": "already an and api array brings cell cellnav col coldef column containing current data does empty evaluate feature focus focused for fully function getcurrentselection getfocusedcell grid gridoptions has have if in index instance into is isn it last make no not null object occurred order public returns row rowcol rowcolselectindex rowentity scrollto scrolltofocus scrolltoifnecessary selected selection set sets should specified that the to ui value view visible was we which"
     },
     {
       "section": "api",
@@ -1325,7 +1325,7 @@ NG_DOCS={
       "id": "499_FAQ",
       "shortName": "499 FAQ Frequently Asked Questions",
       "type": "overview",
-      "keywords": "aims all an and answer apparently are aren asked automatically bad be but can characters chinese column columns common content cover displayname do doesn dynamically each easy explicit faq field fonts format frequently full get give given go gotchas grid grids hasn have height hidden high how if in installation installed is it know korean means most must my name names need ng-show number of one or overview page properly questions refer render renders resize responsive rows same set short take the them there things this to turned tutorial two unique until up use using want when you your"
+      "keywords": "achieve actual adding aims all an and angular answer apparently are aren as asked automatically bad be body but by can celltemplate change characters chinese column columns common content could counter cover currently data depends display displayed displayname do doesn dynamically each easy explicit faq field filtered filters fonts foreach format frequently full function generally get give given go gotchas grid grids hasn have height here hidden high how id if in index indexof installation installed internal internals is it just know korean latter like list means most must my mydata name names need ng-show nor number numbers of ok on one or original overview page particularly properly question questions re really refer render rendercontainers renders resize responsive row rows same sequence sequential set short show someone something sorted sorts stands take that the them then there things this to trying turned tutorial two unique until up use useless using virtualisation visiblerowcache visiblerowscache want what when whenever which will with within would you your"
     }
   ],
   "apis": {

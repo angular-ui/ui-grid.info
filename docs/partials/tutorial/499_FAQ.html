@@ -3,17 +3,40 @@
 </h1>
 <div><p>There are a number of common gotchas in using the grid, this FAQ aims to cover most of them in an easy to use format.</p>
 
-<h3 id="myfontsareallchinese">My fonts are all "chinese"</h4>
+<h3 id="myfontsareallchinese">My fonts are all "chinese"?</h4>
 
 <p>Refer to <a href="#/tutorial/116_fonts_and_installation">116 Fonts and Installation</a>.  The characters are apparently Korean, 
   and in short, it means your fonts aren't installed properly.</p>
 
-<h3 id="oneofmycolumnshasntturnedup">One of my columns hasn't turned up</h4>
+<h3 id="oneofmycolumnshasntturnedup">One of my columns hasn't turned up?</h4>
 
 <p>Your column names must be unique - have you given two columns the same name?  If you want the same <code>displayName</code> you can
   do this, and you can have two columns refer to the same <code>field</code>, but each column must have a unique name.</p>
 
-<h3 id="howdoigetmygridtoberesponsivetakethefullpageheightautomaticallysetheightwheniusengshowthingsgobad">How do I get my grid to be responsive / take the full page height / automatically set height / when I use ng-show things go bad</h4>
+<h3 id="howdoigetmygridtoberesponsivetakethefullpageheightautomaticallysetheightwheniusengshowthingsgobad">How do I get my grid to be responsive / take the full page height / automatically set height / when I use ng-show things go bad?</h4>
 
 <p>Refer to <a href="#/tutorial/108_hidden_grids">108 Hidden Grids</a>.  The short answer is the grid doesn't know how high it's content is until
-  it renders, and it doesn't dynamically resize.  You need to give an explicit height or an explicit number of rows to render.</p></div>
+  it renders, and it doesn't dynamically resize.  You need to give an explicit height or an explicit number of rows to render.</p>
+
+<h3 id="howcanishowasequencenumberidinacolumninmygrid">How can I show a sequence number/id in a column in my grid?</h4>
+
+<p>The question here is what you're really trying to achieve.  Do you want the actual row index, or that you want to display a sequential 
+  id in all your rows?</p>
+
+<p>If the latter, then you can do it by just adding a counter column to your data:</p>
+
+<pre><code>  angular.forEach($scope.myData, function( row, index){
+    row.sequence = index;
+  });
+</code></pre>
+
+<p>If you want to show the index of the row within the grid internals, then it depends on which internal you want. You can get 
+  the index of the row within grid.rows, which would show the row as it stands in the original rows list (not filtered nor sorted), 
+  or the index of the row within grid.renderContainers.body.visibleRowCache (filtered and sorted), or the render index of the 
+  row within the currently displayed rows (given virtualisation, this is generally a particularly useless number).</p>
+
+<p>If you're OK that whenever someone sorts or filters then the numbers will change, then you could do it with a cellTemplate, 
+  which would be something like:</p>
+
+<pre><code>  cellTemplate: '&lt;div&gt;{{row.grid.renderContainers.body.visibleRowsCache.indexOf(row)}}&lt;/div&gt;
+</code></pre></div>

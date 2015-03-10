@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-03f739f - 2015-03-09
+ * ui-grid - v3.0.0-rc.20-8e4ebfa - 2015-03-10
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12081,7 +12081,7 @@ module.filter('px', function() {
 
                 /**
                  * @ngdoc function
-                 * @name scrollToFocus
+                 * @name scrollToIfNecessary
                  * @methodOf  ui.grid.cellNav.api:PublicApi
                  * @description brings the specified row and column fully into view if it isn't already
                  * @param {GridRow} row grid row that we should make fully visible
@@ -12273,7 +12273,7 @@ module.filter('px', function() {
           if (colDef !== null && typeof(colDef) !== 'undefined' ) {
             gridCol = grid.getColumn(colDef.name ? colDef.name : colDef.field);
           }
-          this.scrollToInternal(grid, gridRow, gridCol);
+          this.scrollToIfNecessary(grid, gridRow, gridCol);
         },
 
         /**
@@ -12290,14 +12290,14 @@ module.filter('px', function() {
         scrollToFocus: function (grid, rowEntity, colDef) {
           var gridRow = null, gridCol = null;
 
-          if (rowEntity !== null) {
+          if (typeof(rowEntity) !== 'undefined' && rowEntity !== null) {
             gridRow = grid.getRow(rowEntity);
           }
 
-          if (colDef !== null) {
+          if (typeof(colDef) !== 'undefined' && colDef !== null) {
             gridCol = grid.getColumn(colDef.name ? colDef.name : colDef.field);
           }
-          this.scrollToInternal(grid, gridRow, gridCol);
+          this.scrollToIfNecessary(grid, gridRow, gridCol);
 
           var rowCol = { row: gridRow, col: gridCol };
 
@@ -13288,8 +13288,8 @@ module.filter('px', function() {
    */
 
   module.directive('uiGridCell',
-    ['$compile', '$injector', '$timeout', 'uiGridConstants', 'uiGridEditConstants', 'gridUtil', '$parse', 'uiGridEditService',
-      function ($compile, $injector, $timeout, uiGridConstants, uiGridEditConstants, gridUtil, $parse, uiGridEditService) {
+    ['$compile', '$injector', '$timeout', 'uiGridConstants', 'uiGridEditConstants', 'gridUtil', '$parse', 'uiGridEditService', '$rootScope',
+      function ($compile, $injector, $timeout, uiGridConstants, uiGridEditConstants, gridUtil, $parse, uiGridEditService, $rootScope) {
         var touchstartTimeout = 500;
 
         return {
@@ -13539,7 +13539,7 @@ module.filter('px', function() {
               $scope.editDropdownValueLabel = $scope.col.colDef.editDropdownValueLabel ? $scope.col.colDef.editDropdownValueLabel : 'value';
 
               var cellElement;
-              $scope.$apply(function () {
+              var createEditor = function(){
                 inEdit = true;
                 cancelBeginEditEvents();
                 var cellElement = angular.element(html);
@@ -13549,7 +13549,12 @@ module.filter('px', function() {
                 var gridCellContentsEl = angular.element($elm.children()[0]);
                 isFocusedBeforeEdit = gridCellContentsEl.hasClass('ui-grid-cell-focus');
                 gridCellContentsEl.addClass('ui-grid-cell-contents-hidden');
-              });
+              };
+              if (!$rootScope.$$phase) {
+                $scope.$apply(createEditor);
+              } else {
+                createEditor();
+              }
 
               //stop editing when grid is scrolled
               var deregOnGridScroll = $scope.col.grid.api.core.on.scrollEvent($scope, function () {
