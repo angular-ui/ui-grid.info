@@ -9,7 +9,7 @@
   <meta name="MobileOptimized" content="320" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>3 Ways to Customize Your UI-Grid Data | UI Grid</title>
+  <title>6 Ways to Take Control of How Your Grid Data is Displayed | UI Grid</title>
 
   <meta name="generator" content="UI Grid">
 
@@ -83,7 +83,7 @@
   </a>
 </span>
 
-        <h1 class="post-title">3 Ways to Customize Your UI-Grid Data</h1>
+        <h1 class="post-title">6 Ways to Take Control of How Your Grid Data is Displayed</h1>
 
         <br>
 
@@ -91,16 +91,20 @@
           <!-- 5 ways to display data the way you want -->
 <p>Getting your data displayed just right can be a huge pain.</p>
 <p>You might just want to format some numbers, or you might want to embed something complex like a chart or custom directive.</p>
-<p>In this post outline three different tactics you can use to get your data <strong>just the way you want it</strong>:</p>
+<p>In this post outline six different methods you can use to get your data <strong>just the way you want it</strong>:</p>
 <ul>
 <li>Bindings</li>
 <li>Cell Filters</li>
-<li>Cell Templates<br><strong> Links
-</strong> Buttons<br>** Custom directives</li>
+<li>Cell Templates<ul>
+<li>Links</li>
+<li>Buttons</li>
+<li>Custom directives</li>
+</ul>
+</li>
 </ul>
 <h2 id="Bindings">Bindings</h2>
 <p>UI Grid columns can be bound to any sort of Angular expression, as well as property names that would normally break an expression:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/*</span></div><div class="line">    Yes, you can use hyphens, plus signs, etc.</div><div class="line"></div><div class="line">    Normally something like 0 would bomb but UI Grid pre-processes</div><div class="line">    your bindings to make sure they work correctly.</div><div class="line">  */</div><div class="line">  { field: <span class="string">'first-name'</span> }, </div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/*</span></div><div class="line">    Yes, you can use hyphens, plus signs, etc.</div><div class="line"></div><div class="line">    Normally something like {{ row.entity.first-name }} would</div><div class="line">    bomb but UI Grid pre-processes your bindings to make sure they work correctly.</div><div class="line">  */</div><div class="line">  { field: <span class="string">'first-name'</span> }, </div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
 
 <h2 id="Cell_Filters">Cell Filters</h2>
 <p>Cell filters can transform the displayed value for a column while leaving the model intact. In this plunker the amount column contains floating point values, but we only want to display the integer part. A simple cellFilter that uses <code>.toFixed()</code> will alter the displayed value the way we want.</p>
@@ -112,7 +116,7 @@
 <p>If you double-click a cell in the Currency column you’ll see that the raw value is still available to be edited. Cell filters only change your displayed value!</p>
 <h2 id="Cell_Templates">Cell Templates</h2>
 <p>Column definitions take a <code>cellTemplate</code> argument you can use to give your cells a custom template. You can specify it a few different ways, with a url (relative or absolute), an Angular template ID, a string/Angular element, or a promise.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'name-template.html'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'myTemplateId'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: $.get(<span class="string">'url-to-your-template.html'</span>) }</div><div class="line">};</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'name-template.html'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'myTemplateId'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: $.get(<span class="string">'url-to-your-template.html'</span>) }</div><div class="line">];</div></pre></td></tr></table></figure>
 
 <h3 id="Bindings_in_Cell_Templates">Bindings in Cell Templates</h3>
 <p>There are a couple options for your binding your row’s data in your template. You can access the <code>row</code> object which is in the local scope; <code>row.entity</code> will contain the reference to your object, so if you want the “name” field, you can bind like so: .</p>
@@ -139,6 +143,8 @@
 <iframe src="http://embed.plnkr.co/irskqERheTOiFql82QFC/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
 
 <p>Here I’ve used d3.js, nvd3.js, and angular-nvd3.js to create sparkline charts in my cells.</p>
+<h2 id="Summin’_it_up">Summin’ it up</h2>
+<p>You should be able to do the vast majority of what you want with your data using these six methods. If you have questions, suggestions, or just want to say hi, drop in to <a href="http://gitter.im/angular-ui/ng-grid" target="_blank" rel="external">our gitter channel</a>; we’d love to meet you!</p>
 
 
           
@@ -151,15 +157,15 @@
 </section>
           <section class="share">
   <h4>Share this post</h4>
-  <a class="fa fa-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/3_ways_to_customize_data/"
+  <a class="fa fa-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/6_ways_to_take_control_of_how_your_grid_data_is_displayed/"
      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
       <span class="hidden">Twitter</span>
   </a>
-  <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/3_ways_to_customize_data/"
+  <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/6_ways_to_take_control_of_how_your_grid_data_is_displayed/"
      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
       <span class="hidden">Facebook</span>
   </a>
-  <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/3_ways_to_customize_data/"
+  <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/6_ways_to_take_control_of_how_your_grid_data_is_displayed/"
      onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
       <span class="hidden">Google+</span>
   </a>

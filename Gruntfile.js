@@ -55,5 +55,5 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('dev', ['shell:hexogen', 'connect', 'watch']);
-
+  grunt.registerTask('default', ['shell:hexogen']);
 };

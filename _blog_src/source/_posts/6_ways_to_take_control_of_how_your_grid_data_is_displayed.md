@@ -1,5 +1,5 @@
 author: Brian
-title: 3 Ways to Customize Your UI-Grid Data
+title: 6 Ways to Take Control of How Your Grid Data is Displayed
 date: 2015-02-27 10:55:01
 tags:
  - customize
@@ -12,14 +12,14 @@ Getting your data displayed just right can be a huge pain.
 
 You might just want to format some numbers, or you might want to embed something complex like a chart or custom directive.
 
-In this post outline three different tactics you can use to get your data **just the way you want it**:
+In this post outline six different methods you can use to get your data **just the way you want it**:
 
 * Bindings
 * Cell Filters
 * Cell Templates
-** Links
-** Buttons
-** Custom directives
+  * Links
+  * Buttons
+  * Custom directives
 
 ## Bindings
 
@@ -33,8 +33,8 @@ var columnDefs = [
   /*
     Yes, you can use hyphens, plus signs, etc.
 
-    Normally something like {{ row.entity.first-name }} would bomb but UI Grid pre-processes
-    your bindings to make sure they work correctly.
+    Normally something like {% raw %}{{ row.entity.first-name }}{% endraw %} would
+    bomb but UI Grid pre-processes your bindings to make sure they work correctly.
   */
   { field: 'first-name' }, 
 
@@ -70,7 +70,7 @@ var columnDefs = [
   { field: 'name', cellTemplate: 'name-template.html' },
   { field: 'name', cellTemplate: 'myTemplateId' },
   { field: 'name', cellTemplate: $.get('url-to-your-template.html') }
-};
+];
 {% endcodeblock %}
 
 ### Bindings in Cell Templates ###
@@ -126,3 +126,7 @@ You can put absolutely anything in your cell templates, just remember to use `.u
 {% iframe http://embed.plnkr.co/irskqERheTOiFql82QFC/preview %}
 
 Here I've used d3.js, nvd3.js, and angular-nvd3.js to create sparkline charts in my cells.
+
+## Summin' it up
+
+You should be able to do the vast majority of what you want with your data using these six methods. If you have questions, suggestions, or just want to say hi, drop in to [our gitter channel](http://gitter.im/angular-ui/ng-grid); we'd love to meet you!
