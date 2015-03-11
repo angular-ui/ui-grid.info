@@ -38,5 +38,5 @@
 <p>If you're OK that whenever someone sorts or filters then the numbers will change, then you could do it with a cellTemplate, 
   which would be something like:</p>
 
-<pre><code>  cellTemplate: '&lt;div&gt;{{row.grid.renderContainers.body.visibleRowsCache.indexOf(row)}}&lt;/div&gt;
+<pre><code>  cellTemplate: '&lt;div class="ui-grid-cell-contents"&gt;{{grid.renderContainers.body.visibleRowCache.indexOf(row)}}&lt;/div&gt;'
 </code></pre></div>

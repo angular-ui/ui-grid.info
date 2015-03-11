@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-8354e7a - 2015-03-11
+ * ui-grid - v3.0.0-rc.20-220d7b9 - 2015-03-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3273,7 +3273,7 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:Grid
    * @description When the build creates columns from column definitions, the columnbuilders will be called to add
    * additional properties to the column.
-   * @param {function(colDef, col, gridOptions)} columnsProcessor function to be called
+   * @param {function(colDef, col, gridOptions)} columnBuilder function to be called
    */
   Grid.prototype.registerColumnBuilder = function registerColumnBuilder(columnBuilder) {
     this.columnBuilders.push(columnBuilder);
@@ -15525,6 +15525,8 @@ module.filter('px', function() {
           
           grid.registerRowsProcessor(service.groupRows);
           
+          grid.registerColumnsProcessor(service.groupingColumnProcessor);
+          
           /**
            *  @ngdoc object
            *  @name ui.grid.grouping.api:PublicApi
@@ -15652,6 +15654,16 @@ module.filter('px', function() {
            *  <br/>Defaults to 10
            */
           gridOptions.groupingIndent = gridOptions.groupingIndent || 10;
+          
+          /**
+           *  @ngdoc object
+           *  @name groupingRowHeaderAlwaysVisible
+           *  @propertyOf  ui.grid.grouping.api:GridOptions
+           *  @description forces the groupRowHeader to always be present, even if nothing is grouped.  In some situations this
+           *  may be preferable to having the groupHeader come and go
+           *  <br/>Defaults to false
+           */
+          gridOptions.groupingRowHeaderAlwaysVisible = gridOptions.groupingRowHeaderAlwaysVisible !== false;
         },
 
 
@@ -15685,7 +15697,7 @@ module.filter('px', function() {
           if (colDef.enableGrouping === false){
             return;
           }
-
+          
           /**
            *  @ngdoc object
            *  @name grouping
@@ -15807,6 +15819,36 @@ module.filter('px', function() {
           if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'name', 'ui.grid.grouping.aggregateRemove')) {
             col.menuItems.push(aggregateRemove);
           }
+        },
+        
+        
+        
+        /**
+         * @ngdoc function
+         * @name groupingColumnProcessor
+         * @methodOf  ui.grid.grouping.service:uiGridGroupingService
+         * @description Updates the visibility of the groupingRowHeader based on whether or not
+         * there are any grouped columns
+         * 
+         * @param {object} colDef columnDef we're basing on
+         * @param {GridCol} col the column we're to update
+         * @param {object} gridOptions the options we should use
+         * @returns {promise} promise for the builder - actually we do it all inline so it's immediately resolved
+         */
+        groupingColumnProcessor: function( columns ) {
+          angular.forEach(columns, function(column, index){
+            if (column.name === uiGridGroupingConstants.groupingRowHeaderColName) {
+              if (typeof(column.grid.options.groupingRowHeaderAlwaysVisible) === 'undefined' || column.grid.options.groupingRowHeaderAlwaysVisible === true) {
+                var groupingConfig = service.getGrouping(column.grid);
+                if (groupingConfig.grouping.length > 0){
+                  column.visible = true;
+                } else {
+                  column.visible = false;
+                }
+              }
+            }
+          });
+          return columns;
         },
         
         
