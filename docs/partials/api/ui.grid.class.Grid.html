@@ -216,16 +216,16 @@ additional properties to the column.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
-<li><h3 id="registerColumnsProcessor">registerColumnsProcessor(rows)</h3>
+<li><h3 id="registerColumnsProcessor">registerColumnsProcessor(columnProcessor)</h3>
 <div class="registercolumnsprocessor"><p>Register a "columns processor" function. When the columns are updated,
 the grid calls each registered "columns processor", which has a chance
 to alter the set of columns, as long as the count is not modified.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rows – {function(renderableColumns)} – </code>
-<p>processor function</p></li>
+<ul class="parameters"><li><code ng:non-bindable="">columnProcessor – {function(renderedColumnsToProcess, rows)} – </code>
+<p>column processor function, which
+is run in the context of the grid (i.e. this for the function will be the grid), and
+which must return an updated renderedColumnsToProcess which can be passed to the next processor 
+in the chain</p></li>
 </ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Array[GridColumn]}</code>
-– <p>Updated renderable columns</p></div>
 </div>
 </li>
 <li><h3 id="registerDataChangeCallback">registerDataChangeCallback(callback, types)</h3>
@@ -267,17 +267,16 @@ additional properties to the row.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
-<li><h3 id="registerRowsProcessor">registerRowsProcessor(rows)</h3>
+<li><h3 id="registerRowsProcessor">registerRowsProcessor(processorFunction)</h3>
 <div class="registerrowsprocessor"><p>Register a "rows processor" function. When the rows are updated,
 the grid calls each registered "rows processor", which has a chance
 to alter the set of rows (sorting, etc) as long as the count is not
 modified.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rows – {function(renderableRows)} – </code>
-<p>processor function</p></li>
+<ul class="parameters"><li><code ng:non-bindable="">processorFunction – {function(renderedRowsToProcess, columns )} – </code>
+<p>rows processor function, which 
+is run in the context of the grid (i.e. this for the function will be the grid), and must
+return the updated rows list, which is passed to the next processor in the chain</p></li>
 </ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Array[GridRow]}</code>
-– <p>Updated renderable rows</p></div>
 </div>
 </li>
 <li><h3 id="registerStyleComputation">registerStyleComputation(styleComputation)</h3>

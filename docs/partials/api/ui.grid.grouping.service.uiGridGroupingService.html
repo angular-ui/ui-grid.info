@@ -114,8 +114,8 @@ this always renumbers the grouping starting at 0</p><h4 id="Parameters">Paramete
 <div class="groupcolumn"><p>Adds this column to the existing grouping, at the end of the priority order.
 If the column doesn't have a sort, adds one, by default ASC</p>
 
-<p>If the option <code>groupMoveColumns</code> hasn't been set to false, moves the column to the left
-to make things look tidier.</p><h4 id="Parameters">Parameters</h4>
+<p>This column will move to the left of any non-group columns, the
+move is handled in a columnProcessor, so gets called as part of refresh</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">column – {GridCol} – </code>
@@ -187,19 +187,17 @@ working with, the following information:</p>
 – <p>promise for the builder - actually we do it all inline so it's immediately resolved</p></div>
 </div>
 </li>
-<li><h3 id="groupingColumnProcessor">groupingColumnProcessor(colDef, col, gridOptions)</h3>
+<li><h3 id="groupingColumnProcessor">groupingColumnProcessor(columns, rows)</h3>
 <div class="groupingcolumnprocessor"><p>Updates the visibility of the groupingRowHeader based on whether or not
 there are any grouped columns</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">colDef – {object} – </code>
-<p>columnDef we're basing on</p></li>
-<li><code ng:non-bindable="">col – {GridCol} – </code>
-<p>the column we're to update</p></li>
-<li><code ng:non-bindable="">gridOptions – {object} – </code>
-<p>the options we should use</p></li>
+<ul class="parameters"><li><code ng:non-bindable="">columns – {array} – </code>
+<p>the columns to consider rendering</p></li>
+<li><code ng:non-bindable="">rows – {array} – </code>
+<p>the grid rows, which we don't use but are passed to us </p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>promise for the builder - actually we do it all inline so it's immediately resolved</p></div>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>updated columns array</p></div>
 </div>
 </li>
 <li><h3 id="initialiseProcessingState">initialiseProcessingState(grid)</h3>
@@ -232,17 +230,23 @@ i.e. the column that we want to create a header for</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="moveGroupColumns">moveGroupColumns(grid)</h3>
+<li><h3 id="moveGroupColumns">moveGroupColumns(grid, columns, rows)</h3>
 <div class="movegroupcolumns"><p>Moves the column order so that the grouped columns are lined up
-to the left (well, unless you're RTL, then it's the right).  Doesn't change
-the columnDefs, just the columns array.  (check move columns that this is how it works)</p>
-
-<p>All other columns retain their relative position, after the group columns </p>
+to the left (well, unless you're RTL, then it's the right).  By doing this in 
+the columnsProcessor, we make it transient - when the column is ungrouped it'll
+go back to where it was.</p>
 
 <p>Does nothing if the option <code>moveGroupColumns</code> is set to false.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
+<li><code ng:non-bindable="">columns – {array} – </code>
+<p>the columns that we should process/move</p></li>
+<li><code ng:non-bindable="">rows – {array} – </code>
+<p>the grid rows</p></li>
 </ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>updated columns</p></div>
 </div>
 </li>
 <li><h3 id="setAllNodes">setAllNodes(expandedStatesSubset)</h3>
@@ -293,7 +297,8 @@ If the row isn't a groupHeader, does nothing.</p><h4 id="Parameters">Parameters<
 column was previously aggregated the aggregation will come back. 
 The sort will remain.  </p>
 
-<p>This column will move to the right of any other group columns.</p><h4 id="Parameters">Parameters</h4>
+<p>This column will move to the right of any other group columns, the
+move is handled in a columnProcessor, so gets called as part of refresh</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">column – {GridCol} – </code>
