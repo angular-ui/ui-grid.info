@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-fbb3631 - 2015-03-11
+ * ui-grid - v3.0.0-rc.20-4acbdc1 - 2015-03-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -9696,7 +9696,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         case 'default':
           return element.scrollWidth - scrollLeft - element.clientWidth;
         case 'negative':
-          return scrollLeft + element.scrollWidth - element.clientWidth;
+          return Math.abs(scrollLeft);
         case 'reverse':
           return scrollLeft;
       }
