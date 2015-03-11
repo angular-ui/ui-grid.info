@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-220d7b9 - 2015-03-11
+ * ui-grid - v3.0.0-rc.20-fbb3631 - 2015-03-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2103,7 +2103,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               // Horizontal scroll
               if (args.x && $scope.bindScrollHorizontal) {
                 containerCtrl.prevScrollArgs = args;
-                var newScrollLeft = args.getNewScrollLeft(colContainer,containerCtrl.viewport);
+                var newScrollLeft = args.getNewScrollLeft(colContainer, containerCtrl.viewport);
 
                 // Make the current horizontal scroll position available in the $scope
                 $scope.newScrollLeft = newScrollLeft;
@@ -2118,7 +2118,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
                 // Scroll came from somewhere else, so the viewport must be positioned
                 if (args.source !== ScrollEvent.Sources.ViewPortScroll) {
-                  containerCtrl.viewport[0].scrollLeft = newScrollLeft;
+                  containerCtrl.viewport[0].scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.viewport, newScrollLeft);
                 }
 
                 containerCtrl.prevScrollLeft = newScrollLeft;
@@ -9642,6 +9642,34 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     return 'unknown';
   };
 
+  // Borrowed from https://github.com/othree/jquery.rtl-scroll-type
+  // Determine the scroll "type" this browser is using for RTL
+  s.rtlScrollType = function rtlScrollType() {
+    if (rtlScrollType.type) {
+      return rtlScrollType.type;
+    }
+
+    var definer = angular.element('<div dir="rtl" style="font-size: 14px; width: 1px; height: 1px; position: absolute; top: -1000px; overflow: scroll">A</div>')[0],
+        type = 'reverse';
+
+    document.body.appendChild(definer);
+
+    if (definer.scrollLeft > 0) {
+      type = 'default';
+    }
+    else {
+      definer.scrollLeft = 1;
+      if (definer.scrollLeft === 0) {
+        type = 'negative';
+      }
+    }
+
+    definer.remove();
+    rtlScrollType.type = type;
+
+    return type;
+  };
+
   /**
     * @ngdoc method
     * @name normalizeScrollLeft
@@ -9659,37 +9687,22 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       element = element[0];
     }
 
-    var browser = s.detectBrowser();
-
     var scrollLeft = element.scrollLeft;
     
-    var dir = s.getStyles(element)['direction'];
+    var dir = s.getStyles(element).direction;
 
-    // IE stays normal in RTL
-    if (browser === 'ie') {
-      return scrollLeft;
-    }
-    // Chrome doesn't alter the scrollLeft value. So with RTL on a 400px-wide grid, the right-most position will still be 400 and the left-most will still be 0;
-    else if (browser === 'chrome') {
-      if (dir === 'rtl') {
-        // Get the max scroll for the element
-        var maxScrollLeft = element.scrollWidth - element.clientWidth;
-
-        // Subtract the current scroll amount from the max scroll
-        return maxScrollLeft - scrollLeft;
-      }
-      else {
-        return scrollLeft;
+    if (dir === 'rtl') {
+      switch (s.rtlScrollType()) {
+        case 'default':
+          return element.scrollWidth - scrollLeft - element.clientWidth;
+        case 'negative':
+          return scrollLeft + element.scrollWidth - element.clientWidth;
+        case 'reverse':
+          return scrollLeft;
       }
     }
-    // Firefox goes negative!
-    else if (browser === 'firefox') {
-      return Math.abs(scrollLeft);
-    }
-    else {
-      // TODO(c0bra): Handle other browsers? Android? iOS? Opera?
-      return scrollLeft;
-    }
+
+    return scrollLeft;
   };
 
   /**
@@ -9710,40 +9723,24 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       element = element[0];
     }
 
-    var browser = s.detectBrowser();
+    var dir = s.getStyles(element).direction;
 
-    var dir = s.getStyles(element)['direction'];
+    if (dir === 'rtl') {
+      switch (s.rtlScrollType()) {
+        case 'default':
+          // Get the max scroll for the element
+          var maxScrollLeft = element.scrollWidth - element.clientWidth;
 
-    // IE stays normal in RTL
-    if (browser === 'ie') {
-      return scrollLeft;
+          // Subtract the current scroll amount from the max scroll
+          return maxScrollLeft - scrollLeft;
+        case 'negative':
+          return scrollLeft * -1;
+        case 'reverse':
+          return scrollLeft;
+      }
     }
-    // Chrome doesn't alter the scrollLeft value. So with RTL on a 400px-wide grid, the right-most position will still be 400 and the left-most will still be 0;
-    else if (browser === 'chrome') {
-      if (dir === 'rtl') {
-        // Get the max scroll for the element
-        var maxScrollLeft = element.scrollWidth - element.clientWidth;
 
-        // Subtract the current scroll amount from the max scroll
-        return maxScrollLeft - scrollLeft;
-      }
-      else {
-        return scrollLeft;
-      }
-    }
-    // Firefox goes negative!
-    else if (browser === 'firefox') {
-      if (dir === 'rtl') {
-        return scrollLeft * -1;
-      }
-      else {
-        return scrollLeft;
-      }
-    }
-    else {
-      // TODO(c0bra): Handle other browsers? Android? iOS? Opera?
-      return scrollLeft;
-    }
+    return scrollLeft;
   };
 
     /**
