@@ -1,0 +1,97 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>You can set a tooltip (actually, a title) to pop up when a user hovers over a cell.</p>
+
+<p>This tooltip can be simply the cell contents, in which case set the columnDef to have
+<code>cellTooltip: true</code>.  Or it can be a function that returns a value derived from the 
+current column and row - for example:</p>
+
+<pre><code>  cellTooltip: function(row, col) {
+    return 'Name: ' + row.entity.name + ' Company: ' + row.entity.company;
+  }
+</code></pre>
+
+<p>Note that turning on tooltips will create an extra watcher per cell, so it has an impact on overall grid
+performance, it is not recommended to turn them on for every column, rather only for the columns likely to have
+data that won't be displayable within the grid row (e.g. long description fields).</p>
+
+<h3>Source</h3>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-46" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-47"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-46" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-46">
+    <div ng-controller="MainCtrl">
+      <br>
+      <br>
+      <div id="grid1" ui-grid="gridOptions" class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 200px;
+    }
+    .red { color: red;  background-color: yellow !important; }
+    .blue { color: blue;  }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid']);
+
+    app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
+      $scope.gridOptions = {
+        enableSorting: true,
+        columnDefs: [
+          { field: 'name', cellTooltip: true },
+          { field: 'company', cellTooltip: 
+            function( row, col ) {
+              return 'Name: ' + row.entity.name + ' Company: ' + row.entity.company;
+            } 
+          }
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+          $scope.gridApi.core.on.sortChanged( $scope, function( grid, sort ) {
+            $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+          })
+        }
+      };
+
+      $http.get('/data/100.json')
+        .success(function(data) {
+          $scope.gridOptions.data = data;
+        });
+    }]);
+  </script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-47"></pre>
+<script type="text/ng-template" id="scenario.js-47">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+    describe( '115 header cell class', function() {
+      it('grid should have two visible columns', function () {
+        gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
+      });
+  
+      it('cell classes', function () {
+        // blue for header 0
+        expect( gridTestUtils.headerCell( 'grid1', 0 ).getCssValue('color')).toEqual('rgba(0, 0, 255, 1)');
+
+        // header 2 starts with no coloring, but colors when sort is ASC
+        expect( gridTestUtils.headerCell( 'grid1', 1 ).getCssValue('color')).toEqual('rgba(44, 62, 80, 1)', 'normal foreground');
+
+        gridTestUtils.clickHeaderCell( 'grid1', 1 );
+        expect( gridTestUtils.headerCell( 'grid1', 1 ).getCssValue('color')).toEqual('rgba(255, 0, 0, 1)', 'red highlight');
+        
+      });
+    });    
+  </script>
+</div>
+</div><h3>Demo</h3>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-46" ng-eval-javascript="app.js"></div></div>

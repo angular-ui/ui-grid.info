@@ -198,6 +198,14 @@ like any normal sorting function.</p></div>
 <div class="suppressremovesort"><p>(optional) False by default. When enabled, this setting hides the removeSort option
 in the menu, and prevents users from manually removing the sort</p></div>
 </li>
+<li><h3 id="tooltip">tooltip</h3>
+<div class="tooltip"><p>Whether or not to show a tooltip when a user hovers over the cell.
+If set to false, no tooltip.  If true, the cell value is shown in the tooltip (useful
+if you have long values in your cells), if a function then that function is called
+passing in the row and the col <code>cellTooltip( row, col )</code>, and the return value is shown in the tooltip.</p>
+
+<p>Defaults to false</p></div>
+</li>
 <li><h3 id="type">type</h3>
 <div class="type"><p>the type of the column, used in sorting.  If not provided then the 
 grid will guess the type.  Add this only if the grid guessing is not to your

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-2d67f0c - 2015-03-11
+ * ui-grid - v3.0.0-rc.20-f05545b - 2015-03-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17,6 +17,7 @@
     CUSTOM_FILTERS: /CUSTOM_FILTERS/g,
     COL_FIELD: /COL_FIELD/g,
     MODEL_COL_FIELD: /MODEL_COL_FIELD/g,
+    TOOLTIP: /title=\"TOOLTIP\"/g,
     DISPLAY_CELL_TEMPLATE: /DISPLAY_CELL_TEMPLATE/g,
     TEMPLATE_REGEXP: /<.+>/,
     FUNC_REGEXP: /(\([^)]*\))?$/,
@@ -3635,7 +3636,13 @@ angular.module('ui.grid')
     this.columns.forEach(function (col) {
       var html = col.cellTemplate.replace(uiGridConstants.MODEL_COL_FIELD, self.getQualifiedColField(col));
       html = html.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
-
+      
+      if (col.cellTooltip === false){
+        html = html.replace(uiGridConstants.TOOLTIP, '');
+      } else {
+        // gridColumn will have made sure that the col either has false or a function for this value
+        html = html.replace(uiGridConstants.TOOLTIP, 'title="{{col.cellTooltip(row, col)}}"');
+      }
 
       var compiledElementFn = $compile(html);
       col.compiledElementFn = compiledElementFn;
@@ -5778,6 +5785,28 @@ angular.module('ui.grid')
 
     self.aggregationType = angular.isDefined(colDef.aggregationType) ? colDef.aggregationType : null;
     self.footerCellTemplate = angular.isDefined(colDef.footerCellTemplate) ? colDef.footerCellTemplate : null;
+
+    /**
+     * @ngdoc property
+     * @name tooltip
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description Whether or not to show a tooltip when a user hovers over the cell.
+     * If set to false, no tooltip.  If true, the cell value is shown in the tooltip (useful
+     * if you have long values in your cells), if a function then that function is called
+     * passing in the row and the col `cellTooltip( row, col )`, and the return value is shown in the tooltip.
+     * 
+     * Defaults to false
+     *
+     */
+    if ( typeof(colDef.cellTooltip) === 'undefined' || colDef.cellTooltip === false ) {
+      self.cellTooltip = false;
+    } else if ( colDef.cellTooltip === true ){
+      self.cellTooltip = function(row, col) {
+        return self.grid.getCellValue( row, col );
+      };
+    } else {
+      self.cellTooltip = colDef.cellTooltip;
+    }
 
     /**
      * @ngdoc property
@@ -21616,7 +21645,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridCell',
-    "<div class=\"ui-grid-cell-contents\">{{COL_FIELD CUSTOM_FILTERS}}</div>"
+    "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{COL_FIELD CUSTOM_FILTERS}}</div>"
   );
 
 
