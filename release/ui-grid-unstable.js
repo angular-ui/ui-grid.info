@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-23fec17 - 2015-03-12
+ * ui-grid - v3.0.0-rc.20-460fae5 - 2015-03-13
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -20420,8 +20420,12 @@ module.filter('px', function() {
             scrollFocus.focus = true;
             var rowCol = grid.api.cellNav.getFocusedCell();
             if ( rowCol !== null ) {
-              scrollFocus.colName = rowCol.col.colDef.name;
-              scrollFocus.rowVal = service.getRowVal( grid, rowCol.row );
+              if ( rowCol.col !== null ){
+                scrollFocus.colName = rowCol.col.colDef.name;  
+              }
+              if ( rowCol.row !== null ){
+                scrollFocus.rowVal = service.getRowVal( grid, rowCol.row );  
+              }
             }
           } else if ( grid.options.saveScroll ) {
             scrollFocus.focus = false;
