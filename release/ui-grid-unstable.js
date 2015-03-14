@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-b9302e8 - 2015-03-14
+ * ui-grid - v3.0.0-rc.20-3b4d2ec - 2015-03-14
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -4613,11 +4613,15 @@ angular.module('ui.grid')
    * @param {GridColumn} col Column to access
    */
   Grid.prototype.getCellValue = function getCellValue(row, col){
-    if (!col.cellValueGetterCache) {
-      col.cellValueGetterCache = $parse(row.getEntityQualifiedColField(col));
+    if (this.options.flatEntityAccess && col.field){
+      return row.entity[col.field];      
+    } else {
+      if (!col.cellValueGetterCache) {
+        col.cellValueGetterCache = $parse(row.getEntityQualifiedColField(col));
+      }
+  
+      return col.cellValueGetterCache(row);
     }
-
-    return col.cellValueGetterCache(row);
   };
 
   
@@ -6335,6 +6339,20 @@ angular.module('ui.grid')
       baseOptions.getRowIdentity = baseOptions.getRowIdentity || function getRowIdentity(row) {
         return row.$$hashKey;
       };
+
+      /**
+       * @ngdoc function
+       * @name flatEntityAccess
+       * @methodOf ui.grid.class:GridOptions
+       * @description Set to true if your columns are all related directly to fields in a flat object structure - i.e. 
+       * each of your columns associate directly with a propery one each of the entities in your data array.
+       * 
+       * In that situation we can avoid all the logic associated with complex binding to functions or to properties of sub-objects,
+       * which can provide a significant speed improvement with large data sets, with filtering and with sorting.
+       * 
+       * By default false
+       */
+      baseOptions.flatEntityAccess = baseOptions.flatEntityAccess === true;
 
       /**
        * @ngdoc property
@@ -8739,12 +8757,13 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     var r = rows.slice(0);
     
     // put a custom index field on each row, used to make a stable sort out of unstable sorts (e.g. Chrome)
-    angular.forEach( rows, function ( row, idx ) {
+    var setIndex = function( row, idx ){
       row.entity.$uiGridIndex = idx;
-    });
+    };
+    rows.forEach(setIndex);
 
     // Now actually sort the data
-    var newRows = rows.sort(function rowSortFn(rowA, rowB) {
+    var rowSortFn = function (rowA, rowB) {
       var tem = 0,
           idx = 0,
           sortFn;
@@ -8765,7 +8784,8 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       }
 
       // Chrome doesn't implement a stable sort function.  If our sort returns 0 
-      // (i.e. the items are equal), then return the previous order using our custom
+      // (i.e. the items are equal), and we're at the last sort column in the list,
+      // then return the previous order using our custom
       // index variable
       if (tem === 0 ) {
         return rowA.entity.$uiGridIndex - rowB.entity.$uiGridIndex;
@@ -8777,12 +8797,15 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       } else {
         return 0 - tem;
       }
-    });
+    };
+
+    var newRows = rows.sort(rowSortFn);
     
     // remove the custom index field on each row, used to make a stable sort out of unstable sorts (e.g. Chrome)
-    angular.forEach( newRows, function ( row, idx ) {
-      delete row.entity.$uiGridIndex;
-    });
+    var clearIndex = function( row, idx ){
+       delete row.entity.$uiGridIndex;
+    };
+    rows.forEach(setIndex);
     
     return newRows;
   };
