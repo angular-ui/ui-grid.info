@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-bd88bb7 - 2015-03-14
+ * ui-grid - v3.0.0-rc.20-b9302e8 - 2015-03-14
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -21708,7 +21708,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/dropdownEditor',
-    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\"></select></form></div>"
+    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] for field in editDropdownOptionsArray CUSTOM_FILTERS\"></select></form></div>"
   );
 
 
