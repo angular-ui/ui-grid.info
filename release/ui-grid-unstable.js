@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-460fae5 - 2015-03-13
+ * ui-grid - v3.0.0-rc.20-7d1a1c9 - 2015-03-14
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -21372,6 +21372,7 @@ module.filter('px', function() {
         link: function($scope, $elm, $attrs, uiGridCtrl) {
           var self = uiGridCtrl.grid;
           $scope.selectButtonClick = function(row, evt) {
+            evt.stopPropagation();
             if (evt.shiftKey) {
               uiGridSelectionService.shiftSelect(self, row, evt, self.options.multiSelect);
             }
