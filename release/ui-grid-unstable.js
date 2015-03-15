@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-3b4d2ec - 2015-03-14
+ * ui-grid - v3.0.0-rc.20-700ab8a - 2015-03-15
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12371,9 +12371,9 @@ module.filter('px', function() {
           // The left boundary is the current X scroll position
           var leftBound = grid.renderContainers.body.prevScrollLeft;
 
-          // The bottom boundary is the current Y scroll position, plus the height of the grid, but minus the header height.
+          // The bottom boundary is the current Y scroll position, plus the height of the grid, but minus the header height and minus the footerHeight.
           //   Basically this is the viewport height added on to the scroll position
-          var bottomBound = grid.renderContainers.body.prevScrollTop + grid.gridHeight - grid.headerHeight;
+          var bottomBound = grid.renderContainers.body.prevScrollTop + grid.gridHeight - grid.headerHeight - grid.footerHeight;
 
           // If there's a horizontal scrollbar, remove its height from the bottom boundary, otherwise we'll be letting it obscure rows
           //if (grid.horizontalScrollbarHeight) {
@@ -14076,7 +14076,7 @@ module.filter('px', function() {
       },
       
       expandAllRows: function(grid, $scope) {
-        angular.forEach(grid.renderContainers.body.visibleRowCache, function(row) {
+        grid.renderContainers.body.visibleRowCache.forEach( function(row) {
           if (!row.isExpanded) {
             service.toggleRowExpansion(grid, row);
           }
@@ -14086,7 +14086,7 @@ module.filter('px', function() {
       },
       
       collapseAllRows: function(grid) {
-        angular.forEach(grid.renderContainers.body.visibleRowCache, function(row) {
+        grid.renderContainers.body.visibleRowCache.forEach( function(row) {
           if (row.isExpanded) {
             service.toggleRowExpansion(grid, row);
           }
@@ -14275,7 +14275,7 @@ module.filter('px', function() {
                   function updateRowContainerWidth() {
                       var grid = $scope.grid;
                       var colWidth = 0;
-                      angular.forEach(grid.columns, function (column) {
+                      grid.columns.forEach( function (column) {
                           if (column.renderContainer === 'left') {
                             colWidth += column.width;
                           }
@@ -14905,7 +14905,7 @@ module.filter('px', function() {
          */
         getColumnHeaders: function (grid, colTypes) {
           var headers = [];
-          angular.forEach(grid.columns, function( gridCol, index ) {
+          grid.columns.forEach( function( gridCol, index ) {
             if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
                  gridCol.colDef.exporterSuppressExport !== true &&
                  grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
@@ -14982,11 +14982,11 @@ module.filter('px', function() {
               break;
           }
           
-          angular.forEach(rows, function( row, index ) {
+          rows.forEach( function( row, index ) {
 
             if (row.exporterEnableExporting !== false) {
               var extractedRow = [];
-              angular.forEach(grid.columns, function( gridCol, index ) {
+              grid.columns.forEach( function( gridCol, index ) {
               if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
                    gridCol.colDef.exporterSuppressExport !== true &&
                    grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
@@ -15081,8 +15081,8 @@ module.filter('px', function() {
          * @description Checks whether current browser is IE and returns it's version if it is
         */
         isIE: function () {
-            var myNav = navigator.userAgent.toLowerCase();
-            return (myNav.indexOf('msie') !== -1) ? parseInt(myNav.split('msie')[1]) : false;
+          var match = navigator.userAgent.match(/(?:MSIE |Trident\/.*; rv:)(\d+)/);
+          return match ? parseInt(match[1]) : false;
         },
 
 
@@ -15270,19 +15270,19 @@ module.filter('px', function() {
          * for any column that is a %
          *  
          * @param {Grid} grid the grid from which data should be exported
-         * @param {object} exportHeaders array of header information 
+         * @param {array} exportHeaders array of header information 
          * @returns {object} an array of header widths
          */
         calculatePdfHeaderWidths: function ( grid, exportHeaders ) {
           var baseGridWidth = 0;
-          angular.forEach(exportHeaders, function(value){
+          exportHeaders.forEach( function(value){
             if (typeof(value.width) === 'number'){
               baseGridWidth += value.width;
             }
           });
           
           var extraColumns = 0;
-          angular.forEach(exportHeaders, function(value){
+          exportHeaders.forEach( function(value){
             if (value.width === '*'){
               extraColumns += 100;
             }
@@ -15701,18 +15701,18 @@ module.filter('px', function() {
            *  @ngdoc object
            *  @name groupingRowHeaderWidth
            *  @propertyOf  ui.grid.grouping.api:GridOptions
-           *  @description Width of the grouping header, if your nested grouping is too
-           *  deep you may need to increase this 
-           *  <br/>Defaults to 40
+           *  @description Base width of the grouping header, provides for a single level of grouping.  This
+           *  is incremented by `groupingIndent` for each extra level
+           *  <br/>Defaults to 30
            */
-          gridOptions.groupingRowHeaderWidth = gridOptions.groupingRowHeaderWidth || 40;
+          gridOptions.groupingRowHeaderBaseWidth = gridOptions.groupingRowHeaderBaseWidth || 30;
 
           /**
            *  @ngdoc object
            *  @name groupingIndent
            *  @propertyOf  ui.grid.grouping.api:GridOptions
            *  @description Number of pixels of indent for the icon at each grouping level, wider indents are visually more pleasing,
-           *  but may result in you having to make the group row header wider
+           *  but will make the group row header wider
            *  <br/>Defaults to 10
            */
           gridOptions.groupingIndent = gridOptions.groupingIndent || 10;
@@ -15907,21 +15907,27 @@ module.filter('px', function() {
          */
         groupingColumnProcessor: function( columns, rows ) {
           var grid = this;
-          angular.forEach(columns, function(column, index){
+          columns.forEach( function(column, index){
             // position used to make stable sort in moveGroupColumns
             column.groupingPosition = index;
             
-            // find groupingRowHeader and decide whether to make it visible
+            // find groupingRowHeader
             if (column.name === uiGridGroupingConstants.groupingRowHeaderColName) {
+              var groupingConfig = service.getGrouping(column.grid);
+              // decide whether to make it visible
               if (typeof(grid.options.groupingRowHeaderAlwaysVisible) === 'undefined' || grid.options.groupingRowHeaderAlwaysVisible === false) {
-                var groupingConfig = service.getGrouping(column.grid);
                 if (groupingConfig.grouping.length > 0){
                   column.visible = true;
                 } else {
                   column.visible = false;
                 }
               }
+              // set the width based on the depth of grouping
+              var indent = ( groupingConfig.grouping.length - 1 ) * grid.options.groupingIndent;
+              indent = indent > 0 ? indent : 0;
+              column.width = grid.options.groupingRowHeaderBaseWidth + indent; 
             }
+            
           });
           
           columns = service.moveGroupColumns(this, columns, rows);
@@ -15953,7 +15959,7 @@ module.filter('px', function() {
           // optimisation - this can be done in the groupingColumnProcessor since we were already
           // iterating.  But commented out and left here to make the code a little more understandable
           //
-          // angular.forEach(columns, function(column, index) {
+          // columns.forEach( function(column, index) {
           //   column.groupingPosition = index;
           // });
           
@@ -15979,7 +15985,7 @@ module.filter('px', function() {
             return a.groupingPosition - b.groupingPosition;
           });
           
-          angular.forEach(columns, function(column, index) {
+          columns.forEach( function(column, index) {
             delete column.groupingPosition;
           });
           
@@ -16091,7 +16097,7 @@ module.filter('px', function() {
           var groupArray = [];
           var sortArray = [];
           
-          angular.forEach(grid.columns, function(column, index){
+          grid.columns.forEach( function(column, index){
             if ( typeof(column.grouping) !== 'undefined' && typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0){
               groupArray.push(column);
             } else if ( typeof(column.sort) !== 'undefined' && typeof(column.sort.priority) !== 'undefined' && column.sort.priority >= 0){
@@ -16100,7 +16106,7 @@ module.filter('px', function() {
           });
           
           groupArray.sort(function(a, b){ return a.grouping.groupPriority - b.grouping.groupPriority; });
-          angular.forEach(groupArray, function(column, index){
+          groupArray.forEach( function(column, index){
             column.grouping.groupPriority = index;
             column.suppressRemoveSort = true;
             if ( typeof(column.sort) === 'undefined'){
@@ -16111,7 +16117,7 @@ module.filter('px', function() {
 
           var i = groupArray.length;
           sortArray.sort(function(a, b){ return a.sort.priority - b.sort.priority; });
-          angular.forEach(sortArray, function(column, index){
+          sortArray.forEach( function(column, index){
             column.sort.priority = i;
             column.suppressRemoveSort = column.colDef.suppressRemoveSort;
             i++;
@@ -16164,7 +16170,7 @@ module.filter('px', function() {
           expandedStatesSubset.state = targetState;
           
           // set all child nodes
-          angular.forEach(expandedStatesSubset, function( childNode, key){
+          expandedStatesSubset.forEach( function( childNode, key){
             if (key !== 'state'){
               service.setAllNodes(childNode, targetState);
             }
@@ -16356,7 +16362,7 @@ module.filter('px', function() {
           for (var i = 0; i < renderableRows.length; i++ ){
             var row = renderableRows[i];
             
-            angular.forEach(groupingProcessingState, updateProcessingState);
+            groupingProcessingState.forEach( updateProcessingState);
             
             service.setVisibility( grid, row, groupingProcessingState );
           }
@@ -16384,7 +16390,7 @@ module.filter('px', function() {
           var processingState = [];
           var columnSettings = service.getGrouping( grid );
           
-          angular.forEach(columnSettings.grouping, function( groupItem, index){
+          columnSettings.grouping.forEach( function( groupItem, index){
             // get the aggregation config to copy in - do this multiple times as shallow copying it
             // was harder than it looked, and as much work as just creating it again
             var aggregations = [];
@@ -16392,7 +16398,7 @@ module.filter('px', function() {
               aggregations.push({type: uiGridGroupingConstants.aggregation.COUNT, fieldName: uiGridGroupingConstants.aggregation.FIELD, value: null });
             } else {
             }
-            angular.forEach(columnSettings.aggregations, function(aggregation, index){
+            columnSettings.aggregations.forEach( function(aggregation, index){
               
               if (aggregation.aggregation === uiGridGroupingConstants.aggregation.AVG){
                 aggregations.push({ type: aggregation.aggregation, fieldName: aggregation.field, col: aggregation.col, value: null, sum: null, count: null });
@@ -16429,7 +16435,7 @@ module.filter('px', function() {
           var aggregateArray = [];
           
           // get all the grouping
-          angular.forEach(grid.columns, function(column, columnIndex){
+          grid.columns.forEach( function(column, columnIndex){
             if ( column.grouping ){
               if ( typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0){
                 groupArray.push({ field: column.field, col: column, groupPriority: column.grouping.groupPriority, grouping: column.grouping });  
@@ -16445,7 +16451,7 @@ module.filter('px', function() {
           });
           
           // renumber the priority in case it was somewhat messed up, then remove the grouping reference
-          angular.forEach( groupArray, function( group, index) {
+          groupArray.forEach( function( group, index) {
             group.grouping.groupPriority = index;
             group.groupPriority = index;
             delete group.grouping;
@@ -16533,7 +16539,7 @@ module.filter('px', function() {
          */
         writeOutAggregation: function( grid, processingState ) {
           if ( processingState.currentGroupHeader ){
-            angular.forEach(processingState.runningAggregations, function( aggregation, index ){
+            processingState.runningAggregations.forEach( function( aggregation, index ){
               if (aggregation.fieldName === uiGridGroupingConstants.aggregation.FIELD){
                 // running total to include in the groupHeader
                 processingState.currentGroupHeader.entity[processingState.fieldName] = processingState.currentValue + ' (' + aggregation.value + ')';
@@ -16634,7 +16640,7 @@ module.filter('px', function() {
          */
         aggregate: function( grid, row, groupFieldState ){
           // TODO: check data types, cast as necessary, all that jazz
-          angular.forEach( groupFieldState.runningAggregations, function( aggregation, index ){
+          groupFieldState.runningAggregations.forEach(  function( aggregation, index ){
             if (aggregation.type === uiGridGroupingConstants.aggregation.COUNT){
               // don't need getCellValue for counting, and column isn't present sometimes
               aggregation.value++;
@@ -17224,7 +17230,11 @@ module.filter('px', function() {
             var newObjects = [];
             var newObject;
             
-            angular.forEach( service.parseJson( grid, importFile ), function( value, index ) {
+            var importArray = service.parseJson( grid, importFile );
+            if (importArray === null){
+              return;
+            }
+            importArray.forEach(  function( value, index ) {
               newObject = service.newObject( grid );
               angular.extend( newObject, value );
               newObject = grid.options.importerObjectCallback( grid, newObject );
@@ -17328,8 +17338,7 @@ module.filter('px', function() {
          * the columns in the column defs.  The resulting objects will have attributes
          * that are named based on the column.field or column.name, in that order.
          * @param {Grid} grid the grid that we want to import into 
-         * @param {FileObject} importFile the file that we want to import, as a 
-         * file object
+         * @param {Array} importArray the data that we want to import, as an array
          */
         createCsvObjects: function( grid, importArray ){
           // pull off header row and turn into headers
@@ -17341,13 +17350,15 @@ module.filter('px', function() {
           
           var newObjects = [];
           var newObject;
-          angular.forEach( importArray, function( row, index ) {
+          importArray.forEach( function( row, index ) {
             newObject = service.newObject( grid );
-            angular.forEach( row, function( field, index ){
-              if ( headerMapping[index] !== null ){
-                newObject[ headerMapping[index] ] = field;
-              }
-            });
+            if ( row !== null ){
+              row.forEach( function( field, index ){
+                if ( headerMapping[index] !== null ){
+                  newObject[ headerMapping[index] ] = field;
+                }
+              });
+            }
             newObject = grid.options.importerObjectCallback( grid, newObject );
             newObjects.push( newObject );
           });
@@ -17374,13 +17385,13 @@ module.filter('px', function() {
           if ( !grid.options.columnDefs || grid.options.columnDefs.length === 0 ){
             // we are going to create new columnDefs for all these columns, so just remove
             // spaces from the names to create fields
-            angular.forEach( headerRow, function( value, index ) {
+            headerRow.forEach( function( value, index ) {
               headers.push( value.replace( /[^0-9a-zA-Z\-_]/g, '_' ) );
             });
             return headers;
           } else {
             var lookupHash = service.flattenColumnDefs( grid, grid.options.columnDefs );
-            angular.forEach( headerRow, function( value, index ) {
+            headerRow.forEach(  function( value, index ) {
               if ( lookupHash[value] ) {
                 headers.push( lookupHash[value] );
               } else if ( lookupHash[ value.toLowerCase() ] ) {
@@ -17409,7 +17420,7 @@ module.filter('px', function() {
          */
         flattenColumnDefs: function( grid, columnDefs ){
           var flattenedHash = {};
-          angular.forEach( columnDefs, function( columnDef, index) {
+          columnDefs.forEach(  function( columnDef, index) {
             if ( columnDef.name ){
               flattenedHash[ columnDef.name ] = columnDef.field || columnDef.name;
               flattenedHash[ columnDef.name.toLowerCase() ] = columnDef.field || columnDef.name;
@@ -19779,7 +19790,11 @@ module.filter('px', function() {
          * @param {GridRow} gridRow the row that should be removed
          */
         removeRow: function( rowArray, removeGridRow ){
-          angular.forEach( rowArray, function( gridRow, index ){
+          if (typeof(rowArray) === 'undefined' || rowArray === null){
+            return;
+          }
+          
+          rowArray.forEach( function( gridRow, index ){
             if ( gridRow.uid === removeGridRow.uid ){
               rowArray.splice( index, 1);
             }
@@ -19798,7 +19813,7 @@ module.filter('px', function() {
          */
         isRowPresent: function( rowArray, removeGridRow ){
           var present = false;
-          angular.forEach( rowArray, function( gridRow, index ){
+          rowArray.forEach( function( gridRow, index ){
             if ( gridRow.uid === removeGridRow.uid ){
               present = true;
             }
@@ -19824,7 +19839,7 @@ module.filter('px', function() {
          */
         flushDirtyRows: function(grid){
           var promises = [];
-          angular.forEach(grid.rowEdit.dirtyRows, function( gridRow ){
+          grid.rowEdit.dirtyRows.forEach( function( gridRow ){
             service.saveRow( grid, gridRow )();
             promises.push( gridRow.rowEditSavePromise );
           });
@@ -20398,7 +20413,7 @@ module.filter('px', function() {
          */
         saveColumns: function( grid ) {
           var columns = [];
-          angular.forEach( grid.columns, function( column ) {
+          grid.columns.forEach( function( column ) {
             var savedColumn = {};
             savedColumn.name = column.name;
             savedColumn.visible = column.visible;
@@ -20525,7 +20540,7 @@ module.filter('px', function() {
          * @param {object} columnsState the list of columns we had before, with their state
          */
         restoreColumns: function( grid, columnsState ){
-          angular.forEach( columnsState, function( columnState, index ) {
+          columnsState.forEach( function( columnState, index ) {
             var currentCol = grid.columns.filter( function( column ) {
               return column.name === columnState.name;
             });
@@ -20624,7 +20639,7 @@ module.filter('px', function() {
           
           grid.api.selection.clearSelectedRows();
 
-          angular.forEach( selectionState, function( rowVal ) {
+          selectionState.forEach(  function( rowVal ) {
             if ( rowVal.identity ){
               var foundRow = service.findRowByIdentity( grid, rowVal );
               

@@ -25,7 +25,7 @@
 
 <p>If the latter, then you can do it by just adding a counter column to your data:</p>
 
-<pre><code>  angular.forEach($scope.myData, function( row, index){
+<pre><code>  $scope.myData.forEach( function( row, index){
     row.sequence = index;
   });
 </code></pre>
