@@ -1,0 +1,65 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The core grid rendering cycle is executed whenever the grid needs re-rendering.  There are a number of core methods,
+with some of those methods able to be called individually.</p>
+
+<h3 id="current">Current</h4>
+
+<p>The key method is <code>grid.refresh</code>.  This method updates the rows and columns in the grid, then redraws and resizes the grid.</p>
+
+<ul>
+<li>grid.refresh
+<ul><li>rowsProcessors</li>
+<li>setVisibleRows</li>
+<li>columnsProcessors</li>
+<li>setVisibleColumns</li>
+<li>redrawInPlace</li>
+<li>refreshCanvas</li></ul></li>
+</ul>
+
+<p>By preference grid.refresh is called through a debounce function - grid.queueGridRefresh.  If you use this method you are
+telling the grid that you want a refresh, but you're allowing the grid to consolidate all refreshes from the current digest cycle
+and process just once.</p>
+
+<p>A similar method, <code>grid.refreshRows</code> also exists, this is the same as grid.refresh except that it doesn't run <code>columnsProcessors</code> 
+or <code>setVisibleColumns</code>.</p>
+
+<p>The rows and columns processors are focused on ordering and determining the visibility of columns and rows.  They include functions
+such as sorting and filtering (impacting order and visibility of rows), grouping rows (which adds extra rows, and changes the ordering
+and widths of columns), and pinning, which changes which render container particular columns are in.</p>
+
+<p><code>redrawInPlace</code> determines the correct scroll percentage in the grid, and therefore which of the rows and columns should currently
+be visible in the viewport.</p>
+
+<p><code>refreshCanvas</code> is a complicated method that determines the sizing of each of the grid elements.  In some cases it is currently iterative,
+for example it determines header height by rendering each of the column headers, and determining the maximum rendered height.  This largely
+appears to be to accomodate filters.</p>
+
+<ul>
+<li>refreshCanvas
+<ul><li>buildStyles</li>
+<li>$timeout - calcHeaders  (this is inline - should it be a style computation? It isn't a promise, and doesn't wait on the buildStyles 
+promise, but it does run in a timeout.  Conversely, it creates a promise that it resolves - but it doesn't wait for the header calc to
+complete before resolving the promise)
+<ul><li>may call buildStyles again if it decides headerHeight has changed</li></ul></li></ul></li>
+</ul>
+
+<h3 id="vision">Vision</h4>
+
+<p>The vision is to make the style calculations more deterministic, and remove any iteration or other dependencies.  A single pass through
+refreshCanvas should return a correctly sized grid.</p>
+
+<p>To achieve this, we really need to:</p>
+
+<ul>
+<li>calculate all sizing in code, without reference to the sizing of rendered grid elements.  We already do most of this for rows
+and columns, the main gap seems to be grid header</li>
+<li>we could reference rendered size to determine the grid's available size (if we want to), which could allow the grid to be more responsive</li>
+<li>layout all the columns first - what render container they're in etc, before we start any sizing</li>
+<li>calculate the column widths and element heights</li>
+<li>calculate the overall grid sizing based on all the elements (headerHeight, footerHeight, container widths etc)</li>
+<li>render</li>
+</ul>
+
+<p>Thinking only at this stage!!</p></div>

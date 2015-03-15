@@ -13,6 +13,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "design-rendering-cycle",
+      "shortName": "Rendering Cycle",
+      "type": "overview",
+      "keywords": "$timeout able accomodate achieve adds again all allow allowing already also and any api appears are as at available based be before buildstyles but by calc calcheaders calculate calculations call called cases changed changes code column columns columnsprocessors complete complicated computation consolidate container conversely core correct correctly could creates current currently cycle debounce decides dependencies determine determines determining deterministic digest do does doesn each element elements etc example except executed exists extra filtering filters first focused footerheight for from function functions gap grid grouping has header headerheight headers height heights if in include individually inline is isn it iteration iterative just key largely layout main make maximum may method methods more most need needs number of on once only or order ordering other overall overview particular pass percentage pinning preference process processors promise queuegridrefresh re re-rendering really redrawinplace redraws reference refresh refreshcanvas refreshes refreshrows remove render rendered rendering resizes resolves resolving responsive return rows rowsprocessors run same scroll seems setvisiblecolumns setvisiblerows should similar single size sized sizing some sorting stage start style such telling that the then there therefore they thinking this those through timeout to updates use viewport visibility visible vision wait want we what whenever which widths with without you"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.autoResize",
       "shortName": "autoResize",
       "type": "overview",
