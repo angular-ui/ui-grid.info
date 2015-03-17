@@ -42,7 +42,12 @@ run even when no term is provided.  The filter box will, however, still be shown
 
 <p>Occasionally, you may want to provide two or more filters for a single column. This can be accomplished by setting a <code>filters</code> array instead of a <code>filter</code> object.
 The elements of this array are the same as the contents of the <code>filter</code> object in all the previous examples. In fact, <code>filter: { term: 'xxx' }</code> is just an alias 
-for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an example.</p><h2 id="Example">Example</h2>
+for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an example.</p>
+
+<h3 id="datefilters">Date filters</h4>
+
+<p>The example also includes date filters.  These work, however there isn't a date chooser in the filter widget - so you may need to implement a custom field
+if you want to filter dates in this way. </p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-24" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-25"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -55,6 +60,7 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
     <strong>Note:</strong> The third column has the filter input disabled, but actually has a filter set in code that requires every company to have an 'a' in their name.
     <br>
     <br>
+    <button id='toggleFiltering' ng-click="toggleFiltering()" class="btn btn-success">Toggle Filtering</button>
     <div id="grid1" ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
@@ -74,8 +80,15 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
   var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid']);
 
   app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
+    var today = new Date();
+    var nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
+  
     $scope.gridOptions = {
       enableFiltering: true,
+      onRegisterApi: function(gridApi){
+        $scope.gridApi = gridApi;
+      },
       columnDefs: [
         // default
         { field: 'name' },
@@ -117,7 +130,13 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
             condition: uiGridConstants.filter.LESS_THAN,
             placeholder: 'less than'
           }
-        ]}
+        ]},
+        // date filter
+        { field: 'mixedDate', cellFilter: 'date', width: '15%', filter: {
+            condition: uiGridConstants.filter.LESS_THAN,
+            placeholder: 'less than',
+            term: nextWeek
+        }}
       ]
     };
 
@@ -125,7 +144,17 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
       .success(function(data) {
         $scope.gridOptions.data = data;
         $scope.gridOptions.data[0].age = -5;
+
+        data.forEach( function addDates( row, index ){
+          row.mixedDate = new Date();
+          row.mixedDate.setDate(today.getDate() + ( index % 14 ) );
+        });
       });
+      
+    $scope.toggleFiltering = function(){
+      $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
+      $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+    };
   }]);
 </script>
 </div>
@@ -139,13 +168,14 @@ for <code>filters: [{ term: 'xxx' }]</code>. See the "age" column below for an e
       gridTestUtils.expectHeaderColumnCount( 'grid1', 6 );
     });
 
-    it('filter on 4 columns, filter with greater than/less than on one, one with no filter', function () {
+    it('filter on 4 columns, filter with greater than/less than on one, one with no filter, then one with one filter', function () {
       gridTestUtils.expectFilterBoxInColumn( 'grid1', 0, 1 );
       gridTestUtils.expectFilterBoxInColumn( 'grid1', 1, 1 );
       gridTestUtils.expectFilterBoxInColumn( 'grid1', 2, 0 );
       gridTestUtils.expectFilterBoxInColumn( 'grid1', 3, 1 );
       gridTestUtils.expectFilterBoxInColumn( 'grid1', 4, 1 );
       gridTestUtils.expectFilterBoxInColumn( 'grid1', 5, 2 );
+      gridTestUtils.expectFilterBoxInColumn( 'grid1', 6, 1 );
     });
 
     it('third row should be Hatfield Hudson - will be Terry Clay if filtering broken', function () {

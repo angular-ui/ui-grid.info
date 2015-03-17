@@ -1,0 +1,110 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The grid allows you to override most of the templates, including cellTemplate, headerCellTemplate, rowTemplate
+and others.  You would typically do this to inject functionality like buttons or to get a very different look and
+feel that you couldn't achieve through cell classes and other settings.</p>
+
+<p>It is generally good practice to at least review the standard template in https://github.com/angular-ui/ng-grid/tree/master/src/templates/ui-grid
+to make sure there isn't functionality that you are overriding that you needed to keep.  In many cases it is desirable to 
+use the standard template as a starting point, and add your customisations on top.  Also remember that new features
+or code changes may mean that you need to upgrade your custom template (if the standard template has been modified).</p>
+
+<p>In this example we create a grid almost the same as the most basic one, but with a custom row template, and
+with a cellTemplate that totals all the items above it in the grid.  This template continues to work when the data is 
+filtered or sorted.</p>
+
+<p>You can use <a href="/docs/#/tutorial/305_appScope">grid.appScope</a> in your row template to access
+elements in your controller's scope. More details are on
+the <a href="/docs/#/tutorial/305_appScope">scopes</a> tutorial.</p>
+
+<p>In the cellTemplate you have access to <code>grid</code>, <code>row</code> and <code>column</code>, which allows you to write any of a range of functions.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-88" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-88" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-88">
+  <div ng-controller="MainCtrl">
+    <strong ng-bind="waiting"></strong> <strong>{{ wait }}</strong>
+    <br>
+    <div class="grid" ui-grid="gridOptions" ></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 300px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$http', '$timeout', '$interval', function ($scope, $http, $timeout, $interval) {
+    var start = new Date();
+    var sec = $interval(function () {
+      var wait = parseInt(((new Date()) - start) / 1000, 10);
+      $scope.wait = wait + 's';
+    }, 1000);
+
+    function rowTemplate() {
+      return $timeout(function() {
+        $scope.waiting = 'Done!';
+        $interval.cancel(sec);
+        $scope.wait = '';
+        return '<div style="background-color: aquamarine" ng-click="grid.appScope.fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell></div>';
+      }, 6000);
+    }
+
+    // Access outside scope functions from row template
+    $scope.fnOne =  function(row) {
+        console.log(row);
+     };
+
+    $scope.waiting = 'Waiting for row template...';
+
+    $http.get('/data/100.json')
+      .success(function (data) {
+        data.forEach( function(row, index) {
+          row.widgets = index % 10;
+        });
+        $scope.data = data;
+      });
+
+    $scope.gridOptions = {
+      enableFiltering: true,
+      rowTemplate: rowTemplate(),
+      data: 'data',
+      columnDefs: [
+        { name: 'name' },
+        { name: 'gender' },
+        { name: 'company' },
+        { name: 'widgets' },
+        { name: 'cumulativeWidgets', field: 'widgets', cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP">{{grid.appScope.cumulative(grid, row)}}</div>' }
+      ]
+    };
+    
+    $scope.cumulative = function( grid, myRow ) {
+      var myRowFound = false;
+      var cumulativeTotal = 0;
+      grid.renderContainers.body.visibleRowCache.forEach( function( row, index ) {
+        if( !myRowFound ) {
+          cumulativeTotal += row.entity.widgets;
+          if( row === myRow ) {
+            myRowFound = true;
+          }
+        }
+      });
+      return cumulativeTotal;
+    };
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-88" ng-eval-javascript="app.js"></div></div>
+</div>

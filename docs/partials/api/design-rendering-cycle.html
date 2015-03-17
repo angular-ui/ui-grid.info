@@ -45,6 +45,21 @@ complete before resolving the promise)
 <ul><li>may call buildStyles again if it decides headerHeight has changed</li></ul></li></ul></li>
 </ul>
 
+<p>The style builders include:</p>
+
+<ul>
+<li><code>GridRenderContainer</code>, which appears to currently apply no styles</li>
+<li><code>uiGrid.updateColumnWidths</code>, which calculates column widths based on the defined settings, including resolving * and ** etc.  No rendering 
+is involved - all based on the availableWidth.  This may be the source of some of the iteration - because availableWidth must in some way be
+based on columnWidth - the canvas doesn't really have an available width.  I also have question on why we calculate widths on the grid
+and not on the renderContainer, that may be another source of iteration.  Having said that, things like % and * probably apply to the
+full grid width, not to just a container, and we wouldn't expect a column to change width when it changed container (e.g. when we pinned it)</li>
+<li><code>uiGridRenderContainer.update()</code>, which is called for each renderContainer.  It determines the
+width of each column in the render container, and the width of the overall render container.</li>
+<li><code>Grid.prototype.getFooterStyles()</code>, sets the columnFooterHeight and the gridFooterHeight based on fixed values declared in the options</li>
+<li>when there are multiple renderContainers (e.g. a left container), the non-body render containers appear to execute first</li>
+</ul>
+
 <h3 id="vision">Vision</h4>
 
 <p>The vision is to make the style calculations more deterministic, and remove any iteration or other dependencies.  A single pass through
@@ -55,9 +70,10 @@ refreshCanvas should return a correctly sized grid.</p>
 <ul>
 <li>calculate all sizing in code, without reference to the sizing of rendered grid elements.  We already do most of this for rows
 and columns, the main gap seems to be grid header</li>
-<li>we could reference rendered size to determine the grid's available size (if we want to), which could allow the grid to be more responsive</li>
-<li>layout all the columns first - what render container they're in etc, before we start any sizing</li>
+<li>we could reference rendered size to determine the grid's available size (if we want to), which could allow the grid to be more 
+responsive.  Probably we already do this.</li>
 <li>calculate the column widths and element heights</li>
+<li>layout all the columns - what render container they're in etc, then size the render containers</li>
 <li>calculate the overall grid sizing based on all the elements (headerHeight, footerHeight, container widths etc)</li>
 <li>render</li>
 </ul>

@@ -33,10 +33,10 @@ internationalization function that waits 1 second then prefixes each column with
 <p>You can suppress the ability to show and hide columns by setting the gridOption <code>gridMenuShowHideColumns: false</code>,
 you can suppress the ability to hide individual columns by setting <code>enableHiding</code> on that columnDef to false.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-75" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-76"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-74" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-75"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-75" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-75">
+<pre class="prettyprint linenums" ng-set-text="index.html-74" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-74">
   <div ng-controller="MainCtrl">
     <div id="grid1" ui-grid="gridOptions" ui-grid-exporter ui-grid-selection class="grid"></div>
     <div ng-if='columnChanged'>
@@ -128,8 +128,8 @@ you can suppress the ability to hide individual columns by setting <code>enableH
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-76"></pre>
-<script type="text/ng-template" id="scenario.js-76">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-75"></pre>
+<script type="text/ng-template" id="scenario.js-75">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   describe('grid menu', function() {
     it('grid1 should have three visible columns', function () {
@@ -162,5 +162,5 @@ you can suppress the ability to hide individual columns by setting <code>enableH
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-75" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-74" ng-eval-javascript="app.js"></div></div>
 </div>
