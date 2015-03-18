@@ -20,6 +20,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "exporterMenuAllData",
+      "shortName": "exporterMenuAllData",
+      "type": "object",
+      "keywords": "add all api as cvs data defaults export exporter exportermenualldata grid if it items menu object present the to true ui ui-grid"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.autoResize",
       "shortName": "autoResize",
       "type": "overview",
