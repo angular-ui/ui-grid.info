@@ -33,6 +33,35 @@ you expand the row again, all grandchildren will be collapsed</p><h4 id="Paramet
 </ul>
 </div>
 </li>
+<li><h3 id="getGrouping">getGrouping(getExpanded)</h3>
+<div class="getgrouping"><p>Get the grouping configuration for this grid,
+used by the saveState feature
+Returned grouping is an object 
+  <code>{ grouping: groupArray, aggregations: aggregateArray, expandedState: hash }</code> 
+where grouping contains an array of objects: 
+  <code>{ field: column.field, colName: column.name, groupPriority: column.grouping.groupPriority }</code>
+and aggregations contains an array of objects:
+  <code>{ field: column.field, colName: column.name, aggregation: column.grouping.aggregation }</code>
+and expandedState is a hash of the currently expanded nodes</p>
+
+<p>The groupArray will be sorted by groupPriority.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">getExpanded – {boolean} – </code>
+<p>whether or not to return the expanded state</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>grouping configuration</p></div>
+</div>
+</li>
+<li><h3 id="setGrouping">setGrouping(config)</h3>
+<div class="setgrouping"><p>Set the grouping configuration for this grid, 
+used by the saveState feature</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">config – {object} – </code>
+<p>the config you want to apply, in the format
+provided out by getGrouping</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="toggleRowGroupingState">toggleRowGroupingState(row)</h3>
 <div class="togglerowgroupingstate"><p>call expand if the row is collapsed, collapse if it is expanded</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>

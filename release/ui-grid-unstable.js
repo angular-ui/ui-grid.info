@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-1fdcf3d - 2015-03-18
+ * ui-grid - v3.0.0-rc.20-746a476 - 2015-03-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -82,7 +82,9 @@
       GREATER_THAN_OR_EQUAL: 64,
       LESS_THAN: 128,
       LESS_THAN_OR_EQUAL: 256,
-      NOT_EQUAL: 512
+      NOT_EQUAL: 512,
+      SELECT: 'select',
+      INPUT: 'input'
     },
 
     aggregationTypes: {
@@ -5503,7 +5505,7 @@ angular.module('ui.grid')
    * @propertyOf ui.grid.class:GridColumn
    * @description Filter on this column.  
    * @example
-   * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', flags: { caseSensitive: false } }</pre>
+   * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', flags: { caseSensitive: false }, type: uiGridConstants.filter.SELECT, [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ] }</pre>
    *
    */
     
@@ -5644,7 +5646,9 @@ angular.module('ui.grid')
    *         term: 'aa',
    *         condition: uiGridConstants.filter.STARTS_WITH,
    *         placeholder: 'starts with...',
-   *         flags: { caseSensitive: false }
+   *         flags: { caseSensitive: false },
+   *         type: uiGridConstants.filter.SELECT,
+   *         selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ]
    *       },
    *       {
    *         condition: uiGridConstants.filter.ENDS_WITH,
@@ -5668,7 +5672,9 @@ angular.module('ui.grid')
    *     term: 'foo', // ngModel for <input>
    *     condition: uiGridConstants.filter.STARTS_WITH,
    *     placeholder: 'starts with...',
-   *     flags: { caseSensitive: false }
+   *     flags: { caseSensitive: false },
+   *     type: uiGridConstants.filter.SELECT,
+   *     selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ]
    *   },
    *   {
    *     term: 'baz',
@@ -5966,6 +5972,10 @@ angular.module('ui.grid')
      * your custom function doesn't require a term (so it can run even when the term is null)
      * - flags: only flag currently available is `caseSensitive`, set to false if you don't want
      * case sensitive matching
+     * - type: defaults to uiGridConstants.filter.INPUT, which gives a text box.  If set to uiGridConstants.filter.SELECT
+     * then a select box will be shown with options selectOptions
+     * - selectOptions: options in the format `[ { value: 1, label: 'male' }]`.  No i18n filter is provided, you need
+     * to perform the i18n on the values before you provide them
      * @example
      * <pre>$scope.gridOptions.columnDefs = [ 
      *   {
@@ -5974,7 +5984,9 @@ angular.module('ui.grid')
      *       term: 'xx',
      *       condition: uiGridConstants.filter.STARTS_WITH,
      *       placeholder: 'starts with...',
-     *       flags: { caseSensitive: false }
+     *       flags: { caseSensitive: false },
+     *       type: uiGridConstants.filter.SELECT,
+     *       selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ]
      *     }
      *   }
      * ]; </pre>
@@ -15755,6 +15767,58 @@ module.filter('px', function() {
                  */
                 collapseRow: function ( row ) {
                   service.collapseRow(grid, row);
+                },
+
+                /**
+                 * @ngdoc function
+                 * @name getGrouping
+                 * @methodOf  ui.grid.grouping.api:PublicApi
+                 * @description Get the grouping configuration for this grid,
+                 * used by the saveState feature
+                 * Returned grouping is an object 
+                 *   `{ grouping: groupArray, aggregations: aggregateArray, expandedState: hash }` 
+                 * where grouping contains an array of objects: 
+                 *   `{ field: column.field, colName: column.name, groupPriority: column.grouping.groupPriority }`
+                 * and aggregations contains an array of objects:
+                 *   `{ field: column.field, colName: column.name, aggregation: column.grouping.aggregation }`
+                 * and expandedState is a hash of the currently expanded nodes
+                 * 
+                 * The groupArray will be sorted by groupPriority.
+                 * 
+                 * @param {boolean} getExpanded whether or not to return the expanded state
+                 * @returns {object} grouping configuration
+                 */
+                getGrouping: function ( getExpanded ) {
+                  var grouping = service.getGrouping(grid);
+                  
+                  grouping.grouping.forEach( function( group ) {
+                    group.colName = group.col.name;
+                    delete group.col;
+                  });
+
+                  grouping.aggregations.forEach( function( aggregation ) {
+                    aggregation.colName = aggregation.col.name;
+                    delete aggregation.col;
+                  });
+                  
+                  if ( getExpanded ){
+                    grouping.rowExpandedStates = grid.grouping.rowExpandedStates;
+                  }
+                  
+                  return grouping;
+                },
+
+                /**
+                 * @ngdoc function
+                 * @name setGrouping
+                 * @methodOf  ui.grid.grouping.api:PublicApi
+                 * @description Set the grouping configuration for this grid, 
+                 * used by the saveState feature
+                 * @param {object} config the config you want to apply, in the format
+                 * provided out by getGrouping
+                 */
+                setGrouping: function ( config ) {
+                  service.setGrouping(grid, config);
                 }
               }
             }
@@ -16184,6 +16248,11 @@ module.filter('px', function() {
          * @param {Grid} grid grid object
          */
         tidyPriorities: function( grid ){
+          // if we're called from sortChanged, grid is in this, not passed as param
+          if ( typeof(grid) === 'undefined' && typeof(this.grid) !== 'undefined' ) {
+            grid = this.grid;
+          }
+          
           var groupArray = [];
           var sortArray = [];
           
@@ -16260,7 +16329,7 @@ module.filter('px', function() {
           expandedStatesSubset.state = targetState;
           
           // set all child nodes
-          expandedStatesSubset.forEach( function( childNode, key){
+          angular.forEach(expandedStatesSubset, function( childNode, key){
             if (key !== 'state'){
               service.setAllNodes(childNode, targetState);
             }
@@ -16534,7 +16603,7 @@ module.filter('px', function() {
               }
             }
           });
-          
+
           // sort grouping into priority order
           groupArray.sort( function(a, b){
             return a.groupPriority - b.groupPriority;
@@ -16763,7 +16832,48 @@ module.filter('px', function() {
               }
             }
           });
-        }        
+        },
+        
+
+       /**
+         * @ngdoc function
+         * @name setGrouping
+         * @methodOf  ui.grid.grouping.service:uiGridGroupingService
+         * @description Set the grouping based on a config object, used by the save state feature 
+         * (more specifically, by the restore function in that feature )
+         * 
+         * @param {Grid} grid grid object
+         * @param {object} config the config we want to set, same format as that returned by getGrouping
+         */
+        setGrouping: function ( grid, config ){
+          if ( typeof(config) === 'undefined' ){
+            return;
+          }
+          
+          if ( config.grouping && config.grouping.length && config.grouping.length > 0 ){
+            config.grouping.forEach( function( group ) {
+              var col = grid.getColumn(group.colName);
+              
+              if ( col ) {
+                service.groupColumn( grid, col );
+              }
+            });
+          }
+
+          if ( config.aggregations && config.aggregations.length && config.aggregations.length > 0 ){
+            config.aggregations.forEach( function( aggregation ) {
+              var col = grid.getColumn(aggregation.colName);
+              
+              if ( col ) {
+                service.aggregateColumn( grid, col, aggregation.aggregation );
+              }
+            });
+          }
+          
+          if ( config.rowExpandedStates ){
+            grid.grouping.rowExpandedStates = config.rowExpandedStates;
+          }
+        }
 
       };
 
@@ -19784,9 +19894,15 @@ module.filter('px', function() {
           return function() {
             gridRow.isSaving = true;
 
+            if ( gridRow.rowEditSavePromise ){
+              // don't save the row again if it's already saving - that causes stale object exceptions
+              return gridRow.rowEditSavePromise;
+            }
+            
             var promise = grid.api.rowEdit.raise.saveRow( gridRow.entity );
             
             if ( gridRow.rowEditSavePromise ){
+              console.log(gridRow.rowEditSavePromise);
               gridRow.rowEditSavePromise.then( self.processSuccessPromise( grid, gridRow ), self.processErrorPromise( grid, gridRow ));
             } else {
               gridUtil.logError( 'A promise was not returned when saveRow event was raised, either nobody is listening to event, or event handler did not return a promise' );
@@ -19836,6 +19952,7 @@ module.filter('px', function() {
             delete gridRow.isDirty;
             delete gridRow.isError;
             delete gridRow.rowEditSaveTimer;
+            delete gridRow.rowEditSavePromise;
             self.removeRow( grid.rowEdit.errorRows, gridRow );
             self.removeRow( grid.rowEdit.dirtyRows, gridRow );
           };
@@ -19856,6 +19973,7 @@ module.filter('px', function() {
           return function() {
             delete gridRow.isSaving;
             delete gridRow.rowEditSaveTimer;
+            delete gridRow.rowEditSavePromise;
 
             gridRow.isError = true;
             
@@ -20236,7 +20354,7 @@ module.filter('px', function() {
    * <div doc-module-components="ui.grid.save-state"></div>
    */
 
-  var module = angular.module('ui.grid.saveState', ['ui.grid', 'ui.grid.selection', 'ui.grid.cellNav']);
+  var module = angular.module('ui.grid.saveState', ['ui.grid', 'ui.grid.selection', 'ui.grid.cellNav', 'ui.grid.grouping']);
 
   /**
    *  @ngdoc object
@@ -20334,7 +20452,7 @@ module.filter('px', function() {
            * @ngdoc object
            * @name saveOrder
            * @propertyOf  ui.grid.saveState.api:GridOptions
-           * @description Save the current column order.  Note that unless
+           * @description Restore the current column order.  Note that unless
            * you've provided the user with some way to reorder their columns (for
            * example the move columns feature), this makes little sense.
            * <br/>Defaults to true
@@ -20437,6 +20555,29 @@ module.filter('px', function() {
            * <br/>Defaults to true
            */
           gridOptions.saveSelection = gridOptions.saveSelection !== false;          
+          /**
+           * @ngdoc object
+           * @name saveGrouping
+           * @propertyOf  ui.grid.saveState.api:GridOptions
+           * @description Save the grouping configuration.  If set to true and the 
+           * grouping feature is not enabled then does nothing.
+           * 
+           * <br/>Defaults to true
+           */
+          gridOptions.saveGrouping = gridOptions.saveGrouping !== false; 
+          /**
+           * @ngdoc object
+           * @name saveGroupingExpandedStates
+           * @propertyOf  ui.grid.saveState.api:GridOptions
+           * @description Save the grouping row expanded states.  If set to true and the 
+           * grouping feature is not enabled then does nothing.
+           * 
+           * This can be quite a bit of data, in many cases you wouldn't want to save this
+           * information.
+           * 
+           * <br/>Defaults to false
+           */
+          gridOptions.saveGroupingExpandedStates = gridOptions.saveGroupingExpandedStates === true; 
         },
 
 
@@ -20456,6 +20597,7 @@ module.filter('px', function() {
           savedState.columns = service.saveColumns( grid );
           savedState.scrollFocus = service.saveScrollFocus( grid );
           savedState.selection = service.saveSelection( grid );
+          savedState.grouping = service.saveGrouping( grid );
           
           return savedState;
         },
@@ -20484,6 +20626,10 @@ module.filter('px', function() {
             service.restoreSelection( grid, state.selection );
           }
           
+          if ( state.grouping ){
+            service.restoreGrouping( grid, state.grouping );
+          }
+          
           grid.queueGridRefresh();
         },
         
@@ -20506,12 +20652,24 @@ module.filter('px', function() {
           grid.columns.forEach( function( column ) {
             var savedColumn = {};
             savedColumn.name = column.name;
-            savedColumn.visible = column.visible;
-            savedColumn.width = column.width;
+            
+            if ( grid.options.saveVisible ){
+              savedColumn.visible = column.visible;  
+            }
+            
+            if ( grid.options.saveWidths ){
+              savedColumn.width = column.width;  
+            }
             
             // these two must be copied, not just pointed too - otherwise our saved state is pointing to the same object as current state
-            savedColumn.sort = angular.copy( column.sort );
-            savedColumn.filters = angular.copy ( column.filters );
+            if ( grid.options.saveSort ){
+              savedColumn.sort = angular.copy( column.sort );  
+            }
+            
+            if ( grid.options.saveFilter ){
+              savedColumn.filters = angular.copy ( column.filters );
+            }
+            
             columns.push( savedColumn );
           });
           
@@ -20593,6 +20751,23 @@ module.filter('px', function() {
         
         /**
          * @ngdoc function
+         * @name saveGrouping
+         * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
+         * @description Saves the grouping state, if the grouping feature is enabled
+         * @param {Grid} grid the grid whose state we'd like to save
+         * @returns {object} the grouping state ready to be saved
+         */
+        saveGrouping: function( grid ){
+          if ( !grid.api.grouping || !grid.options.saveGrouping ){
+            return {};
+          }
+
+          return grid.api.grouping.getGrouping( grid.options.saveGroupingExpandedStates );
+        },
+        
+        
+        /**
+         * @ngdoc function
          * @name getRowVal
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Helper function that gets either the rowNum or
@@ -20631,34 +20806,37 @@ module.filter('px', function() {
          */
         restoreColumns: function( grid, columnsState ){
           columnsState.forEach( function( columnState, index ) {
-            var currentCol = grid.columns.filter( function( column ) {
-              return column.name === columnState.name;
-            });
+            var currentCol = grid.getColumn( columnState.name );
             
-            if ( currentCol.length > 0 ){
-              var currentIndex = grid.columns.indexOf( currentCol[0] );
+            if ( currentCol ){
+              var currentIndex = grid.columns.indexOf( currentCol );
               
-              if ( grid.columns[currentIndex].visible !== columnState.visible ||
-                   grid.columns[currentIndex].colDef.visible !== columnState.visible ){
+              if ( grid.options.saveVisible && 
+                   ( grid.columns[currentIndex].visible !== columnState.visible ||
+                     grid.columns[currentIndex].colDef.visible !== columnState.visible ) ){
                 grid.columns[currentIndex].visible = columnState.visible;
                 grid.columns[currentIndex].colDef.visible = columnState.visible;
                 grid.api.core.raise.columnVisibilityChanged( grid.columns[currentIndex]);
               }
               
-              grid.columns[currentIndex].width = columnState.width;
+              if ( grid.options.saveWidths ){
+                grid.columns[currentIndex].width = columnState.width;
+              }
 
-              if ( !angular.equals(grid.columns[currentIndex].sort, columnState.sort) &&
+              if ( grid.options.saveSort && 
+                   !angular.equals(grid.columns[currentIndex].sort, columnState.sort) &&
                    !( grid.columns[currentIndex].sort === undefined && angular.isEmpty(columnState.sort) ) ){
                 grid.columns[currentIndex].sort = angular.copy( columnState.sort );
                 grid.api.core.raise.sortChanged();
               }
 
-              if ( !angular.equals(grid.columns[currentIndex].filters, columnState.filters ) ){
+              if ( grid.options.saveFilter && 
+                   !angular.equals(grid.columns[currentIndex].filters, columnState.filters ) ){
                 grid.columns[currentIndex].filters = angular.copy( columnState.filters );
                 grid.api.core.raise.filterChanged();
               }
               
-              if ( currentIndex !== index ){
+              if ( grid.options.saveOrder && currentIndex !== index ){
                 var column = grid.columns.splice( currentIndex, 1 )[0];
                 grid.columns.splice( index, 0, column );
               }
@@ -20742,7 +20920,24 @@ module.filter('px', function() {
             }
           });
         },
-        
+
+
+        /**
+         * @ngdoc function
+         * @name restoreGrouping
+         * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
+         * @description Restores the grouping configuration, if the grouping feature
+         * is enabled.
+         * @param {Grid} grid the grid whose state we'd like to restore
+         * @param {object} groupingState the grouping state ready to be restored
+         */
+        restoreGrouping: function( grid, groupingState ){
+          if ( !grid.api.grouping || typeof(groupingState) === 'undefined' || groupingState === null || angular.equals(groupingState, {}) ){
+            return;
+          }
+          
+          grid.api.grouping.setGrouping( groupingState );
+        },        
         
         /**
          * @ngdoc function
@@ -21780,11 +21975,6 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('ui-grid/uiGridColumnFilter',
-    "<li class=\"ui-grid-menu-item ui-grid-clearfix ui-grid-column-filter\" ng-show=\"itemShown()\" ng-click=\"$event.stopPropagation();\"><div class=\"input-container\"><input class=\"column-filter-input\" type=\"text\" ng-model=\"item.model\" placeholder=\"{{ i18n.search.placeholder }}\"><div class=\"column-filter-cancel-icon-container\"><i class=\"ui-grid-filter-cancel ui-grid-icon-cancel column-filter-cancel-icon\">&nbsp;</i></div></div><div style=\"button-container\" ng-click=\"item.action($event)\"><div class=\"ui-grid-button\"><i class=\"ui-grid-icon-search\">&nbsp;</i></div></div></li>"
-  );
-
-
   $templateCache.put('ui-grid/uiGridColumnMenu',
     "<div class=\"ui-grid-column-menu\"><div ui-grid-menu menu-items=\"menuItems\"><!-- <div class=\"ui-grid-column-menu\">\n" +
     "    <div class=\"inner\" ng-show=\"menuShown\">\n" +
@@ -21806,7 +21996,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-class=\"{'ui-grid-column-menu-button-last-col': isLastCol}\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel\" ng-show=\"!!colFilter.term\">&nbsp;</i><!-- use !! because angular interprets 'f' as false --></div></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-class=\"{'ui-grid-column-menu-button-last-col': isLastCol}\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\"><div ng-if=\"colFilter.type !== 'select'\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel\" ng-show=\"!!colFilter.term\">&nbsp;</i><!-- use !! because angular interprets 'f' as false --></div></div><div ng-if=\"colFilter.type === 'select'\"><select class=\"ui-grid-filter-select\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\" ng-options=\"option.value as option.label for option in colFilter.selectOptions\"></select><div class=\"ui-grid-filter-button-select\" ng-click=\"colFilter.term = null\"><i class=\"ui-grid-icon-cancel\" ng-show=\"!!colFilter.term\">&nbsp;</i><!-- use !! because angular interprets 'f' as false --></div></div></div></div>"
   );
 
 
@@ -21836,7 +22026,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/dropdownEditor',
-    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] for field in editDropdownOptionsArray CUSTOM_FILTERS\"></select></form></div>"
+    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\"></select></form></div>"
   );
 
 

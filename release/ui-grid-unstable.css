@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-1fdcf3d - 2015-03-18
+ * ui-grid - v3.0.0-rc.20-746a476 - 2015-03-19
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -212,6 +212,23 @@
 .ui-grid-filter-container .ui-grid-filter-button [class^="ui-grid-icon"]:hover {
   opacity: 1;
 }
+.ui-grid-filter-container .ui-grid-filter-button-select {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.ui-grid-filter-container .ui-grid-filter-button-select [class^="ui-grid-icon"] {
+  position: absolute;
+  top: 50%;
+  line-height: 32px;
+  margin-top: -16px;
+  right: 0px;
+  opacity: 0.66;
+}
+.ui-grid-filter-container .ui-grid-filter-button-select [class^="ui-grid-icon"]:hover {
+  opacity: 1;
+}
 input[type="text"].ui-grid-filter-input {
   padding: 0;
   margin: 0;
@@ -235,6 +252,31 @@ input[type="text"].ui-grid-filter-input {
   background-clip: padding-box;
 }
 input[type="text"].ui-grid-filter-input:hover {
+  border: 1px solid #d4d4d4;
+}
+select.ui-grid-filter-select {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 90%;
+  border: 1px solid #d4d4d4;
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+select.ui-grid-filter-select:hover {
   border: 1px solid #d4d4d4;
 }
 .ui-grid-render-container {

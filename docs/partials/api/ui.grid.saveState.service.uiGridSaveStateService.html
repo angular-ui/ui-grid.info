@@ -52,6 +52,16 @@ sort and filters.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
+<li><h3 id="restoreGrouping">restoreGrouping(grid, groupingState)</h3>
+<div class="restoregrouping"><p>Restores the grouping configuration, if the grouping feature
+is enabled.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">groupingState – {object} – </code>
+<p>the grouping state ready to be restored</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="restoreScrollFocus">restoreScrollFocus(grid, $scope, scrollFocusState)</h3>
 <div class="restorescrollfocus"><p>Scrolls to the position that was saved.  If focus is true, then
 sets focus to the specified row/col.  If focus is false, then scrolls to the 
@@ -99,6 +109,16 @@ column name, then the visible flag, width, sort and filters for each column.</p>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{array}</code>
 – <p>the columns state ready to be saved</p></div>
+</div>
+</li>
+<li><h3 id="saveGrouping">saveGrouping(grid)</h3>
+<div class="savegrouping"><p>Saves the grouping state, if the grouping feature is enabled</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to save</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the grouping state ready to be saved</p></div>
 </div>
 </li>
 <li><h3 id="saveScrollFocus">saveScrollFocus(grid)</h3>
