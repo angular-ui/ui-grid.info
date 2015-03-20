@@ -87,6 +87,11 @@ Filtering can then be disabled on individual columns using the columnDefs. </p><
 <div class="enablehorizontalscrollbar"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
 Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER</p></div>
 </li>
+<li><h3 id="enableMinHeightCheck">enableMinHeightCheck</h3>
+<div class="enableminheightcheck"><p>True by default. When enabled, a newly initialized grid will check to see if it is tall enough to display
+at least one row of data.  If the grid is not tall enough, it will resize the DOM element to display minRowsToShow number
+of rows.</p></div>
+</li>
 <li><h3 id="enableRowHashing">enableRowHashing</h3>
 <div class="enablerowhashing"><p>True by default. When enabled, this setting allows uiGrid to add
 <code>$$hashKey</code>-type properties (similar to Angular) to elements in the <code>data</code> array. This allows

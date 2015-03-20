@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-746a476 - 2015-03-19
+ * ui-grid - v3.0.0-rc.20-3647f0e - 2015-03-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2760,7 +2760,7 @@ angular.module('ui.grid').directive('uiGrid',
               grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
               // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
-              if (grid.gridHeight < grid.options.rowHeight) {
+              if (grid.gridHeight < grid.options.rowHeight && grid.options.enableMinHeightCheck) {
                 // Figure out the new height
                 var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
                 var headerHeight = grid.options.showHeader ? grid.options.headerRowHeight : 0;
@@ -6559,7 +6559,17 @@ angular.module('ui.grid')
        * Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER
        */
       baseOptions.enableHorizontalScrollbar = typeof(baseOptions.enableHorizontalScrollbar) !== "undefined" ? baseOptions.enableHorizontalScrollbar : uiGridConstants.scrollbars.ALWAYS;
-  
+
+      /**
+       * @ngdoc boolean
+       * @name enableMinHeightCheck
+       * @propertyOf ui.grid.class:GridOptions
+       * @description True by default. When enabled, a newly initialized grid will check to see if it is tall enough to display
+       * at least one row of data.  If the grid is not tall enough, it will resize the DOM element to display minRowsToShow number
+       * of rows.
+       */
+       baseOptions.enableMinHeightCheck = baseOptions.enableMinHeightCheck !== false;
+
       /**
        * @ngdoc boolean
        * @name minimumColumnSize
