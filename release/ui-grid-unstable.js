@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-d52ef18 - 2015-03-21
+ * ui-grid - v3.0.0-rc.20-6c7b429 - 2015-03-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8311,7 +8311,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     // Cache of sorting functions. Once we create them, we don't want to keep re-doing it
     //   this takes a piece of data from the cell and tries to determine its type and what sorting
     //   function to use for it
-    colSortFnCache: {}
+    colSortFnCache: []
   };
 
 
@@ -8754,7 +8754,6 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 }]);
 
 })();
-
 (function() {
 
 var module = angular.module('ui.grid');
