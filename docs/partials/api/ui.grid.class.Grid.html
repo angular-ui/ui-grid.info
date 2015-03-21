@@ -116,10 +116,13 @@ registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters<
 </ul>
 </div>
 </li>
-<li><h3 id="getRow">getRow(rowEntity)</h3>
+<li><h3 id="getRow">getRow(rowEntity, rows)</h3>
 <div class="getrow"><p>returns the GridRow that contains the rowEntity</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
 <p>the gridOptions.data array element instance</p></li>
+<li><code ng:non-bindable="">rows – {array} – </code>
+<p>[optional] the rows to look in - if not provided then
+looks in grid.rows</p></li>
 </ul>
 </div>
 </li>
@@ -145,7 +148,28 @@ registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters<
 <div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered
 rowBuilder to further process the row</p>
 
-<p>Rows are identified using the gridOptions.rowEquality function</p></div>
+<p>This method aims to achieve three things:
+1. the resulting rows array is in the same order as the newRawData, we'll call
+rowsProcessors immediately after to sort the data anyway
+2. if we have row hashing available, we try to use the rowHash to find the row
+3. no memory leaks - rows that are no longer in newRawData need to be garbage collected</p>
+
+<p>The basic logic flow makes use of the newRawData, oldRows and oldHash, and creates
+the newRows and newHash</p>
+
+<p>```
+newRawData.forEach newEntity
+  if (hashing enabled)
+    check oldHash for newEntity
+  else
+    look for old row directly in oldRows
+  if !oldRowFound     // must be a new row
+    create newRow
+  append to the newRows and add to newHash
+  run the processors</p>
+
+<p>Rows are identified using the hashKey if configured.  If not configured, then rows
+are identified using the gridOptions.rowEquality function</p></div>
 </li>
 <li><h3 id="notifyDataChange">notifyDataChange(type)</h3>
 <div class="notifydatachange"><p>Notifies us that a data change has occurred, used in the public

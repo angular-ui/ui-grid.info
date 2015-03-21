@@ -33,7 +33,12 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
 
 <p>The selectAll box can be disabled by setting <code>enableSelectAll</code> to false.</p>
 
-<p>You can set the selection row header column width by setting 'selectionRowHeaderWidth' option.</p><h2 id="Example">Example</h2>
+<p>You can set the selection row header column width by setting 'selectionRowHeaderWidth' option.</p>
+
+<p>You can use an <code>isRowSelectable</code> function to determine which rows are selectable.  If you set this function in the options
+after grid initialisation you need to call <code>gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS)</code> to enable
+the option.  In the grid below pressing the button to "set selectable" will set any rows that have an age > 30 to not be
+selectable, and also set the age of the first row to 31.</p><h2 id="Example">Example</h2>
 <div class="example"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.  The first example
 auto-selects the first row once the data is loaded.</p>
 
@@ -52,6 +57,7 @@ auto-selects the first row once the data is loaded.</p>
       <br/>
       <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button>
       <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button>
+      <button type="button" class="btn btn-success" ng-click="setSelectable()">Set Selectable</button>
       <br/>
 
       <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
@@ -78,7 +84,7 @@ auto-selects the first row once the data is loaded.</p>
 <script type="text/ng-template" id="app.js">
     var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.selection']);
 
-    app.controller('MainCtrl', ['$scope', '$http', '$log', '$timeout', function ($scope, $http, $log, $timeout) {
+    app.controller('MainCtrl', ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function ($scope, $http, $log, $timeout, uiGridConstants) {
       $scope.gridOptions = { 
         enableRowSelection: true,
         enableSelectAll: true,
@@ -126,6 +132,22 @@ auto-selects the first row once the data is loaded.</p>
 
         $scope.toggleRow1 = function() {
           $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
+        };
+        
+        $scope.setSelectable = function() {
+          $scope.gridApi.selection.clearSelectedRows();
+
+          $scope.gridOptions.isRowSelectable = function(row){
+            if(row.entity.age > 30){
+              return false;
+            } else {
+              return true;
+            }
+          };
+          $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+          
+          $scope.gridOptions.data[0].age = 31;
+          $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
         };
 
         $scope.gridOptions.onRegisterApi = function(gridApi){

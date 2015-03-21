@@ -30,6 +30,20 @@ however, be exported.</p>
 to have no visual impact when grouping is turned on but unused.  If you'd like the groupRowHeader permanently
 present then set the <code>groupingRowHeaderAlwaysVisible: true</code> gridOption.</p>
 
+<p>If you want to change the grouping programmatically after grid initialisation, you do this through calling the
+provided methods:</p>
+
+<ul>
+<li><code>groupColumn</code>: groups an individual column.  Adds it to the end of the current grouping - so you need to remove
+existing grouped columns first if you wanted this to be the only grouping.  Adds a sort ASC if there isn't one</li>
+<li><code>ungroupColumn</code>: ungroups an individual column</li>
+<li><code>aggregateColumn</code>: sets aggregation on a column, including setting the aggregation off.  Automatically removes
+any sort first.</li>
+<li><code>setGrouping</code>: sets all the grouping in one go, removing existing grouping</li>
+<li><code>getGrouping</code>: gets the grouping config for the grid</li>
+<li><code>clearGrouping</code>: clears all current grouping settings</li>
+</ul>
+
 <p>Grouping is still alpha, and under development, however it is included in the distribution files
 to allow people to start using it.  Notable outstandings are:</p>
 
@@ -37,12 +51,10 @@ to allow people to start using it.  Notable outstandings are:</p>
 <li>does not correctly handle columns that are based on functions or complex objects.  The groupHeader rows create
 a fake row.entity, and then set the appropriate fields in that entity.  This doesn't work well with 
 complex column definitions at present</li>
-<li>notify data change capability is needed for when people programmatically change the grouping  </li>
 <li>some more unit testing</li>
 <li>enhancement: allow a limit on number of columns grouped</li>
 <li>consideration of RTL - not sure whether the indent/outdent should get reversed?</li>
 <li>special formatting for header rows in exporter?</li>
-<li>add grouping options to saveState</li>
 </ul>
 
 <p>Options to watch out for include:</p>
@@ -57,7 +69,15 @@ usually breaks the cellFilter.  So you can suppress the aggregation text, but th
 visual indication of what sort of aggregation is going on.  Refer the example below, the balance column with
 an average </li>
 <li><code>groupingShowCounts</code>: set to false if you don't like the counts against the groupHeaders </li>
-</ul><h2 id="Example">Example</h2>
+</ul>
+
+<p>If you would like to suppress the data in a grouped column (so it only shows in the groupHeader rows) this can
+be done by overriding the cellTemplate for any of the columns you allow grouping on as follows:</p>
+
+<p><code>cellTemplate: '&lt;div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader &amp;&amp; col.grouping.groupPriority === row.groupLevel )" class="ui-grid-cell-contents" title="TOOLTIP"&gt;{{COL_FIELD CUSTOM_FILTERS}}&lt;/div&gt;'</code></p>
+
+<p>In the example below this has been done on the state column only.  This isn't included in the base code as it
+could potentially interact with people's custom templates.</p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we group by the state column then the gender column, and we count the names (a proxy for 
 counting the number of rows), we find the max age for each grouping, and we calculate the average balance.  We
 suppress the aggregation text on the balance column because we want to format as currency...but that means that 
@@ -69,10 +89,11 @@ we can't easily see that it's an average.</p>
 <pre class="prettyprint linenums" ng-set-text="index.html-62" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-62">
     <div ng-controller="MainCtrl">
-      <div id="grid1" ui-grid="gridOptions" ui-grid-grouping ui-grid-pinning class="grid"></div>
       <button id="expandAll" type="button" class="btn btn-success" ng-click="expandAll()">Expand All</button>
       <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row</button>
       <button id="toggleSecondRow" type="button" class="btn btn-success" ng-click="toggleRow(1)">Toggle Second Row</button>
+      <button id="changeGrouping" type="button" class="btn btn-success" ng-click="changeGrouping()">Change Grouping</button>
+      <div id="grid1" ui-grid="gridOptions" ui-grid-grouping ui-grid-pinning class="grid"></div>
     </div>
   </script>
 </div>
@@ -95,10 +116,10 @@ we can't easily see that it's an average.</p>
         enableFiltering: true,
         columnDefs: [
           { name: 'name', width: '30%' },
-          { name: 'gender', grouping: { groupPriority: 1 }, sort: { direction: 'asc' }, width: '20%' },
+          { name: 'gender', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }, width: '20%' },
           { name: 'age', grouping: { aggregation: uiGridGroupingConstants.aggregation.MAX }, width: '20%' },
           { name: 'company', width: '25%' },
-          { name: 'state', grouping: { groupPriority: 0 }, sort: { direction: 'desc' }, width: '35%' },
+          { name: 'state', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }, width: '35%', cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.groupLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
           { name: 'balance', width: '25%', cellFilter: 'currency', groupingSuppressAggregationText: true, grouping: { aggregation: uiGridGroupingConstants.aggregation.AVG } }
         ],
         onRegisterApi: function( gridApi ) {
@@ -112,6 +133,7 @@ we can't easily see that it's an average.</p>
          data[i].state = data[i].address.state;
          data[i].balance = Number( data[i].balance.slice(1).replace(/,/,'') );
        }
+       delete data[2].age;
        $scope.gridOptions.data = data;
      });
  
@@ -121,7 +143,13 @@ we can't easily see that it's an average.</p>
       
       $scope.toggleRow = function( rowNum ){
         $scope.gridApi.grouping.toggleRowGroupingState($scope.gridApi.grid.renderContainers.body.visibleRowCache[rowNum]);
-      }
+      };
+      
+      $scope.changeGrouping = function() {
+        $scope.gridApi.grouping.clearGrouping();
+        $scope.gridApi.grouping.groupColumn('age');
+        $scope.gridApi.grouping.aggregateColumn('state', uiGridGroupingConstants.aggregation.COUNT);
+      };
     }]);
   </script>
 </div>

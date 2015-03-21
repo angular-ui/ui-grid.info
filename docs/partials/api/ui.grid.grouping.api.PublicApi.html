@@ -5,7 +5,24 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Public Api for grouping feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="collapseAllRows">collapseAllRows()</h3>
+<ul class="methods"><li><h3 id="aggregateColumn">aggregateColumn(columnName, aggregationType)</h3>
+<div class="aggregatecolumn"><p>Sets the aggregation type on a column, if the 
+column is currently grouped then it removes the grouping first.
+If the aggregationType is null then will result in the aggregation
+being removed</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
+<p>the column we want to aggregate</p></li>
+<li><code ng:non-bindable="">aggregationType – {string} – </code>
+<p>one of the recognised types
+from uiGridGroupingConstants</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="clearGrouping">clearGrouping()</h3>
+<div class="cleargrouping"><p>Clear any grouped columns and any aggregations.  Doesn't remove sorting,
+as we don't know whether that sorting was added by grouping or was there beforehand</p></div>
+</li>
+<li><h3 id="collapseAllRows">collapseAllRows()</h3>
 <div class="collapseallrows"><p>collapse all grouped rows</p></div>
 </li>
 <li><h3 id="collapseRow">collapseRow(row)</h3>
@@ -53,9 +70,21 @@ and expandedState is a hash of the currently expanded nodes</p>
 – <p>grouping configuration</p></div>
 </div>
 </li>
+<li><h3 id="groupColumn">groupColumn(columnName)</h3>
+<div class="groupcolumn"><p>Adds this column to the existing grouping, at the end of the priority order.
+If the column doesn't have a sort, adds one, by default ASC</p>
+
+<p>This column will move to the left of any non-group columns, the
+move is handled in a columnProcessor, so gets called as part of refresh</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
+<p>the name of the column we want to group</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="setGrouping">setGrouping(config)</h3>
 <div class="setgrouping"><p>Set the grouping configuration for this grid, 
-used by the saveState feature</p><h4 id="Parameters">Parameters</h4>
+used by the saveState feature, but can also be used by any
+user to specify a combined grouping and aggregation configuration</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">config – {object} – </code>
 <p>the config you want to apply, in the format
 provided out by getGrouping</p></li>
@@ -66,6 +95,18 @@ provided out by getGrouping</p></li>
 <div class="togglerowgroupingstate"><p>call expand if the row is collapsed, collapse if it is expanded</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
 <p>the row you wish to toggle</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="ungroupColumn">ungroupColumn(columnName)</h3>
+<div class="ungroupcolumn"><p>Removes the groupPriority from this column.  If the
+column was previously aggregated the aggregation will come back. 
+The sort will remain.  </p>
+
+<p>This column will move to the right of any other group columns, the
+move is handled in a columnProcessor, so gets called as part of refresh</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
+<p>the name of the column we want to ungroup</p></li>
 </ul>
 </div>
 </li>
