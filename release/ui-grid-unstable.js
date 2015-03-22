@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-6c7b429 - 2015-03-21
+ * ui-grid - v3.0.0-rc.20-b2fdba9 - 2015-03-22
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1644,7 +1644,8 @@ angular.module('ui.grid')
             shown: function() {
               return this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined;
             },
-            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) }
+            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) },
+            leaveOpen: true
           };
           service.setMenuItemTitle( menuItem, colDef, $scope.grid );
           showHideColumns.push( menuItem );
@@ -1659,7 +1660,8 @@ angular.module('ui.grid')
             shown: function() {
               return !(this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined);
             },
-            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) }
+            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) },
+            leaveOpen: true
           };
           service.setMenuItemTitle( menuItem, colDef, $scope.grid );
           showHideColumns.push( menuItem );
@@ -1937,7 +1939,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
       icon: '=',
       shown: '=',
       context: '=',
-      templateUrl: '='
+      templateUrl: '=',
+      leaveOpen: '='
     },
     require: ['?^uiGrid', '^uiGridMenu'],
     templateUrl: 'ui-grid/uiGridMenuItem',
@@ -2001,7 +2004,9 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
               $scope.action.call(context, $event, title);
 
-              $scope.$emit('hide-menu');
+              if ( !$scope.leaveOpen ){
+                $scope.$emit('hide-menu');
+              }
             }
           };
 
@@ -5586,7 +5591,8 @@ angular.module('ui.grid')
    * - action: the method to call when the menu is clicked
    * - shown: a function to evaluate to determine whether or not to show the item
    * - active: a function to evaluate to determine whether or not the item is currently selected
-   * - context: context to pass to the action function??
+   * - context: context to pass to the action function, available in this.context in your handler
+   * - leaveOpen: if set to true, the menu should stay open after the action, defaults to false
    * @example
    * <pre>  $scope.gridOptions.columnDefs = [ 
    *   { field: 'field1', menuItems: [
@@ -8311,7 +8317,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     // Cache of sorting functions. Once we create them, we don't want to keep re-doing it
     //   this takes a piece of data from the cell and tries to determine its type and what sorting
     //   function to use for it
-    colSortFnCache: []
+    colSortFnCache: {}
   };
 
 
@@ -8754,6 +8760,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 }]);
 
 })();
+
 (function() {
 
 var module = angular.module('ui.grid');
@@ -22032,7 +22039,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridMenu',
-    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-mid\" ng-show=\"shownMid\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" name=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\"></li></ul></div></div></div>"
+    "<div class=\"ui-grid-menu\" ng-if=\"shown\"><div class=\"ui-grid-menu-mid\" ng-show=\"shownMid\"><div class=\"ui-grid-menu-inner\"><ul class=\"ui-grid-menu-items\"><li ng-repeat=\"item in menuItems\" ui-grid-menu-item action=\"item.action\" name=\"item.title\" active=\"item.active\" icon=\"item.icon\" shown=\"item.shown\" context=\"item.context\" template-url=\"item.templateUrl\" leave-open=\"item.leaveOpen\"></li></ul></div></div></div>"
   );
 
 

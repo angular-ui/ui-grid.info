@@ -38,6 +38,7 @@ the <a href="/docs/#/tutorial/305_appScope">scopes</a> tutorial.</p>
     width: 500px;
     height: 300px;
   }
+   .my-css-class { color: blue }
 </style>
 </div>
 <div class="tab-pane" title="app.js">
@@ -52,19 +53,22 @@ the <a href="/docs/#/tutorial/305_appScope">scopes</a> tutorial.</p>
       $scope.wait = wait + 's';
     }, 1000);
 
+    // you could of course just include the template inline in your code, this example shows a template being returned from a function
     function rowTemplate() {
       return $timeout(function() {
         $scope.waiting = 'Done!';
         $interval.cancel(sec);
         $scope.wait = '';
-        return '<div style="background-color: aquamarine" ng-click="grid.appScope.fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell></div>';
+        return '<div ng-class="{ \'my-css-class\': grid.appScope.rowFormatter( row ) }">' +
+                   '  <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
+                   '</div>';
       }, 6000);
     }
 
     // Access outside scope functions from row template
-    $scope.fnOne =  function(row) {
-        console.log(row);
-     };
+    $scope.rowFormatter = function( row ) {
+      return row.entity.gender === 'male'; 
+    };
 
     $scope.waiting = 'Waiting for row template...';
 

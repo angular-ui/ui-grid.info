@@ -160,7 +160,8 @@ functionality.  A number of settings are supported:</p>
 <li>action: the method to call when the menu is clicked</li>
 <li>shown: a function to evaluate to determine whether or not to show the item</li>
 <li>active: a function to evaluate to determine whether or not the item is currently selected</li>
-<li>context: context to pass to the action function??</li>
+<li>context: context to pass to the action function, available in this.context in your handler</li>
+<li>leaveOpen: if set to true, the menu should stay open after the action, defaults to false</li>
 </ul><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ 
 { field: 'field1', menuItems: [
