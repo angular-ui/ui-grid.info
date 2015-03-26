@@ -5,15 +5,53 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Service for infinite scroll features</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="checkScroll">checkScroll()</h3>
-<div class="checkscroll"><p>This function checks scroll position inside grid and
-calls 'loadData' function when scroll reaches 'infiniteScrollPercentage'</p></div>
+<ul class="methods"><li><h3 id="adjustInfiniteScrollPosition">adjustInfiniteScrollPosition(grid, percentage)</h3>
+<div class="adjustinfinitescrollposition"><p>This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're working on</p></li>
+<li><code ng:non-bindable="">percentage – {number} – </code>
+<p>the percentage through the grid that we want to scroll to</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="adjustScroll">adjustScroll(grid)</h3>
+<div class="adjustscroll"><p>Once we are informed that data has been loaded, adjust the scroll position to account for that
+addition and to make things look clean.  </p>
+
+<p>If we're scrolling up we scroll to the first row of the old data set - 
+so we're assuming that you would have gotten to the top of the grid (from the 20% need more data trigger) by
+the time the data comes back.  If we're scrolling down we scoll to the last row of the old data set - so we're
+assuming that you would have gotten to the bottom of the grid (from the 80% need more data trigger) by the time
+the data comes back.  </p>
+
+<p>Neither of these are good assumptions, but making this a smoother experience really requires
+that trigger to not be a percentage, and to be much closer to the end of the data (say, 5 rows off the end).  Even then
+it'd be better still to actually run into the end.  But if the data takes a while to come back, they may have scrolled
+somewhere else in the mean-time, in which case they'll get a jump back to the new data.  Anyway, this will do for
+now, until someone wants to do better.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're working on</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="handleScroll">handleScroll(args)</h3>
+<div class="handlescroll"><p>Called whenever the grid scrolls, determines whether the scroll should
+trigger an infinite scroll request for more data</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">args – {object} – </code>
+<p>the args from the event</p></li>
+</ul>
+</div>
 </li>
 <li><h3 id="initializeGrid">initializeGrid()</h3>
 <div class="initializegrid"><p>This method register events and methods into grid public API</p></div>
 </li>
-<li><h3 id="loadData">loadData()</h3>
-<div class="loaddata"><p>This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection</p></div>
+<li><h3 id="loadData">loadData(grid)</h3>
+<div class="loaddata"><p>This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection
+and whether there are more pages upwards or downwards</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're working on</p></li>
+</ul>
+</div>
 </li>
 </ul>
 </div>

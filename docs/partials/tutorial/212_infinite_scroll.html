@@ -1,104 +1,123 @@
 <h1><code ng:non-bindable=""></code>
 <span class="hint"></span>
 </h1>
-<div><p>The infinite scroll feature allows the user to lazy load their data to gridOptions.data</p>
+<div><p>The infinite scroll feature allows the user to lazy load their data to gridOptions.data.  </p>
 
-<p>Specify percentage when lazy load should trigger:
-<pre class="prettyprint linenums">
-  $scope.gridOptions.infiniteScroll = 20;
-</pre><h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
+<p>Once you reach the top (or bottom) of your real data set, you can notify that no more pages exist
+up (or down), and infinite scroll will stop triggering events in that direction.  You can also
+optionally tell us up-front that there are no more pages up through <code>infiniteScrollUp = true</code> or down through
+<code>infiniteScrollDown = true</code>, and we will never trigger
+pages in that direction.  By default we assume you have pages down but not up.</p>
+
+<p>You can specify the percentage of the grid at which the infinite scroll will trigger a request for
+more data <code>infiniteScrollPercentage = 20</code>. By default we trigger when you are 20% away from the end of 
+the grid (in either direction).</p>
+
+<p>We will raise a <code>needMoreData</code> or <code>needMoreDataTop</code> event, which you must listen to and respond to if
+you have told us that you have more data available.  Once you have retrieved the data and added it to your
+data array (at the top if the event was <code>needMoreDataTop</code>), you need to call <code>dataLoaded</code> to tell us
+that you have loaded your data.  Optionally, you can tell us that there is no more data, and we won't trigger
+further requests for more data in that direction.</p>
+
+<p>When you have loaded your data we will attempt to adjust the grid scroll to give the appearance of continuous
+scrolling.  This is a little jumpy at present, largely because we work of percentages instead of a number of
+rows from the end.  We basically assume that your user will have reached the end of the scroll (upwards or downwards)
+by the time the data comes back, and scroll the user to the beginning of the newly added data to reflect that.  If
+your user has already scrolled a lot of pages, then they may not be at the end of the data (20% can be a long way).
+Ideally the API would change to a number of rows. </p>
+
+<p>Finally, we suppress the normal grid behaviour of propagating the scroll to the parent container when you reach the end
+if infinite scroll is enabled and there is still data in that direction.</p><h2 id="Example">Example</h2>
+<div class="example"><p>In this example we have a data set that starts at page 2 of a 5 page data set.  Each page is 100 records, so we start at 
+record 200, and we can scroll up 2 pages, and scroll down 2 pages.  You should see smooth scrolling as you move up, when
+you hit record zero a touchpad scroll should propagate to the parent page.  You should also see smooth scrolling as you
+move down, and when you hit record 499 a touchpad scroll should propagate to the parent page.</p>
+
+<h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-67" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-67" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-67">
-  <div ng-controller="MainCtrl">
-    <div ui-grid="gridOptions" class="grid" ui-grid-infinite-scroll></div>
-  </div>
-</script>
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" class="grid" ui-grid-infinite-scroll></div>
+    </div>
+  </script>
 </div>
 <div class="tab-pane" title="main.css">
 <pre class="prettyprint linenums" ng-set-text="main.css"></pre>
 <style type="text/css" id="main.css">
-  .grid {
-    width: 500px;
-    height: 400px;
-  }
-</style>
+    .grid {
+      width: 500px;
+      height: 400px;
+    }
+  </style>
 </div>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.infiniteScroll']);
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.infiniteScroll']);
 
-  app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
-    $scope.gridOptions = {};
+    app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+      $scope.gridOptions = {
+        infiniteScrollPercentage: 15,
+        infiniteScrollUp: true,
+        infiniteScrollDown: true,
+        columnDefs: [
+          { name:'id'},
+          { name:'name' },
+          { name:'age' }
+        ],
+        data: 'data',
+        onRegisterApi: function(gridApi){
+          gridApi.infiniteScroll.on.needLoadMoreData($scope, $scope.getDataDown);
+          gridApi.infiniteScroll.on.needLoadMoreDataTop($scope, $scope.getDataUp);
+          $scope.gridApi = gridApi;
+        }
+      };
 
-  /**
-    * @ngdoc property
-    * @name infiniteScrollPercentage
-    * @propertyOf ui.grid.class:GridOptions
-    * @description This setting controls at what percentage of the scroll more data
-    * is requested by the infinite scroll
-    */
-    $scope.gridOptions.infiniteScrollPercentage = 15;
-    
-    $scope.gridOptions.columnDefs = [
-      { name:'id'},
-      { name:'name' },
-      { name:'age' }
-    ];
-    var page = 0;
-    var pageUp = 0;
-    var getData = function(data, page) {
-      var res = [];
-      for (var i = (page * 100); i < (page + 1) * 100 && i < data.length; ++i) {
-        res.push(data[i]);
-      }
-      return res;
-    };
-
-    var getDataUp = function(data, page) {
-      var res = [];
-      for (var i = data.length - (page * 100) - 1; (data.length - i) < ((page + 1) * 100) && (data.length - i) > 0; --i) {
-        data[i].id = -(data.length - data[i].id)
-        res.push(data[i]);
-      }
-      return res;
-    };
-
-    $http.get('/data/10000_complex.json')
-      .success(function(data) {
-        $scope.gridOptions.data = getData(data, page);
-        ++page;
-      });
-
-    $scope.gridOptions.onRegisterApi = function(gridApi){
-      gridApi.infiniteScroll.on.needLoadMoreData($scope,function(){
+      $scope.data = [];
+      
+      var firstPage = 2;
+      var lastPage = 1;
+      
+      $scope.getDataDown = function() {
         $http.get('/data/10000_complex.json')
-          .success(function(data) {
-            $scope.gridOptions.data = $scope.gridOptions.data.concat(getData(data, page));
-            ++page;
-            gridApi.infiniteScroll.dataLoaded();
-          })
-          .error(function() {
-            gridApi.infiniteScroll.dataLoaded();
-          });
-      });
-      gridApi.infiniteScroll.on.needLoadMoreDataTop($scope,function(){
+        .success(function(data) {
+          lastPage++;
+          var newData = $scope.getPage(data, lastPage);
+          $scope.data = $scope.data.concat(newData);
+          $scope.gridApi.infiniteScroll.dataLoaded(null, lastPage === 4);
+        })
+        .error(function(error) {
+          $scope.gridApi.infiniteScroll.dataLoaded();
+        });
+      };
+
+      $scope.getDataUp = function() {
         $http.get('/data/10000_complex.json')
-          .success(function(data) {
-            $scope.gridOptions.data = getDataUp(data, pageUp).reverse().concat($scope.gridOptions.data);
-            ++pageUp;
-            gridApi.infiniteScroll.dataLoaded();
-          })
-          .error(function() {
-            gridApi.infiniteScroll.dataLoaded();
-          });
-      });
-    };
-  }]);
-</script>
+        .success(function(data) {
+          firstPage--;
+          var newData = $scope.getPage(data, firstPage);
+          $scope.data = newData.concat($scope.data);
+          $scope.gridApi.infiniteScroll.dataLoaded(firstPage === 0, null);
+        })
+        .error(function(error) {
+          $scope.gridApi.infiniteScroll.dataLoaded();
+        });
+      };
+
+
+      $scope.getPage = function(data, page) {
+        var res = [];
+        for (var i = (page * 100); i < (page + 1) * 100 && i < data.length; ++i) {
+          res.push(data[i]);
+        }
+        return res;
+      };
+      
+      $scope.getDataDown();
+    }]);
+  </script>
 </div>
 </div><h4>Demo</h4>
 <div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-67" ng-eval-javascript="app.js"></div></div>

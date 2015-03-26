@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-b2fdba9 - 2015-03-22
+ * ui-grid - v3.0.0-rc.20-6143bb8 - 2015-03-26
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2531,9 +2531,9 @@ angular.module('ui.grid')
   'use strict';
 
   angular.module('ui.grid').controller('uiGridController', ['$scope', '$element', '$attrs', 'gridUtil', '$q', 'uiGridConstants',
-                    '$templateCache', 'gridClassFactory', '$timeout', '$parse', '$compile', 'ScrollEvent',
+                    '$templateCache', 'gridClassFactory', '$timeout', '$parse', '$compile',
     function ($scope, $elm, $attrs, gridUtil, $q, uiGridConstants,
-              $templateCache, gridClassFactory, $timeout, $parse, $compile, ScrollEvent) {
+              $templateCache, gridClassFactory, $timeout, $parse, $compile) {
       // gridUtil.logDebug('ui-grid controller');
 
       var self = this;
@@ -2588,23 +2588,6 @@ angular.module('ui.grid')
         }
       }
 
-      function adjustInfiniteScrollPosition (scrollToRow) {
-
-        var scrollEvent = new ScrollEvent(self.grid, null, null, 'ui.grid.adjustInfiniteScrollPosition');
-        var totalRows = self.grid.renderContainers.body.visibleRowCache.length;
-        var percentage = ( scrollToRow + ( scrollToRow / ( totalRows - 1 ) ) ) / totalRows;
-
-        //for infinite scroll, never allow it to be at the zero position so the up button can be active
-        if ( percentage === 0 ) {
-          scrollEvent.y = {pixels: 1};
-        }
-        else {
-          scrollEvent.y = {percentage: percentage};
-        }
-        scrollEvent.fireScrollingEvent();
-
-      }
-
       function dataWatchFunction(newData) {
         // gridUtil.logDebug('dataWatch fired');
         var promises = [];
@@ -2643,20 +2626,6 @@ angular.module('ui.grid')
                 $scope.$evalAsync(function() {
                   self.grid.refreshCanvas(true);
                   self.grid.callDataChangeCallbacks(uiGridConstants.dataChange.ROW);
-
-                  $timeout(function () {
-                    //Process post load scroll events if using infinite scroll
-                    if ( self.grid.options.enableInfiniteScroll ) {
-                      //If first load, seed the scrollbar down a little to activate the button
-                      if ( self.grid.renderContainers.body.prevRowScrollIndex === 0 ) {
-                        adjustInfiniteScrollPosition(0);
-                      }
-                      //If we are scrolling up, we need to reseed the grid.
-                      if (self.grid.scrollDirection === uiGridConstants.scrollDirection.UP) {
-                        adjustInfiniteScrollPosition(self.grid.renderContainers.body.prevRowScrollIndex + 1 + self.grid.options.excessRows);
-                      }
-                    }
-                    }, 0);
                 });
               });
           });
@@ -6933,48 +6902,19 @@ angular.module('ui.grid')
     if (rowCache.length > self.grid.options.virtualizationThreshold) {
       if (!(typeof(scrollTop) === 'undefined' || scrollTop === null)) {
         // Have we hit the threshold going down?
-        if (!self.grid.options.enableInfiniteScroll && self.prevScrollTop < scrollTop && rowIndex < self.prevRowScrollIndex + self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
+        if ( !self.grid.suppressParentScrollDown && self.prevScrollTop < scrollTop && rowIndex < self.prevRowScrollIndex + self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
           return;
         }
         //Have we hit the threshold going up?
-        if (!self.grid.options.enableInfiniteScroll && self.prevScrollTop > scrollTop && rowIndex > self.prevRowScrollIndex - self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
+        if ( !self.grid.suppressParentScrollUp && self.prevScrollTop > scrollTop && rowIndex > self.prevRowScrollIndex - self.grid.options.scrollThreshold && rowIndex < maxRowIndex) {
           return;
         }
       }
       var rangeStart = {};
       var rangeEnd = {};
 
-      //If infinite scroll is enabled, and we loaded more data coming from redrawInPlace, then recalculate the range and set rowIndex to proper place to scroll to
-      if ( self.grid.options.enableInfiniteScroll && self.grid.scrollDirection !== uiGridConstants.scrollDirection.NONE && postDataLoaded ) {
-        var findIndex = null;
-        var i = null;
-        if ( self.grid.scrollDirection === uiGridConstants.scrollDirection.UP ) {
-          findIndex = rowIndex > 0 ? self.grid.options.excessRows : 0;
-          for ( i = 0; i < rowCache.length; i++) {
-            if (self.grid.options.rowIdentity(rowCache[i].entity) === self.grid.options.rowIdentity(self.renderedRows[findIndex].entity)) {
-              rowIndex = i;
-              break;
-            }
-          }
-          rangeStart = Math.max(0, rowIndex);
-          rangeEnd = Math.min(rowCache.length, rangeStart + self.grid.options.excessRows + minRows);
-        }
-        else if ( self.grid.scrollDirection === uiGridConstants.scrollDirection.DOWN ) {
-          findIndex = minRows;
-          for ( i = 0; i < rowCache.length; i++) {
-            if (self.grid.options.rowIdentity(rowCache[i].entity) === self.grid.options.rowIdentity(self.renderedRows[findIndex].entity)) {
-              rowIndex = i;
-              break;
-            }
-          }
-          rangeStart = Math.max(0, rowIndex - self.grid.options.excessRows - minRows);
-          rangeEnd = Math.min(rowCache.length, rowIndex + minRows + self.grid.options.excessRows);
-        }
-      }
-      else {
-        rangeStart = Math.max(0, rowIndex - self.grid.options.excessRows);
-        rangeEnd = Math.min(rowCache.length, rowIndex + minRows + self.grid.options.excessRows);
-      }
+      rangeStart = Math.max(0, rowIndex - self.grid.options.excessRows);
+      rangeEnd = Math.min(rowCache.length, rowIndex + minRows + self.grid.options.excessRows);
 
       newRange = [rangeStart, rangeEnd];
     }
@@ -10069,6 +10009,93 @@ module.filter('px', function() {
 
 })();
 
+(function () {
+  angular.module('ui.grid').config(['$provide', function($provide) {
+    $provide.decorator('i18nService', ['$delegate', function($delegate) {
+      var lang = {
+              aggregate: {
+                  label: 'položky'
+              },
+              groupPanel: {
+                  description: 'Přesuntě záhlaví zde pro vytvoření skupiny dle sloupce.'
+              },
+              search: {
+                  placeholder: 'Hledat...',
+                  showingItems: 'Zobrazuji položky:',
+                  selectedItems: 'Vybrané položky:',
+                  totalItems: 'Celkem položek:',
+                  size: 'Velikost strany:',
+                  first: 'První strana',
+                  next: 'Další strana',
+                  previous: 'Předchozí strana',
+                  last: 'Poslední strana'
+              },
+              menu: {
+                  text: 'Vyberte sloupec:'
+              },
+              sort: {
+                  ascending: 'Seřadit od A-Z',
+                  descending: 'Seřadit od Z-A',
+                  remove: 'Odebrat seřazení'
+              },
+              column: {
+                  hide: 'Schovat sloupec'
+              },
+              aggregation: {
+                  count: 'celkem řádků: ',
+                  sum: 'celkem: ',
+                  avg: 'avg: ',
+                  min: 'min.: ',
+                  max: 'max.: '
+              },
+              pinning: {
+                  pinLeft: 'Zamknout v levo',
+                  pinRight: 'Zamknout v pravo',
+                  unpin: 'Odemknout'
+              },
+              gridMenu: {
+                  columns: 'Sloupce:',
+                  importerTitle: 'Importovat soubor',
+                  exporterAllAsCsv: 'Exportovat všechny data do csv',
+                  exporterVisibleAsCsv: 'Exportovat viditelné data do csv',
+                  exporterSelectedAsCsv: 'Exportovat vybranné data do csv',
+                  exporterAllAsPdf: 'Exportovat všechny data do pdf',
+                  exporterVisibleAsPdf: 'Exportovat viditelné data do pdf',
+                  exporterSelectedAsPdf: 'Exportovat vybranné data do pdf'
+              },
+              importer: {
+                  noHeaders: 'Názvy sloupců se nepodařilo získat, obsahuje soubor záhlaví?',
+                  noObjects: 'Data se nepodařilo zpracovat, obsahuje soubor řádky mimo záhlaví?',
+                  invalidCsv: 'Soubor nelze zpracovat, jedná se CSV?',
+                  invalidJson: 'Soubor nelze zpracovat, je to JSON?',
+                  jsonNotArray: 'Soubor musí obsahovat json. Ukončuji..'
+              },
+              pagination: {
+                  sizes: 'položek na stránku',
+                  totalItems: 'položek'
+              },
+              grouping: {
+                  group: 'Seskupit',
+                  ungroup: 'Odebrat seskupení',
+                  aggregate_count: 'Agregace: Count',
+                  aggregate_sum: 'Agregace: Sum',
+                  aggregate_max: 'Agregace: Max',
+                  aggregate_min: 'Agregace: Min',
+                  aggregate_avg: 'Agregace: Avg',
+                  aggregate_remove: 'Agregace: Odebrat'
+              }
+          };
+
+          // support varianty of different czech keys.
+          $delegate.add('cs', lang);
+          $delegate.add('cz', lang);
+          $delegate.add('cs-cz', lang);
+          $delegate.add('cs-CZ', lang);
+      return $delegate;
+    }]);
+  }]);
+})();
+
 (function(){
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -11050,6 +11077,7 @@ module.filter('px', function() {
         },
         gridMenu: {
           columns: 'Colunas:',
+          importerTitle: 'Importar ficheiro',
           exporterAllAsCsv: 'Exportar todos os dados como csv',
           exporterVisibleAsCsv: 'Exportar dados visíveis como csv',
           exporterSelectedAsCsv: 'Exportar dados selecionados como csv',
@@ -11058,16 +11086,26 @@ module.filter('px', function() {
           exporterSelectedAsPdf: 'Exportar dados selecionados como pdf'
         },
         importer: {
-          noHeaders: 'Nomes de colunas não puderam ser derivados. O arquivo tem um cabeçalho?',
-          noObjects: 'Objetos não puderam ser derivados. Havia dados no arquivo, além dos cabeçalhos?',
-          invalidCsv: 'Arquivo não pode ser processado. É um CSV válido?',
-          invalidJson: 'Arquivo não pode ser processado. É um Json válido?',
-          jsonNotArray: 'Arquivo json importado tem que conter um array. Abortando.'
+          noHeaders: 'Nomes de colunas não puderam ser derivados. O ficheiro tem um cabeçalho?',
+          noObjects: 'Objetos não puderam ser derivados. Havia dados no ficheiro, além dos cabeçalhos?',
+          invalidCsv: 'Ficheiro não pode ser processado. É um CSV válido?',
+          invalidJson: 'Ficheiro não pode ser processado. É um Json válido?',
+          jsonNotArray: 'Ficheiro json importado tem que conter um array. Interrompendo.'
         },
         pagination: {
           sizes: 'itens por página',
           totalItems: 'itens'
-        }		
+        },
+        grouping: {
+          group: 'Agrupar',
+          ungroup: 'Desagrupar',
+          aggregate_count: 'Agr: Contar',
+          aggregate_sum: 'Agr: Soma',
+          aggregate_max: 'Agr: Max',
+          aggregate_min: 'Agr: Min',
+          aggregate_avg: 'Agr: Med',
+          aggregate_remove: 'Agr: Remover'
+        }        
       });
       return $delegate;
     }]);
@@ -17835,7 +17873,7 @@ module.filter('px', function() {
    *
    *  @description Service for infinite scroll features
    */
-  module.service('uiGridInfiniteScrollService', ['gridUtil', '$compile', '$timeout', 'uiGridConstants', function (gridUtil, $compile, $timeout, uiGridConstants) {
+  module.service('uiGridInfiniteScrollService', ['gridUtil', '$compile', '$timeout', 'uiGridConstants', 'ScrollEvent', function (gridUtil, $compile, $timeout, uiGridConstants, ScrollEvent) {
 
     var service = {
 
@@ -17846,8 +17884,24 @@ module.filter('px', function() {
        * @description This method register events and methods into grid public API
        */
 
-      initializeGrid: function(grid) {
+      initializeGrid: function(grid, $scope) {
         service.defaultGridOptions(grid.options);
+        grid.infiniteScroll = { dataLoading: false, scrollUp: grid.options.infiniteScrollUp, scrollDown: grid.options.infiniteScrollDown };
+
+        if ( grid.options.infiniteScrollUp){
+          grid.suppressParentScrollUp = true;
+        }
+
+        if ( grid.options.infiniteScrollDown){
+          grid.suppressParentScrollDown = true;
+        }
+
+        if (grid.options.enableInfiniteScroll) {
+          grid.api.core.on.scrollEvent($scope, service.handleScroll);
+        }
+        
+        // tweak the scroll for infinite scroll up (if enabled)
+        service.adjustScroll(grid);
 
         /**
          *  @ngdoc object
@@ -17863,7 +17917,7 @@ module.filter('px', function() {
                * @ngdoc event
                * @name needLoadMoreData
                * @eventOf ui.grid.infiniteScroll.api:PublicAPI
-               * @description This event fires when scroll reached bottom percentage of grid
+               * @description This event fires when scroll reaches bottom percentage of grid
                * and needs to load data
                */
 
@@ -17874,7 +17928,7 @@ module.filter('px', function() {
                * @ngdoc event
                * @name needLoadMoreDataTop
                * @eventOf ui.grid.infiniteScroll.api:PublicAPI
-               * @description This event fires when scroll reached top percentage of grid
+               * @description This event fires when scroll reaches top percentage of grid
                * and needs to load data
                */
 
@@ -17889,20 +17943,40 @@ module.filter('px', function() {
                * @ngdoc function
                * @name dataLoaded
                * @methodOf ui.grid.infiniteScroll.api:PublicAPI
-               * @description This function is used as a promise when data finished loading.
-               * See infinite_scroll ngdoc for example of usage
+               * @description Call this function when you have loaded the additional data
+               * requested.  You can set noMoreDataTop or noMoreDataBottom to indicate
+               * that we've reached the end of your data set, we won't fire any more events
+               * for scroll in that direction.
+               * See infinite_scroll tutorial for example of usage
+               * @param {boolean} noMoreDataTop flag that there are no more pages upwards, so don't fire
+               * any more infinite scroll events upward
+               * @param {boolean} noMoreDataBottom flag that there are no more pages downwards, so don't 
+               * fire any more infinite scroll events downward 
                */
 
-              dataLoaded: function() {
-                grid.options.loadTimout = false;
+              dataLoaded: function( noMoreDataTop, noMoreDataBottom ) {
+                grid.infiniteScroll.dataLoading = false;
+                
+                if ( noMoreDataTop === true ){
+                  grid.infiniteScroll.scrollUp = false;
+                  grid.suppressParentScrollUp = false;
+                }
+
+                if ( noMoreDataBottom === true ){
+                  grid.infiniteScroll.scrollDown = false;
+                  grid.suppressParentScrollDown = false;
+                }
+                
+                service.adjustScroll(grid);
               }
             }
           }
         };
-        grid.options.loadTimout = false;
         grid.api.registerEventsFromObject(publicApi.events);
         grid.api.registerMethodsFromObject(publicApi.methods);
       },
+      
+      
       defaultGridOptions: function (gridOptions) {
         //default option to true unless it was explicitly set to false
         /**
@@ -17921,6 +17995,73 @@ module.filter('px', function() {
          *  <br/>Defaults to true
          */
         gridOptions.enableInfiniteScroll = gridOptions.enableInfiniteScroll !== false;
+
+        /**
+         * @ngdoc property
+         * @name infiniteScrollPercentage
+         * @propertyOf ui.grid.class:GridOptions
+         * @description This setting controls at what percentage remaining more data
+         * is requested by the infinite scroll, whether scrolling up or down.
+         * 
+         * TODO: it would be nice if this were percentage of a page, not percentage of the
+         * total scroll - as you get more and more data, the needMoreData event is triggered
+         * further and further away from the end (in terms of number of rows)
+         * <br> Defaults to 20
+         */
+        gridOptions.infiniteScrollPercentage = gridOptions.infiniteScrollPercentage || 20;
+
+        /**
+         * @ngdoc property
+         * @name infiniteScrollUp
+         * @propertyOf ui.grid.class:GridOptions
+         * @description Whether you allow infinite scroll up, implying that the first page of data
+         * you have displayed is in the middle of your data set.  If set to true then we trigger the
+         * needMoreDataTop event when the user hits the top of the scrollbar.  
+         * <br> Defaults to false
+         */
+        gridOptions.infiniteScrollUp = gridOptions.infiniteScrollUp === true;
+
+        /**
+         * @ngdoc property
+         * @name infiniteScrollDown
+         * @propertyOf ui.grid.class:GridOptions
+         * @description Whether you allow infinite scroll down, implying that the first page of data
+         * you have displayed is in the middle of your data set.  If set to true then we trigger the
+         * needMoreData event when the user hits the bottom of the scrollbar.  
+         * <br> Defaults to true
+         */
+        gridOptions.infiniteScrollDown = gridOptions.infiniteScrollDown !== false;
+      },
+
+
+      /**
+       * @ngdoc function
+       * @name handleScroll
+       * @methodOf ui.grid.infiniteScroll.service:uiGridInfiniteScrollService
+       * @description Called whenever the grid scrolls, determines whether the scroll should
+       * trigger an infinite scroll request for more data
+       * @param {object} args the args from the event
+       */
+      handleScroll:  function (args) {
+        // don't request data if already waiting for data, or if source is coming from ui.grid.adjustInfiniteScrollPosition() function
+        if ( args.grid.infiniteScroll && args.grid.infiniteScroll.dataLoading || args.source === 'ui.grid.adjustInfiniteScrollPosition' ){
+          return;
+        }
+
+        if (args.y) {
+          var percentage;
+          if (args.grid.scrollDirection === uiGridConstants.scrollDirection.UP ) {
+            percentage = args.y.percentage;
+            if (percentage <= args.grid.options.infiniteScrollPercentage / 100){
+              service.loadData(args.grid);
+            }
+          } else if (args.grid.scrollDirection === uiGridConstants.scrollDirection.DOWN) {
+            percentage = 1 - args.y.percentage;
+            if (percentage <= args.grid.options.infiniteScrollPercentage / 100){
+              service.loadData(args.grid);
+            }
+          }
+        }
       },
 
 
@@ -17929,43 +18070,92 @@ module.filter('px', function() {
        * @name loadData
        * @methodOf ui.grid.infiniteScroll.service:uiGridInfiniteScrollService
        * @description This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection
+       * and whether there are more pages upwards or downwards
+       * @param {Grid} grid the grid we're working on
        */
-
       loadData: function (grid) {
-        grid.options.loadTimout = true;
-        if (grid.scrollDirection === uiGridConstants.scrollDirection.UP) {
+        // save number of currently visible rows to calculate new scroll position later - we know that we want 
+        // to be at approximately the row we're currently at
+        grid.infiniteScroll.previousVisibleRows = grid.renderContainers.body.visibleRowCache.length;
+        grid.infiniteScroll.direction = grid.scrollDirection;
+        
+        if (grid.scrollDirection === uiGridConstants.scrollDirection.UP && grid.infiniteScroll.scrollUp ) {
+          grid.infiniteScroll.dataLoading = true;
           grid.api.infiniteScroll.raise.needLoadMoreDataTop();
-          return;
+        } else if (grid.scrollDirection === uiGridConstants.scrollDirection.DOWN && grid.infiniteScroll.scrollDown ) {
+          grid.infiniteScroll.dataLoading = true;
+          grid.api.infiniteScroll.raise.needLoadMoreData();
         }
-        grid.api.infiniteScroll.raise.needLoadMoreData();
       },
-
+      
+      
       /**
        * @ngdoc function
-       * @name checkScroll
+       * @name adjustScroll
        * @methodOf ui.grid.infiniteScroll.service:uiGridInfiniteScrollService
-       * @description This function checks scroll position inside grid and
-       * calls 'loadData' function when scroll reaches 'infiniteScrollPercentage'
+       * @description Once we are informed that data has been loaded, adjust the scroll position to account for that
+       * addition and to make things look clean.  
+       * 
+       * If we're scrolling up we scroll to the first row of the old data set - 
+       * so we're assuming that you would have gotten to the top of the grid (from the 20% need more data trigger) by
+       * the time the data comes back.  If we're scrolling down we scoll to the last row of the old data set - so we're
+       * assuming that you would have gotten to the bottom of the grid (from the 80% need more data trigger) by the time
+       * the data comes back.  
+       * 
+       * Neither of these are good assumptions, but making this a smoother experience really requires
+       * that trigger to not be a percentage, and to be much closer to the end of the data (say, 5 rows off the end).  Even then
+       * it'd be better still to actually run into the end.  But if the data takes a while to come back, they may have scrolled
+       * somewhere else in the mean-time, in which case they'll get a jump back to the new data.  Anyway, this will do for
+       * now, until someone wants to do better.
+       * @param {Grid} grid the grid we're working on
        */
+      adjustScroll: function(grid){
+        $timeout(function () {
+          var percentage;
+          
+          if ( grid.infiniteScroll.direction === undefined ){
+            // called from initialize, tweak our scroll up a little
+            service.adjustInfiniteScrollPosition(grid, 0);
+          }
 
-      checkScroll: function(grid, scrollTop) {
+          var newVisibleRows = grid.renderContainers.body.visibleRowCache.length;
+          if ( grid.infiniteScroll.direction === uiGridConstants.scrollDirection.UP ){
+            percentage = ( newVisibleRows - grid.infiniteScroll.previousVisibleRows ) / newVisibleRows;
+            service.adjustInfiniteScrollPosition(grid, percentage);  
+          }
 
-        /* Take infiniteScrollPercentage value or use 20% as default */
-        var infiniteScrollPercentage = grid.options.infiniteScrollPercentage ? grid.options.infiniteScrollPercentage : 20;
-
-        if (!grid.options.loadTimout && scrollTop <= infiniteScrollPercentage) {
-          this.loadData(grid);
-          return true;
-        }
-        return false;
-      }
+          if ( grid.infiniteScroll.direction === uiGridConstants.scrollDirection.DOWN ){
+            percentage = grid.infiniteScroll.previousVisibleRows / newVisibleRows;            
+            service.adjustInfiniteScrollPosition(grid, percentage);  
+          }
+        }, 0);
+      },
+ 
+ 
       /**
-       * @ngdoc property
-       * @name infiniteScrollPercentage
-       * @propertyOf ui.grid.class:GridOptions
-       * @description This setting controls at what percentage of the scroll more data
-       * is requested by the infinite scroll
+       * @ngdoc function
+       * @name adjustInfiniteScrollPosition
+       * @methodOf ui.grid.infiniteScroll.service:uiGridInfiniteScrollService
+       * @description This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection
+       * @param {Grid} grid the grid we're working on
+       * @param {number} percentage the percentage through the grid that we want to scroll to
        */
+      adjustInfiniteScrollPosition: function (grid, percentage) {
+        var scrollEvent = new ScrollEvent(grid, null, null, 'ui.grid.adjustInfiniteScrollPosition');
+
+        //for infinite scroll, if there are pages upwards then never allow it to be at the zero position so the up button can be active
+        if ( percentage === 0 && grid.infiniteScroll.scrollUp ) {
+          scrollEvent.y = {pixels: 1};
+        }
+        else {
+          scrollEvent.y = {percentage: percentage};
+        }
+        scrollEvent.fireScrollingEvent();
+      }
+
+      
+
+
     };
     return service;
   }]);
@@ -18011,7 +18201,7 @@ module.filter('px', function() {
         compile: function($scope, $elm, $attr){
           return {
             pre: function($scope, $elm, $attr, uiGridCtrl) {
-              uiGridInfiniteScrollService.initializeGrid(uiGridCtrl.grid);
+              uiGridInfiniteScrollService.initializeGrid(uiGridCtrl.grid, $scope);
             },
             post: function($scope, $elm, $attr) {
             }
@@ -18020,28 +18210,6 @@ module.filter('px', function() {
       };
     }]);
 
-  module.directive('uiGridViewport',
-    ['$compile', 'gridUtil', 'uiGridInfiniteScrollService', 'uiGridConstants',
-      function ($compile, gridUtil, uiGridInfiniteScrollService, uiGridConstants) {
-        return {
-          priority: -200,
-          scope: false,
-          link: function ($scope, $elm, $attr){
-            if ($scope.grid.options.enableInfiniteScroll) {
-              $scope.grid.api.core.on.scrollEvent($scope, function (args) {
-                  //Prevent circular scroll references, if source is coming from ui.grid.adjustInfiniteScrollPosition() function
-                  if (args.y && (args.source !== 'ui.grid.adjustInfiniteScrollPosition')) {
-                    var percentage = 100 - (args.y.percentage * 100);
-                    if ($scope.grid.scrollDirection === uiGridConstants.scrollDirection.UP) {
-                      percentage = (args.y.percentage * 100);
-                    }
-                    uiGridInfiniteScrollService.checkScroll($scope.grid, percentage);
-                  }
-              });
-            }
-          }
-        };
-      }]);
 })();
 (function () {
   'use strict';

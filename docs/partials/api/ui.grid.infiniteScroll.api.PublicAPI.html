@@ -5,21 +5,32 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Public API for infinite scroll feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="dataLoaded">dataLoaded()</h3>
-<div class="dataloaded"><p>This function is used as a promise when data finished loading.
-See infinite_scroll ngdoc for example of usage</p></div>
+<ul class="methods"><li><h3 id="dataLoaded">dataLoaded(noMoreDataTop, noMoreDataBottom)</h3>
+<div class="dataloaded"><p>Call this function when you have loaded the additional data
+requested.  You can set noMoreDataTop or noMoreDataBottom to indicate
+that we've reached the end of your data set, we won't fire any more events
+for scroll in that direction.
+See infinite_scroll tutorial for example of usage</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">noMoreDataTop – {boolean} – </code>
+<p>flag that there are no more pages upwards, so don't fire
+any more infinite scroll events upward</p></li>
+<li><code ng:non-bindable="">noMoreDataBottom – {boolean} – </code>
+<p>flag that there are no more pages downwards, so don't 
+fire any more infinite scroll events downward </p></li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 <div class="member event"><h2 id="Events">Events</h2>
 <ul class="events"><li><h3 id="needLoadMoreData">needLoadMoreData</h3>
-<div class="needloadmoredata"><p>This event fires when scroll reached bottom percentage of grid
+<div class="needloadmoredata"><p>This event fires when scroll reaches bottom percentage of grid
 and needs to load data</p><div class="inline"></div>
 <div class="inline"></div>
 </div>
 </li>
 <li><h3 id="needLoadMoreDataTop">needLoadMoreDataTop</h3>
-<div class="needloadmoredatatop"><p>This event fires when scroll reached top percentage of grid
+<div class="needloadmoredatatop"><p>This event fires when scroll reaches top percentage of grid
 and needs to load data</p><div class="inline"></div>
 <div class="inline"></div>
 </div>
