@@ -187,14 +187,16 @@ you have displayed is in the middle of your data set.  If set to true then we tr
 needMoreData event when the user hits the bottom of the scrollbar. <br />
 <br> Defaults to true</p></div>
 </li>
-<li><h3 id="infiniteScrollPercentage">infiniteScrollPercentage</h3>
-<div class="infinitescrollpercentage"><p>This setting controls at what percentage remaining more data
-is requested by the infinite scroll, whether scrolling up or down.</p>
+<li><h3 id="infiniteScrollRowsFromEnd">infiniteScrollRowsFromEnd</h3>
+<div class="infinitescrollrowsfromend"><p>This setting controls how close to the end of the dataset a user gets before
+more data is requested by the infinite scroll, whether scrolling up or down.  This allows you to
+'prefetch' rows before the user actually runs out of scrolling.</p>
 
-<p>TODO: it would be nice if this were percentage of a page, not percentage of the
-total scroll - as you get more and more data, the needMoreData event is triggered
-further and further away from the end (in terms of number of rows)
-<br> Defaults to 20</p></div>
+<p>Note that if you set this value too high it may give jumpy scrolling behaviour, if you're getting
+this behaviour you could use the <code>saveScrollPercentageMethod</code> right before loading your data, and we'll
+preserve that scroll position</p>
+
+<p><br> Defaults to 20</p></div>
 </li>
 <li><h3 id="infiniteScrollUp">infiniteScrollUp</h3>
 <div class="infinitescrollup"><p>Whether you allow infinite scroll up, implying that the first page of data

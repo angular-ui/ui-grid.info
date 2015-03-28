@@ -12,6 +12,9 @@
 <li><code ng:non-bindable="">percentage – {number} – </code>
 <p>the percentage through the grid that we want to scroll to</p></li>
 </ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>a promise that is resolved when the scrolling finishes</p></div>
 </div>
 </li>
 <li><h3 id="adjustScroll">adjustScroll(grid)</h3>
@@ -32,6 +35,9 @@ now, until someone wants to do better.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid we're working on</p></li>
 </ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>a promise that is resolved when scrolling has finished</p></div>
 </div>
 </li>
 <li><h3 id="handleScroll">handleScroll(args)</h3>
@@ -47,9 +53,32 @@ trigger an infinite scroll request for more data</p><h4 id="Parameters">Paramete
 </li>
 <li><h3 id="loadData">loadData(grid)</h3>
 <div class="loaddata"><p>This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection
-and whether there are more pages upwards or downwards</p><h4 id="Parameters">Parameters</h4>
+and whether there are more pages upwards or downwards.  It also stores the number of rows that we had previously,
+and clears out any saved scroll position so that we know whether or not the user calls <code>saveScrollPercentage</code></p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid we're working on</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="setScrollDirections">setScrollDirections(scrollUp, scrollDown)</h3>
+<div class="setscrolldirections"><p>Sets the scrollUp and scrollDown flags, handling nulls and undefined,
+and also sets the grid.suppressParentScroll</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>whether there are pages available up - defaults to false</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>whether there are pages available down - defaults to true</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="setScrollDirections">setScrollDirections(grid, scrollUp, scrollDown)</h3>
+<div class="setscrolldirections"><p>Sets the scrollUp and scrollDown flags, handling nulls and undefined,
+and also sets the grid.suppressParentScroll</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {grid} – </code>
+<p>the grid we're operating on</p></li>
+<li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>whether there are pages available up - defaults to false</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>whether there are pages available down - defaults to true</p></li>
 </ul>
 </div>
 </li>

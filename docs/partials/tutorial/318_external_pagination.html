@@ -1,0 +1,68 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Pagination can be server based, with clicking the pagination buttons getting a new page of data from the server
+rather than internally filtering the data that is held in the grid.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-89" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-89" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-89">
+  <div ng-controller="MainCtrl">
+    <p><strong>Grid with native pagination controls</strong></p>
+    <div ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 600px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pagination']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {
+      paginationPageSizes: [25, 50, 75],
+      paginationPageSize: 25,
+      useExternalPagination: true,
+      totalItems: 100,
+      columnDefs: [
+        { name: 'name' },
+        { name: 'gender' },
+        { name: 'company' }
+      ],
+      onRegisterApi: function(gridApi){
+        $scope.gridApi = gridApi;
+        $scope.gridApi.pagination.on.paginationChanged( $scope, function( currentPage, pageSize){
+          $scope.getPage(currentPage, pageSize);
+        });
+      }
+    };
+
+
+    $scope.getPage = function(pageNumber, pageSize){
+      var startingRow = pageSize * ( pageNumber - 1);   // page number starts at 1, not zero
+      $http.get('/data/100.json')
+      .success(function (data) {
+        var newData = [];
+        for( var i = startingRow; i < startingRow + $scope.gridOptions.paginationPageSize; i++ ) {
+          newData.push( data[i] );
+        }
+        $scope.gridOptions.data = newData;
+      });
+    };
+    
+    $scope.getPage(1, 25);
+  }]);
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-89" ng-eval-javascript="app.js"></div></div>
+</div>

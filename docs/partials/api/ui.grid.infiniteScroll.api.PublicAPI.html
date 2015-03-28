@@ -5,20 +5,110 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Public API for infinite scroll feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="dataLoaded">dataLoaded(noMoreDataTop, noMoreDataBottom)</h3>
+<ul class="methods"><li><h3 id="dataLoaded">dataLoaded(scrollUp, scrollDown)</h3>
 <div class="dataloaded"><p>Call this function when you have loaded the additional data
-requested.  You can set noMoreDataTop or noMoreDataBottom to indicate
-that we've reached the end of your data set, we won't fire any more events
-for scroll in that direction.
-See infinite_scroll tutorial for example of usage</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">noMoreDataTop – {boolean} – </code>
-<p>flag that there are no more pages upwards, so don't fire
+requested.  You should set scrollUp and scrollDown to indicate
+whether there are still more pages in each direction.</p>
+
+<p>If you call dataLoaded without first calling <code>saveScrollPercentage</code> then we will
+scroll the user to the start of the newly loaded data, which usually gives a smooth scroll
+experience, but can give a jumpy experience with large <code>infiniteScrollRowsFromEnd</code> values, and 
+on variable speed internet connections.  Using <code>saveScrollPercentage</code> as demonstrated in the tutorial
+should give a smoother scrolling experience for users.</p>
+
+<p>See infinite_scroll tutorial for example of usage</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>if set to false flags that there are no more pages upwards, so don't fire
 any more infinite scroll events upward</p></li>
-<li><code ng:non-bindable="">noMoreDataBottom – {boolean} – </code>
-<p>flag that there are no more pages downwards, so don't 
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>if set to false flags that there are no more pages downwards, so don't 
 fire any more infinite scroll events downward </p></li>
 </ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>a promise that is resolved when the grid scrolling is fully adjusted.  If you're
+planning to remove pages, you should wait on this promise first, or you'll break the scroll positioning</p></div>
 </div>
+</li>
+<li><h3 id="dataRemovedBottom">dataRemovedBottom(scrollUp, scrollDown)</h3>
+<div class="dataremovedbottom"><p>Adjusts the scroll position after you've removed data at the bottom </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>flag that there are pages upwards, fire
+infinite scroll events upward</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>flag that there are pages downwards, so 
+fire infinite scroll events downward</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="dataRemovedBottom">dataRemovedBottom(grid, scrollUp, scrollDown)</h3>
+<div class="dataremovedbottom"><p>Adjusts the scroll position after you've removed data at the bottom.  You should
+have called <code>saveScrollPercentage</code> before you remove the data, and if you're doing this in 
+response to a <code>needMoreData</code> you should wait until the promise from <code>loadData</code> has resolved
+before you start removing data  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're working on</p></li>
+<li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>flag that there are pages upwards, fire
+infinite scroll events upward</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>flag that there are pages downwards, so 
+fire infinite scroll events downward</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="dataRemovedTop">dataRemovedTop(scrollUp, scrollDown)</h3>
+<div class="dataremovedtop"><p>Adjusts the scroll position after you've removed data at the top </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>flag that there are pages upwards, fire
+infinite scroll events upward</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>flag that there are pages downwards, so 
+fire infinite scroll events downward</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="dataRemovedTop">dataRemovedTop(grid, scrollUp, scrollDown)</h3>
+<div class="dataremovedtop"><p>Adjusts the scroll position after you've removed data at the top. You should
+have called <code>saveScrollPercentage</code> before you remove the data, and if you're doing this in 
+response to a <code>needMoreData</code> you should wait until the promise from <code>loadData</code> has resolved
+before you start removing data  </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're working on</p></li>
+<li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>flag that there are pages upwards, fire
+infinite scroll events upward</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>flag that there are pages downwards, so 
+fire infinite scroll events downward</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>a promise that is resolved when the scrolling finishes</p></div>
+</div>
+</li>
+<li><h3 id="resetScroll">resetScroll(scrollUp, scrollDown)</h3>
+<div class="resetscroll"><p>Call this function when you have taken some action that makes the current
+scroll position invalid.  For example, if you're using external sorting and you've resorted
+then you might reset the scroll, or if you've otherwise substantially changed the data, perhaps
+you've reused an existing grid for a new data set</p>
+
+<p>You must tell us whether there is data upwards or downwards after the reset</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">scrollUp – {boolean} – </code>
+<p>flag that there are pages upwards, fire
+infinite scroll events upward</p></li>
+<li><code ng:non-bindable="">scrollDown – {boolean} – </code>
+<p>flag that there are pages downwards, so 
+fire infinite scroll events downward</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>promise that is resolved when the scroll reset is complete</p></div>
+</div>
+</li>
+<li><h3 id="saveScrollPercentage">saveScrollPercentage()</h3>
+<div class="savescrollpercentage"><p>Saves the scroll percentage and number of visible rows before you adjust the data,
+used if you're subsequently going to call <code>dataRemovedTop</code> or <code>dataRemovedBottom</code> </p></div>
 </li>
 </ul>
 </div>
