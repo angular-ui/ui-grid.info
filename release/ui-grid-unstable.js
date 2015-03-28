@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-e130902 - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-ab721ea - 2015-03-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18534,9 +18534,9 @@ module.filter('px', function() {
             }
           }
           columns[newPosition] = originalColumn;
+          grid.queueGridRefresh();
           $timeout(function () {
             grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-            grid.queueGridRefresh();
             grid.api.colMovable.raise.columnPositionChanged(originalColumn.colDef, originalPosition, newPosition);
           });
         }
