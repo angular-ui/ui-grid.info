@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-80c057d - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-7a8e3ac - 2015-03-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18516,7 +18516,15 @@ module.filter('px', function() {
                         //Left of cloned element should be aligned to original header cell.
                         movingElm.addClass('movingColumn');
                         var movingElementStyles = {};
-                        var elmLeft = $elm[0].getBoundingClientRect().left;
+                        var elmLeft;
+                        if (gridUtil.detectBrowser() === 'safari') {
+                          //Correction for Safari getBoundingClientRect,
+                          //which does not correctly compute when there is an horizontal scroll
+                          elmLeft = $elm[0].offsetLeft + $elm[0].offsetWidth - $elm[0].getBoundingClientRect().width;
+                        }
+                        else {
+                          elmLeft = $elm[0].getBoundingClientRect().left;
+                        }
                         movingElementStyles.left = (elmLeft - gridLeft) + 'px';
                         var gridRight = $scope.grid.element[0].getBoundingClientRect().right;
                         var elmRight = $elm[0].getBoundingClientRect().right;
