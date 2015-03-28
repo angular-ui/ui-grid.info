@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-ab721ea - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-84150a1 - 2015-03-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11012,6 +11012,7 @@ module.filter('px', function() {
         },
         gridMenu: {
           columns: 'Colunas:',
+          importerTitle: 'Importar arquivo',
           exporterAllAsCsv: 'Exportar todos os dados como csv',
           exporterVisibleAsCsv: 'Exportar dados visíveis como csv',
           exporterSelectedAsCsv: 'Exportar dados selecionados como csv',
@@ -11025,12 +11026,27 @@ module.filter('px', function() {
           invalidCsv: 'Arquivo não pode ser processado. É um CSV válido?',
           invalidJson: 'Arquivo não pode ser processado. É um Json válido?',
           jsonNotArray: 'Arquivo json importado tem que conter um array. Abortando.'
+        },
+        pagination: {
+          sizes: 'itens por página',
+          totalItems: 'itens'
+        },
+        grouping: {
+          group: 'Agrupar',
+          ungroup: 'Desagrupar',
+          aggregate_count: 'Agr: Contar',
+          aggregate_sum: 'Agr: Soma',
+          aggregate_max: 'Agr: Max',
+          aggregate_min: 'Agr: Min',
+          aggregate_avg: 'Agr: Med',
+          aggregate_remove: 'Agr: Remover'
         }
       });
       return $delegate;
     }]);
 }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
