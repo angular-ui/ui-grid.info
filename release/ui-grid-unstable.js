@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-d8f1042 - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-80c057d - 2015-03-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -671,8 +671,9 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
       $scope.hideColumn = function () {
         $scope.col.colDef.visible = false;
+        $scope.col.visible = false;
 
-        $scope.grid.refresh();
+        $scope.grid.queueGridRefresh();
         $scope.hideMenu();
         $scope.grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
         $scope.grid.api.core.raise.columnVisibilityChanged( $scope.col );        
@@ -14178,6 +14179,10 @@ module.filter('px', function() {
                   return ret;
                 };
 
+ /*
+  * Commented out @PaulL1.  This has no purpose that I can see, and causes #2964.  If this code needs to be reinstated for some
+  * reason it needs to use drawnWidth, not width, and needs to check column visibility.  It should really use render container
+  * visible column cache also instead of checking column.renderContainer. 
                   function updateRowContainerWidth() {
                       var grid = $scope.grid;
                       var colWidth = 0;
@@ -14197,7 +14202,7 @@ module.filter('px', function() {
                           priority: 15,
                           func: updateRowContainerWidth
                       });
-                  }
+                  }*/
 
               },
               post: function ($scope, $elm, $attrs, controllers) {
