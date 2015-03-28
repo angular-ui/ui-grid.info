@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-2ad8ef4 - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-f45be96 - 2015-03-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
