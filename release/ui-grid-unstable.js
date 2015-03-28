@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-7a8e3ac - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-6520046 - 2015-03-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -21633,7 +21633,7 @@ module.filter('px', function() {
            *  @propertyOf  ui.grid.selection.api:GridOptions
            *  @description Shows the total number of selected items in footer if true.
            *  <br/>Defaults to true.
-           *  <br/>GridOptions.showFooter must also be set to true.
+           *  <br/>GridOptions.showGridFooter must also be set to true.
            */
           gridOptions.enableFooterTotalSelected = gridOptions.enableFooterTotalSelected !== false;
 
