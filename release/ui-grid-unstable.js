@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-a484c28 - 2015-03-30
+ * ui-grid - v3.0.0-rc.20-7375c49 - 2015-03-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -22293,7 +22293,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/columnResizer',
-    "<div ui-grid-column-resizer ng-if=\"grid.options.enableColumnResizing\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\"></div>"
+    "<div ui-grid-column-resizer ng-if=\"grid.options.enableColumnResizing\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\" unselectable=\"on\"></div>"
   );
 
 
