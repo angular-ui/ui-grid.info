@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-6520046 - 2015-03-28
+ * ui-grid - v3.0.0-rc.20-a484c28 - 2015-03-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -20897,7 +20897,9 @@ module.filter('px', function() {
                 scrollFocus.rowVal = service.getRowVal( grid, rowCol.row );  
               }
             }
-          } else if ( grid.options.saveScroll ) {
+          }
+          
+          if ( grid.options.saveScroll || grid.options.saveFocus && !scrollFocus.colName && !scrollFocus.rowVal ) {
             scrollFocus.focus = false;
             if ( grid.renderContainers.body.prevRowScrollIndex ){
               scrollFocus.rowVal = service.getRowVal( grid, grid.renderContainers.body.visibleRowCache[ grid.renderContainers.body.prevRowScrollIndex ]);
