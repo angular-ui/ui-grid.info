@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-7375c49 - 2015-03-30
+ * ui-grid - v3.0.0-rc.20-98ed010 - 2015-03-31
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -4656,9 +4656,7 @@ angular.module('ui.grid')
 
           if (container.header) {
             var oldHeaderHeight = container.headerHeight;
-            var headerHeight = gridUtil.outerElementHeight(container.header);
-
-            container.headerHeight = parseInt(headerHeight, 10);
+            var headerHeight = container.headerHeight = parseInt(gridUtil.outerElementHeight(container.header), 10);
 
             if (oldHeaderHeight !== headerHeight) {
               rebuildStyles = true;
@@ -4673,24 +4671,24 @@ angular.module('ui.grid')
 
             container.innerHeaderHeight = innerHeaderHeight;
 
-            // Save the largest header height for use later
-            if (innerHeaderHeight > maxHeaderHeight) {
+            // If the header doesn't have an explicit height set, save the largest header height for use later
+            //   Explicit header heights are based off of the max we are calculating here. We never want to base the max on something we're setting explicitly
+            if (!container.explicitHeaderHeight && innerHeaderHeight > maxHeaderHeight) {
               maxHeaderHeight = innerHeaderHeight;
             }
           }
 
           if (container.headerCanvas) {
             var oldHeaderCanvasHeight = container.headerCanvasHeight;
-            var headerCanvasHeight = gridUtil.outerElementHeight(container.headerCanvas);
-
-            container.headerCanvasHeight = parseInt(headerCanvasHeight, 10);
+            var headerCanvasHeight = container.headerCanvasHeight = parseInt(gridUtil.outerElementHeight(container.headerCanvas), 10);
 
             if (oldHeaderCanvasHeight !== headerCanvasHeight) {
               rebuildStyles = true;
             }
 
-            // Save the largest header canvas height for use later
-            if (headerCanvasHeight > maxHeaderCanvasHeight) {
+            // If the header doesn't have an explicit canvas height, save the largest header canvas height for use later
+            //   Explicit header heights are based off of the max we are calculating here. We never want to base the max on something we're setting explicitly
+            if (!container.explicitHeaderCanvasHeight && headerCanvasHeight > maxHeaderCanvasHeight) {
               maxHeaderCanvasHeight = headerCanvasHeight;
             }
           }
@@ -4700,12 +4698,27 @@ angular.module('ui.grid')
         for (i = 0; i < containerHeadersToRecalc.length; i++) {
           container = containerHeadersToRecalc[i];
 
-          // If this header's height is less than another header's height, then explicitly set it so they're the same and one isn't all offset and weird looking
-          if (maxHeaderHeight > 0 && typeof(container.headerHeight) !== 'undefined' && container.headerHeight !== null && container.headerHeight < maxHeaderHeight) {
+          /* If:
+              1. We have a max header height
+              2. This container has a header height defined
+              3. And either this container has an explicit header height set, OR its header height is less than the max
+
+              then:
+
+              Give this container's header an explicit height so it will line up with the tallest header
+          */
+          if (
+            maxHeaderHeight > 0 && typeof(container.headerHeight) !== 'undefined' && container.headerHeight !== null &&
+            (container.explicitHeaderHeight || container.headerHeight < maxHeaderHeight)
+          ) {
             container.explicitHeaderHeight = maxHeaderHeight;
           }
 
-          if (typeof(container.headerCanvasHeight) !== 'undefined' && container.headerCanvasHeight !== null && maxHeaderCanvasHeight > 0 && container.headerCanvasHeight < maxHeaderCanvasHeight) {
+          // Do the same as above except for the header canvas
+          if (
+            maxHeaderCanvasHeight > 0 && typeof(container.headerCanvasHeight) !== 'undefined' && container.headerCanvasHeight !== null &&
+            (container.explicitHeaderCanvasHeight || container.headerCanvasHeight < maxHeaderCanvasHeight)
+          ) {
             container.explicitHeaderCanvasHeight = maxHeaderCanvasHeight;
           }
         }
@@ -14068,7 +14081,7 @@ module.filter('px', function() {
     function (uiGridExpandableService, $templateCache) {
       return {
         replace: true,
-        priority: 1000,
+        priority: 599,
         require: '^uiGrid',
         scope: false,
         compile: function () {
