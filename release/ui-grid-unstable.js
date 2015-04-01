@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-58a27fc - 2015-04-01
+ * ui-grid - v3.0.0-rc.20-b2e0377 - 2015-04-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18492,13 +18492,7 @@ module.filter('px', function() {
         else {
           scrollEvent.y = {percentage: percentage};
         }
-        scrollEvent.fireScrollingEvent();
-        // change this once @swalters has merged his scrolling changes, which will return a promise from the fireScrollingEvent
-        var promise = $q.defer();
-        $timeout(function(){
-          promise.resolve();
-        });
-        return promise.promise;
+        return grid.scrollContainers('body', scrollEvent);
       },
       
       
