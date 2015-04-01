@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-98ed010 - 2015-03-31
+ * ui-grid - v3.0.0-rc.20-842a9e0 - 2015-04-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -904,6 +904,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
   function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, ScrollEvent) {
     // Do stuff after mouse has been down this many ms on the header cell
     var mousedownTimeout = 500;
+    var changeModeTimeout = 500;    // length of time between a touch event and a mouse event being recognised again, and vice versa
 
     var uiGridHeaderCell = {
       priority: 0,
@@ -947,6 +948,138 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             // apply any headerCellClass
             var classAdded;
+            
+            /* 
+             * Our basic approach here for event handlers is that we listen for a down event (mousedown or touchstart).
+             * Once we have a down event, we need to work out whether we have a click, a drag, or a 
+             * hold.  A click would sort the grid (if sortable).  A drag would be used by moveable, so 
+             * we ignore it.  A hold would open the menu.
+             * 
+             * So, on down event, we put in place handlers for move and up events, and a timer.  If the
+             * timer expires before we see a move or up, then we have a long press and hence a column menu open.  
+             * If the up happens before the timer, then we have a click, and we sort if the column is sortable.  
+             * If a move happens before the timer, then we are doing column move, so we do nothing, the moveable feature
+             * will handle it.
+             * 
+             * To deal with touch enabled devices that also have mice, we only create our handlers when
+             * we get the down event, and we create the corresponding handlers - if we're touchstart then 
+             * we get touchmove and touchend, if we're mousedown then we get mousemove and mouseup.
+             * 
+             * We also suppress the click action whilst this is happening - otherwise after the mouseup there
+             * will be a click event and that can cause the column menu to close
+             *
+             */
+            
+            $scope.downFn = function( event ){
+              event.stopPropagation();
+
+              if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
+                event = event.originalEvent;
+              }
+    
+              // Don't show the menu if it's not the left button
+              if (event.button && event.button !== 0) {
+                return;
+              }
+    
+              $scope.mousedownStartTime = (new Date()).getTime();
+              $scope.mousedownTimeout = $timeout(function() { }, mousedownTimeout);
+    
+              $scope.mousedownTimeout.then(function () {
+                if ( $scope.colMenu ) {
+                  uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm, event);
+                }
+              });
+
+              uiGridCtrl.fireEvent(uiGridConstants.events.COLUMN_HEADER_CLICK, {event: event, columnName: $scope.col.colDef.name});
+              
+              $scope.offAllEvents();
+              if ( event.type === 'touchstart'){
+                $document.on('touchend', $scope.upFn);
+                $document.on('touchmove', $scope.moveFn);
+              } else if ( event.type === 'mousedown' ){
+                $document.on('mouseup', $scope.upFn);
+                $document.on('mousemove', $scope.moveFn);
+              }
+            };
+            
+            $scope.upFn = function( event ){
+              event.stopPropagation();
+              $timeout.cancel($scope.mousedownTimeout);
+              $scope.offAllEvents();
+              $scope.onDownEvents(event.type);
+
+              var mousedownEndTime = (new Date()).getTime();
+              var mousedownTime = mousedownEndTime - $scope.mousedownStartTime;
+  
+              if (mousedownTime > mousedownTimeout) {
+                // long click, handled above with mousedown
+              }
+              else {
+                // short click
+                if ( $scope.sortable ){
+                  $scope.handleClick(event);
+                }
+              }
+            };
+            
+            $scope.moveFn = function( event ){
+              // we're a move, so do nothing and leave for column move (if enabled) to take over
+              $timeout.cancel($scope.mousedownTimeout);
+              $scope.offAllEvents();
+              $scope.onDownEvents(event.type);
+            };
+            
+            $scope.clickFn = function ( event ){
+              event.stopPropagation();
+              $contentsElm.off('click', $scope.clickFn);
+            };
+            
+
+            $scope.offAllEvents = function(){
+              $contentsElm.off('touchstart', $scope.downFn);
+              $contentsElm.off('mousedown', $scope.downFn);
+
+              $document.off('touchend', $scope.upFn);
+              $document.off('mouseup', $scope.upFn);
+
+              $document.off('touchmove', $scope.moveFn);
+              $document.off('mousemove', $scope.moveFn);
+              
+              $contentsElm.off('click', $scope.clickFn);
+            };
+            
+            $scope.onDownEvents = function( type ){
+              // If there is a previous event, then wait a while before
+              // activating the other mode - i.e. if the last event was a touch event then
+              // don't enable mouse events for a wee while (500ms or so)
+              // Avoids problems with devices that emulate mouse events when you have touch events
+
+              switch (type){
+                case 'touchmove':
+                case 'touchend':
+                  $contentsElm.on('click', $scope.clickFn);
+                  $contentsElm.on('touchstart', $scope.downFn);
+                  $timeout(function(){
+                    $contentsElm.on('mousedown', $scope.downFn);              
+                  }, changeModeTimeout);
+                  break;
+                case 'mousemove':
+                case 'mouseup':
+                  $contentsElm.on('click', $scope.clickFn);
+                  $contentsElm.on('mousedown', $scope.downFn);
+                  $timeout(function(){
+                    $contentsElm.on('touchstart', $scope.downFn);              
+                  }, changeModeTimeout);
+                  break;
+                default:
+                  $contentsElm.on('click', $scope.clickFn);
+                  $contentsElm.on('touchstart', $scope.downFn);
+                  $contentsElm.on('mousedown', $scope.downFn);
+              }              
+            };
+            
+
             var updateHeaderOptions = function( grid ){
               var contents = $elm;
               if ( classAdded ){
@@ -1008,77 +1141,16 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               *
               */
   
-              var downEvent = gridUtil.isTouchEnabled() ? 'touchstart' : 'mousedown';
+              $scope.offAllEvents();
+              
               if ($scope.sortable || $scope.colMenu) {
-                // Long-click (for mobile)
-                var cancelMousedownTimeout;
-                var mousedownStartTime = 0;
-  
-                $contentsElm.on(downEvent, function(event) {
-                  event.stopPropagation();
-  
-                  if (typeof(event.originalEvent) !== 'undefined' && event.originalEvent !== undefined) {
-                    event = event.originalEvent;
-                  }
-        
-                  // Don't show the menu if it's not the left button
-                  if (event.button && event.button !== 0) {
-                    return;
-                  }
-        
-                  mousedownStartTime = (new Date()).getTime();
-        
-                  cancelMousedownTimeout = $timeout(function() { }, mousedownTimeout);
-        
-                  cancelMousedownTimeout.then(function () {
-                    if ( $scope.colMenu ) {
-                      uiGridCtrl.columnMenuScope.showMenu($scope.col, $elm, event);
-                    }
-                  });
-  
-                  uiGridCtrl.fireEvent(uiGridConstants.events.COLUMN_HEADER_CLICK, {event: event, columnName: $scope.col.colDef.name});
-                });
+                $scope.onDownEvents();
           
-                var upEvent = gridUtil.isTouchEnabled() ? 'touchend' : 'mouseup';
-                $contentsElm.on(upEvent, function () {
-                  $timeout.cancel(cancelMousedownTimeout);
-                });
-    
                 $scope.$on('$destroy', function () {
-                  $contentsElm.off('mousedown touchstart');
+                  $scope.offAllEvents();
                 });
-              } else {
-                $contentsElm.off(downEvent);
               } 
 
-              // If this column is sortable, add a click event handler
-              var clickEvent = gridUtil.isTouchEnabled() ? 'touchend' : 'click';
-              if ($scope.sortable) {
-                $contentsElm.on(clickEvent, function(event) {
-                  event.stopPropagation();
-      
-                  $timeout.cancel(cancelMousedownTimeout);
-      
-                  var mousedownEndTime = (new Date()).getTime();
-                  var mousedownTime = mousedownEndTime - mousedownStartTime;
-      
-                  if (mousedownTime > mousedownTimeout) {
-                    // long click, handled above with mousedown
-                  }
-                  else {
-                    // short click
-                    handleClick(event);
-                  }
-                });
-      
-                $scope.$on('$destroy', function () {
-                  // Cancel any pending long-click timeout
-                  $timeout.cancel(cancelMousedownTimeout);
-                });
-              } else {
-                $contentsElm.off(clickEvent);
-              }
-      
               // if column is filterable add a filter watcher
               var filterDeregisters = [];
               if ($scope.filterable) {
@@ -1121,7 +1193,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.$on( '$destroy', dataChangeDereg );            
 
-            function handleClick(event) {
+            $scope.handleClick = function(event) {
               // If the shift key is being held down, add this column to the sort
               var add = false;
               if (event.shiftKey) {
@@ -1134,7 +1206,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   if (uiGridCtrl.columnMenuScope) { uiGridCtrl.columnMenuScope.hideMenu(); }
                   uiGridCtrl.grid.refresh();
                 });
-            }
+            };
     
 
             $scope.toggleMenu = function(event) {
@@ -7044,7 +7116,7 @@ angular.module('ui.grid')
     var columnsToChange = true; 
     
     var processColumn = function(column){
-      if (isNaN(column.width) && column.drawnWidth < column.maxWidth && leftoverWidth > 0) {
+      if ( column.drawnWidth < column.maxWidth && leftoverWidth > 0) {
         column.drawnWidth++;
         usedWidthSum++;
         leftoverWidth--;
@@ -7054,7 +7126,7 @@ angular.module('ui.grid')
     
     while (leftoverWidth > 0 && columnsToChange) {
       columnsToChange = false;
-      columnCache.forEach(processColumn);
+      asterisksArray.forEach(processColumn);
     }
 
     // all that was across all the renderContainers, now we need to work out what that calculation decided for
@@ -18500,228 +18572,233 @@ module.filter('px', function() {
 
               if ($scope.col.colDef.enableColumnMoving) {
 
-                $scope.$on(uiGridConstants.events.COLUMN_HEADER_CLICK, function (event, args) {
+                /*
+                 * Our general approach to column move is that we listen to a touchstart or mousedown
+                 * event over the column header.  When we hear one, then we wait for a move of the same type
+                 * - if we are a touchstart then we listen for a touchmove, if we are a mousedown we listen for
+                 * a mousemove (i.e. a drag) before we decide that there's a move underway.  If there's never a move,
+                 * and we instead get a mouseup or a touchend, then we just drop out again and do nothing.
+                 * 
+                 */
+                var $contentsElm = angular.element( $elm[0].querySelectorAll('.ui-grid-cell-contents') );
 
-                  if (args.columnName === $scope.col.colDef.name && !$scope.col.renderContainer) {
+                var gridLeft;
+                var previousMouseX;
+                var totalMouseMovement;
+                var rightMoveLimit;
+                var elmCloned = false;
+                var movingElm;
+                var reducedWidth;
+                var moveOccurred = false;
 
-                    var evt = args.event;
-                    if (evt.target.className !== 'ui-grid-icon-angle-down' && evt.target.tagName !== 'I' &&
-                      evt.target.className.indexOf('ui-grid-filter-input') < 0) {
+                var downFn = function( event ){
+                  //Setting some variables required for calculations.
+                  gridLeft = $scope.grid.element[0].getBoundingClientRect().left;
+                  previousMouseX = event.pageX;
+                  totalMouseMovement = 0;
+                  rightMoveLimit = gridLeft + $scope.grid.getViewportWidth();
 
-                      //Setting some variables required for calculations.
-                      var gridLeft = $scope.grid.element[0].getBoundingClientRect().left;
-                      var previousMouseX = evt.pageX;
-                      var totalMouseMovement = 0;
-                      var rightMoveLimit = gridLeft + $scope.grid.getViewportWidth();// - $scope.grid.verticalScrollbarWidth;
+                  if ( event.type === 'mousedown' ){
+                    $document.on('mousemove', moveFn);
+                    $document.on('mouseup', upFn);
+                  } else if ( event.type === 'touchstart' ){
+                    $document.on('touchmove', moveFn);
+                    $document.on('touchend', upFn);
+                  }
+                };
+                
+                var moveFn = function( event ) {
+                  //Disable text selection in Chrome during column move
+                  document.onselectstart = function() { return false; };
+                  
+                  moveOccurred = true;
 
-                      //Clone element should move horizontally with mouse.
-                      var elmCloned = false;
-                      var movingElm;
-                      var reducedWidth;
+                  var changeValue = event.pageX - previousMouseX;
+                  if (!elmCloned) {
+                    cloneElement();
+                  }
+                  else if (elmCloned) {
+                    moveElement(changeValue);
+                    previousMouseX = event.pageX;
+                  }
+                };
+                
+                var upFn = function( event ){
+                  //Re-enable text selection after column move
+                  document.onselectstart = null;
 
-                      var cloneElement = function () {
-                        elmCloned = true;
+                  //Remove the cloned element on mouse up.
+                  if (movingElm) {
+                    movingElm.remove();
+                    elmCloned = false;
+                  }
+                  
+                  offAllEvents();
+                  onDownEvents();
 
-                        //Cloning header cell and appending to current header cell.
-                        movingElm = $elm.clone();
-                        $elm.parent().append(movingElm);
+                  if (!moveOccurred){
+                    return;
+                  }
 
-                        //Left of cloned element should be aligned to original header cell.
-                        movingElm.addClass('movingColumn');
-                        var movingElementStyles = {};
-                        var elmLeft;
-                        if (gridUtil.detectBrowser() === 'safari') {
-                          //Correction for Safari getBoundingClientRect,
-                          //which does not correctly compute when there is an horizontal scroll
-                          elmLeft = $elm[0].offsetLeft + $elm[0].offsetWidth - $elm[0].getBoundingClientRect().width;
-                        }
-                        else {
-                          elmLeft = $elm[0].getBoundingClientRect().left;
-                        }
-                        movingElementStyles.left = (elmLeft - gridLeft) + 'px';
-                        var gridRight = $scope.grid.element[0].getBoundingClientRect().right;
-                        var elmRight = $elm[0].getBoundingClientRect().right;
-                        if (elmRight > gridRight) {
-                          reducedWidth = $scope.col.drawnWidth + (gridRight - elmRight);
-                          movingElementStyles.width = reducedWidth + 'px';
-                        }
-                        movingElm.css(movingElementStyles);
-                      };
-
-                      var moveElement = function (changeValue) {
-                        //Hide column menu
-                        uiGridCtrl.fireEvent('hide-menu');
-
-                        //Calculate total column width
-                        var columns = $scope.grid.columns;
-                        var totalColumnWidth = 0;
-                        for (var i = 0; i < columns.length; i++) {
-                          if (angular.isUndefined(columns[i].colDef.visible) || columns[i].colDef.visible === true) {
-                            totalColumnWidth += columns[i].drawnWidth || columns[i].width || columns[i].colDef.width;
-                          }
-                        }
-
-                        //Calculate new position of left of column
-                        var currentElmLeft = movingElm[0].getBoundingClientRect().left - 1;
-                        var currentElmRight = movingElm[0].getBoundingClientRect().right;
-                        var newElementLeft;
-                        if (gridUtil.detectBrowser() === 'ie') {
-                          newElementLeft = currentElmLeft + changeValue;
-                        }
-                        else {
-                          newElementLeft = currentElmLeft - gridLeft + changeValue;
-                        }
-                        newElementLeft = newElementLeft < rightMoveLimit ? newElementLeft : rightMoveLimit;
-
-                        //Update css of moving column to adjust to new left value or fire scroll in case column has reached edge of grid
-                        if ((currentElmLeft >= gridLeft || changeValue > 0) && (currentElmRight <= rightMoveLimit || changeValue < 0)) {
-                          movingElm.css({visibility: 'visible', 'left': newElementLeft + 'px'});
-                        }
-                        else if (totalColumnWidth > Math.ceil(uiGridCtrl.grid.gridWidth)) {
-                          changeValue *= 8;
-                          var scrollEvent = new ScrollEvent($scope.col.grid, null, null, 'uiGridHeaderCell.moveElement');
-                          scrollEvent.x = {pixels: changeValue};
-                          scrollEvent.fireScrollingEvent();
-                        }
-
-                        //Calculate total width of columns on the left of the moving column and the mouse movement
-                        var totalColumnsLeftWidth = 0;
-                        for (var il = 0; il < columns.length; il++) {
-                          if (angular.isUndefined(columns[il].colDef.visible) || columns[il].colDef.visible === true) {
-                            if (columns[il].colDef.name !== $scope.col.colDef.name) {
-                              totalColumnsLeftWidth += columns[il].drawnWidth || columns[il].width || columns[il].colDef.width;
-                            }
-                            else {
-                              break;
-                            }
-                          }
-                        }
-                        if ($scope.newScrollLeft === undefined) {
-                          totalMouseMovement += changeValue;
-                        }
-                        else {
-                          totalMouseMovement = $scope.newScrollLeft + newElementLeft - totalColumnsLeftWidth;
-                        }
-
-                        //Increase width of moving column, in case the rightmost column was moved and its width was
-                        //decreased because of overflow
-                        if (reducedWidth < $scope.col.drawnWidth) {
-                          reducedWidth += Math.abs(changeValue);
-                          movingElm.css({'width': reducedWidth + 'px'});
-                        }
-                      };
-
-                      var mouseMoveHandler = function (evt) {
-                        //Disable text selection in Chrome during column move
-                        document.onselectstart = function() { return false; };
-
-                        var changeValue = evt.pageX - previousMouseX;
-                        if (!elmCloned && Math.abs(changeValue) > 50) {
-                          cloneElement();
-                        }
-                        else if (elmCloned) {
-                          moveElement(changeValue);
-                          previousMouseX = evt.pageX;
-                        }
-                      };
-
-                      /*
-                       //Commenting these lines as they are creating trouble with column moving when grid has huge scroll
-                       // On scope destroy, remove the mouse event handlers from the document body
-                       $scope.$on('$destroy', function () {
-                       $document.off('mousemove', mouseMoveHandler);
-                       $document.off('mouseup', mouseUpHandler);
-                       });
-                       */
-                      $document.on('mousemove', mouseMoveHandler);
-
-                      var mouseUpHandler = function (evt) {
-                        //Re-enable text selection after column move
-                        document.onselectstart = null;
-
-                        //Remove the cloned element on mouse up.
-                        if (movingElm) {
-                          movingElm.remove();
-                        }
-
-                        var columns = $scope.grid.columns;
-                        var columnIndex = 0;
-                        for (var i = 0; i < columns.length; i++) {
-                          if (columns[i].colDef.name !== $scope.col.colDef.name) {
-                            columnIndex++;
-                          }
-                          else {
-                            break;
-                          }
-                        }
-
-                        //Case where column should be moved to a position on its left
-                        if (totalMouseMovement < 0) {
-                          var totalColumnsLeftWidth = 0;
-                          for (var il = columnIndex - 1; il >= 0; il--) {
-                            if (angular.isUndefined(columns[il].colDef.visible) || columns[il].colDef.visible === true) {
-                              totalColumnsLeftWidth += columns[il].drawnWidth || columns[il].width || columns[il].colDef.width;
-                              if (totalColumnsLeftWidth > Math.abs(totalMouseMovement)) {
-                                uiGridMoveColumnService.redrawColumnAtPosition
-                                ($scope.grid, columnIndex, il + 1);
-                                break;
-                              }
-                            }
-                          }
-                          //Case where column should be moved to beginning of the grid.
-                          if (totalColumnsLeftWidth < Math.abs(totalMouseMovement)) {
-                            uiGridMoveColumnService.redrawColumnAtPosition
-                            ($scope.grid, columnIndex, 0);
-                          }
-                        }
-
-                        //Case where column should be moved to a position on its right
-                        else if (totalMouseMovement > 0) {
-                          var totalColumnsRightWidth = 0;
-                          for (var ir = columnIndex + 1; ir < columns.length; ir++) {
-                            if (angular.isUndefined(columns[ir].colDef.visible) || columns[ir].colDef.visible === true) {
-                              totalColumnsRightWidth += columns[ir].drawnWidth || columns[ir].width || columns[ir].colDef.width;
-                              if (totalColumnsRightWidth > totalMouseMovement) {
-                                uiGridMoveColumnService.redrawColumnAtPosition
-                                ($scope.grid, columnIndex, ir - 1);
-                                break;
-                              }
-                            }
-                          }
-                          //Case where column should be moved to end of the grid.
-                          if (totalColumnsRightWidth < totalMouseMovement) {
-                            uiGridMoveColumnService.redrawColumnAtPosition
-                            ($scope.grid, columnIndex, columns.length - 1);
-                          }
-                        }
-/*
-                        else if (totalMouseMovement === 0) {
-                          if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
-                            //sort the current column
-                            var add = false;
-                            if (evt.shiftKey) {
-                              add = true;
-                            }
-                            // Sort this column then rebuild the grid's rows
-                            uiGridCtrl.grid.sortColumn($scope.col, add)
-                              .then(function () {
-                                if (uiGridCtrl.columnMenuScope) {
-                                  uiGridCtrl.columnMenuScope.hideMenu();
-                                }
-                                uiGridCtrl.grid.refresh();
-                              });
-                          }
-                        }
-*/
-                        $document.off('mousemove', mouseMoveHandler);
-                        $document.off('mouseup', mouseUpHandler);
-                      };
-
-                      //Binding the mouseup event handler
-                      $document.on('mouseup', mouseUpHandler);
+                  var columns = $scope.grid.columns;
+                  var columnIndex = 0;
+                  for (var i = 0; i < columns.length; i++) {
+                    if (columns[i].colDef.name !== $scope.col.colDef.name) {
+                      columnIndex++;
+                    }
+                    else {
+                      break;
                     }
                   }
-                });
+
+                  //Case where column should be moved to a position on its left
+                  if (totalMouseMovement < 0) {
+                    var totalColumnsLeftWidth = 0;
+                    for (var il = columnIndex - 1; il >= 0; il--) {
+                      if (angular.isUndefined(columns[il].colDef.visible) || columns[il].colDef.visible === true) {
+                        totalColumnsLeftWidth += columns[il].drawnWidth || columns[il].width || columns[il].colDef.width;
+                        if (totalColumnsLeftWidth > Math.abs(totalMouseMovement)) {
+                          uiGridMoveColumnService.redrawColumnAtPosition
+                          ($scope.grid, columnIndex, il + 1);
+                          break;
+                        }
+                      }
+                    }
+                    //Case where column should be moved to beginning of the grid.
+                    if (totalColumnsLeftWidth < Math.abs(totalMouseMovement)) {
+                      uiGridMoveColumnService.redrawColumnAtPosition
+                      ($scope.grid, columnIndex, 0);
+                    }
+                  }
+
+                  //Case where column should be moved to a position on its right
+                  else if (totalMouseMovement > 0) {
+                    var totalColumnsRightWidth = 0;
+                    for (var ir = columnIndex + 1; ir < columns.length; ir++) {
+                      if (angular.isUndefined(columns[ir].colDef.visible) || columns[ir].colDef.visible === true) {
+                        totalColumnsRightWidth += columns[ir].drawnWidth || columns[ir].width || columns[ir].colDef.width;
+                        if (totalColumnsRightWidth > totalMouseMovement) {
+                          uiGridMoveColumnService.redrawColumnAtPosition
+                          ($scope.grid, columnIndex, ir - 1);
+                          break;
+                        }
+                      }
+                    }
+                    //Case where column should be moved to end of the grid.
+                    if (totalColumnsRightWidth < totalMouseMovement) {
+                      uiGridMoveColumnService.redrawColumnAtPosition
+                      ($scope.grid, columnIndex, columns.length - 1);
+                    }
+                  }
+                };
+                
+                var onDownEvents = function(){
+                  $contentsElm.on('touchstart', downFn);
+                  $contentsElm.on('mousedown', downFn);
+                };
+                
+                var offAllEvents = function() {
+                  $contentsElm.off('touchstart', downFn);
+                  $contentsElm.off('mousedown', downFn);
+
+                  $document.off('mousemove', moveFn);
+                  $document.off('touchmove', moveFn);
+
+                  $document.off('mouseup', upFn);
+                  $document.off('touchend', upFn);
+                };
+                
+                onDownEvents();
+
+
+                var cloneElement = function () {
+                  elmCloned = true;
+
+                  //Cloning header cell and appending to current header cell.
+                  movingElm = $elm.clone();
+                  $elm.parent().append(movingElm);
+
+                  //Left of cloned element should be aligned to original header cell.
+                  movingElm.addClass('movingColumn');
+                  var movingElementStyles = {};
+                  var elmLeft;
+                  if (gridUtil.detectBrowser() === 'safari') {
+                    //Correction for Safari getBoundingClientRect,
+                    //which does not correctly compute when there is an horizontal scroll
+                    elmLeft = $elm[0].offsetLeft + $elm[0].offsetWidth - $elm[0].getBoundingClientRect().width;
+                  }
+                  else {
+                    elmLeft = $elm[0].getBoundingClientRect().left;
+                  }
+                  movingElementStyles.left = (elmLeft - gridLeft) + 'px';
+                  var gridRight = $scope.grid.element[0].getBoundingClientRect().right;
+                  var elmRight = $elm[0].getBoundingClientRect().right;
+                  if (elmRight > gridRight) {
+                    reducedWidth = $scope.col.drawnWidth + (gridRight - elmRight);
+                    movingElementStyles.width = reducedWidth + 'px';
+                  }
+                  movingElm.css(movingElementStyles);
+                };
+
+                var moveElement = function (changeValue) {
+                  //Calculate total column width
+                  var columns = $scope.grid.columns;
+                  var totalColumnWidth = 0;
+                  for (var i = 0; i < columns.length; i++) {
+                    if (angular.isUndefined(columns[i].colDef.visible) || columns[i].colDef.visible === true) {
+                      totalColumnWidth += columns[i].drawnWidth || columns[i].width || columns[i].colDef.width;
+                    }
+                  }
+
+                  //Calculate new position of left of column
+                  var currentElmLeft = movingElm[0].getBoundingClientRect().left - 1;
+                  var currentElmRight = movingElm[0].getBoundingClientRect().right;
+                  var newElementLeft;
+                  if (gridUtil.detectBrowser() === 'ie') {
+                    newElementLeft = currentElmLeft + changeValue;
+                  }
+                  else {
+                    newElementLeft = currentElmLeft - gridLeft + changeValue;
+                  }
+                  newElementLeft = newElementLeft < rightMoveLimit ? newElementLeft : rightMoveLimit;
+
+                  //Update css of moving column to adjust to new left value or fire scroll in case column has reached edge of grid
+                  if ((currentElmLeft >= gridLeft || changeValue > 0) && (currentElmRight <= rightMoveLimit || changeValue < 0)) {
+                    movingElm.css({visibility: 'visible', 'left': newElementLeft + 'px'});
+                  }
+                  else if (totalColumnWidth > Math.ceil(uiGridCtrl.grid.gridWidth)) {
+                    changeValue *= 8;
+                    var scrollEvent = new ScrollEvent($scope.col.grid, null, null, 'uiGridHeaderCell.moveElement');
+                    scrollEvent.x = {pixels: changeValue};
+                    scrollEvent.fireScrollingEvent();
+                  }
+
+                  //Calculate total width of columns on the left of the moving column and the mouse movement
+                  var totalColumnsLeftWidth = 0;
+                  for (var il = 0; il < columns.length; il++) {
+                    if (angular.isUndefined(columns[il].colDef.visible) || columns[il].colDef.visible === true) {
+                      if (columns[il].colDef.name !== $scope.col.colDef.name) {
+                        totalColumnsLeftWidth += columns[il].drawnWidth || columns[il].width || columns[il].colDef.width;
+                      }
+                      else {
+                        break;
+                      }
+                    }
+                  }
+                  if ($scope.newScrollLeft === undefined) {
+                    totalMouseMovement += changeValue;
+                  }
+                  else {
+                    totalMouseMovement = $scope.newScrollLeft + newElementLeft - totalColumnsLeftWidth;
+                  }
+
+                  //Increase width of moving column, in case the rightmost column was moved and its width was
+                  //decreased because of overflow
+                  if (reducedWidth < $scope.col.drawnWidth) {
+                    reducedWidth += Math.abs(changeValue);
+                    movingElm.css({'width': reducedWidth + 'px'});
+                  }
+                };
               }
             }
           };
@@ -19634,19 +19711,6 @@ module.filter('px', function() {
   module.directive('uiGridColumnResizer', ['$document', 'gridUtil', 'uiGridConstants', 'uiGridResizeColumnsService', function ($document, gridUtil, uiGridConstants, uiGridResizeColumnsService) {
     var resizeOverlay = angular.element('<div class="ui-grid-resize-overlay"></div>');
 
-    var downEvent, upEvent, moveEvent;
-
-    if (gridUtil.isTouchEnabled()) {
-      downEvent = 'touchstart';
-      upEvent = 'touchend';
-      moveEvent = 'touchmove';
-    }
-    else {
-      downEvent = 'mousedown';
-      upEvent = 'mouseup';
-      moveEvent = 'mousemove';
-    }
-
     var resizer = {
       priority: 0,
       scope: {
@@ -19704,7 +19768,15 @@ module.filter('px', function() {
         }
         
         
-        function mousemove(event, args) {
+        /*
+         * Our approach to event handling aims to deal with both touch devices and mouse devices
+         * We register down handlers on both touch and mouse.  When a touchstart or mousedown event
+         * occurs, we register the corresponding touchmove/touchend, or mousemove/mouseend events.
+         * 
+         * This way we can listen for both without worrying about the fact many touch devices also emulate
+         * mouse events - basically whichever one we hear first is what we'll go with.
+         */
+        function moveFunction(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
           event.preventDefault();
 
@@ -19739,7 +19811,7 @@ module.filter('px', function() {
         }
         
 
-        function mouseup(event, args) {
+        function upFunction(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
           event.preventDefault();
 
@@ -19752,8 +19824,10 @@ module.filter('px', function() {
           var xDiff = x - startX;
 
           if (xDiff === 0) {
-            $document.off(upEvent, mouseup);
-            $document.off(moveEvent, mousemove);
+            // no movement, so just reset event handlers, including turning back on both
+            // down events - we turned one off when this event started
+            offAllEvents();
+            onDownEvents();
             return;
           }
 
@@ -19774,12 +19848,14 @@ module.filter('px', function() {
 
           uiGridResizeColumnsService.fireColumnSizeChanged(uiGridCtrl.grid, col.colDef, xDiff);
 
-          $document.off(upEvent, mouseup);
-          $document.off(moveEvent, mousemove);
+          // stop listening of up and move events - wait for next down
+          // reset the down events - we will have turned one off when this event started
+          offAllEvents();
+          onDownEvents();
         }
 
 
-        $elm.on(downEvent, function(event, args) {
+        var downFunction = function(event, args) {
           if (event.originalEvent) { event = event.originalEvent; }
           event.stopPropagation();
 
@@ -19796,14 +19872,40 @@ module.filter('px', function() {
           // Place the resizer overlay at the start position
           resizeOverlay.css({ left: startX });
 
-          // Add handlers for mouse move and up events
-          $document.on(upEvent, mouseup);
-          $document.on(moveEvent, mousemove);
-        });
-
+          // Add handlers for move and up events - if we were mousedown then we listen for mousemove and mouseup, if
+          // we were touchdown then we listen for touchmove and touchup.  Also remove the handler for the equivalent
+          // down event - so if we're touchdown, then remove the mousedown handler until this event is over, if we're
+          // mousedown then remove the touchdown handler until this event is over, this avoids processing duplicate events
+          if ( event.type === 'touchstart' ){
+            $document.on('touchend', upFunction);
+            $document.on('touchmove', moveFunction);
+            $elm.off('mousedown', downFunction);
+          } else {
+            $document.on('mouseup', upFunction);
+            $document.on('mousemove', moveFunction);
+            $elm.off('touchstart', downFunction);
+          }
+        };
+        
+        var onDownEvents = function() {
+          $elm.on('mousedown', downFunction);
+          $elm.on('touchstart', downFunction);
+        };
+        
+        var offAllEvents = function() {
+          $document.off('mouseup', upFunction);
+          $document.off('touchend', upFunction);
+          $document.off('mousemove', moveFunction);
+          $document.off('touchmove', moveFunction);
+          $elm.off('mousedown', downFunction);
+          $elm.off('touchstart', downFunction);
+        };
+        
+        onDownEvents();
+        
 
         // On doubleclick, resize to fit all rendered cells
-        $elm.on('dblclick', function(event, args) {
+        var dblClickFn = function(event, args){
           event.stopPropagation();
 
           var col = uiGridResizeColumnsService.findTargetCol($scope.col, $scope.position, rtlMultiplier);
@@ -19856,14 +19958,12 @@ module.filter('px', function() {
           
           buildColumnsAndRefresh(xDiff);
           
-          uiGridResizeColumnsService.fireColumnSizeChanged(uiGridCtrl.grid, col.colDef, xDiff);
-        });
+          uiGridResizeColumnsService.fireColumnSizeChanged(uiGridCtrl.grid, col.colDef, xDiff);        };
+        $elm.on('dblclick', dblClickFn);
 
         $elm.on('$destroy', function() {
-          $elm.off(downEvent);
-          $elm.off('dblclick');
-          $document.off(moveEvent, mousemove);
-          $document.off(upEvent, mouseup);
+          $elm.off('dblclick', dblClickFn);
+          offAllEvents();
         });
       }
     };
@@ -21996,8 +22096,8 @@ module.filter('px', function() {
    *  @description Stacks on top of ui.grid.uiGridCell to provide selection feature
    */
   module.directive('uiGridCell',
-    ['$compile', 'uiGridConstants', 'uiGridSelectionConstants', 'gridUtil', '$parse', 'uiGridSelectionService',
-      function ($compile, uiGridConstants, uiGridSelectionConstants, gridUtil, $parse, uiGridSelectionService) {
+    ['$compile', 'uiGridConstants', 'uiGridSelectionConstants', 'gridUtil', '$parse', 'uiGridSelectionService', '$timeout',
+      function ($compile, uiGridConstants, uiGridSelectionConstants, gridUtil, $parse, uiGridSelectionService, $timeout) {
         return {
           priority: -200, // run after default uiGridCell directive
           restrict: 'A',
@@ -22015,6 +22115,9 @@ module.filter('px', function() {
             });
 
             var selectCells = function(evt){
+              // if we get a click, then stop listening for touchend
+              $elm.off('touchend', touchEnd);
+              
               if (evt.shiftKey) {
                 uiGridSelectionService.shiftSelect($scope.grid, $scope.row, evt, $scope.grid.options.multiSelect);
               }
@@ -22025,10 +22128,19 @@ module.filter('px', function() {
                 uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
               }
               $scope.$apply();
+              
+              // don't re-enable the touchend handler for a little while - some devices generate both, and it will
+              // take a little while to move your hand from the mouse to the screen if you have both modes of input
+              $timeout(function() {
+                $elm.on('touchend', touchEnd);
+              }, touchTimeout);
             };
 
             var touchStart = function(evt){
               touchStartTime = (new Date()).getTime();
+
+              // if we get a touch event, then stop listening for click
+              $elm.off('click', selectCells);
             };
 
             var touchEnd = function(evt) {
@@ -22039,6 +22151,12 @@ module.filter('px', function() {
                 // short touch
                 selectCells(evt);
               }
+              
+              // don't re-enable the click handler for a little while - some devices generate both, and it will
+              // take a little while to move your hand from the screen to the mouse if you have both modes of input
+              $timeout(function() {
+                $elm.on('click', selectCells);
+              }, touchTimeout);
             };
 
             function registerRowSelectionEvents() {
