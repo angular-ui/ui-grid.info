@@ -291,7 +291,7 @@ additional properties to the row.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
-<li><h3 id="registerRowsProcessor">registerRowsProcessor(processorFunction)</h3>
+<li><h3 id="registerRowsProcessor">registerRowsProcessor(processorFunction, processor, priority)</h3>
 <div class="registerrowsprocessor"><p>Register a "rows processor" function. When the rows are updated,
 the grid calls each registered "rows processor", which has a chance
 to alter the set of rows (sorting, etc) as long as the count is not
@@ -300,6 +300,13 @@ modified.</p><h4 id="Parameters">Parameters</h4>
 <p>rows processor function, which 
 is run in the context of the grid (i.e. this for the function will be the grid), and must
 return the updated rows list, which is passed to the next processor in the chain</p></li>
+<li><code ng:non-bindable="">processor – {function} – </code>
+<p>a function that takes in rows, and returns updated rows</p></li>
+<li><code ng:non-bindable="">priority – {number} – </code>
+<p>the priority of this processor.  In general we try to do them in 100s to leave room
+for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.</p>
+
+<p>At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p></li>
 </ul>
 </div>
 </li>
