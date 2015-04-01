@@ -116,12 +116,27 @@ It then calls redrawInPlace and refreshCanvas, which adjust the grid sizing.</p>
 – <p>promise that is resolved when render completes?</p></div>
 </div>
 </li>
+<li><h3 id="registerRowsProcessor">registerRowsProcessor(processorFunction, priority)</h3>
+<div class="registerrowsprocessor"><p>Register a "rows processor" function. When the rows are updated,
+the grid calls each registered "rows processor", which has a chance
+to alter the set of rows (sorting, etc) as long as the count is not
+modified.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">processorFunction – {function(renderedRowsToProcess, columns )} – </code>
+<p>rows processor function, which 
+is run in the context of the grid (i.e. this for the function will be the grid), and must
+return the updated rows list, which is passed to the next processor in the chain</p></li>
+<li><code ng:non-bindable="">priority – {number} – </code>
+<p>the priority of this processor.  In general we try to do them in 100s to leave room
+for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.</p>
+
+<p>At present allRowsVisible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="removeFromGridMenu">removeFromGridMenu(grid, id)</h3>
-<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id.  Assumes
-that the id is unique, removes only the last instance of that id.  Does nothing if
-the specified id is not found.  If there is no gridMenuScope or registeredMenuItems
-then do nothing silently - the desired result is those menu items not be present and they
-aren't.</p><h4 id="Parameters">Parameters</h4>
+<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id. Assumes
+that the id is unique, removes only the last instance of that id. Does nothing if
+the specified id is not found</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid on which we are acting</p></li>
 <li><code ng:non-bindable="">id – {string} – </code>
@@ -130,9 +145,11 @@ aren't.</p><h4 id="Parameters">Parameters</h4>
 </div>
 </li>
 <li><h3 id="removeFromGridMenu">removeFromGridMenu(grid, id)</h3>
-<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id. Assumes
-that the id is unique, removes only the last instance of that id. Does nothing if
-the specified id is not found</p><h4 id="Parameters">Parameters</h4>
+<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id.  Assumes
+that the id is unique, removes only the last instance of that id.  Does nothing if
+the specified id is not found.  If there is no gridMenuScope or registeredMenuItems
+then do nothing silently - the desired result is those menu items not be present and they
+aren't.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid on which we are acting</p></li>
 <li><code ng:non-bindable="">id – {string} – </code>

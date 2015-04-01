@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-f38e075 - 2015-04-01
+ * ui-grid - v3.0.0-rc.20-b41275e - 2015-04-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3159,6 +3159,26 @@ angular.module('ui.grid')
      */
     self.api.registerMethod( 'core', 'scrollTo', function (rowEntity, colDef) { return self.scrollTo(rowEntity, colDef);}  );
 
+    /**
+     * @ngdoc function
+     * @name registerRowsProcessor
+     * @methodOf ui.grid.core.api:PublicApi
+     * @description
+     * Register a "rows processor" function. When the rows are updated,
+     * the grid calls each registered "rows processor", which has a chance
+     * to alter the set of rows (sorting, etc) as long as the count is not
+     * modified.
+     * 
+     * @param {function(renderedRowsToProcess, columns )} processorFunction rows processor function, which 
+     * is run in the context of the grid (i.e. this for the function will be the grid), and must
+     * return the updated rows list, which is passed to the next processor in the chain
+     * @param {number} priority the priority of this processor.  In general we try to do them in 100s to leave room
+     * for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.
+     * 
+     * At present allRowsVisible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)
+     */
+    self.api.registerMethod( 'core', 'registerRowsProcessor', this.registerRowsProcessor  );
+
 
 
     /**
@@ -4002,22 +4022,21 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name registerRowsProcessor
    * @methodOf ui.grid.class:Grid
+   * @description
+   *
+   * Register a "rows processor" function. When the rows are updated,
+   * the grid calls each registered "rows processor", which has a chance
+   * to alter the set of rows (sorting, etc) as long as the count is not
+   * modified.
+   * 
    * @param {function(renderedRowsToProcess, columns )} processorFunction rows processor function, which 
    * is run in the context of the grid (i.e. this for the function will be the grid), and must
    * return the updated rows list, which is passed to the next processor in the chain
-   * @description
-
-     Register a "rows processor" function. When the rows are updated,
-     the grid calls each registered "rows processor", which has a chance
-     to alter the set of rows (sorting, etc) as long as the count is not
-     modified.
-     
-     @param {function} processor a function that takes in rows, and returns updated rows
-     @param {number} priority the priority of this processor.  In general we try to do them in 100s to leave room
-     for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.
-     
-     At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)
-     
+   * @param {number} priority the priority of this processor.  In general we try to do them in 100s to leave room
+   * for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.
+   * 
+   * At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)
+   * 
    */
   Grid.prototype.registerRowsProcessor = function registerRowsProcessor(processor, priority) {
     if (!angular.isFunction(processor)) {
@@ -8098,7 +8117,7 @@ angular.module('ui.grid')
           grid.registerRowsProcessor(function allRowsVisible(rows) {
             rows.forEach(function (row) {
               row.visible = true;
-            });
+            }, 50);
 
             return rows;
           });
@@ -8122,14 +8141,14 @@ angular.module('ui.grid')
           });
 
 
-          grid.registerRowsProcessor(grid.searchRows);
+          grid.registerRowsProcessor(grid.searchRows, 100);
 
           // Register the default row processor, it sorts rows by selected columns
           if (grid.options.externalSort && angular.isFunction(grid.options.externalSort)) {
-            grid.registerRowsProcessor(grid.options.externalSort);
+            grid.registerRowsProcessor(grid.options.externalSort, 200);
           }
           else {
-            grid.registerRowsProcessor(grid.sortByColumn);
+            grid.registerRowsProcessor(grid.sortByColumn, 200);
           }
 
           return grid;
