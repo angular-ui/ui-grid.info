@@ -39,7 +39,7 @@ each other.</p><h2 id="Example">Example</h2>
     };
     
     $scope.scrollTo = function( rowIndex, colIndex ) {
-      $scope.gridApi.cellNav.scrollTo( $scope.gridOptions.data[rowIndex], $scope.gridOptions.columnDefs[colIndex]);
+      $scope.gridApi.core.scrollTo( $scope.gridOptions.data[rowIndex], $scope.gridOptions.columnDefs[colIndex]);
     };
 
     $http.get('/data/100.json')

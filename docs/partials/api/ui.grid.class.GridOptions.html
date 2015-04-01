@@ -50,6 +50,9 @@ remove again, which can simplify management of which items are included
 in the menu when.  (Noting that in most cases the shown and active functions
 provide a better way to handle visibility of menu items)</p></div>
 </li>
+<li><h3 id="aggregationCalcThrottle">aggregationCalcThrottle</h3>
+<div class="aggregationcalcthrottle"><p>Default time in milliseconds to throttle aggregation calcuations, defaults to 1000ms</p></div>
+</li>
 <li><h3 id="appScopeProvider">appScopeProvider</h3>
 <div class="appscopeprovider"><p>by default, the parent scope of the ui-grid element will be assigned to grid.appScope
 this property allows you to assign any reference you want to grid.appScope</p></div>
@@ -240,11 +243,11 @@ inline html
 or the id of a precompiled template (TBD how to use this) can be provided. <br />
 </br>Refer to the custom row template tutorial for more information.</p></div>
 </li>
+<li><h3 id="scrollDebounce">scrollDebounce</h3>
+<div class="scrolldebounce"><p>Default time in milliseconds to debounce scroll events, defaults to 300ms</p></div>
+</li>
 <li><h3 id="scrollThreshold">scrollThreshold</h3>
 <div class="scrollthreshold"><p>Defaults to 4</p></div>
-</li>
-<li><h3 id="scrollThrottle">scrollThrottle</h3>
-<div class="scrollthrottle"><p>Default time to throttle scroll events to, defaults to 70ms</p></div>
 </li>
 <li><h3 id="showColumnFooter">showColumnFooter</h3>
 <div class="showcolumnfooter"><p>Whether or not to show the column footer, defaults to false
@@ -276,6 +279,9 @@ server sorting) to be implemented.  Defaults to false. </p></div>
 </li>
 <li><h3 id="virtualizationThreshold">virtualizationThreshold</h3>
 <div class="virtualizationthreshold"><p>Turn virtualization on when number of data elements goes over this number, defaults to 20</p></div>
+</li>
+<li><h3 id="wheelScrollThrottle">wheelScrollThrottle</h3>
+<div class="wheelscrollthrottle"><p>Default time in milliseconds to throttle scroll events to, defaults to 70ms</p></div>
 </li>
 </ul>
 </div>

@@ -38,7 +38,8 @@ based on colDef.aggregationHideLabel.</p><h4 id="Parameters">Parameters</h4>
 </div>
 </li>
 <li><h3 id="getAggregationValue">getAggregationValue()</h3>
-<div class="getaggregationvalue"><p>gets the aggregation value based on the aggregation type for this column</p></div>
+<div class="getaggregationvalue"><p>gets the aggregation value based on the aggregation type for this column.
+Debounced using scrollDebounce option setting</p></div>
 </li>
 <li><h3 id="getColClass">getColClass(prefixDot)</h3>
 <div class="getcolclass"><p>Returns the class name for the column</p><h4 id="Parameters">Parameters</h4>
@@ -57,6 +58,12 @@ based on colDef.aggregationHideLabel.</p><h4 id="Parameters">Parameters</h4>
 </li>
 <li><h3 id="hideColumn">hideColumn()</h3>
 <div class="hidecolumn"><p>Hides the column by setting colDef.visible = false</p></div>
+</li>
+<li><h3 id="isPinnedLeft">isPinnedLeft()</h3>
+<div class="ispinnedleft"><p>Returns true if column is in the left render container</p></div>
+</li>
+<li><h3 id="isPinnedRight">isPinnedRight()</h3>
+<div class="ispinnedright"><p>Returns true if column is in the right render container</p></div>
 </li>
 <li><h3 id="setPropertyOrDefault">setPropertyOrDefault(colDef, propName, defaultValue)</h3>
 <div class="setpropertyordefault"><p>Sets a property on the column using the passed in columnDef, and

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-d98d0f1 - 2015-04-01
+ * ui-grid - v3.0.0-rc.20-58a27fc - 2015-04-01
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -306,8 +306,8 @@ select.ui-grid-filter-select:hover {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
-.ui-grid-viewport :focus {
-  outline: none;
+.ui-grid-viewport:focus {
+  outline: none !important;
 }
 .ui-grid-canvas {
   position: relative;

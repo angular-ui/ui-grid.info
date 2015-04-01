@@ -18,10 +18,7 @@
 </ul>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="fireScrollingEvent">fireScrollingEvent()</h3>
-<div class="firescrollingevent"><p>fires an event using grid.api.core.raise.scrollEvent</p></div>
-</li>
-<li><h3 id="fireThrottledScrollingEvent">fireThrottledScrollingEvent()</h3>
+<ul class="methods"><li><h3 id="fireThrottledScrollingEvent">fireThrottledScrollingEvent()</h3>
 <div class="firethrottledscrollingevent"><p>fires a throttled event using grid.api.core.raise.scrollEvent</p></div>
 </li>
 <li><h3 id="getNewScrollLeft">getNewScrollLeft()</h3>
@@ -33,11 +30,15 @@
 </ul>
 </div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="entity">entity</h3>
-<div class="entity"><p>the source of the scroll event. limited to values from uiGridConstants.scrollEventSources</p></div>
-</li>
-<li><h3 id="grid">grid</h3>
+<ul class="properties"><li><h3 id="grid">grid</h3>
 <div class="grid"><p>A reference back to the grid</p></div>
+</li>
+<li><h3 id="noDelay">noDelay</h3>
+<div class="nodelay"><p>most scroll events from the mouse or trackpad require delay to operate properly
+set to false to eliminate delay.  Useful for scroll events that the grid causes, such as scrolling to make a row visible.</p></div>
+</li>
+<li><h3 id="source">source</h3>
+<div class="source"><p>the source of the scroll event. limited to values from uiGridConstants.scrollEventSources</p></div>
 </li>
 </ul>
 </div>
