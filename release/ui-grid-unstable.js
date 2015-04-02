@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-3cc2e63 - 2015-04-02
+ * ui-grid - v3.0.0-rc.20-ca96903 - 2015-04-02
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2434,20 +2434,20 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           function syncHorizontalScroll(scrollEvent){
             containerCtrl.prevScrollArgs = scrollEvent;
             var newScrollLeft = scrollEvent.getNewScrollLeft(colContainer, containerCtrl.viewport);
-            $elm[0].scrollLeft = newScrollLeft;
+            $elm[0].scrollLeft =  gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft);
           }
 
           function syncHorizontalHeader(scrollEvent){
             var newScrollLeft = scrollEvent.getNewScrollLeft(colContainer, containerCtrl.viewport);
             if (containerCtrl.headerViewport) {
-              containerCtrl.headerViewport.scrollLeft = newScrollLeft;
+              containerCtrl.headerViewport.scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft);
             }
           }
 
           function syncHorizontalFooter(scrollEvent){
             var newScrollLeft = scrollEvent.getNewScrollLeft(colContainer, containerCtrl.viewport);
             if (containerCtrl.footerViewport) {
-              containerCtrl.footerViewport.scrollLeft = newScrollLeft;
+              containerCtrl.footerViewport.scrollLeft =  gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft);
             }
           }
 
