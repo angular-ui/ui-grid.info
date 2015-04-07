@@ -870,7 +870,7 @@ NG_DOCS={
       "id": "ui.grid.selection.api:GridRow",
       "shortName": "GridRow",
       "type": "object",
-      "keywords": "added and any api be by changes code enable enableselection example false feature for function functions grid gridrow group grouping header internal isselected made make might not object of only property prototype readonly row rows selectable selected selectedcount selection selelected set sets setselected settable should state the this to true ui updates using value via"
+      "keywords": "added and any api be by changes code enable enableselection example false feature for function functions grid gridrow group grouping header internal isselected made make might not object of only property prototype readonly row rows selectable selected selectedcount selection set sets setselected settable should state the this to true ui updates using value via"
     },
     {
       "section": "api",

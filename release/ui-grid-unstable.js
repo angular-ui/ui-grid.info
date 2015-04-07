@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-7061e45 - 2015-04-07
+ * ui-grid - v3.0.0-rc.20-da73c49 - 2015-04-07
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13225,8 +13225,8 @@ module.filter('px', function() {
    *
    *  @description Services for editing features
    */
-  module.service('uiGridEditService', ['$q', '$templateCache', 'uiGridConstants', 'gridUtil',
-    function ($q, $templateCache, uiGridConstants, gridUtil) {
+  module.service('uiGridEditService', ['$q', 'uiGridConstants', 'gridUtil',
+    function ($q, uiGridConstants, gridUtil) {
 
       var service = {
 
@@ -21709,7 +21709,7 @@ module.filter('px', function() {
          * @methodOf ui.grid.selection.api:GridRow
          * @description Sets the isSelected property and updates the selectedCount
          * Changes to isSelected state should only be made via this function
-         * @param {bool} selelected value to set
+         * @param {bool} selected value to set
          */
         $delegate.prototype.setSelected = function(selected) {
           this.isSelected = selected;
