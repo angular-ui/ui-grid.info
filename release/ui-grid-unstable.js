@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-76029e7 - 2015-04-06
+ * ui-grid - v3.0.0-rc.20-7061e45 - 2015-04-07
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -7643,7 +7643,7 @@ angular.module('ui.grid')
     this.columnStyles = ret;
   };
 
-  GridRenderContainer.prototype.getViewPortStyle = function () {
+  GridRenderContainer.prototype.getViewportStyle = function () {
     var self = this;
     var styles = {};
 
@@ -22689,7 +22689,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridViewport',
-    "<div class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewPortStyle()\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+    "<div class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\"><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
   );
 
 
