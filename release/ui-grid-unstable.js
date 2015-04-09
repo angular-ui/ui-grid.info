@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-31bea71 - 2015-04-09
+ * ui-grid - v3.0.0-rc.20-6e16d4d - 2015-04-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -7862,7 +7862,9 @@ angular.module('ui.grid')
    * @param {boolean} fromRowsProcessor whether we were called from a rowsProcessor, passed through to evaluateRowVisibility
    */
   GridRow.prototype.clearThisRowInvisible = function ( reason, fromRowsProcessor ) {
-    delete this.invisibleReason.user;
+    if (typeof(this.invisibleReason) !== 'undefined' ) {
+      delete this.invisibleReason.user;
+    }
     this.evaluateRowVisibility( fromRowsProcessor );
   };
 
@@ -7880,7 +7882,7 @@ angular.module('ui.grid')
    */
   GridRow.prototype.evaluateRowVisibility = function ( fromRowProcessor ) {
     var newVisibility = true;
-    if ( this.invisibleReason ){
+    if ( typeof(this.invisibleReason) !== 'undefined' ){
       angular.forEach(this.invisibleReason, function( value, key ){
         if ( value ){
           newVisibility = false;
@@ -7888,7 +7890,7 @@ angular.module('ui.grid')
       });
     }
     
-    if ( this.visible !== newVisibility ){
+    if ( typeof(this.visible) === 'undefined' || this.visible !== newVisibility ){
       this.visible = newVisibility;
       if ( !fromRowProcessor ){
         this.grid.queueGridRefresh();
@@ -8116,7 +8118,7 @@ angular.module('ui.grid')
           // Reset all rows to visible initially
           grid.registerRowsProcessor(function allRowsVisible(rows) {
             rows.forEach(function (row) {
-              row.visible = true;
+              row.evaluateRowVisibility( true );
             }, 50);
 
             return rows;
@@ -8627,8 +8629,8 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     if (filterData.length > 0) {
       // define functions outside the loop, performance optimisation
       var foreachRow = function(grid, row, col, filters){
-        if ( !rowSearcher.searchColumn(grid, row, col, filters) ) {
-          row.setThisRowInvisible('filtered', true);
+        if ( row.visible && !rowSearcher.searchColumn(grid, row, col, filters) ) {
+          row.visible = false;
         }
       };
       
@@ -8648,6 +8650,10 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       if (grid.api.core.raise.rowsVisibleChanged) {
         grid.api.core.raise.rowsVisibleChanged();
       }
+      
+      // drop any invisible rows
+      rows = rows.filter(function(row){ return row.visible; });
+    
     }
 
     return rows;
@@ -9068,15 +9074,15 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     // Re-usable variables
     var col, direction;
 
-    // IE9-11 HACK.... the 'rows' variable would be empty where we call rowSorter.getSortFn(...) below. We have to use a separate reference
-    // var d = data.slice(0);
-    var r = rows.slice(0);
-    
     // put a custom index field on each row, used to make a stable sort out of unstable sorts (e.g. Chrome)
     var setIndex = function( row, idx ){
       row.entity.$$uiGridIndex = idx;
     };
     rows.forEach(setIndex);
+
+    // IE9-11 HACK.... the 'rows' variable would be empty where we call rowSorter.getSortFn(...) below. We have to use a separate reference
+    // var d = data.slice(0);
+    var r = rows.slice(0);
 
     // Now actually sort the data
     var rowSortFn = function (rowA, rowB) {
@@ -16912,7 +16918,7 @@ module.filter('px', function() {
           service.writeOutAggregations( grid, groupingProcessingState, 0);
 
           
-          return renderableRows;
+          return renderableRows.filter(function (row) { return row.visible; });
         },
         
         
@@ -17154,17 +17160,11 @@ module.filter('px', function() {
             return;
           }
           
-          var visible = true;
           var groupLevel = typeof(row.groupLevel) !== 'undefined' ? row.groupLevel : groupingProcessingState.length;
           for (var i = 0; i < groupLevel; i++){
             if ( groupingProcessingState[i].currentGroupHeader.expandedState.state === uiGridGroupingConstants.COLLAPSED ){
-              visible = false;
+             row.visible = false;
             }
-          }
-          
-          // we're running in a rowProcessor, so default is always visible, we don't need to set it unless we want invisible
-          if ( !visible ){
-            row.setThisRowInvisible( 'grouping', true );
           }
         },
         
