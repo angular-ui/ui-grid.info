@@ -11,10 +11,10 @@ so the currently recommended approach is to use $interval, and to call every 500
 
 <p>In a sense this is similar to what the auto-resize feature does, but it only does it for a short period after modal opening.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-34" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-35"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-35" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-36"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-34" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-34">
+<pre class="prettyprint linenums" ng-set-text="index.html-35" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-35">
   <div ng-controller="MainCtrl">
     <button id="showButton" class="btn btn-success" ng-click="showModal()">Show Modal</button>
   </div>
@@ -91,8 +91,8 @@ so the currently recommended approach is to use $interval, and to call every 500
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-35"></pre>
-<script type="text/ng-template" id="scenario.js-35">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-36"></pre>
+<script type="text/ng-template" id="scenario.js-36">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   it('click modal button, grid should show with three columns and some data', function () {
     element( by.id ( 'showButton' ) ).click();
@@ -103,5 +103,5 @@ so the currently recommended approach is to use $interval, and to call every 500
 </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-34" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-35" ng-eval-javascript="app.js"></div></div>
 </div>

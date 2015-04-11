@@ -240,7 +240,7 @@ additional properties to the column.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
-<li><h3 id="registerColumnsProcessor">registerColumnsProcessor(columnProcessor)</h3>
+<li><h3 id="registerColumnsProcessor">registerColumnsProcessor(columnProcessor, priority)</h3>
 <div class="registercolumnsprocessor"><p>Register a "columns processor" function. When the columns are updated,
 the grid calls each registered "columns processor", which has a chance
 to alter the set of columns, as long as the count is not modified.</p><h4 id="Parameters">Parameters</h4>
@@ -249,6 +249,11 @@ to alter the set of columns, as long as the count is not modified.</p><h4 id="Pa
 is run in the context of the grid (i.e. this for the function will be the grid), and
 which must return an updated renderedColumnsToProcess which can be passed to the next processor 
 in the chain</p></li>
+<li><code ng:non-bindable="">priority – {number} – </code>
+<p>the priority of this processor.  In general we try to do them in 100s to leave room
+for other people to inject columns processors at intermediate priorities.  Lower priority columnsProcessors run earlier.</p>
+
+<p>At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p></li>
 </ul>
 </div>
 </li>
