@@ -135,7 +135,7 @@ NG_DOCS={
       "id": "ui.grid.class:GridOptions.columnDef",
       "shortName": "columnDef",
       "type": "object",
-      "keywords": "$scope aa about action active add address adds after against aggregation aggregationhidelabel alert algorithm allowing alongside although an and angular any api append apply are arguments array as asc attribute auto available backward be before bind binding blargh boolean box by call called can case casesensitive cell cellclass cellfilter cellnav cells celltemplate celltooltip cellvalue chosen city class clicked col colrenderindex column columndef columndefs compatibility complex condition configuration consists constants contain content context control controls currently custom data date default defaults defined defines definition definitions desc determine direction displayed displayname div docs doesn don each either element enablecolumnmenu enablecolumnmenus enabled enablefiltering enablehiding enablesorting ends ends_with evaluate evaluates even everywhere example expression expressions false feature female field field1 field2 field3 fields filter filtering filters flag flags focus following footer footercellclass footercellfilter footercelltemplate for format from function functionality generated get getfulladdress gets gives grid gridoptions gridutil guess guessing guesstype handler have header headercellclass headercellfilter headercelltemplate hides hiding hovers how i18n icon id if in individual input irrespective is it item items just knows label leaveopen like list long male manually many matching maximum maxwidth menu menuitems menus method minimum minwidth multiple must name need no normal not noterm null number object of off omitted on one only open option options or outer over overall override parameters pass passed passing percentage perform placeholder pre-populated present prevents property provide provided receive refer removesort removing require return returns row rowrenderindex rows run satisfaction scope see select selected selectoptions sensitive service set sets setting settings should show shown single so sort sorting sortingalgorithm source specific specify specifying starts starts_with stay string supply supported suppressremovesort takes template term text that the them then this title to too tooltip translate true turn turned tutorial type typically ui ui-grid ui-grid-icon-info-circled uigridconstants use used user users using value values ve visible want when where whether which widgets width will wish with within work would xx xxx you your"
+      "keywords": "$scope aa about action active add address adds after against aggregation aggregationhidelabel alert algorithm allowing alongside although an and angular any api append apply are arguments array as asc attribute auto available backward be before bind binding blargh boolean box button by call called can cancels case casesensitive cell cellclass cellfilter cellnav cells celltemplate celltooltip cellvalue chosen city class clicked col colrenderindex column columndef columndefs compatibility complex condition configuration consists constants contain content context control controls currently custom data date default defaults defined defines definition definitions desc determine direction disablecancelfilterbutton displayed displayname div docs doesn don each either element enablecolumnmenu enablecolumnmenus enabled enablefiltering enablehiding enablesorting ends ends_with evaluate evaluates even everywhere example expression expressions false feature female field field1 field2 field3 fields filter filtering filters flag flags focus following footer footercellclass footercellfilter footercelltemplate for format from function functionality generated get getfulladdress gets gives grid gridoptions gridutil guess guessing guesstype handler have header headercellclass headercellfilter headercelltemplate hides hiding hovers how i18n icon id if in individual input irrespective is it item items just knows label leaveopen like list long male manually many matching maximum maxwidth menu menuitems menus method minimum minwidth multiple must name need no normal not noterm null number object of off omitted on one only open option options or outer over overall override parameters pass passed passing percentage perform placeholder pre-populated present prevents property provide provided receive refer removesort removing require return returns row rowrenderindex rows run satisfaction scope see select selected selectoptions sensitive service set sets setting settings should show shown single so sort sorting sortingalgorithm source specific specify specifying starts starts_with stay string supply supported suppressremovesort takes template term text that the them then this title to too tooltip translate true turn turned tutorial type typically ui ui-grid ui-grid-icon-info-circled uigridconstants use used user users using value values ve visible want when where whether which widgets width will wish with within work would xx xxx you your"
     },
     {
       "section": "api",
@@ -436,7 +436,7 @@ NG_DOCS={
       "id": "ui.grid.grouping",
       "shortName": "grouping",
       "type": "overview",
-      "keywords": "across actual add added after aggregate aggregations all allow allowing already and any anything api are as ask at attributes baked based be because break built by cache calculate call calling can cause change changed collapsed collapsing column columns concept core creates data day default defined design directly do doc-module-components don each easily excel expanded expandedstate expanding false feature filtered filtering fine first flag flags footer for forces from front get grid group grouped groupheader grouping grouplevel hash have identifying if ignore in included information inserting internalrow into invocations is isn it items just know level like logic looking manipulate may means menu module move multiple nested new node not note num object of on once one only or order our over overview own pointer precedence process processing processors property provides putting real really reasoninvisible recall refers reflect refresh relates rely respect resulting row rowexpandedstates rowprocessors rows rowsprocessors set should similar since so sort sorted sorting sorts specific state take tells that the their them then there this those time to triggered true ui us use used value ve visibility visible want we well what whenever which will with within without work wouldn you"
+      "keywords": "across actual add added after aggregate aggregations all allow allowing already and any anything api are as at attributes baked based be because break built by cache call calling can cause change changed collapsed collapsing column columns concept core creates data day default defined design do doc-module-components each easily excel expanded expandedstate expanding false feature filtering first flags footer for forces from front get grid group grouped groupheader grouping grouplevel hash have identifying if ignore in information inserting internalrow into invocations is isn it items just know level like logic looking manipulate may means menu module move multiple nested new node not num object of on once one only or order over overview pointer precedence process processing processors property provides putting real recall refers reflect refresh relates rely respect resulting row rowexpandedstates rowprocessors rows rowsprocessors set should similar since so sort sorted sorting sorts specific state take tells that the their them then there this those time to triggered true ui us use used value ve visible want we well what whenever which will within without you"
     },
     {
       "section": "api",
@@ -450,14 +450,14 @@ NG_DOCS={
       "id": "ui.grid.grouping.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "always and api are at available base be but by class come counts each enable enablegrouping entire even extra false feature for forces go grid gridoptions group grouped groupheader grouping groupingindent groupingrowheaderalwaysvisible groupingrowheaderwidth groupingshowcounts grouprowheader having header icon if in incremented indent indents is level make may more nothing number object of on pixels pleasing preferable present provides row rows set shows single situations some the these this to true ui ui-grid using visually wider width will"
+      "keywords": "always and api are at available base be but by class come counts each enable enablegrouping entire even extra false feature for forces go grid gridoptions group grouped groupheader grouping groupingindent groupingrowheaderalwaysvisible groupingrowheaderbasewidth groupingshowcounts grouprowheader having header icon if in incremented indent indents is level make may more nothing number object of on pixels pleasing preferable present provides row rows set shows single situations some the these this to true ui ui-grid using visually wider width will"
     },
     {
       "section": "api",
       "id": "ui.grid.grouping.api:PublicApi",
       "shortName": "PublicApi",
       "type": "object",
-      "keywords": "added adds again aggregate aggregatearray aggregatecolumn aggregated aggregation aggregations aggregationtype all also an and any api apply array as asc at back be beforehand being but by call called can children clear cleargrouping collapse collapseallrows collapsed collapserow colname column columnname columnprocessor columns combined come config configuration contains currently default doesn don end existing expand expandallrows expanded expandedstate expandrow expandrowchildren expands feature field first for format from function get getexpanded getgrouping gets grandchildren grid group grouparray groupcolumn grouped grouping grouppriority handled hash have if immediate in is it know left move name nodes non-group not null object objects of on one or order other out part previously priority provided public recognised refresh remain remove removed removes result return returned right row rows savestate set setgrouping sets so sort sorted sorting specified specify state that the then there this to toggle togglerowgroupingstate type types ui uigridgroupingconstants ungroup ungroupcolumn used user want was we when where whether will wish you"
+      "keywords": "added adds again aggregate aggregatearray aggregatecolumn aggregated aggregation aggregations aggregationtype all also an and any api apply array as asc at back be beforehand being but by call called can children clear cleargrouping collapse collapseallrows collapsed collapserow collapserowchildren colname column columnname columnprocessor columns combined come config configuration contains currently default doesn don end existing expand expandallrows expanded expandedstate expandrow expandrowchildren expands feature field first for format from function get getexpanded getgrouping gets grandchildren grid group grouparray groupcolumn grouped grouping grouppriority handled hash have if immediate in is it know left move name nodes non-group not null object objects of on one or order other out part previously priority provided public recognised refresh remain remove removed removes result retain return returned right row rows savestate set setgrouping sets so sort sorted sorting specified specify state that the their then there this to toggle togglerowgroupingstate type types ui uigridgroupingconstants ungroup ungroupcolumn used user want was we when where whether will wish you"
     },
     {
       "section": "api",
@@ -727,6 +727,13 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.pinning.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "api being col column container feature for from function grid gridapi left none object of one or pin pincolumn pinned pinning public recognised right the types ui uigridpinningconstants"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.resizeColumns.api:ColumnDef",
       "shortName": "ColumnDef",
       "type": "object",
@@ -821,7 +828,7 @@ NG_DOCS={
       "id": "ui.grid.saveState.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "actually again also and anything api are as attempt available be been before bit business by callback called can cases cell cellnav changed class column columns concatenate configuration current currently data default define defined deleted different disabled do does each element enabled example exists expanded false feature field fields filter find focus focused for from function give grid gridoptions grouping has have however id if in information instead is isn it list little ll make makes many mean-time might move not note nothing number object of on one only option or order passing percentage position preferred presuming provided quite reorder resize restore results return returning returns row rowentity rows same save saved savefilter savefocus savegrouping savegroupingexpandedstates saveorder saverowidentity saves savescroll saveselection savesort savestate savevisible savewidths scroll scrolled select selected selection sense set should show significantly simply so some sort specific state states still that the their then these this to true ui ui-grid undefined unique unless use used user using value ve visible want way we when whether which widths will with within won wouldn wrong you your"
+      "keywords": "actually again also and anything api are as attempt available be been before bit business by callback called can cases cell cellnav changed class column columns concatenate configuration current currently data default define defined deleted different disabled do does each element enabled example exists expanded false feature field fields filter find focus focused for from function give grid gridoptions grouping has have however id if in information instead is isn it list little ll make makes many mean-time might move not note nothing number object of on one only option or order passing percentage pinning position preferred presuming provided quite reorder resize restore results return returning returns row rowentity rows same save saved savefilter savefocus savegrouping savegroupingexpandedstates saveorder savepinning saverowidentity saves savescroll saveselection savesort savestate savevisible savewidths scroll scrolled select selected selection sense set should show significantly simply so some sort specific state states still that the their then these this to true ui ui-grid undefined unique unless use used user using value ve visible want way we when whether which widths will with within won wouldn wrong you your"
     },
     {
       "section": "api",
@@ -849,7 +856,7 @@ NG_DOCS={
       "id": "ui.grid.saveState.service:uiGridSaveStateService",
       "shortName": "uiGridSaveStateService",
       "type": "service",
-      "keywords": "$scope an and any anyway api applies approximates are back be before broadcast caller can cell cellnav column columns columnsstate configuration containing current currently does each either enabled false feature filters find findrowbyidentity finds first flag focus focused for found function getrowval gets given grid gridrow grouping groupingstate had helper identity if in including into is isn it like list matches module more name no none not nothing null object of on one only or order ordering otherwise passes position present provided ready restore restorecolumns restored restoregrouping restores restorescrollfocus restoreselection return returns row rowidentity rownum rownumber rows rowval save savecolumns saved savefocus savegrouping saverowidentity saves savescroll savescrollfocus saveselection savestate scope scroll scrollfocusstate scrolls selected selection selectionstate selects service services sets setup sort specified state stores storing than that the their them then through to true ui using value visible visiblerownum want was we whose width widths with without works you"
+      "keywords": "$scope an and any anyway api applies approximates are back be before broadcast caller can cell cellnav column columns columnsstate configuration containing current currently does each either enabled false feature filters find findrowbyidentity finds first flag focus focused for found function getrowval gets given grid gridrow grouping groupingstate had helper identity if in including into is isn it like list matches module more name no none not nothing null object of on one only or order ordering otherwise passes pinning position present provided ready restore restorecolumns restored restoregrouping restores restorescrollfocus restoreselection return returns row rowidentity rownum rownumber rows rowval save savecolumns saved savefocus savegrouping saverowidentity saves savescroll savescrollfocus saveselection savestate scope scroll scrollfocusstate scrolls selected selection selectionstate selects service services sets setup sort specified state stores storing than that the their them then through to true ui using value visible visiblerownum want was we whose width widths with without works you"
     },
     {
       "section": "api",
@@ -948,6 +955,76 @@ NG_DOCS={
       "shortName": "uiGridColumnMenuService",
       "type": "service",
       "keywords": "$columnelement $elm $scope active again allow and api at based be before below by called calling can checking child code col column columndef containing current currently default defaults determines direction easier element enablehiding factored fix for from getcolumnelementposition getdefaultmenuitems gets grid guess has hash have header height hidden hideable highlighting if in information initialize is isactivesort it items later left ll make menu menuitems menus method needed needs new no nodes not offset on option out place position positiondata puts re reference removesort reposition repositionmenu requested returns selected service services set setcolmenuitemwatch sets setup should sort sortable suppress suppressremovesort that the then this to top ui uigridcolumnmenu uigridcontroller uigridctrl underneath understand update us visible want watch we whether width with working"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView",
+      "shortName": "treeView",
+      "type": "overview",
+      "keywords": "across actual actually added additional adds all allowing alongside an and any anything api are array as automatically baked be because built but buttons by cache calculate calculated call callbacks calling can change changed child children clicked collapsed collapsing come could count current data deciding default design direct disable display displayed do doc-module-components doesn don each easily expand expanded expandedstate expanding false filter filtering flags for from future get grid group grouping hash have ideally if in information inherent into invocations is issue it leaf leaves level like logic maintain manipulate matched may means module must node nodes non-leaf now object of on once only optionally or order overview parent plausible pointer populated present probably processors property provide provided provides putting raw recall refers refresh rely remove requesting requires reworking row rowexpandedstates rowprocessors rows rowsprocessor rowsprocessors run set should shown since so some sorting state tells that the their them then these this time to top tree treelevel treeview triggered ui under unlike us use used using ve view visible want we well when whenever where which will with without work would you your"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "keywords": "api are at available base be but by class each enable enabletreeview entire extra feature for grid gridoptions header icon incremented indent indents is level make more number object of pixels pleasing provides row set single the these this to tree treeview treeviewindent treeviewrowheaderbasewidth true ui ui-grid using view visually wider width will"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "keywords": "again all an api apply be by call children collapse collapseallrows collapsed collapserow collapserowchildren config currently expand expandallrows expanded expandedstate expandrow expandrowchildren expands feature for format function get getgrouping gettreeview grandchildren grid hash if immediate in is it nodes object of out provided public retain returned row rows savestate set settreeview specified state states the their this to toggle togglerowtreeviewstate tree treeview ui used want when where will wish you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.constant:uiGridTreeViewConstants",
+      "shortName": "uiGridTreeViewConstants",
+      "type": "object",
+      "keywords": "api available constant constants grid in module object treeview ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.directive:uiGridTreeView",
+      "shortName": "uiGridTreeView",
+      "type": "directive",
+      "keywords": "$scope adds angular api app bob ceo columndefs controller data developer directive div enablecelledit features frank function grid gridoptions html index js lowly mainctrl module name ng-controller title to treeview true ui ui-grid ui-grid-tree-view var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.directive:uiGridTreeViewExpandAllButtons",
+      "shortName": "uiGridTreeViewExpandAllButtons",
+      "type": "directive",
+      "keywords": "all api button directive div expand grid provides the treeview ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.directive:uiGridTreeViewRowHeaderButtons",
+      "shortName": "uiGridTreeViewRowHeaderButtons",
+      "type": "directive",
+      "keywords": "api button directive div expand grid groupheader on provides rows the treeview ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.directive:uiGridViewport",
+      "shortName": "uiGridViewport",
+      "type": "directive",
+      "keywords": "api directive div formatting grid header of on row set stacks to top tree treeview ui uigridviewport view"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.grid:treeView",
+      "shortName": "treeView",
+      "type": "object",
+      "keywords": "across added all and api are aren as based because box by calculated collapsed currently every expandall expanded false for functions gives grid hash highest holds instead into is it key level levels lookup lose meaning missing need nested nodes not number numberlevels object of on only or persists properties property refreshed reliable retaining row rowexpandedstates rowprocessors rowsprocessor run sees selected so state states that the they this time total tree treeview ui uid uigrid-aaa uigrid-bbb uigrid-ccc uigrid-dap uigrid-ddd uigrid-dxng uigrid-dxnp uigrid-xxx uigrid-yyy us use used values was we whether"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.treeView.service:uiGridTreeViewService",
+      "shortName": "uiGridTreeViewService",
+      "type": "service",
+      "keywords": "achieve addorusestate adds after all already always an and any api array as associated assumes at based be calculates called calls can child children collapse collapseallrows collapsed collapserow collapserowchildren collapses column correctly create current deepest descendents determine does each entity events exists expand expandallrows expanded expandedstates expandedstatessubset expandrow expandrowchildren expands features for from function given goes grid group grouped groupheader have header hierarchy if immediate in including is isn it itself level looks new node nodes nothing object of on only operating or order otherwise our output parent parents portion previous process processes processor provided raise re recursively renderablerows return right row rowexpandedstates rowprocessor rows same see service services set setallnodes setcurrentstate sets setting should showing sized so sorting specific state subset targetstate that the their then this through to toggle togglerowtreeviewstate toggles tree treeexpandedstate treerows treeview ui update updated updates use usually visible want we whilst with works"
     },
     {
       "section": "tutorial",
@@ -1098,6 +1175,13 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "121_grid_menu",
+      "shortName": "121 Grid Menu",
+      "type": "overview",
+      "keywords": "$http $interval $q $scope ability above absolute access accessible action actions active added additional adds addtogridmenu after allow alongside also an and angular app are as at available be below box-shadow but by called can changed changedcolumn class clicked clickgridmenuitem col coldef column columnchanged columndef columndefs columns columnvisibilitychanged company company_hide company_show context contexts controller core create css csv custom customised customize data default defer deferred defined describe determines directive display displayed dynamic each effect either element enabled enablegridmenu enablehiding example expectheadercellvaluematch expectheadercolumncount expectvisiblegridmenuitems export exporter exportermenucsv fake fakei18n false feature filter floats for function functionality gender get gives grid grid1 gridapi gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoption gridoptions gridtestutils have header headers height hidden hide highlights html i18n i18nservice icon id if in index individual initialized internationalization internationalized interval is it item items js json just least leaveopen left like main mainctrl menu menus module my-custom-menu name needs ng-controller ng-if ngtouch none not of on one only onregisterapi open option or overview own padding pass position prefixes promise property provide reference require resolve return right rotate rotated row rows scenario second see selected selection set setting settings should show shown some sort spec string success supplying suppress suppresses that the them then there this three through title titles to toggle toggleclass top transform translate true tutorial type ui ui-grid ui-grid-exporter ui-grid-menu ui-grid-menu-inner ui-grid-selection use used using var visibility visible waits want we when whether which width will with you your zero"
+    },
+    {
+      "section": "tutorial",
       "id": "190_large_dataset",
       "shortName": "190 Large Dataset",
       "type": "overview",
@@ -1171,14 +1255,14 @@ NG_DOCS={
       "id": "208_save_state",
       "shortName": "208 Saving and restoring the state of the grid",
       "type": "overview",
-      "keywords": "$http $interval $scope adjust alexander all allows also an and angular another app application apply are as back btn btn-success button by calling can cancelfilterincolumn cell cellnav class click clickcolumnmenuhide clickcolumnmenuremovesort clickcolumnmenusortasc column columndefs columns company control controller cookie core css current data database default deliberately describe did different element enablefiltering enterfilterincolumn ethel example expect expectcellvaluematch expectheadercellvaluematch expectheadercolumncount false feature female filter filters first foley for freda function functionality gee gender get grid grid1 gridapi gridoptions gridtestutils had have height held hide html id in index information into is isn it js json layout left like look main mainctrl mason may methods might modify module movecolumns must name navigate ng-click ng-controller nganimate ngtouch nor note object of onregisterapi options order out overview packages page permits price provide provides remove render reorder require resizecolumns responsible restore restorestate restoring returning returns save saved savefilter savefocus saveorder savescroll savesort savestate savevisible savewidths saving scenario select selection session set sets some something somewhere sort sorts spec specific state store stored stores storing success takes that the their them then there they this time to transient true tutorial two type ui ui-grid ui-grid-cellnav ui-grid-move-columns ui-grid-resize-columns ui-grid-save-state ui-grid-selection upon use user var was way we what when where which width widths wish with you your"
+      "keywords": "$http $interval $scope adjust alexander all allows also an and angular another app application apply are as back btn btn-success button by calling can cancelfilterincolumn cell cellnav class click clickcolumnmenuhide clickcolumnmenuremovesort clickcolumnmenusortasc column columndefs columns company control controller cookie core css current data database default deliberately describe did different element enablefiltering enterfilterincolumn ethel example expect expectcellvaluematch expectheadercellvaluematch expectheadercolumncount false feature female filter filters first foley for freda function functionality gee gender get grid grid1 gridapi gridoptions gridtestutils had have height held hide html id in index information into is isn it js json layout left like look main mainctrl mason may methods might modify module movecolumns must name navigate ng-click ng-controller nganimate ngtouch nor note object of onregisterapi options order out overview packages page permits pinning price provide provides remove render reorder require resizecolumns responsible restore restorestate restoring returning returns save saved savefilter savefocus saveorder savepinning savescroll savesort savestate savevisible savewidths saving scenario select selection session set sets some something somewhere sort sorts spec specific state store stored stores storing success takes that the their them then there they this time to transient true tutorial two type ui ui-grid ui-grid-cellnav ui-grid-move-columns ui-grid-pinning ui-grid-resize-columns ui-grid-save-state ui-grid-selection upon use user var was way we what when where which width widths wish with you your"
     },
     {
       "section": "tutorial",
       "id": "209_grouping",
       "shortName": "209 Grouping",
       "type": "overview",
-      "keywords": "$http $interval $scope above address adds after against age aggregate aggregatecolumn aggregated aggregation aggregations aim all allow allowing allows alpha always an and angular any app appropriate are aren as asc at automatically average avg avoid balance base based be because been being below body breaks btn btn-success but button buttons by calculate calling can cannot cellfilter celltemplate change changegrouping class cleanly clear cleargrouping clears code col column columndef columndefs columns company complex config consideration controller correctly could count counting counts create creating css currency current custom custom_filters data deep deeper default definitions delete dependency desc describe development direction distribution do does doesn don done each easily edited effect enablefiltering end enhancement entity example excel existing expand expandall expandallrows exported exporter external fake false feature fields files filtered filtering find first follows for format formatting front function functionality functions gender get getgrouping gets go going grid grid1 gridapi gridoption gridoptions gridtestutils group groupcolumn grouped groupheader groupheaders grouping groupingindent groupingrowheaderalwaysvisible groupingrowheaderwidth groupingshowcounts groupingsuppressaggregationtext grouplevel grouppriority grouprowheader groups handle has have header height high however html id if impact important in include included including indent indented index indication individual initialisation insertion interact is isn it js json larger length level leverages like limit list look main mainctrl make marked max mean means methods min module more moved moving must name names need ng-click ng-controller ng-if nganimate ngtouch nicer no not notable null number objects of off on one only onregisterapi option optionally options or order out outstandings overriding overview part people permanently permit pinning pivot pixels pleasing potentially present priority probably programmatically provided provides providing proxy re refer remove removes removing rendercontainers replace require resulting returned reversed row rowheader rownum rows rtl running scenario second see selected selection set setgrouping sets setting settings should shows similar slice so some sort sorted spec special specific start state still success suppress suppressremovesort sure table templates testing text that the themselves then there they this through title to together togglefirstrow togglerow togglerowgroupingstate togglesecondrow tooltip true turned tutorial type ui ui-grid ui-grid-cell-contents ui-grid-grouping ui-grid-pinning uigridgroupingconstants undefined under ungroupcolumn ungrouped ungroups unit unused use user using usually value values var visible visiblerowcache visual visually want wanted watch ways we well what when whether which wider width with work would xxxx you your"
+      "keywords": "$http $interval $scope address adds after against age aggregate aggregatecolumn aggregated aggregation aggregations aim all allow allowing allows alpha always an and angular any app appropriate are aren as asc at automatically average avg avoid balance base based be because been being below body breaks btn btn-success but button buttons by calculate calling can cannot cellfilter celltemplate change changegrouping class cleanly clear cleargrouping clears code col column columndef columndefs columns company complex config consideration controller correctly could count counting counts create creating css currency current custom custom_filters data deeper default definitions delete dependency desc describe development direction distribution do does doesn don done each easily edited effect enablefiltering end enhancement entity example excel existing expand expandall expandallrows exported exporter external fake false feature fields files filtered filtering find first follows for format formatting front function functionality functions gender get getgrouping gets go going grid grid1 gridapi gridoption gridoptions gridtestutils group groupcolumn grouped groupheader groupheaders grouping groupingindent groupingrowheaderalwaysvisible groupingrowheaderwidth groupingshowcounts groupingsuppressaggregationtext grouplevel grouppriority grouprowheader groups handle has have header height high however html id if impact in include included including indent indented index indication individual initialisation insertion interact is isn it js json larger length level leverages like limit list look main mainctrl marked max means methods min module more moved moving must name names need ng-click ng-controller ng-if nganimate ngtouch nicer no not notable null number objects of off on one only onregisterapi option optionally options or order out outstandings overriding overview part people permanently permit pinning pivot pixels pleasing potentially present priority programmatically provided provides providing proxy refer remove removes removing rendercontainers replace require resulting returned reversed row rowheader rownum rows rtl running scenario second see selected selection set setgrouping sets setting settings should shows similar slice so some sort sorted space spec special specific start state still success suppress suppressremovesort sure table take templates testing text that the themselves then there they this through title to together togglefirstrow togglerow togglerowgroupingstate togglesecondrow tooltip true turned tutorial type ui ui-grid ui-grid-cell-contents ui-grid-grouping uigridgroupingconstants undefined under ungroupcolumn ungrouped ungroups unit unused up use user using usually value values var visible visiblerowcache visual visually want wanted watch ways we well what when whether which width with work would xxxx you your"
     },
     {
       "section": "tutorial",
@@ -1217,6 +1301,27 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "215_treeView",
+      "shortName": "215 Tree View",
+      "type": "overview",
+      "keywords": "$http $interval $scope adding additional address age algorithm all allow allows alpha an and angular anywhere app are arrangement array arrives as at automatically balance be body break btn btn-success button buttons by calculate can cellfilter child children class columndefs company controller could counts create css currency current data deeper delay describe development did display distribution doesn down dynamic dynamically each enablefiltering enablesorting entity event example expand expandall expandallrows expanded false feature female files first for from function gender general get gets given going grid grid1 gridapi griddable gridoptions grids gridtestutils guerrero have header height hourglass however html icon id if in include included increase incrementally indented index initial into is it js json know larger leaves length level levels listen load loaded loading look lopez main mainctrl make male means might module most move name need new ng-click ng-controller nganimate ngtouch nice nicer no node nodeloaded nodes not notable number of on only onregisterapi options or out outstandings overview page people perhaps permit pixels point positional property rather re removed render rendercontainers replace require retrieve right row rowexpanded rownum rows scenario second sense server set setting simulate slice some sort sorting spec specifying splice start state still structure success sure tell than that the their then these they this though to togglefirstrow togglerow togglerowtreeviewstate togglesecondrow tree treeview treeviewindent treeviewrowheaderwidth true tutorial type ui ui-grid ui-grid-tree-view uigridtreeviewconstants under us user using values var very view visiblerowcache was watch way we were weren when whenever whether which whilst whole width will wish with within would you your"
+    },
+    {
+      "section": "tutorial",
+      "id": "216_expandable_grid",
+      "shortName": "216 Expandable grid",
+      "type": "overview",
+      "keywords": "$http $log $scope above access added addition address adds age all also and angular api app appears as available be btn btn-small button can checkboxes city class collapse collapseallrows columndefs company configuration control-group controller css data done each enablerowselection entity events expand expandable expandablerowheight expandablerowscope expandablerowtemplate expandablescope expandallrows expanded expanding feature field filler fired following for fos friends from function gender get grid gridapi gridoptions height html id if in index is isexpanded its js json left length levels main mainctrl methods module multiple name need nesting ng-click ng-controller ngtouch object of on onregisterapi option overview pinnedleft pinning pins provide provided quickly render retrieve row rowexpandabletemplate rowexpandedstatechanged rows scope scroll scrollfillerclass secondctrl selection show style subgrid subgridoptions subgrids subgridscopevariable subgridvariable success template that the then these thirdctrl through to true tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning ui-grid-selection upto used value var variables when width will with works you"
+    },
+    {
+      "section": "tutorial",
+      "id": "217_column_moving",
+      "shortName": "217 Column Moving",
+      "type": "overview",
+      "keywords": "$http $scope age all allows also alternatively and angular app be by can class colmovable column columndefs columns controller css data default definitions different directive disable dragging dropping either element email enable enablecolumnmoving enabled feature for from function gender get grid gridapi gridoptions height html id in include index it js json leftmost main mainctrl method module move movecolumn movecolumns moving must name newposition ng-controller ngtouch number of on options or overview position property ranging repositioned rightmost specific specifically success the them to tutorial ui ui-grid ui-grid-move-columns up used var visible width will you your"
+    },
+    {
+      "section": "tutorial",
       "id": "301_editableOnFocus",
       "shortName": "301 Edit On Focus",
       "type": "overview",
@@ -1238,24 +1343,10 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "304_grid_menu",
-      "shortName": "304 Grid Menu",
-      "type": "overview",
-      "keywords": "$http $interval $q $scope ability above absolute access accessible action actions active added additional adds addtogridmenu after allow alongside also an and angular app are as at available be below box-shadow but by called can changed changedcolumn class clicked clickgridmenuitem col coldef column columnchanged columndef columndefs columns columnvisibilitychanged company company_hide company_show context contexts controller core create css csv custom customised customize data default defer deferred defined describe determines directive display displayed dynamic each effect either element enabled enablegridmenu enablehiding example expectheadercellvaluematch expectheadercolumncount expectvisiblegridmenuitems export exporter exportermenucsv fake fakei18n false feature filter floats for function functionality gender get gives grid grid1 gridapi gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoption gridoptions gridtestutils have header headers height hidden hide highlights html i18n i18nservice icon id if in index individual initialized internationalization internationalized interval is it item items js json just least leaveopen left like main mainctrl menu menus module my-custom-menu name needs ng-controller ng-if ngtouch none not of on one only onregisterapi open option or overview own padding pass position prefixes promise property provide reference require resolve return right rotate rotated row rows scenario second see selected selection set setting settings should show shown some sort spec string success supplying suppress suppresses that the them then there this three through title titles to toggle toggleclass top transform translate true tutorial type ui ui-grid ui-grid-exporter ui-grid-menu ui-grid-menu-inner ui-grid-selection use used using var visibility visible waits want we when whether which width will with you your zero"
-    },
-    {
-      "section": "tutorial",
       "id": "305_appScope",
       "shortName": "305 Accessing Scope in templates",
       "type": "overview",
       "keywords": "$http $log $parent $scope abc access accessing alert all angular another app application appscope appscopeprovider assigned assignment available be btn by can carney cell celltemplate class columndefs company comveyer controller cox css data default element employed enormo false firstname from fuelton function gender get grid gridoptions height html if in index is isolate js json lastname lorraine main mainctrl me module name named nancy need ng-click ng-controller ngtouch no of on or other override overview parent primary property reference row scope showme showscope so someotherreference someprop success template templates than that the then there this to true tutorial ui ui-grid use uses using var variables waters width will wise wish you your"
-    },
-    {
-      "section": "tutorial",
-      "id": "306_expandable_grid",
-      "shortName": "306 Expandable grid",
-      "type": "overview",
-      "keywords": "$http $log $scope access added address adds age all and angular api app as available be btn btn-small button can checkboxes city class collapse collapseallrows columndefs company control-group controller css data done each enablerowselection entity events expand expandable expandablerowheight expandablerowscope expandablerowtemplate expandablescope expandallrows expanded expanding feature field fired following for fos friends from function gender get grid gridapi gridoptions height html id if in index is isexpanded its js json left length levels main mainctrl methods module multiple name need nesting ng-click ng-controller ngtouch object of on onregisterapi option overview pinnedleft pinning pins provide provided render retrieve row rowexpandabletemplate rowexpandedstatechanged rows scope secondctrl selection show style subgrid subgridoptions subgrids subgridscopevariable subgridvariable success template that the then these thirdctrl to true tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning ui-grid-selection upto used value var variables when width will with works you"
     },
     {
       "section": "tutorial",
@@ -1277,13 +1368,6 @@ NG_DOCS={
       "shortName": "309 Edit Feature With Cellnav",
       "type": "overview",
       "keywords": "$apply $http $scope active address addressformatter aftercelledit age an and angular app basics boolean cell celleditablecondition cellfilter cellnav city class coldef column columndefs combining controller css data date displayname dropdown edit editable editdropdownoptionsarray editdropdownvaluelabel edited editing edittype else enablecelledit enablecelleditonfocus example experience false feature female filter for function gender genderhash get give grid gridapi gridoptions height html id if index input isactive js json lastcelledited length main mainctrl male mapgender module more msg name new newvalue ng-controller ngtouch number object of oldvalue on onregisterapi overview provides refer registered return row rowentity rowrenderindex rows scope spreadsheet-like state street success the this to true tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit var width with yyyy-mm-dd zip"
-    },
-    {
-      "section": "tutorial",
-      "id": "310_column_moving",
-      "shortName": "310 Column Moving",
-      "type": "overview",
-      "keywords": "$http $scope age all allows also alternatively and angular app be by can class colmovable column columndefs columns controller css data default definitions different directive disable dragging dropping either element email enable enablecolumnmoving enabled feature for from function gender get grid gridapi gridoptions height html id in include index it js json leftmost main mainctrl method module move movecolumn movecolumns moving must name newposition ng-controller ngtouch number of on options or overview position property ranging repositioned rightmost specific specifically success the them to tutorial ui ui-grid ui-grid-move-columns up used var visible width will you your"
     },
     {
       "section": "tutorial",

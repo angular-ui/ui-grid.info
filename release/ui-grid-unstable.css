@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-e4eb65c - 2015-04-09
+ * ui-grid - v3.0.0-rc.20-8a0c105 - 2015-04-11
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -278,6 +278,9 @@ select.ui-grid-filter-select {
 }
 select.ui-grid-filter-select:hover {
   border: 1px solid #d4d4d4;
+}
+.ui-grid-filter-cancel-button-hidden select.ui-grid-filter-select {
+  width: 100%;
 }
 .ui-grid-render-container {
   position: inherit;
@@ -890,6 +893,10 @@ div.ui-grid-cell input.ng-valid {
 .expandableRow .ui-grid-row:nth-child(even) .ui-grid-cell {
   background-color: #f3f3f3;
 }
+.scrollFiller {
+  float: left;
+  border: 1px solid #d4d4d4;
+}
 
 /* This file contains variable declarations (do not remove this line) */
 /*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
@@ -1304,95 +1311,33 @@ div.ui-grid-cell input.ng-valid {
   opacity: 1;
 }
 
-.ui-grid-icon-plus-squared:before {
-  content: '\c350';
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/**
+* @section font library path
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.ui-grid-group-header-row {
+  font-weight: bold !important;
 }
-/* '썐' */
-.ui-grid-icon-minus-squared:before {
-  content: '\c351';
+.ui-grid-grouping-row-header-buttons.ui-grid-group-header {
+  cursor: pointer;
+  opacity: 1;
 }
-/* '썑' */
-.ui-grid-icon-search:before {
-  content: '\c352';
-}
-/* '썒' */
-.ui-grid-icon-cancel:before {
-  content: '\c353';
-}
-/* '썓' */
-.ui-grid-icon-info-circled:before {
-  content: '\c354';
-}
-/* '썔' */
-.ui-grid-icon-lock:before {
-  content: '\c355';
-}
-/* '썕' */
-.ui-grid-icon-lock-open:before {
-  content: '\c356';
-}
-/* '썖' */
-.ui-grid-icon-pencil:before {
-  content: '\c357';
-}
-/* '썗' */
-.ui-grid-icon-down-dir:before {
-  content: '\c358';
-}
-/* '썘' */
-.ui-grid-icon-up-dir:before {
-  content: '\c359';
-}
-/* '썙' */
-.ui-grid-icon-left-dir:before {
-  content: '\c35a';
-}
-/* '썚' */
-.ui-grid-icon-right-dir:before {
-  content: '\c35b';
-}
-/* '썛' */
-.ui-grid-icon-left-open:before {
-  content: '\c35c';
-}
-/* '썜' */
-.ui-grid-icon-right-open:before {
-  content: '\c35d';
-}
-/* '썝' */
-.ui-grid-icon-angle-down:before {
-  content: '\c35e';
-}
-/* '썞' */
-.ui-grid-icon-filter:before {
-  content: '\c35f';
-}
-/* '썟' */
-.ui-grid-icon-sort-alt-up:before {
-  content: '\c360';
-}
-/* '썠' */
-.ui-grid-icon-sort-alt-down:before {
-  content: '\c361';
-}
-/* '썡' */
-.ui-grid-icon-ok:before {
-  content: '\c362';
-}
-/* '썢' */
-.ui-grid-icon-menu:before {
-  content: '\c363';
-}
-/* '썣' */
-.ui-grid-icon-indent-left:before {
-  content: '\e800';
-}
-/* '' */
-.ui-grid-icon-indent-right:before {
-  content: '\e801';
-}
-/* '' */
-.ui-grid-icon-spin5:before {
-  content: '\ea61';
-}
-/* '' */

@@ -79,8 +79,10 @@ case sensitive matching</li>
 then a select box will be shown with options selectOptions</li>
 <li>selectOptions: options in the format <code>[ { value: 1, label: 'male' }]</code>.  No i18n filter is provided, you need
 to perform the i18n on the values before you provide them</li>
+<li>disableCancelFilterButton: defaults to false. If set to true then the 'x' button that cancels/clears the filter
+will not be shown.</li>
 </ul><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
+<div class="example"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [
 {
   field: 'field1',
   filter: {
@@ -89,7 +91,8 @@ to perform the i18n on the values before you provide them</li>
     placeholder: 'starts with...',
     flags: { caseSensitive: false },
     type: uiGridConstants.filter.SELECT,
-    selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ]
+    selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ],
+    disableCancelFilterButton: true
   }
 }
 ]; </pre></div>

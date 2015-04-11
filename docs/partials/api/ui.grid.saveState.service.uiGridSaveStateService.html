@@ -43,8 +43,8 @@ the saveRowIdentity, given a gridRow </p><h4 id="Parameters">Parameters</h4>
 </div>
 </li>
 <li><h3 id="restoreColumns">restoreColumns(grid, columnsState)</h3>
-<div class="restorecolumns"><p>Restores the columns, including order, visible, width
-sort and filters.</p><h4 id="Parameters">Parameters</h4>
+<div class="restorecolumns"><p>Restores the columns, including order, visible, width,
+pinning, sort and filters.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>the grid whose state we'd like to restore</p></li>
 <li><code ng:non-bindable="">columnsState – {object} – </code>
@@ -98,8 +98,8 @@ passes that object back to the caller</p><h4 id="Parameters">Parameters</h4>
 </div>
 </li>
 <li><h3 id="saveColumns">saveColumns(grid)</h3>
-<div class="savecolumns"><p>Saves the column setup, including sort, filters, ordering
-and column widths.</p>
+<div class="savecolumns"><p>Saves the column setup, including sort, filters, ordering,
+pinning and column widths.</p>
 
 <p>Works through the current columns, storing them in order.  Stores the
 column name, then the visible flag, width, sort and filters for each column.</p><h4 id="Parameters">Parameters</h4>

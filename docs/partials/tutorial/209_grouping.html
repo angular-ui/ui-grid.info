@@ -61,9 +61,8 @@ complex column definitions at present</li>
 
 <ul>
 <li><code>groupingIndent</code>: the expand buttons are indented by a number of pixels (default 10) as the grouping
-level gets deeper.  Larger values look nicer, but mean that you probably need to make your groupHeader
-wider if you're allowing deep grouping</li>
-<li><code>groupingRowHeaderWidth</code>: the width of the grouping row header, important as above</li>
+level gets deeper.  Larger values look nicer, but take up more space</li>
+<li><code>groupingRowHeaderWidth</code>: the base width of the grouping row header</li>
 <li><code>groupingSuppressAggregationText</code>: if your column has a cellFilter, the insertion of text (e.g. 'min: xxxx') 
 usually breaks the cellFilter.  So you can suppress the aggregation text, but then you don't get a clear
 visual indication of what sort of aggregation is going on.  Refer the example below, the balance column with
@@ -84,16 +83,16 @@ suppress the aggregation text on the balance column because we want to format as
 we can't easily see that it's an average.</p>
 
 <h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-62" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-63"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-65" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-66"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-62" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-62">
+<pre class="prettyprint linenums" ng-set-text="index.html-65" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-65">
     <div ng-controller="MainCtrl">
       <button id="expandAll" type="button" class="btn btn-success" ng-click="expandAll()">Expand All</button>
       <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row</button>
       <button id="toggleSecondRow" type="button" class="btn btn-success" ng-click="toggleRow(1)">Toggle Second Row</button>
       <button id="changeGrouping" type="button" class="btn btn-success" ng-click="changeGrouping()">Change Grouping</button>
-      <div id="grid1" ui-grid="gridOptions" ui-grid-grouping ui-grid-pinning class="grid"></div>
+      <div id="grid1" ui-grid="gridOptions" ui-grid-grouping class="grid"></div>
     </div>
   </script>
 </div>
@@ -109,7 +108,7 @@ we can't easily see that it's an average.</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.grouping', 'ui.grid.pinning' ]);
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.grouping' ]);
 
     app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridGroupingConstants', function ($scope, $http, $interval, uiGridGroupingConstants ) {
       $scope.gridOptions = {
@@ -154,13 +153,13 @@ we can't easily see that it's an average.</p>
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-63"></pre>
-<script type="text/ng-template" id="scenario.js-63">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-66"></pre>
+<script type="text/ng-template" id="scenario.js-66">
     var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
     describe( '209 grouping', function() {
     });
   </script>
 </div>
 </div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-62" ng-eval-javascript="app.js"></div></div>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-65" ng-eval-javascript="app.js"></div></div>
 </div>

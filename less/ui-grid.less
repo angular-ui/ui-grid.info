@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-e4eb65c - 2015-04-09
+ * ui-grid - v3.0.0-rc.20-8a0c105 - 2015-04-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -732,7 +732,12 @@ select.ui-grid-filter-select {
   &:hover {
     border: @gridBorderWidth solid  @borderColor;
   }
+
+  .ui-grid-filter-cancel-button-hidden & {
+    width: 100%;
+  }
 }
+
 @font-face {
   font-family: 'ui-grid';
   src: url('@{font-path}ui-grid.eot');

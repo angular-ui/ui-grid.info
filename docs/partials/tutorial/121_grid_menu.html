@@ -1,0 +1,167 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>The grid menu can be enabled through setting the gridOption <code>enableGridMenu</code>.  This 
+adds a settings icon in the top right of the grid, which floats above the column header.  The
+menu by default gives access to show/hide columns, but can be customised to show additional
+actions.  </p>
+
+<p>You can customize a the menu and provide your own functionality.  Each menu item can have:</p>
+
+<ul>
+<li><code>shown</code>: a function that determines whether or not to display the item</li>
+<li><code>title</code>: the title you'd like to have displayed for the menu item (note that you can also 
+use i18n on this through the <code>gridMenuTitleFilter</code> setting)</li>
+<li><code>icon</code>: an icon you'd like displayed alongside the item</li>
+<li><code>action</code>: a function that will be called when the menu is clicked</li>
+<li><code>active</code>: a function that highlights the item (giving a toggle type effect - see the sort on the column menus for an example)</li>
+<li><code>context</code>: by default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the 
+property <code>grid</code> (accessible through <code>this.grid</code>.  You can pass in your own context by supplying 
+the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</li>
+<li><code>leaveOpen</code>: by default false, if set to true the menu will be left open after the action</li>
+</ul>
+
+<p>The exporter feature also adds menu items to this menu.  The <code>exporterMenuCsv</code> option is set
+to false, which suppresses csv export.  The 'export selected rows' option is only available
+if at least one row is selected.</p>
+
+<p>The column titles can have a custom filter defined using <code>gridMenuTitleFilter</code>, used when your
+column headers have an internationalization filter (angular translate or i18nService), and you
+want them also internationalized in the grid menu.  The translate needs to return either a string,
+or a promise that will resolve to a string.  In the example below we create a fake 
+internationalization function that waits 1 second then prefixes each column with "col: ".</p>
+
+<p>You can suppress the ability to show and hide columns by setting the gridOption <code>gridMenuShowHideColumns: false</code>,
+you can suppress the ability to hide individual columns by setting <code>enableHiding</code> on that columnDef to false.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-50" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-51"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-50" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-50">
+  <div ng-controller="MainCtrl">
+    <div id="grid1" ui-grid="gridOptions" ui-grid-exporter ui-grid-selection class="grid"></div>
+    <div ng-if='columnChanged'>
+      Column Visibility Changed - name: {{ columnChanged.name }} visible: {{ columnChanged.visible }}
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+
+  .my-custom-menu {
+    position: absolute;
+  }
+
+  .my-custom-menu .ui-grid-menu {
+    padding: 0px;
+  }
+
+  .my-custom-menu .ui-grid-menu-inner {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.exporter', 'ui.grid.selection']);
+
+  app.controller('MainCtrl', ['$scope', '$http', '$interval', '$q', function ($scope, $http, $interval, $q) {
+    var fakeI18n = function( title ){
+      var deferred = $q.defer();
+      $interval( function() {
+        deferred.resolve( 'col: ' + title );
+      }, 1000, 1);
+      return deferred.promise;
+    };
+  
+    $scope.gridOptions = {
+      exporterMenuCsv: false,
+      enableGridMenu: true,
+      gridMenuTitleFilter: fakeI18n,
+      columnDefs: [
+        { name: 'name' },
+        { name: 'gender', enableHiding: false },
+        { name: 'company' }
+      ],
+      gridMenuCustomItems: [
+        {
+          title: 'Rotate Grid',
+          action: function ($event) {
+            this.grid.element.toggleClass('rotated');
+          }
+        }
+      ],
+      onRegisterApi: function( gridApi ){
+        $scope.gridApi = gridApi;
+        
+        // interval of zero just to allow the directive to have initialized
+        $interval( function() {
+          gridApi.core.addToGridMenu( gridApi.grid, [{ title: 'Dynamic item'}]);
+        }, 0, 1);
+        
+        gridApi.core.on.columnVisibilityChanged( $scope, function( changedColumn ){
+          $scope.columnChanged = { name: changedColumn.colDef.name, visible: changedColumn.colDef.visible };
+        });
+      }
+    };
+
+    $http.get('/data/100.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-51"></pre>
+<script type="text/ng-template" id="scenario.js-51">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  describe('grid menu', function() {
+    it('grid1 should have three visible columns', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+    });
+
+    it('grid1 grid menu should have 8 items', function () {
+      gridTestUtils.expectVisibleGridMenuItems( 'grid1', 7 );
+    });
+    
+    it('grid1 hide then show company column', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Name' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Company' );
+
+      gridTestUtils.clickGridMenuItem( 'grid1', 11 );  // there are some hidden menu items, this is company_hide
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Name' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
+
+      gridTestUtils.clickGridMenuItem( 'grid1', 12 );  // there are some hidden menu items, this is company_show
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Name' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
+      gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Company' );
+    });
+  });
+
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-50" ng-eval-javascript="app.js"></div></div>
+</div>
