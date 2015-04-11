@@ -49,6 +49,10 @@ grid.grouping.rowExpandedStates, then call refresh.  This is because we can't ea
 row cache without calling the processors, and once we've built the logic into the rowProcessors we may as
 well use it all the time.</p>
 
+<p>Note that we don't really manipulate row visibility directly - we set the reasonInvisible.grouping
+flag, and then ask the row to calculate it's own visibility.  This means we should work fine with 
+filtering - filtered rows wouldn't get included in our grouping logic.</p>
+
 <p><br/>
 <br/></p>
 

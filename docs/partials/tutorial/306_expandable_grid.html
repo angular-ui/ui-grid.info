@@ -27,7 +27,10 @@ provided following events and methods fos subGrids:</p>
     gridApi.expandable.collapseAllRows();
 </pre>
 
-<p>SubGrid nesting can be done upto multiple levels.</p><h2 id="Example">Example</h2>
+<p>SubGrid nesting can be done upto multiple levels.</p>
+
+<p>In addition to above configuration 'scrollFillerClass' is also available and can be used to style the scroll filler, scroll filler
+appears when you quickly scroll through the grid.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-77 expandableRowTemplate.html" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -53,7 +56,7 @@ provided following events and methods fos subGrids:</p>
 <div class="tab-pane" title="expandableRowTemplate.html">
 <pre class="prettyprint linenums" ng-set-text="expandableRowTemplate.html"></pre>
 <script type="text/ng-template" id="expandableRowTemplate.html">
-  <div ui-grid="row.entity.subGridOptions" style="height:140px;"></div>
+  <div ui-grid="row.entity.subGridOptions" style="height:150px;"></div>
 </script>
 </div>
 <div class="tab-pane" title="main.css">
