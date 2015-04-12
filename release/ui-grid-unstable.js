@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-3b142c3 - 2015-04-12
+ * ui-grid - v3.0.0-rc.20-f4d065a - 2015-04-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6707,9 +6707,9 @@ angular.module('ui.grid')
       };
 
       /**
-       * @ngdoc function
+       * @ngdoc property
        * @name flatEntityAccess
-       * @methodOf ui.grid.class:GridOptions
+       * @propertyOf ui.grid.class:GridOptions
        * @description Set to true if your columns are all related directly to fields in a flat object structure - i.e. 
        * each of your columns associate directly with a propery one each of the entities in your data array.
        * 

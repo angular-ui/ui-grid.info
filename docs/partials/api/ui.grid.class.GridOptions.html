@@ -10,16 +10,7 @@ developer to configure the behaviour of their ui-grid</p></div>
 <div class="usage"><pre class="prettyprint linenums">GridOptions();</pre>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="flatEntityAccess">flatEntityAccess()</h3>
-<div class="flatentityaccess"><p>Set to true if your columns are all related directly to fields in a flat object structure - i.e. 
-each of your columns associate directly with a propery one each of the entities in your data array.</p>
-
-<p>In that situation we can avoid all the logic associated with complex binding to functions or to properties of sub-objects,
-which can provide a significant speed improvement with large data sets, with filtering and with sorting.</p>
-
-<p>By default false</p></div>
-</li>
-<li><h3 id="getRowIdentity">getRowIdentity()</h3>
+<ul class="methods"><li><h3 id="getRowIdentity">getRowIdentity()</h3>
 <div class="getrowidentity"><p>This function returns the identity value uniquely identifying this row, if one is not present it does not set it.</p>
 
 <p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p></div>
@@ -129,6 +120,15 @@ to exclude. </p>
 <p>If columnDefs is defined, this will be ignored.</p>
 
 <p>Defaults to ['$$hashKey']</p></div>
+</li>
+<li><h3 id="flatEntityAccess">flatEntityAccess</h3>
+<div class="flatentityaccess"><p>Set to true if your columns are all related directly to fields in a flat object structure - i.e. 
+each of your columns associate directly with a propery one each of the entities in your data array.</p>
+
+<p>In that situation we can avoid all the logic associated with complex binding to functions or to properties of sub-objects,
+which can provide a significant speed improvement with large data sets, with filtering and with sorting.</p>
+
+<p>By default false</p></div>
 </li>
 <li><h3 id="footerTemplate">footerTemplate</h3>
 <div class="footertemplate"><p>(optional) Null by default. When provided, this setting uses a custom footer
