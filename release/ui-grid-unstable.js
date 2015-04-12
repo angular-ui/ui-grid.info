@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-d388a39 - 2015-04-11
+ * ui-grid - v3.0.0-rc.20-3b142c3 - 2015-04-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -696,6 +696,34 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 }]);
 
 })();
+(function(){
+  'use strict';
+
+  angular.module('ui.grid').directive('uiGridFilter', function ($compile, $templateCache) {
+
+    return {
+      compile: function() {
+        return {
+          pre: function ($scope, $elm, $attrs, controllers) {
+            $scope.col.updateFilters = function( filterable ){
+              $elm.children().remove();
+              if ( filterable ){
+                var template = $scope.col.filterHeaderTemplate;
+    
+                $elm.append($compile(template)($scope));
+              }
+            };
+            
+            $scope.$on( '$destroy', function() {
+              delete $scope.col.updateFilters;
+            });
+          }
+        };
+      }
+    };
+  });
+})();
+
 (function () {
   'use strict';
 
@@ -1107,11 +1135,17 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               }
       
               // Figure out whether this column is filterable or not
+              var oldFilterable = $scope.filterable;
               if (uiGridCtrl.grid.options.enableFiltering && $scope.col.enableFiltering) {
                 $scope.filterable = true;
               }
               else {
                 $scope.filterable = false;
+              }
+
+              if ( oldFilterable !== $scope.filterable && typeof($scope.col.updateFilters) !== 'undefined'){
+                
+                $scope.col.updateFilters($scope.filterable);
               }
               
               // figure out whether we support column menus
@@ -5523,7 +5557,7 @@ angular.module('ui.grid')
 
           // gridUtil.logDebug('Creating on event method ' + featureName + '.on.' + eventName);
           feature.on[eventName] = function (scope, handler, _this) {
-            if ( typeof(scope.$on) === 'undefined' ){
+            if ( !scope || typeof(scope.$on) === 'undefined' ){
               gridUtil.logError('asked to listen on ' + featureName + '.on.' + eventName + ' but scope wasn\'t passed in the input parameters, you probably forgot to provide it, not registering');
               return;
             }
@@ -8207,20 +8241,31 @@ angular.module('ui.grid')
 
           var templateGetPromises = [];
 
-          /**
-           * @ngdoc property
-           * @name headerCellTemplate
-           * @propertyOf ui.grid.class:GridOptions.columnDef
-           * @description a custom template for the header for this column.  The default
-           * is ui-grid/uiGridHeaderCell
-           *
-           */
-          if (!colDef.headerCellTemplate) {
-            col.providedHeaderCellTemplate = 'ui-grid/uiGridHeaderCell';
-          } else {
-            col.providedHeaderCellTemplate = colDef.headerCellTemplate;
-          }
+          // Abstracts the standard template processing we do for every template type
+          var processTemplate = function( templateType, providedType, defaultTemplate, filterType ) {
+            if ( !colDef[templateType] ){
+              col[providedType] = defaultTemplate;
+            } else {
+              col[providedType] = colDef[templateType];
+            }
+ 
+             templateGetPromises.push(gridUtil.getTemplate(col[providedType])
+                .then(
+                function (template) {
+                  if ( filterType ){
+                    col[templateType] = template.replace(uiGridConstants.CUSTOM_FILTERS, col[filterType] ? "|" + col[filterType] : "");
+                  } else {
+                    col[templateType] = template;
+                  }
+                },
+                function (res) {
+                  throw new Error("Couldn't fetch/use colDef." + templateType + " '" + colDef[templateType] + "'");
+                })
+            );
 
+          };
+          
+          
           /**
            * @ngdoc property
            * @name cellTemplate
@@ -8230,11 +8275,18 @@ angular.module('ui.grid')
            * must contain a div that can receive focus.
            *
            */
-          if (!colDef.cellTemplate) {
-            col.providedCellTemplate = 'ui-grid/uiGridCell';
-          } else {
-            col.providedCellTemplate = colDef.cellTemplate;
-          }
+          processTemplate( 'cellTemplate', 'providedCellTemplate', 'ui-grid/uiGridCell', 'cellFilter' );
+          col.cellTemplatePromise = templateGetPromises[0];
+          
+          /**
+           * @ngdoc property
+           * @name headerCellTemplate
+           * @propertyOf ui.grid.class:GridOptions.columnDef
+           * @description a custom template for the header for this column.  The default
+           * is ui-grid/uiGridHeaderCell
+           *
+           */
+          processTemplate( 'headerCellTemplate', 'providedHeaderCellTemplate', 'ui-grid/uiGridHeaderCell', 'headerCellFilter' );
 
           /**
            * @ngdoc property
@@ -8244,48 +8296,23 @@ angular.module('ui.grid')
            * is ui-grid/uiGridFooterCell
            *
            */
-          if (!colDef.footerCellTemplate) {
-            col.providedFooterCellTemplate = 'ui-grid/uiGridFooterCell';
-          } else {
-            col.providedFooterCellTemplate = colDef.footerCellTemplate;
-          }
+          processTemplate( 'footerCellTemplate', 'providedFooterCellTemplate', 'ui-grid/uiGridFooterCell', 'footerCellFilter' );
 
-          col.cellTemplatePromise = gridUtil.getTemplate(col.providedCellTemplate);
-          templateGetPromises.push(col.cellTemplatePromise
-            .then(
-              function (template) {
-                col.cellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.cellFilter ? "|" + col.cellFilter : "");
-              },
-              function (res) {
-                throw new Error("Couldn't fetch/use colDef.cellTemplate '" + colDef.cellTemplate + "'");
-              })
-          );
-
-          templateGetPromises.push(gridUtil.getTemplate(col.providedHeaderCellTemplate)
-              .then(
-              function (template) {
-                col.headerCellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.headerCellFilter ? "|" + col.headerCellFilter : "");
-              },
-              function (res) {
-                throw new Error("Couldn't fetch/use colDef.headerCellTemplate '" + colDef.headerCellTemplate + "'");
-              })
-          );
-
-          templateGetPromises.push(gridUtil.getTemplate(col.providedFooterCellTemplate)
-              .then(
-              function (template) {
-                col.footerCellTemplate = template.replace(uiGridConstants.CUSTOM_FILTERS, col.footerCellFilter ? "|" + col.footerCellFilter : "");
-              },
-              function (res) {
-                throw new Error("Couldn't fetch/use colDef.footerCellTemplate '" + colDef.footerCellTemplate + "'");
-              })
-          );
+          /**
+           * @ngdoc property
+           * @name filterHeaderTemplate
+           * @propertyOf ui.grid.class:GridOptions.columnDef
+           * @description a custom template for the filter input.  The default is ui-grid/ui-grid-filter
+           *
+           */
+          processTemplate( 'filterHeaderTemplate', 'providedFilterHeaderTemplate', 'ui-grid/ui-grid-filter' );
 
           // Create a promise for the compiled element function
           col.compiledElementFnDefer = $q.defer();
 
           return $q.all(templateGetPromises);
         },
+        
 
         rowTemplateAssigner: function rowTemplateAssigner(row) {
           var grid = this;
@@ -23558,6 +23585,11 @@ module.filter('px', function() {
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('ui-grid/ui-grid-filter',
+    "<div class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\" ng-class=\"{'ui-grid-filter-cancel-button-hidden' : colFilter.disableCancelFilterButton === true }\"><div ng-if=\"colFilter.type !== 'select'\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div><div ng-if=\"colFilter.type === 'select'\"><select class=\"ui-grid-filter-select\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\" ng-options=\"option.value as option.label for option in colFilter.selectOptions\"><option value=\"\"></option></select><div class=\"ui-grid-filter-button-select\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div></div>"
+  );
+
+
   $templateCache.put('ui-grid/ui-grid-footer',
     "<div class=\"ui-grid-footer-panel ui-grid-footer-aggregates-row\"><div class=\"ui-grid-footer ui-grid-footer-viewport\"><div class=\"ui-grid-footer-canvas\"><div class=\"ui-grid-footer-cell-wrapper\" ng-style=\"colContainer.headerCellWrapperStyle()\"><div class=\"ui-grid-footer-cell-row\"><div ng-repeat=\"col in colContainer.renderedColumns track by col.colDef.name\" ui-grid-footer-cell col=\"col\" render-index=\"$index\" class=\"ui-grid-footer-cell ui-grid-clearfix\"></div></div></div></div></div></div>"
   );
@@ -23645,7 +23677,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-class=\"{'ui-grid-column-menu-button-last-col': isLastCol}\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ng-if=\"filterable\" class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\" ng-class=\"{'ui-grid-filter-cancel-button-hidden' : colFilter.disableCancelFilterButton === true }\"><div ng-if=\"colFilter.type !== 'select'\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div><div ng-if=\"colFilter.type === 'select'\"><select class=\"ui-grid-filter-select\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\" ng-options=\"option.value as option.label for option in colFilter.selectOptions\"><option value=\"\"></option></select><div class=\"ui-grid-filter-button-select\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-class=\"{'ui-grid-column-menu-button-last-col': isLastCol}\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ui-grid-filter></div></div>"
   );
 
 
