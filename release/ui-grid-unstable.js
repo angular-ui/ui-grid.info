@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-f4d065a - 2015-04-12
+ * ui-grid - v3.0.0-rc.20-b0dc47d - 2015-04-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14806,8 +14806,8 @@ module.filter('px', function() {
    *
    *  @description Services for exporter feature
    */
-  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'uiGridSelectionConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
-    function ($q, uiGridExporterConstants, uiGridSelectionConstants, gridUtil, $compile, $interval, i18nService) {
+  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
+    function ($q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService) {
 
       var service = {
 
@@ -19771,32 +19771,12 @@ module.filter('px', function() {
          *  <br/>Defaults to false
          */
         if (colDef.pinnedLeft) {
-          if (col.width === '*') {
-            // Need to refresh so the width can be calculated.
-            col.grid.refresh()
-                .then(function () {
-                    col.renderContainer = 'left';
-                    col.grid.createLeftContainer();
-            });
-          }
-          else {
-            col.renderContainer = 'left';
-            col.grid.createLeftContainer();
-          }
+          col.renderContainer = 'left';
+          col.grid.createLeftContainer();
         }
         else if (colDef.pinnedRight) {
-            if (col.width === '*') {
-                // Need to refresh so the width can be calculated.
-                col.grid.refresh()
-                    .then(function () {
-                        col.renderContainer = 'right';
-                        col.grid.createRightContainer();
-                    });
-            }
-            else {
-                col.renderContainer = 'right';
-                col.grid.createRightContainer();
-            }
+          col.renderContainer = 'right';
+          col.grid.createRightContainer();
         }
 
         if (!colDef.enablePinning) {
@@ -19865,15 +19845,10 @@ module.filter('px', function() {
           }
         }
 
-        // Need to call refresh twice; once to move our column over to the new render container and then
-        //   a second time to update the grid viewport dimensions with our adjustments
         grid.refresh()
-          .then(function () {
-            grid.refresh()
-              .then(function() {
-                grid.api.pinning.raise.columnPinned( col.colDef, container );
-              });
-          });
+        .then(function() {
+          grid.api.pinning.raise.columnPinned( col.colDef, container );
+        });
       }
     };
 
