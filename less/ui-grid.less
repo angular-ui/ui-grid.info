@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-e1d8b60 - 2015-04-13
+ * ui-grid - v3.0.0-rc.20-9d91805 - 2015-04-13
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -518,7 +518,7 @@ input[type="text"].ui-grid-filter-input {
 }
 
 .ui-grid-top-panel-background {
-  .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
+  .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);
 }
 
 @topPanelRadius: @gridBorderRadius - @gridBorderWidth;
@@ -535,7 +535,7 @@ input[type="text"].ui-grid-filter-input {
     overflow: hidden;  // Disable so menus show up
     font-weight: bold;
 
-    // .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);  
+    // .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);
     .ui-grid-top-panel-background;
 
     .border-radius(@topPanelRadius, 0, 0, @topPanelRadius);
@@ -621,7 +621,7 @@ input[type="text"].ui-grid-filter-input {
 }
 
 .ui-grid-column-menu {
-  position: absolute;
+  position: relative;
 }
 
 /* Slide up/down animations */
@@ -630,12 +630,12 @@ input[type="text"].ui-grid-filter-input {
     .transition(all, 0.05s, linear);
     display: block !important;
   }
-  
+
   &.ng-hide-add.ng-hide-add-active,
   &.ng-hide-remove {
     .transform(translateY(-100%));
   }
-   
+
   &.ng-hide-add,
   &.ng-hide-remove.ng-hide-remove-active {
     .transform(translateY(0));
@@ -648,12 +648,12 @@ input[type="text"].ui-grid-filter-input {
     .transition(all, 0.05s, linear);
     display: block !important;
   }
-  
+
   &.ng-hide-add.ng-hide-add-active,
   &.ng-hide-remove {
     .transform(translateY(-100%));
   }
-   
+
   &.ng-hide-add,
   &.ng-hide-remove.ng-hide-remove-active {
     .transform(translateY(0));
