@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-9d91805 - 2015-04-13
+ * ui-grid - v3.0.0-rc.20-8199eb5 - 2015-04-13
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2212,7 +2212,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-viewport { width: ' + viewportWidth + 'px; height: ' + viewportHeight + 'px; }';
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-header-viewport { width: ' + headerViewportWidth + 'px; }';
 
-              ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-canvas { width: ' + canvasWidth + grid.scrollbarWidth + 'px; }';
+              ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-canvas { width: ' + (canvasWidth + grid.scrollbarWidth) + 'px; }';
               ret += '\n .grid' + uiGridCtrl.grid.id + ' .ui-grid-render-container-' + $scope.containerId + ' .ui-grid-footer-viewport { width: ' + footerViewportWidth + 'px; }';
 
               return ret;
@@ -13267,6 +13267,7 @@ module.filter('px', function() {
             uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col), evt.ctrlKey || evt.metaKey);
 
             evt.stopPropagation();
+            $scope.$apply();
           });
 
           $elm.find('div').on('focus', function (evt) {
@@ -20030,7 +20031,11 @@ module.filter('px', function() {
         
         fireColumnSizeChanged: function (grid, colDef, deltaChange) {
           $timeout(function () {
-            grid.api.colResizable.raise.columnSizeChanged(colDef, deltaChange);
+            if ( grid.api.colResizable ){
+              grid.api.colResizable.raise.columnSizeChanged(colDef, deltaChange);
+            } else {
+              gridUtil.logError("The resizeable api is not registered, this may indicate that you've included the module but not added the 'ui-grid-column-resize' directive to your grid definition.  Cannot raise any events.");
+            }
           });
         },
         
