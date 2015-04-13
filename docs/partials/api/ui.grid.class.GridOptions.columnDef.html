@@ -224,8 +224,14 @@ passing in the row and the col <code>cellTooltip( row, col )</code>, and the ret
 <li><h3 id="type">type</h3>
 <div class="type"><p>the type of the column, used in sorting.  If not provided then the 
 grid will guess the type.  Add this only if the grid guessing is not to your
-satisfaction.  Refer to <a href="#/api/ui.grid.service:GridUtil.guessType">gridUtil.guessType</a> for
-a list of values the grid knows about.</p></div>
+satisfaction.  One of:
+- 'string'
+- 'boolean'
+- 'number'
+- 'date'
+- 'object'
+- 'numberStr'
+Note that if you choose date, your dates should be in a javascript date type</p></div>
 </li>
 <li><h3 id="visible">visible</h3>
 <div class="visible"><p>sets whether or not the column is visible

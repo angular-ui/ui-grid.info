@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-b0dc47d - 2015-04-12
+ * ui-grid - v3.0.0-rc.20-e1d8b60 - 2015-04-13
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -55,7 +55,7 @@
 }
 .ui-grid-header {
   border-bottom: 1px solid #d4d4d4;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 .ui-grid-top-panel {
   position: relative;
@@ -506,10 +506,11 @@ input[type="text"].ui-grid-filter-input:hover {
   z-index: 2;
   position: absolute;
   right: 0;
+  top: 0;
   background: #f3f3f3;
   border: 1px solid #d4d4d4;
   cursor: pointer;
-  min-height: 27px;
+  height: 31px;
   font-weight: normal;
 }
 .ui-grid-menu-button .ui-grid-icon-container {
@@ -519,17 +520,16 @@ input[type="text"].ui-grid-filter-input:hover {
   right: 0;
 }
 .ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid {
-  overflow-y: scroll;
+  overflow: scroll;
   max-height: 300px;
   border: 1px solid #d4d4d4;
 }
 .ui-grid-menu {
   z-index: 2;
   position: absolute;
-  overflow: hidden;
   padding: 0 10px 20px 10px;
   cursor: pointer;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 .ui-grid-menu .ui-grid-menu-inner {
   background: #f3f3f3;

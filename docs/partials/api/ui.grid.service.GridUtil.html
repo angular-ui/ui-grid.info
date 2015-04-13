@@ -124,11 +124,11 @@ GridUtil.getTemplate(url).then(function (contents) {
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{string}</code>
 – <p>one of the following
-'string'
-'boolean'
-'number'
-'date'
-'object'</p></div>
+- 'string'
+- 'boolean'
+- 'number'
+- 'date'
+- 'object'</p></div>
 </div>
 </li>
 <li><h3 id="logDebug">logDebug()</h3>
@@ -259,7 +259,9 @@ gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
 <li><h3 id="throttle">throttle(func, wait, params)</h3>
 <div class="throttle"><p>Adapted from debounce function (above)
 Potential keys for Params Object are:
-   trailing (bool) - whether to trigger after throttle time ends if called multiple times</p><h4 id="Parameters">Parameters</h4>
+   trailing (bool) - whether to trigger after throttle time ends if called multiple times
+Updated to use $interval rather than $timeout, as protractor (e2e tests) is able to work with $interval,
+but not with $timeout</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
 <p>function to throttle</p></li>
 <li><code ng:non-bindable="">wait – {number} – </code>

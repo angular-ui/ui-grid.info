@@ -118,7 +118,7 @@ of setting gridOptions.data to a string value that specifies an object on your s
       it('should not duplicate the menu options for pinning when resizing a column', function () {
         element( by.id('refreshButton') ).click();
         gridTestUtils.resizeHeaderCell( 'grid1', 1 );
-        gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 5)
+        gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 5);
       });
     });
 </script>

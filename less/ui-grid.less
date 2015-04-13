@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-b0dc47d - 2015-04-12
+ * ui-grid - v3.0.0-rc.20-e1d8b60 - 2015-04-13
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -525,7 +525,7 @@ input[type="text"].ui-grid-filter-input {
 
 .ui-grid-header {
   border-bottom: 1px solid @borderColor;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .ui-grid-top-panel {
@@ -811,10 +811,11 @@ select.ui-grid-filter-select {
   z-index: 2;
   position: absolute;
   right: 0;
+  top: 0;
   background: @headerBackgroundColor;
   border: @gridBorderWidth solid @borderColor;
   cursor: pointer;
-  min-height: 27px;
+  height: 31px;
   font-weight: normal;
 }
 
@@ -825,7 +826,7 @@ select.ui-grid-filter-select {
 .ui-grid-menu-button .ui-grid-menu {
   right: 0;
   .ui-grid-menu-mid {
-    overflow-y: scroll;
+    overflow: scroll;
     max-height: 300px;
     border: @gridBorderWidth solid @borderColor;
   }
@@ -834,10 +835,9 @@ select.ui-grid-filter-select {
 .ui-grid-menu {
   z-index: 2; // So it shows up over grid canvas
   position: absolute;
-  overflow: hidden;
   padding: 0 10px 20px 10px;
   cursor: pointer;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .ui-grid-menu .ui-grid-menu-inner {

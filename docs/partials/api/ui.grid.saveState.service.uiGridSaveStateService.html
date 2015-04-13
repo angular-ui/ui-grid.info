@@ -86,6 +86,16 @@ function then only the first is selected.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
+<li><h3 id="restoreTreeView">restoreTreeView(grid, treeViewState)</h3>
+<div class="restoretreeview"><p>Restores the tree view configuration, if the tree view feature
+is enabled.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to restore</p></li>
+<li><code ng:non-bindable="">treeViewState – {object} – </code>
+<p>the tree view state ready to be restored</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="save">save(grid)</h3>
 <div class="save"><p>Saves the current grid state into an object, and
 passes that object back to the caller</p><h4 id="Parameters">Parameters</h4>
@@ -147,8 +157,18 @@ it approximates the current scroll row and column, and saves that.</p><h4 id="Pa
 <p>the grid whose state we'd like to save</p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
+<div class="returns"><code ng:non-bindable="">{array}</code>
 – <p>the selection state ready to be saved</p></div>
+</div>
+</li>
+<li><h3 id="saveTreeView">saveTreeView(grid)</h3>
+<div class="savetreeview"><p>Saves the tree view state, if the tree feature is enabled</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid whose state we'd like to save</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the tree view state ready to be saved</p></div>
 </div>
 </li>
 </ul>
