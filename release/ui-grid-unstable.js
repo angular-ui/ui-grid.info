@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-1f9100d - 2015-04-16
+ * ui-grid - v3.0.0-rc.20-e3b49da - 2015-04-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -15613,12 +15613,20 @@ module.filter('px', function() {
         
           // IE10+
           if (navigator.msSaveBlob) {
-            return navigator.msSaveBlob(new Blob(["\uFEFF", csvContent], { type: strMimeType } ), fileName);
+            return navigator.msSaveBlob(
+              new Blob(
+                [exporterOlderExcelCompatibility ? "\uFEFF" : '', csvContent],
+                { type: strMimeType } ),
+              fileName
+            );
           }
       
           //html5 A[download]
           if ('download' in a) {
-            var blob = new Blob(["\uFEFF", csvContent], { type: strMimeType } );
+            var blob = new Blob(
+              [exporterOlderExcelCompatibility ? "\uFEFF" : '', csvContent], 
+              { type: strMimeType }
+            );
             rawFile = URL.createObjectURL(blob);
             a.setAttribute('download', fileName);
           } else {
