@@ -169,6 +169,27 @@ uiGridExporterConstants.SELECTED</p></li>
 <li><h3 id="isIE">isIE()</h3>
 <div class="isie"><p>Checks whether current browser is IE and returns it's version if it is</p></div>
 </li>
+<li><h3 id="loadAllDataIfNeeded">loadAllDataIfNeeded(ref, grid, rowTypes, colTypes, callback)</h3>
+<div class="loadalldataifneeded"><p>When using server side pagination, raise exportAll event to load all data, 
+and call callback function till all data loaded.
+When using client side pagination, call callback function directly</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">ref – {object} – </code>
+<p>reference used by callback</p></li>
+<li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid from which data should be exported</p></li>
+<li><code ng:non-bindable="">rowTypes – {string} – </code>
+<p>which rows to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+<li><code ng:non-bindable="">colTypes – {string} – </code>
+<p>which columns to export, valid values are
+uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+uiGridExporterConstants.SELECTED</p></li>
+<li><code ng:non-bindable="">callback – {object} – </code>
+<p>callback function</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="pdfExport">pdfExport(grid, rowTypes, colTypes)</h3>
 <div class="pdfexport"><p>Exports rows from the grid in pdf format, 
 the data exported is selected based on the provided options.

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-e3b49da - 2015-04-16
+ * ui-grid - v3.0.0-rc.20-f4e6cb4 - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14878,6 +14878,8 @@ module.filter('px', function() {
 
       var service = {
 
+        delay: 100,
+
         initializeGrid: function (grid) {
 
           //add feature namespace and any properties to grid for needed state
@@ -14946,7 +14948,7 @@ module.filter('px', function() {
               if (grid.api.core.addToGridMenu){
                 service.addToMenu( grid );
               }              
-            }, 100, 1);
+            }, this.delay, 1);
           }
 
         },
@@ -15261,6 +15263,28 @@ module.filter('px', function() {
            * </pre>
            */
           gridOptions.exporterFieldCallback = gridOptions.exporterFieldCallback ? gridOptions.exporterFieldCallback : function( grid, row, col, value ) { return value; };
+
+          /**
+           * @ngdoc function
+           * @name exporterAllDataPromise
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description This promise is needed when exporting all rows,
+           * and the data need to be provided by server side. Default is null.
+           * @returns {Promise} a promise to load all data from server
+           * 
+           * @example
+           * <pre>
+           *   gridOptions.exporterAllDataPromise = function () {
+           *     var deferred = $q.defer();
+           *     $http.get('/data/100.json')
+           *       .success(function ( data ) {
+           *         deferred.resolve( data );
+           *       });
+           *     return deferred.promise;
+           *   }
+           * </pre>
+           */
+          gridOptions.exporterAllDataPromise = gridOptions.exporterAllDataPromise ? gridOptions.exporterAllDataPromise : null;
         },
 
 
@@ -15355,14 +15379,46 @@ module.filter('px', function() {
          * uiGridExporterConstants.SELECTED
          */
         csvExport: function (grid, rowTypes, colTypes) {
-          var exportColumnHeaders = this.getColumnHeaders(grid, colTypes);
-          var exportData = this.getData(grid, rowTypes, colTypes);
-          var csvContent = this.formatAsCsv(exportColumnHeaders, exportData, grid.options.exporterCsvColumnSeparator);
-          
-          this.downloadFile (grid.options.exporterCsvFilename, csvContent, grid.options.exporterOlderExcelCompatibility);
+          this.loadAllDataIfNeeded(this, grid, rowTypes, colTypes, function(ref, grid, rowTypes, colTypes) {
+            var exportColumnHeaders = ref.getColumnHeaders(grid, colTypes);
+            var exportData = ref.getData(grid, rowTypes, colTypes);
+            var csvContent = ref.formatAsCsv(exportColumnHeaders, exportData, grid.options.exporterCsvColumnSeparator);
+            
+            ref.downloadFile (grid.options.exporterCsvFilename, csvContent, grid.options.exporterOlderExcelCompatibility);
+          });
         },
-        
-        
+
+        /**
+         * @ngdoc function
+         * @name loadAllDataIfNeeded
+         * @methodOf  ui.grid.exporter.service:uiGridExporterService
+         * @description When using server side pagination, raise exportAll event to load all data, 
+         * and call callback function till all data loaded.
+         * When using client side pagination, call callback function directly
+         * @param {object} ref reference used by callback
+         * @param {Grid} grid the grid from which data should be exported
+         * @param {string} rowTypes which rows to export, valid values are
+         * uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+         * uiGridExporterConstants.SELECTED
+         * @param {string} colTypes which columns to export, valid values are
+         * uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
+         * uiGridExporterConstants.SELECTED
+         * @param {object} callback callback function
+         */
+        loadAllDataIfNeeded: function (ref, grid, rowTypes, colTypes, callback) {
+          if ( rowTypes === uiGridExporterConstants.ALL && grid.rows.length !== grid.options.totalItems && grid.options.exporterAllDataPromise) {
+            grid.options.exporterAllDataPromise()
+              .then(function() {
+                grid.modifyRows(grid.options.data);
+              })
+              .then(function() {
+                callback(ref, grid, rowTypes, colTypes);
+              });
+          } else {
+            callback(ref, grid, rowTypes, colTypes);
+          }
+        },
+
         /** 
          * @ngdoc property
          * @propertyOf ui.grid.exporter.api:ColumnDef
@@ -15648,7 +15704,7 @@ module.filter('px', function() {
             }
             D.body.removeChild(a);
     
-          }, 100);
+          }, this.delay);
         },
 
         /**
@@ -15669,15 +15725,17 @@ module.filter('px', function() {
          * uiGridExporterConstants.SELECTED
          */
         pdfExport: function (grid, rowTypes, colTypes) {
-          var exportColumnHeaders = this.getColumnHeaders(grid, colTypes);
-          var exportData = this.getData(grid, rowTypes, colTypes);
-          var docDefinition = this.prepareAsPdf(grid, exportColumnHeaders, exportData);
-          
-          if (this.isIE()) {
-            var pdf = pdfMake.createPdf(docDefinition).download();
-          } else {
-            pdfMake.createPdf(docDefinition).open();
-          }
+          this.loadAllDataIfNeeded(this, grid, rowTypes, colTypes, function(ref, grid, rowTypes, colTypes) {
+            var exportColumnHeaders = ref.getColumnHeaders(grid, colTypes);
+            var exportData = ref.getData(grid, rowTypes, colTypes);
+            var docDefinition = ref.prepareAsPdf(grid, exportColumnHeaders, exportData);
+
+            if (ref.isIE()) {
+              var pdf = pdfMake.createPdf(docDefinition).download();
+            } else {
+              pdfMake.createPdf(docDefinition).open();
+            }
+          });
         },
         
         

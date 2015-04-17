@@ -6,7 +6,25 @@
 <div class="description"><p>GridOptions for exporter feature, these are available to be <br />
 set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="exporterCsvColumnSeparator">exporterCsvColumnSeparator</h3>
+<ul class="properties"><li><h3 id="exporterAllDataPromise">exporterAllDataPromise</h3>
+<div class="exporteralldatapromise"><p>This promise is needed when exporting all rows,
+and the data need to be provided by server side. Default is null.</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Promise}</code>
+– <p>a promise to load all data from server</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridOptions.exporterAllDataPromise = function () {
+  var deferred = $q.defer();
+  $http.get('/data/100.json')
+    .success(function ( data ) {
+      deferred.resolve( data );
+    });
+  return deferred.promise;
+}
+</pre></div>
+</div>
+</li>
+<li><h3 id="exporterCsvColumnSeparator">exporterCsvColumnSeparator</h3>
 <div class="exportercsvcolumnseparator"><p>The character to use as column separator
 link
 <br/>Defaults to ','</p></div>
