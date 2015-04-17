@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-7f12f6f - 2015-04-17
+ * ui-grid - v3.0.0-rc.20-3cbe79f - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1721,7 +1721,7 @@ angular.module('ui.grid')
             },
             context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) },
             leaveOpen: true,
-            order: 300 + index * 2 + 1
+            order: 301 + index * 2 + 1
           };
           service.setMenuItemTitle( menuItem, colDef, $scope.grid );
           showHideColumns.push( menuItem );
