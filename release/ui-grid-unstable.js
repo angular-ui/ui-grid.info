@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-f4e6cb4 - 2015-04-17
+ * ui-grid - v3.0.0-rc.20-f66f816 - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -804,7 +804,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
   'use strict';
 
   angular.module('ui.grid').directive('uiGridFooter', ['$templateCache', '$compile', 'uiGridConstants', 'gridUtil', '$timeout', function ($templateCache, $compile, uiGridConstants, gridUtil, $timeout) {
-    var defaultTemplate = 'ui-grid/ui-grid-footer';
 
     return {
       restrict: 'EA',
@@ -823,7 +822,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             containerCtrl.footer = $elm;
 
-            var footerTemplate = ($scope.grid.options.footerTemplate) ? $scope.grid.options.footerTemplate : defaultTemplate;
+            var footerTemplate = $scope.grid.options.footerTemplate;
             gridUtil.getTemplate(footerTemplate)
               .then(function (contents) {
                 var template = angular.element(contents);
@@ -870,7 +869,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
   'use strict';
 
   angular.module('ui.grid').directive('uiGridGridFooter', ['$templateCache', '$compile', 'uiGridConstants', 'gridUtil', '$timeout', function ($templateCache, $compile, uiGridConstants, gridUtil, $timeout) {
-    var defaultTemplate = 'ui-grid/ui-grid-grid-footer';
 
     return {
       restrict: 'EA',
@@ -884,7 +882,9 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             $scope.grid = uiGridCtrl.grid;
 
-            var footerTemplate = ($scope.grid.options.gridFooterTemplate) ? $scope.grid.options.gridFooterTemplate : defaultTemplate;
+
+
+            var footerTemplate = $scope.grid.options.gridFooterTemplate;
             gridUtil.getTemplate(footerTemplate)
               .then(function (contents) {
                 var template = angular.element(contents);
@@ -990,6 +990,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             // apply any headerCellClass
             var classAdded;
+            
+            // filter watchers
+            var filterDeregisters = [];
+            
             
             /* 
              * Our basic approach here for event handlers is that we listen for a down event (mousedown or touchstart).
@@ -1157,9 +1161,33 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 $scope.filterable = false;
               }
 
-              if ( oldFilterable !== $scope.filterable && typeof($scope.col.updateFilters) !== 'undefined'){
+              if ( oldFilterable !== $scope.filterable){
+                if ( typeof($scope.col.updateFilters) !== 'undefined' ){
+                  $scope.col.updateFilters($scope.filterable);
+                }
+
+                // if column is filterable add a filter watcher
+                if ($scope.filterable) {
+                  $scope.col.filters.forEach( function(filter, i) {
+                    filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
+                      if (n !== o) {
+                        uiGridCtrl.grid.api.core.raise.filterChanged();
+                        uiGridCtrl.grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+                        uiGridCtrl.grid.queueGridRefresh();
+                      }
+                    }));  
+                  });
+                  $scope.$on('$destroy', function() {
+                    filterDeregisters.forEach( function(filterDeregister) {
+                      filterDeregister();
+                    });
+                  });
+                } else {
+                  filterDeregisters.forEach( function(filterDeregister) {
+                    filterDeregister();
+                  });
+                }                          
                 
-                $scope.col.updateFilters($scope.filterable);
               }
               
               // figure out whether we support column menus
@@ -1198,28 +1226,6 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                   $scope.offAllEvents();
                 });
               } 
-
-              // if column is filterable add a filter watcher
-              var filterDeregisters = [];
-              if ($scope.filterable) {
-                $scope.col.filters.forEach( function(filter, i) {
-                  filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
-                    if (n !== o) {
-                      uiGridCtrl.grid.api.core.raise.filterChanged();
-                      uiGridCtrl.grid.refresh(true);
-                    }
-                  }));  
-                });
-                $scope.$on('$destroy', function() {
-                  filterDeregisters.forEach( function(filterDeregister) {
-                    filterDeregister();
-                  });
-                });
-              } else {
-                filterDeregisters.forEach( function(filterDeregister) {
-                  filterDeregister();
-                });
-              }                          
             };
 
             $scope.$watch('col', function (n, o) {
@@ -1698,7 +1704,7 @@ angular.module('ui.grid')
             },
             context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) },
             leaveOpen: true,
-            order: 300 + index * 2
+            order: 301 + index * 2
           };
           service.setMenuItemTitle( menuItem, colDef, $scope.grid );
           showHideColumns.push( menuItem );
@@ -7029,12 +7035,22 @@ angular.module('ui.grid')
        * @ngdoc string
        * @name footerTemplate
        * @propertyOf ui.grid.class:GridOptions
-       * @description (optional) Null by default. When provided, this setting uses a custom footer
-       * template. Can be set to either the name of a template file 'footer_template.html', inline html
+       * @description (optional) ui-grid/ui-grid-footer by default.  This footer shows the per-column
+       * aggregation totals. 
+       * When provided, this setting uses a custom footer template. Can be set to either the name of a template file 'footer_template.html', inline html
        * <pre>'<div class="ui-grid-bottom-panel" style="text-align: center">I am a Custom Grid Footer</div>'</pre>, or the id
        * of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.
        */
-      baseOptions.footerTemplate = baseOptions.footerTemplate || null;
+      baseOptions.footerTemplate = baseOptions.footerTemplate || 'ui-grid/ui-grid-footer';
+  
+      /**
+       * @ngdoc string
+       * @name gridFooterTemplate
+       * @propertyOf ui.grid.class:GridOptions
+       * @description (optional) ui-grid/ui-grid-grid-footer by default. This template by default shows the
+       * total items at the bottom of the grid, and the selected items if selection is enabled.
+       */
+      baseOptions.gridFooterTemplate = baseOptions.gridFooterTemplate || 'ui-grid/ui-grid-grid-footer';
   
       /**
        * @ngdoc string
@@ -15275,12 +15291,7 @@ module.filter('px', function() {
            * @example
            * <pre>
            *   gridOptions.exporterAllDataPromise = function () {
-           *     var deferred = $q.defer();
-           *     $http.get('/data/100.json')
-           *       .success(function ( data ) {
-           *         deferred.resolve( data );
-           *       });
-           *     return deferred.promise;
+           *     return $http.get('/data/100.json')
            *   }
            * </pre>
            */
@@ -15379,12 +15390,13 @@ module.filter('px', function() {
          * uiGridExporterConstants.SELECTED
          */
         csvExport: function (grid, rowTypes, colTypes) {
-          this.loadAllDataIfNeeded(this, grid, rowTypes, colTypes, function(ref, grid, rowTypes, colTypes) {
-            var exportColumnHeaders = ref.getColumnHeaders(grid, colTypes);
-            var exportData = ref.getData(grid, rowTypes, colTypes);
-            var csvContent = ref.formatAsCsv(exportColumnHeaders, exportData, grid.options.exporterCsvColumnSeparator);
+          var self = this;
+          this.loadAllDataIfNeeded(grid, rowTypes, colTypes).then(function() {
+            var exportColumnHeaders = self.getColumnHeaders(grid, colTypes);
+            var exportData = self.getData(grid, rowTypes, colTypes);
+            var csvContent = self.formatAsCsv(exportColumnHeaders, exportData, grid.options.exporterCsvColumnSeparator);
             
-            ref.downloadFile (grid.options.exporterCsvFilename, csvContent, grid.options.exporterOlderExcelCompatibility);
+            self.downloadFile (grid.options.exporterCsvFilename, csvContent, grid.options.exporterOlderExcelCompatibility);
           });
         },
 
@@ -15392,10 +15404,10 @@ module.filter('px', function() {
          * @ngdoc function
          * @name loadAllDataIfNeeded
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
-         * @description When using server side pagination, raise exportAll event to load all data, 
-         * and call callback function till all data loaded.
-         * When using client side pagination, call callback function directly
-         * @param {object} ref reference used by callback
+         * @description When using server side pagination, use exportAllDataPromise to
+         * load all data before continuing processing.
+         * When using client side pagination, return a resolved promise so processing
+         * continues immediately
          * @param {Grid} grid the grid from which data should be exported
          * @param {string} rowTypes which rows to export, valid values are
          * uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
@@ -15403,19 +15415,17 @@ module.filter('px', function() {
          * @param {string} colTypes which columns to export, valid values are
          * uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
          * uiGridExporterConstants.SELECTED
-         * @param {object} callback callback function
          */
-        loadAllDataIfNeeded: function (ref, grid, rowTypes, colTypes, callback) {
+        loadAllDataIfNeeded: function (grid, rowTypes, colTypes) {
           if ( rowTypes === uiGridExporterConstants.ALL && grid.rows.length !== grid.options.totalItems && grid.options.exporterAllDataPromise) {
-            grid.options.exporterAllDataPromise()
+            return grid.options.exporterAllDataPromise()
               .then(function() {
                 grid.modifyRows(grid.options.data);
-              })
-              .then(function() {
-                callback(ref, grid, rowTypes, colTypes);
               });
           } else {
-            callback(ref, grid, rowTypes, colTypes);
+            var deferred = $q.defer();
+            deferred.resolve();
+            return $q.promise;
           }
         },
 
@@ -15725,12 +15735,13 @@ module.filter('px', function() {
          * uiGridExporterConstants.SELECTED
          */
         pdfExport: function (grid, rowTypes, colTypes) {
-          this.loadAllDataIfNeeded(this, grid, rowTypes, colTypes, function(ref, grid, rowTypes, colTypes) {
-            var exportColumnHeaders = ref.getColumnHeaders(grid, colTypes);
-            var exportData = ref.getData(grid, rowTypes, colTypes);
-            var docDefinition = ref.prepareAsPdf(grid, exportColumnHeaders, exportData);
+          var self = this;
+          this.loadAllDataIfNeeded(grid, rowTypes, colTypes).then(function () {
+            var exportColumnHeaders = self.getColumnHeaders(grid, colTypes);
+            var exportData = self.getData(grid, rowTypes, colTypes);
+            var docDefinition = self.prepareAsPdf(grid, exportColumnHeaders, exportData);
 
-            if (ref.isIE()) {
+            if (self.isIE()) {
               var pdf = pdfMake.createPdf(docDefinition).download();
             } else {
               pdfMake.createPdf(docDefinition).open();

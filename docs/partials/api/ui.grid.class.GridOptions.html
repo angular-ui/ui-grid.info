@@ -131,10 +131,15 @@ which can provide a significant speed improvement with large data sets, with fil
 <p>By default false</p></div>
 </li>
 <li><h3 id="footerTemplate">footerTemplate</h3>
-<div class="footertemplate"><p>(optional) Null by default. When provided, this setting uses a custom footer
-template. Can be set to either the name of a template file 'footer_template.html', inline html
+<div class="footertemplate"><p>(optional) ui-grid/ui-grid-footer by default.  This footer shows the per-column
+aggregation totals. 
+When provided, this setting uses a custom footer template. Can be set to either the name of a template file 'footer_template.html', inline html
 <pre class="prettyprint linenums">'&lt;div class="ui-grid-bottom-panel" style="text-align: center"&gt;I am a Custom Grid Footer&lt;/div&gt;'</pre>, or the id
 of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p></div>
+</li>
+<li><h3 id="gridFooterTemplate">gridFooterTemplate</h3>
+<div class="gridfootertemplate"><p>(optional) ui-grid/ui-grid-grid-footer by default. This template by default shows the
+total items at the bottom of the grid, and the selected items if selection is enabled.</p></div>
 </li>
 <li><h3 id="gridMenuCustomItems">gridMenuCustomItems</h3>
 <div class="gridmenucustomitems"><p>(optional) An array of menu items that should be added to

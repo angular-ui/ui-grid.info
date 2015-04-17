@@ -14,12 +14,7 @@ and the data need to be provided by server side. Default is null.</p><h4 id="Ret
 <h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
 gridOptions.exporterAllDataPromise = function () {
-  var deferred = $q.defer();
-  $http.get('/data/100.json')
-    .success(function ( data ) {
-      deferred.resolve( data );
-    });
-  return deferred.promise;
+  return $http.get('/data/100.json')
 }
 </pre></div>
 </div>

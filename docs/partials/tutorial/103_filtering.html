@@ -61,7 +61,11 @@ and
 <h3 id="cancelicon">Cancel icon</h4>
 
 <p>By default the filter shows a cancel X beside the dropdown. You can set <code>disableCancelFilterButton: true</code> to suppress
-this button.</p><h2 id="Example">Example</h2>
+this button.</p>
+
+<p>In this example we've provided a "toggle filters" button to allow you to turn the filter row on and off.  To 
+still visually indicate which columns are filtered even when the filters aren't present, we've used the headerCellClass
+to make any columns with a filter condition have blue text.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-25" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-26"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -86,6 +90,10 @@ this button.</p><h2 id="Example">Example</h2>
     width: 650px;
     height: 400px;
   }
+  
+  .header-filtered {
+    color: blue;
+  }
 </style>
 </div>
 <div class="tab-pane" title="app.js">
@@ -98,6 +106,14 @@ this button.</p><h2 id="Example">Example</h2>
     var nextWeek = new Date();
     nextWeek.setDate(nextWeek.getDate() + 7);
   
+    $scope.highlightFilteredHeader = function( row, rowRenderIndex, col, colRenderIndex ) {
+      if( col.filters[0].term ){
+        return 'header-filtered';
+      } else {
+        return '';
+      }
+    };
+
     $scope.gridOptions = {
       enableFiltering: true,
       onRegisterApi: function(gridApi){
@@ -105,14 +121,14 @@ this button.</p><h2 id="Example">Example</h2>
       },
       columnDefs: [
         // default
-        { field: 'name' },
+        { field: 'name', headerCellClass: $scope.highlightFilteredHeader },
         // pre-populated search field
         { field: 'gender', filter: { 
             term: '1', 
             type: uiGridConstants.filter.SELECT, 
             selectOptions: [ { value: '1', label: 'male' }, { value: '2', label: 'female' }, { value: '3', label: 'unknown'}, { value: '4', label: 'not stated' }, { value: '5', label: 'a really long value that extends things' } ]
           }, 
-          cellFilter: 'mapGender' },                               
+          cellFilter: 'mapGender', headerCellClass: $scope.highlightFilteredHeader },                               
         // no filter input
         { field: 'company', enableFiltering: false, filter: {
           noTerm: true,
@@ -127,7 +143,7 @@ this button.</p><h2 id="Example">Example</h2>
           filter: {
             condition: uiGridConstants.filter.ENDS_WITH,
             placeholder: 'ends with'
-          }
+          }, headerCellClass: $scope.highlightFilteredHeader
         },
         // custom condition function
         {
@@ -137,7 +153,7 @@ this button.</p><h2 id="Example">Example</h2>
               var strippedValue = (cellValue + '').replace(/[^\d]/g, '');
               return strippedValue.indexOf(searchTerm) >= 0;
             }
-          }
+          }, headerCellClass: $scope.highlightFilteredHeader
         },
         // multiple filters
         { field: 'age', filters: [
@@ -149,13 +165,14 @@ this button.</p><h2 id="Example">Example</h2>
             condition: uiGridConstants.filter.LESS_THAN,
             placeholder: 'less than'
           }
-        ]},
+        ], headerCellClass: $scope.highlightFilteredHeader},
         // date filter
         { field: 'mixedDate', cellFilter: 'date', width: '15%', filter: {
             condition: uiGridConstants.filter.LESS_THAN,
             placeholder: 'less than',
             term: nextWeek
-        }}
+          }, headerCellClass: $scope.highlightFilteredHeader
+        }
       ]
     };
 
