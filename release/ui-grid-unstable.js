@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-f66f816 - 2015-04-17
+ * ui-grid - v3.0.0-rc.20-7f12f6f - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1375,7 +1375,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               if (uiGridCtrl.grid.isScrollingHorizontally) {
                 return;
               }
-              var newScrollLeft = gridUtil.normalizeScrollLeft(containerCtrl.headerViewport);
+              var newScrollLeft = gridUtil.normalizeScrollLeft(containerCtrl.headerViewport, uiGridCtrl.grid);
               var horizScrollPercentage = containerCtrl.colContainer.scrollHorizontal(newScrollLeft);
 
               var scrollEvent = new ScrollEvent(uiGridCtrl.grid, null, containerCtrl.colContainer, ScrollEvent.Sources.ViewPortScroll);
@@ -2169,7 +2169,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 var scrollXAmount = event.deltaX * event.deltaFactor;
 
                 // Get the scroll percentage
-                scrollLeft = gridUtil.normalizeScrollLeft(containerCtrl.viewport);
+                scrollLeft = gridUtil.normalizeScrollLeft(containerCtrl.viewport, grid);
                 var scrollXPercentage = (scrollLeft + scrollXAmount) / (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
 
                 // Keep scrollPercentage within the range 0-1.
@@ -2456,7 +2456,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
             //ignoreScroll = true;
 
             var newScrollTop = $elm[0].scrollTop;
-            var newScrollLeft = gridUtil.normalizeScrollLeft($elm);
+            var newScrollLeft = gridUtil.normalizeScrollLeft($elm, grid);
 
             var vertScrollPercentage = rowContainer.scrollVertical(newScrollTop);
             var horizScrollPercentage = colContainer.scrollHorizontal(newScrollLeft);
@@ -2495,20 +2495,20 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
           function syncHorizontalScroll(scrollEvent){
             containerCtrl.prevScrollArgs = scrollEvent;
             var newScrollLeft = scrollEvent.getNewScrollLeft(colContainer, containerCtrl.viewport);
-            $elm[0].scrollLeft =  gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft);
+            $elm[0].scrollLeft =  gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft, grid);
           }
 
           function syncHorizontalHeader(scrollEvent){
             var newScrollLeft = scrollEvent.getNewScrollLeft(colContainer, containerCtrl.viewport);
             if (containerCtrl.headerViewport) {
-              containerCtrl.headerViewport.scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft);
+              containerCtrl.headerViewport.scrollLeft = gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft, grid);
             }
           }
 
           function syncHorizontalFooter(scrollEvent){
             var newScrollLeft = scrollEvent.getNewScrollLeft(colContainer, containerCtrl.viewport);
             if (containerCtrl.footerViewport) {
-              containerCtrl.footerViewport.scrollLeft =  gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft);
+              containerCtrl.footerViewport.scrollLeft =  gridUtil.denormalizeScrollLeft(containerCtrl.viewport,newScrollLeft, grid);
             }
           }
 
@@ -8123,7 +8123,7 @@ angular.module('ui.grid')
         if (!self.newScrollLeft){
           var scrollWidth = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
 
-          var oldScrollLeft = gridUtil.normalizeScrollLeft(viewport);
+          var oldScrollLeft = gridUtil.normalizeScrollLeft(viewport, self.grid);
 
           var scrollXPercentage;
           if (typeof(self.x.percentage) !== 'undefined' && self.x.percentage !== undefined) {
@@ -10181,28 +10181,27 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     return type;
   };
 
-  /**
-    * @ngdoc method
-    * @name normalizeScrollLeft
-    * @methodOf ui.grid.service:GridUtil
-    *
-    * @param {element} element The element to get the `scrollLeft` from.
-    *
-    * @returns {int} A normalized scrollLeft value for the current browser.
-    *
-    * @description
-    * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them
-    */
-  s.normalizeScrollLeft = function normalizeScrollLeft(element) {
+    /**
+     * @ngdoc method
+     * @name normalizeScrollLeft
+     * @methodOf ui.grid.service:GridUtil
+     *
+     * @param {element} element The element to get the `scrollLeft` from.
+     * @param {boolean} grid -  grid used to normalize (uses the rtl property)
+     *
+     * @returns {int} A normalized scrollLeft value for the current browser.
+     *
+     * @description
+     * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them
+     */
+  s.normalizeScrollLeft = function normalizeScrollLeft(element, grid) {
     if (typeof(element.length) !== 'undefined' && element.length) {
       element = element[0];
     }
 
     var scrollLeft = element.scrollLeft;
-    
-    var dir = s.getStyles(element).direction;
 
-    if (dir === 'rtl') {
+    if (grid.isRTL()) {
       switch (s.rtlScrollType()) {
         case 'default':
           return element.scrollWidth - scrollLeft - element.clientWidth;
@@ -10223,20 +10222,19 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
   *
   * @param {element} element The element to normalize the `scrollLeft` value for
   * @param {int} scrollLeft The `scrollLeft` value to denormalize.
+  * @param {boolean} grid The grid that owns the scroll event.
   *
   * @returns {int} A normalized scrollLeft value for the current browser.
   *
   * @description
   * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.
   */
-  s.denormalizeScrollLeft = function denormalizeScrollLeft(element, scrollLeft) {
+  s.denormalizeScrollLeft = function denormalizeScrollLeft(element, scrollLeft, grid) {
     if (typeof(element.length) !== 'undefined' && element.length) {
       element = element[0];
     }
 
-    var dir = s.getStyles(element).direction;
-
-    if (dir === 'rtl') {
+    if (grid.isRTL()) {
       switch (s.rtlScrollType()) {
         case 'default':
           // Get the max scroll for the element

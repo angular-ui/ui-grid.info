@@ -166,22 +166,28 @@ var id = GridUtil.newId();
 </pre></div>
 </div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element)</h3>
+<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, grid)</h3>
 <div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
 <p>The element to get the <code>scrollLeft</code> from.</p></li>
+<li><code ng:non-bindable="">grid – {boolean} – </code>
+<ul>
+<li>grid used to normalize (uses the rtl property)</li>
+</ul></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{int}</code>
 – <p>A normalized scrollLeft value for the current browser.</p></div>
 </div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, scrollLeft)</h3>
+<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, scrollLeft, grid)</h3>
 <div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
 <p>The element to normalize the <code>scrollLeft</code> value for</p></li>
 <li><code ng:non-bindable="">scrollLeft – {int} – </code>
 <p>The <code>scrollLeft</code> value to denormalize.</p></li>
+<li><code ng:non-bindable="">grid – {boolean} – </code>
+<p>The grid that owns the scroll event.</p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{int}</code>
