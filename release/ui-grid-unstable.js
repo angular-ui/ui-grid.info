@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-3cbe79f - 2015-04-17
+ * ui-grid - v3.0.0-rc.20-74fc9ef - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11542,6 +11542,10 @@ module.filter('px', function() {
           invalidCsv: 'Het bestand kan niet verwerkt worden. Is het een valide csv bestand?',
           invalidJson: 'Het bestand kan niet verwerkt worden. Is het valide json?',
           jsonNotArray: 'Het json bestand moet een array bevatten. De actie wordt geannuleerd.'
+        },
+        pagination: {
+            sizes: 'items per pagina',
+            totalItems: 'items'
         },
         grouping: {
             group: 'Groepeer',
