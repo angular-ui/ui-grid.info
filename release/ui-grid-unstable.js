@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-74fc9ef - 2015-04-17
+ * ui-grid - v3.0.0-rc.20-66b43bf - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -23287,6 +23287,16 @@ module.filter('px', function() {
            *  <br/>Defaults to 10
            */
           gridOptions.treeViewIndent = gridOptions.treeViewIndent || 10;
+
+          /**
+           *  @ngdoc object
+           *  @name showTreeViewRowHeader
+           *  @propertyOf  ui.grid.treeView.api:GridOptions
+           *  @description If set to false, don't create the row header.  Youll need to programatically control the expand
+           *  states
+           *  <br/>Defaults to true
+           */
+          gridOptions.showTreeViewRowHeader = gridOptions.showTreeViewRowHeader !== false;
         },
 
         
@@ -23644,20 +23654,23 @@ module.filter('px', function() {
             pre: function ($scope, $elm, $attrs, uiGridCtrl) {
               if (uiGridCtrl.grid.options.enableTreeView !== false){
                 uiGridTreeViewService.initializeGrid(uiGridCtrl.grid, $scope);
-                var treeViewRowHeaderDef = {
-                  name: uiGridTreeViewConstants.treeViewRowHeaderColName,
-                  displayName: '',
-                  width:  uiGridCtrl.grid.options.treeViewRowHeaderBaseWidth,
-                  minWidth: 10,
-                  cellTemplate: 'ui-grid/treeViewRowHeader',
-                  headerCellTemplate: 'ui-grid/treeViewHeaderCell',
-                  enableColumnResizing: false,
-                  enableColumnMenu: false,
-                  exporterSuppressExport: true,
-                  allowCellFocus: true
-                };
-  
-                uiGridCtrl.grid.addRowHeaderColumn(treeViewRowHeaderDef);
+                
+                if ( uiGridCtrl.grid.options.showTreeViewRowHeader ){
+                  var treeViewRowHeaderDef = {
+                    name: uiGridTreeViewConstants.treeViewRowHeaderColName,
+                    displayName: '',
+                    width:  uiGridCtrl.grid.options.treeViewRowHeaderBaseWidth,
+                    minWidth: 10,
+                    cellTemplate: 'ui-grid/treeViewRowHeader',
+                    headerCellTemplate: 'ui-grid/treeViewHeaderCell',
+                    enableColumnResizing: false,
+                    enableColumnMenu: false,
+                    exporterSuppressExport: true,
+                    allowCellFocus: true
+                  };
+    
+                  uiGridCtrl.grid.addRowHeaderColumn(treeViewRowHeaderDef);
+                }
               }
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {

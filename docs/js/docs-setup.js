@@ -968,7 +968,7 @@ NG_DOCS={
       "id": "ui.grid.treeView.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "api are at available base be but by class each enable enabletreeview entire extra feature for grid gridoptions header icon incremented indent indents is level make more number object of pixels pleasing provides row set single the these this to tree treeview treeviewindent treeviewrowheaderbasewidth true ui ui-grid using view visually wider width will"
+      "keywords": "api are at available base be but by class control create don each enable enabletreeview entire expand extra false feature for grid gridoptions header icon if incremented indent indents is level make more need number object of pixels pleasing programatically provides row set showtreeviewrowheader single states the these this to tree treeview treeviewindent treeviewrowheaderbasewidth true ui ui-grid using view visually wider width will youll"
     },
     {
       "section": "api",
