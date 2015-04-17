@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-4038de4 - 2015-04-17
+ * ui-grid - v3.0.0-rc.20-933438f - 2015-04-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -699,7 +699,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 (function(){
   'use strict';
 
-  angular.module('ui.grid').directive('uiGridFilter', function ($compile, $templateCache) {
+  angular.module('ui.grid').directive('uiGridFilter', ['$compile', '$templateCache', function ($compile, $templateCache) {
 
     return {
       compile: function() {
@@ -721,7 +721,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
         };
       }
     };
-  });
+  }]);
 })();
 
 (function () {
@@ -15427,7 +15427,7 @@ module.filter('px', function() {
           } else {
             var deferred = $q.defer();
             deferred.resolve();
-            return $q.promise;
+            return deferred.promise;
           }
         },
 
