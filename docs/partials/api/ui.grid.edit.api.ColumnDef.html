@@ -80,6 +80,38 @@ $scope.gridOptions = {
 </pre></div>
 </div>
 </li>
+<li><h3 id="editFileChooserCallback">editFileChooserCallback</h3>
+<div class="editfilechoosercallback"><p>A function that should be called when any files have been chosen
+by the user.  You should use this to process the files appropriately for your
+application.</p>
+
+<p>It passes the gridCol, the gridRow (from which you can get gridRow.entity), 
+and the files.  The files are in the format as returned from the file chooser,
+an array of files, with each having useful information such as:
+- <code>files[0].lastModifiedDate</code>
+- <code>files[0].name</code>
+- <code>files[0].size</code>  (appears to be in bytes)
+- <code>files[0].type</code>  (MIME type by the looks)</p>
+
+<p>Typically you would do something with these files - most commonly you would 
+use the filename or read the file itself in.  The example function does both.</p><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+editFileChooserCallBack: function(gridRow, gridCol, files ){
+  // ignore all but the first file, it can only choose one anyway
+  // set the filename into this column
+  gridRow.entity.filename = file[0].name;
+  
+  // read the file and set it into a hidden column, which we may do stuff with later
+  var setFile = function(fileContent){
+    gridRow.entity.file = fileContent.currentTarget.result;
+  };
+  var reader = new FileReader();
+  reader.onload = setFile;
+  reader.readAsText( files[0] );
+}
+</pre></div>
+</div>
+</li>
 <li><h3 id="editableCellTemplate">editableCellTemplate</h3>
 <div class="editablecelltemplate"><p>cell template to be used when editing this column. Can be Url or text template
 <br/>Defaults to gridOptions.editableCellTemplate</p></div>
