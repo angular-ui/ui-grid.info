@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-d77a8ba - 2015-04-18
+ * ui-grid - v3.0.0-rc.20-6404a97 - 2015-04-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -5614,8 +5614,8 @@ angular.module('ui.grid')
 
           // gridUtil.logDebug('Creating on event method ' + featureName + '.on.' + eventName);
           feature.on[eventName] = function (scope, handler, _this) {
-            if ( !scope || typeof(scope.$on) === 'undefined' ){
-              gridUtil.logError('asked to listen on ' + featureName + '.on.' + eventName + ' but scope wasn\'t passed in the input parameters, you probably forgot to provide it, not registering');
+            if ( scope !== null && typeof(scope.$on) === 'undefined' ){
+              gridUtil.logError('asked to listen on ' + featureName + '.on.' + eventName + ' but scope wasn\'t passed in the input parameters.  It is legitimate to pass null, but you\'ve passed something else, so you probably forgot to provide scope rather than did it deliberately, not registering');
               return;
             }
             var deregAngularOn = registerEventWithAngular(eventId, handler, self.grid, _this);
