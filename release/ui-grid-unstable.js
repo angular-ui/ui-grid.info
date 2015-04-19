@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-6404a97 - 2015-04-19
+ * ui-grid - v3.0.0-rc.20-86cb0e5 - 2015-04-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11070,16 +11070,16 @@ module.filter('px', function() {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('fr', {
         aggregate: {
-          label: 'articles'
+          label: 'éléments'
         },
         groupPanel: {
-          description: 'Faites glisser un en-tête de colonne ici et déposez-le vers un groupe par cette colonne.'
+          description: 'Faites glisser une en-tête de colonne ici pour créer un groupe de colonnes.'
         },
         search: {
           placeholder: 'Recherche...',
-          showingItems: 'Articles Affichage des:',
-          selectedItems: 'Éléments Articles:',
-          totalItems: 'Nombre total d\'articles:',
+          showingItems: 'Affichage des éléments :',
+          selectedItems: 'Éléments sélectionnés :',
+          totalItems: 'Nombre total d\'éléments:',
           size: 'Taille de page:',
           first: 'Première page',
           next: 'Page Suivante',
@@ -11087,7 +11087,7 @@ module.filter('px', function() {
           last: 'Dernière page'
         },
         menu: {
-          text: 'Choisir des colonnes:'
+          text: 'Choisir des colonnes :'
         },
         sort: {
           ascending: 'Trier par ordre croissant',
@@ -11098,7 +11098,7 @@ module.filter('px', function() {
           hide: 'Cacher la colonne'
         },
         aggregation: {
-          count: 'total lignes: ',
+          count: 'lignes totales: ',
           sum: 'total: ',
           avg: 'moy: ',
           min: 'min: ',
@@ -11120,20 +11120,30 @@ module.filter('px', function() {
           exporterSelectedAsPdf: 'Exporter les données sélectionnées en PDF'
         },
         importer: {
-          noHeaders: 'Impossible de déterminer le nom des colonnes, le fichier possède-t-il un en-tête ?',
+          noHeaders: 'Impossible de déterminer le nom des colonnes, le fichier possède-t-il une en-tête ?',
           noObjects: 'Aucun objet trouvé, le fichier possède-t-il des données autres que l\'en-tête ?',
           invalidCsv: 'Le fichier n\'a pas pu être traité, le CSV est-il valide ?',
           invalidJson: 'Le fichier n\'a pas pu être traité, le JSON est-il valide ?',
-          jsonNotArray: 'Le fichier JSON importé doit contenir un tableau. Abandon.'
+          jsonNotArray: 'Le fichier JSON importé doit contenir un tableau, abandon.'
         },
         pagination: {
-          sizes: 'articles par page',
-          totalItems: 'articles'
+          sizes: 'éléments par page',
+          totalItems: 'éléments'
+        },
+        grouping: {
+          group: 'Grouper',
+          ungroup: 'Dégrouper',
+          aggregate_count: 'Agg: Compte',
+          aggregate_sum: 'Agg: Somme',
+          aggregate_max: 'Agg: Max',
+          aggregate_min: 'Agg: Min',
+          aggregate_avg: 'Agg: Moy',
+          aggregate_remove: 'Agg: Retirer'
         }
       });
       return $delegate;
     }]);
-}]);
+  }]);
 })();
 (function () {
   angular.module('ui.grid').config(['$provide', function ($provide) {
