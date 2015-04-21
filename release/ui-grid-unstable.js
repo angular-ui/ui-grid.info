@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-89461bc - 2015-04-21
+ * ui-grid - v3.0.0-rc.20-02b05ca - 2015-04-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13045,7 +13045,9 @@ module.filter('px', function() {
             var rowCol = { row: gridRow, col: gridCol };
 
             // Broadcast the navigation
-            grid.cellNav.broadcastCellNav(rowCol);
+            if (gridRow !== null && gridCol !== null) {
+              grid.cellNav.broadcastCellNav(rowCol);
+            }
           });
 
 
