@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-e657a70 - 2015-04-21
+ * ui-grid - v3.0.0-rc.20-d4a784f - 2015-04-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -20199,7 +20199,6 @@ module.filter('px', function() {
         }
         else {
           col.renderContainer = container;
-          col.width = col.drawnWidth;
           if (container === uiGridPinningConstants.container.LEFT) {
             grid.createLeftContainer();
           }
