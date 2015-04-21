@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-5692e1c - 2015-04-21
+ * ui-grid - v3.0.0-rc.20-7df7234 - 2015-04-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -211,13 +211,15 @@ angular.module('ui.grid').directive('uiGridCell', ['$compile', '$parse', 'gridUt
           };
 
           // TODO(c0bra): Turn this into a deep array watch
+/*        shouldn't be needed any more given track by col.name
           var colWatchDereg = $scope.$watch( 'col', cellChangeFunction );
+*/
           var rowWatchDereg = $scope.$watch( 'row', cellChangeFunction );
           
           
           var deregisterFunction = function() {
             dataChangeDereg();
-            colWatchDereg();
+//            colWatchDereg();
             rowWatchDereg(); 
           };
           
@@ -774,6 +776,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             }
 
             // Watch for column changes so we can alter the col cell class properly
+/* shouldn't be needed any more, given track by col.name
             $scope.$watch('col', function (n, o) {
               if (n !== o) {
                 // See if the column's internal class has changed
@@ -785,6 +788,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 }
               }
             });
+*/
 
 
             // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
@@ -1231,6 +1235,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               } 
             };
 
+/*
             $scope.$watch('col', function (n, o) {
               if (n !== o) {
                 // See if the column's internal class has changed
@@ -1242,7 +1247,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
                 }
               }
             });
-  
+*/
             updateHeaderOptions();
             
             // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
