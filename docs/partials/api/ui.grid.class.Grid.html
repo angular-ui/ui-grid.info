@@ -58,6 +58,12 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p></li>
 </ul>
 </div>
 </li>
+<li><h3 id="clearAllFilters">clearAllFilters()</h3>
+<div class="clearallfilters"><p>Clears all filters and optionally refreshes the visible rows.</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>If <code>refreshRows</code> is true, returns a promise of the rows refreshing.</p></div>
+</div>
+</li>
 <li><h3 id="columnRefreshCallback">columnRefreshCallback(name)</h3>
 <div class="columnrefreshcallback"><p>refreshes the grid when a column refresh
 is notified, which triggers handling of the visible flag. 
@@ -130,10 +136,10 @@ looks in grid.rows</p></li>
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainerColumns">hasLeftContainerColumns()</h3>
 <div class="hasleftcontainercolumns"><p>returns true if leftContainer has columns</p></div>

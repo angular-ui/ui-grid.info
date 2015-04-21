@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-86cb0e5 - 2015-04-19
+ * ui-grid - v3.0.0-rc.20-a45bd8c - 2015-04-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -786,8 +786,11 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               }
             });
 
+
             // Register a data change watch that would get triggered whenever someone edits a cell or modifies column defs
             var dataChangeDereg = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
+            // listen for visible rows change and update aggregation values
+            $scope.grid.api.core.on.rowsRendered( $scope, $scope.col.updateAggregationValue );
 
             $scope.$on( '$destroy', dataChangeDereg );
           }
@@ -3364,7 +3367,19 @@ angular.module('ui.grid')
      * 
      */
     self.api.registerMethod( 'core', 'notifyDataChange', this.notifyDataChange );
-    
+
+    /**
+     * @ngdoc method
+     * @name clearAllFilters
+     * @methodOf ui.grid.core.api:PublicApi
+     * @description Clears all filters and optionally refreshes the visible rows.
+     * @params {object} refreshRows Defaults to true.
+     * @params {object} clearConditions Defaults to false.
+     * @params {object} clearFlags Defaults to false.
+     * @returns {promise} If `refreshRows` is true, returns a promise of the rows refreshing.
+     */
+    self.api.registerMethod('core', 'clearAllFilters', this.clearAllFilters);
+
     self.registerDataChangeCallback( self.columnRefreshCallback, [uiGridConstants.dataChange.COLUMN]);
     self.registerDataChangeCallback( self.processRowsCallback, [uiGridConstants.dataChange.EDIT]);
 
@@ -4249,9 +4264,6 @@ angular.module('ui.grid')
   };
 
   Grid.prototype.setVisibleRows = function setVisibleRows(rows) {
-    // this is also setting processedRows, providing a cache of the rows as they
-    // came out of the rowProcessors - in particular they are sorted so we
-    // can process them for grouping
     var self = this;
 
     // Reset all the render container row caches
@@ -5329,6 +5341,47 @@ angular.module('ui.grid')
       return this.scrollToIfNecessary(gridRow, gridCol);
     };
 
+  /**
+   * @ngdoc function
+   * @name clearAllFilters
+   * @methodOf ui.grid.class:Grid
+   * @description Clears all filters and optionally refreshes the visible rows.
+   * @params {object} refreshRows Defaults to true.
+   * @params {object} clearConditions Defaults to false.
+   * @params {object} clearFlags Defaults to false.
+   * @returns {promise} If `refreshRows` is true, returns a promise of the rows refreshing.
+   */
+  Grid.prototype.clearAllFilters = function clearAllFilters(refreshRows, clearConditions, clearFlags) {
+    // Default `refreshRows` to true because it will be the most commonly desired behaviour.
+    if (refreshRows === undefined) {
+      refreshRows = true;
+    }
+    if (clearConditions === undefined) {
+      clearConditions = false;
+    }
+    if (clearFlags === undefined) {
+      clearFlags = false;
+    }
+
+    this.columns.forEach(function(column) {
+      column.filters.forEach(function(filter) {
+        filter.term = undefined;
+
+        if (clearConditions) {
+          filter.condition = undefined;
+        }
+
+        if (clearFlags) {
+          filter.flags = undefined;
+        }
+      });
+    });
+
+    if (refreshRows) {
+      return this.refreshRows();
+    }
+  };
+
 
       // Blatantly stolen from Angular as it isn't exposed (yet? 2.0?)
   function RowHashMap() {}
@@ -5866,10 +5919,24 @@ angular.module('ui.grid')
 
     self.aggregationValue = undefined;
 
-    var updateAggregationValue = function() {
+    // The footer cell registers to listen for the rowsRendered event, and calls this.  Needed to be
+    // in something with a scope so that the dereg would get called
+    self.updateAggregationValue = function() {
 
      // gridUtil.logDebug('getAggregationValue for Column ' + self.colDef.name);
 
+      /** 
+       * @ngdoc property
+       * @name aggregationType
+       * @propertyOf ui.grid.class:GridOptions.columnDef
+       * @description The aggregation that you'd like to show in the columnFooter for this
+       * column.  Valid values are in uiGridConstants, and currently include `uiGridConstants.aggregationTypes.count`, 
+       * `uiGridConstants.aggregationTypes.sum`, `uiGridConstants.aggregationTypes.avg`, `uiGridConstants.aggregationTypes.min`, 
+       * `uiGridConstants.aggregationTypes.max`.
+       * 
+       * You can also provide a function as the aggregation type, in this case your function needs to accept the full
+       * set of visible rows, and return a value that should be shown 
+       */
       if (!self.aggregationType) {
         self.aggregationValue = undefined;
         return;
@@ -5920,10 +5987,7 @@ angular.module('ui.grid')
       }
     };
 
-    var throttledUpdateAggregationValue = gridUtil.throttle(updateAggregationValue, self.grid.options.aggregationCalcThrottle, { trailing: true });
-
-
-
+//     var throttledUpdateAggregationValue = gridUtil.throttle(updateAggregationValue, self.grid.options.aggregationCalcThrottle, { trailing: true, context: self.name });
 
     /**
      * @ngdoc function
@@ -5933,15 +5997,12 @@ angular.module('ui.grid')
      * Debounced using scrollDebounce option setting
      */
     this.getAggregationValue =  function() {
-      if (!self.grid.isScrollingVertically && !self.grid.isScrollingHorizontally) {
-        throttledUpdateAggregationValue();
-      }
+//      if (!self.grid.isScrollingVertically && !self.grid.isScrollingHorizontally) {
+//        throttledUpdateAggregationValue();
+//      }
 
       return self.aggregationValue;
-    } ;
-
-
-
+    };
   }
 
 
@@ -6374,7 +6435,7 @@ angular.module('ui.grid')
       defaultFilters.push({});
     }
 
-/**
+    /**
      * @ngdoc property
      * @name filter
      * @propertyOf ui.grid.class:GridOptions.columnDef
@@ -10352,6 +10413,11 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
    *    trailing (bool) - whether to trigger after throttle time ends if called multiple times
    * Updated to use $interval rather than $timeout, as protractor (e2e tests) is able to work with $interval,
    * but not with $timeout
+   * 
+   * Note that when using throttle, you need to use throttle to create a new function upfront, then use the function
+   * return from that call each time you need to call throttle.  If you call throttle itself repeatedly, the lastCall
+   * variable will get overwritten and the throttling won't work
+   * 
    * @example
    * <pre>
    * var throttledFunc =  gridUtil.throttle(function(){console.log('throttled');}, 500, {trailing: true});
@@ -10362,12 +10428,12 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
    */
   s.throttle = function(func, wait, options){
     options = options || {};
-    var lastCall = 0, queued = null, context, args;
+    var lastCall = 0, queued = null, context, args, rndFunctionTag = Math.floor(Math.random() * (10000));
 
     function runFunc(endDate){
       lastCall = +new Date();
       func.apply(context, args);
-      $interval(function(){ queued = null; }, 0, 1);
+      $timeout(function(){ queued = null; }, 0);
     }
 
     return function(){

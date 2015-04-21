@@ -82,6 +82,9 @@ counting the number of rows), we find the max age for each grouping, and we calc
 suppress the aggregation text on the balance column because we want to format as currency...but that means that 
 we can't easily see that it's an average.</p>
 
+<p>We write a function that extracts the aggregated data for states and genders (if you change the grouping then this
+function will stop working), and writes them to the console.</p>
+
 <h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-65" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-66"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -92,6 +95,7 @@ we can't easily see that it's an average.</p>
       <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row</button>
       <button id="toggleSecondRow" type="button" class="btn btn-success" ng-click="toggleRow(1)">Toggle Second Row</button>
       <button id="changeGrouping" type="button" class="btn btn-success" ng-click="changeGrouping()">Change Grouping</button>
+      <button id="getAggregates" type="button" class="btn btn-success" ng-click="getAggregates()">Get Aggregates</button>
       <div id="grid1" ui-grid="gridOptions" ui-grid-grouping class="grid"></div>
     </div>
   </script>
@@ -148,6 +152,27 @@ we can't easily see that it's an average.</p>
         $scope.gridApi.grouping.clearGrouping();
         $scope.gridApi.grouping.groupColumn('age');
         $scope.gridApi.grouping.aggregateColumn('state', uiGridGroupingConstants.aggregation.COUNT);
+      };
+      
+      $scope.getAggregates = function() {
+        var aggregateInfo = {};
+        var lastState; 
+        $scope.gridApi.grid.renderContainers.body.visibleRowCache.forEach( function(row) {
+          if( row.groupHeader ) {
+            if( row.groupLevel === 0 ){
+              // in the format "xxxxx (10)", we want the xxxx and the 10
+              if( match = row.entity.state.match(/(.+) \((\d+)\)/) ){
+                aggregateInfo[ match[1] ] = { stateTotal: match[2] };
+                lastState = match[1];
+              }
+            } else if (row.groupLevel === 1){
+              if( match = row.entity.gender.match(/(.+) \((\d+)\)/) ){
+                aggregateInfo[ lastState ][ match[1] ] = match[2];
+              }
+            }
+          }
+        });
+        console.log(aggregateInfo);
       };
     }]);
   </script>

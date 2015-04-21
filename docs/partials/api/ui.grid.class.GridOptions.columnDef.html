@@ -10,6 +10,15 @@ one of many column definitions within the gridOptions.columnDefs array</p></div>
 <div class="aggregationhidelabel"><p>defaults to false, if set to true hides the label text
 in the aggregation footer, so only the value is displayed.</p></div>
 </li>
+<li><h3 id="aggregationType">aggregationType</h3>
+<div class="aggregationtype"><p>The aggregation that you'd like to show in the columnFooter for this
+column.  Valid values are in uiGridConstants, and currently include <code>uiGridConstants.aggregationTypes.count</code>, 
+<code>uiGridConstants.aggregationTypes.sum</code>, <code>uiGridConstants.aggregationTypes.avg</code>, <code>uiGridConstants.aggregationTypes.min</code>, 
+<code>uiGridConstants.aggregationTypes.max</code>.</p>
+
+<p>You can also provide a function as the aggregation type, in this case your function needs to accept the full
+set of visible rows, and return a value that should be shown </p></div>
+</li>
 <li><h3 id="cellClass">cellClass</h3>
 <div class="cellclass"><p>cellClass can be a string specifying the class to append to a cell
 or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name</p></div>
