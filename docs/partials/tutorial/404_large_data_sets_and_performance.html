@@ -29,7 +29,13 @@ entities in that array (i.e. the way we think 90% of people use the grid), then 
 and the grid will run faster.</p>
 
 <p>The option for this is <code>flatEntityAccess</code>.  The below grid provides a toggle on this value so you can see the difference it makes
-with a data set of 640,000 rows. </p><h2 id="Example">Example</h2>
+with a data set of 640,000 rows. </p>
+
+<p>Further, the grid watches the data and the column defs to determine if anything has changed.  Watches get called very frequently in
+angularJS (on every digest cycle, which can be many times per second), and watching each row of a large data collection can be expensive.
+The <code>fastWatch</code> gridOption watches only the data reference and it's length - in theory this means we might not notice if you replaced
+a row in the data, or replaced a column in the columnDefs.  If using fastWatch you should always do deletes and adds separately, never
+a swap.  Fastwatch cannot be dynamically toggled - you need to set it upon grid creation.</p><h2 id="Example">Example</h2>
 <div class="example"><h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-98" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-99"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -59,7 +65,8 @@ with a data set of 640,000 rows. </p><h2 id="Example">Example</h2>
     $scope.gridOptions = {  
       enableFiltering: true,
       flatEntityAccess: true,
-      showGridFooter: true
+      showGridFooter: true,
+      fastWatch: true
     };
 
      $scope.gridOptions.columnDefs = [

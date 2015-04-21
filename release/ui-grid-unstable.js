@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-7df7234 - 2015-04-21
+ * ui-grid - v3.0.0-rc.20-e657a70 - 2015-04-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2605,15 +2605,34 @@ angular.module('ui.grid')
       }
 
 
-      var dataWatchCollectionDereg;
-      if (angular.isString($scope.uiGrid.data)) {
-        dataWatchCollectionDereg = $scope.$parent.$watchCollection($scope.uiGrid.data, dataWatchFunction);
+      // if fastWatch is set we watch only the length and the reference, not every individual object
+      var deregFunctions = [];
+      if (self.grid.options.fastWatch) {
+        self.uiGrid = $scope.uiGrid;
+        if (angular.isString($scope.uiGrid.data)) {
+          deregFunctions.push( $scope.$parent.$watch($scope.uiGrid.data, dataWatchFunction) );
+          deregFunctions.push( $scope.$parent.$watch(function() {
+            if ( self.grid.appScope[$scope.uiGrid.data] ){
+              return self.grid.appScope[$scope.uiGrid.data].length; 
+            } else {
+              return undefined;
+            } 
+          }, dataWatchFunction) );
+        } else {
+          deregFunctions.push( $scope.$parent.$watch(function() { return $scope.uiGrid.data; }, dataWatchFunction) );
+          deregFunctions.push( $scope.$parent.$watch(function() { return $scope.uiGrid.data.length; }, dataWatchFunction) );
+        }
+        deregFunctions.push( $scope.$parent.$watch(function() { return $scope.uiGrid.columnDefs; }, columnDefsWatchFunction) );
+        deregFunctions.push( $scope.$parent.$watch(function() { return $scope.uiGrid.columnDefs.length; }, columnDefsWatchFunction) );
+      } else {
+        if (angular.isString($scope.uiGrid.data)) {
+          deregFunctions.push( $scope.$parent.$watchCollection($scope.uiGrid.data, dataWatchFunction) );
+        } else {
+          deregFunctions.push( $scope.$parent.$watchCollection(function() { return $scope.uiGrid.data; }, dataWatchFunction) );
+        }
+        deregFunctions.push( $scope.$parent.$watchCollection(function() { return $scope.uiGrid.columnDefs; }, columnDefsWatchFunction) );
       }
-      else {
-        dataWatchCollectionDereg = $scope.$parent.$watchCollection(function() { return $scope.uiGrid.data; }, dataWatchFunction);
-      }
-
-      var columnDefWatchCollectionDereg = $scope.$parent.$watchCollection(function() { return $scope.uiGrid.columnDefs; }, columnDefsWatchFunction);
+      
 
       function columnDefsWatchFunction(n, o) {
         if (n && n !== o) {
@@ -2631,6 +2650,14 @@ angular.module('ui.grid')
       function dataWatchFunction(newData) {
         // gridUtil.logDebug('dataWatch fired');
         var promises = [];
+        
+        if ( self.grid.options.fastWatch ){
+          if (angular.isString($scope.uiGrid.data)) {
+            newData = self.grid.appScope[$scope.uiGrid.data];
+          } else {
+            newData = $scope.uiGrid.data;
+          }
+        }
         
         if (newData) {
           if (
@@ -2677,8 +2704,7 @@ angular.module('ui.grid')
       });
 
       $scope.$on('$destroy', function() {
-        dataWatchCollectionDereg();
-        columnDefWatchCollectionDereg();
+        deregFunctions.forEach( function( deregFn ){ deregFn(); });
         styleWatchDereg();
       });
 
@@ -7644,7 +7670,6 @@ angular.module('ui.grid')
     // Define the top-most rendered row
     this.currentTopRow = renderedRange[0];
 
-    // TODO(c0bra): make this method!
     this.setRenderedRows(rowArr);
   };
 
