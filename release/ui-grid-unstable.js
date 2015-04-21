@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-a45bd8c - 2015-04-21
+ * ui-grid - v3.0.0-rc.20-5692e1c - 2015-04-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -10428,12 +10428,12 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
    */
   s.throttle = function(func, wait, options){
     options = options || {};
-    var lastCall = 0, queued = null, context, args, rndFunctionTag = Math.floor(Math.random() * (10000));
+    var lastCall = 0, queued = null, context, args;
 
     function runFunc(endDate){
       lastCall = +new Date();
       func.apply(context, args);
-      $timeout(function(){ queued = null; }, 0);
+      $interval(function(){ queued = null; }, 0, 1);
     }
 
     return function(){
