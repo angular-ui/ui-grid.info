@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-02b05ca - 2015-04-21
+ * ui-grid - v3.0.0-rc.20-8092660 - 2015-04-22
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3843,7 +3843,11 @@ angular.module('ui.grid')
         html = html.replace(uiGridConstants.TOOLTIP, '');
       } else {
         // gridColumn will have made sure that the col either has false or a function for this value
-        html = html.replace(uiGridConstants.TOOLTIP, 'title="{{col.cellTooltip(row, col)}}"');
+        if (col.cellFilter){
+          html = html.replace(uiGridConstants.TOOLTIP, 'title="{{col.cellTooltip(row, col) | ' + col.cellFilter + '}}"');
+        } else {
+          html = html.replace(uiGridConstants.TOOLTIP, 'title="{{col.cellTooltip(row, col)}}"');
+        }
       }
 
       var compiledElementFn = $compile(html);

@@ -16,6 +16,8 @@ current column and row - for example:</p>
 performance, it is not recommended to turn them on for every column, rather only for the columns likely to have
 data that won't be displayable within the grid row (e.g. long description fields).</p>
 
+<p>Tooltips respect the cellFilter, so if you define a cellFilter it will also be used in the tooltip.</p>
+
 <h3>Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-47" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-48"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -53,7 +55,8 @@ data that won't be displayable within the grid row (e.g. long description fields
             function( row, col ) {
               return 'Name: ' + row.entity.name + ' Company: ' + row.entity.company;
             } 
-          }
+          },
+          { field: 'gender', cellTooltip: true, cellFilter: 'mapGender' },
         ],
         onRegisterApi: function( gridApi ) {
           $scope.gridApi = gridApi;
@@ -65,9 +68,27 @@ data that won't be displayable within the grid row (e.g. long description fields
 
       $http.get('/data/100.json')
         .success(function(data) {
+          data.forEach( function setGender( row, index ){
+            row.gender = row.gender==='male' ? '1' : '2';
+          });
+
           $scope.gridOptions.data = data;
         });
-    }]);
+    }])
+    .filter('mapGender', function() {
+      var genderHash = {
+        1: 'male',
+        2: 'female'
+      };
+
+      return function(input) {
+        if (!input){
+          return '';
+        } else {
+          return genderHash[input];
+        }
+      };
+    });
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
