@@ -7,7 +7,10 @@
 
 <p>Filtering can be disabled at the column level by setting <code>enableFiltering: false</code> in the column def. See the "company" column below for an example.</p>
 
-<p>The filter field can be pre-populated by setting <code>filter: { term: 'xxx' }</code> in the column def.  See the "gender" column below.</p>
+<p>The filter field can be pre-populated by setting <code>filter: { term: 'xxx' }</code> in the column def.  See the "gender" column below.  Once
+the grid has rendered changes to the columnDef don't reflect in the grid - if they did then users would have their changes to filters
+overwritten every time the grid refreshed.  If you want to programatically modify filters after initial render then modify 
+grid.column[i].filters[0] directly.</p>
 
 <h3 id="conditon">Conditon</h4>
 
@@ -62,6 +65,10 @@ and
 
 <p>By default the filter shows a cancel X beside the dropdown. You can set <code>disableCancelFilterButton: true</code> to suppress
 this button.</p>
+
+<h3 id="programmaticsettingoffilters">Programmatic setting of filters</h4>
+
+<p>You can set filters </p>
 
 <p>In this example we've provided a "toggle filters" button to allow you to turn the filter row on and off.  To 
 still visually indicate which columns are filtered even when the filters aren't present, we've used the headerCellClass
