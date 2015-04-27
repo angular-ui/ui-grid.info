@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-1625e04 - 2015-04-24
+ * ui-grid - v3.0.0-rc.20-1a83269 - 2015-04-27
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -103,6 +103,7 @@
 }
 .ui-grid-header-cell-row {
   display: table-row;
+  position: relative;
 }
 .ui-grid-header-cell {
   position: relative;
@@ -1001,7 +1002,8 @@ div.ui-grid-cell input.ng-valid {
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .movingColumn {
-  position: fixed;
+  position: absolute;
+  top: 0;
   border: 1px solid #d4d4d4;
   box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
 }
