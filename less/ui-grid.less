@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-5c8e91d - 2015-04-27
+ * ui-grid - v3.0.0-rc.20-76d4a37 - 2015-04-27
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -200,8 +200,8 @@
   display: none;
 }
 
-.ui-grid-row-header-cell {
-  background-color: #F0F0EE !important;
+.ui-grid-row .ui-grid-cell.ui-grid-row-header-cell {
+  background-color: @rowHeaderCell;
   border-bottom: solid @gridBorderWidth @borderColor;
 }
 
@@ -1008,7 +1008,7 @@ select.ui-grid-filter-select {
 
 
 // TODO: color for menu background
-
+@rowHeaderCell: #F0F0EE;
 @rowSelected: #C9DDE1;
 @rowSavingForeground: #848484;
 @rowErrorForeground: #FF0000;

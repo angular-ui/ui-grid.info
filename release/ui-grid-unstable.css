@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-5c8e91d - 2015-04-27
+ * ui-grid - v3.0.0-rc.20-76d4a37 - 2015-04-27
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -399,8 +399,8 @@ select.ui-grid-filter-select:hover {
   height: 0;
   display: none;
 }
-.ui-grid-row-header-cell {
-  background-color: #F0F0EE !important;
+.ui-grid-row .ui-grid-cell.ui-grid-row-header-cell {
+  background-color: #f0f0ee;
   border-bottom: solid 1px #d4d4d4;
 }
 .ui-grid-footer-panel-background {
@@ -1290,8 +1290,8 @@ div.ui-grid-cell input.ng-valid {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
-  background-color: #c9dde1 !important;
+.ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
+  background-color: #c9dde1;
 }
 .ui-grid-disable-selection {
   -webkit-touch-callout: none;
