@@ -50,10 +50,10 @@ columnBuilder to further process the column</p><h4 id="Parameters">Parameters</h
 </li>
 <li><h3 id="callDataChangeCallbacks">callDataChangeCallbacks(type)</h3>
 <div class="calldatachangecallbacks"><p>Calls the callbacks based on the type of data change that
-has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, COLUMN and OPTIONS callbacks if the 
+has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, COLUMN and OPTIONS callbacks if the
 event type is matching, or if the type is ALL.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">type – {number} – </code>
-<p>the type of event that occurred - one of the 
+<p>the type of event that occurred - one of the
 uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p></li>
 </ul>
 </div>
@@ -66,8 +66,8 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p></li>
 </li>
 <li><h3 id="columnRefreshCallback">columnRefreshCallback(name)</h3>
 <div class="columnrefreshcallback"><p>refreshes the grid when a column refresh
-is notified, which triggers handling of the visible flag. 
-This is called on uiGridConstants.dataChange.COLUMN, and is 
+is notified, which triggers handling of the visible flag.
+This is called on uiGridConstants.dataChange.COLUMN, and is
 registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
 <p>column name</p></li>
@@ -179,10 +179,10 @@ are identified using the gridOptions.rowEquality function</p></div>
 </li>
 <li><h3 id="notifyDataChange">notifyDataChange(type)</h3>
 <div class="notifydatachange"><p>Notifies us that a data change has occurred, used in the public
-api for users to tell us when they've changed data or some other event that 
+api for users to tell us when they've changed data or some other event that
 our watches cannot pick up</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">type – {string} – </code>
-<p>the type of event that occurred - one of the 
+<p>the type of event that occurred - one of the
 uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
 </ul>
 </div>
@@ -233,7 +233,7 @@ has been refreshed</p></div>
 </div>
 </li>
 <li><h3 id="refreshRows">refreshRows()</h3>
-<div class="refreshrows"><p>Refresh the rendered rows on screen?  Note: not functional at present </p><h4 id="Returns">Returns</h4>
+<div class="refreshrows"><p>Refresh the rendered rows on screen?  Note: not functional at present</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{promise}</code>
 – <p>promise that is resolved when render completes?</p></div>
 </div>
@@ -253,7 +253,7 @@ to alter the set of columns, as long as the count is not modified.</p><h4 id="Pa
 <ul class="parameters"><li><code ng:non-bindable="">columnProcessor – {function(renderedColumnsToProcess, rows)} – </code>
 <p>column processor function, which
 is run in the context of the grid (i.e. this for the function will be the grid), and
-which must return an updated renderedColumnsToProcess which can be passed to the next processor 
+which must return an updated renderedColumnsToProcess which can be passed to the next processor
 in the chain</p></li>
 <li><code ng:non-bindable="">priority – {number} – </code>
 <p>the priority of this processor.  In general we try to do them in 100s to leave room
@@ -285,9 +285,9 @@ added or removed rows)</li>
 <ul class="parameters"><li><code ng:non-bindable="">callback – {function(grid)} – </code>
 <p>function to be called</p></li>
 <li><code ng:non-bindable="">types – {array} – </code>
-<p>the types of data change you want to be informed of.  Values from 
+<p>the types of data change you want to be informed of.  Values from
 the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN, OPTIONS ).  Optional and defaults to
-ALL </p></li>
+ALL</p></li>
 </ul>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{function}</code>
@@ -308,7 +308,7 @@ the grid calls each registered "rows processor", which has a chance
 to alter the set of rows (sorting, etc) as long as the count is not
 modified.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">processorFunction – {function(renderedRowsToProcess, columns )} – </code>
-<p>rows processor function, which 
+<p>rows processor function, which
 is run in the context of the grid (i.e. this for the function will be the grid), and must
 return the updated rows list, which is passed to the next processor in the chain</p></li>
 <li><code ng:non-bindable="">priority – {number} – </code>
