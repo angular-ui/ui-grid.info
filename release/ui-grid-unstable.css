@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-76d4a37 - 2015-04-27
+ * ui-grid - v3.0.0-rc.20-5e81f41 - 2015-04-28
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -140,7 +140,7 @@
   margin-right: 25px;
 }
 .ui-grid-column-menu {
-  position: relative;
+  position: absolute;
 }
 /* Slide up/down animations */
 .ui-grid-column-menu .ui-grid-menu .ui-grid-menu-mid.ng-hide-add,
@@ -1118,19 +1118,29 @@ div.ui-grid-cell input.ng-valid {
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-pinned-container {
+  position: absolute;
+  display: inline;
+  top: 0;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left {
   float: left;
+  left: 0;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right {
+  float: right;
+  right: 0;
 }
 .ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:last-child {
   box-sizing: border-box;
   border-right: 1px solid;
   border-width: 1px;
-  border-color: #aeaeae;
+  border-right-color: #aeaeae;
 }
 .ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-cell:last-child {
   box-sizing: border-box;
   border-right: 1px solid;
   border-width: 1px;
-  border-color: #aeaeae;
+  border-right-color: #aeaeae;
 }
 .ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:not(:last-child) .ui-grid-vertical-bar,
 .ui-grid-pinned-container .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
@@ -1151,13 +1161,13 @@ div.ui-grid-cell input.ng-valid {
   box-sizing: border-box;
   border-left: 1px solid;
   border-width: 1px;
-  border-color: #aeaeae;
+  border-left-color: #aeaeae;
 }
 .ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-cell:first-child {
   box-sizing: border-box;
   border-left: 1px solid;
   border-width: 1px;
-  border-color: #aeaeae;
+  border-left-color: #aeaeae;
 }
 .ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-header-cell:not(:first-child) .ui-grid-vertical-bar,
 .ui-grid-pinned-container .ui-grid-cell:not(:first-child) .ui-grid-vertical-bar {
@@ -1173,9 +1183,6 @@ div.ui-grid-cell input.ng-valid {
   left: -1px;
   width: 1px;
   background-color: #aeaeae;
-}
-.ui-grid-render-container-body {
-  float: left;
 }
 
 /* This file contains variable declarations (do not remove this line) */

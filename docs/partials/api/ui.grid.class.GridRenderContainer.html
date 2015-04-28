@@ -4,7 +4,7 @@
 </h1>
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>The grid has render containers, allowing the ability to have pinned columns.  If the grid
-is right-to-left then there may be a right render container, if left-to-right then there may 
+is right-to-left then there may be a right render container, if left-to-right then there may
 be a left render container.  There is always a body render container.</p></div>
 <h2 id="Usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridRenderContainer(name, grid, options);</pre>
@@ -25,7 +25,7 @@ be a left render container.  There is always a body render container.</p></div>
 </div>
 </li>
 <li><h3 id="getViewportAdjustment">getViewportAdjustment()</h3>
-<div class="getviewportadjustment"><p>Gets the adjustment based on the viewportAdjusters.  </p><h4 id="Returns">Returns</h4>
+<div class="getviewportadjustment"><p>Gets the adjustment based on the viewportAdjusters.</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{object}</code>
 – <p>a hash of { height: x, width: y }.  Usually the values will be negative</p></div>
 </div>
@@ -33,7 +33,7 @@ be a left render container.  There is always a body render container.</p></div>
 <li><h3 id="registerViewportAdjuster">registerViewportAdjuster(func)</h3>
 <div class="registerviewportadjuster"><p>Registers an adjuster to the render container's available width or height.  Adjusters are used
 to tell the render container that there is something else consuming space, and to adjust it's size
-appropriately.  </p><h4 id="Parameters">Parameters</h4>
+appropriately.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
 <p>the adjuster function we want to register</p></li>
 </ul>
@@ -58,30 +58,30 @@ appropriately.  </p><h4 id="Parameters">Parameters</h4>
 <li><h3 id="updateColumnWidths">updateColumnWidths</h3>
 <div class="updatecolumnwidths"><p>Determine the appropriate column width of each column across all render containers.</p>
 
-<p>Column width is easy when each column has a specified width.  When columns are variable width (i.e. 
-have an * or % of the viewport) then we try to calculate so that things fit in.  The problem is that
-we have multiple render containers, and we don't want one render container to just take the whole viewport
-when it doesn't need to - we want things to balance out across the render containers.</p>
+<p>Column width is easy when each column has a specified width.  When columns are variable width (i.e.
+ have an * or % of the viewport) then we try to calculate so that things fit in.  The problem is that
+ we have multiple render containers, and we don't want one render container to just take the whole viewport
+ when it doesn't need to - we want things to balance out across the render containers.</p>
 
 <p>To do this, we use this method to calculate all the renderContainers, recognising that in a given render
-cycle it'll get called once per render container, so it needs to return the same values each time.</p>
+ cycle it'll get called once per render container, so it needs to return the same values each time.</p>
 
 <p>The constraints on this method are therefore:
-- must return the same value when called multiple times, to do this it needs to rely on properties of the
-  columns, but not properties that change when this is called (so it shouldn't rely on drawnWidth)</p>
+ - must return the same value when called multiple times, to do this it needs to rely on properties of the
+   columns, but not properties that change when this is called (so it shouldn't rely on drawnWidth)</p>
 
 <p>The general logic of this method is:
-- calculate our total available width
-- look at all the columns across all render containers, and work out which have widths and which have
-  constraints such as % or * or something else
-- for those with *, count the total number of * we see and add it onto a running total, add this column to an * array
-- for those with a %, allocate the % as a percentage of the viewport, having consideration of min and max
-- for those with manual width (in pixels) we set the drawnWidth to the specified width
-- we end up with an asterisks array still to process
-- we look at our remaining width.  If it's greater than zero, we divide it up among the asterisk columns, then process
-  them for min and max width constraints
-- if it's zero or less, we set the asterisk columns to their minimum widths
-- we use parseInt quite a bit, as we try to make all our column widths integers</p></div>
+ - calculate our total available width
+ - look at all the columns across all render containers, and work out which have widths and which have
+   constraints such as % or * or something else
+ - for those with *, count the total number of * we see and add it onto a running total, add this column to an * array
+ - for those with a %, allocate the % as a percentage of the viewport, having consideration of min and max
+ - for those with manual width (in pixels) we set the drawnWidth to the specified width
+ - we end up with an asterisks array still to process
+ - we look at our remaining width.  If it's greater than zero, we divide it up among the asterisk columns, then process
+   them for min and max width constraints
+ - if it's zero or less, we set the asterisk columns to their minimum widths
+ - we use parseInt quite a bit, as we try to make all our column widths integers</p></div>
 </li>
 </ul>
 </div>

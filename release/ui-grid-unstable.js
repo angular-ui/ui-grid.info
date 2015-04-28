@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.20-76d4a37 - 2015-04-27
+ * ui-grid - v3.0.0-rc.20-5e81f41 - 2015-04-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2924,6 +2924,27 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
 
             $elm.addClass('ui-grid-pinned-container-' + $scope.side);
 
+            // Monkey-patch the viewport width function
+            if ($scope.side === 'left' || $scope.side === 'right') {
+              grid.renderContainers[$scope.side].getViewportWidth = monkeyPatchedGetViewportWidth;
+            }
+
+            function monkeyPatchedGetViewportWidth() {
+              /*jshint validthis: true */
+              var self = this;
+
+              var viewportWidth = 0;
+              self.visibleColumnCache.forEach(function (column) {
+                viewportWidth += column.drawnWidth;
+              });
+
+              var adjustment = self.getViewportAdjustment();
+
+              viewportWidth = viewportWidth + adjustment.width;
+
+              return viewportWidth;
+            }
+
             function updateContainerWidth() {
               if ($scope.side === 'left' || $scope.side === 'right') {
                 var cols = grid.renderContainers[$scope.side].visibleColumnCache;
@@ -2936,10 +2957,10 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
                 return width;
               }
             }
-            
+
             function updateContainerDimensions() {
               var ret = '';
-              
+
               // Column containers
               if ($scope.side === 'left' || $scope.side === 'right') {
                 myWidth = updateContainerWidth();
@@ -2950,7 +2971,7 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
                 $elm.attr('style', null);
 
                 var myHeight = grid.renderContainers.body.getViewportHeight(); // + grid.horizontalScrollbarHeight;
-                
+
                 ret += '.grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.side + ', .grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.side + ' .ui-grid-render-container-' + $scope.side + ' .ui-grid-viewport { width: ' + myWidth + 'px; height: ' + myHeight + 'px; } ';
               }
 
@@ -2962,6 +2983,7 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
 
               // Subtract our own width
               adjustment.width -= myWidth;
+              adjustment.side = $scope.side;
 
               return adjustment;
             });
@@ -2977,6 +2999,7 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
     };
   }]);
 })();
+
 (function(){
 
 angular.module('ui.grid')
@@ -7181,12 +7204,12 @@ angular.module('ui.grid')
 (function(){
 
 angular.module('ui.grid')
-  
+
   /**
    * @ngdoc function
    * @name ui.grid.class:GridRenderContainer
    * @description The grid has render containers, allowing the ability to have pinned columns.  If the grid
-   * is right-to-left then there may be a right render container, if left-to-right then there may 
+   * is right-to-left then there may be a right render container, if left-to-right then there may
    * be a left render container.  There is always a body render container.
    * @param {string} name The name of the render container ('body', 'left', or 'right')
    * @param {Grid} grid the grid the render container is in
@@ -7203,7 +7226,7 @@ angular.module('ui.grid')
     self.name = name;
 
     self.grid = grid;
-    
+
     // self.rowCache = [];
     // self.columnCache = [];
 
@@ -7323,7 +7346,7 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:GridRenderContainer
    * @description Registers an adjuster to the render container's available width or height.  Adjusters are used
    * to tell the render container that there is something else consuming space, and to adjust it's size
-   * appropriately.  
+   * appropriately.
    * @param {function} func the adjuster function we want to register
    */
 
@@ -7350,7 +7373,7 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name getViewportAdjustment
    * @methodOf ui.grid.class:GridRenderContainer
-   * @description Gets the adjustment based on the viewportAdjusters.  
+   * @description Gets the adjustment based on the viewportAdjusters.
    * @returns {object} a hash of { height: x, width: y }.  Usually the values will be negative
    */
   GridRenderContainer.prototype.getViewportAdjustment = function getViewportAdjustment() {
@@ -7365,6 +7388,22 @@ angular.module('ui.grid')
     return adjustment;
   };
 
+  GridRenderContainer.prototype.getMargin = function getMargin(side) {
+    var self = this;
+
+    var amount = 0;
+
+    self.viewportAdjusters.forEach(function (func) {
+      var adjustment = func.call(this, { height: 0, width: 0 });
+
+      if (adjustment.side && adjustment.side === side) {
+        amount += adjustment.width * -1;
+      }
+    });
+
+    return amount;
+  };
+
   GridRenderContainer.prototype.getViewportHeight = function getViewportHeight() {
     var self = this;
 
@@ -7374,7 +7413,7 @@ angular.module('ui.grid')
 
 
     var adjustment = self.getViewportAdjustment();
-    
+
     viewPortHeight = viewPortHeight + adjustment.height;
 
     return viewPortHeight;
@@ -7383,23 +7422,28 @@ angular.module('ui.grid')
   GridRenderContainer.prototype.getViewportWidth = function getViewportWidth() {
     var self = this;
 
-    var viewPortWidth = self.grid.gridWidth;
+    var viewportWidth = self.grid.gridWidth;
 
     //if (typeof(self.grid.verticalScrollbarWidth) !== 'undefined' && self.grid.verticalScrollbarWidth !== undefined && self.grid.verticalScrollbarWidth > 0) {
     //  viewPortWidth = viewPortWidth - self.grid.verticalScrollbarWidth;
     //}
 
-    var adjustment = self.getViewportAdjustment();
-    
-    viewPortWidth = viewPortWidth + adjustment.width;
+    // var viewportWidth = 0;\
+    // self.visibleColumnCache.forEach(function (column) {
+    //   viewportWidth += column.drawnWidth;
+    // });
 
-    return viewPortWidth;
+    var adjustment = self.getViewportAdjustment();
+
+    viewportWidth = viewportWidth + adjustment.width;
+
+    return viewportWidth;
   };
 
   GridRenderContainer.prototype.getHeaderViewportWidth = function getHeaderViewportWidth() {
     var self = this;
 
-    var viewPortWidth = this.getViewportWidth();
+    var viewportWidth = this.getViewportWidth();
 
     //if (typeof(self.grid.verticalScrollbarWidth) !== 'undefined' && self.grid.verticalScrollbarWidth !== undefined && self.grid.verticalScrollbarWidth > 0) {
     //  viewPortWidth = viewPortWidth + self.grid.verticalScrollbarWidth;
@@ -7408,7 +7452,7 @@ angular.module('ui.grid')
     // var adjustment = self.getViewportAdjustment();
     // viewPortWidth = viewPortWidth + adjustment.width;
 
-    return viewPortWidth;
+    return viewportWidth;
   };
 
 
@@ -7469,7 +7513,7 @@ angular.module('ui.grid')
     for (var i = 0; i < newColumns.length; i++) {
       this.renderedColumns[i] = newColumns[i];
     }
-    
+
     this.updateColumnOffset();
   };
 
@@ -7576,7 +7620,7 @@ angular.module('ui.grid')
     if ((typeof(scrollPercentage) === 'undefined' || scrollPercentage === null) && scrollTop) {
       scrollPercentage = scrollTop / self.getVerticalScrollLength();
     }
-    
+
     var rowIndex = Math.ceil(Math.min(maxRowIndex, maxRowIndex * scrollPercentage));
 
     // Define a max row index that we can't scroll past
@@ -7633,7 +7677,7 @@ angular.module('ui.grid')
     if (colIndex > maxColumnIndex) {
       colIndex = maxColumnIndex;
     }
-    
+
     var newRange = [];
     if (columnCache.length > self.grid.options.columnVirtualizationThreshold && self.getCanvasWidth() > self.getViewportWidth()) {
       /* Commented the following lines because otherwise the moved column wasn't visible immediately on the new position
@@ -7657,7 +7701,7 @@ angular.module('ui.grid')
 
       newRange = [0, Math.max(maxLen, minCols + self.grid.options.excessColumns)];
     }
-    
+
     self.updateViewableColumnRange(newRange);
 
     self.prevColumnScrollIndex = colIndex;
@@ -7689,7 +7733,7 @@ angular.module('ui.grid')
 
   GridRenderContainer.prototype.headerCellWrapperStyle = function () {
     var self = this;
-    
+
     if (self.currentFirstColumn !== 0) {
       var offset = self.columnOffset;
 
@@ -7709,19 +7753,19 @@ angular.module('ui.grid')
      *  @name updateColumnWidths
      *  @propertyOf  ui.grid.class:GridRenderContainer
      *  @description Determine the appropriate column width of each column across all render containers.
-     *  
-     *  Column width is easy when each column has a specified width.  When columns are variable width (i.e. 
+     *
+     *  Column width is easy when each column has a specified width.  When columns are variable width (i.e.
      *  have an * or % of the viewport) then we try to calculate so that things fit in.  The problem is that
      *  we have multiple render containers, and we don't want one render container to just take the whole viewport
      *  when it doesn't need to - we want things to balance out across the render containers.
-     * 
+     *
      *  To do this, we use this method to calculate all the renderContainers, recognising that in a given render
      *  cycle it'll get called once per render container, so it needs to return the same values each time.
-     * 
+     *
      *  The constraints on this method are therefore:
      *  - must return the same value when called multiple times, to do this it needs to rely on properties of the
      *    columns, but not properties that change when this is called (so it shouldn't rely on drawnWidth)
-     * 
+     *
      *  The general logic of this method is:
      *  - calculate our total available width
      *  - look at all the columns across all render containers, and work out which have widths and which have
@@ -7739,7 +7783,7 @@ angular.module('ui.grid')
     var self = this;
 
     var asterisksArray = [],
-        asteriskNum = 0, 
+        asteriskNum = 0,
         usedWidthSum = 0,
         ret = '';
 
@@ -7764,22 +7808,22 @@ angular.module('ui.grid')
         width = parseInt(column.width, 10);
         usedWidthSum = usedWidthSum + width;
         column.drawnWidth = width;
-        
+
       } else if (gridUtil.endsWith(column.width, "%")) {
         // percentage width, set to percentage of the viewport
         width = parseInt(parseInt(column.width.replace(/%/g, ''), 10) / 100 * availableWidth);
-        
+
         if ( width > column.maxWidth ){
           width = column.maxWidth;
         }
-        
+
         if ( width < column.minWidth ){
           width = column.minWidth;
         }
-        
+
         usedWidthSum = usedWidthSum + width;
         column.drawnWidth = width;
-      } else if (angular.isString(column.width) && column.width.indexOf('*') !== -1) { 
+      } else if (angular.isString(column.width) && column.width.indexOf('*') !== -1) {
         // is an asterisk column, the gridColumn already checked the string consists only of '****'
         asteriskNum = asteriskNum + column.width.length;
         asterisksArray.push(column);
@@ -7801,18 +7845,18 @@ angular.module('ui.grid')
         if ( width > column.maxWidth ){
           width = column.maxWidth;
         }
-        
+
         if ( width < column.minWidth ){
           width = column.minWidth;
         }
-        
+
         usedWidthSum = usedWidthSum + width;
         column.drawnWidth = width;
       });
     }
 
-    // If the grid width didn't divide evenly into the column widths and we have pixels left over, or our  
-    // calculated widths would have the grid narrower than the available space, 
+    // If the grid width didn't divide evenly into the column widths and we have pixels left over, or our
+    // calculated widths would have the grid narrower than the available space,
     // dole the remainder out one by one to make everything fit
     var processColumnUpwards = function(column){
       if ( column.drawnWidth < column.maxWidth && leftoverWidth > 0) {
@@ -7822,9 +7866,9 @@ angular.module('ui.grid')
         columnsToChange = true;
       }
     };
-    
+
     var leftoverWidth = availableWidth - usedWidthSum;
-    var columnsToChange = true; 
+    var columnsToChange = true;
 
     while (leftoverWidth > 0 && columnsToChange) {
       columnsToChange = false;
@@ -7841,9 +7885,9 @@ angular.module('ui.grid')
         columnsToChange = true;
       }
     };
-    
+
     var excessWidth =  usedWidthSum - availableWidth;
-    columnsToChange = true; 
+    columnsToChange = true;
 
     while (excessWidth > 0 && columnsToChange) {
       columnsToChange = false;
@@ -24094,7 +24138,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div class=\"ui-grid-render-container\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></div></div>"
+    "<div class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': colContainer.getMargin('left') + 'px', 'margin-right': colContainer.getMargin('right') + 'px' }\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></div></div>"
   );
 
 
