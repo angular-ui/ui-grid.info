@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-77467e4 - 2015-04-29
+ * ui-grid - v3.0.0-rc.21-6937d4d - 2015-04-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13366,8 +13366,9 @@ module.filter('px', function() {
       };
     }]);
 
-  module.directive('uiGridViewport', ['$timeout', '$document', 'gridUtil', 'uiGridConstants', 'uiGridCellNavService', 'uiGridCellNavConstants','$log',
-    function ($timeout, $document, gridUtil, uiGridConstants, uiGridCellNavService, uiGridCellNavConstants, $log) {
+  module.directive('uiGridViewport', ['$timeout', '$document', 'gridUtil', 'uiGridConstants', 'uiGridCellNavService', 'uiGridCellNavConstants','$log','$compile',
+    function ($timeout, $document, gridUtil, uiGridConstants, uiGridCellNavService, uiGridCellNavConstants, $log, $compile) {
+      var focuser;
       return {
         replace: true,
         priority: -99999, //this needs to run very last
@@ -13375,6 +13376,11 @@ module.filter('px', function() {
         scope: false,
         compile: function () {
           return {
+            pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+              //add an element with no dimensions that can be used to set focus and capture keystrokes
+              focuser = $compile('<div class="ui-grid-focuser" tabindex="-1"></div>')($scope);
+              $elm.append(focuser);
+            },
             post: function ($scope, $elm, $attrs, controllers) {
               var uiGridCtrl = controllers[0],
                 renderContainerCtrl = controllers[1];
@@ -13387,11 +13393,10 @@ module.filter('px', function() {
               var grid = uiGridCtrl.grid;
 
 
-              // Let the render container be focus-able
-              $elm.attr("tabindex", -1);
+              focuser[0].focus();
 
               // Bind to keydown events in the render container
-              $elm.on('keydown', function (evt) {
+              focuser.on('keydown', function (evt) {
                 evt.uiGridTargetRenderContainerId = containerId;
                 var rowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
                 var result = uiGridCtrl.cellNav.handleKeyDown(evt);
@@ -13439,8 +13444,8 @@ module.filter('px', function() {
               });
 
               grid.api.cellNav.on.navigate($scope, function () {
-                //focus the viewport because this can sometimes be lost
-                $elm[0].focus();
+                //focus again because it can be lost
+                focuser[0].focus();
               });
 
             }
