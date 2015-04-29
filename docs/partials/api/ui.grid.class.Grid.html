@@ -122,6 +122,9 @@ registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters<
 </ul>
 </div>
 </li>
+<li><h3 id="getOnlyDataColumns">getOnlyDataColumns()</h3>
+<div class="getonlydatacolumns"><p>returns all columns except for rowHeader columns</p></div>
+</li>
 <li><h3 id="getRow">getRow(rowEntity, rows)</h3>
 <div class="getrow"><p>returns the GridRow that contains the rowEntity</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
@@ -136,10 +139,10 @@ looks in grid.rows</p></li>
 <div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
 </li>
 <li><h3 id="hasLeftContainerColumns">hasLeftContainerColumns()</h3>
 <div class="hasleftcontainercolumns"><p>returns true if leftContainer has columns</p></div>
@@ -149,6 +152,13 @@ looks in grid.rows</p></li>
 </li>
 <li><h3 id="isRTL">isRTL()</h3>
 <div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>
+</li>
+<li><h3 id="isRowHeaderColumn">isRowHeaderColumn(column)</h3>
+<div class="isrowheadercolumn"><p>returns true if the column is a row Header</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">column – {object} – </code>
+<p>column</p></li>
+</ul>
+</div>
 </li>
 <li><h3 id="modifyRows">modifyRows()</h3>
 <div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered

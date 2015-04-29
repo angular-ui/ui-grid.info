@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-6937d4d - 2015-04-29
+ * ui-grid - v3.0.0-rc.21-c9ce96a - 2015-04-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3719,6 +3719,18 @@ angular.module('ui.grid')
     });
   };
 
+
+  /**
+   * @ngdoc function
+   * @name isRowHeaderColumn
+   * @methodOf ui.grid.class:Grid
+   * @description returns true if the column is a row Header
+   * @param {object} column column
+   */
+  Grid.prototype.isRowHeaderColumn = function isRowHeaderColumn(column) {
+    return this.rowHeaderColumns.indexOf(column) !== -1;
+  };
+
   /**
   * @ngdoc function
   * @name addRowHeaderColumn
@@ -3728,7 +3740,6 @@ angular.module('ui.grid')
   */
   Grid.prototype.addRowHeaderColumn = function addRowHeaderColumn(colDef) {
     var self = this;
-    //self.createLeftContainer();
     var rowHeaderCol = new GridColumn(colDef, gridUtil.nextUid(), self);
     rowHeaderCol.isRowHeader = true;
     if (self.isRTL()) {
@@ -3754,6 +3765,23 @@ angular.module('ui.grid')
             self.queueGridRefresh();
           });
       });
+  };
+
+  /**
+   * @ngdoc function
+   * @name getOnlyDataColumns
+   * @methodOf ui.grid.class:Grid
+   * @description returns all columns except for rowHeader columns
+   */
+  Grid.prototype.getOnlyDataColumns = function getOnlyDataColumns() {
+    var self = this;
+    var cols = [];
+    self.columns.forEach(function (col) {
+      if (self.rowHeaderColumns.indexOf(col) === -1) {
+        cols.push(col);
+      }
+    });
+    return cols;
   };
 
   /**
@@ -21532,12 +21560,12 @@ module.filter('px', function() {
    *
    *  # ui.grid.saveState
    * This module provides the ability to save the grid state, and restore
-   * it when the user returns to the page.  
-   * 
-   * No UI is provided, the caller should provide their own UI/buttons 
+   * it when the user returns to the page.
+   *
+   * No UI is provided, the caller should provide their own UI/buttons
    * as appropriate. Usually the navigate events would be used to save
    * the grid state and restore it.
-   * 
+   *
    * <br/>
    * <br/>
    *
@@ -21591,7 +21619,7 @@ module.filter('px', function() {
                  * @ngdoc function
                  * @name save
                  * @methodOf  ui.grid.saveState.api:PublicApi
-                 * @description Packages the current state of the grid into 
+                 * @description Packages the current state of the grid into
                  * an object, and provides it to the user for saving
                  * @returns {object} the state as a javascript object that can be saved
                  */
@@ -21616,7 +21644,7 @@ module.filter('px', function() {
           grid.api.registerEventsFromObject(publicApi.events);
 
           grid.api.registerMethodsFromObject(publicApi.methods);
-          
+
         },
 
         defaultGridOptions: function (gridOptions) {
@@ -21625,7 +21653,7 @@ module.filter('px', function() {
            * @ngdoc object
            * @name ui.grid.saveState.api:GridOptions
            *
-           * @description GridOptions for saveState feature, these are available to be  
+           * @description GridOptions for saveState feature, these are available to be
            * set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
            */
           /**
@@ -21654,12 +21682,12 @@ module.filter('px', function() {
            * @propertyOf  ui.grid.saveState.api:GridOptions
            * @description Save the current scroll position.  Note that this
            * is saved as the percentage of the grid scrolled - so if your
-           * user returns to a grid with a significantly different number of 
-           * rows (perhaps some data has been deleted) then the scroll won't 
+           * user returns to a grid with a significantly different number of
+           * rows (perhaps some data has been deleted) then the scroll won't
            * actually show the same rows as before.  If you want to scroll to
            * a specific row then you should instead use the saveFocus option, which
            * is the default.
-           * 
+           *
            * Note that this element will only be saved if the cellNav feature is
            * enabled
            * <br/>Defaults to false
@@ -21672,20 +21700,20 @@ module.filter('px', function() {
            * @description Save the current focused cell.  On returning
            * to this focused cell we'll also scroll.  This option is
            * preferred to the saveScroll option, so is set to true by
-           * default.  If saveScroll is set to true then this option will 
-           * be disabled.  
-           * 
-           * By default this option saves the current row number and column 
+           * default.  If saveScroll is set to true then this option will
+           * be disabled.
+           *
+           * By default this option saves the current row number and column
            * number, and returns to that row and column.  However, if you define
-           * a saveRowIdentity function, then it will return you to the currently 
+           * a saveRowIdentity function, then it will return you to the currently
            * selected column within that row (in a business sense - so if some
-           * rows have been deleted, it will still find the same data, presuming it 
+           * rows have been deleted, it will still find the same data, presuming it
            * still exists in the list.  If it isn't in the list then it will instead
            * return to the same row number - i.e. scroll percentage)
-           * 
+           *
            * Note that this option will do nothing if the cellNav
            * feature is not enabled.
-           * 
+           *
            * <br/>Defaults to true (unless saveScroll is true)
            */
           gridOptions.saveFocus = gridOptions.saveScroll !== true && gridOptions.saveFocus !== false;
@@ -21693,14 +21721,14 @@ module.filter('px', function() {
            * @ngdoc object
            * @name saveRowIdentity
            * @propertyOf  ui.grid.saveState.api:GridOptions
-           * @description A function that can be called, passing in a rowEntity, 
-           * and that will return a unique id for that row.  This might simply 
+           * @description A function that can be called, passing in a rowEntity,
+           * and that will return a unique id for that row.  This might simply
            * return the `id` field from that row (if you have one), or it might
            * concatenate some fields within the row to make a unique value.
-           * 
-           * This value will be used to find the same row again and set the focus 
+           *
+           * This value will be used to find the same row again and set the focus
            * to it, if it exists when we return.
-           * 
+           *
            * <br/>Defaults to undefined
            */
           /**
@@ -21708,25 +21736,25 @@ module.filter('px', function() {
            * @name saveVisible
            * @propertyOf  ui.grid.saveState.api:GridOptions
            * @description Save whether or not columns are visible.
-           * 
+           *
            * <br/>Defaults to true
            */
-          gridOptions.saveVisible = gridOptions.saveVisible !== false;          
+          gridOptions.saveVisible = gridOptions.saveVisible !== false;
           /**
            * @ngdoc object
            * @name saveSort
            * @propertyOf  ui.grid.saveState.api:GridOptions
            * @description Save the current sort state for each column
-           * 
+           *
            * <br/>Defaults to true
            */
-          gridOptions.saveSort = gridOptions.saveSort !== false;         
+          gridOptions.saveSort = gridOptions.saveSort !== false;
           /**
            * @ngdoc object
            * @name saveFilter
            * @propertyOf  ui.grid.saveState.api:GridOptions
            * @description Save the current filter state for each column
-           * 
+           *
            * <br/>Defaults to true
            */
           gridOptions.saveFilter = gridOptions.saveFilter !== false;
@@ -21738,33 +21766,33 @@ module.filter('px', function() {
            * is defined, then it will save the id of the row and select that.  If not, then
            * it will attempt to select the rows by row number, which will give the wrong results
            * if the data set has changed in the mean-time.
-           * 
+           *
            * Note that this option only does anything
-           * if the selection feature is enabled.  
-           * 
+           * if the selection feature is enabled.
+           *
            * <br/>Defaults to true
            */
-          gridOptions.saveSelection = gridOptions.saveSelection !== false;          
+          gridOptions.saveSelection = gridOptions.saveSelection !== false;
           /**
            * @ngdoc object
            * @name saveGrouping
            * @propertyOf  ui.grid.saveState.api:GridOptions
-           * @description Save the grouping configuration.  If set to true and the 
+           * @description Save the grouping configuration.  If set to true and the
            * grouping feature is not enabled then does nothing.
-           * 
+           *
            * <br/>Defaults to true
            */
-          gridOptions.saveGrouping = gridOptions.saveGrouping !== false; 
+          gridOptions.saveGrouping = gridOptions.saveGrouping !== false;
           /**
            * @ngdoc object
            * @name saveGroupingExpandedStates
            * @propertyOf  ui.grid.saveState.api:GridOptions
-           * @description Save the grouping row expanded states.  If set to true and the 
+           * @description Save the grouping row expanded states.  If set to true and the
            * grouping feature is not enabled then does nothing.
-           * 
+           *
            * This can be quite a bit of data, in many cases you wouldn't want to save this
            * information.
-           * 
+           *
            * <br/>Defaults to false
            */
           gridOptions.saveGroupingExpandedStates = gridOptions.saveGroupingExpandedStates === true;
@@ -21781,12 +21809,12 @@ module.filter('px', function() {
            * @ngdoc object
            * @name saveTreeView
            * @propertyOf  ui.grid.saveState.api:GridOptions
-           * @description Save the treeView configuration.  If set to true and the 
+           * @description Save the treeView configuration.  If set to true and the
            * treeView feature is not enabled then does nothing.
-           * 
+           *
            * <br/>Defaults to true
            */
-          gridOptions.saveTreeView = gridOptions.saveTreeView !== false; 
+          gridOptions.saveTreeView = gridOptions.saveTreeView !== false;
         },
 
 
@@ -21802,23 +21830,23 @@ module.filter('px', function() {
          */
         save: function (grid) {
           var savedState = {};
-          
+
           savedState.columns = service.saveColumns( grid );
           savedState.scrollFocus = service.saveScrollFocus( grid );
           savedState.selection = service.saveSelection( grid );
           savedState.grouping = service.saveGrouping( grid );
           savedState.treeView = service.saveTreeView( grid );
-          
+
           return savedState;
         },
-        
-        
+
+
         /**
          * @ngdoc function
          * @name restore
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Applies the provided state to the grid
-         * 
+         *
          * @param {Grid} grid the grid whose state we'd like to restore
          * @param {scope} $scope a scope that we can broadcast on
          * @param {object} state the state we'd like to restore
@@ -21827,15 +21855,15 @@ module.filter('px', function() {
           if ( state.columns ) {
             service.restoreColumns( grid, state.columns );
           }
-          
+
           if ( state.scrollFocus ){
             service.restoreScrollFocus( grid, $scope, state.scrollFocus );
           }
-          
+
           if ( state.selection ){
             service.restoreSelection( grid, state.selection );
           }
-          
+
           if ( state.grouping ){
             service.restoreGrouping( grid, state.grouping );
           }
@@ -21846,15 +21874,15 @@ module.filter('px', function() {
 
           grid.refresh();
         },
-        
-        
+
+
         /**
          * @ngdoc function
          * @name saveColumns
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Saves the column setup, including sort, filters, ordering,
          * pinning and column widths.
-         * 
+         *
          * Works through the current columns, storing them in order.  Stores the
          * column name, then the visible flag, width, sort and filters for each column.
          *
@@ -21863,23 +21891,23 @@ module.filter('px', function() {
          */
         saveColumns: function( grid ) {
           var columns = [];
-          grid.columns.forEach( function( column ) {
+          grid.getOnlyDataColumns().forEach( function( column ) {
             var savedColumn = {};
             savedColumn.name = column.name;
-            
+
             if ( grid.options.saveVisible ){
-              savedColumn.visible = column.visible;  
+              savedColumn.visible = column.visible;
             }
-            
+
             if ( grid.options.saveWidths ){
-              savedColumn.width = column.width;  
+              savedColumn.width = column.width;
             }
-            
+
             // these two must be copied, not just pointed too - otherwise our saved state is pointing to the same object as current state
             if ( grid.options.saveSort ){
-              savedColumn.sort = angular.copy( column.sort );  
+              savedColumn.sort = angular.copy( column.sort );
             }
-            
+
             if ( grid.options.saveFilter ){
               savedColumn.filters = angular.copy ( column.filters );
             }
@@ -21887,30 +21915,30 @@ module.filter('px', function() {
             if ( !!grid.api.pinning && grid.options.savePinning ){
               savedColumn.pinned = column.renderContainer ? column.renderContainer : '';
             }
-            
+
             columns.push( savedColumn );
           });
-          
+
           return columns;
         },
-        
+
 
         /**
          * @ngdoc function
          * @name saveScrollFocus
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Saves the currently scroll or focus.
-         * 
+         *
          * If cellNav isn't present then does nothing - we can't return
          * to the scroll position without cellNav anyway.
-         * 
+         *
          * If the cellNav module is present, and saveFocus is true, then
          * it saves the currently focused cell.  If rowIdentity is present
          * then saves using rowIdentity, otherwise saves visibleRowNum.
-         * 
+         *
          * If the cellNav module is not present, and saveScroll is true, then
          * it approximates the current scroll row and column, and saves that.
-         * 
+         *
          * @param {Grid} grid the grid whose state we'd like to save
          * @returns {object} the selection state ready to be saved
          */
@@ -21918,35 +21946,35 @@ module.filter('px', function() {
           if ( !grid.api.cellNav ){
             return {};
           }
-          
+
           var scrollFocus = {};
           if ( grid.options.saveFocus ){
             scrollFocus.focus = true;
             var rowCol = grid.api.cellNav.getFocusedCell();
             if ( rowCol !== null ) {
               if ( rowCol.col !== null ){
-                scrollFocus.colName = rowCol.col.colDef.name;  
+                scrollFocus.colName = rowCol.col.colDef.name;
               }
               if ( rowCol.row !== null ){
-                scrollFocus.rowVal = service.getRowVal( grid, rowCol.row );  
+                scrollFocus.rowVal = service.getRowVal( grid, rowCol.row );
               }
             }
           }
-          
+
           if ( grid.options.saveScroll || grid.options.saveFocus && !scrollFocus.colName && !scrollFocus.rowVal ) {
             scrollFocus.focus = false;
             if ( grid.renderContainers.body.prevRowScrollIndex ){
               scrollFocus.rowVal = service.getRowVal( grid, grid.renderContainers.body.visibleRowCache[ grid.renderContainers.body.prevRowScrollIndex ]);
             }
-            
+
             if ( grid.renderContainers.body.prevColScrollIndex ){
               scrollFocus.colName = grid.renderContainers.body.visibleColumnCache[ grid.renderContainers.body.prevColScrollIndex ].name;
             }
-          }        
-          
+          }
+
           return scrollFocus;
         },
-        
+
 
         /**
          * @ngdoc function
@@ -21967,8 +21995,8 @@ module.filter('px', function() {
 
           return selection;
         },
-        
-        
+
+
         /**
          * @ngdoc function
          * @name saveGrouping
@@ -21984,8 +22012,8 @@ module.filter('px', function() {
 
           return grid.api.grouping.getGrouping( grid.options.saveGroupingExpandedStates );
         },
-        
-        
+
+
         /**
          * @ngdoc function
          * @name saveTreeView
@@ -22001,24 +22029,24 @@ module.filter('px', function() {
 
           return grid.api.treeView.getTreeView();
         },
-        
-        
+
+
         /**
          * @ngdoc function
          * @name getRowVal
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Helper function that gets either the rowNum or
-         * the saveRowIdentity, given a gridRow 
+         * the saveRowIdentity, given a gridRow
          * @param {Grid} grid the grid the row is in
          * @param {GridRow} gridRow the row we want the rowNum for
          * @returns {object} an object containing { identity: true/false, row: rowNumber/rowIdentity }
-         * 
+         *
          */
         getRowVal: function( grid, gridRow ){
           if ( !gridRow ) {
             return null;
           }
-          
+
           var rowVal = {};
           if ( grid.options.saveRowIdentity ){
             rowVal.identity = true;
@@ -22029,71 +22057,74 @@ module.filter('px', function() {
           }
           return rowVal;
         },
-        
-        
+
+
         /**
          * @ngdoc function
          * @name restoreColumns
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Restores the columns, including order, visible, width,
          * pinning, sort and filters.
-         * 
+         *
          * @param {Grid} grid the grid whose state we'd like to restore
          * @param {object} columnsState the list of columns we had before, with their state
          */
         restoreColumns: function( grid, columnsState ){
           columnsState.forEach( function( columnState, index ) {
             var currentCol = grid.getColumn( columnState.name );
-            
-            if ( currentCol ){
-              var currentIndex = grid.columns.indexOf( currentCol );
-              
-              if ( grid.options.saveVisible && 
-                   ( grid.columns[currentIndex].visible !== columnState.visible ||
-                     grid.columns[currentIndex].colDef.visible !== columnState.visible ) ){
-                grid.columns[currentIndex].visible = columnState.visible;
-                grid.columns[currentIndex].colDef.visible = columnState.visible;
-                grid.api.core.raise.columnVisibilityChanged( grid.columns[currentIndex]);
-              }
-              
-              if ( grid.options.saveWidths ){
-                grid.columns[currentIndex].width = columnState.width;
+
+
+
+            if ( currentCol && !grid.isRowHeaderColumn(currentCol) ){
+              if ( grid.options.saveVisible &&
+                   ( currentCol.visible !== columnState.visible ||
+                     currentCol.colDef.visible !== columnState.visible ) ){
+                currentCol.visible = columnState.visible;
+                currentCol.colDef.visible = columnState.visible;
+                grid.api.core.raise.columnVisibilityChanged(currentCol);
               }
 
-              if ( grid.options.saveSort && 
-                   !angular.equals(grid.columns[currentIndex].sort, columnState.sort) &&
-                   !( grid.columns[currentIndex].sort === undefined && angular.isEmpty(columnState.sort) ) ){
-                grid.columns[currentIndex].sort = angular.copy( columnState.sort );
+              if ( grid.options.saveWidths ){
+                currentCol.width = columnState.width;
+              }
+
+              if ( grid.options.saveSort &&
+                   !angular.equals(currentCol.sort, columnState.sort) &&
+                   !( currentCol.sort === undefined && angular.isEmpty(columnState.sort) ) ){
+                currentCol.sort = angular.copy( columnState.sort );
                 grid.api.core.raise.sortChanged();
               }
 
-              if ( grid.options.saveFilter && 
-                   !angular.equals(grid.columns[currentIndex].filters, columnState.filters ) ){
-                grid.columns[currentIndex].filters = angular.copy( columnState.filters );
+              if ( grid.options.saveFilter &&
+                   !angular.equals(currentCol.filters, columnState.filters ) ){
+                currentCol.filters = angular.copy( columnState.filters );
                 grid.api.core.raise.filterChanged();
               }
 
-              if ( !!grid.api.pinning && grid.options.savePinning && grid.columns[currentIndex].renderContainer !== columnState.pinned ){
-                grid.api.pinning.pinColumn(grid.columns[currentIndex], columnState.pinned);
+              if ( !!grid.api.pinning && grid.options.savePinning && currentCol.renderContainer !== columnState.pinned ){
+                grid.api.pinning.pinColumn(currentCol, columnState.pinned);
               }
-              
-              if ( grid.options.saveOrder && currentIndex !== index ){
-                var column = grid.columns.splice( currentIndex, 1 )[0];
-                grid.columns.splice( index, 0, column );
+
+              var currentIndex = grid.getOnlyDataColumns().indexOf( currentCol );
+              if (currentIndex !== -1) {
+                if (grid.options.saveOrder && currentIndex !== index) {
+                  var column = grid.columns.splice(currentIndex + grid.rowHeaderColumns.length, 1)[0];
+                  grid.columns.splice(index + grid.rowHeaderColumns.length, 0, column);
+                }
               }
             }
           });
         },
-        
+
 
         /**
          * @ngdoc function
          * @name restoreScrollFocus
          * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
          * @description Scrolls to the position that was saved.  If focus is true, then
-         * sets focus to the specified row/col.  If focus is false, then scrolls to the 
+         * sets focus to the specified row/col.  If focus is false, then scrolls to the
          * specified row/col.
-         * 
+         *
          * @param {Grid} grid the grid whose state we'd like to restore
          * @param {scope} $scope a scope that we can broadcast on
          * @param {object} scrollFocusState the scroll/focus state ready to be restored
@@ -22102,7 +22133,7 @@ module.filter('px', function() {
           if ( !grid.api.cellNav ){
             return;
           }
-          
+
           var colDef, row;
           if ( scrollFocusState.colName ){
             var colDefs = grid.options.columnDefs.filter( function( colDef ) { return colDef.name === scrollFocusState.colName; });
@@ -22110,7 +22141,7 @@ module.filter('px', function() {
               colDef = colDefs[0];
             }
           }
-          
+
           if ( scrollFocusState.rowVal && scrollFocusState.rowVal.row ){
             if ( scrollFocusState.rowVal.identity ){
               row = service.findRowByIdentity( grid, scrollFocusState.rowVal );
@@ -22118,10 +22149,10 @@ module.filter('px', function() {
               row = grid.renderContainers.body.visibleRowCache[ scrollFocusState.rowVal.row ];
             }
           }
-          
+
           var entity = row && row.entity ? row.entity : null ;
 
-          if ( colDef || entity ) {          
+          if ( colDef || entity ) {
             if (scrollFocusState.focus ){
               grid.api.cellNav.scrollToFocus( entity, colDef );
             } else {
@@ -22129,7 +22160,7 @@ module.filter('px', function() {
             }
           }
         },
-        
+
 
         /**
          * @ngdoc function
@@ -22145,17 +22176,17 @@ module.filter('px', function() {
           if ( !grid.api.selection ){
             return;
           }
-          
+
           grid.api.selection.clearSelectedRows();
 
           selectionState.forEach(  function( rowVal ) {
             if ( rowVal.identity ){
               var foundRow = service.findRowByIdentity( grid, rowVal );
-              
+
               if ( foundRow ){
                 grid.api.selection.selectRow( foundRow.entity );
               }
-              
+
             } else {
               grid.api.selection.selectRowByVisibleIndex( rowVal.row );
             }
@@ -22176,10 +22207,10 @@ module.filter('px', function() {
           if ( !grid.api.grouping || typeof(groupingState) === 'undefined' || groupingState === null || angular.equals(groupingState, {}) ){
             return;
           }
-          
+
           grid.api.grouping.setGrouping( groupingState );
-        },        
-        
+        },
+
         /**
          * @ngdoc function
          * @name restoreTreeView
@@ -22193,10 +22224,10 @@ module.filter('px', function() {
           if ( !grid.api.treeView || typeof(treeViewState) === 'undefined' || treeViewState === null || angular.equals(treeViewState, {}) ){
             return;
           }
-          
+
           grid.api.treeView.setTreeView( treeViewState );
-        },        
-        
+        },
+
         /**
          * @ngdoc function
          * @name findRowByIdentity
@@ -22211,7 +22242,7 @@ module.filter('px', function() {
           if ( !grid.options.saveRowIdentity ){
             return null;
           }
-          
+
           var filteredRows = grid.rows.filter( function( gridRow ) {
             if ( grid.options.saveRowIdentity( gridRow.entity ) === rowVal.row ){
               return true;
@@ -22219,7 +22250,7 @@ module.filter('px', function() {
               return false;
             }
           });
-          
+
           if ( filteredRows.length > 0 ){
             return filteredRows[0];
           } else {

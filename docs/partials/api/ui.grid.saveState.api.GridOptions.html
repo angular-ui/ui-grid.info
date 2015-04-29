@@ -3,7 +3,7 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>GridOptions for saveState feature, these are available to be <br />
+<div class="description"><p>GridOptions for saveState feature, these are available to be
 set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
 <div class="member property"><h2 id="Properties">Properties</h2>
 <ul class="properties"><li><h3 id="saveFilter">saveFilter</h3>
@@ -15,14 +15,14 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a><
 <div class="savefocus"><p>Save the current focused cell.  On returning
 to this focused cell we'll also scroll.  This option is
 preferred to the saveScroll option, so is set to true by
-default.  If saveScroll is set to true then this option will 
-be disabled.  </p>
+default.  If saveScroll is set to true then this option will
+be disabled.</p>
 
-<p>By default this option saves the current row number and column 
+<p>By default this option saves the current row number and column
 number, and returns to that row and column.  However, if you define
-a saveRowIdentity function, then it will return you to the currently 
+a saveRowIdentity function, then it will return you to the currently
 selected column within that row (in a business sense - so if some
-rows have been deleted, it will still find the same data, presuming it 
+rows have been deleted, it will still find the same data, presuming it
 still exists in the list.  If it isn't in the list then it will instead
 return to the same row number - i.e. scroll percentage)</p>
 
@@ -32,13 +32,13 @@ feature is not enabled.</p>
 <p><br/>Defaults to true (unless saveScroll is true)</p></div>
 </li>
 <li><h3 id="saveGrouping">saveGrouping</h3>
-<div class="savegrouping"><p>Save the grouping configuration.  If set to true and the 
+<div class="savegrouping"><p>Save the grouping configuration.  If set to true and the
 grouping feature is not enabled then does nothing.</p>
 
 <p><br/>Defaults to true</p></div>
 </li>
 <li><h3 id="saveGroupingExpandedStates">saveGroupingExpandedStates</h3>
-<div class="savegroupingexpandedstates"><p>Save the grouping row expanded states.  If set to true and the 
+<div class="savegroupingexpandedstates"><p>Save the grouping row expanded states.  If set to true and the
 grouping feature is not enabled then does nothing.</p>
 
 <p>This can be quite a bit of data, in many cases you wouldn't want to save this
@@ -58,12 +58,12 @@ example the move columns feature), this makes little sense.
 <p><br/>Defaults to true</p></div>
 </li>
 <li><h3 id="saveRowIdentity">saveRowIdentity</h3>
-<div class="saverowidentity"><p>A function that can be called, passing in a rowEntity, 
-and that will return a unique id for that row.  This might simply 
+<div class="saverowidentity"><p>A function that can be called, passing in a rowEntity,
+and that will return a unique id for that row.  This might simply
 return the <code>id</code> field from that row (if you have one), or it might
 concatenate some fields within the row to make a unique value.</p>
 
-<p>This value will be used to find the same row again and set the focus 
+<p>This value will be used to find the same row again and set the focus
 to it, if it exists when we return.</p>
 
 <p><br/>Defaults to undefined</p></div>
@@ -71,8 +71,8 @@ to it, if it exists when we return.</p>
 <li><h3 id="saveScroll">saveScroll</h3>
 <div class="savescroll"><p>Save the current scroll position.  Note that this
 is saved as the percentage of the grid scrolled - so if your
-user returns to a grid with a significantly different number of 
-rows (perhaps some data has been deleted) then the scroll won't 
+user returns to a grid with a significantly different number of
+rows (perhaps some data has been deleted) then the scroll won't
 actually show the same rows as before.  If you want to scroll to
 a specific row then you should instead use the saveFocus option, which
 is the default.</p>
@@ -88,7 +88,7 @@ it will attempt to select the rows by row number, which will give the wrong resu
 if the data set has changed in the mean-time.</p>
 
 <p>Note that this option only does anything
-if the selection feature is enabled.  </p>
+if the selection feature is enabled.</p>
 
 <p><br/>Defaults to true</p></div>
 </li>
@@ -98,7 +98,7 @@ if the selection feature is enabled.  </p>
 <p><br/>Defaults to true</p></div>
 </li>
 <li><h3 id="saveTreeView">saveTreeView</h3>
-<div class="savetreeview"><p>Save the treeView configuration.  If set to true and the 
+<div class="savetreeview"><p>Save the treeView configuration.  If set to true and the
 treeView feature is not enabled then does nothing.</p>
 
 <p><br/>Defaults to true</p></div>
