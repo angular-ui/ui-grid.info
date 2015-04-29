@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-43f63ac - 2015-04-28
+ * ui-grid - v3.0.0-rc.21-77467e4 - 2015-04-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -10942,6 +10942,16 @@ module.filter('px', function() {
         pagination: {
             sizes: 'Einträge pro Seite',
             totalItems: 'Einträge'
+        },
+        grouping: {
+            group: 'Gruppieren',
+            ungroup: 'Gruppierung aufheben',
+            aggregate_count: 'Agg: Anzahl',
+            aggregate_sum: 'Agg: Summe',
+            aggregate_max: 'Agg: Maximum',
+            aggregate_min: 'Agg: Minimum',
+            aggregate_avg: 'Agg: Mittelwert',
+            aggregate_remove: 'Aggregation entfernen'
         }
       });
       return $delegate;
@@ -20392,7 +20402,7 @@ module.filter('px', function() {
             if ( grid.api.colResizable ){
               grid.api.colResizable.raise.columnSizeChanged(colDef, deltaChange);
             } else {
-              gridUtil.logError("The resizeable api is not registered, this may indicate that you've included the module but not added the 'ui-grid-column-resize' directive to your grid definition.  Cannot raise any events.");
+              gridUtil.logError("The resizeable api is not registered, this may indicate that you've included the module but not added the 'ui-grid-resize-columns' directive to your grid definition.  Cannot raise any events.");
             }
           });
         },
@@ -20849,6 +20859,7 @@ module.filter('px', function() {
   }]);
 
 })();
+
 (function () {
   'use strict';
 
