@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-aa56355 - 2015-05-06
+ * ui-grid - v3.0.0-rc.21-025c893 - 2015-05-14
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -35,6 +35,7 @@
     keymap: {
       TAB: 9,
       STRG: 17,
+      CAPSLOCK: 20,
       CTRL: 17,
       CTRLRIGHT: 18,
       CTRLR: 18,
@@ -13839,7 +13840,15 @@ module.filter('px', function() {
          * @returns {boolean} true if an edit should start
          */
         isStartEditKey: function (evt) {
-          if (evt.keyCode === uiGridConstants.keymap.LEFT ||
+          if (evt.metaKey ||
+              evt.keyCode === uiGridConstants.keymap.ESC ||
+              evt.keyCode === uiGridConstants.keymap.SHIFT ||
+              evt.keyCode === uiGridConstants.keymap.CTRL ||
+              evt.keyCode === uiGridConstants.keymap.ALT ||
+              evt.keyCode === uiGridConstants.keymap.WIN ||
+              evt.keyCode === uiGridConstants.keymap.CAPSLOCK ||
+
+             evt.keyCode === uiGridConstants.keymap.LEFT ||
             (evt.keyCode === uiGridConstants.keymap.TAB && evt.shiftKey) ||
 
             evt.keyCode === uiGridConstants.keymap.RIGHT ||
