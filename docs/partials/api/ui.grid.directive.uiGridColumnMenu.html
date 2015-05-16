@@ -3,11 +3,14 @@
 )</span>
 </h1>
 <div><h2 id="Description">Description</h2>
-<div class="description"><p>Allows us to interpolate expressions in <code>&lt;style&gt;</code> elements. Angular doesn't do this by default as it can/will/might? break in IE8.</p></div>
+<div class="description"><p>Provides the column menu framework, leverages uiGridMenu underneath</p></div>
 <h2 id="Usage">Usage</h2>
-<div class="usage">as attribute<pre class="prettyprint linenums">&lt;style ui-grid-column-menu&gt;
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY ui-grid-column-menu&gt;
    ...
-&lt;/style&gt;</pre>
+&lt;/ANY&gt;</pre>
+as class<pre class="prettyprint linenums">&lt;ANY class="ui-grid-column-menu"&gt;
+   ...
+&lt;/ANY&gt;</pre>
 </div>
 <div class="member method"><h2 id="Methods">Methods</h2>
 <ul class="methods"><li><h3 id="hideMenu">hideMenu(broadcastTrigger)</h3>
@@ -34,34 +37,4 @@ once we can calculate it's size.</p><h4 id="Parameters">Parameters</h4>
 </li>
 </ul>
 </div>
-<h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js script.js" source-edit-html="index.html-14" source-edit-css="" source-edit-js="script.js-13" source-edit-unit="" source-edit-scenario="scenario.js-15"></div>
-<div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-14" ng-html-wrap-loaded="app angular.js script.js"></pre>
-<script type="text/ng-template" id="index.html-14">
-
-
-<div ng-controller="MainCtrl">
-  <div ui-grid-menu shown="true"  ></div>
-</div>
-</script>
-</div>
-<div class="tab-pane" title="script.js">
-<pre class="prettyprint linenums" ng-set-text="script.js-13"></pre>
-<script type="text/ng-template" id="script.js-13">
-var app = angular.module('app', ['ui.grid']);
-
-app.controller('MainCtrl', ['$scope', function ($scope) {
-  
-}]);
-</script>
-</div>
-<div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-15"></pre>
-<script type="text/ng-template" id="scenario.js-15">
-</script>
-</div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-14" ng-eval-javascript="script.js-13"></div></div>
 </div>

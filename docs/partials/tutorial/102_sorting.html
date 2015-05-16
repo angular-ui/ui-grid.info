@@ -24,6 +24,11 @@ data has changed by calling <code>gridApi.core.notifyDataChange( uiGridConstants
 <p>If you set a default sort, you can prevent the user from removing that sort by setting <code>suppressRemoveSort: true</code>
 for that column.  This will let the user change the direction of the sort, but take away the option to remove the sort.</p>
 
+<p>The sort algorithm is chosen based on the column type.  ui-grid will guess the type based on the data, although if you load data
+asynchronously after the columns it will often decide all your columns are string.  You can explicitly set the column type in the 
+column def using <code>type='number'</code>.  Valid types are documented in <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a>, and 
+include <code>string</code>, <code>number</code>, <code>numberStr</code> and <code>date</code>.  If you use date be aware the code expects a javascript date object.</p>
+
 <h3>Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-23" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-24"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">

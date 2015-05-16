@@ -16,11 +16,11 @@ parent nodes would be shown whenever a child node or leaf node under them matche
 will run a rowsProcessor to set expand buttons alongside these nodes, and will maintain the
 expand/collapse state of each node.</p>
 
-<p>In future a count of the direct children of each node could optionally be calculated and displayed
-alongside the node - the current issue is deciding where to display that.  For now we calculate it 
-but don't display it.</p>
+<p>A count of the direct children of each node is calculated in the expanded states, the current 
+issue is deciding where to display that.  For now we calculate it but don't display it.</p>
 
-<p>In future the count could be used to remove the + from a row that doesn't actually have any children.</p>
+<p>The count can be used to remove the + from a row that doesn't actually have any children, if you
+set the option treeHideNoChildren.</p>
 
 <p>Optionally the treeView can be populated only when nodes are clicked on.  This will provide callbacks when
 nodes are expanded, requesting the additional data.  The node will be set to expanded, and when the data
