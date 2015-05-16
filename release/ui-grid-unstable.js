@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-869be69 - 2015-05-16
+ * ui-grid - v3.0.0-rc.21-9be0549 - 2015-05-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -23877,6 +23877,7 @@ module.filter('px', function() {
 
           if ( row.treeExpandedState.state !== uiGridTreeViewConstants.COLLAPSED ){
             row.treeExpandedState.state = uiGridTreeViewConstants.COLLAPSED;
+            grid.treeView.expandAll = false;
             grid.api.treeView.raise.rowCollapsed(row);
             grid.queueGridRefresh();
           }
@@ -23898,6 +23899,7 @@ module.filter('px', function() {
           }
 
           service.setAllNodes(grid, row.treeExpandedState, uiGridTreeViewConstants.COLLAPSED);
+          grid.treeView.expandAll = false;
           grid.queueGridRefresh();
         },
 
