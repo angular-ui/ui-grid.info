@@ -48,7 +48,7 @@ as all the data is now present within AngularJS  </p><h2 id="Example">Example</h
             { name: 'gender', enableSorting: false },
             { name: 'company', enableSorting: false }
           ],
-          exporterAllDataPromise: function() {
+          exporterAllDataFn: function() {
             return getPage(1, $scope.gridOptions.totalItems, paginationOptions.sort)
             .then(function() {
               $scope.gridOptions.useExternalPagination = false;

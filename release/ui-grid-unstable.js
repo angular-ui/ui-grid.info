@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-025c893 - 2015-05-14
+ * ui-grid - v3.0.0-rc.21-7980717 - 2015-05-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6621,7 +6621,7 @@ angular.module('ui.grid')
     // as is
     GridColumn.prototype.unsort = function () {
       this.sort = {};
-      self.grid.api.core.raise.sortChanged( self, self.grid.getColumnSorting() );
+      self.grid.api.core.raise.sortChanged( self.grid, self.grid.getColumnSorting() );
     };
   
   };
@@ -11861,7 +11861,7 @@ module.filter('px', function() {
         search: {
           placeholder: 'Procurar...',
           showingItems: 'Mostrando os Itens:',
-          selectedItems: 'Items Selecionados:',
+          selectedItems: 'Itens Selecionados:',
           totalItems: 'Total de Itens:',
           size: 'Tamanho da Página:',
           first: 'Primeira Página',
@@ -15637,7 +15637,7 @@ module.filter('px', function() {
 
           /**
            * @ngdoc function
-           * @name exporterAllDataPromise
+           * @name exporterAllDataFn
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description This promise is needed when exporting all rows,
            * and the data need to be provided by server side. Default is null.
@@ -15645,12 +15645,33 @@ module.filter('px', function() {
            * 
            * @example
            * <pre>
-           *   gridOptions.exporterAllDataPromise = function () {
+           *   gridOptions.exporterAllDataFn = function () {
            *     return $http.get('/data/100.json')
            *   }
            * </pre>
            */
-          gridOptions.exporterAllDataPromise = gridOptions.exporterAllDataPromise ? gridOptions.exporterAllDataPromise : null;
+          gridOptions.exporterAllDataFn = gridOptions.exporterAllDataFn ? gridOptions.exporterAllDataFn : null;
+
+          /**
+           * @ngdoc function
+           * @name exporterAllDataPromise
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description DEPRECATED - exporterAllDataFn used to be 
+           * called this, but it wasn't a promise, it was a function that returned
+           * a promise.  Deprecated, but supported for backward compatibility, use
+           * exporterAllDataFn instead.
+           * @returns {Promise} a promise to load all data from server
+           * 
+           * @example
+           * <pre>
+           *   gridOptions.exporterAllDataFn = function () {
+           *     return $http.get('/data/100.json')
+           *   }
+           * </pre>
+           */
+          if ( gridOptions.exporterAllDataFn == null && gridOptions.exporterAllDataPromise ) {
+            gridOptions.exporterAllDataFn = gridOptions.exporterAllDataPromise;
+          }
         },
 
 
@@ -15759,7 +15780,7 @@ module.filter('px', function() {
          * @ngdoc function
          * @name loadAllDataIfNeeded
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
-         * @description When using server side pagination, use exportAllDataPromise to
+         * @description When using server side pagination, use exporterAllDataFn to
          * load all data before continuing processing.
          * When using client side pagination, return a resolved promise so processing
          * continues immediately
@@ -15772,8 +15793,8 @@ module.filter('px', function() {
          * uiGridExporterConstants.SELECTED
          */
         loadAllDataIfNeeded: function (grid, rowTypes, colTypes) {
-          if ( rowTypes === uiGridExporterConstants.ALL && grid.rows.length !== grid.options.totalItems && grid.options.exporterAllDataPromise) {
-            return grid.options.exporterAllDataPromise()
+          if ( rowTypes === uiGridExporterConstants.ALL && grid.rows.length !== grid.options.totalItems && grid.options.exporterAllDataFn) {
+            return grid.options.exporterAllDataFn()
               .then(function() {
                 grid.modifyRows(grid.options.data);
               });
@@ -17215,8 +17236,8 @@ module.filter('px', function() {
          * @param {Grid} grid grid object
          */
         tidyPriorities: function( grid ){
-          // if we're called from sortChanged, grid is in this, not passed as param
-          if ( typeof(grid) === 'undefined' && typeof(this.grid) !== 'undefined' ) {
+          // if we're called from sortChanged, grid is in this, not passed as param, the param can be a column or undefined
+          if ( ( typeof(grid) === 'undefined' || typeof(grid.grid) !== 'undefined' ) && typeof(this.grid) !== 'undefined' ) {
             grid = this.grid;
           }
           
@@ -17741,7 +17762,7 @@ module.filter('px', function() {
           
           var groupLevel = typeof(row.groupLevel) !== 'undefined' ? row.groupLevel : groupingProcessingState.length;
           for (var i = 0; i < groupLevel; i++){
-            if ( groupingProcessingState[i].currentGroupHeader.expandedState.state === uiGridGroupingConstants.COLLAPSED ){
+            if ( groupingProcessingState[i].currentGroupHeader && groupingProcessingState[i].currentGroupHeader.expandedState.state === uiGridGroupingConstants.COLLAPSED ){
              row.visible = false;
             }
           }
@@ -21082,7 +21103,7 @@ module.filter('px', function() {
                 flushDirtyRows: function () {
                   return service.flushDirtyRows(grid);
                 },
-                
+
                 /**
                  * @ngdoc method
                  * @methodOf ui.grid.rowEdit.api:PublicApi
@@ -21094,7 +21115,7 @@ module.filter('px', function() {
                  * call in a $interval or $timeout
                  * <pre>
                  *      $interval( function() {
-                 *        gridApi.rowEdit.setRowsDirty(grid, myDataRows);
+                 *        gridApi.rowEdit.setRowsDirty(myDataRows);
                  *      }, 0, 1);
                  * </pre>
                  * @param {array} dataRows the data entities for which the gridRows
@@ -21103,6 +21124,26 @@ module.filter('px', function() {
                  */
                 setRowsDirty: function ( dataRows) {
                   service.setRowsDirty(grid, dataRows);
+                },
+
+                /**
+                 * @ngdoc method
+                 * @methodOf ui.grid.rowEdit.api:PublicApi
+                 * @name setRowsClean
+                 * @description Sets each of the rows passed in dataRows
+                 * to be clean, removing them from the dirty cache and the error cache,
+                 * and clearing the error flag and the dirty flag
+                 * <pre>
+                 *      var gridRows = $scope.gridApi.rowEdit.getDirtyRows();
+                 *      var dataRows = gridRows.map( function( gridRow ) { return gridRow.entity; });
+                 *      $scope.gridApi.rowEdit.setRowsClean( dataRows );
+                 * </pre>
+                 * @param {array} dataRows the data entities for which the gridRows
+                 * should be set clean.
+                 * 
+                 */
+                setRowsClean: function ( dataRows) {
+                  service.setRowsClean(grid, dataRows);
                 }
               }
             }
@@ -21110,15 +21151,15 @@ module.filter('px', function() {
 
           grid.api.registerEventsFromObject(publicApi.events);
           grid.api.registerMethodsFromObject(publicApi.methods);
-          
+
           grid.api.core.on.renderingComplete( scope, function ( gridApi ) {
             grid.api.edit.on.afterCellEdit( scope, service.endEditCell );
             grid.api.edit.on.beginCellEdit( scope, service.beginEditCell );
             grid.api.edit.on.cancelCellEdit( scope, service.cancelEditCell );
-            
+
             if ( grid.api.cellNav ) {
               grid.api.cellNav.on.navigate( scope, service.navigate );
-            }              
+            }
           });
 
         },
@@ -21157,9 +21198,9 @@ module.filter('px', function() {
               // don't save the row again if it's already saving - that causes stale object exceptions
               return gridRow.rowEditSavePromise;
             }
-            
+
             var promise = grid.api.rowEdit.raise.saveRow( gridRow.entity );
-            
+
             if ( gridRow.rowEditSavePromise ){
               gridRow.rowEditSavePromise.then( self.processSuccessPromise( grid, gridRow ), self.processErrorPromise( grid, gridRow ));
             } else {
@@ -21168,7 +21209,7 @@ module.filter('px', function() {
             return promise;
           };
         },
-        
+
 
         /**
          * @ngdoc method
@@ -21204,7 +21245,7 @@ module.filter('px', function() {
          */
         processSuccessPromise: function ( grid, gridRow ) {
           var self = this;
-          
+
           return function() {
             delete gridRow.isSaving;
             delete gridRow.isDirty;
@@ -21215,7 +21256,7 @@ module.filter('px', function() {
             self.removeRow( grid.rowEdit.dirtyRows, gridRow );
           };
         },
-        
+
 
         /**
          * @ngdoc method
@@ -21234,7 +21275,7 @@ module.filter('px', function() {
             delete gridRow.rowEditSavePromise;
 
             gridRow.isError = true;
-            
+
             if (!grid.rowEdit.errorRows){
               grid.rowEdit.errorRows = [];
             }
@@ -21243,8 +21284,8 @@ module.filter('px', function() {
             }
           };
         },
-        
-        
+
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
@@ -21259,15 +21300,15 @@ module.filter('px', function() {
           if (typeof(rowArray) === 'undefined' || rowArray === null){
             return;
           }
-          
+
           rowArray.forEach( function( gridRow, index ){
             if ( gridRow.uid === removeGridRow.uid ){
               rowArray.splice( index, 1);
             }
           });
         },
-        
-        
+
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
@@ -21287,7 +21328,7 @@ module.filter('px', function() {
           return present;
         },
 
-        
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
@@ -21309,11 +21350,11 @@ module.filter('px', function() {
             service.saveRow( grid, gridRow )();
             promises.push( gridRow.rowEditSavePromise );
           });
-          
+
           return $q.all( promises );
         },
-        
-        
+
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
@@ -21324,7 +21365,7 @@ module.filter('px', function() {
          * is automatically provided by the gridApi. 
          * @param {object} rowEntity the data entity for which the cell
          * was edited
-         */        
+         */
         endEditCell: function( rowEntity, colDef, newValue, previousValue ){
           var grid = this.grid;
           var gridRow = grid.getRow( rowEntity );
@@ -21334,19 +21375,19 @@ module.filter('px', function() {
             if ( !grid.rowEdit.dirtyRows ){
               grid.rowEdit.dirtyRows = [];
             }
-            
+
             if ( !gridRow.isDirty ){
               gridRow.isDirty = true;
               grid.rowEdit.dirtyRows.push( gridRow );
             }
-            
+
             delete gridRow.isError;
-            
+
             service.considerSetTimer( grid, gridRow );
           }
         },
-        
-        
+
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
@@ -21363,7 +21404,7 @@ module.filter('px', function() {
           var grid = this.grid;
           var gridRow = grid.getRow( rowEntity );
           if ( !gridRow ){ gridUtil.logError( 'Unable to find rowEntity in grid data, timer cannot be cancelled' ); return; }
-          
+
           service.cancelTimer( grid, gridRow );
         },
 
@@ -21375,23 +21416,23 @@ module.filter('px', function() {
          * @description Receives a cancelCellEdit event from the edit function,
          * and if the row was already dirty, restarts the save timer.  If the row
          * was not already dirty, then it's not dirty now either and does nothing.
-         * 
+         *
          * Only the rowEntity parameter
          * is processed, although other params are available.  Grid
          * is automatically provided by the gridApi.
-         *  
+         *
          * @param {object} rowEntity the data entity for which the cell
          * editing was cancelled
-         */        
+         */
         cancelEditCell: function( rowEntity, colDef ){
           var grid = this.grid;
           var gridRow = grid.getRow( rowEntity );
           if ( !gridRow ){ gridUtil.logError( 'Unable to find rowEntity in grid data, timer cannot be set' ); return; }
-          
+
           service.considerSetTimer( grid, gridRow );
         },
-        
-        
+
+
         /**
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
@@ -21414,8 +21455,8 @@ module.filter('px', function() {
             service.considerSetTimer( grid, oldRowCol.row );
           }
         },
-        
-        
+
+
         /**
          * @ngdoc property
          * @propertyOf ui.grid.rowEdit.api:GridOptions
@@ -21445,7 +21486,7 @@ module.filter('px', function() {
          */
         considerSetTimer: function( grid, gridRow ){
           service.cancelTimer( grid, gridRow );
-          
+
           if ( gridRow.isDirty && !gridRow.isSaving ){
             if ( grid.options.rowEditWaitInterval !== -1 ){
               var waitTime = grid.options.rowEditWaitInterval ? grid.options.rowEditWaitInterval : 2000;
@@ -21453,7 +21494,7 @@ module.filter('px', function() {
             }
           }
         },
-        
+
 
         /**
          * @ngdoc method
@@ -21500,22 +21541,52 @@ module.filter('px', function() {
               if ( !grid.rowEdit.dirtyRows ){
                 grid.rowEdit.dirtyRows = [];
               }
-              
+
               if ( !gridRow.isDirty ){
                 gridRow.isDirty = true;
                 grid.rowEdit.dirtyRows.push( gridRow );
               }
-              
+
               delete gridRow.isError;
-              
+
               service.considerSetTimer( grid, gridRow );
             } else {
               gridUtil.logError( "requested row not found in rowEdit.setRowsDirty, row was: " + value );
             }
           });
+        },
+
+
+        /**
+         * @ngdoc method
+         * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
+         * @name setRowsClean
+         * @description Sets each of the rows passed in dataRows
+         * to be clean, clearing the dirty flag and the error flag, and removing
+         * the rows from the dirty and error caches. 
+         * @param {object} grid the grid for which rows should be set clean
+         * @param {array} dataRows the data entities for which the gridRows
+         * should be set clean.
+         * 
+         */
+        setRowsClean: function( grid, myDataRows ) {
+          var gridRow;
+
+          myDataRows.forEach( function( value, index ){
+            gridRow = grid.getRow( value );
+            if ( gridRow ){
+              delete gridRow.isDirty;
+              service.removeRow( grid.rowEdit.dirtyRows, gridRow );
+              service.cancelTimer( grid, gridRow );
+
+              delete gridRow.isError;
+              service.removeRow( grid.rowEdit.errorRows, gridRow );
+            } else {
+              gridUtil.logError( "requested row not found in rowEdit.setRowsClean, row was: " + value );
+            }
+          });
         }
-        
-        
+
       };
 
       return service;
@@ -23924,7 +23995,7 @@ module.filter('px', function() {
           } else {
             var parentState = parents[parents.length - 1].treeExpandedState; 
             if ( typeof(parentState[row.uid]) === 'undefined') {
-              parentState[row.uid] = { state: parentState.state, row: row };
+              parentState[row.uid] = { state: uiGridTreeViewConstants.COLLAPSED, row: row };
             }
             row.treeExpandedState = parentState[row.uid];
           }
@@ -24131,7 +24202,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('ui-grid/ui-grid-filter',
-    "<div class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\" ng-class=\"{'ui-grid-filter-cancel-button-hidden' : colFilter.disableCancelFilterButton === true }\"><div ng-if=\"colFilter.type !== 'select'\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div><div ng-if=\"colFilter.type === 'select'\"><select class=\"ui-grid-filter-select\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\" ng-options=\"option.value as option.label for option in colFilter.selectOptions\"><option value=\"\"></option></select><div class=\"ui-grid-filter-button-select\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div></div>"
+    "<div class=\"ui-grid-filter-container\" ng-repeat=\"colFilter in col.filters\" ng-class=\"{'ui-grid-filter-cancel-button-hidden' : colFilter.disableCancelFilterButton === true }\"><div ng-if=\"colFilter.type !== 'select'\"><input type=\"text\" class=\"ui-grid-filter-input\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\"><div class=\"ui-grid-filter-button\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term !== null && colFilter.term !== ''\">&nbsp;</i></div></div><div ng-if=\"colFilter.type === 'select'\"><select class=\"ui-grid-filter-select\" ng-model=\"colFilter.term\" ng-attr-placeholder=\"{{colFilter.placeholder || ''}}\" ng-options=\"option.value as option.label for option in colFilter.selectOptions\"><option value=\"\"></option></select><div class=\"ui-grid-filter-button-select\" ng-click=\"colFilter.term = null\" ng-if=\"!colFilter.disableCancelFilterButton\"><i class=\"ui-grid-icon-cancel\" ng-show=\"colFilter.term !== undefined && colFilter.term != null\">&nbsp;</i></div></div></div>"
   );
 
 

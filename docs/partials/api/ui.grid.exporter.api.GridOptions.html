@@ -6,14 +6,29 @@
 <div class="description"><p>GridOptions for exporter feature, these are available to be <br />
 set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
 <div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="exporterAllDataPromise">exporterAllDataPromise</h3>
-<div class="exporteralldatapromise"><p>This promise is needed when exporting all rows,
+<ul class="properties"><li><h3 id="exporterAllDataFn">exporterAllDataFn</h3>
+<div class="exporteralldatafn"><p>This promise is needed when exporting all rows,
 and the data need to be provided by server side. Default is null.</p><h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{Promise}</code>
 – <p>a promise to load all data from server</p></div>
 <h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
-gridOptions.exporterAllDataPromise = function () {
+gridOptions.exporterAllDataFn = function () {
+  return $http.get('/data/100.json')
+}
+</pre></div>
+</div>
+</li>
+<li><h3 id="exporterAllDataPromise">exporterAllDataPromise</h3>
+<div class="exporteralldatapromise"><p>DEPRECATED - exporterAllDataFn used to be 
+called this, but it wasn't a promise, it was a function that returned
+a promise.  Deprecated, but supported for backward compatibility, use
+exporterAllDataFn instead.</p><h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{Promise}</code>
+– <p>a promise to load all data from server</p></div>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridOptions.exporterAllDataFn = function () {
   return $http.get('/data/100.json')
 }
 </pre></div>

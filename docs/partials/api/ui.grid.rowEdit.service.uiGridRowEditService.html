@@ -152,6 +152,18 @@ and returns a promise</p><h4 id="Parameters">Parameters</h4>
 in turn, when called, returns a promise relating to the save callback</p></div>
 </div>
 </li>
+<li><h3 id="setRowsClean">setRowsClean(grid, dataRows)</h3>
+<div class="setrowsclean"><p>Sets each of the rows passed in dataRows
+to be clean, clearing the dirty flag and the error flag, and removing
+the rows from the dirty and error caches. </p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
+<p>the grid for which rows should be set clean</p></li>
+<li><code ng:non-bindable="">dataRows – {array} – </code>
+<p>the data entities for which the gridRows
+should be set clean.</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="setRowsDirty">setRowsDirty(grid, dataRows)</h3>
 <div class="setrowsdirty"><p>Sets each of the rows passed in dataRows
 to be dirty.  note that if you have only just inserted the
