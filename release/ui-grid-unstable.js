@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-7980717 - 2015-05-16
+ * ui-grid - v3.0.0-rc.21-4888a7c - 2015-05-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17640,7 +17640,7 @@ module.filter('px', function() {
           headerRow.groupLevel = stateIndex;
           headerRow.groupHeader = true;
           headerRow.internalRow = true;
-          headerRow.enableEditing = false;
+          headerRow.enableCellEdit = false;
           headerRow.enableSelection = false;
           groupingProcessingState[stateIndex].initialised = true;
           groupingProcessingState[stateIndex].currentValue = newValue;
