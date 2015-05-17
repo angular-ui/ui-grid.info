@@ -13,13 +13,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "design-rendering-cycle",
-      "shortName": "Rendering Cycle",
-      "type": "overview",
-      "keywords": "$timeout able accomodate achieve adds again all allow allowing already also an and another any api appear appears apply are as at available availablewidth based be because before builders buildstyles but by calc calcheaders calculate calculates calculations call called canvas cases change changed changes code column columnfooterheight columns columnsprocessors columnwidth complete complicated computation consolidate container containers conversely core correct correctly could creates current currently cycle debounce decides declared defined dependencies determine determines determining deterministic digest do does doesn each element elements etc example except execute executed exists expect extra filtering filters first fixed focused footerheight for from full function functions gap getfooterstyles grid gridfooterheight gridrendercontainer grouping has have having header headerheight headers height heights how if in include including individually inline interact involved is isn it iteration iterative just key largely layout left like main make maximum may method methods more most multiple must need needs no non-body not number of on once only options or order ordering other overall overview particular pass percentage pinned pinning preference probably process processors promise prototype question queuegridrefresh re re-rendering really redrawinplace redraws reference refresh refreshcanvas refreshes refreshrows remove render rendercontainer rendercontainers rendered rendering resizes resolves resolving responsive return rows rowsprocessors run said same scroll seems sets settings setvisiblecolumns setvisiblerows should similar single size sized sizing some sorting source stage style such telling that the then there therefore they things thinking this those through timeout to ui-pinned-container uigridrendercontainer update updatecolumnwidths updatecontainerdimensions updates use values viewport visibility visible vision wait want way we what when whenever which why width widths with without wouldn you"
-    },
-    {
-      "section": "api",
       "id": "exporterMenuAllData",
       "shortName": "exporterMenuAllData",
       "type": "object",
