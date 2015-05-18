@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-0a10fe1 - 2015-05-17
+ * ui-grid - v3.0.0-rc.21-56b12b5 - 2015-05-18
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14238,12 +14238,15 @@ module.filter('px', function() {
               origCellValue = cellModel($scope);
 
               html = $scope.col.editableCellTemplate;
+
               if ($scope.col.colDef.editModelField) {
                 html = html.replace(uiGridConstants.MODEL_COL_FIELD, gridUtil.preEval('row.entity.' + $scope.col.colDef.editModelField));
               }
               else {
                 html = html.replace(uiGridConstants.MODEL_COL_FIELD, $scope.row.getQualifiedColField($scope.col));
               }
+
+              html = html.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
 
               var optionFilter = $scope.col.colDef.editDropdownFilter ? '|' + $scope.col.colDef.editDropdownFilter : '';
               html = html.replace(uiGridConstants.CUSTOM_FILTERS, optionFilter);
