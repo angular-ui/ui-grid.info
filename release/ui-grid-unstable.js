@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-9028ed3 - 2015-05-19
+ * ui-grid - v3.0.0-rc.21-c0d9b48 - 2015-05-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -19549,6 +19549,10 @@ module.filter('px', function() {
                 var downFn = function( event ){
                   //Setting some variables required for calculations.
                   gridLeft = $scope.grid.element[0].getBoundingClientRect().left;
+                  if ( $scope.grid.hasLeftContainer() ){
+                    gridLeft += $scope.grid.renderContainers.left.header[0].getBoundingClientRect().width;
+                  }
+
                   previousMouseX = event.pageX;
                   totalMouseMovement = 0;
                   rightMoveLimit = gridLeft + $scope.grid.getViewportWidth();
