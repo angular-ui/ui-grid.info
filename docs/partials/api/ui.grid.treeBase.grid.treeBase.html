@@ -1,0 +1,93 @@
+<h1><code ng:non-bindable="">treeBase</code>
+<span class="hint">(grid in module <code ng:non-bindable="">ui.grid.treeBase</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Grid properties and functions added for treeBase</p></div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="expandAll">expandAll</h3>
+<div class="expandall"><p>Whether or not the expandAll box is selected</p></div>
+</li>
+<li><h3 id="numberLevels">numberLevels</h3>
+<div class="numberlevels"><p>Total number of tree levels currently used, calculated by the rowsProcessor by 
+retaining the highest tree level it sees </p></div>
+</li>
+<li><h3 id="tree">tree</h3>
+<div class="tree"><p>Tree represented as a nested array that holds the state of each node, along with a
+pointer to the row.  The array order is material - we will display the children in the order
+they are stored in the array</p>
+
+<p>Each node stores:</p>
+
+<ul>
+<li>the state of this node</li>
+<li>an array of children of this node</li>
+<li>a pointer to the parent of this node (reverse pointer, allowing us to walk up the tree)</li>
+<li>the number of children of this node</li>
+<li>aggregation information calculated from the nodes</li>
+</ul>
+
+<pre><code>  [{
+    state: 'expanded',
+    row: &lt;reference to row&gt;,
+    parentRow: null,
+    aggregations: [{
+      type: 'count',
+      col: &lt;gridCol&gt;,
+      value: 2,
+      label: 'count: ',
+      rendered: 'count: 2'
+    }],
+    children: [
+      {
+        state: 'expanded',
+        row: &lt;reference to row&gt;,
+        parentRow: &lt;reference to row&gt;,
+        aggregations: [{
+          type: 'count',
+          col: '&lt;gridCol&gt;,
+          value: 4,
+          label: 'count: ',
+          rendered: 'count: 4'
+        }],
+        children: [
+          { state: 'expanded', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; },
+          { state: 'collapsed', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; },
+          { state: 'expanded', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; },
+          { state: 'collapsed', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; }
+        ]
+      },
+      {
+        state: 'collapsed',
+        row: &lt;reference to row&gt;,
+        parentRow: &lt;reference to row&gt;,
+        aggregations: [{
+          type: 'count',
+          col: &lt;gridCol&gt;,
+          value: 3,
+          label: 'count: ',
+          rendered: 'count: 3'
+        }],
+        children: [
+          { state: 'expanded', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; },
+          { state: 'collapsed', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; },
+          { state: 'expanded', row: &lt;reference to row&gt;, parentRow: &lt;reference to row&gt; }
+        ]
+      }
+    ]
+  }, {&lt;another level 0 node maybe&gt;} ]
+</code></pre>
+
+<p>Missing state values are false - meaning they aren't expanded.</p>
+
+<p>This is used because the rowProcessors run every time the grid is refreshed, so
+we'd lose the expanded state every time the grid was refreshed.  This instead gives
+us a reliable lookup that persists across rowProcessors.</p>
+
+<p>This tree is rebuilt every time we run the rowsProcessors.  Since each row holds a pointer
+to it's tree node we can persist expand/collapse state across calls to rowsProcessor, we discard 
+all transient information on the tree (children, childCount) and recalculate it</p></div>
+</li>
+</ul>
+</div>
+</div>

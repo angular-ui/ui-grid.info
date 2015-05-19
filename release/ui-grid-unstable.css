@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-56b12b5 - 2015-05-18
+ * ui-grid - v3.0.0-rc.21-42b789a - 2015-05-19
  * Copyright (c) 2015 ; License: MIT 
  */
 .ui-grid {
@@ -1347,12 +1347,36 @@ div.ui-grid-cell input.ng-valid {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-.ui-grid-group-header-row {
-  font-weight: bold !important;
-}
-.ui-grid-grouping-row-header-buttons.ui-grid-group-header {
+.ui-grid-tree-row-header-buttons.ui-grid-tree-header {
   cursor: pointer;
   opacity: 1;
+}
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/**
+* @section font library path
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+.ui-grid-tree-header-row {
+  font-weight: bold !important;
 }
 
 .ui-grid-icon-plus-squared:before {

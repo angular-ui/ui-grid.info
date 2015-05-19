@@ -209,9 +209,13 @@ functionality.  A number of settings are supported:</p>
 compatibility with 2.x name can be omitted if field is present</p></div>
 </li>
 <li><h3 id="sort">sort</h3>
-<div class="sort"><p>Can be used to set the sort direction for the column, values are
-uiGridConstants.ASC or uiGridConstants.DESC</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC }}] </pre></div>
+<div class="sort"><p>An object of sort information, attributes are:</p>
+
+<ul>
+<li>direction: values are uiGridConstants.ASC or uiGridConstants.DESC</li>
+<li>ignoreSort: if set to true this sort is ignored (used by tree to manipulate the sort functionality)</li>
+</ul><h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC, ignoreSort: true }}] </pre></div>
 </div>
 </li>
 <li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>

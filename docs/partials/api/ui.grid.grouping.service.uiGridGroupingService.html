@@ -16,6 +16,20 @@
 </ul>
 </div>
 </li>
+<li><h3 id="aggregate">aggregate(grid, row, parents)</h3>
+<div class="aggregate"><p>Accumulate the data from this row onto the aggregations for each parent</p>
+
+<p>Iterate over the parents, then iterate over the aggregations for each of those parents,
+and perform the aggregation for each individual aggregation</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row we want to set grouping visibility on</p></li>
+<li><code ng:non-bindable="">parents – {array} – </code>
+<p>the parents that we would want to aggregate onto</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="aggregateColumn">aggregateColumn(grid, column, aggregationType)</h3>
 <div class="aggregatecolumn"><p>Sets the aggregation type on a column, if the 
 column is currently grouped then it removes the grouping first.</p><h4 id="Parameters">Parameters</h4>
@@ -89,6 +103,16 @@ they may still be invisible for other reasons)</p><h4 id="Parameters">Parameters
 <p>grid object</p></li>
 <li><code ng:non-bindable="">row – {GridRow} – </code>
 <p>the row we want to expand</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="finaliseAggregations">finaliseAggregations(row)</h3>
+<div class="finaliseaggregations"><p>Format the data from the aggregation into the rendered text
+e.g. if we had label: 'sum: ' and value: 25, we'd create 'sum: 25'.</p>
+
+<p>As part of this we call any formatting callback routines we've been provided.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
+<p>the parent we're finalising</p></li>
 </ul>
 </div>
 </li>

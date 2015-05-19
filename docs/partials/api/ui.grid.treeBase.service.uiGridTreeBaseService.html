@@ -1,0 +1,272 @@
+<h1><code ng:non-bindable="">uiGridTreeBaseService</code>
+<span class="hint">(service in module <code ng:non-bindable="">ui.grid.treeBase</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>Services for treeBase feature</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="addOrUseNode">addOrUseNode(grid, row, parents, aggregationBase)</h3>
+<div class="addorusenode"><p>Creates a tree node for this row.  If this row already has a treeNode
+recorded against it, preserves the state, but otherwise overwrites the data.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {grid} – </code>
+<p>the grid we're operating on</p></li>
+<li><code ng:non-bindable="">row – {gridRow} – </code>
+<p>the row we want to set</p></li>
+<li><code ng:non-bindable="">parents – {array} – </code>
+<p>an array of the parents this row should have</p></li>
+<li><code ng:non-bindable="">aggregationBase – {array} – </code>
+<p>empty aggregation information</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{undefined}</code>
+– <p>updates the parents array, updates the row to have a treeNode, and updates the
+grid.treeBase.tree</p></div>
+</div>
+</li>
+<li><h3 id="adjustSorting">adjustSorting(renderableRows)</h3>
+<div class="adjustsorting"><p>Trees cannot be sorted the same as flat lists of rows - 
+trees are sorted recursively within each level - so the children of each
+node are sorted, but not the full set of rows.</p>
+
+<p>To achieve this, we suppress the normal sorting by setting ignoreSort on
+each of the sort columns.  When the treeBase rowsProcessor runs it will then
+unignore these, and will perform a recursive sort against the tree that it builds.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">renderableRows – {array} – </code>
+<p>the rows that we need to pass on through</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>renderableRows that we passed on through</p></div>
+</div>
+</li>
+<li><h3 id="allExpanded">allExpanded(tree)</h3>
+<div class="allexpanded"><p>Returns true if all rows are expanded, false
+if they're not.  Walks the tree to determine this.  Used
+to set the expandAll state.</p>
+
+<p>If the node has no children, then return true (it's immaterial
+whether it is expanded).  If the node has children, then return
+false if this node is collapsed, or if any child node is not all expanded</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">tree – {object} – </code>
+<p>the grid to check</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{boolean}</code>
+– <p>whether or not the tree is all expanded</p></div>
+</div>
+</li>
+<li><h3 id="collapseAllRows">collapseAllRows(grid)</h3>
+<div class="collapseallrows"><p>Collapses all nodes in the tree</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="collapseRow">collapseRow(grid, row)</h3>
+<div class="collapserow"><p>Collapses this specific row</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row we want to collapse</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="collapseRowChildren">collapseRowChildren(grid, row)</h3>
+<div class="collapserowchildren"><p>Collapses this specific row and all children</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row we want to collapse</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="createOrUpdateRowHeaderWidth">createOrUpdateRowHeaderWidth(grid)</h3>
+<div class="createorupdaterowheaderwidth"><p>Calculates the rowHeader width.</p>
+
+<p>If rowHeader is always present, updates the width.</p>
+
+<p>If rowHeader is only sometimes present (<code>treeRowHeaderAlwaysVisible: false</code>), determines whether there 
+should be one, then creates or removes it as appropriate, with the created rowHeader having the 
+right width.</p>
+
+<p>If there's never a rowHeader then never creates one: <code>showTreeRowHeader: false</code></p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we want to set the row header on</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="createRowHeader">createRowHeader(grid)</h3>
+<div class="createrowheader"><p>Create the rowHeader.  If treeRowHeaderAlwaysVisible then
+set it to visible, otherwise set it to invisible</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="createTree">createTree(grid, renderableRows)</h3>
+<div class="createtree"><p>Creates a tree from the renderableRows</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid</p></li>
+<li><code ng:non-bindable="">renderableRows – {array} – </code>
+<p>the rows we want to create a tree from</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>the tree we've build</p></div>
+</div>
+</li>
+<li><h3 id="expandAllRows">expandAllRows(grid)</h3>
+<div class="expandallrows"><p>Expands all nodes in the tree</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="expandRow">expandRow(grid, row)</h3>
+<div class="expandrow"><p>Expands this specific row, showing only immediate children.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row we want to expand</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="expandRowChildren">expandRowChildren(grid, row)</h3>
+<div class="expandrowchildren"><p>Expands this specific row, showing all children.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row we want to expand</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="fixFilter">fixFilter(grid)</h3>
+<div class="fixfilter"><p>After filtering has run, we need to go back through the tree
+and make sure the parent rows are always visible if any of the child rows
+are visible (filtering may make a child visible, but the parent may not 
+match the filter criteria)</p>
+
+<p>This has a risk of being computationally expensive, we do it by walking
+the tree and remembering whether there are any invisible nodes on the 
+way down.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid to fix filters on</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="getAggregations">getAggregations(grid)</h3>
+<div class="getaggregations"><p>Looks through the grid columns to find those with aggregations,
+and collates the aggregation information into an array, returns that array</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid to get the aggregation information from</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>the aggregation information</p></div>
+</div>
+</li>
+<li><h3 id="renderTree">renderTree(nodeList)</h3>
+<div class="rendertree"><p>Creates an array of rows based on the tree, exporting only
+the visible nodes and leaves</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">nodeList – {array} – </code>
+<p>the list of nodes - can be grid.treeBase.tree, or can be node.children when
+we're calling recursively</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>renderable rows</p></div>
+</div>
+</li>
+<li><h3 id="setAllNodes">setAllNodes(grid, treeNode, targetState)</h3>
+<div class="setallnodes"><p>Works through a subset of grid.treeBase.rowExpandedStates, setting
+all child nodes (and their descendents) of the provided node to the given state.</p>
+
+<p>Calls itself recursively on all nodes so as to achieve this.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid we're operating on (so we can raise events) </p></li>
+<li><code ng:non-bindable="">treeNode – {object} – </code>
+<p>a node in the tree that we want to update</p></li>
+<li><code ng:non-bindable="">targetState – {string} – </code>
+<p>the state we want to set it to</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="setCurrentState">setCurrentState(parents)</h3>
+<div class="setcurrentstate"><p>Looks at the parents array to determine our current state.
+If any node in the hierarchy is collapsed, then return collapsed, otherwise return
+expanded.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">parents – {array} – </code>
+<p>an array of the parents this row should have</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{string}</code>
+– <p>the state we should be setting to any nodes we see</p></div>
+</div>
+</li>
+<li><h3 id="sortTree">sortTree(grid)</h3>
+<div class="sorttree"><p>Performs a recursive sort on the tree nodes, sorting the 
+children of each node and putting them back into the children array.</p>
+
+<p>Before doing this it turns back on all the sortIgnore - things that were previously
+ignored we process now.  Since we're sorting within the nodes, presumably anything 
+that was already sorted is how we derived the nodes, we can keep those sorts too.</p>
+
+<p>We only sort tree nodes that are expanded - no point in wasting effort sorting collapsed
+nodes</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid to get the aggregation information from</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>the aggregation information</p></div>
+</div>
+</li>
+<li><h3 id="toggleRowTreeState">toggleRowTreeState(grid, row)</h3>
+<div class="togglerowtreestate"><p>Toggles the expand or collapse state of this grouped row, if
+it's a parent row</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+<li><code ng:non-bindable="">row – {GridRow} – </code>
+<p>the row we want to toggle</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="treeBaseColumnBuilder">treeBaseColumnBuilder(colDef, col, gridOptions)</h3>
+<div class="treebasecolumnbuilder"><p>Sets the tree defaults based on the columnDefs</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">colDef – {object} – </code>
+<p>columnDef we're basing on</p></li>
+<li><code ng:non-bindable="">col – {GridCol} – </code>
+<p>the column we're to update</p></li>
+<li><code ng:non-bindable="">gridOptions – {object} – </code>
+<p>the options we should use</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{promise}</code>
+– <p>promise for the builder - actually we do it all inline so it's immediately resolved</p></div>
+</div>
+</li>
+<li><h3 id="treeRows">treeRows(renderableRows)</h3>
+<div class="treerows"><p>The rowProcessor that adds the nodes to the tree, and sets the visible
+state of each row based on it's parent state</p>
+
+<p>Assumes it is always called after the sorting processor, and the grouping processor if there is one.
+Performs any tree sorts itself after having built the tree</p>
+
+<p>Processes all the rows in order, setting the group level based on the $$treeLevel in the associated
+entity, and setting the visible state based on the parent's state.</p>
+
+<p>Calculates the deepest level of tree whilst it goes, and updates that so that the header column can be correctly 
+sized.</p>
+
+<p>Aggregates if necessary along the way.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">renderableRows – {array} – </code>
+<p>the rows we want to process, usually the output from the previous rowProcessor</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{array}</code>
+– <p>the updated rows</p></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
