@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-9adca3d - 2015-05-19
+ * ui-grid - v3.0.0-rc.21-9028ed3 - 2015-05-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8184,7 +8184,7 @@ angular.module('ui.grid')
    */
   GridRow.prototype.clearThisRowInvisible = function ( reason, fromRowsProcessor ) {
     if (typeof(this.invisibleReason) !== 'undefined' ) {
-      delete this.invisibleReason.user;
+      delete this.invisibleReason[reason];
     }
     this.evaluateRowVisibility( fromRowsProcessor );
   };
@@ -8225,6 +8225,7 @@ angular.module('ui.grid')
 }]);
 
 })();
+
 (function () {
   angular.module('ui.grid')
     .factory('ScrollEvent', ['gridUtil', function (gridUtil) {
