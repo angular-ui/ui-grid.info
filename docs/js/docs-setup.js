@@ -450,7 +450,7 @@ NG_DOCS={
       "id": "ui.grid.grouping.api:GridOptions",
       "shortName": "GridOptions",
       "type": "object",
-      "keywords": "always and api are at available base be but by class come counts each enable enablegrouping entire even extra false feature for forces go grid gridoptions group grouped groupheader grouping groupingindent groupingrowheaderalwaysvisible groupingrowheaderbasewidth groupingshowcounts grouprowheader having header icon if in incremented indent indents is level make may more nothing number object of on pixels pleasing preferable present provides row rows set shows single situations some the these this to true ui ui-grid using visually wider width will"
+      "keywords": "always and api are at available base be but by class column come contain counts each enable enablegrouping entire even extra false feature for forces go grid gridoptions group grouped groupheader grouping groupingindent groupingnulllabel groupingrowheaderalwaysvisible groupingrowheaderbasewidth groupingshowcounts grouprowheader having header icon if in incremented indent indents is label level make may more nothing null number object of on or pixels pleasing preferable present provides row rows set shows single situations some string the these this to true ui ui-grid undefined use using value visually which wider width will"
     },
     {
       "section": "api",

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-42b789a - 2015-05-19
+ * ui-grid - v3.0.0-rc.21-9adca3d - 2015-05-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -16808,6 +16808,15 @@ module.filter('px', function() {
            *  <br/>Defaults to true
            */
           gridOptions.groupingShowCounts = gridOptions.groupingShowCounts !== false;
+
+          /**
+           *  @ngdoc object
+           *  @name groupingNullLabel
+           *  @propertyOf  ui.grid.grouping.api:GridOptions
+           *  @description The string to use for the grouping header row label on rows which contain a null or undefined value in the grouped column.
+           *  <br/>Defaults to "Null"
+           */
+          gridOptions.groupingNullLabel = gridOptions.groupingNullLabel || 'Null';
         },
 
 
@@ -17499,7 +17508,7 @@ module.filter('px', function() {
           var updateProcessingState = function( groupFieldState, stateIndex ) {
             var fieldValue = grid.getCellValue(row, groupFieldState.col); 
             if ( typeof(fieldValue) === 'undefined' || fieldValue === null ){
-              return;
+              fieldValue = grid.options.groupingNullLabel;
             }
             
             if ( !row.visible ){
@@ -17646,6 +17655,9 @@ module.filter('px', function() {
 
           // TODO: can't just use entity like this, have to use get cell value, need col for that
           var newValue = grid.getCellValue(renderableRows[rowIndex], col);
+          if ( typeof(newValue) === 'undefined' || newValue === null ) {
+            newValue = grid.options.groupingNullLabel;
+          }
           headerRow.entity[fieldName] = newValue;
           headerRow.groupLevel = stateIndex;
           headerRow.groupHeader = true;
