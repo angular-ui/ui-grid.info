@@ -22,47 +22,13 @@ from uiGridGroupingConstants</p></li>
 <div class="cleargrouping"><p>Clear any grouped columns and any aggregations.  Doesn't remove sorting,
 as we don't know whether that sorting was added by grouping or was there beforehand</p></div>
 </li>
-<li><h3 id="collapseAllRows">collapseAllRows()</h3>
-<div class="collapseallrows"><p>collapse all grouped rows</p></div>
-</li>
-<li><h3 id="collapseRow">collapseRow(row)</h3>
-<div class="collapserow"><p>collapse all children of the specified row.  When
-you expand the row again, all grandchildren will retain their state</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
-<p>the row you wish to collapse</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="collapseRowChildren">collapseRowChildren(row)</h3>
-<div class="collapserowchildren"><p>collapse all children of the specified row.  When
-you expand the row again, all grandchildren will be collapsed</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
-<p>the row you wish to collapse</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="expandAllRows">expandAllRows()</h3>
-<div class="expandallrows"><p>Expands all grouped rows</p></div>
-</li>
-<li><h3 id="expandRow">expandRow(row)</h3>
-<div class="expandrow"><p>expand the immediate children of the specified row</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
-<p>the row you wish to expand</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="expandRowChildren">expandRowChildren(row)</h3>
-<div class="expandrowchildren"><p>expand all children of the specified row</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
-<p>the row you wish to expand</p></li>
-</ul>
-</div>
-</li>
 <li><h3 id="getGrouping">getGrouping(getExpanded)</h3>
 <div class="getgrouping"><p>Get the grouping configuration for this grid,
-used by the saveState feature
+used by the saveState feature.  Adds expandedState to the information
+provided by the internal getGrouping, and removes any aggregations that have a source
+of grouping (i.e. will be automatically reapplied when we regroup the column)
 Returned grouping is an object 
-  <code>{ grouping: groupArray, aggregations: aggregateArray, expandedState: hash }</code> 
+  <code>{ grouping: groupArray, treeAggregations: aggregateArray, expandedState: hash }</code> 
 where grouping contains an array of objects: 
   <code>{ field: column.field, colName: column.name, groupPriority: column.grouping.groupPriority }</code>
 and aggregations contains an array of objects:
@@ -96,13 +62,6 @@ user to specify a combined grouping and aggregation configuration</p><h4 id="Par
 <ul class="parameters"><li><code ng:non-bindable="">config – {object} – </code>
 <p>the config you want to apply, in the format
 provided out by getGrouping</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="toggleRowGroupingState">toggleRowGroupingState(row)</h3>
-<div class="togglerowgroupingstate"><p>call expand if the row is collapsed, collapse if it is expanded</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
-<p>the row you wish to toggle</p></li>
 </ul>
 </div>
 </li>

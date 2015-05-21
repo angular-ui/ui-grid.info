@@ -14,26 +14,32 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOp
 <div class="grouping"><p>Set the grouping for a column.  Format is:</p>
 
 <pre><code>  {
-    groupPriority: &lt;number, starts at 0, if less than 0 or undefined then we're aggregating in this column&gt;,
-    aggregation: &lt;one of uiGridGroupingConstants.aggregation.XXXX&gt;
+    groupPriority: &lt;number, starts at 0, if less than 0 or undefined then we're aggregating in this column&gt;
   }
 </code></pre>
+
+<p><strong>Note that aggregation used to be included in grouping, but is now separately set on the column via treeAggregation
+setting in treeBase</strong></p>
 
 <p>We group in the priority order given, this will also put these columns to the high order of the sort irrespective
 of the sort priority given them.  If there is no sort defined then we sort ascending, if there is a sort defined then
 we use that sort.</p>
 
-<p>If the groupPriority is undefined or less than 0, then we expect to be aggregating, and we look at the aggregation
-types to determine what sort of aggregation we can do.  Values are in the constants file, but include SUM, COUNT, MAX, MIN</p>
+<p>If the groupPriority is undefined or less than 0, then we expect to be aggregating, and we look at the 
+aggregation types to determine what sort of aggregation we can do.  Values are in the constants file, but 
+include SUM, COUNT, MAX, MIN</p>
 
-<p>groupPriorities should generally be sequential, if they're not then the next time getGrouping is called we'll renumber them
-to be sequential.
+<p>groupPriorities should generally be sequential, if they're not then the next time getGrouping is called 
+we'll renumber them to be sequential.
 <br/>Defaults to undefined.</p></div>
 </li>
-<li><h3 id="groupingSuppressAggregationText">groupingSuppressAggregationText</h3>
-<div class="groupingsuppressaggregationtext"><p>Don't print the aggregation text on this column - useful if you have a cellFilter on the column, which 
-would otherwise be impacted by the text
-<br/>Defaults to false.</p></div>
+<li><h3 id="groupingShowAggregationMenu">groupingShowAggregationMenu</h3>
+<div class="groupingshowaggregationmenu"><p>Show the aggregation menu on this column
+<br/>Defaults to true.</p></div>
+</li>
+<li><h3 id="groupingShowGroupingMenu">groupingShowGroupingMenu</h3>
+<div class="groupingshowgroupingmenu"><p>Show the grouping (group and ungroup items) menu on this column
+<br/>Defaults to true.</p></div>
 </li>
 </ul>
 </div>

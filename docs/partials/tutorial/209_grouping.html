@@ -6,8 +6,21 @@ values in specific columns, providing an effect similar in some ways to an Excel
 Columns that aren't grouped by can be aggregated, providing for example a running count
 of the number of rows in each group.</p>
 
+<p><em>**BREAKING CHANGES IN RC22 for grouping.  Prior to RC22 grouping was a standalone feature, with RC22
+a number of things have changed as grouping and treeView move to a shared code base.  In particular:
+- methods such as expandAll are now on treeBase, not on grouping
+- aggregations move from being col.grouping.aggregation to col.treeAggregation
+- saveState format changes, if you persisted that across instantiations your
+  saved states may not reload cleanly
+- groupLevel is now treeLevel
+- groupingSuppressAggregationText is now handled via customTreeAggregationFinalizerText
+- groupingRowHeaderWidth is now treeRowHeaderWidth
+- groupingIndent is now treeIndent
+- groupingRowHeaderAlwaysVisible is now treeRowHeaderAlwaysVisible, and default has changed to true
+**</em></p>
+
 <p>Grouping can be set programmatically by using the columnDef option <code>grouping: { groupPriority: 0 }</code>,
-or for aggregations on a column by setting <code>grouping: {aggregation: uiGridGroupingConstants.aggregation.COUNT}</code>. </p>
+or for aggregations on a column by setting <code>treeAggregation: {type: uiGridGroupingConstants.aggregation.COUNT}</code>. </p>
 
 <p>Optionally (and by default) grouped columns are moved to the front of the grid, which provides a more
 visually pleasing effect.  In order to avoid creating a dependency on pinning, this is done by 
@@ -26,9 +39,8 @@ filtered rows.</p>
 <p>Group header rows cannot be edited, and if using the selection feature, cannot be selected.  They can,
 however, be exported.</p>
 
-<p>The group rowHeader by default is only visible when one or more columns are grouped - the aim being
-to have no visual impact when grouping is turned on but unused.  If you'd like the groupRowHeader permanently
-present then set the <code>groupingRowHeaderAlwaysVisible: true</code> gridOption.</p>
+<p>The group rowHeader by default is always visible.  If you'd like the groupRowHeader only
+present when at least one column is grouped then set the <code>treeRowHeaderAlwaysVisible: false</code> gridOption.</p>
 
 <p>If you want to change the grouping programmatically after grid initialisation, you do this through calling the
 provided methods:</p>
@@ -48,9 +60,6 @@ any sort first.</li>
 to allow people to start using it.  Notable outstandings are:</p>
 
 <ul>
-<li>does not correctly handle columns that are based on functions or complex objects.  The groupHeader rows create
-a fake row.entity, and then set the appropriate fields in that entity.  This doesn't work well with 
-complex column definitions at present</li>
 <li>some more unit testing</li>
 <li>enhancement: allow a limit on number of columns grouped</li>
 <li>consideration of RTL - not sure whether the indent/outdent should get reversed?</li>
@@ -60,25 +69,27 @@ complex column definitions at present</li>
 <p>Options to watch out for include:</p>
 
 <ul>
-<li><code>groupingIndent</code>: the expand buttons are indented by a number of pixels (default 10) as the grouping
+<li><code>treeIndent</code>: the expand buttons are indented by a number of pixels (default 10) as the grouping
 level gets deeper.  Larger values look nicer, but take up more space</li>
-<li><code>groupingRowHeaderWidth</code>: the base width of the grouping row header</li>
-<li><code>groupingSuppressAggregationText</code>: if your column has a cellFilter, the insertion of text (e.g. 'min: xxxx') 
-usually breaks the cellFilter.  So you can suppress the aggregation text, but then you don't get a clear
-visual indication of what sort of aggregation is going on.  Refer the example below, the balance column with
-an average</li>
-<li><code>groupingShowCounts</code>: set to false if you don't like the counts against the groupHeaders</li>
+<li><code>treeRowHeaderWidth</code>: the base width of the grouping row header</li>
+<li><code>customTreeAggregationFinalizerFn</code>: if your column has a cellFilter, the insertion of text (e.g. 'min: xxxx') 
+usually breaks the cellFilter.  You can define a custom aggregation finalizer that handles this text differently,
+either applying the filter in code, or skipping the inclusion of the aggregation text.  This can also be used
+to skip the showing of the counts at all</li>
 </ul>
-
-<p>If you have data in your entity that is 1:1 with a group row (so, for example, you have </p>
 
 <p>If you would like to suppress the data in a grouped column (so it only shows in the groupHeader rows) this can
 be done by overriding the cellTemplate for any of the columns you allow grouping on as follows:</p>
 
-<p><code>cellTemplate: '&lt;div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader &amp;&amp; col.grouping.groupPriority === row.groupLevel )" class="ui-grid-cell-contents" title="TOOLTIP"&gt;{{COL_FIELD CUSTOM_FILTERS}}&lt;/div&gt;'</code></p>
+<p><code>cellTemplate: '&lt;div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader &amp;&amp; col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP"&gt;{{COL_FIELD CUSTOM_FILTERS}}&lt;/div&gt;'</code></p>
 
 <p>In the example below this has been done on the state column only.  This isn't included in the base code as it
-could potentially interact with people's custom templates.</p><h2 id="Example">Example</h2>
+could potentially interact with people's custom templates.</p>
+
+<p>Tuning the way aggregations work can be done through defining a columnsProcessor that runs with higher (later)
+priority than the groupingColumnProcessor (so higher than 400), and that looks for grouped or aggregated columns
+and changes things like the treeAggregation.type, or the customTreeAggregationFinalizerFn.  A 'complex' tutorial
+may be forthcoming that provides examples of this.</p><h2 id="Example">Example</h2>
 <div class="example"><p>In this example we group by the state column then the gender column, and we count the names (a proxy for 
 counting the number of rows), we find the max age for each grouping, and we calculate the average balance.  We
 suppress the aggregation text on the balance column because we want to format as currency...but that means that 
@@ -122,10 +133,12 @@ function will stop working), and writes them to the console.</p>
         columnDefs: [
           { name: 'name', width: '30%' },
           { name: 'gender', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }, width: '20%', cellFilter: 'mapGender' },
-          { name: 'age', grouping: { aggregation: uiGridGroupingConstants.aggregation.MAX }, width: '20%' },
+          { name: 'age', treeAggregation: { type: uiGridGroupingConstants.aggregation.MAX }, width: '20%' },
           { name: 'company', width: '25%' },
-          { name: 'state', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }, width: '35%', cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.groupLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
-          { name: 'balance', width: '25%', cellFilter: 'currency', groupingSuppressAggregationText: true, grouping: { aggregation: uiGridGroupingConstants.aggregation.AVG } }
+          { name: 'state', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }, width: '35%', cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
+          { name: 'balance', width: '25%', cellFilter: 'currency', treeAggregation: { type: uiGridGroupingConstants.aggregation.AVG }, customTreeAggregationFinalizerFn: function( aggregation ) { 
+            aggregation.rendered = aggregation.value; 
+          } }
         ],
         onRegisterApi: function( gridApi ) {
           $scope.gridApi = gridApi;

@@ -5,18 +5,7 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Services for grouping features</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="aggregate">aggregate(grid, row, groupFieldState)</h3>
-<div class="aggregate"><p>Accumulate the data from this row onto the aggregation for each processingState (for each level of grouping).</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to set grouping visibility on</p></li>
-<li><code ng:non-bindable="">groupFieldState – {object} – </code>
-<p>the processing state for the field/column/group we're currently processing for</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="aggregate">aggregate(grid, row, parents)</h3>
+<ul class="methods"><li><h3 id="aggregate">aggregate(grid, row, parents)</h3>
 <div class="aggregate"><p>Accumulate the data from this row onto the aggregations for each parent</p>
 
 <p>Iterate over the parents, then iterate over the aggregations for each of those parents,
@@ -43,6 +32,22 @@ from uiGridGroupingConstants</p></li>
 </ul>
 </div>
 </li>
+<li><h3 id="applyRowExpandedStates">applyRowExpandedStates(currentNode)</h3>
+<div class="applyrowexpandedstates"><p>Take a hash in the format as created by getRowExpandedStates,
+and apply it to the grid.grouping.groupHeaderCache.</p>
+
+<p>Takes a treeSubset, and applies to a treeSubset - so can be called
+recursively.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">currentNode – {object} – </code>
+<p>can be grid.grouping.groupHeaderCache, or any of
+the children of that hash</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{hash}</code>
+– <p>expandedStates can be the full expanded states, or children
+of that expanded states (which hopefully matches the subset of the groupHeaderCache)</p></div>
+</div>
+</li>
 <li><h3 id="clearGrouping">clearGrouping(grid)</h3>
 <div class="cleargrouping"><p>Clear any grouped columns and any aggregations.  Doesn't remove sorting,
 as we don't know whether that sorting was added by grouping or was there beforehand</p><h4 id="Parameters">Parameters</h4>
@@ -51,83 +56,33 @@ as we don't know whether that sorting was added by grouping or was there beforeh
 </ul>
 </div>
 </li>
-<li><h3 id="collapseAllRows">collapseAllRows(grid)</h3>
-<div class="collapseallrows"><p>Makes each row of the grid invisible (from a grouping perspective)</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="collapseRow">collapseRow(grid, row)</h3>
-<div class="collapserow"><p>Collapses this specific row</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to collapse</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="collapseRowChildren">collapseRowChildren(grid, row)</h3>
-<div class="collapserowchildren"><p>Collapses this specific row and all children</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to collapse</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="expandAllRows">expandAllRows(grid)</h3>
-<div class="expandallrows"><p>Makes each row of the grid visible (from a grouping perspective,
-they may still be invisible for other reasons)</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="expandRow">expandRow(grid, row)</h3>
-<div class="expandrow"><p>Expands this specific row, showing only immediate children.</p>
-
-<p>If this row isn't a groupHeader, we do nothing </p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to expand</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="expandRowChildren">expandRowChildren(grid, row)</h3>
-<div class="expandrowchildren"><p>Expands this specific row, showing all children.</p>
-
-<p>If this row isn't a groupHeader, we do nothing </p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to expand</p></li>
-</ul>
-</div>
-</li>
 <li><h3 id="finaliseAggregations">finaliseAggregations(row)</h3>
 <div class="finaliseaggregations"><p>Format the data from the aggregation into the rendered text
 e.g. if we had label: 'sum: ' and value: 25, we'd create 'sum: 25'.</p>
 
-<p>As part of this we call any formatting callback routines we've been provided.</p><h4 id="Parameters">Parameters</h4>
+<p>As part of this we call any formatting callback routines we've been provided.</p>
+
+<p>We write our aggregation out to the row.entity if treeAggregationUpdateEntity is
+set on the column - we don't overwrite any information that's already there, we append
+to it so that grouping can have set the groupVal beforehand without us overwriting it.</p>
+
+<p>We need to copy the data from the row.entity first before we finalise the aggregation,
+we need that information for the finaliserFn</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">row – {gridRow} – </code>
 <p>the parent we're finalising</p></li>
 </ul>
 </div>
 </li>
-<li><h3 id="getExpandedState">getExpandedState(grid, groupingProcessingState, stateIndex)</h3>
-<div class="getexpandedstate"><p>Gets the expanded state reference from the <code>grid.grouping.rowExpandedStates</code> for 
-the given processingState and state index.  In effect this is finding the entry for a given 
-groupingHeader so that we can store a reference to it on the groupHeader, and use it to work
-out visibility.</p><h4 id="Parameters">Parameters</h4>
+<li><h3 id="finaliseProcessingState">finaliseProcessingState(grid, processingState, stateIndex)</h3>
+<div class="finaliseprocessingstate"><p>Set all processing states lower than the one that had a break in value to
+no longer be initialised.  Render the counts into the entity ready for display.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
-<li><code ng:non-bindable="">groupingProcessingState – {array} – </code>
-<p>the state we're currently in (contains the current values
-of each of the groups)</p></li>
+<li><code ng:non-bindable="">processingState – {array} – </code>
+<p>the current processing state</p></li>
 <li><code ng:non-bindable="">stateIndex – {number} – </code>
-<p>the index of the processing state (i.e. column) that we want the reference for</p></li>
+<p>the processing state item that we were on when we triggered a new group header, all
+processing states after this need to be finalised</p></li>
 </ul>
 </div>
 </li>
@@ -140,6 +95,37 @@ this always renumbers the grouping starting at 0</p><h4 id="Parameters">Paramete
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{array}</code>
 – <p>an array of the group fields, in order of priority</p></div>
+</div>
+</li>
+<li><h3 id="getRowExpandedStates">getRowExpandedStates(grid)</h3>
+<div class="getrowexpandedstates"><p>Extract the groupHeaderCache hash, pulling out only the states.</p>
+
+<p>The example below shows a grid that is grouped by gender then age</p>
+
+<pre class="prettyprint linenums">
+  {
+    male: {
+      state: 'expanded',
+      children: {
+        22: { state: 'expanded' },
+        30: { state: 'collapsed' }
+      }
+    },
+    female: {
+      state: 'expanded',
+      children: {
+        28: { state: 'expanded' },
+        55: { state: 'collapsed' }
+      }
+    }
+  }
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>grid object</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{hash}</code>
+– <p>the expanded states as a hash</p></div>
 </div>
 </li>
 <li><h3 id="groupColumn">groupColumn(grid, column)</h3>
@@ -159,21 +145,13 @@ move is handled in a columnProcessor, so gets called as part of refresh</p><h4 i
 <div class="grouprows"><p>The rowProcessor that creates the groupHeaders (i.e. does
 the actual grouping).</p>
 
-<p>Assumes it is always called after the sorting processor (TODO: how do we prove that?)</p>
+<p>Assumes it is always called after the sorting processor, guaranteed by teh priority setting</p>
 
 <p>Processes all the rows in order, inserting a groupHeader row whenever there is a change
-in value of a grouped row, the groupHeader will also cause an update to (or insertion into) the
-grid.grouping.rowExpandedStates hash, and a reference to that entry (including it's sub-tree) to be held 
-on the gridRow itself in row.expandedState.</p>
+in value of a grouped row.  The group header row is looked up in the groupHeaderCache, and used
+from there if there is one.  The entity is reset to {} if one is found.</p>
 
-<p>Aggregates any configured row values whilst it goes, and updates those aggregations into
-the previously created groupHeader upon the break in value (aggregations are maintained at each level
-of grouping)</p>
-
-<p>Uses the <code>grid.grouping.rowExpandedStates</code> to decide which rows are visible, the rule is that once any parent
-node is collapsed, all nodes below that will be invisible.</p>
-
-<p>As it processes it maintains a <code>groupingProcessingState</code> array. This records, for each level of grouping we're
+<p>As it processes it maintains a <code>processingState</code> array. This records, for each level of grouping we're
 working with, the following information:</p>
 
 <pre><code>  {
@@ -181,22 +159,15 @@ working with, the following information:</p>
     col: col,
     initialised: boolean,
     currentValue: value,
-    currentGroupHeader: gridRow,
-    runningAggregations 
-      field: {type: xxxx, value: 1234},
-      field: {type: yyyy, value: 2345)
-    }
+    currentRow: gridRow,
   }
 </code></pre>
 
 <p>We look for changes in the currentValue at any of the levels.  Where we find a change we:</p>
 
 <ul>
-<li>write out any aggregations to the currentGroupHeader, and reset them</li>
 <li>create a new groupHeader row in the array</li>
-</ul>
-
-<p>If there is no change, we just run the aggregations</p><h4 id="Parameters">Parameters</h4>
+</ul><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">renderableRows – {array} – </code>
 <p>the rows we want to process, usually the output from the previous rowProcessor</p></li>
 </ul>
@@ -220,8 +191,7 @@ working with, the following information:</p>
 </div>
 </li>
 <li><h3 id="groupingColumnProcessor">groupingColumnProcessor(columns, rows)</h3>
-<div class="groupingcolumnprocessor"><p>Updates the visibility of the groupingRowHeader based on whether or not
-there are any grouped columns</p><h4 id="Parameters">Parameters</h4>
+<div class="groupingcolumnprocessor"><p>Moves the columns around based on which are grouped</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">columns – {array} – </code>
 <p>the columns to consider rendering</p></li>
 <li><code ng:non-bindable="">rows – {array} – </code>
@@ -233,8 +203,8 @@ there are any grouped columns</p><h4 id="Parameters">Parameters</h4>
 </div>
 </li>
 <li><h3 id="initialiseProcessingState">initialiseProcessingState(grid)</h3>
-<div class="initialiseprocessingstate"><p>The rowProcessor that creates the groupHeaders (i.e. does
-the actual grouping).</p><h4 id="Parameters">Parameters</h4>
+<div class="initialiseprocessingstate"><p>Creates the processing state array that is used
+for groupRows.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 </ul>
@@ -244,18 +214,19 @@ the actual grouping).</p><h4 id="Parameters">Parameters</h4>
 initialised with blank values</p></div>
 </div>
 </li>
-<li><h3 id="insertGroupHeader">insertGroupHeader(grid, renderableRows, rowIndex, groupingProcessingState, stateIndex)</h3>
+<li><h3 id="insertGroupHeader">insertGroupHeader(grid, renderableRows, rowIndex, processingState, stateIndex)</h3>
 <div class="insertgroupheader"><p>Create a group header row, and link it to the various configuration
-items that we use.  Write out any grouping aggregation for this group and groups that are children of this one</p><h4 id="Parameters">Parameters</h4>
+items that we use.</p>
+
+<p>Look for the row in the oldGroupingHeaderCache, write the row into the new groupingHeaderCache.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
 <li><code ng:non-bindable="">renderableRows – {array} – </code>
 <p>the rows that we are processing</p></li>
 <li><code ng:non-bindable="">rowIndex – {number} – </code>
 <p>the row we were up to processing</p></li>
-<li><code ng:non-bindable="">groupingProcessingState – {array} – </code>
-<p>the state we're up to - we update this when we write out
-the aggregation</p></li>
+<li><code ng:non-bindable="">processingState – {array} – </code>
+<p>the current processing state</p></li>
 <li><code ng:non-bindable="">stateIndex – {number} – </code>
 <p>the processing state item that we were on when we triggered a new group header - 
 i.e. the column that we want to create a header for</p></li>
@@ -281,16 +252,6 @@ go back to where it was.</p>
 – <p>updated columns</p></div>
 </div>
 </li>
-<li><h3 id="setAllNodes">setAllNodes(expandedStatesSubset)</h3>
-<div class="setallnodes"><p>Works through a subset of grid.grouping.rowExpandedStates, setting
-all child nodes (and their descendents) of the provided node to the given state.</p>
-
-<p>Calls itself recursively on all nodes so as to achieve this.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">expandedStatesSubset – {object} – </code>
-<p>the portion of the tree that we want to update</p></li>
-</ul>
-</div>
-</li>
 <li><h3 id="setGrouping">setGrouping(grid, config)</h3>
 <div class="setgrouping"><p>Set the grouping based on a config object, used by the save state feature 
 (more specifically, by the restore function in that feature )</p><h4 id="Parameters">Parameters</h4>
@@ -301,19 +262,6 @@ all child nodes (and their descendents) of the provided node to the given state.
 </ul>
 </div>
 </li>
-<li><h3 id="setVisibility">setVisibility(grid, row, groupingProcessingState)</h3>
-<div class="setvisibility"><p>Determine the visibility of a row based on the processing state, which contains references to the
-row headers, and therefore to the relevant rowExpandedStates.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to set grouping visibility on</p></li>
-<li><code ng:non-bindable="">groupingProcessingState – {array} – </code>
-<p>the state we're currently in (contains the current values
-of each of the groups)</p></li>
-</ul>
-</div>
-</li>
 <li><h3 id="tidyPriorities">tidyPriorities(grid)</h3>
 <div class="tidypriorities"><p>Renumbers groupPriority and sortPriority such that
 groupPriority is contiguous, and sortPriority either matches
@@ -321,16 +269,6 @@ groupPriority (for group columns), and otherwise is contiguous and
 higher than groupPriority. </p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
 <p>grid object</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="toggleRowGroupingState">toggleRowGroupingState(grid, row)</h3>
-<div class="togglerowgroupingstate"><p>Toggles the expand or collapse state of this grouped row.
-If the row isn't a groupHeader, does nothing.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to toggle</p></li>
 </ul>
 </div>
 </li>
@@ -345,32 +283,6 @@ move is handled in a columnProcessor, so gets called as part of refresh</p><h4 i
 <p>grid object</p></li>
 <li><code ng:non-bindable="">column – {GridCol} – </code>
 <p>the column we want to ungroup</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="writeOutAggregation">writeOutAggregation(grid, processingState)</h3>
-<div class="writeoutaggregation"><p>Writes a single aggregation to the linked groupingHeader, and clears the processing state
-for that group </p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">processingState – {object} – </code>
-<p>the specific group column that we're writing out state for, and resetting
-the aggregation</p></li>
-</ul>
-</div>
-</li>
-<li><h3 id="writeOutAggregations">writeOutAggregations(grid, groupingProcessingState, stateIndex)</h3>
-<div class="writeoutaggregations"><p>Write out the aggregations for the group that has changed, and any children of that group, which 
-by definition have changed as well.  Reset the processing state to reflect that all children of the group now
-triggered a new group as well</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>grid object</p></li>
-<li><code ng:non-bindable="">groupingProcessingState – {array} – </code>
-<p>the state we're up to - we update this when we write out
-the aggregation</p></li>
-<li><code ng:non-bindable="">stateIndex – {number} – </code>
-<p>the processing state item that we were on when we triggered a new group header - 
-i.e. the column that we want to create a header for</p></li>
 </ul>
 </div>
 </li>

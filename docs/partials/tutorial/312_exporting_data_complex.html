@@ -19,6 +19,9 @@ data to apply a filter to decode coded data.</p>
 
 <p>We also right align the gender column.</p>
 
+<p>We include move columns, allowing users to move columns around and see them represented in the 
+resulting export.</p>
+
 <h4>Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-89" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
@@ -47,7 +50,7 @@ data to apply a filter to decode coded data.</p>
         <span class="ui-grid-exporter-csv-link">&nbsp</span>
       </div>
       
-      <div ui-grid="gridOptions" ui-grid-selection ui-grid-exporter class="grid"></div>
+      <div ui-grid="gridOptions" ui-grid-selection ui-grid-exporter ui-grid-move-columns class="grid"></div>
     </div>
   </script>
 </div>
@@ -63,7 +66,7 @@ data to apply a filter to decode coded data.</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.selection', 'ui.grid.exporter']);
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.moveColumns']);
 
     app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
       $scope.gridOptions = {

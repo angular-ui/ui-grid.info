@@ -52,7 +52,7 @@ must provide a rowsProcessor that runs with very low priority (typically in the 
 the <code>ignoreSort</code>on any sort that it wants to run on the tree.  TreeBase will clear the ignoreSort on all sorts - so it
 will turn on any sorts that haven't run.  It will then call a recursive sort on the tree.</p>
 
-<p>Tree base provides aggregation.  It checks the aggregation configuration on each column, and aggregates based on
+<p>Tree base provides treeAggregation.  It checks the treeAggregation configuration on each column, and aggregates based on
 the logic provided as it builds the tree.  Aggregation information will be collected in the format:</p>
 
 <pre><code> {
