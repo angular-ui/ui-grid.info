@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-11b83eb - 2015-05-21
+ * ui-grid - v3.0.0-rc.21-363e4a5 - 2015-05-23
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8824,7 +8824,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       return !regex.exec(value);
     }
 
-    if (typeof(value) === 'number'){
+    if (typeof(value) === 'number' && typeof(term) === 'string' ){
       // if the term has a decimal in it, it comes through as '9\.4', we need to take out the \
       // the same for negative numbers
       // TODO: I suspect the right answer is to look at escapeRegExp at the top of this code file, maybe it's not needed?
@@ -16706,6 +16706,15 @@ module.filter('px', function() {
          *  <br/>Defaults to "Null"
          */
         gridOptions.groupingNullLabel = gridOptions.groupingNullLabel || 'Null';
+
+        /**
+         *  @ngdoc object
+         *  @name enableGroupHeaderSelection
+         *  @propertyOf  ui.grid.grouping.api:GridOptions
+         *  @description Allows group header rows to be selected.  
+         *  <br/>Defaults to false
+         */
+        gridOptions.enableGroupHeaderSelection = gridOptions.enableGroupHeaderSelection === true;
       },
 
 
@@ -17374,7 +17383,7 @@ module.filter('px', function() {
         headerRow.groupHeader = true;
         headerRow.internalRow = true;
         headerRow.enableCellEdit = false;
-        headerRow.enableSelection = false;
+        headerRow.enableSelection = grid.options.enableGroupHeaderSelection;
         processingState[stateIndex].initialised = true;
         processingState[stateIndex].currentValue = newValue;
         processingState[stateIndex].currentRow = headerRow;
@@ -20607,7 +20616,7 @@ module.filter('px', function() {
                  * </pre>
                  * and somewhere within the event handler:
                  * <pre>
-                 *      gridApi.rowEdit.setSavePromise( grid, rowEntity, savePromise)
+                 *      gridApi.rowEdit.setSavePromise( rowEntity, savePromise)
                  * </pre>
                  * @param {object} rowEntity the options.data element that was edited
                  * @returns {promise} Your saveRow method should return a promise, the
@@ -20627,7 +20636,7 @@ module.filter('px', function() {
                  * @description Sets the promise associated with the row save, mandatory that
                  * the saveRow event handler calls this method somewhere before returning.
                  * <pre>
-                 *      gridApi.rowEdit.setSavePromise(grid, rowEntity)
+                 *      gridApi.rowEdit.setSavePromise(rowEntity, savePromise)
                  * </pre>
                  * @param {object} rowEntity a data row from the grid for which a save has
                  * been initiated
@@ -23339,6 +23348,21 @@ module.filter('px', function() {
                */
               setTreeState: function ( config ) {
                 service.setTreeState( grid, config );
+              },
+
+              /**
+               * @ngdoc function
+               * @name getRowChildren
+               * @methodOf  ui.grid.treeBase.api:PublicApi
+               * @description Get the children of the specified row
+               * @param {GridRow} row the row you want the children of
+               * @returns {Array} array of children of this row, the children
+               * are all gridRows
+               */
+              getRowChildren: function ( row ){
+                return row.treeNode.children.map( function( childNode ){ 
+                  return childNode.row; 
+                });
               }
             }
           }
