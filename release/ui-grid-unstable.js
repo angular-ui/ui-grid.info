@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-363e4a5 - 2015-05-23
+ * ui-grid - v3.0.0-rc.21-2c53f57 - 2015-05-23
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -23875,7 +23875,7 @@ module.filter('px', function() {
       updateRowHeaderWidth: function( grid ){
         var rowHeader = grid.getColumn(uiGridTreeBaseConstants.rowHeaderColName);
 
-        var newWidth = grid.options.treeRowHeaderBaseWidth + grid.options.treeIndent * grid.treeBase.numberLevels;
+        var newWidth = grid.options.treeRowHeaderBaseWidth + grid.options.treeIndent * Math.max(grid.treeBase.numberLevels - 1, 0);
         if ( rowHeader && newWidth !== rowHeader.width ){
           rowHeader.width = newWidth;
           grid.queueRefresh();
@@ -23936,6 +23936,7 @@ module.filter('px', function() {
         var parents = [];
         var currentState;
         grid.treeBase.tree = [];
+        grid.treeBase.numberLevels = 0;
         var aggregations = service.getAggregations( grid );
 
         var createNode = function( row ){
@@ -23974,8 +23975,8 @@ module.filter('px', function() {
           }
 
           // update the tree number of levels, so we can set header width if we need to
-          if ( grid.treeBase.numberLevels < row.treeLevel ){
-            grid.treeBase.numberLevels = row.treeLevel;
+          if ( grid.treeBase.numberLevels < row.treeLevel + 1){
+            grid.treeBase.numberLevels = row.treeLevel + 1;
           }
         };
 
@@ -24405,8 +24406,8 @@ module.filter('px', function() {
    *  @description Stacks on top of ui.grid.uiGridViewport to set formatting on a tree header row
    */
   module.directive('uiGridViewport',
-  ['$compile', 'uiGridConstants', 'gridUtil', '$parse', 'uiGridGroupingService',
-    function ($compile, uiGridConstants, gridUtil, $parse, uiGridGroupingService) {
+  ['$compile', 'uiGridConstants', 'gridUtil', '$parse',
+    function ($compile, uiGridConstants, gridUtil, $parse) {
       return {
         priority: -200, // run after default  directive
         scope: false,
