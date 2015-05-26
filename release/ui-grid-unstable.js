@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-9b2c6d5 - 2015-05-26
+ * ui-grid - v3.0.0-rc.21-a1bbc0c - 2015-05-26
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -22437,7 +22437,7 @@ module.filter('px', function() {
           }
 
           if (selected && noUnselect){
-            // don't deselect the row 
+            // don't deselect the row
           } else if (row.enableSelection !== false) {
             row.setSelected(!selected);
             if (row.isSelected === true) {
@@ -22618,27 +22618,27 @@ module.filter('px', function() {
 
                 uiGridCtrl.grid.addRowHeaderColumn(selectionRowHeaderDef);
               }
-              
+
               var processorSet = false;
-              
+
               var processSelectableRows = function( rows ){
                 rows.forEach(function(row){
                   row.enableSelection = uiGridCtrl.grid.options.isRowSelectable(row);
                 });
                 return rows;
               };
-              
+
               var updateOptions = function(){
                 if (uiGridCtrl.grid.options.isRowSelectable !== angular.noop && processorSet !== true) {
                   uiGridCtrl.grid.registerRowsProcessor(processSelectableRows, 500);
                   processorSet = true;
                 }
               };
-              
+
               updateOptions();
 
               var dataChangeDereg = uiGridCtrl.grid.registerDataChangeCallback( updateOptions, [uiGridConstants.dataChange.OPTIONS] );
-  
+
               $scope.$on( '$destroy', dataChangeDereg);
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
@@ -22649,8 +22649,8 @@ module.filter('px', function() {
       };
     }]);
 
-  module.directive('uiGridSelectionRowHeaderButtons', ['$templateCache', 'uiGridSelectionService',
-    function ($templateCache, uiGridSelectionService) {
+  module.directive('uiGridSelectionRowHeaderButtons', ['$templateCache', 'uiGridSelectionService', 'gridUtil',
+    function ($templateCache, uiGridSelectionService, gridUtil) {
       return {
         replace: true,
         restrict: 'E',
@@ -22659,8 +22659,18 @@ module.filter('px', function() {
         require: '^uiGrid',
         link: function($scope, $elm, $attrs, uiGridCtrl) {
           var self = uiGridCtrl.grid;
-          $scope.selectButtonClick = function(row, evt) {
+          $scope.selectButtonClick = selectButtonClick;
+
+          // On IE, prevent mousedowns on the select button from starting a selection.
+          //   If this is not done and you shift+click on another row, the browser will select a big chunk of text
+          if (gridUtil.detectBrowser() === 'ie') {
+            $elm.on('mousedown', selectButtonMouseDown);
+          }
+
+
+          function selectButtonClick(row, evt) {
             evt.stopPropagation();
+
             if (evt.shiftKey) {
               uiGridSelectionService.shiftSelect(self, row, evt, self.options.multiSelect);
             }
@@ -22670,7 +22680,14 @@ module.filter('px', function() {
             else {
               uiGridSelectionService.toggleRowSelection(self, row, evt, (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect);
             }
-          };
+          }
+
+          function selectButtonMouseDown(evt) {
+            if (evt.ctrlKey || evt.shiftKey) {
+              evt.target.onselectstart = function () { return false; };
+              window.setTimeout(function () { evt.target.onselectstart = null; }, 0);
+            }
+          }
         }
       };
     }]);
@@ -22790,7 +22807,7 @@ module.filter('px', function() {
             var selectCells = function(evt){
               // if we get a click, then stop listening for touchend
               $elm.off('touchend', touchEnd);
-              
+
               if (evt.shiftKey) {
                 uiGridSelectionService.shiftSelect($scope.grid, $scope.row, evt, $scope.grid.options.multiSelect);
               }
@@ -22801,7 +22818,7 @@ module.filter('px', function() {
                 uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
               }
               $scope.$apply();
-              
+
               // don't re-enable the touchend handler for a little while - some devices generate both, and it will
               // take a little while to move your hand from the mouse to the screen if you have both modes of input
               $timeout(function() {
@@ -22824,7 +22841,7 @@ module.filter('px', function() {
                 // short touch
                 selectCells(evt);
               }
-              
+
               // don't re-enable the click handler for a little while - some devices generate both, and it will
               // take a little while to move your hand from the screen to the mouse if you have both modes of input
               $timeout(function() {
