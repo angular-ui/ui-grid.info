@@ -70,7 +70,8 @@ of setting gridOptions.data to a string value that specifies an object on your s
       { name:'friends[0].name', displayName:'1st friend', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Friend0:{{COL_FIELD}}</span></div>'  },
       { name:'friends[1].name', displayName:'2nd friend', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Friend1:{{COL_FIELD}}</span></div>'  },
       { name:'friends[2].name', displayName:'3rd friend', width:150, enableCellEdit: true, cellTemplate: '<div class="ui-grid-cell-contents"><span>Friend2:{{COL_FIELD}}</span></div>'  },
-      { name:'agetemplate',field:'age', width:150, cellTemplate: '<div class="ui-grid-cell-contents"><span>Age 2:{{COL_FIELD}}</span></div>' }
+      { name:'agetemplate',field:'age', width:150, cellTemplate: '<div class="ui-grid-cell-contents"><span>Age 2:{{COL_FIELD}}</span></div>' },
+      { name:'Is Active',field:'isActive', width:150, type:'boolean' }
     ];
 
     $scope.callsPending = 0;
@@ -82,7 +83,7 @@ of setting gridOptions.data to a string value that specifies an object on your s
       var start = new Date();
       var sec = $interval(function () {
         $scope.callsPending++;
-        
+
         $http.get('/data/500_complex.json')
           .success(function(data) {
             $scope.callsPending--;

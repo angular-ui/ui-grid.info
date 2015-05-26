@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-a1bbc0c - 2015-05-26
+ * ui-grid - v3.0.0-rc.21-4d9ec8b - 2015-05-26
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14400,7 +14400,9 @@ module.filter('px', function() {
                 };
 
                 $elm.on('click', function (evt) {
-                  $scope.deepEdit = true;
+                  if ($elm[0].type !== 'checkbox') {
+                    $scope.deepEdit = true;
+                  }
                 });
 
                 $elm.on('keydown', function (evt) {
