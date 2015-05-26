@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-baaf1c0 - 2015-05-25
+ * ui-grid - v3.0.0-rc.21-b33d962 - 2015-05-26
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -5038,8 +5038,8 @@ angular.module('ui.grid')
         }
 
         if (container.header || container.headerCanvas) {
-          container.explicitHeaderHeight = null;
-          container.explicitHeaderCanvasHeight = null;
+          container.explicitHeaderHeight = container.explicitHeaderHeight || null;
+          container.explicitHeaderCanvasHeight = container.explicitHeaderCanvasHeight || null;
 
           containerHeadersToRecalc.push(container);
         }
@@ -5075,6 +5075,12 @@ angular.module('ui.grid')
         var maxHeaderHeight = 0;
         var maxHeaderCanvasHeight = 0;
         var i, container;
+        var getHeight = function(oldVal, newVal){
+          if ( oldVal !== newVal){
+            rebuildStyles = true;
+          }
+          return newVal;
+        };
         for (i = 0; i < containerHeadersToRecalc.length; i++) {
           container = containerHeadersToRecalc[i];
 
@@ -5084,12 +5090,7 @@ angular.module('ui.grid')
           }
 
           if (container.header) {
-            var oldHeaderHeight = container.headerHeight;
-            var headerHeight = container.headerHeight = parseInt(gridUtil.outerElementHeight(container.header), 10);
-
-            if (oldHeaderHeight !== headerHeight) {
-              rebuildStyles = true;
-            }
+            var headerHeight = container.headerHeight = getHeight(container.headerHeight, parseInt(gridUtil.outerElementHeight(container.header), 10));
 
             // Get the "inner" header height, that is the height minus the top and bottom borders, if present. We'll use it to make sure all the headers have a consistent height
             var topBorder = gridUtil.getBorderSize(container.header, 'top');
@@ -5108,12 +5109,8 @@ angular.module('ui.grid')
           }
 
           if (container.headerCanvas) {
-            var oldHeaderCanvasHeight = container.headerCanvasHeight;
-            var headerCanvasHeight = container.headerCanvasHeight = parseInt(gridUtil.outerElementHeight(container.headerCanvas), 10);
+            var headerCanvasHeight = container.headerCanvasHeight = getHeight(container.headerCanvasHeight, parseInt(gridUtil.outerElementHeight(container.headerCanvas), 10));
 
-            if (oldHeaderCanvasHeight !== headerCanvasHeight) {
-              rebuildStyles = true;
-            }
 
             // If the header doesn't have an explicit canvas height, save the largest header canvas height for use later
             //   Explicit header heights are based off of the max we are calculating here. We never want to base the max on something we're setting explicitly
@@ -5140,7 +5137,7 @@ angular.module('ui.grid')
             maxHeaderHeight > 0 && typeof(container.headerHeight) !== 'undefined' && container.headerHeight !== null &&
             (container.explicitHeaderHeight || container.headerHeight < maxHeaderHeight)
           ) {
-            container.explicitHeaderHeight = maxHeaderHeight;
+            container.explicitHeaderHeight = getHeight(container.explicitHeaderHeight, maxHeaderHeight);
           }
 
           // Do the same as above except for the header canvas
@@ -5148,7 +5145,7 @@ angular.module('ui.grid')
             maxHeaderCanvasHeight > 0 && typeof(container.headerCanvasHeight) !== 'undefined' && container.headerCanvasHeight !== null &&
             (container.explicitHeaderCanvasHeight || container.headerCanvasHeight < maxHeaderCanvasHeight)
           ) {
-            container.explicitHeaderCanvasHeight = maxHeaderCanvasHeight;
+            container.explicitHeaderCanvasHeight = getHeight(container.explicitHeaderCanvasHeight, maxHeaderCanvasHeight);
           }
         }
 
