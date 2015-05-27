@@ -64,9 +64,37 @@ The individual options available in columnDefs are documented in the
 </li>
 <li><h3 id="data">data</h3>
 <div class="data"><p>(mandatory) Array of data to be rendered into the grid, providing the data source or data binding for 
-the grid.  The most common case is an array of objects, where each object has a number of attributes.
+the grid.</p>
+
+<p>Most commonly the data is an array of objects, where each object has a number of attributes.
 Each attribute automatically becomes a column in your grid.  This array could, for example, be sourced from
-an angularJS $resource query request.  The array can also contain complex objects.</p></div>
+an angularJS $resource query request.  The array can also contain complex objects, refer the binding tutorial 
+for examples of that.</p>
+
+<p>The most flexible usage is to set your data on $scope:</p>
+
+<p><code>$scope.data = data;</code></p>
+
+<p>And then direct the grid to resolve whatever is in $scope.data:</p>
+
+<p><code>$scope.gridOptions.data = 'data';</code></p>
+
+<p>This is the most flexible approach as it allows you to replace $scope.data whenever you feel like it without
+getting pointer issues.</p>
+
+<p>Alternatively you can directly set the data array:</p>
+
+<p><code>$scope.gridOptions.data = [ ];</code>
+or</p>
+
+<p><code>$http.get('/data/100.json')
+.success(function(data) {
+  $scope.myData = data;
+  $scope.gridOptions.data = $scope.myData;
+ });</code></p>
+
+<p>Where you do this, you need to take care in updating the data - you can't just update <code>$scope.myData</code> to some other 
+array, you need to update $scope.gridOptions.data to point to that new array as well.</p></div>
 </li>
 <li><h3 id="enableColumnMenus">enableColumnMenus</h3>
 <div class="enablecolumnmenus"><p>True by default. When enabled, this setting displays a column

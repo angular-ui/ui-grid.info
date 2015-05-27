@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-4d9ec8b - 2015-05-26
+ * ui-grid - v3.0.0-rc.21-3597417 - 2015-05-27
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -775,6 +775,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             if ($scope.col.footerCellClass) {
               updateClass();
             }
+
+            $scope.col.updateAggregationValue();
 
             // Watch for column changes so we can alter the col cell class properly
 /* shouldn't be needed any more, given track by col.name
@@ -6800,9 +6802,37 @@ angular.module('ui.grid')
        * @name data
        * @propertyOf ui.grid.class:GridOptions
        * @description (mandatory) Array of data to be rendered into the grid, providing the data source or data binding for 
-       * the grid.  The most common case is an array of objects, where each object has a number of attributes.
+       * the grid.
+       * 
+       * Most commonly the data is an array of objects, where each object has a number of attributes.
        * Each attribute automatically becomes a column in your grid.  This array could, for example, be sourced from
-       * an angularJS $resource query request.  The array can also contain complex objects.
+       * an angularJS $resource query request.  The array can also contain complex objects, refer the binding tutorial 
+       * for examples of that.
+       * 
+       * The most flexible usage is to set your data on $scope:
+       * 
+       * `$scope.data = data;`
+       * 
+       * And then direct the grid to resolve whatever is in $scope.data:
+       * 
+       * `$scope.gridOptions.data = 'data';`
+       * 
+       * This is the most flexible approach as it allows you to replace $scope.data whenever you feel like it without
+       * getting pointer issues.
+       * 
+       * Alternatively you can directly set the data array:
+       * 
+       * `$scope.gridOptions.data = [ ];`
+       * or
+       * 
+       * `$http.get('/data/100.json')
+       * .success(function(data) {
+       *   $scope.myData = data;
+       *   $scope.gridOptions.data = $scope.myData;
+       *  });`
+       * 
+       * Where you do this, you need to take care in updating the data - you can't just update `$scope.myData` to some other 
+       * array, you need to update $scope.gridOptions.data to point to that new array as well.
        * 
        */
       baseOptions.data = baseOptions.data || [];
@@ -15810,15 +15840,15 @@ module.filter('px', function() {
          */
         getColumnHeaders: function (grid, colTypes) {
           var headers = [];
-          var sourceColumns;
+          var columns;
 
           if ( colTypes === uiGridExporterConstants.ALL ){
-            sourceColumns = grid.columns;
+            columns = grid.columns;
           } else {
-            sourceColumns = grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } );
+            columns = grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } );
           }
 
-          sourceColumns.forEach( function( gridCol, index ) {
+          columns.forEach( function( gridCol, index ) {
             if ( gridCol.colDef.exporterSuppressExport !== true &&
                  grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
               headers.push({
@@ -15875,9 +15905,9 @@ module.filter('px', function() {
          */
         getData: function (grid, rowTypes, colTypes) {
           var data = [];
-          
           var rows;
-          
+          var columns;
+
           switch ( rowTypes ) {
             case uiGridExporterConstants.ALL:
               rows = grid.rows; 
@@ -15893,12 +15923,20 @@ module.filter('px', function() {
               }
               break;
           }
-          
+
+          if ( colTypes === uiGridExporterConstants.ALL ){
+            columns = grid.columns;
+          } else {
+            columns = grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } );
+          }
+
           rows.forEach( function( row, index ) {
 
             if (row.exporterEnableExporting !== false) {
               var extractedRow = [];
-              grid.columns.forEach( function( gridCol, index ) {
+
+
+              columns.forEach( function( gridCol, index ) {
               if ( (gridCol.visible || colTypes === uiGridExporterConstants.ALL ) && 
                    gridCol.colDef.exporterSuppressExport !== true &&
                    grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
@@ -15909,11 +15947,11 @@ module.filter('px', function() {
                   extractedRow.push(extractedField);
                 }
               });
-              
+
               data.push(extractedRow);
             }
           });
-          
+
           return data;
         },
 
@@ -17220,7 +17258,9 @@ module.filter('px', function() {
         for (var i = 0; i < renderableRows.length; i++ ){
           var row = renderableRows[i];
 
-          processingState.forEach( updateProcessingState );
+          if ( row.visible ){
+            processingState.forEach( updateProcessingState );
+          }
         }
 
         delete grid.grouping.oldGroupingHeaderCache;
@@ -23941,7 +23981,7 @@ module.filter('px', function() {
           }
 
           // aggregate if this is a leaf node
-          if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0  ){
+          if ( ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) && row.visible  ){
             service.aggregate( grid, row, parents );
           }
 
@@ -24836,7 +24876,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/treeBaseExpandAllButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-icon-minus-squared': grid.treeBase.expandAll, 'ui-grid-icon-plus-squared': !grid.treeBase.expandAll}\" ng-click=\"headerButtonClick($event)\"></div>"
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-icon-minus-squared': grid.treeBase.numberLevels > 0 && grid.treeBase.expandAll, 'ui-grid-icon-plus-squared': grid.treeBase.numberLevels > 0 && !grid.treeBase.expandAll}\" ng-click=\"headerButtonClick($event)\"></div>"
   );
 
 
@@ -24851,7 +24891,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/treeBaseRowHeaderButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > - 1}\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"{'ui-grid-icon-minus-squared': ( ( grid.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || row.treeNode.children.length > 0 ) && row.treeNode.state === 'expanded', 'ui-grid-icon-plus-squared': ( ( grid.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || row.treeNode.children.length > 0 ) && row.treeNode.state === 'collapsed'}\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"{'ui-grid-icon-minus-squared': ( ( grid.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || ( row.treeNode.children && row.treeNode.children.length > 0 ) ) && row.treeNode.state === 'expanded', 'ui-grid-icon-plus-squared': ( ( grid.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || ( row.treeNode.children && row.treeNode.children.length > 0 ) ) && row.treeNode.state === 'collapsed'}\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
   );
 
 }]);
