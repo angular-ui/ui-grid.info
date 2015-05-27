@@ -14,6 +14,8 @@ or code changes may mean that you need to upgrade your custom template (if the s
 with a cellTemplate that totals all the items above it in the grid.  This template continues to work when the data is 
 filtered or sorted.</p>
 
+<p>The custom row template merges all the cells together when the entity.merge value is true.</p>
+
 <p>You can use <a href="/docs/#/tutorial/305_appScope">grid.appScope</a> in your row template to access
 elements in your controller's scope. More details are on
 the <a href="/docs/#/tutorial/305_appScope">scopes</a> tutorial.</p>
@@ -60,7 +62,8 @@ the <a href="/docs/#/tutorial/305_appScope">scopes</a> tutorial.</p>
         $interval.cancel(sec);
         $scope.wait = '';
         return '<div ng-class="{ \'my-css-class\': grid.appScope.rowFormatter( row ) }">' +
-                   '  <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
+                   '  <div ng-if="row.entity.merge">{{row.entity.title}}</div>' +
+                   '  <div ng-if="!row.entity.merge" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
                    '</div>';
       }, 6000);
     }
@@ -77,6 +80,10 @@ the <a href="/docs/#/tutorial/305_appScope">scopes</a> tutorial.</p>
         data.forEach( function(row, index) {
           row.widgets = index % 10;
         });
+        data[1].merge = true;
+        data[1].title = "A merged row";
+        data[4].merge = true;
+        data[4].title = "Another merged row";
         $scope.data = data;
       });
 
