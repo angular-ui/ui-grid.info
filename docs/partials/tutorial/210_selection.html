@@ -14,6 +14,9 @@ side processing of the changes.</p>
 the <code>enableRowHeaderSelection</code> gridOption to false, then the row header is hidden and a click on the row will
 result in selection of that row.  You can see that in this tutorial for grid1 by looking at your javascript console.</p>
 
+<p>If you want to allow both clicking on the row, and also clicking on the rowHeader, you can set <code>enableFullRowSelection</code> to 
+true.</p>
+
 <p>Setting the <code>multiSelect</code> gridOption to true will allow selecting multiple rows, setting to false will allow selection
 of only one row at a time.</p>
 
@@ -58,6 +61,7 @@ auto-selects the first row once the data is loaded.</p>
       <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button>
       <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button>
       <button type="button" class="btn btn-success" ng-click="setSelectable()">Set Selectable</button>
+      <button type="button" class="btn btn-success" ng-click="toggleFullRowSelection()">Toggle full row selection</button>
       <br/>
 
       <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
@@ -133,7 +137,12 @@ auto-selects the first row once the data is loaded.</p>
         $scope.toggleRow1 = function() {
           $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
         };
-        
+
+        $scope.toggleFullRowSelection = function() {
+          $scope.gridOptions.enableFullRowSelection = !$scope.gridOptions.enableFullRowSelection;
+          $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
+        };
+
         $scope.setSelectable = function() {
           $scope.gridApi.selection.clearSelectedRows();
 

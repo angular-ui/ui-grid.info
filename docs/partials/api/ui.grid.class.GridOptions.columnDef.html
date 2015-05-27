@@ -34,6 +34,15 @@ gridOptions.columnDefs[0].cellFilter = 'date'</p></div>
 is ui-grid/uiGridCell.  If you are using the cellNav feature, this template
 must contain a div that can receive focus.</p></div>
 </li>
+<li><h3 id="cellTooltip">cellTooltip</h3>
+<div class="celltooltip"><p>Whether or not to show a tooltip when a user hovers over the cell.
+If set to false, no tooltip.  If true, the cell value is shown in the tooltip (useful
+if you have long values in your cells), if a function then that function is called
+passing in the row and the col <code>cellTooltip( row, col )</code>, and the return value is shown in the tooltip,
+if it is a static string then displays that static string.</p>
+
+<p>Defaults to false</p></div>
+</li>
 <li><h3 id="displayName">displayName</h3>
 <div class="displayname"><p>Column name that will be shown in the header.  If displayName is not
 provided then one is generated using the name.</p></div>
@@ -160,6 +169,15 @@ gridOptions.columnDefs[0].headerCellFilter = 'translate'</p></div>
 <div class="headercelltemplate"><p>a custom template for the header for this column.  The default
 is ui-grid/uiGridHeaderCell</p></div>
 </li>
+<li><h3 id="headerTooltip">headerTooltip</h3>
+<div class="headertooltip"><p>Whether or not to show a tooltip when a user hovers over the header cell.
+If set to false, no tooltip.  If true, the displayName is shown in the tooltip (useful
+if you have long values in your headers), if a function then that function is called
+passing in the row and the col <code>headerTooltip( col )</code>, and the return value is shown in the tooltip,
+if a static string then shows that static string.</p>
+
+<p>Defaults to false</p></div>
+</li>
 <li><h3 id="maxWidth">maxWidth</h3>
 <div class="maxwidth"><p>sets the maximum column width.  Should be a number.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', maxWidth: 100}]; </pre></div>
@@ -225,14 +243,6 @@ like any normal sorting function.</p></div>
 <li><h3 id="suppressRemoveSort">suppressRemoveSort</h3>
 <div class="suppressremovesort"><p>(optional) False by default. When enabled, this setting hides the removeSort option
 in the menu, and prevents users from manually removing the sort</p></div>
-</li>
-<li><h3 id="tooltip">tooltip</h3>
-<div class="tooltip"><p>Whether or not to show a tooltip when a user hovers over the cell.
-If set to false, no tooltip.  If true, the cell value is shown in the tooltip (useful
-if you have long values in your cells), if a function then that function is called
-passing in the row and the col <code>cellTooltip( row, col )</code>, and the return value is shown in the tooltip.</p>
-
-<p>Defaults to false</p></div>
 </li>
 <li><h3 id="type">type</h3>
 <div class="type"><p>the type of the column, used in sorting.  If not provided then the

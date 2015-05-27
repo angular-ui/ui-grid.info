@@ -1,0 +1,100 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><p>Provide a single filter box that searches across multiple columns in the grid.</p><h2 id="Example">Example</h2>
+<div class="example"><h4>Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-99" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-99" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-99">
+  <div ng-controller="MainCtrl">
+    <input ng-model='filterValue'/><button ng-click='filter()'>Filter</button>
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    var today = new Date();
+    $scope.gridOptions = {
+      enableFiltering: false,
+      onRegisterApi: function(gridApi){
+        $scope.gridApi = gridApi;
+        $scope.gridApi.grid.registerRowsProcessor( $scope.singleFilter, 200 );
+      },
+      columnDefs: [
+        { field: 'name' },
+        { field: 'gender', cellFilter: 'mapGender' },
+        { field: 'company' },
+        { field: 'email' },
+        { field: 'phone' },
+        { field: 'age' },
+        { field: 'mixedDate' }
+      ]
+    };
+  
+    $http.get('/data/500_complex.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+        $scope.gridOptions.data[0].age = -5;
+  
+        data.forEach( function addDates( row, index ){
+          row.mixedDate = new Date();
+          row.mixedDate.setDate(today.getDate() + ( index % 14 ) );
+          row.gender = row.gender==='male' ? '1' : '2';
+        });
+      });
+      
+    $scope.filter = function() {
+      $scope.gridApi.grid.refresh();
+    };
+      
+    $scope.singleFilter = function( renderableRows ){
+      var matcher = new RegExp($scope.filterValue);
+      renderableRows.forEach( function( row ) {
+        var match = false;
+        [ 'name', 'company', 'email' ].forEach(function( field ){
+          if ( row.entity[field].match(matcher) ){
+            match = true;
+          }
+        });
+        if ( !match ){
+          row.visible = false;
+        }
+      });
+      return renderableRows;
+    };
+  }])
+  .filter('mapGender', function() {
+    var genderHash = {
+      1: 'male',
+      2: 'female'
+    };
+  
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return genderHash[input];
+      }
+    };
+  });
+
+</script>
+</div>
+</div><h4>Demo</h4>
+<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-99" ng-eval-javascript="app.js"></div></div>
+</div>

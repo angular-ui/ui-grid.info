@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-3597417 - 2015-05-27
+ * ui-grid - v3.0.0-rc.21-90a51cc - 2015-05-27
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3894,26 +3894,26 @@ angular.module('ui.grid')
  */
   Grid.prototype.preCompileCellTemplates = function() {
     var self = this;
-    this.columns.forEach(function (col) {
+
+    var preCompileTemplate = function( col ) {
       var html = col.cellTemplate.replace(uiGridConstants.MODEL_COL_FIELD, self.getQualifiedColField(col));
       html = html.replace(uiGridConstants.COL_FIELD, 'grid.getCellValue(row, col)');
-
-      if (col.cellTooltip === false){
-        html = html.replace(uiGridConstants.TOOLTIP, '');
-      } else {
-        // gridColumn will have made sure that the col either has false or a function for this value
-        if (col.cellFilter){
-          html = html.replace(uiGridConstants.TOOLTIP, 'title="{{col.cellTooltip(row, col) | ' + col.cellFilter + '}}"');
-        } else {
-          html = html.replace(uiGridConstants.TOOLTIP, 'title="{{col.cellTooltip(row, col)}}"');
-        }
-      }
 
       var compiledElementFn = $compile(html);
       col.compiledElementFn = compiledElementFn;
 
       if (col.compiledElementFnDefer) {
         col.compiledElementFnDefer.resolve(col.compiledElementFn);
+      }
+    };
+
+    this.columns.forEach(function (col) {
+      if ( col.cellTemplate ){
+        preCompileTemplate( col );
+      } else if ( col.cellTemplatePromise ){
+        col.cellTemplatePromise.then( function() {
+          preCompileTemplate( col );
+        });
       }
     });
   };
@@ -6349,12 +6349,13 @@ angular.module('ui.grid')
 
     /**
      * @ngdoc property
-     * @name tooltip
+     * @name cellTooltip
      * @propertyOf ui.grid.class:GridOptions.columnDef
      * @description Whether or not to show a tooltip when a user hovers over the cell.
      * If set to false, no tooltip.  If true, the cell value is shown in the tooltip (useful
      * if you have long values in your cells), if a function then that function is called
-     * passing in the row and the col `cellTooltip( row, col )`, and the return value is shown in the tooltip.
+     * passing in the row and the col `cellTooltip( row, col )`, and the return value is shown in the tooltip,
+     * if it is a static string then displays that static string.
      * 
      * Defaults to false
      *
@@ -6365,9 +6366,41 @@ angular.module('ui.grid')
       self.cellTooltip = function(row, col) {
         return self.grid.getCellValue( row, col );
       };
-    } else {
+    } else if (typeof(colDef.cellTooltip) === 'function' ){
       self.cellTooltip = colDef.cellTooltip;
+    } else {
+      self.cellTooltip = function ( row, col ){
+        return col.colDef.cellTooltip;
+      };
     }
+
+    /**
+     * @ngdoc property
+     * @name headerTooltip
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description Whether or not to show a tooltip when a user hovers over the header cell.
+     * If set to false, no tooltip.  If true, the displayName is shown in the tooltip (useful
+     * if you have long values in your headers), if a function then that function is called
+     * passing in the row and the col `headerTooltip( col )`, and the return value is shown in the tooltip,
+     * if a static string then shows that static string.
+     * 
+     * Defaults to false
+     *
+     */
+    if ( typeof(colDef.headerTooltip) === 'undefined' || colDef.headerTooltip === false ) {
+      self.headerTooltip = false;
+    } else if ( colDef.headerTooltip === true ){
+      self.headerTooltip = function(col) {
+        return col.displayName;
+      };
+    } else if (typeof(colDef.headerTooltip) === 'function' ){
+      self.headerTooltip = colDef.headerTooltip;
+    } else {
+      self.headerTooltip = function ( col ) {
+        return col.colDef.headerTooltip;
+      };
+    }
+
 
     /**
      * @ngdoc property
@@ -8483,8 +8516,8 @@ angular.module('ui.grid')
 
           var templateGetPromises = [];
 
-          // Abstracts the standard template processing we do for every template type
-          var processTemplate = function( templateType, providedType, defaultTemplate, filterType ) {
+          // Abstracts the standard template processing we do for every template type.
+          var processTemplate = function( templateType, providedType, defaultTemplate, filterType, tooltipType ) {
             if ( !colDef[templateType] ){
               col[providedType] = defaultTemplate;
             } else {
@@ -8494,6 +8527,13 @@ angular.module('ui.grid')
              templateGetPromises.push(gridUtil.getTemplate(col[providedType])
                 .then(
                 function (template) {
+                  var tooltipCall = ( tooltipType === 'cellTooltip' ) ? 'col.cellTooltip(row,col)' : 'col.headerTooltip(col)';
+                  if ( tooltipType && col[tooltipType] === false ){
+                    template = template.replace(uiGridConstants.TOOLTIP, '');
+                  } else if ( tooltipType && col[tooltipType] ){
+                    template = template.replace(uiGridConstants.TOOLTIP, 'title="{{' + tooltipCall + ' CUSTOM_FILTERS }}"');
+                  }
+
                   if ( filterType ){
                     col[templateType] = template.replace(uiGridConstants.CUSTOM_FILTERS, col[filterType] ? "|" + col[filterType] : "");
                   } else {
@@ -8506,8 +8546,8 @@ angular.module('ui.grid')
             );
 
           };
-          
-          
+
+
           /**
            * @ngdoc property
            * @name cellTemplate
@@ -8517,9 +8557,9 @@ angular.module('ui.grid')
            * must contain a div that can receive focus.
            *
            */
-          processTemplate( 'cellTemplate', 'providedCellTemplate', 'ui-grid/uiGridCell', 'cellFilter' );
+          processTemplate( 'cellTemplate', 'providedCellTemplate', 'ui-grid/uiGridCell', 'cellFilter', 'cellTooltip' );
           col.cellTemplatePromise = templateGetPromises[0];
-          
+
           /**
            * @ngdoc property
            * @name headerCellTemplate
@@ -8528,7 +8568,7 @@ angular.module('ui.grid')
            * is ui-grid/uiGridHeaderCell
            *
            */
-          processTemplate( 'headerCellTemplate', 'providedHeaderCellTemplate', 'ui-grid/uiGridHeaderCell', 'headerCellFilter' );
+          processTemplate( 'headerCellTemplate', 'providedHeaderCellTemplate', 'ui-grid/uiGridHeaderCell', 'headerCellFilter', 'headerTooltip' );
 
           /**
            * @ngdoc property
@@ -22408,6 +22448,16 @@ module.filter('px', function() {
           gridOptions.enableRowHeaderSelection = gridOptions.enableRowHeaderSelection !== false;
           /**
            *  @ngdoc object
+           *  @name enableFullRowSelection
+           *  @propertyOf  ui.grid.selection.api:GridOptions
+           *  @description Enable selection by clicking anywhere on the row.  Defaults to 
+           *  false if `enableRowHeaderSelection` is true, otherwise defaults to false.
+           */
+          if ( typeof(gridOptions.enableFullRowSelection) === 'undefined' ){
+            gridOptions.enableFullRowSelection = !gridOptions.enableRowHeaderSelection;
+          }
+          /**
+           *  @ngdoc object
            *  @name enableSelectAll
            *  @propertyOf  ui.grid.selection.api:GridOptions
            *  @description Enable the select all checkbox at the top of the selectionRowHeader
@@ -22892,7 +22942,7 @@ module.filter('px', function() {
             };
 
             function registerRowSelectionEvents() {
-              if ($scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection) {
+              if ($scope.grid.options.enableRowSelection && $scope.grid.options.enableFullRowSelection) {
                 $elm.addClass('ui-grid-disable-selection');
                 $elm.on('touchstart', touchStart);
                 $elm.on('touchend', touchEnd);
@@ -22918,10 +22968,10 @@ module.filter('px', function() {
             // register a dataChange callback so that we can change the selection configuration dynamically
             // if the user changes the options
             var dataChangeDereg = $scope.grid.registerDataChangeCallback( function() {
-              if ( $scope.grid.options.enableRowSelection && !$scope.grid.options.enableRowHeaderSelection &&
+              if ( $scope.grid.options.enableRowSelection && $scope.grid.options.enableFullRowSelection &&
                 !$scope.registered ){
                 registerRowSelectionEvents();
-              } else if ( ( !$scope.grid.options.enableRowSelection || $scope.grid.options.enableRowHeaderSelection ) &&
+              } else if ( ( !$scope.grid.options.enableRowSelection || !$scope.grid.options.enableFullRowSelection ) &&
                 $scope.registered ){
                 deregisterRowSelectionEvents();
               }
@@ -24763,7 +24813,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div ng-class=\"{ 'sortable': sortable }\"><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-class=\"{'ui-grid-column-menu-button-last-col': isLastCol}\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ui-grid-filter></div></div>"
+    "<div ng-class=\"{ 'sortable': sortable }\"><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\" title=\"TOOLTIP\"><span>{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-visible=\"col.sort.direction\" ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\">&nbsp;</span></div><div class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-class=\"{'ui-grid-column-menu-button-last-col': isLastCol}\"><i class=\"ui-grid-icon-angle-down\">&nbsp;</i></div><div ui-grid-filter></div></div>"
   );
 
 
