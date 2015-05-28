@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-bd4eacc - 2015-05-28
+ * ui-grid - v3.0.0-rc.21-57f556d - 2015-05-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -16490,8 +16490,7 @@ module.filter('px', function() {
       SUM: 'sum',
       MAX: 'max',
       MIN: 'min',
-      AVG: 'avg',
-      CUSTOM: 'custom'
+      AVG: 'avg'
     }
   });
 
@@ -16687,17 +16686,19 @@ module.filter('px', function() {
                * @methodOf  ui.grid.grouping.api:PublicApi
                * @description Sets the aggregation type on a column, if the 
                * column is currently grouped then it removes the grouping first.
-               * If the aggregationType is null then will result in the aggregation
+               * If the aggregationDef is null then will result in the aggregation
                * being removed
                * 
                * @param {string} columnName the column we want to aggregate
-               * @param {string} aggregationType one of the recognised types
-               * from uiGridGroupingConstants
+               * @param {string} or {function} aggregationDef one of the recognised types
+               * from uiGridGroupingConstants or a custom aggregation function.
+               * @param {string} aggregationLabel (optional) The label to use for this aggregation.
                */
-              aggregateColumn: function( columnName, aggregationType){
+              aggregateColumn: function( columnName, aggregationDef, aggregationLabel){
                 var column = grid.getColumn(columnName);
-                service.aggregateColumn( grid, column, aggregationType );
+                service.aggregateColumn( grid, column, aggregationDef, aggregationLabel);
               }
+
             }
           }
         };
@@ -16819,10 +16820,13 @@ module.filter('px', function() {
         if ( typeof(col.grouping) === 'undefined' && typeof(colDef.grouping) !== 'undefined') {
           col.grouping = angular.copy(colDef.grouping);
           if ( typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority > -1 ){
-            col.treeAggregation = { type: uiGridGroupingConstants.aggregation.COUNT };
+            col.treeAggregationFn = uiGridTreeBaseService.nativeAggregations[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
             col.customTreeAggregationFinalizerFn = function( aggregation ){
               if ( typeof(aggregation.groupVal) !== 'undefined') {
-                aggregation.rendered = aggregation.groupVal + ' (' + aggregation.value + ')';
+                aggregation.rendered = aggregation.groupVal;
+                if ( gridOptions.groupingShowCounts ){
+                  aggregation.rendered += (' (' + aggregation.value + ')');
+                }
               } else {
                 aggregation.rendered = null;
               }
@@ -16868,9 +16872,7 @@ module.filter('px', function() {
           name: 'ui.grid.grouping.aggregateRemove',
           title: i18nService.get().grouping.aggregate_remove,
           shown: function () {
-            return typeof(this.context.col.treeAggregation) !== 'undefined' && 
-                   typeof(this.context.col.treeAggregation.type) !== 'undefined' &&
-                   this.context.col.treeAggregation.type !== null;
+            return typeof(this.context.col.treeAggregationFn) !== 'undefined';
           },
           action: function () {
             service.aggregateColumn( this.context.col.grid, this.context.col, null);
@@ -16878,12 +16880,13 @@ module.filter('px', function() {
         };
 
         // generic adder for the aggregation menus, which follow a pattern
-        var addAggregationMenu = function(type){
+        var addAggregationMenu = function(type, title){
+          title = title || i18nService.get().grouping['aggregate_' + type] || type;
           var menuItem = {
             name: 'ui.grid.grouping.aggregate' + type,
-            title: i18nService.get().grouping['aggregate_' + type],
+            title: title,
             shown: function () {
-              return typeof(this.context.col.treeAggregation) === 'undefined' || 
+              return typeof(this.context.col.treeAggregation) === 'undefined' ||
                      typeof(this.context.col.treeAggregation.type) === 'undefined' ||
                      this.context.col.treeAggregation.type !== type;
             },
@@ -16923,11 +16926,12 @@ module.filter('px', function() {
          *  <br/>Defaults to true.
          */
         if ( col.colDef.groupingShowAggregationMenu !== false ){
-          addAggregationMenu(uiGridGroupingConstants.aggregation.COUNT);
-          addAggregationMenu(uiGridGroupingConstants.aggregation.SUM);
-          addAggregationMenu(uiGridGroupingConstants.aggregation.MAX);
-          addAggregationMenu(uiGridGroupingConstants.aggregation.MIN);
-          addAggregationMenu(uiGridGroupingConstants.aggregation.AVG);
+          angular.forEach(uiGridTreeBaseService.nativeAggregations, function(aggregationDef, name){
+            addAggregationMenu(name);
+          });
+          angular.forEach(gridOptions.treeCustomAggregations, function(aggregationDef, name){
+            addAggregationMenu(name, aggregationDef.menuTitle);
+          });
 
           if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'name', 'ui.grid.grouping.aggregateRemove')) {
             col.menuItems.push(aggregateRemove);
@@ -17042,6 +17046,7 @@ module.filter('px', function() {
         service.tidyPriorities( grid );
 
         column.treeAggregation = { type: uiGridGroupingConstants.aggregation.COUNT, source: 'grouping' };
+        column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
         column.customTreeAggregationFinalizerFn = function( aggregation ){
           if ( typeof(aggregation.groupVal) !== 'undefined') {
             aggregation.rendered = aggregation.groupVal + ' (' + aggregation.value + ')';
@@ -17082,7 +17087,6 @@ module.filter('px', function() {
         grid.queueGridRefresh();
       },
 
-
       /**
        * @ngdoc function
        * @name aggregateColumn
@@ -17092,25 +17096,30 @@ module.filter('px', function() {
        * 
        * @param {Grid} grid grid object
        * @param {GridCol} column the column we want to aggregate
-       * @param {string} aggregationType one of the recognised types
-       * from uiGridGroupingConstants
+       * @param {string} one of the recognised types from uiGridGroupingConstants or one of the custom aggregations from gridOptions
        */
       aggregateColumn: function( grid, column, aggregationType){
-        if (typeof(column.treeAggregation) === 'undefined') {
-          column.treeAggregation = {};
-        }
 
         if (typeof(column.grouping) !== 'undefined' && typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0){
           service.ungroupColumn( grid, column );
         }
 
-        column.treeAggregation = { type: aggregationType };
+        var aggregationDef = {};
+        if ( typeof(grid.options.treeCustomAggregations[aggregationType]) !== 'undefined' ){
+          aggregationDef = grid.options.treeCustomAggregations[aggregationType];
+        } else if ( typeof(uiGridTreeBaseService.nativeAggregations[aggregationType]) !== 'undefined' ){
+          aggregationDef = uiGridTreeBaseService.nativeAggregations[aggregationType];
+        }
+
+        column.treeAggregation = { type: aggregationType, label:  i18nService.get().aggregation[aggregationDef.label] || aggregationDef.label };
+        column.treeAggregationFn = aggregationDef.aggregationFn;
+        column.treeAggregationFinalizerFn = aggregationDef.finalizerFn;
 
         grid.queueGridRefresh();
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name setGrouping
        * @methodOf  ui.grid.grouping.service:uiGridGroupingService
@@ -17138,7 +17147,7 @@ module.filter('px', function() {
           });
         }
 
-        if ( config.aggregations && config.aggregations.length && config.aggregations.length > 0 ){
+        if ( config.aggregations && config.aggregations.length ){
           config.aggregations.forEach( function( aggregation ) {
             var col = grid.getColumn(aggregation.colName);
 
@@ -17154,7 +17163,7 @@ module.filter('px', function() {
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name clearGrouping
        * @methodOf  ui.grid.grouping.service:uiGridGroupingService
@@ -17236,7 +17245,7 @@ module.filter('px', function() {
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name groupRows
        * @methodOf  ui.grid.grouping.service:uiGridGroupingService
@@ -17308,7 +17317,7 @@ module.filter('px', function() {
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name initialiseProcessingState
        * @methodOf  ui.grid.grouping.service:uiGridGroupingService
@@ -17337,7 +17346,7 @@ module.filter('px', function() {
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name getGrouping
        * @methodOf  ui.grid.grouping.service:uiGridGroupingService
@@ -23134,8 +23143,7 @@ module.filter('px', function() {
       SUM: 'sum',
       MAX: 'max',
       MIN: 'min',
-      AVG: 'avg',
-      CUSTOM: 'custom'
+      AVG: 'avg'
     }
   });
 
@@ -23517,6 +23525,44 @@ module.filter('px', function() {
          *  <br/>Defaults to true
          */
         gridOptions.treeRowHeaderAlwaysVisible = gridOptions.treeRowHeaderAlwaysVisible !== false;
+
+        /**
+         *  @ngdoc object
+         *  @name treeCustomAggregations
+         *  @propertyOf  ui.grid.treeBase.api:GridOptions
+         *  @description Define custom aggregation functions. The properties of this object will be
+         *  aggregation types available for use on columnDef with {@link ui.grid.treeBase.api:ColumnDef treeAggregationType} or through the column menu.
+         *  If a function defined here uses the same name as one of the native aggregations, this one will take precedence.
+         *  The object format is:
+         *
+         *  <pre>
+         *    {
+         *      aggregationName: {
+         *        label: (optional) string,
+         *        aggregationFn: function( aggregation, fieldValue, numValue, row ){...},
+         *        finalizerFn: (optional) function( aggregation ){...}
+       *        },
+         *      mean: {
+         *        label: 'mean',
+         *        aggregationFn: function( aggregation, fieldValue, numValue ){
+       *            aggregation.count = (aggregation.count || 1) + 1;
+         *          aggregation.sum = (aggregation.sum || 0) + numValue;
+         *        },
+         *        finalizerFn: function( aggregation ){
+         *          aggregation.value = aggregation.sum / aggregation.count
+         *        }
+         *      }
+         *    }
+         *  </pre>
+         *
+         *  <br/>The `finalizerFn` may be used to manipulate the value before rendering, or to
+         *  apply a custom rendered value. If `aggregation.rendered` is left undefined, the value will be
+         *  rendered. Note that the native aggregation functions use an `finalizerFn` to concatenate
+         *  the label and the value.
+         *
+         *  <br/>Defaults to {}
+         */
+        gridOptions.treeCustomAggregations = gridOptions.treeCustomAggregations || {};
       },
 
 
@@ -23533,17 +23579,53 @@ module.filter('px', function() {
        */
       treeBaseColumnBuilder: function (colDef, col, gridOptions) {
 
+
         /**
          *  @ngdoc object
-         *  @name treeAggregation
+         *  @name customTreeAggregationFn
          *  @propertyOf  ui.grid.treeBase.api:ColumnDef
-         *  @description Calculate aggregations on this column.  Aggregations
-         *  are an object in the format:
-         * 
+         *  @description A custom function that aggregates rows into some form of
+         *  total.  Aggregations run row-by-row, the function needs to be capable of
+         *  creating a running total.
+         *
+         *  The function will be provided the aggregation item (in which you can store running
+         *  totals), the row value that is to be aggregated, and that same row value converted to
+         *  a number (most aggregations work on numbers)
+         *  @example
          *  <pre>
-         *    {
-         *      type: uiGridTreeBaseConstants.aggregation.SUM,
-         *      label: <optional label, if provided we don't use the native i18n>
+         *    customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
+         *      // calculates the average of the squares of the values
+         *      if ( typeof(aggregation.count) === 'undefined' ){
+         *        aggregation.count = 0;
+         *      }
+         *      aggregation.count++;
+         *
+         *      if ( !isNaN(numValue) ){
+         *        if ( typeof(aggregation.total) === 'undefined' ){
+         *          aggregation.total = 0;
+         *        }
+         *        aggregation.total = aggregation.total + numValue * numValue;
+         *      }
+         *
+         *      aggregation.value = aggregation.total / aggregation.count;
+         *    }
+         *  </pre>
+         *  <br/>Defaults to undefined. May be overwritten by treeAggregationType, the two options should not be used together.
+         */
+        if ( typeof(colDef.customTreeAggregationFn) !== 'undefined' ){
+          col.treeAggregationFn = colDef.customTreeAggregationFn;
+        }
+
+        /**
+         *  @ngdoc object
+         *  @name treeAggregationType
+         *  @propertyOf  ui.grid.treeBase.api:ColumnDef
+         *  @description Use one of the native or grid-level aggregation methods for calculating aggregations on this column.
+         *  Native method are in the constants file and include: SUM, COUNT, MIN, MAX, AVG. This may also be the property the
+         *  name of an aggregation function defined with {@link ui.grid.treeBase.api:GridOptions treeCustomAggregations}.
+         *
+         *  <pre>
+         *      treeAggregationType = uiGridTreeBaseConstants.aggregation.SUM,
          *    }
          *  </pre>
          *
@@ -23553,11 +23635,33 @@ module.filter('px', function() {
          *   - use treeView, in which case you can set `treeAggregationUpdateEntity: true` in the colDef, and
          *     treeBase will store the aggregation information in the entity, or you can set `treeAggregationUpdateEntity: false` 
          *     in the colDef, and you need to manual retrieve the calculated aggregations from the row.treeNode.aggregations
-         * 
+         *
+         *  <br/>Takes precendence over a treeAggregationFn, the two options should not be used together.
          *  <br/>Defaults to undefined.
          */
-        if ( typeof(colDef.treeAggregation) !== 'undefined' ){
-          col.treeAggregation = colDef.treeAggregation;
+        if ( typeof(colDef.treeAggregationType) !== 'undefined' ){
+          col.treeAggregation = { type: colDef.treeAggregationType };
+          if ( typeof(gridOptions.treeCustomAggregations[colDef.treeAggregationType]) !== 'undefined' ){
+            col.treeAggregationFn = gridOptions.treeCustomAggregations[colDef.treeAggregationType].aggregationFn;
+            col.treeAggregationFinalizerFn = gridOptions.treeCustomAggregations[colDef.treeAggregationType].finalizerFn;
+            col.treeAggregation.label = gridOptions.treeCustomAggregations[colDef.treeAggregationType].label;
+          } else if ( typeof(service.nativeAggregations[colDef.treeAggregationType]) !== 'undefined' ){
+            col.treeAggregationFn = service.nativeAggregations[colDef.treeAggregationType].aggregationFn;
+            col.treeAggregation.label = service.nativeAggregations[colDef.treeAggregationType].label;
+          }
+        }
+
+         /**
+         *  @ngdoc object
+         *  @name treeAggregationLabel
+         *  @propertyOf  ui.grid.treeBase.api:ColumnDef
+         *  @description A custom label to use for this aggregation. If provided we don't use native i18n.
+         */
+        if ( typeof(colDef.treeAggregationLabel) !== 'undefined' ){
+          if (typeof(col.treeAggregation) === 'undefined' ){
+            col.treeAggregation = {};
+          }
+          col.treeAggregation.label = colDef.treeAggregationLabel;
         }
 
         /**
@@ -23595,9 +23699,10 @@ module.filter('px', function() {
          *  @description A custom function that populates aggregation.rendered, this is called when
          *  a particular aggregation has been fully calculated, and we want to render the value.
          * 
-         *  Typically we just concatenate aggregation.label and aggregation.value, but if you
-         *  wanted to apply a filter or otherwise manipulate the label or the value, you can do
-         *  so with this function.
+         *  With the native aggregation options we just concatenate `aggregation.label` and
+         *  `aggregation.value`, but if you wanted to apply a filter or otherwise manipulate the label
+         *  or the value, you can do so with this function. This function will be called after the
+         *  the default `finalizerFn`.
          *
          *  @example
          *  <pre>
@@ -23611,41 +23716,6 @@ module.filter('px', function() {
           col.customTreeAggregationFinalizerFn = colDef.customTreeAggregationFinalizerFn;
         }
 
-        /**
-         *  @ngdoc object
-         *  @name customTreeAggregationFn
-         *  @propertyOf  ui.grid.treeBase.api:ColumnDef
-         *  @description A custom function that aggregates rows into some form of
-         *  total.  Aggregations run row-by-row, the function needs to be capable of
-         *  creating a running total.
-         *
-         *  The function will be provided the aggregation item (in which you can store running
-         *  totals), the row value that is to be aggregated, and that same row value converted to 
-         *  a number (most aggregations work on numbers)
-         *  @example
-         *  <pre>
-         *    customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
-         *      // calculates the average of the squares of the values
-         *      if ( typeof(aggregation.count) === 'undefined' ){
-         *        aggregation.count = 0;
-         *      }
-         *      aggregation.count++;
-         * 
-         *      if ( !isNaN(numValue) ){
-         *        if ( typeof(aggregation.total) === 'undefined' ){
-         *          aggregation.total = 0;
-         *        }
-         *        aggregation.total = aggregation.total + numValue * numValue;
-         *      }
-         *
-         *      aggregation.value = aggregation.total / aggregation.count;
-         *    }
-         *  </pre>
-         *  <br/>Defaults to undefined.  Required if you set the aggregation type to CUSTOM
-         */
-        if ( typeof(col.customTreeAggregationFn) === 'undefined' ){
-          col.customTreeAggregationFn = colDef.customTreeAggregationFn;
-        }
       },
 
 
@@ -23812,7 +23882,7 @@ module.filter('px', function() {
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name collapseRow
        * @methodOf  ui.grid.treeBase.service:uiGridTreeBaseService
@@ -24093,7 +24163,7 @@ module.filter('px', function() {
       addOrUseNode: function( grid, row, parents, aggregationBase ){
         var newAggregations = [];
         aggregationBase.forEach( function(aggregation){
-          newAggregations.push({ col: aggregation.col, type: aggregation.type, label: aggregation.label });
+          newAggregations.push(service.buildAggregationObject(aggregation.col));
         });
 
         var newNode = { state: uiGridTreeBaseConstants.COLLAPSED, row: row, parentRow: null, aggregations: newAggregations, children: [] };
@@ -24234,6 +24304,30 @@ module.filter('px', function() {
 
       /**
        * @ngdoc function
+       * @name buildAggregationObject
+       * @methodOf  ui.grid.treeBase.service:uiGridTreeBaseService
+       * @description Build the object which is stored on the column for holding meta-data about the aggregation.
+       * This method should only be called with columns which have an aggregation.
+       *
+       * @param {Column} the column which this object relates to
+       * @returns {object} {col: Column object, label: string, type: string (optional)}
+       */
+      buildAggregationObject: function( column ){
+        var newAggregation = { col: column };
+
+        if ( column.treeAggregation && column.treeAggregation.type ){
+          newAggregation.type = column.treeAggregation.type;
+        }
+
+        if ( column.treeAggregation && column.treeAggregation.label ){
+          newAggregation.label = column.treeAggregation.label;
+        }
+
+        return newAggregation;
+      },
+
+      /**
+       * @ngdoc function
        * @name getAggregations
        * @methodOf  ui.grid.treeBase.service:uiGridTreeBaseService
        * @description Looks through the grid columns to find those with aggregations,
@@ -24246,19 +24340,15 @@ module.filter('px', function() {
         var aggregateArray = [];
 
         grid.columns.forEach( function(column){
-          if ( column.treeAggregation ){
-            var newAggregation = { col: column, type: column.treeAggregation.type, value: 0, label: column.treeAggregation.label };
-            if ( !newAggregation.label ){
-              newAggregation.label = i18nService.get().aggregation[newAggregation.type];
-            }
-            aggregateArray.push( newAggregation );
+          if ( typeof(column.treeAggregationFn) !== 'undefined' ){
+            aggregateArray.push( service.buildAggregationObject(column) );
           }
         });
         return aggregateArray;
       },
 
 
-     /**
+      /**
        * @ngdoc function
        * @name aggregate
        * @methodOf  ui.grid.grouping.service:uiGridGroupingService
@@ -24281,99 +24371,93 @@ module.filter('px', function() {
             parent.treeNode.aggregations.forEach( function( aggregation ){
               var fieldValue = grid.getCellValue(row, aggregation.col);
               var numValue = Number(fieldValue);
-              switch (aggregation.type) {
-                case uiGridTreeBaseConstants.aggregation.COUNT:
-                  service.aggregateCount( aggregation, fieldValue, numValue );
-                  break;
-                case uiGridTreeBaseConstants.aggregation.SUM:
-                  service.aggregateSum( aggregation, fieldValue, numValue );
-                  break;
-                case uiGridTreeBaseConstants.aggregation.MIN:
-                  service.aggregateMin( aggregation, fieldValue, numValue );
-                  break;
-                case uiGridTreeBaseConstants.aggregation.MAX:
-                  service.aggregateMax( aggregation, fieldValue, numValue );
-                  break;
-                case uiGridTreeBaseConstants.aggregation.AVG:
-                  service.aggregateAvg( aggregation, fieldValue, numValue );
-                  break;
-                case uiGridTreeBaseConstants.aggregation.CUSTOM:
-                  service.aggregateCustom( aggregation, fieldValue, numValue, row );
-                  break;
-              }
+              aggregation.col.treeAggregationFn(aggregation, fieldValue, numValue, row);
             });
           }
         });
       },
 
+
       // Aggregation routines - no doco needed as self evident
-      aggregateCount: function( aggregation, fieldValue, numValue ){
-        if ( typeof(aggregation.value) === 'undefined' ){
-          aggregation.value = 1;
-        } else {
-          aggregation.value++;
-        }
-      },
+      nativeAggregations: {
+        count: {
+          label: i18nService.get().aggregation.count,
+          menuTitle: i18nService.get().grouping.aggregate_count,
+          aggregationFn: function (aggregation, fieldValue, numValue) {
+            if (typeof(aggregation.value) === 'undefined') {
+              aggregation.value = 1;
+            } else {
+              aggregation.value++;
+            }
+          }
+        },
 
-      aggregateSum: function( aggregation, fieldValue, numValue ){
-        if (!isNaN(numValue)){
-          if ( typeof(aggregation.value) === 'undefined' ){
-            aggregation.value = numValue;
-          } else {
-            aggregation.value += numValue;
+        sum: {
+          label: i18nService.get().aggregation.sum,
+          menuTitle: i18nService.get().grouping.aggregate_sum,
+          aggregationFn: function( aggregation, fieldValue, numValue ) {
+            if (!isNaN(numValue)) {
+              if (typeof(aggregation.value) === 'undefined') {
+                aggregation.value = numValue;
+              } else {
+                aggregation.value += numValue;
+              }
+            }
+          }
+        },
+
+        min: {
+          label: i18nService.get().aggregation.min,
+          menuTitle: i18nService.get().grouping.aggregate_min,
+          aggregationFn: function( aggregation, fieldValue, numValue ) {
+            if (typeof(aggregation.value) === 'undefined') {
+              aggregation.value = fieldValue;
+            } else {
+              if (typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue < aggregation.value || aggregation.value === null)) {
+                aggregation.value = fieldValue;
+              }
+            }
+          }
+        },
+
+        max: {
+          label: i18nService.get().aggregation.max,
+          menuTitle: i18nService.get().grouping.aggregate_max,
+          aggregationFn: function( aggregation, fieldValue, numValue ){
+            if ( typeof(aggregation.value) === 'undefined' ){
+              aggregation.value = fieldValue;
+            } else {
+              if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue > aggregation.value || aggregation.value === null)){
+                aggregation.value = fieldValue;
+              }
+            }
+          }
+        },
+
+        avg: {
+          label: i18nService.get().aggregation.avg,
+          menuTitle: i18nService.get().grouping.aggregate_avg,
+          aggregationFn: function( aggregation, fieldValue, numValue ){
+            if ( typeof(aggregation.count) === 'undefined' ){
+              aggregation.count = 1;
+            } else {
+              aggregation.count++;
+            }
+
+            if ( isNaN(numValue) ){
+              return;
+            }
+
+            if ( typeof(aggregation.value) === 'undefined' || typeof(aggregation.sum) === 'undefined' ){
+              aggregation.value = numValue;
+              aggregation.sum = numValue;
+            } else {
+              aggregation.sum += numValue;
+              aggregation.value = aggregation.sum / aggregation.count;
+            }
           }
         }
       },
-
-      aggregateMin: function( aggregation, fieldValue, numValue ){
-        if ( typeof(aggregation.value) === 'undefined' ){
-          aggregation.value = fieldValue;
-        } else {
-          if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue < aggregation.value || aggregation.value === null)){
-            aggregation.value = fieldValue;
-          }
-        }
-      },
-
-      aggregateMax: function( aggregation, fieldValue, numValue ){
-        if ( typeof(aggregation.value) === 'undefined' ){
-          aggregation.value = fieldValue;
-        } else {
-          if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue > aggregation.value || aggregation.value === null)){
-            aggregation.value = fieldValue;
-          }
-        }
-      },
-
-      aggregateAvg: function( aggregation, fieldValue, numValue ){
-        if ( typeof(aggregation.count) === 'undefined' ){
-          aggregation.count = 1;
-        } else {
-          aggregation.count++;
-        }
-
-        if ( isNaN(numValue) ){
-          return;
-        }
-
-        if ( typeof(aggregation.value) === 'undefined' || typeof(aggregation.sum) === 'undefined' ){
-          aggregation.value = numValue;
-          aggregation.sum = numValue;
-        } else {
-          aggregation.sum += numValue;
-          aggregation.value = aggregation.sum / aggregation.count;
-        }
-      },
-
-      aggregateCustom: function( aggregation, fieldValue, numValue, row ){
-        if ( typeof(aggregation.col.customTreeAggregationFn) !== 'function' ) {
-          gridUtil.logError( 'If you set aggregation type to custom, you need to provide a customTreeAggregationFn on the colDef' );
-          return;
-        }
-
-        aggregation.col.customTreeAggregationFn( aggregation, fieldValue, numValue, row );
-      },
-
 
       /**
        * @ngdoc function
@@ -24403,10 +24487,14 @@ module.filter('px', function() {
             angular.extend( aggregation, row.entity[ '$$' + aggregation.col.uid ]);
           }
 
+          if ( typeof(aggregation.col.treeAggregationFinalizerFn) === 'function' ){
+            aggregation.col.treeAggregationFinalizerFn( aggregation );
+          }
           if ( typeof(aggregation.col.customTreeAggregationFinalizerFn) === 'function' ){
             aggregation.col.customTreeAggregationFinalizerFn( aggregation );
-          } else {
-            aggregation.rendered = aggregation.label + aggregation.value;
+          }
+          if ( typeof(aggregation.rendered) === 'undefined' ){
+            aggregation.rendered = aggregation.label ? aggregation.label + aggregation.value : aggregation.value;
           }
 
           if ( aggregation.col.treeAggregationUpdateEntity ){
@@ -24482,7 +24570,7 @@ module.filter('px', function() {
   }]);
   
 
- /**
+  /**
    *  @ngdoc directive
    *  @name ui.grid.treeBase.directive:uiGridViewport
    *  @element div
@@ -24565,8 +24653,7 @@ module.filter('px', function() {
       SUM: 'sum',
       MAX: 'max',
       MIN: 'min',
-      AVG: 'avg',
-      CUSTOM: 'custom'
+      AVG: 'avg'
     }
   });
 

@@ -10,9 +10,10 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOp
 <div class="customtreeaggregationfinalizerfn"><p>A custom function that populates aggregation.rendered, this is called when
 a particular aggregation has been fully calculated, and we want to render the value.</p>
 
-<p>Typically we just concatenate aggregation.label and aggregation.value, but if you
-wanted to apply a filter or otherwise manipulate the label or the value, you can do
-so with this function.</p><h4 id="Example">Example</h4>
+<p>With the native aggregation options we just concatenate <code>aggregation.label</code> and
+<code>aggregation.value</code>, but if you wanted to apply a filter or otherwise manipulate the label
+or the value, you can do so with this function. This function will be called after the
+the default <code>finalizerFn</code>.</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
 customTreeAggregationFinalizerFn = function ( aggregation ){
   aggregation.rendered = aggregation.label + aggregation.value / 100 + '%';
@@ -27,7 +28,7 @@ total.  Aggregations run row-by-row, the function needs to be capable of
 creating a running total.</p>
 
 <p>The function will be provided the aggregation item (in which you can store running
-totals), the row value that is to be aggregated, and that same row value converted to 
+totals), the row value that is to be aggregated, and that same row value converted to
 a number (most aggregations work on numbers)</p><h4 id="Example">Example</h4>
 <div class="example"><pre class="prettyprint linenums">
 customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
@@ -47,17 +48,19 @@ customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
   aggregation.value = aggregation.total / aggregation.count;
 }
 </pre>
-<br/>Defaults to undefined.  Required if you set the aggregation type to CUSTOM</p></div>
+<br/>Defaults to undefined. May be overwritten by treeAggregationType, the two options should not be used together.</p></div>
 </div>
 </li>
-<li><h3 id="treeAggregation">treeAggregation</h3>
-<div class="treeaggregation"><p>Calculate aggregations on this column.  Aggregations
-are an object in the format:</p>
+<li><h3 id="treeAggregationLabel">treeAggregationLabel</h3>
+<div class="treeaggregationlabel"><p>A custom label to use for this aggregation. If provided we don't use native i18n.</p></div>
+</li>
+<li><h3 id="treeAggregationType">treeAggregationType</h3>
+<div class="treeaggregationtype"><p>Use one of the native or grid-level aggregation methods for calculating aggregations on this column.
+Native method are in the constants file and include: SUM, COUNT, MIN, MAX, AVG. This may also be the property the
+name of an aggregation function defined with <a href="#/api/ui.grid.treeBase.api:GridOptions">treeCustomAggregations</a>.</p>
 
 <pre class="prettyprint linenums">
-  {
-    type: uiGridTreeBaseConstants.aggregation.SUM,
-    label: &lt;optional label, if provided we don't use the native i18n&gt;
+    treeAggregationType = uiGridTreeBaseConstants.aggregation.SUM,
   }
 </pre>
 
@@ -70,7 +73,8 @@ treeBase will store the aggregation information in the entity, or you can set <c
 in the colDef, and you need to manual retrieve the calculated aggregations from the row.treeNode.aggregations</li>
 </ul>
 
-<p><br/>Defaults to undefined.</p></div>
+<p><br/>Takes precendence over a treeAggregationFn, the two options should not be used together.
+<br/>Defaults to undefined.</p></div>
 </li>
 <li><h3 id="treeAggregationUpdateEntity">treeAggregationUpdateEntity</h3>
 <div class="treeaggregationupdateentity"><p>Store calculated aggregations into the entity, allowing them

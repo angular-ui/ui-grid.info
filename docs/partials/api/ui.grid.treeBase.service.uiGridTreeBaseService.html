@@ -55,6 +55,17 @@ false if this node is collapsed, or if any child node is not all expanded</p><h4
 – <p>whether or not the tree is all expanded</p></div>
 </div>
 </li>
+<li><h3 id="buildAggregationObject">buildAggregationObject(the)</h3>
+<div class="buildaggregationobject"><p>Build the object which is stored on the column for holding meta-data about the aggregation.
+This method should only be called with columns which have an aggregation.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">the – {Column} – </code>
+<p>column which this object relates to</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>{col: Column object, label: string, type: string (optional)}</p></div>
+</div>
+</li>
 <li><h3 id="collapseAllRows">collapseAllRows(grid)</h3>
 <div class="collapseallrows"><p>Collapses all nodes in the tree</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>

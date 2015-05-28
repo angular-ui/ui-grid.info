@@ -17,6 +17,39 @@ children of a node.  You'd use this if you're planning to dynamically load the c
 states
 <br/>Defaults to true</p></div>
 </li>
+<li><h3 id="treeCustomAggregations">treeCustomAggregations</h3>
+<div class="treecustomaggregations"><p>Define custom aggregation functions. The properties of this object will be
+aggregation types available for use on columnDef with <a href="#/api/ui.grid.treeBase.api:ColumnDef">treeAggregationType</a> or through the column menu.
+If a function defined here uses the same name as one of the native aggregations, this one will take precedence.
+The object format is:</p>
+
+<pre class="prettyprint linenums">
+  {
+    aggregationName: {
+      label: (optional) string,
+      aggregationFn: function( aggregation, fieldValue, numValue, row ){...},
+      finalizerFn: (optional) function( aggregation ){...}
+      },
+    mean: {
+      label: 'mean',
+      aggregationFn: function( aggregation, fieldValue, numValue ){
+          aggregation.count = (aggregation.count || 1) + 1;
+        aggregation.sum = (aggregation.sum || 0) + numValue;
+      },
+      finalizerFn: function( aggregation ){
+        aggregation.value = aggregation.sum / aggregation.count
+      }
+    }
+  }
+</pre>
+
+<p><br/>The <code>finalizerFn</code> may be used to manipulate the value before rendering, or to
+apply a custom rendered value. If <code>aggregation.rendered</code> is left undefined, the value will be
+rendered. Note that the native aggregation functions use an <code>finalizerFn</code> to concatenate
+the label and the value.</p>
+
+<p><br/>Defaults to {}</p></div>
+</li>
 <li><h3 id="treeIndent">treeIndent</h3>
 <div class="treeindent"><p>Number of pixels of indent for the icon at each tree level, wider indents are visually more pleasing,
 but will make the tree row header wider

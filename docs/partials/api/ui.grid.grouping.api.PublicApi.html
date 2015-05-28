@@ -5,16 +5,18 @@
 <div><h2 id="Description">Description</h2>
 <div class="description"><p>Public Api for grouping feature</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="aggregateColumn">aggregateColumn(columnName, aggregationType)</h3>
+<ul class="methods"><li><h3 id="aggregateColumn">aggregateColumn(columnName, or, aggregationLabel)</h3>
 <div class="aggregatecolumn"><p>Sets the aggregation type on a column, if the 
 column is currently grouped then it removes the grouping first.
-If the aggregationType is null then will result in the aggregation
+If the aggregationDef is null then will result in the aggregation
 being removed</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
 <p>the column we want to aggregate</p></li>
-<li><code ng:non-bindable="">aggregationType – {string} – </code>
-<p>one of the recognised types
-from uiGridGroupingConstants</p></li>
+<li><code ng:non-bindable="">or – {string} – </code>
+<p>{function} aggregationDef one of the recognised types
+from uiGridGroupingConstants or a custom aggregation function.</p></li>
+<li><code ng:non-bindable="">aggregationLabel – {string} – </code>
+<p>(optional) The label to use for this aggregation.</p></li>
 </ul>
 </div>
 </li>
