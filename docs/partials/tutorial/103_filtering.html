@@ -101,7 +101,7 @@ to make any columns with a filter condition have blue text.</p>
     width: 650px;
     height: 400px;
   }
-  
+
   .header-filtered {
     color: blue;
   }
@@ -170,8 +170,7 @@ to make any columns with a filter condition have blue text.</p>
         { field: 'age', filters: [
           {
             condition: uiGridConstants.filter.GREATER_THAN,
-            placeholder: 'greater than',
-            term: 30
+            placeholder: 'greater than'
           },
           {
             condition: uiGridConstants.filter.LESS_THAN,
@@ -225,7 +224,7 @@ to make any columns with a filter condition have blue text.</p>
 <pre class="prettyprint linenums" ng-set-text="scenario.js-26"></pre>
 <script type="text/ng-template" id="scenario.js-26">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
-  
+
   describe('first grid on the page, filtered by male by default', function() {
     it('grid should have seven visible columns', function () {
       gridTestUtils.expectHeaderColumnCount( 'grid1', 7 );
@@ -244,15 +243,17 @@ to make any columns with a filter condition have blue text.</p>
     it('third row should be Hatfield Hudson - will be Terry Clay if filtering broken', function () {
       gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'Hatfield Hudson' );
     });
-    
-    it('cancel filter on gender column, should now see Bishop Carr in third row', function() {
-      gridTestUtils.cancelFilterInColumn( 'grid1', 1 );        
+
+    it('cancel filter on gender column and on date column, should now see Bishop Carr in third row', function() {
+      gridTestUtils.cancelFilterInColumn( 'grid1', 1 );
+      gridTestUtils.cancelFilterInColumn( 'grid1', 6 );
       gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'Bishop Carr' );
     });
 
     it('filter on email column, should automatically do "ends with"', function() {
-      gridTestUtils.cancelFilterInColumn( 'grid1', 1 );        
-      gridTestUtils.enterFilterInColumn( 'grid1', 3, 'digirang.com' );        
+      gridTestUtils.cancelFilterInColumn( 'grid1', 1 );
+      gridTestUtils.cancelFilterInColumn( 'grid1', 6 );
+      gridTestUtils.enterFilterInColumn( 'grid1', 3, 'digirang.com' );
       gridTestUtils.expectRowCount( 'grid1', 2 );
     });
   });

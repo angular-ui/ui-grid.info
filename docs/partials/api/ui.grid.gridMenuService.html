@@ -39,6 +39,19 @@ on the core api.</p><h4 id="Parameters">Parameters</h4>
 </ul>
 </div>
 </li>
+<li><h3 id="removeFromGridMenu">removeFromGridMenu(grid, id)</h3>
+<div class="removefromgridmenu"><p>Remove an item from the grid menu based on a provided id.  Assumes
+that the id is unique, removes only the last instance of that id.  Does nothing if
+the specified id is not found.  If there is no gridMenuScope or registeredMenuItems
+then do nothing silently - the desired result is those menu items not be present and they
+aren't.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
+<p>the grid on which we are acting</p></li>
+<li><code ng:non-bindable="">id – {string} – </code>
+<p>the id we'd like to remove from the menu</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="setMenuItemTitle">setMenuItemTitle(menuItem, colDef, grid)</h3>
 <div class="setmenuitemtitle"><p>Handles the response from gridMenuTitleFilter, adding it directly to the menu
 item if it returns a string, otherwise waiting for the promise to resolve or reject then
@@ -70,6 +83,17 @@ we'll operate upon.  We change the visibility, and refresh the grid as appropria
 <p>the column that we want to toggle</p></li>
 </ul>
 </div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="Properties">Properties</h2>
+<ul class="properties"><li><h3 id="addToGridMenu">addToGridMenu</h3>
+<div class="addtogridmenu"><p>add items to the grid menu.  Used by features
+to add their menu items if they are enabled, can also be used by
+end users to add menu items.  This method has the advantage of allowing
+remove again, which can simplify management of which items are included
+in the menu when.  (Noting that in most cases the shown and active functions
+provide a better way to handle visibility of menu items)</p></div>
 </li>
 </ul>
 </div>
