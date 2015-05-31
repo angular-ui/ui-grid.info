@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-8b475ef - 2015-05-30
+ * ui-grid - v3.0.0-rc.21-814585a - 2015-05-31
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -24044,7 +24044,7 @@ module.filter('px', function() {
         if ( rowHeader.visible !== newVisibility ) {
           rowHeader.visible = newVisibility;
           rowHeader.colDef.visible = newVisibility;
-          grid.queueRefresh();
+          grid.queueGridRefresh();
         }
       },
 
