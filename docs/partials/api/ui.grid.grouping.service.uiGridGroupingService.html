@@ -144,11 +144,12 @@ move is handled in a columnProcessor, so gets called as part of refresh</p><h4 i
 <div class="grouprows"><p>The rowProcessor that creates the groupHeaders (i.e. does
 the actual grouping).</p>
 
-<p>Assumes it is always called after the sorting processor, guaranteed by teh priority setting</p>
+<p>Assumes it is always called after the sorting processor, guaranteed by the priority setting</p>
 
 <p>Processes all the rows in order, inserting a groupHeader row whenever there is a change
-in value of a grouped row.  The group header row is looked up in the groupHeaderCache, and used
-from there if there is one.  The entity is reset to {} if one is found.</p>
+in value of a grouped row, based on the sortAlgorithm used for the column.  The group header row
+is looked up in the groupHeaderCache, and used from there if there is one. The entity is reset
+to {} if one is found.</p>
 
 <p>As it processes it maintains a <code>processingState</code> array. This records, for each level of grouping we're
 working with, the following information:</p>
@@ -173,6 +174,14 @@ working with, the following information:</p>
 <h4 id="Returns">Returns</h4>
 <div class="returns"><code ng:non-bindable="">{array}</code>
 – <p>the updated rows, including our new group rows</p></div>
+</div>
+</li>
+<li><h3 id="groupedFinalizerFn">groupedFinalizerFn(the)</h3>
+<div class="groupedfinalizerfn"><p>Used on group columns to display the rendered value and optionally
+display the count of rows.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">the – {aggregation} – </code>
+<p>aggregation entity for a grouped column</p></li>
+</ul>
 </div>
 </li>
 <li><h3 id="groupingColumnBuilder">groupingColumnBuilder(colDef, col, gridOptions)</h3>

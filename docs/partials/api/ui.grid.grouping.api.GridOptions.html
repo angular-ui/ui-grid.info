@@ -19,8 +19,10 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a><
 <br/>Defaults to "Null"</p></div>
 </li>
 <li><h3 id="groupingShowCounts">groupingShowCounts</h3>
-<div class="groupingshowcounts"><p>shows counts on the groupHeader rows
-<br/>Defaults to true</p></div>
+<div class="groupingshowcounts"><p>shows counts on the groupHeader rows. Not that if you are using a cellFilter or a
+sortingAlgorithm which relies on a specific format or data type, showing counts may cause that
+to break, since the group header rows will always be a string with groupingShowCounts enabled.
+<br/>Defaults to true except on columns of type 'date'</p></div>
 </li>
 </ul>
 </div>

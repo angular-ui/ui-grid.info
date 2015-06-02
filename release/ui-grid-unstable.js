@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-814585a - 2015-05-31
+ * ui-grid - v3.0.0-rc.21-15ee480 - 2015-06-02
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -9535,7 +9535,7 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
           val = 0;
 
   var sides = ['Top', 'Right', 'Bottom', 'Left'];
-  
+
   for ( ; i < 4; i += 2 ) {
     var side = sides[i];
     // dump('side', side);
@@ -9655,7 +9655,7 @@ var uidPrefix = 'uiGrid-';
 /**
  *  @ngdoc service
  *  @name ui.grid.service:GridUtil
- *  
+ *
  *  @description Grid utility functions
  */
 module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateCache', '$timeout', '$interval', '$injector', '$q', '$interpolate', 'uiGridConstants',
@@ -9781,7 +9781,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       if (angular.isUndefined(excludeProperties)) { excludeProperties = []; }
 
       var item = data[0];
-      
+
       angular.forEach(item,function (prop, propName) {
         if ( excludeProperties.indexOf(propName) === -1){
           columnDefs.push({
@@ -9872,7 +9872,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         .then(s.postProcessTemplate);
     },
 
-    // 
+    //
     postProcessTemplate: function (template) {
       var startSym = $interpolate.startSymbol(),
           endSym = $interpolate.endSymbol();
@@ -9929,7 +9929,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     * @returns {number} Element width in pixels, accounting for any borders, etc.
     */
     elementWidth: function (elem) {
-      
+
     },
 
     /**
@@ -9943,7 +9943,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     * @returns {number} Element height in pixels, accounting for any borders, etc.
     */
     elementHeight: function (elem) {
-      
+
     },
 
     // Thanks to http://stackoverflow.com/a/13382873/888165
@@ -9962,7 +9962,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         // add innerdiv
         var inner = document.createElement("div");
         inner.style.width = "100%";
-        outer.appendChild(inner);        
+        outer.appendChild(inner);
 
         var widthWithScroll = inner.offsetWidth;
 
@@ -10030,7 +10030,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       // var toFix = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'];
       // var toBind = 'onwheel' in document || document.documentMode >= 9 ? ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'];
       var lowestDelta, lowestDeltaXY;
-      
+
       var orgEvent   = event || window.event,
           args       = [].slice.call(arguments, 1),
           delta      = 0,
@@ -10216,7 +10216,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     resetUids: function () {
       uid = ['0', '0', '0'];
     },
-    
+
     /**
      * @ngdoc method
      * @methodOf ui.grid.service:GridUtil
@@ -10225,7 +10225,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
      * treatment within ui-grid if we so desired.  At present we only log
      * error messages if uiGridConstants.LOG_ERROR_MESSAGES is set to true
      * @param {string} logMessage message to be logged to the console
-     * 
+     *
      */
     logError: function( logMessage ){
       if ( uiGridConstants.LOG_ERROR_MESSAGES ){
@@ -10241,7 +10241,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
      * treatment within ui-grid if we so desired.  At present we only log
      * warning messages if uiGridConstants.LOG_WARN_MESSAGES is set to true
      * @param {string} logMessage message to be logged to the console
-     * 
+     *
      */
     logWarn: function( logMessage ){
       if ( uiGridConstants.LOG_WARN_MESSAGES ){
@@ -10256,7 +10256,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
      * @description wraps the $log method, allowing us to choose different
      * treatment within ui-grid if we so desired.  At present we only log
      * debug messages if uiGridConstants.LOG_DEBUG_MESSAGES is set to true
-     * 
+     *
      */
     logDebug: function() {
       if ( uiGridConstants.LOG_DEBUG_MESSAGES ){
@@ -10392,7 +10392,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       }
     }
 
-    definer.remove();
+    angular.element(definer).remove();
     rtlScrollType.type = type;
 
     return type;
@@ -10569,11 +10569,11 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
    *    trailing (bool) - whether to trigger after throttle time ends if called multiple times
    * Updated to use $interval rather than $timeout, as protractor (e2e tests) is able to work with $interval,
    * but not with $timeout
-   * 
+   *
    * Note that when using throttle, you need to use throttle to create a new function upfront, then use the function
    * return from that call each time you need to call throttle.  If you call throttle itself repeatedly, the lastCall
    * variable will get overwritten and the throttling won't work
-   * 
+   *
    * @example
    * <pre>
    * var throttledFunc =  gridUtil.throttle(function(){console.log('throttled');}, 500, {trailing: true});
@@ -10747,7 +10747,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     //   offsetX = event.clientX - boundingRect.left;
     //   offsetY = event.clientY - boundingRect.top;
     // }
-    
+
     // event.deltaX = deltaX;
     // event.deltaY = deltaY;
     // event.deltaFactor = lowestDelta;
@@ -16500,8 +16500,8 @@ module.filter('px', function() {
    *
    *  @description Services for grouping features
    */
-  module.service('uiGridGroupingService', ['$q', 'uiGridGroupingConstants', 'gridUtil', 'GridRow', 'gridClassFactory', 'i18nService', 'uiGridConstants', 'uiGridTreeBaseService',
-  function ($q, uiGridGroupingConstants, gridUtil, GridRow, gridClassFactory, i18nService, uiGridConstants, uiGridTreeBaseService) {
+  module.service('uiGridGroupingService', ['$q', 'uiGridGroupingConstants', 'gridUtil', 'rowSorter', 'GridRow', 'gridClassFactory', 'i18nService', 'uiGridConstants', 'uiGridTreeBaseService',
+  function ($q, uiGridGroupingConstants, gridUtil, rowSorter, GridRow, gridClassFactory, i18nService, uiGridConstants, uiGridTreeBaseService) {
 
     var service = {
 
@@ -16734,8 +16734,10 @@ module.filter('px', function() {
          *  @ngdoc object
          *  @name groupingShowCounts
          *  @propertyOf  ui.grid.grouping.api:GridOptions
-         *  @description shows counts on the groupHeader rows
-         *  <br/>Defaults to true
+         *  @description shows counts on the groupHeader rows. Not that if you are using a cellFilter or a
+         *  sortingAlgorithm which relies on a specific format or data type, showing counts may cause that
+         *  to break, since the group header rows will always be a string with groupingShowCounts enabled.
+         *  <br/>Defaults to true except on columns of type 'date'
          */
         gridOptions.groupingShowCounts = gridOptions.groupingShowCounts !== false;
 
@@ -16821,16 +16823,7 @@ module.filter('px', function() {
           col.grouping = angular.copy(colDef.grouping);
           if ( typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority > -1 ){
             col.treeAggregationFn = uiGridTreeBaseService.nativeAggregations[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
-            col.customTreeAggregationFinalizerFn = function( aggregation ){
-              if ( typeof(aggregation.groupVal) !== 'undefined') {
-                aggregation.rendered = aggregation.groupVal;
-                if ( gridOptions.groupingShowCounts ){
-                  aggregation.rendered += (' (' + aggregation.value + ')');
-                }
-              } else {
-                aggregation.rendered = null;
-              }
-            };
+            col.treeAggregationFinalizerFn = service.groupedFinalizerFn;
           }
         } else if (typeof(col.grouping) === 'undefined'){
           col.grouping = {};
@@ -16940,6 +16933,8 @@ module.filter('px', function() {
       },
 
 
+
+
       /**
        * @ngdoc function
        * @name groupingColumnProcessor
@@ -16957,6 +16952,27 @@ module.filter('px', function() {
         return columns;
       },
 
+      /**
+       * @ngdoc function
+       * @name groupedFinalizerFn
+       * @methodOf  ui.grid.grouping.service:uiGridGroupingService
+       * @description Used on group columns to display the rendered value and optionally
+       * display the count of rows.
+       *
+       * @param {aggregation} the aggregation entity for a grouped column
+       */
+      groupedFinalizerFn: function( aggregation ){
+        var col = this;
+
+        if ( typeof(aggregation.groupVal) !== 'undefined') {
+          aggregation.rendered = aggregation.groupVal;
+          if ( col.grid.options.groupingShowCounts && col.colDef.type !== 'date' ){
+            aggregation.rendered += (' (' + aggregation.value + ')');
+          }
+        } else {
+          aggregation.rendered = null;
+        }
+      },
 
       /**
        * @ngdoc function
@@ -17047,13 +17063,7 @@ module.filter('px', function() {
 
         column.treeAggregation = { type: uiGridGroupingConstants.aggregation.COUNT, source: 'grouping' };
         column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
-        column.customTreeAggregationFinalizerFn = function( aggregation ){
-          if ( typeof(aggregation.groupVal) !== 'undefined') {
-            aggregation.rendered = aggregation.groupVal + ' (' + aggregation.value + ')';
-          } else {
-            aggregation.rendered = null;
-          }
-        };
+        column.treeAggregationFinalizerFn = service.groupedFinalizerFn;
 
         grid.queueGridRefresh();
       },
@@ -17252,11 +17262,12 @@ module.filter('px', function() {
        * @description The rowProcessor that creates the groupHeaders (i.e. does
        * the actual grouping).
        * 
-       * Assumes it is always called after the sorting processor, guaranteed by teh priority setting
+       * Assumes it is always called after the sorting processor, guaranteed by the priority setting
        * 
        * Processes all the rows in order, inserting a groupHeader row whenever there is a change
-       * in value of a grouped row.  The group header row is looked up in the groupHeaderCache, and used
-       * from there if there is one.  The entity is reset to {} if one is found.
+       * in value of a grouped row, based on the sortAlgorithm used for the column.  The group header row
+       * is looked up in the groupHeaderCache, and used from there if there is one. The entity is reset
+       * to {} if one is found.
        *
        * As it processes it maintains a `processingState` array. This records, for each level of grouping we're
        * working with, the following information:
@@ -17296,7 +17307,7 @@ module.filter('px', function() {
           }
 
           // look for change of value - and insert a header
-          if ( !groupFieldState.initialised || fieldValue !== groupFieldState.currentValue ){
+          if ( !groupFieldState.initialised || rowSorter.getSortFn(grid, groupFieldState.col, renderableRows)(fieldValue, groupFieldState.currentValue) !== 0 ){
             service.insertGroupHeader( grid, renderableRows, i, processingState, stateIndex );
             i++;
           }
