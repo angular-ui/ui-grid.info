@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-6b1e88e - 2015-06-05
+ * ui-grid - v3.0.0-rc.21-a43d963 - 2015-06-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -16829,7 +16829,7 @@ module.filter('px', function() {
         if ( typeof(col.grouping) === 'undefined' && typeof(colDef.grouping) !== 'undefined') {
           col.grouping = angular.copy(colDef.grouping);
           if ( typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority > -1 ){
-            col.treeAggregationFn = uiGridTreeBaseService.nativeAggregations[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
+            col.treeAggregationFn = uiGridTreeBaseService.nativeAggregations()[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
             col.treeAggregationFinalizerFn = service.groupedFinalizerFn;
           }
         } else if (typeof(col.grouping) === 'undefined'){
@@ -16926,7 +16926,7 @@ module.filter('px', function() {
          *  <br/>Defaults to true.
          */
         if ( col.colDef.groupingShowAggregationMenu !== false ){
-          angular.forEach(uiGridTreeBaseService.nativeAggregations, function(aggregationDef, name){
+          angular.forEach(uiGridTreeBaseService.nativeAggregations(), function(aggregationDef, name){
             addAggregationMenu(name);
           });
           angular.forEach(gridOptions.treeCustomAggregations, function(aggregationDef, name){
@@ -17069,7 +17069,7 @@ module.filter('px', function() {
         service.tidyPriorities( grid );
 
         column.treeAggregation = { type: uiGridGroupingConstants.aggregation.COUNT, source: 'grouping' };
-        column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
+        column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations()[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
         column.treeAggregationFinalizerFn = service.groupedFinalizerFn;
 
         grid.queueGridRefresh();
@@ -17124,8 +17124,8 @@ module.filter('px', function() {
         var aggregationDef = {};
         if ( typeof(grid.options.treeCustomAggregations[aggregationType]) !== 'undefined' ){
           aggregationDef = grid.options.treeCustomAggregations[aggregationType];
-        } else if ( typeof(uiGridTreeBaseService.nativeAggregations[aggregationType]) !== 'undefined' ){
-          aggregationDef = uiGridTreeBaseService.nativeAggregations[aggregationType];
+        } else if ( typeof(uiGridTreeBaseService.nativeAggregations()[aggregationType]) !== 'undefined' ){
+          aggregationDef = uiGridTreeBaseService.nativeAggregations()[aggregationType];
         }
 
         column.treeAggregation = { type: aggregationType, label:  i18nService.get().aggregation[aggregationDef.label] || aggregationDef.label };
@@ -23663,9 +23663,9 @@ module.filter('px', function() {
             col.treeAggregationFn = gridOptions.treeCustomAggregations[colDef.treeAggregationType].aggregationFn;
             col.treeAggregationFinalizerFn = gridOptions.treeCustomAggregations[colDef.treeAggregationType].finalizerFn;
             col.treeAggregation.label = gridOptions.treeCustomAggregations[colDef.treeAggregationType].label;
-          } else if ( typeof(service.nativeAggregations[colDef.treeAggregationType]) !== 'undefined' ){
-            col.treeAggregationFn = service.nativeAggregations[colDef.treeAggregationType].aggregationFn;
-            col.treeAggregation.label = service.nativeAggregations[colDef.treeAggregationType].label;
+          } else if ( typeof(service.nativeAggregations()[colDef.treeAggregationType]) !== 'undefined' ){
+            col.treeAggregationFn = service.nativeAggregations()[colDef.treeAggregationType].aggregationFn;
+            col.treeAggregation.label = service.nativeAggregations()[colDef.treeAggregationType].label;
           }
         }
 
@@ -24397,84 +24397,87 @@ module.filter('px', function() {
 
 
       // Aggregation routines - no doco needed as self evident
-      nativeAggregations: {
-        count: {
-          label: i18nService.get().aggregation.count,
-          menuTitle: i18nService.get().grouping.aggregate_count,
-          aggregationFn: function (aggregation, fieldValue, numValue) {
-            if (typeof(aggregation.value) === 'undefined') {
-              aggregation.value = 1;
-            } else {
-              aggregation.value++;
-            }
-          }
-        },
-
-        sum: {
-          label: i18nService.get().aggregation.sum,
-          menuTitle: i18nService.get().grouping.aggregate_sum,
-          aggregationFn: function( aggregation, fieldValue, numValue ) {
-            if (!isNaN(numValue)) {
+      nativeAggregations: function() {
+        var nativeAggregations = {
+          count: {
+            label: i18nService.get().aggregation.count,
+            menuTitle: i18nService.get().grouping.aggregate_count,
+            aggregationFn: function (aggregation, fieldValue, numValue) {
               if (typeof(aggregation.value) === 'undefined') {
-                aggregation.value = numValue;
+                aggregation.value = 1;
               } else {
-                aggregation.value += numValue;
+                aggregation.value++;
               }
             }
-          }
-        },
-
-        min: {
-          label: i18nService.get().aggregation.min,
-          menuTitle: i18nService.get().grouping.aggregate_min,
-          aggregationFn: function( aggregation, fieldValue, numValue ) {
-            if (typeof(aggregation.value) === 'undefined') {
-              aggregation.value = fieldValue;
-            } else {
-              if (typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue < aggregation.value || aggregation.value === null)) {
+          },
+  
+          sum: {
+            label: i18nService.get().aggregation.sum,
+            menuTitle: i18nService.get().grouping.aggregate_sum,
+            aggregationFn: function( aggregation, fieldValue, numValue ) {
+              if (!isNaN(numValue)) {
+                if (typeof(aggregation.value) === 'undefined') {
+                  aggregation.value = numValue;
+                } else {
+                  aggregation.value += numValue;
+                }
+              }
+            }
+          },
+  
+          min: {
+            label: i18nService.get().aggregation.min,
+            menuTitle: i18nService.get().grouping.aggregate_min,
+            aggregationFn: function( aggregation, fieldValue, numValue ) {
+              if (typeof(aggregation.value) === 'undefined') {
                 aggregation.value = fieldValue;
+              } else {
+                if (typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue < aggregation.value || aggregation.value === null)) {
+                  aggregation.value = fieldValue;
+                }
               }
             }
-          }
-        },
-
-        max: {
-          label: i18nService.get().aggregation.max,
-          menuTitle: i18nService.get().grouping.aggregate_max,
-          aggregationFn: function( aggregation, fieldValue, numValue ){
-            if ( typeof(aggregation.value) === 'undefined' ){
-              aggregation.value = fieldValue;
-            } else {
-              if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue > aggregation.value || aggregation.value === null)){
+          },
+  
+          max: {
+            label: i18nService.get().aggregation.max,
+            menuTitle: i18nService.get().grouping.aggregate_max,
+            aggregationFn: function( aggregation, fieldValue, numValue ){
+              if ( typeof(aggregation.value) === 'undefined' ){
                 aggregation.value = fieldValue;
+              } else {
+                if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue > aggregation.value || aggregation.value === null)){
+                  aggregation.value = fieldValue;
+                }
+              }
+            }
+          },
+  
+          avg: {
+            label: i18nService.get().aggregation.avg,
+            menuTitle: i18nService.get().grouping.aggregate_avg,
+            aggregationFn: function( aggregation, fieldValue, numValue ){
+              if ( typeof(aggregation.count) === 'undefined' ){
+                aggregation.count = 1;
+              } else {
+                aggregation.count++;
+              }
+  
+              if ( isNaN(numValue) ){
+                return;
+              }
+  
+              if ( typeof(aggregation.value) === 'undefined' || typeof(aggregation.sum) === 'undefined' ){
+                aggregation.value = numValue;
+                aggregation.sum = numValue;
+              } else {
+                aggregation.sum += numValue;
+                aggregation.value = aggregation.sum / aggregation.count;
               }
             }
           }
-        },
-
-        avg: {
-          label: i18nService.get().aggregation.avg,
-          menuTitle: i18nService.get().grouping.aggregate_avg,
-          aggregationFn: function( aggregation, fieldValue, numValue ){
-            if ( typeof(aggregation.count) === 'undefined' ){
-              aggregation.count = 1;
-            } else {
-              aggregation.count++;
-            }
-
-            if ( isNaN(numValue) ){
-              return;
-            }
-
-            if ( typeof(aggregation.value) === 'undefined' || typeof(aggregation.sum) === 'undefined' ){
-              aggregation.value = numValue;
-              aggregation.sum = numValue;
-            } else {
-              aggregation.sum += numValue;
-              aggregation.value = aggregation.sum / aggregation.count;
-            }
-          }
-        }
+        };
+        return nativeAggregations;
       },
 
       /**
