@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-a43d963 - 2015-06-06
+ * ui-grid - v3.0.0-rc.21-a4500fd - 2015-06-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8822,7 +8822,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
 
     // Get the column value for this row
     var value = grid.getCellValue(row, column);
-    
+
     // If the filter's condition is a RegExp, then use it
     if (filter.condition instanceof RegExp) {
       return filter.condition.test(value);
@@ -8832,19 +8832,19 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     if (conditionType === 'function') {
       return filter.condition(term, value, row, column);
     }
-    
+
     if (filter.startswithRE) {
       return filter.startswithRE.test(value);
     }
-    
+
     if (filter.endswithRE) {
       return filter.endswithRE.test(value);
     }
-    
+
     if (filter.containsRE) {
       return filter.containsRE.test(value);
     }
-    
+
     if (filter.exactRE) {
       return filter.exactRE.test(value);
     }
@@ -8881,11 +8881,11 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     if (filter.condition === uiGridConstants.filter.LESS_THAN) {
       return (value < term);
     }
-    
+
     if (filter.condition === uiGridConstants.filter.LESS_THAN_OR_EQUAL) {
       return (value <= term);
     }
-    
+
     return true;
   };
 
@@ -8916,11 +8916,11 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     if (grid.options.useExternalFiltering) {
       return true;
     }
-    
+
     var filtersLength = filters.length;
     for (var i = 0; i < filtersLength; i++) {
       var filter = filters[i];
-      
+
       var ret = rowSearcher.runColumnFilter(grid, row, column, filter);
       if (!ret) {
         return false;
@@ -8947,12 +8947,12 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
      * loops and is therefore very performance sensitive.  In particular, avoiding forEach as
      * this impacts some browser optimisers (particularly Chrome), using iterators instead
      */
-    
+
     // Don't do anything if we weren't passed any rows
     if (!rows) {
       return;
     }
-    
+
     // don't filter if filtering currently disabled
     if (!grid.options.enableFiltering){
       return rows;
@@ -8962,17 +8962,27 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     var filterData = [];
 
     var colsLength = columns.length;
+
+    var hasTerm = function( filters ) {
+      var hasTerm = false;
+
+      filters.forEach( function (filter) {
+        if ( !gridUtil.isNullOrUndefined(filter.term) && filter.term !== '' || filter.noTerm ){
+          hasTerm = true;
+        }
+      });
+
+      return hasTerm;
+    };
+
     for (var i = 0; i < colsLength; i++) {
       var col = columns[i];
 
-      if (typeof(col.filters) !== 'undefined' && ( col.filters.length > 1 || col.filters.length === 1 && ( !gridUtil.isNullOrUndefined(col.filters[0].term) || col.filters[0].noTerm ) ) ) {
+      if (typeof(col.filters) !== 'undefined' && hasTerm(col.filters) ) {
         filterData.push( { col: col, filters: rowSearcher.setupFilters(col.filters) } );
       }
-      else if (typeof(col.filter) !== 'undefined' && col.filter && ( !gridUtil.isNullOrUndefined(col.filters[0].term) || col.filter.noTerm ) ) {
-        filterData.push( { col: col, filters: rowSearcher.setupFilters([col.filter]) } );
-      }
     }
-    
+
     if (filterData.length > 0) {
       // define functions outside the loop, performance optimisation
       var foreachRow = function(grid, row, col, filters){
@@ -15445,6 +15455,14 @@ module.filter('px', function() {
           gridOptions.exporterCsvFilename = gridOptions.exporterCsvFilename ? gridOptions.exporterCsvFilename : 'download.csv';
           /**
            * @ngdoc object
+           * @name exporterPdfFilename
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The default filename to use when saving the downloaded pdf, only used in IE (other browsers open pdfs in a new window)
+           * <br/>Defaults to 'download.pdf'
+           */
+          gridOptions.exporterPdfFilename = gridOptions.exporterPdfFilename ? gridOptions.exporterPdfFilename : 'download.pdf';
+          /**
+           * @ngdoc object
            * @name exporterOlderExcelCompatibility
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description Some versions of excel don't like the utf-16 BOM on the front, and it comes
@@ -16101,29 +16119,22 @@ module.filter('px', function() {
           var strMimeType = 'application/octet-stream;charset=utf-8';
           var rawFile;
           var ieVersion;
-      
-          if (!fileName) {
-            var currentDate = new Date();
-            fileName = "CWS Export - " + currentDate.getFullYear() + (currentDate.getMonth() + 1) +
-                       currentDate.getDate() + currentDate.getHours() +
-                       currentDate.getMinutes() + currentDate.getSeconds() + ".csv";
-          }
 
           ieVersion = this.isIE();
           if (ieVersion && ieVersion < 10) {
             var frame = D.createElement('iframe');
             document.body.appendChild(frame);
-        
+
             frame.contentWindow.document.open("text/html", "replace");
             frame.contentWindow.document.write('sep=,\r\n' + csvContent);
             frame.contentWindow.document.close();
             frame.contentWindow.focus();
             frame.contentWindow.document.execCommand('SaveAs', true, fileName);
-        
+
             document.body.removeChild(frame);
             return true;
           }
-        
+
           // IE10+
           if (navigator.msSaveBlob) {
             return navigator.msSaveBlob(
@@ -16133,7 +16144,7 @@ module.filter('px', function() {
               fileName
             );
           }
-      
+
           //html5 A[download]
           if ('download' in a) {
             var blob = new Blob(
@@ -16146,7 +16157,7 @@ module.filter('px', function() {
             rawFile = 'data:' + strMimeType + ',' + encodeURIComponent(csvContent);
             a.setAttribute('target', '_blank');
           }
-      
+
           a.href = rawFile;
           a.setAttribute('style', 'display:none;');
           D.body.appendChild(a);
@@ -16160,7 +16171,7 @@ module.filter('px', function() {
               a.dispatchEvent(eventObj);
             }
             D.body.removeChild(a);
-    
+
           }, this.delay);
         },
 
@@ -16189,14 +16200,63 @@ module.filter('px', function() {
             var docDefinition = self.prepareAsPdf(grid, exportColumnHeaders, exportData);
 
             if (self.isIE()) {
-              var pdf = pdfMake.createPdf(docDefinition).download();
+              self.downloadPDF(grid.options.exporterPdfFilename, docDefinition);
             } else {
               pdfMake.createPdf(docDefinition).open();
             }
           });
         },
-        
-        
+
+
+        /**
+         * @ngdoc function
+         * @name downloadPdf
+         * @methodOf  ui.grid.exporter.service:uiGridExporterService
+         * @description Generates and retrieves the pdf as a blob, then downloads
+         * it as a file.  Only used in IE, in all other browsers we use the native
+         * pdfMake.open function to just open the PDF
+         * @param {string} fileName the filename to give to the pdf, can be set
+         * through exporterPdfFilename
+         * @param {object} docDefinition a pdf docDefinition that we can generate
+         * and get a blob from
+         */
+        downloadPDF: function (fileName, docDefinition) {
+          var D = document;
+          var a = D.createElement('a');
+          var strMimeType = 'application/octet-stream;charset=utf-8';
+          var rawFile;
+          var ieVersion;
+
+          ieVersion = this.isIE();
+          var doc = pdfMake.createPdf(docDefinition);
+          var blob;
+          doc.getBuffer( function (buffer) {
+            blob = new Blob([buffer]);
+          });
+
+          if (ieVersion && ieVersion < 10) {
+            var frame = D.createElement('iframe');
+            document.body.appendChild(frame);
+
+            frame.contentWindow.document.open("text/html", "replace");
+            frame.contentWindow.document.write(blob);
+            frame.contentWindow.document.close();
+            frame.contentWindow.focus();
+            frame.contentWindow.document.execCommand('SaveAs', true, fileName);
+
+            document.body.removeChild(frame);
+            return true;
+          }
+
+          // IE10+
+          if (navigator.msSaveBlob) {
+            return navigator.msSaveBlob(
+              blob, fileName
+            );
+          }
+        },
+
+
         /**
          * @ngdoc function
          * @name renderAsPdf
@@ -16755,7 +16815,7 @@ module.filter('px', function() {
          *  @description The string to use for the grouping header row label on rows which contain a null or undefined value in the grouped column.
          *  <br/>Defaults to "Null"
          */
-        gridOptions.groupingNullLabel = gridOptions.groupingNullLabel || 'Null';
+        gridOptions.groupingNullLabel = typeof(gridOptions.groupingNullLabel) === 'undefined' ? 'Null' : gridOptions.groupingNullLabel;
 
         /**
          *  @ngdoc object
