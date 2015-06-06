@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-a4500fd - 2015-06-06
+ * ui-grid - v3.0.0-rc.21-07e78d5 - 2015-06-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8654,7 +8654,7 @@ function escapeRegExp(str) {
  *  @description Service for searching/filtering rows based on column value conditions.
  */
 module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil, uiGridConstants) {
-  var defaultCondition = uiGridConstants.filter.STARTS_WITH;
+  var defaultCondition = uiGridConstants.filter.CONTAINS;
 
   var rowSearcher = {};
 
@@ -20401,7 +20401,6 @@ module.filter('px', function() {
      </doc:source>
      <doc:scenario>
       // TODO: e2e specs?
-        // TODO: Obey minWidth and maxWIdth;
 
       // TODO: post-resize a horizontal scroll event should be fired
      </doc:scenario>
@@ -20456,11 +20455,11 @@ module.filter('px', function() {
           var newWidth = width;
 
           // If the new width would be less than the column's allowably minimum width, don't allow it
-          if (col.colDef.minWidth && newWidth < col.colDef.minWidth) {
-            newWidth = col.colDef.minWidth;
+          if (col.minWidth && newWidth < col.minWidth) {
+            newWidth = col.minWidth;
           }
-          else if (col.colDef.maxWidth && newWidth > col.colDef.maxWidth) {
-            newWidth = col.colDef.maxWidth;
+          else if (col.maxWidth && newWidth > col.maxWidth) {
+            newWidth = col.maxWidth;
           }
           
           return newWidth;
@@ -22321,7 +22320,7 @@ module.filter('px', function() {
                  */
                 toggleRowSelection: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && row.enableSelection !== false) {
+                  if (row !== null) {
                     service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
@@ -22335,7 +22334,7 @@ module.filter('px', function() {
                  */
                 selectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && !row.isSelected && row.enableSelection !== false) {
+                  if (row !== null && !row.isSelected) {
                     service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
@@ -22352,7 +22351,7 @@ module.filter('px', function() {
                  */
                 selectRowByVisibleIndex: function ( rowNum, evt ) {
                   var row = grid.renderContainers.body.visibleRowCache[rowNum];
-                  if (row !== null && typeof(row) !== 'undefined' && !row.isSelected && row.enableSelection !== false) {
+                  if (row !== null && typeof(row) !== 'undefined' && !row.isSelected) {
                     service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
                   }
                 },
@@ -22619,6 +22618,10 @@ module.filter('px', function() {
         toggleRowSelection: function (grid, row, evt, multiSelect, noUnselect) {
           var selected = row.isSelected;
 
+          if ( row.enableSelection === false && !selected ){
+            return;
+          }
+
           if (!multiSelect && !selected) {
             service.clearSelectedRows(grid, evt);
           } else if (!multiSelect && selected) {
@@ -22631,7 +22634,7 @@ module.filter('px', function() {
 
           if (selected && noUnselect){
             // don't deselect the row
-          } else if (row.enableSelection !== false) {
+          } else {
             row.setSelected(!selected);
             if (row.isSelected === true) {
               grid.selection.lastSelectedRow = row;

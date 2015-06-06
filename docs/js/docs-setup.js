@@ -737,7 +737,7 @@ NG_DOCS={
       "id": "ui.grid.resizeColumns.directive:uiGridColumnResizer",
       "shortName": "uiGridColumnResizer",
       "type": "directive",
-      "keywords": "$scope and angular api app be beryl class claudine column company controller controls data directive div draggable e2e enablecolumnresizing enersol ethel event female fired function geekko gender gonzales grid gridopts handle horizontal mainctrl male maxwidth minwidth module name neal ng-controller obey post-resize price resizecolumns resizing rice scroll sealoud should specs testgrid that todo true ui ui-grid var velity wilder"
+      "keywords": "$scope angular api app be beryl class claudine column company controller controls data directive div draggable e2e enablecolumnresizing enersol ethel event female fired function geekko gender gonzales grid gridopts handle horizontal mainctrl male module name neal ng-controller post-resize price resizecolumns resizing rice scroll sealoud should specs testgrid that todo true ui ui-grid var velity wilder"
     },
     {
       "section": "api",
