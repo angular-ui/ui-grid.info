@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-07e78d5 - 2015-06-06
+ * ui-grid - v3.0.0-rc.21-34297a3 - 2015-06-06
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3442,6 +3442,7 @@ angular.module('ui.grid')
 
     self.registerDataChangeCallback( self.columnRefreshCallback, [uiGridConstants.dataChange.COLUMN]);
     self.registerDataChangeCallback( self.processRowsCallback, [uiGridConstants.dataChange.EDIT]);
+    self.registerDataChangeCallback( self.updateFooterHeightCallback, [uiGridConstants.dataChange.OPTIONS]);
 
     self.registerStyleComputation({
       priority: 10,
@@ -3651,6 +3652,20 @@ angular.module('ui.grid')
    */
   Grid.prototype.processRowsCallback = function processRowsCallback( grid ){
     grid.queueGridRefresh();
+  };
+
+
+  /**
+   * @ngdoc function
+   * @name updateFooterHeightCallback
+   * @methodOf ui.grid.class:Grid
+   * @description recalculates the footer height,
+   * registered as a dataChangeCallback on uiGridConstants.dataChange.OPTIONS
+   * @param {string} name column name
+   */
+  Grid.prototype.updateFooterHeightCallback = function updateFooterHeightCallback( grid ){
+    grid.footerHeight = grid.calcFooterHeight();
+    grid.columnFooterHeight = grid.calcColumnFooterHeight();
   };
 
 
