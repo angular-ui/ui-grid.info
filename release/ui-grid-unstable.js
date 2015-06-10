@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-0c175e7 - 2015-06-08
+ * ui-grid - v3.0.0-rc.21-54af483 - 2015-06-10
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -9672,7 +9672,7 @@ function getWidthOrHeight( elem, name, extra ) {
 
 function getLineHeight(elm) {
   elm = angular.element(elm)[0];
-  var parent = elm.offsetParent;
+  var parent = elm.parentElement;
 
   if (!parent) {
     parent = document.getElementsByTagName('body')[0];
