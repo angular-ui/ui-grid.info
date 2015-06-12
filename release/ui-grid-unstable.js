@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-7238f45 - 2015-06-12
+ * ui-grid - v3.0.0-rc.21-db54977 - 2015-06-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17424,9 +17424,6 @@ module.filter('px', function() {
         // Broken out as shouldn't create functions in a loop.
         var updateProcessingState = function( groupFieldState, stateIndex ) {
           var fieldValue = grid.getCellValue(row, groupFieldState.col); 
-          if ( typeof(fieldValue) === 'undefined' || fieldValue === null ){
-            fieldValue = grid.options.groupingNullLabel;
-          }
 
           // look for change of value - and insert a header
           if ( !groupFieldState.initialised || rowSorter.getSortFn(grid, groupFieldState.col, renderableRows)(fieldValue, groupFieldState.currentValue) !== 0 ){
@@ -17542,8 +17539,9 @@ module.filter('px', function() {
         var col = processingState[stateIndex].col;
 
         var newValue = grid.getCellValue(renderableRows[rowIndex], col);
+        var newDisplayValue = newValue;
         if ( typeof(newValue) === 'undefined' || newValue === null ) {
-          newValue = grid.options.groupingNullLabel;
+          newDisplayValue = grid.options.groupingNullLabel;
         }
 
         var cacheItem = grid.grouping.oldGroupingHeaderCache;
@@ -17562,7 +17560,7 @@ module.filter('px', function() {
           gridClassFactory.rowTemplateAssigner.call(grid, headerRow);
         }
 
-        headerRow.entity['$$' + processingState[stateIndex].col.uid] = { groupVal: newValue };
+        headerRow.entity['$$' + processingState[stateIndex].col.uid] = { groupVal: newDisplayValue };
         headerRow.treeLevel = stateIndex;
         headerRow.groupHeader = true;
         headerRow.internalRow = true;
