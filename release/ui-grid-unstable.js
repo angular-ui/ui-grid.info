@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-91077e8 - 2015-06-12
+ * ui-grid - v3.0.0-rc.21-7238f45 - 2015-06-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13392,7 +13392,7 @@ module.filter('px', function() {
                   // Figure out which new row+combo we're navigating to
                   var rowCol = uiGridCtrl.grid.renderContainers[containerId].cellNav.getNextRowCol(direction, lastRowCol.row, lastRowCol.col);
                   var focusableCols = uiGridCtrl.grid.renderContainers[containerId].cellNav.getFocusableCols();
-
+                  var rowColSelectIndex = uiGridCtrl.grid.api.cellNav.rowColSelectIndex(rowCol);
                   // Shift+tab on top-left cell should exit cellnav on render container
                   if (
                     // Navigating left
@@ -13404,6 +13404,7 @@ module.filter('px', function() {
                     evt.keyCode === uiGridConstants.keymap.TAB &&
                     evt.shiftKey
                   ) {
+                    grid.cellNav.focusedCells.splice(rowColSelectIndex, 1);
                     uiGridCtrl.cellNav.clearFocus();
                     return true;
                   }
@@ -13417,6 +13418,7 @@ module.filter('px', function() {
                     evt.keyCode === uiGridConstants.keymap.TAB &&
                     !evt.shiftKey
                   ) {
+                    grid.cellNav.focusedCells.splice(rowColSelectIndex, 1);
                     uiGridCtrl.cellNav.clearFocus();
                     return true;
                   }
