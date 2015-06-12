@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-fbc38cb - 2015-06-12
+ * ui-grid - v3.0.0-rc.21-91077e8 - 2015-06-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3141,6 +3141,10 @@ angular.module('ui.grid')
      */
     self.scrollDirection = uiGridConstants.scrollDirection.NONE;
 
+    //if true, grid will not respond to any scroll events
+    self.disableScrolling = false;
+
+
     function vertical (scrollEvent) {
       self.isScrollingVertically = false;
       self.api.core.raise.scrollEnd(scrollEvent);
@@ -3328,7 +3332,7 @@ angular.module('ui.grid')
      * @param {number} priority the priority of this processor.  In general we try to do them in 100s to leave room
      * for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.
      *
-     * At present allRowsVisible is running at 50, sort manipulations running at 60-65, filter is running at 100, 
+     * At present allRowsVisible is running at 50, sort manipulations running at 60-65, filter is running at 100,
      * sort is at 200, grouping and treeview at 400-410, selectable rows at 500, pagination at 900 (pagination will generally want to be last)
      */
     self.api.registerMethod( 'core', 'registerRowsProcessor', this.registerRowsProcessor  );
@@ -8011,6 +8015,12 @@ angular.module('ui.grid')
   GridRenderContainer.prototype.getViewportStyle = function () {
     var self = this;
     var styles = {};
+
+    if (self.grid.disableScrolling) {
+      styles['overflow-x'] = 'hidden';
+      styles['overflow-y'] = 'hidden';
+      return styles;
+    }
 
     if (self.name === 'body') {
       styles['overflow-x'] = self.grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll';
@@ -14423,6 +14433,7 @@ module.filter('px', function() {
             }
 
             function endEdit(retainFocus) {
+              $scope.grid.disableScrolling = false;
               if (!inEdit) {
                 return;
               }
@@ -14437,6 +14448,7 @@ module.filter('px', function() {
             }
 
             function cancelEdit() {
+              $scope.grid.disableScrolling = false;
               if (!inEdit) {
                 return;
               }
@@ -14525,9 +14537,13 @@ module.filter('px', function() {
                   $scope.deepEdit = false;
                 };
 
+
                 $elm.on('click', function (evt) {
                   if ($elm[0].type !== 'checkbox') {
                     $scope.deepEdit = true;
+                    $timeout(function () {
+                      $scope.grid.disableScrolling = true;
+                    });
                   }
                 });
 
@@ -14540,10 +14556,10 @@ module.filter('px', function() {
                   }
 
                   if ($scope.deepEdit &&
-                    evt.keyCode === uiGridConstants.keymap.LEFT ||
-                    evt.keyCode === uiGridConstants.keymap.RIGHT ||
-                    evt.keyCode === uiGridConstants.keymap.UP ||
-                    evt.keyCode === uiGridConstants.keymap.DOWN) {
+                    (evt.keyCode === uiGridConstants.keymap.LEFT ||
+                     evt.keyCode === uiGridConstants.keymap.RIGHT ||
+                     evt.keyCode === uiGridConstants.keymap.UP ||
+                     evt.keyCode === uiGridConstants.keymap.DOWN)) {
                     evt.stopPropagation();
                   }
                   // Pass the keydown event off to the cellNav service, if it exists
