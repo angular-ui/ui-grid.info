@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-4746790 - 2015-06-10
+ * ui-grid - v3.0.0-rc.21-697d17b - 2015-06-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13425,8 +13425,8 @@ module.filter('px', function() {
       };
     }]);
 
-  module.directive('uiGridRenderContainer', ['$timeout', '$document', 'gridUtil', 'uiGridConstants', 'uiGridCellNavService', '$compile',
-    function ($timeout, $document, gridUtil, uiGridConstants, uiGridCellNavService, $compile) {
+  module.directive('uiGridRenderContainer', ['$timeout', '$document', 'gridUtil', 'uiGridConstants', 'uiGridCellNavService', '$compile','uiGridCellNavConstants',
+    function ($timeout, $document, gridUtil, uiGridConstants, uiGridCellNavService, $compile, uiGridCellNavConstants) {
       return {
         replace: true,
         priority: -99999, //this needs to run very last
@@ -13454,12 +13454,25 @@ module.filter('px', function() {
               uiGridCellNavService.decorateRenderContainers(grid);
 
               //add an element with no dimensions that can be used to set focus and capture keystrokes
-              var focuser = $compile('<div class="ui-grid-focuser" tabindex="-1"></div>')($scope);
+              var focuser = $compile('<div class="ui-grid-focuser" tabindex="0"></div>')($scope);
               $elm.append(focuser);
 
               uiGridCtrl.focus = function () {
                 focuser[0].focus();
+                //allow for first time grid focus
+                focuser.on('focus', function (evt) {
+                  evt.uiGridTargetRenderContainerId = containerId;
+                  var rowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
+                  if (rowCol === null) {
+                    rowCol = uiGridCtrl.grid.renderContainers[containerId].cellNav.getNextRowCol(uiGridCellNavConstants.direction.DOWN, null, null);
+                    if (rowCol.row && rowCol.col) {
+                      uiGridCtrl.cellNav.broadcastCellNav(rowCol);
+                    }
+                  }
+                });
               };
+
+
 
               // Bind to keydown events in the render container
               focuser.on('keydown', function (evt) {
@@ -14111,6 +14124,11 @@ module.filter('px', function() {
             var cancelTouchstartTimeout;
 
             var editCellScope;
+
+            if (!$scope.col.colDef.enableCellEdit) {
+              return;
+            }
+
             var cellNavNavigateDereg = function() {};
 
             // Bind to keydown events in the render container
@@ -14513,25 +14531,13 @@ module.filter('px', function() {
                       evt.stopPropagation();
                       $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
                       break;
-                    case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
-                      $scope.stopEdit(evt);
-                      break;
-                    case uiGridConstants.keymap.TAB:
-                      $scope.stopEdit(evt);
-                      break;
                   }
 
                   if ($scope.deepEdit) {
                     switch (evt.keyCode) {
                       case uiGridConstants.keymap.LEFT:
-                        evt.stopPropagation();
-                        break;
                       case uiGridConstants.keymap.RIGHT:
-                        evt.stopPropagation();
-                        break;
                       case uiGridConstants.keymap.UP:
-                        evt.stopPropagation();
-                        break;
                       case uiGridConstants.keymap.DOWN:
                         evt.stopPropagation();
                         break;
@@ -14542,6 +14548,17 @@ module.filter('px', function() {
                     evt.uiGridTargetRenderContainerId = renderContainerCtrl.containerId;
                     if (uiGridCtrl.cellNav.handleKeyDown(evt) !== null) {
                       $scope.stopEdit(evt);
+                    }
+                  }
+                  else {
+                    //handle enter and tab for editing not using cellNav
+                    switch (evt.keyCode) {
+                      case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
+                      case uiGridConstants.keymap.TAB:
+                        evt.stopPropagation();
+                        evt.preventDefault();
+                        $scope.stopEdit(evt);
+                        break;
                     }
                   }
 
@@ -14634,13 +14651,16 @@ module.filter('px', function() {
     ['uiGridConstants', 'uiGridEditConstants',
       function (uiGridConstants, uiGridEditConstants) {
         return {
+          require: ['?^uiGrid', '?^uiGridRenderContainer'],
           scope: true,
           compile: function () {
             return {
               pre: function ($scope, $elm, $attrs) {
 
               },
-              post: function ($scope, $elm, $attrs) {
+              post: function ($scope, $elm, $attrs, controllers) {
+                var uiGridCtrl = controllers[0];
+                var renderContainerCtrl = controllers[1];
 
                 //set focus at start of edit
                 $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
@@ -14664,24 +14684,23 @@ module.filter('px', function() {
                       evt.stopPropagation();
                       $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
                       break;
-                    case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
+                  }
+                  if (uiGridCtrl && uiGridCtrl.grid.api.cellNav) {
+                    evt.uiGridTargetRenderContainerId = renderContainerCtrl.containerId;
+                    if (uiGridCtrl.cellNav.handleKeyDown(evt) !== null) {
                       $scope.stopEdit(evt);
-                      break;
-                    case uiGridConstants.keymap.LEFT:
-                      $scope.stopEdit(evt);
-                      break;
-                    case uiGridConstants.keymap.RIGHT:
-                      $scope.stopEdit(evt);
-                      break;
-                    case uiGridConstants.keymap.UP:
-                      evt.stopPropagation();
-                      break;
-                    case uiGridConstants.keymap.DOWN:
-                      evt.stopPropagation();
-                      break;
-                    case uiGridConstants.keymap.TAB:
-                      $scope.stopEdit(evt);
-                      break;
+                    }
+                  }
+                  else {
+                    //handle enter and tab for editing not using cellNav
+                    switch (evt.keyCode) {
+                      case uiGridConstants.keymap.ENTER: // Enter (Leave Field)
+                      case uiGridConstants.keymap.TAB:
+                        evt.stopPropagation();
+                        evt.preventDefault();
+                        $scope.stopEdit(evt);
+                        break;
+                    }
                   }
                   return true;
                 });
