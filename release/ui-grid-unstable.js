@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-697d17b - 2015-06-12
+ * ui-grid - v3.0.0-rc.21-fbc38cb - 2015-06-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1000,7 +1000,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
 
             // apply any headerCellClass
             var classAdded;
-            
+            var previousMouseX;
+
             // filter watchers
             var filterDeregisters = [];
             
@@ -1037,7 +1038,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
               if (event.button && event.button !== 0) {
                 return;
               }
-    
+              previousMouseX = event.pageX;
+
               $scope.mousedownStartTime = (new Date()).getTime();
               $scope.mousedownTimeout = $timeout(function() { }, mousedownTimeout);
     
@@ -1080,6 +1082,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService) {
             };
             
             $scope.moveFn = function( event ){
+              // Chrome is known to fire some bogus move events.
+              var changeValue = event.pageX - previousMouseX;
+              if ( changeValue === 0 ){ return; }
+
               // we're a move, so do nothing and leave for column move (if enabled) to take over
               $timeout.cancel($scope.mousedownTimeout);
               $scope.offAllEvents();
@@ -14533,15 +14539,12 @@ module.filter('px', function() {
                       break;
                   }
 
-                  if ($scope.deepEdit) {
-                    switch (evt.keyCode) {
-                      case uiGridConstants.keymap.LEFT:
-                      case uiGridConstants.keymap.RIGHT:
-                      case uiGridConstants.keymap.UP:
-                      case uiGridConstants.keymap.DOWN:
-                        evt.stopPropagation();
-                        break;
-                    }
+                  if ($scope.deepEdit &&
+                    evt.keyCode === uiGridConstants.keymap.LEFT ||
+                    evt.keyCode === uiGridConstants.keymap.RIGHT ||
+                    evt.keyCode === uiGridConstants.keymap.UP ||
+                    evt.keyCode === uiGridConstants.keymap.DOWN) {
+                    evt.stopPropagation();
                   }
                   // Pass the keydown event off to the cellNav service, if it exists
                   else if (uiGridCtrl && uiGridCtrl.grid.api.cellNav) {
@@ -19292,12 +19295,13 @@ module.filter('px', function() {
                 };
 
                 var moveFn = function( event ) {
+                  var changeValue = event.pageX - previousMouseX;
+                  if ( changeValue === 0 ){ return; }
                   //Disable text selection in Chrome during column move
                   document.onselectstart = function() { return false; };
 
                   moveOccurred = true;
 
-                  var changeValue = event.pageX - previousMouseX;
                   if (!elmCloned) {
                     cloneElement();
                   }
