@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.21-db54977 - 2015-06-12
+ * ui-grid - v3.0.0-rc.21-91ae013 - 2015-06-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13758,8 +13758,10 @@ module.filter('px', function() {
                  * </pre>
                  * @param {object} rowEntity the options.data element that was edited
                  * @param {object} colDef the column that was edited
+                 * @param {object} triggerEvent the event that triggered the edit.  Useful to prevent losing keystrokes on some
+                 *                 complex editors
                  */
-                beginCellEdit: function (rowEntity, colDef) {
+                beginCellEdit: function (rowEntity, colDef, triggerEvent) {
                 },
                 /**
                  * @ngdoc event
@@ -14238,7 +14240,7 @@ module.filter('px', function() {
 
             function beginEditKeyDown(evt) {
               if (uiGridEditService.isStartEditKey(evt)) {
-                beginEdit();
+                beginEdit(evt);
               }
             }
 
@@ -14334,7 +14336,7 @@ module.filter('px', function() {
              *  </pre>
              *
              */
-            function beginEdit() {
+            function beginEdit(triggerEvent) {
               // If we are already editing, then just skip this so we don't try editing twice...
               if (inEdit) {
                 return;
@@ -14430,8 +14432,8 @@ module.filter('px', function() {
                 deregOnEndCellEdit();
               });
 
-              $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT);
-              $scope.grid.api.edit.raise.beginCellEdit($scope.row.entity, $scope.col.colDef);
+              $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT, triggerEvent);
+              $scope.grid.api.edit.raise.beginCellEdit($scope.row.entity, $scope.col.colDef, triggerEvent);
             }
 
             function endEdit(retainFocus) {
