@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22 - 2015-06-15
+ * ui-grid - v3.0.0-rc.22-9ee59b2 - 2015-06-15
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2373,10 +2373,10 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
    </div>
    </doc:source>
    <doc:scenario>
-   it('should apply the right class to the element', function () {
-        element(by.css('.blah')).getCssValue('border')
+      it('should apply the right class to the element', function () {
+        element(by.css('.blah')).getCssValue('border-top-width')
           .then(function(c) {
-            expect(c).toContain('1px solid');
+            expect(c).toContain('1px');
           });
       });
    </doc:scenario>
@@ -2424,6 +2424,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
   }]);
 
 })();
+
 (function(){
   'use strict';
 

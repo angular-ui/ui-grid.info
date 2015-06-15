@@ -5,18 +5,18 @@
 
 <ul>
 <li><code>shown</code>: a function that determines whether or not to display the item</li>
-<li><code>title</code>: the title you'd like to have displayed for the menu item (note that you can also 
+<li><code>title</code>: the title you'd like to have displayed for the menu item (note that you can also
 use i18n on this through the <code>gridMenuTitleFilter</code> setting)</li>
 <li><code>icon</code>: an icon you'd like displayed alongside the item</li>
 <li><code>action</code>: a function that will be called when the menu is clicked</li>
 <li><code>active</code>: a function that highlights the item (giving a toggle type effect - see the sort on the column menus for an example)</li>
-<li><code>context</code>: by default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the 
-property <code>grid</code> (accessible through <code>this.grid</code>.  You can pass in your own context by supplying 
+<li><code>context</code>: by default, the <code>action</code>, <code>shown</code> and <code>active</code>'s' contexts will have a reference to the grid added as the
+property <code>grid</code> (accessible through <code>this.grid</code>.  You can pass in your own context by supplying
 the <code>context</code> property to your menu item. It will be accessible through <code>this.context</code>.</li>
 </ul>
 
-<p>The column menu will add the column's <code>GridColumn</code> object to the context as <code>this.context.col</code>. 
-You can then show/hide the the menu item based on conditions that use the grid and column.  You could 
+<p>The column menu will add the column's <code>GridColumn</code> object to the context as <code>this.context.col</code>.
+You can then show/hide the the menu item based on conditions that use the grid and column.  You could
 also use a custom column builder to add some item to the every column definition.</p>
 
 <p>You can remove the column hide option using the <code>enableHiding: false</code> columnDef option, which will also prevent
@@ -110,7 +110,11 @@ the column menu entirely using the <code>enableColumnMenu: false</code> columnDe
 <pre class="prettyprint linenums" ng-set-text="scenario.js-80"></pre>
 <script type="text/ng-template" id="scenario.js-80">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+
   describe('column menus', function() {
+    // Reload the page before each test if on Firefox. Chrome does it automatically.
+    gridTestUtils.firefoxReload();
+
     it('grid1 should have three visible columns', function () {
       gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
     });
@@ -118,31 +122,51 @@ the column menu entirely using the <code>enableColumnMenu: false</code> columnDe
     it('no column menu on first column, including from long press', function () {
       var headerCell = gridTestUtils.headerCell( 'grid1', 0 );
       expect( headerCell.all( by.css( '.ui-grid-column-menu-button' ) ).count()).toEqual(0);
-      
+
       browser.actions()
         .mouseDown(headerCell, protractor.Button.LEFT)
-        .perform();
-      browser.sleep(550);  // 500ms for long press
-      
-      var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).all( by.css( '.ui-grid-menu-inner' ));
-      expect(columnMenu.count()).toEqual(0);
+        .perform()
+        .then(function () {
+          return browser.sleep(550);  // 500ms for long press
+        })
+        .then(function () {
+          return browser.actions().mouseUp(headerCell, protractor.Button.LEFT).perform()
+        })
+        .then(function () {
+          var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).all( by.css( '.ui-grid-menu-inner' ));
+          expect(columnMenu.count()).toEqual(0);
+        })
     });
 
     it('2 menu items in second column, implying no hide option and no remove sort option', function () {
-      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 2 );        
-    });      
+      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 1, 2 );
+    });
 
     it('Long press opens menu in second column', function () {
       var headerCell = gridTestUtils.headerCell( 'grid1', 1 );
 
       browser.actions()
         .mouseDown(headerCell, protractor.Button.LEFT)
-        .perform();
-      browser.sleep(550);  // 500ms for long press
-      
-      var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).element( by.css( '.ui-grid-menu-inner' ));
-      expect(columnMenu.isDisplayed()).toEqual(true, 'column menu should be displayed');
-    });      
+        .perform()
+        .then(function () {
+          return browser.sleep(550);  // 500ms for long press
+        })
+        // Wait for element to be present b/c Firefox is kinda slow
+        .then(function () {
+          var el = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).element( by.css( '.ui-grid-menu-inner' ));
+
+          return browser.wait(function () {
+            return el.isPresent();
+          }, 2000);
+        })
+        .then(function () {
+          return browser.actions().mouseUp(headerCell, protractor.Button.LEFT).perform()
+        })
+        .then(function () {
+          var columnMenu = element( by.id( 'grid1' ) ).element( by.css( '.ui-grid-column-menu' ) ).element( by.css( '.ui-grid-menu-inner' ));
+          expect(columnMenu.isDisplayed()).toEqual(true, 'column menu should be displayed');
+        });
+    });
 
     it('Column 2 rotates through sort ASC and sort DESC, but no sort null', function () {
       gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'female' );
@@ -150,26 +174,32 @@ the column menu entirely using the <code>enableColumnMenu: false</code> columnDe
       gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'female' );
       gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'female' );
 
-      gridTestUtils.clickHeaderCell( 'grid1', 1 );
-      gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'male' );
-      gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'male' );
-      gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'male' );
-      gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'male' );
+      gridTestUtils.clickHeaderCell( 'grid1', 1 )
+        .then(function () {
+          gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'male' );
+          gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'male' );
+          gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'male' );
+          gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'male' );
 
-      gridTestUtils.clickHeaderCell( 'grid1', 1 );
-      gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'female' );
-      gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'female' );
-      gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'female' );
-      gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'female' );
-    });      
+          return gridTestUtils.clickHeaderCell( 'grid1', 1 );
+        })
+        .then(function () {
+          gridTestUtils.expectCellValueMatch( 'grid1', 0, 1, 'female' );
+          gridTestUtils.expectCellValueMatch( 'grid1', 1, 1, 'female' );
+          gridTestUtils.expectCellValueMatch( 'grid1', 2, 1, 'female' );
+          gridTestUtils.expectCellValueMatch( 'grid1', 3, 1, 'female' );
+        });
+    });
 
     it('6 visible items in the third column, implying hide option', function () {
-      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 2, 6 );        
+      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 2, 6 );
     });
 
     it('click header to sort third column, 7 visible items in the third column, implying remove sort option', function () {
-      gridTestUtils.clickHeaderCell( 'grid1', 2 );
-      gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 2, 7 );        
+      gridTestUtils.clickHeaderCell( 'grid1', 2 )
+        .then(function () {
+          gridTestUtils.expectVisibleColumnMenuItems( 'grid1', 2, 7 );
+        });
     });
   });
 
