@@ -295,6 +295,19 @@ gridTestUtils.expectHeaderColumnCount('myGrid', 2);
 </pre></div>
 </div>
 </li>
+<li><h3 id="expectHeaderColumns">expectHeaderColumns(gridId, expectedColumns)</h3>
+<div class="expectheadercolumns"><p>Checks that a grid has the given column headers.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
+<p>The ID of the grid that you want to inspect.</p></li>
+<li><code ng:non-bindable="">expectedColumns – {array} – </code>
+<p>The column headers you expect.</p></li>
+</ul>
+<h4 id="Example">Example</h4>
+<div class="example"><pre class="prettyprint linenums">
+gridTestUtils.expectHeaderColumns('myGrid', ['ID', 'Name', 'Email']);
+</pre></div>
+</div>
+</li>
 <li><h3 id="expectHeaderLeftColumnCount">expectHeaderLeftColumnCount(gridId, expectedNumCols)</h3>
 <div class="expectheaderleftcolumncount"><p>Checks that a grid header left render container has the specified number of columns.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">gridId – {string} – </code>
