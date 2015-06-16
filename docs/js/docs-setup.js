@@ -198,6 +198,13 @@ NG_DOCS={
       "id": "ui.grid.e2eTestLibrary",
       "shortName": "e2eTestLibrary",
       "type": "overview",
+      "keywords": "api e2etestlibrary end functions grid overview test to ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.e2eTestLibrary",
+      "shortName": "e2eTestLibrary",
+      "type": "overview",
       "keywords": "also api are associated be e2etestlibrary end functions grid it may necessary overview test the these to tutorial ui update updated whenever"
     },
     {
@@ -206,6 +213,13 @@ NG_DOCS={
       "shortName": "gridTest",
       "type": "service",
       "keywords": "about adding adjust again all also alternatively although an and any api are array as ascending associated at based be body border box boxes break browser but button by can cancel cancelfilterincolumn cancels cell cellvalue cellvalue1 cellvalue3 change changed check checks click clickcolumnmenu clickcolumnmenuhide clickcolumnmenuremovesort clickcolumnmenusortasc clickcolumnmenusortdesc clickgridmenuitem clickheadercell clicking clicks closed closes col colnumber colnumber-1 cols column columns constant container could count cumbersome data datacell dataset default descending develop does doing drag drags dropdown e2etestlibrary each easily element email end enter enterfilterincolumn enters error every exists expect expectcellvaluematch expectcolumncount expectedcol expectedcolumns expectednumcols expectednumrows expectedrow expectedvalue expectedvaluearray expectfilterboxincolumn expectfilterselectincolumn expectfootercellvaluematch expectfootercolumncount expectheadercellvaluematch expectheadercolumncount expectheadercolumns expectheaderleftcolumncount expectitems expectrowcount expectrowvaluesmatch expectvisiblecolumnmenuitems expectvisiblegridmenuitems feels fetchcol fetchrow filter filtervalue find finds footer footercell footervalue for fragile from functional functions given go greater grid gridid gridtestutils has have header headercell headers headervalue helpers hide how i18n id if in increase individual inspect internal into is it item itemnumber items left less ll look lots many matches may meaning menu menuitemnumber menus method methods myelement mygrid name necessary needs none not note number numbered numbers numerical of on only open option or ordering perform pinned quite reason recommended regex regexes remove render rendered repeater resizeheadercell resizer resizing result return returns row rows same script second see select selects service shift-clicks shiftclickheadercell simple size small so some sometimes sort specified standard stays string strings takes test tests text than that the then there therefore these this to towards tutorial typically ui ui-grid unclickgridmenu underlying update updated used useful using usually value values verify virtualisation visibility visible visiblecolumnmenuitems want when whenever which will wish with within would wrap write you"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.e2eTestLibrary.api:gridTestObject",
+      "shortName": "gridTestObject",
+      "type": "service",
+      "keywords": "api e2etestlibrary end functions grid service test to ui"
     },
     {
       "section": "api",
