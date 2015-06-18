@@ -1,44 +1,46 @@
-<h1><code ng:non-bindable="">ScrollEvent</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/ScrollEvent.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/ScrollEvent.js#L14" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">ScrollEvent</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Model for all scrollEvents</p></div>
-<h2 id="Usage">Usage</h2>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-scrollevent-page"><p>Model for all scrollEvents</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">ScrollEvent(grid, sourceRowContainer, sourceColContainer, source);</pre>
-<h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>that owns the scroll event</p></li>
-<li><code ng:non-bindable="">sourceRowContainer – {GridRenderContainer} – </code>
-<p>that owns the scroll event. Can be null</p></li>
-<li><code ng:non-bindable="">sourceColContainer – {GridRenderContainer} – </code>
-<p>that owns the scroll event. Can be null</p></li>
-<li><code ng:non-bindable="">source – {string} – </code>
-<p>the source of the event - from uiGridConstants.scrollEventSources or a string value of directive/service/factory.functionName</p></li>
-</ul>
-</div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="fireThrottledScrollingEvent">fireThrottledScrollingEvent()</h3>
-<div class="firethrottledscrollingevent"><p>fires a throttled event using grid.api.core.raise.scrollEvent</p></div>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="ui-grid-class-page ui-grid-class-scrollevent-page"><p>that owns the scroll event</p>
+</div></td></tr><tr><td>sourceRowContainer</td><td><a href="" class="label type-hint type-hint-gridrendercontainer">GridRenderContainer</a></td><td><div class="ui-grid-class-page ui-grid-class-scrollevent-page"><p>that owns the scroll event. Can be null</p>
+</div></td></tr><tr><td>sourceColContainer</td><td><a href="" class="label type-hint type-hint-gridrendercontainer">GridRenderContainer</a></td><td><div class="ui-grid-class-page ui-grid-class-scrollevent-page"><p>that owns the scroll event. Can be null</p>
+</div></td></tr><tr><td>source</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="ui-grid-class-page ui-grid-class-scrollevent-page"><p>the source of the event - from uiGridConstants.scrollEventSources or a string value of directive/service/factory.functionName</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/ScrollEvent.js#L63" class="view-source icon-eye-open"> </a><h3 id="methods_firethrottledscrollingevent">fireThrottledScrollingEvent()</h3>
+<div class="firethrottledscrollingevent"><div class="firethrottledscrollingevent-page"><p>fires a throttled event using grid.api.core.raise.scrollEvent</p>
+</div></div>
 </li>
-<li><h3 id="getNewScrollLeft">getNewScrollLeft()</h3>
-<div class="getnewscrollleft"><p>returns newScrollLeft property if available; calculates a new value if it isn't</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/ScrollEvent.js#L76" class="view-source icon-eye-open"> </a><h3 id="methods_getnewscrollleft">getNewScrollLeft()</h3>
+<div class="getnewscrollleft"><div class="getnewscrollleft-page"><p>returns newScrollLeft property if available; calculates a new value if it isn&#39;t</p>
+</div></div>
 </li>
-<li><h3 id="getNewScrollTop">getNewScrollTop()</h3>
-<div class="getnewscrolltop"><p>returns newScrollTop property if available; calculates a new value if it isn't</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/ScrollEvent.js#L108" class="view-source icon-eye-open"> </a><h3 id="methods_getnewscrolltop">getNewScrollTop()</h3>
+<div class="getnewscrolltop"><div class="getnewscrolltop-page"><p>returns newScrollTop property if available; calculates a new value if it isn&#39;t</p>
+</div></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="grid">grid</h3>
-<div class="grid"><p>A reference back to the grid</p></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_grid">grid</h3>
+<div class="grid"><div class="grid-page"><p>A reference back to the grid</p>
+</div></div>
 </li>
-<li><h3 id="noDelay">noDelay</h3>
-<div class="nodelay"><p>most scroll events from the mouse or trackpad require delay to operate properly
-set to false to eliminate delay.  Useful for scroll events that the grid causes, such as scrolling to make a row visible.</p></div>
+<li><h3 id="properties_nodelay">noDelay</h3>
+<div class="nodelay"><div class="nodelay-page"><p>most scroll events from the mouse or trackpad require delay to operate properly
+set to false to eliminate delay.  Useful for scroll events that the grid causes, such as scrolling to make a row visible.</p>
+</div></div>
 </li>
-<li><h3 id="source">source</h3>
-<div class="source"><p>the source of the scroll event. limited to values from uiGridConstants.scrollEventSources</p></div>
+<li><h3 id="properties_source">source</h3>
+<div class="source"><div class="source-page"><p>the source of the scroll event. limited to values from uiGridConstants.scrollEventSources</p>
+</div></div>
 </li>
 </ul>
 </div>

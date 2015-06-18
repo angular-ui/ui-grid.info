@@ -1,58 +1,48 @@
-<h1><code ng:non-bindable="">PublicApi</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.edit</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/edit/js/gridEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/edit/js/gridEdit.js#L63" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.edit</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Public Api for edit feature</p></div>
-<div class="member event"><h2 id="Events">Events</h2>
-<ul class="events"><li><h3 id="afterCellEdit">afterCellEdit</h3>
-<div class="aftercelledit"><p>raised when cell editing is complete
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-edit-api-page ui-grid-edit-api-publicapi-page"><p>Public Api for edit feature</p>
+</div></div>
+<div class="member event"><h2 id="events">Events</h2>
+<ul class="events"><li><h3 id="events_aftercelledit">afterCellEdit</h3>
+<div class="aftercelledit"><div class="aftercelledit-page"><p>raised when cell editing is complete
 <pre class="prettyprint linenums">
      gridApi.edit.on.afterCellEdit(scope,function(rowEntity, colDef){})
-</pre><div class="inline"></div>
+</pre>
+</div><div class="inline"></div>
 <div class="inline"></div>
-<h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>the options.data element that was edited</p></li>
-<li><code ng:non-bindable="">colDef – {object} – </code>
-<p>the column that was edited</p></li>
-<li><code ng:non-bindable="">newValue – {object} – </code>
-<p>new value</p></li>
-<li><code ng:non-bindable="">oldValue – {object} – </code>
-<p>old value</p></li>
-</ul>
-</div>
+<h5 id="events_aftercelledit_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="aftercelledit-page"><p>the options.data element that was edited</p>
+</div></td></tr><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="aftercelledit-page"><p>the column that was edited</p>
+</div></td></tr><tr><td>newValue</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="aftercelledit-page"><p>new value</p>
+</div></td></tr><tr><td>oldValue</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="aftercelledit-page"><p>old value</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="beginCellEdit">beginCellEdit</h3>
-<div class="begincelledit"><p>raised when cell editing starts on a cell
+<li><h3 id="events_begincelledit">beginCellEdit</h3>
+<div class="begincelledit"><div class="begincelledit-page"><p>raised when cell editing starts on a cell
 <pre class="prettyprint linenums">
      gridApi.edit.on.beginCellEdit(scope,function(rowEntity, colDef){})
-</pre><div class="inline"></div>
+</pre>
+</div><div class="inline"></div>
 <div class="inline"></div>
-<h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>the options.data element that was edited</p></li>
-<li><code ng:non-bindable="">colDef – {object} – </code>
-<p>the column that was edited</p></li>
-<li><code ng:non-bindable="">triggerEvent – {object} – </code>
-<p>the event that triggered the edit.  Useful to prevent losing keystrokes on some
-complex editors</p></li>
-</ul>
-</div>
+<h5 id="events_begincelledit_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="begincelledit-page"><p>the options.data element that was edited</p>
+</div></td></tr><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="begincelledit-page"><p>the column that was edited</p>
+</div></td></tr><tr><td>triggerEvent</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="begincelledit-page"><p>the event that triggered the edit.  Useful to prevent losing keystrokes on some
+complex editors</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="cancelCellEdit">cancelCellEdit</h3>
-<div class="cancelcelledit"><p>raised when cell editing is cancelled on a cell
+<li><h3 id="events_cancelcelledit">cancelCellEdit</h3>
+<div class="cancelcelledit"><div class="cancelcelledit-page"><p>raised when cell editing is cancelled on a cell
 <pre class="prettyprint linenums">
      gridApi.edit.on.cancelCellEdit(scope,function(rowEntity, colDef){})
-</pre><div class="inline"></div>
+</pre>
+</div><div class="inline"></div>
 <div class="inline"></div>
-<h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>the options.data element that was edited</p></li>
-<li><code ng:non-bindable="">colDef – {object} – </code>
-<p>the column that was edited</p></li>
-</ul>
-</div>
+<h5 id="events_cancelcelledit_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="cancelcelledit-page"><p>the options.data element that was edited</p>
+</div></td></tr><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="cancelcelledit-page"><p>the column that was edited</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>

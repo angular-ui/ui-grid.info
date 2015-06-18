@@ -1,36 +1,39 @@
-<h1><code ng:non-bindable="">ColumnDef</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.treeBase</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/tree-base/js/tree-base.js#L120" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">ColumnDef</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.treeBase</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>ColumnDef for tree feature, these are available to be 
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="customTreeAggregationFinalizerFn">customTreeAggregationFinalizerFn</h3>
-<div class="customtreeaggregationfinalizerfn"><p>A custom function that populates aggregation.rendered, this is called when
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-treebase-api-page ui-grid-treebase-api-columndef-page"><p>ColumnDef for tree feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_customtreeaggregationfinalizerfn">customTreeAggregationFinalizerFn</h3>
+<div class="customtreeaggregationfinalizerfn"><div class="customtreeaggregationfinalizerfn-page"><p>A custom function that populates aggregation.rendered, this is called when
 a particular aggregation has been fully calculated, and we want to render the value.</p>
-
 <p>With the native aggregation options we just concatenate <code>aggregation.label</code> and
 <code>aggregation.value</code>, but if you wanted to apply a filter or otherwise manipulate the label
 or the value, you can do so with this function. This function will be called after the
-the default <code>finalizerFn</code>.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+the default <code>finalizerFn</code>.</p>
+</div><h4 id="properties_customtreeaggregationfinalizerfn_example">Example</h4>
+<div class="example"><div class="customtreeaggregationfinalizerfn-page"><pre class="prettyprint linenums">
 customTreeAggregationFinalizerFn = function ( aggregation ){
   aggregation.rendered = aggregation.label + aggregation.value / 100 + '%';
 }
 </pre>
-<br/>Defaults to undefined.</p></div>
+<br/>Defaults to undefined.</p>
+</div></div>
 </div>
 </li>
-<li><h3 id="customTreeAggregationFn">customTreeAggregationFn</h3>
-<div class="customtreeaggregationfn"><p>A custom function that aggregates rows into some form of
+<li><h3 id="properties_customtreeaggregationfn">customTreeAggregationFn</h3>
+<div class="customtreeaggregationfn"><div class="customtreeaggregationfn-page"><p>A custom function that aggregates rows into some form of
 total.  Aggregations run row-by-row, the function needs to be capable of
 creating a running total.</p>
-
 <p>The function will be provided the aggregation item (in which you can store running
 totals), the row value that is to be aggregated, and that same row value converted to
-a number (most aggregations work on numbers)</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+a number (most aggregations work on numbers)</p>
+</div><h4 id="properties_customtreeaggregationfn_example">Example</h4>
+<div class="example"><div class="customtreeaggregationfn-page"><pre class="prettyprint linenums">
 customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
   // calculates the average of the squares of the values
   if ( typeof(aggregation.count) === 'undefined' ){
@@ -48,54 +51,53 @@ customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
   aggregation.value = aggregation.total / aggregation.count;
 }
 </pre>
-<br/>Defaults to undefined. May be overwritten by treeAggregationType, the two options should not be used together.</p></div>
+<br/>Defaults to undefined. May be overwritten by treeAggregationType, the two options should not be used together.</p>
+</div></div>
 </div>
 </li>
-<li><h3 id="treeAggregationLabel">treeAggregationLabel</h3>
-<div class="treeaggregationlabel"><p>A custom label to use for this aggregation. If provided we don't use native i18n.</p></div>
+<li><h3 id="properties_treeaggregationlabel">treeAggregationLabel</h3>
+<div class="treeaggregationlabel"><div class="treeaggregationlabel-page"><p>A custom label to use for this aggregation. If provided we don&#39;t use native i18n.</p>
+</div></div>
 </li>
-<li><h3 id="treeAggregationType">treeAggregationType</h3>
-<div class="treeaggregationtype"><p>Use one of the native or grid-level aggregation methods for calculating aggregations on this column.
+<li><h3 id="properties_treeaggregationtype">treeAggregationType</h3>
+<div class="treeaggregationtype"><div class="treeaggregationtype-page"><p>Use one of the native or grid-level aggregation methods for calculating aggregations on this column.
 Native method are in the constants file and include: SUM, COUNT, MIN, MAX, AVG. This may also be the property the
 name of an aggregation function defined with <a href="#/api/ui.grid.treeBase.api:GridOptions">treeCustomAggregations</a>.</p>
-
 <pre class="prettyprint linenums">
     treeAggregationType = uiGridTreeBaseConstants.aggregation.SUM,
   }
 </pre>
-
 <p>If you are using aggregations you should either:</p>
-
 <ul>
 <li>also use grouping, in which case the aggregations are displayed in the group header, OR</li>
 <li>use treeView, in which case you can set <code>treeAggregationUpdateEntity: true</code> in the colDef, and
 treeBase will store the aggregation information in the entity, or you can set <code>treeAggregationUpdateEntity: false</code> 
 in the colDef, and you need to manual retrieve the calculated aggregations from the row.treeNode.aggregations</li>
 </ul>
-
 <p><br/>Takes precendence over a treeAggregationFn, the two options should not be used together.
-<br/>Defaults to undefined.</p></div>
+<br/>Defaults to undefined.</p>
+</div></div>
 </li>
-<li><h3 id="treeAggregationUpdateEntity">treeAggregationUpdateEntity</h3>
-<div class="treeaggregationupdateentity"><p>Store calculated aggregations into the entity, allowing them
+<li><h3 id="properties_treeaggregationupdateentity">treeAggregationUpdateEntity</h3>
+<div class="treeaggregationupdateentity"><div class="treeaggregationupdateentity-page"><p>Store calculated aggregations into the entity, allowing them
 to be displayed in the grid using a standard cellTemplate.  This defaults to true,
-if you are using grouping then you shouldn't set it to false, as then the aggregations won't
+if you are using grouping then you shouldn&#39;t set it to false, as then the aggregations won&#39;t
 display.</p>
-
-<p>If you are using treeView in most cases you'll want to set this to true.  This will result in 
+<p>If you are using treeView in most cases you&#39;ll want to set this to true.  This will result in 
 getCellValue returning the aggregation rather than whatever was stored in the cell attribute on
 the entity.  If you want to render the underlying entity value (and do something else with the aggregation)
 then you could use a custom cellTemplate to display <code>row.entity.myAttribute</code>, rather than using getCellValue.</p>
-
-<p><br/>Defaults to true</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<p><br/>Defaults to true</p>
+</div><h4 id="properties_treeaggregationupdateentity_example">Example</h4>
+<div class="example"><div class="treeaggregationupdateentity-page"><pre class="prettyprint linenums">
 gridOptions.columns = [{ 
   name: 'myCol', 
   treeAggregation: { type: uiGridTreeBaseConstants.aggregation.SUM }, 
   treeAggregationUpdateEntity: true 
   cellTemplate: '&lt;div&gt;{{row.entity.myCol + " " + row.treeNode.aggregations[0].rendered}}&lt;/div&gt;'
 }];
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
 </ul>

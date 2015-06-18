@@ -1,45 +1,45 @@
-<h1><code ng:non-bindable="">ColumnDef</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.grouping</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L370" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">ColumnDef</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.grouping</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>ColumnDef for grouping feature, these are available to be 
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="enableGrouping">enableGrouping</h3>
-<div class="enablegrouping"><p>Enable grouping on this column
-<br/>Defaults to true.</p></div>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-grouping-api-page ui-grid-grouping-api-columndef-page"><p>ColumnDef for grouping feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_enablegrouping">enableGrouping</h3>
+<div class="enablegrouping"><div class="enablegrouping-page"><p>Enable grouping on this column
+<br/>Defaults to true.</p>
+</div></div>
 </li>
-<li><h3 id="grouping">grouping</h3>
-<div class="grouping"><p>Set the grouping for a column.  Format is:</p>
-
+<li><h3 id="properties_grouping">grouping</h3>
+<div class="grouping"><div class="grouping-page"><p>Set the grouping for a column.  Format is:</p>
 <pre><code>  {
-    groupPriority: &lt;number, starts at 0, if less than 0 or undefined then we're aggregating in this column&gt;
+    groupPriority: &lt;number, starts at 0, if less than 0 or undefined then we&#39;re aggregating in this column&gt;
   }
-</code></pre>
-
-<p><strong>Note that aggregation used to be included in grouping, but is now separately set on the column via treeAggregation
+</code></pre><p><strong>Note that aggregation used to be included in grouping, but is now separately set on the column via treeAggregation
 setting in treeBase</strong></p>
-
 <p>We group in the priority order given, this will also put these columns to the high order of the sort irrespective
 of the sort priority given them.  If there is no sort defined then we sort ascending, if there is a sort defined then
 we use that sort.</p>
-
 <p>If the groupPriority is undefined or less than 0, then we expect to be aggregating, and we look at the 
 aggregation types to determine what sort of aggregation we can do.  Values are in the constants file, but 
 include SUM, COUNT, MAX, MIN</p>
-
-<p>groupPriorities should generally be sequential, if they're not then the next time getGrouping is called 
-we'll renumber them to be sequential.
-<br/>Defaults to undefined.</p></div>
+<p>groupPriorities should generally be sequential, if they&#39;re not then the next time getGrouping is called 
+we&#39;ll renumber them to be sequential.
+<br/>Defaults to undefined.</p>
+</div></div>
 </li>
-<li><h3 id="groupingShowAggregationMenu">groupingShowAggregationMenu</h3>
-<div class="groupingshowaggregationmenu"><p>Show the aggregation menu on this column
-<br/>Defaults to true.</p></div>
+<li><h3 id="properties_groupingshowaggregationmenu">groupingShowAggregationMenu</h3>
+<div class="groupingshowaggregationmenu"><div class="groupingshowaggregationmenu-page"><p>Show the aggregation menu on this column
+<br/>Defaults to true.</p>
+</div></div>
 </li>
-<li><h3 id="groupingShowGroupingMenu">groupingShowGroupingMenu</h3>
-<div class="groupingshowgroupingmenu"><p>Show the grouping (group and ungroup items) menu on this column
-<br/>Defaults to true.</p></div>
+<li><h3 id="properties_groupingshowgroupingmenu">groupingShowGroupingMenu</h3>
+<div class="groupingshowgroupingmenu"><div class="groupingshowgroupingmenu-page"><p>Show the grouping (group and ungroup items) menu on this column
+<br/>Defaults to true.</p>
+</div></div>
 </li>
 </ul>
 </div>

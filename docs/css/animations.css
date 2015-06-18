@@ -32,7 +32,8 @@
   opacity:0;
   top:10px;
 }
-.slide-reveal.ng-enter.ng-enter-active {
+.slide-reveal.ng-enter.ng-enter-active,
+.slide-reveal.ng-enter-active {
   top:0;
   opacity:1;
 }
@@ -40,17 +41,38 @@
 .foldout.ng-enter,
 .foldout.ng-move,
 .foldout.ng-hide-add,
-.foldout.ng-hide-remove {
+.foldout.ng-hide-remove,
+.expand.ng-enter {
   -webkit-transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
   -moz-transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
   -o-transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
   transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+}
+.expand.ng-enter-active {
+  opacity:1;
+  max-height:40px;
+}
+
+.expand.ng-leave {
+  -webkit-transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+  -moz-transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+  -o-transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+  transition:0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+
+  opacity:1;
+  max-height:40px;
+  overflow:hidden;
 }
 
 .foldout.ng-hide-remove,
 .foldout.ng-hide-add.ng-hide-active,
 .foldout.ng-enter,
-.foldout.ng-move {
+.foldout.ng-move,
+.expand.ng-leave-active {
   opacity:0;
 }
 

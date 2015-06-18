@@ -1,9 +1,10 @@
-<h1><code ng:non-bindable="">GridApi</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridApi.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridApi.js#L22" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridApi</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>GridApi provides the ability to register public methods events inside the grid and allow
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-gridapi-page"><p>GridApi provides the ability to register public methods events inside the grid and allow
 for other components to use the api via featureName.raise.methodName and featureName.on.eventName(function(args){}.
 <br/>
 To listen to events, you must add a callback to gridOptions.onRegisterApi
@@ -13,17 +14,15 @@ To listen to events, you must add a callback to gridOptions.onRegisterApi
          $log.log('navigation event');
      });
   };
-</pre></div>
-<h2 id="Usage">Usage</h2>
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridApi(grid);</pre>
-<h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {object} – </code>
-<p>grid that owns api</p></li>
-</ul>
-</div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="registerEvent">registerEvent(featureName, eventName)</h3>
-<div class="registerevent"><p>Registers a new event for the given feature.  The event will get a
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="ui-grid-class-page ui-grid-class-gridapi-page"><p>grid that owns api</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridApi.js#L224" class="view-source icon-eye-open"> </a><h3 id="methods_registerevent">registerEvent(featureName, eventName)</h3>
+<div class="registerevent"><div class="registerevent-page"><p>Registers a new event for the given feature.  The event will get a
 .raise and .on prepended to it
 <br>
 .raise.eventName() - takes no arguments
@@ -31,24 +30,21 @@ To listen to events, you must add a callback to gridOptions.onRegisterApi
 <br/>
 .on.eventName(scope, callBackFn, _this)
 <br/>
-scope - a scope reference to add a deregister call to the scopes .$on('destroy').  Scope is optional and can be a null value,
+scope - a scope reference to add a deregister call to the scopes .$on(&#39;destroy&#39;).  Scope is optional and can be a null value,
 but in this case you must deregister it yourself via the returned deregister function
 <br/>
 callBackFn - The function to call
 <br/>
 _this - optional this context variable for callbackFn. If omitted, grid.api will be used for the context
 <br/>
-.on.eventName returns a dereg funtion that will remove the listener.  It's not necessary to use it as the listener
-will be removed when the scope is destroyed.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">featureName – {string} – </code>
-<p>name of the feature that raises the event</p></li>
-<li><code ng:non-bindable="">eventName – {string} – </code>
-<p>name of the event</p></li>
-</ul>
-</div>
+.on.eventName returns a dereg funtion that will remove the listener.  It&#39;s not necessary to use it as the listener
+will be removed when the scope is destroyed.</p>
+</div><h5 id="methods_registerevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>featureName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="registerevent-page"><p>name of the feature that raises the event</p>
+</div></td></tr><tr><td>eventName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="registerevent-page"><p>name of the event</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerEventsFromObject">registerEventsFromObject(eventObjectMap)</h3>
-<div class="registereventsfromobject"><p>Registers features and events from a simple objectMap.
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridApi.js#L297" class="view-source icon-eye-open"> </a><h3 id="methods_registereventsfromobject">registerEventsFromObject(eventObjectMap)</h3>
+<div class="registereventsfromobject"><div class="registereventsfromobject-page"><p>Registers features and events from a simple objectMap.
 eventObjectMap must be in this format (multiple features allowed)
 <pre class="prettyprint linenums">
 {featureName:
@@ -57,53 +53,40 @@ eventObjectMap must be in this format (multiple features allowed)
          eventNameTwo:function(args){}
        }
  }
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">eventObjectMap – {object} – </code>
-<p>map of feature/event names</p></li>
-</ul>
-</div>
+</pre>
+</div><h5 id="methods_registereventsfromobject_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventObjectMap</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="registereventsfromobject-page"><p>map of feature/event names</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerMethod">registerMethod(featureName, methodName, callBackFn, _this)</h3>
-<div class="registermethod"><p>Registers a new event for the given feature</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">featureName – {string} – </code>
-<p>name of the feature</p></li>
-<li><code ng:non-bindable="">methodName – {string} – </code>
-<p>name of the method</p></li>
-<li><code ng:non-bindable="">callBackFn – {object} – </code>
-<p>function to execute</p></li>
-<li><code ng:non-bindable="">_this – {object} – </code>
-<p>binds callBackFn 'this' to _this.  Defaults to gridApi.grid</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridApi.js#L326" class="view-source icon-eye-open"> </a><h3 id="methods_registermethod">registerMethod(featureName, methodName, callBackFn, _this)</h3>
+<div class="registermethod"><div class="registermethod-page"><p>Registers a new event for the given feature</p>
+</div><h5 id="methods_registermethod_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>featureName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="registermethod-page"><p>name of the feature</p>
+</div></td></tr><tr><td>methodName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="registermethod-page"><p>name of the method</p>
+</div></td></tr><tr><td>callBackFn</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="registermethod-page"><p>function to execute</p>
+</div></td></tr><tr><td>_this</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="registermethod-page"><p>binds callBackFn &#39;this&#39; to _this.  Defaults to gridApi.grid</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerMethodsFromObject">registerMethodsFromObject(eventObjectMap, _this)</h3>
-<div class="registermethodsfromobject"><p>Registers features and methods from a simple objectMap.
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridApi.js#L351" class="view-source icon-eye-open"> </a><h3 id="methods_registermethodsfromobject">registerMethodsFromObject(eventObjectMap, _this)</h3>
+<div class="registermethodsfromobject"><div class="registermethodsfromobject-page"><p>Registers features and methods from a simple objectMap.
 eventObjectMap must be in this format (multiple features allowed)
 <br>
 {featureName:
        {
          methodNameOne:function(args){},
          methodNameTwo:function(args){}
-       }</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">eventObjectMap – {object} – </code>
-<p>map of feature/event names</p></li>
-<li><code ng:non-bindable="">_this – {object} – </code>
-<p>binds this to _this for all functions.  Defaults to gridApi.grid</p></li>
-</ul>
-</div>
+       }</p>
+</div><h5 id="methods_registermethodsfromobject_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventObjectMap</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="registermethodsfromobject-page"><p>map of feature/event names</p>
+</div></td></tr><tr><td>_this</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="registermethodsfromobject-page"><p>binds this to _this for all functions.  Defaults to gridApi.grid</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="suppressEvents">suppressEvents(listenerFuncs, callBackFn)</h3>
-<div class="suppressevents"><p>Used to execute a function while disabling the specified event listeners.
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridApi.js#L174" class="view-source icon-eye-open"> </a><h3 id="methods_suppressevents">suppressEvents(listenerFuncs, callBackFn)</h3>
+<div class="suppressevents"><div class="ui-grid-class-page ui-grid-class-suppressevents-page"><p>Used to execute a function while disabling the specified event listeners.
 Disables the listenerFunctions, executes the callbackFn, and then enables
-the listenerFunctions again</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">listenerFuncs – {object} – </code>
-<p>listenerFunc or array of listenerFuncs to suppress. These must be the same
-functions that were used in the .on.eventName method</p></li>
-<li><code ng:non-bindable="">callBackFn – {object} – </code>
-<p>function to execute</p></li>
-</ul>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+the listenerFunctions again</p>
+</div><h5 id="methods_suppressevents_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>listenerFuncs</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="ui-grid-class-page ui-grid-class-suppressevents-page"><p>listenerFunc or array of listenerFuncs to suppress. These must be the same
+functions that were used in the .on.eventName method</p>
+</div></td></tr><tr><td>callBackFn</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="ui-grid-class-page ui-grid-class-suppressevents-page"><p>function to execute</p>
+</div></td></tr></tbody></table><h4 id="methods_suppressevents_example">Example</h4>
+<div class="example"><div class="ui-grid-class-page ui-grid-class-suppressevents-page"><pre class="prettyprint linenums">
 var navigate = function (newRowCol, oldRowCol){
    //do something on navigate
 }
@@ -117,7 +100,8 @@ gridApi.suppressEvents(navigate, function(){
    gridApi.cellNav.scrollTo(aRow, aCol);
 });
 
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
 </ul>

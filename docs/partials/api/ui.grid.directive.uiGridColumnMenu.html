@@ -1,39 +1,33 @@
-<h1><code ng:non-bindable="">uiGridColumnMenu</code>
-<span class="hint">(directive in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/directives/ui-grid-column-menu.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/directives/ui-grid-column-menu.js#L321" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridColumnMenu</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Provides the column menu framework, leverages uiGridMenu underneath</p></div>
-<h2 id="Usage">Usage</h2>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-directive-page ui-grid-directive-uigridcolumnmenu-page"><p>Provides the column menu framework, leverages uiGridMenu underneath</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY ui-grid-column-menu&gt;
    ...
 &lt;/ANY&gt;</pre>
-as class<pre class="prettyprint linenums">&lt;ANY class="ui-grid-column-menu"&gt;
-   ...
-&lt;/ANY&gt;</pre>
 </div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="hideMenu">hideMenu(broadcastTrigger)</h3>
-<div class="hidemenu"><p>Hides the column menu.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">broadcastTrigger – {boolean} – </code>
-<p>true if we were triggered by a broadcast
-from the menu itself - in which case don't broadcast again as we'll get
-an infinite loop</p></li>
-</ul>
-</div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/directives/ui-grid-column-menu.js#L388" class="view-source icon-eye-open"> </a><h3 id="methods_hidemenu">hideMenu(broadcastTrigger)</h3>
+<div class="hidemenu"><div class="hidemenu-page"><p>Hides the column menu.</p>
+</div><h5 id="methods_hidemenu_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>broadcastTrigger</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="hidemenu-page"><p>true if we were triggered by a broadcast
+from the menu itself - in which case don&#39;t broadcast again as we&#39;ll get
+an infinite loop</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="showMenu">showMenu(column, $columnElement)</h3>
-<div class="showmenu"><p>Shows the column menu.  If the menu is already displayed it
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/directives/ui-grid-column-menu.js#L352" class="view-source icon-eye-open"> </a><h3 id="methods_showmenu">showMenu(column, $columnElement)</h3>
+<div class="showmenu"><div class="showmenu-page"><p>Shows the column menu.  If the menu is already displayed it
 calls the menu to ask it to hide (it will animate), then it repositions the menu
 to the right place whilst hidden (it will make an assumption on menu width), 
 then it asks the menu to show (it will animate), then it repositions the menu again 
-once we can calculate it's size.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">column – {GridCol} – </code>
-<p>the column we want to position below</p></li>
-<li><code ng:non-bindable="">$columnElement – {element} – </code>
-<p>the column element we want to position below</p></li>
-</ul>
-</div>
+once we can calculate it&#39;s size.</p>
+</div><h5 id="methods_showmenu_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="showmenu-page"><p>the column we want to position below</p>
+</div></td></tr><tr><td>$columnElement</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="showmenu-page"><p>the column element we want to position below</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>

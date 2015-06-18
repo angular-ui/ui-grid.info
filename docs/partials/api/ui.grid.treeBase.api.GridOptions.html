@@ -1,28 +1,30 @@
-<h1><code ng:non-bindable="">GridOptions</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.treeBase</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/tree-base/js/tree-base.js#L434" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.treeBase</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>GridOptions for treeBase feature, these are available to be
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="showTreeExpandNoChildren">showTreeExpandNoChildren</h3>
-<div class="showtreeexpandnochildren"><p>If set to true, show the expand/collapse button even if there are no
-children of a node.  You'd use this if you're planning to dynamically load the children</p>
-
-<p><br/>Defaults to true, grouping overrides to false</p></div>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-treebase-api-page ui-grid-treebase-api-gridoptions-page"><p>GridOptions for treeBase feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_showtreeexpandnochildren">showTreeExpandNoChildren</h3>
+<div class="showtreeexpandnochildren"><div class="showtreeexpandnochildren-page"><p>If set to true, show the expand/collapse button even if there are no
+children of a node.  You&#39;d use this if you&#39;re planning to dynamically load the children</p>
+<p><br/>Defaults to true, grouping overrides to false</p>
+</div></div>
 </li>
-<li><h3 id="showTreeRowHeader">showTreeRowHeader</h3>
-<div class="showtreerowheader"><p>If set to false, don't create the row header.  Youll need to programatically control the expand
+<li><h3 id="properties_showtreerowheader">showTreeRowHeader</h3>
+<div class="showtreerowheader"><div class="showtreerowheader-page"><p>If set to false, don&#39;t create the row header.  Youll need to programatically control the expand
 states
-<br/>Defaults to true</p></div>
+<br/>Defaults to true</p>
+</div></div>
 </li>
-<li><h3 id="treeCustomAggregations">treeCustomAggregations</h3>
-<div class="treecustomaggregations"><p>Define custom aggregation functions. The properties of this object will be
+<li><h3 id="properties_treecustomaggregations">treeCustomAggregations</h3>
+<div class="treecustomaggregations"><div class="treecustomaggregations-page"><p>Define custom aggregation functions. The properties of this object will be
 aggregation types available for use on columnDef with <a href="#/api/ui.grid.treeBase.api:ColumnDef">treeAggregationType</a> or through the column menu.
 If a function defined here uses the same name as one of the native aggregations, this one will take precedence.
 The object format is:</p>
-
 <pre class="prettyprint linenums">
   {
     aggregationName: {
@@ -42,28 +44,29 @@ The object format is:</p>
     }
   }
 </pre>
-
 <p><br/>The <code>finalizerFn</code> may be used to manipulate the value before rendering, or to
 apply a custom rendered value. If <code>aggregation.rendered</code> is left undefined, the value will be
 rendered. Note that the native aggregation functions use an <code>finalizerFn</code> to concatenate
 the label and the value.</p>
-
-<p><br/>Defaults to {}</p></div>
+<p><br/>Defaults to {}</p>
+</div></div>
 </li>
-<li><h3 id="treeIndent">treeIndent</h3>
-<div class="treeindent"><p>Number of pixels of indent for the icon at each tree level, wider indents are visually more pleasing,
+<li><h3 id="properties_treeindent">treeIndent</h3>
+<div class="treeindent"><div class="treeindent-page"><p>Number of pixels of indent for the icon at each tree level, wider indents are visually more pleasing,
 but will make the tree row header wider
-<br/>Defaults to 10</p></div>
+<br/>Defaults to 10</p>
+</div></div>
 </li>
-<li><h3 id="treeRowHeaderAlwaysVisible">treeRowHeaderAlwaysVisible</h3>
-<div class="treerowheaderalwaysvisible"><p>If set to true, row header even if there are no tree nodes</p>
-
-<p><br/>Defaults to true</p></div>
+<li><h3 id="properties_treerowheaderalwaysvisible">treeRowHeaderAlwaysVisible</h3>
+<div class="treerowheaderalwaysvisible"><div class="treerowheaderalwaysvisible-page"><p>If set to true, row header even if there are no tree nodes</p>
+<p> <br/>Defaults to true</p>
+</div></div>
 </li>
-<li><h3 id="treeRowHeaderBaseWidth">treeRowHeaderBaseWidth</h3>
-<div class="treerowheaderbasewidth"><p>Base width of the tree header, provides for a single level of tree.  This
+<li><h3 id="properties_treerowheaderbasewidth">treeRowHeaderBaseWidth</h3>
+<div class="treerowheaderbasewidth"><div class="treerowheaderbasewidth-page"><p>Base width of the tree header, provides for a single level of tree.  This
 is incremented by <code>treeIndent</code> for each extra level
-<br/>Defaults to 30</p></div>
+<br/>Defaults to 30</p>
+</div></div>
 </li>
 </ul>
 </div>

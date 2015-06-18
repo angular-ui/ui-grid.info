@@ -1,21 +1,20 @@
-<h1><code ng:non-bindable="">grouping</code>
-<span class="hint">(grid in module <code ng:non-bindable="">ui.grid.grouping</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L105" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">grouping</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.grouping</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Grid properties and functions added for grouping</p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="groupHeaderCache">groupHeaderCache</h3>
-<div class="groupheadercache"><p>Cache that holds the group header rows we created last time, we'll
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-grouping-grid-page ui-grid-grouping-grid-grouping-page"><p>Grid properties and functions added for grouping</p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_groupheadercache">groupHeaderCache</h3>
+<div class="groupheadercache"><div class="groupheadercache-page"><p>Cache that holds the group header rows we created last time, we&#39;ll
 reuse these next time, not least because they hold our expanded states.</p>
-
-<p>We need to take care with these that they don't become a memory leak, we
+<p>We need to take care with these that they don&#39;t become a memory leak, we
 create a new cache each time using the values from the old cache.  This works
-so long as we're creating group rows for invisible rows as well.</p>
-
+so long as we&#39;re creating group rows for invisible rows as well.</p>
 <p>The cache is a nested hash, indexed on the value we grouped by.  So if we
-grouped by gender then age, we'd maybe have something like:</p>
-
+grouped by gender then age, we&#39;d maybe have something like:</p>
 <pre><code>  {
     male: {
       row: &lt;pointer to the old row&gt;,
@@ -30,9 +29,8 @@ grouped by gender then age, we'd maybe have something like:</p>
         55: { row: &lt;pointer to the old row&gt; }
     }
   }
-</code></pre>
-
-<p>We create new rows for any missing rows, this means that they come in as collapsed.</p></div>
+</code></pre><p>We create new rows for any missing rows, this means that they come in as collapsed.</p>
+</div></div>
 </li>
 </ul>
 </div>

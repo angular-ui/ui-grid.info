@@ -1,87 +1,80 @@
-<h1><code ng:non-bindable="">GridRenderContainer</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridRenderContainer.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRenderContainer.js#L15" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridRenderContainer</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>The grid has render containers, allowing the ability to have pinned columns.  If the grid
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-gridrendercontainer-page"><p>The grid has render containers, allowing the ability to have pinned columns.  If the grid
 is right-to-left then there may be a right render container, if left-to-right then there may
-be a left render container.  There is always a body render container.</p></div>
-<h2 id="Usage">Usage</h2>
+be a left render container.  There is always a body render container.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridRenderContainer(name, grid, options);</pre>
-<h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
-<p>The name of the render container ('body', 'left', or 'right')</p></li>
-<li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid the render container is in</p></li>
-<li><code ng:non-bindable="">options – {object} – </code>
-<p>the render container options</p></li>
-</ul>
-</div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getCanvasHeight">getCanvasHeight()</h3>
-<div class="getcanvasheight"><p>Returns the total canvas height.   Only recalculates if canvasHeightShouldUpdate = false</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{number}</code>
-– <p>total height of all the visible rows in the container</p></div>
-</div>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="ui-grid-class-page ui-grid-class-gridrendercontainer-page"><p>The name of the render container (&#39;body&#39;, &#39;left&#39;, or &#39;right&#39;)</p>
+</div></td></tr><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="ui-grid-class-page ui-grid-class-gridrendercontainer-page"><p>the grid the render container is in</p>
+</div></td></tr><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="ui-grid-class-page ui-grid-class-gridrendercontainer-page"><p>the render container options</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRenderContainer.js#L263" class="view-source icon-eye-open"> </a><h3 id="methods_getcanvasheight">getCanvasHeight()</h3>
+<div class="getcanvasheight"><div class="getcanvasheight-page"><p>Returns the total canvas height.   Only recalculates if canvasHeightShouldUpdate = false</p>
+</div><h5 id="methods_getcanvasheight_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="getcanvasheight-page"><p>total height of all the visible rows in the container</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="getViewportAdjustment">getViewportAdjustment()</h3>
-<div class="getviewportadjustment"><p>Gets the adjustment based on the viewportAdjusters.</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>a hash of { height: x, width: y }.  Usually the values will be negative</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRenderContainer.js#L176" class="view-source icon-eye-open"> </a><h3 id="methods_getviewportadjustment">getViewportAdjustment()</h3>
+<div class="getviewportadjustment"><div class="getviewportadjustment-page"><p>Gets the adjustment based on the viewportAdjusters.</p>
+</div><h5 id="methods_getviewportadjustment_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="getviewportadjustment-page"><p>a hash of { height: x, width: y }.  Usually the values will be negative</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="registerViewportAdjuster">registerViewportAdjuster(func)</h3>
-<div class="registerviewportadjuster"><p>Registers an adjuster to the render container's available width or height.  Adjusters are used
-to tell the render container that there is something else consuming space, and to adjust it's size
-appropriately.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
-<p>the adjuster function we want to register</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRenderContainer.js#L149" class="view-source icon-eye-open"> </a><h3 id="methods_registerviewportadjuster">registerViewportAdjuster(func)</h3>
+<div class="registerviewportadjuster"><div class="registerviewportadjuster-page"><p>Registers an adjuster to the render container&#39;s available width or height.  Adjusters are used
+to tell the render container that there is something else consuming space, and to adjust it&#39;s size
+appropriately.</p>
+</div><h5 id="methods_registerviewportadjuster_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>func</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="registerviewportadjuster-page"><p>the adjuster function we want to register</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="removeViewportAdjuster">removeViewportAdjuster(func)</h3>
-<div class="removeviewportadjuster"><p>Removes an adjuster, should be used when your element is destroyed</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
-<p>the adjuster function we want to remove</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRenderContainer.js#L161" class="view-source icon-eye-open"> </a><h3 id="methods_removeviewportadjuster">removeViewportAdjuster(func)</h3>
+<div class="removeviewportadjuster"><div class="removeviewportadjuster-page"><p>Removes an adjuster, should be used when your element is destroyed</p>
+</div><h5 id="methods_removeviewportadjuster_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>func</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="removeviewportadjuster-page"><p>the adjuster function we want to remove</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="canvasHeight">canvasHeight</h3>
-<div class="canvasheight"><p>last calculated canvas height value</p></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_canvasheight">canvasHeight</h3>
+<div class="canvasheight"><div class="canvasheight-page"><p>last calculated canvas height value</p>
+</div></div>
 </li>
-<li><h3 id="canvasHeightShouldUpdate">canvasHeightShouldUpdate</h3>
-<div class="canvasheightshouldupdate"><p>flag to signal that container should recalculate the canvas size</p></div>
+<li><h3 id="properties_canvasheightshouldupdate">canvasHeightShouldUpdate</h3>
+<div class="canvasheightshouldupdate"><div class="canvasheightshouldupdate-page"><p>flag to signal that container should recalculate the canvas size</p>
+</div></div>
 </li>
-<li><h3 id="updateColumnWidths">updateColumnWidths</h3>
-<div class="updatecolumnwidths"><p>Determine the appropriate column width of each column across all render containers.</p>
-
-<p>Column width is easy when each column has a specified width.  When columns are variable width (i.e.
+<li><h3 id="properties_updatecolumnwidths">updateColumnWidths</h3>
+<div class="updatecolumnwidths"><div class="updatecolumnwidths-page"><p>Determine the appropriate column width of each column across all render containers.</p>
+<p> Column width is easy when each column has a specified width.  When columns are variable width (i.e.
  have an * or % of the viewport) then we try to calculate so that things fit in.  The problem is that
- we have multiple render containers, and we don't want one render container to just take the whole viewport
- when it doesn't need to - we want things to balance out across the render containers.</p>
-
-<p>To do this, we use this method to calculate all the renderContainers, recognising that in a given render
- cycle it'll get called once per render container, so it needs to return the same values each time.</p>
-
-<p>The constraints on this method are therefore:
- - must return the same value when called multiple times, to do this it needs to rely on properties of the
-   columns, but not properties that change when this is called (so it shouldn't rely on drawnWidth)</p>
-
-<p>The general logic of this method is:
- - calculate our total available width
- - look at all the columns across all render containers, and work out which have widths and which have
-   constraints such as % or * or something else
- - for those with *, count the total number of * we see and add it onto a running total, add this column to an * array
- - for those with a %, allocate the % as a percentage of the viewport, having consideration of min and max
- - for those with manual width (in pixels) we set the drawnWidth to the specified width
- - we end up with an asterisks array still to process
- - we look at our remaining width.  If it's greater than zero, we divide it up among the asterisk columns, then process
-   them for min and max width constraints
- - if it's zero or less, we set the asterisk columns to their minimum widths
- - we use parseInt quite a bit, as we try to make all our column widths integers</p></div>
+ we have multiple render containers, and we don&#39;t want one render container to just take the whole viewport
+ when it doesn&#39;t need to - we want things to balance out across the render containers.</p>
+<p> To do this, we use this method to calculate all the renderContainers, recognising that in a given render
+ cycle it&#39;ll get called once per render container, so it needs to return the same values each time.</p>
+<p> The constraints on this method are therefore:</p>
+<ul>
+<li><p>must return the same value when called multiple times, to do this it needs to rely on properties of the
+columns, but not properties that change when this is called (so it shouldn&#39;t rely on drawnWidth)</p>
+<p>The general logic of this method is:</p>
+</li>
+<li>calculate our total available width</li>
+<li>look at all the columns across all render containers, and work out which have widths and which have
+constraints such as % or * or something else</li>
+<li>for those with <em>, count the total number of </em> we see and add it onto a running total, add this column to an * array</li>
+<li>for those with a %, allocate the % as a percentage of the viewport, having consideration of min and max</li>
+<li>for those with manual width (in pixels) we set the drawnWidth to the specified width</li>
+<li>we end up with an asterisks array still to process</li>
+<li>we look at our remaining width.  If it&#39;s greater than zero, we divide it up among the asterisk columns, then process
+them for min and max width constraints</li>
+<li>if it&#39;s zero or less, we set the asterisk columns to their minimum widths</li>
+<li>we use parseInt quite a bit, as we try to make all our column widths integers</li>
+</ul>
+</div></div>
 </li>
 </ul>
 </div>

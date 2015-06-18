@@ -1,14 +1,12 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><h3 id="gridfooter">Grid Footer</h4>
-
+<div><div class="tutorial-page tutorial-105-footer-page"><h4 id="grid-footer">Grid Footer</h4>
 <p>The grid supports a grid footer row, which can be displayed if showGridFooter option is set to true (default=false). This footer displays
 Total rows in the grid and the number of filtered rows.  Selected rows will be shown if using ui-grid-selection feature.
 <br/></p>
-
-<h3 id="columnfooter">Column Footer</h4>
-
+<h4 id="column-footer">Column Footer</h4>
 <p>The grid also has column footer, which can be displayed if showColumnFooter option is set to true (default=false).
 You can set an aggregation function for each column or use a custom footer template to display
 what ever aggregation you wish.
@@ -17,19 +15,17 @@ You need to inject the uiGridConstants in order to use aggregationTypes enum.
 You can also pass in a function in order to create your own aggregation logic.
 If you set the <code>aggregationHideLabel</code> option on the columnDef to true, then the column will
 show the aggregation but without a label.  Refer the third column in the example below.</p>
-
 <p>Note that aggregation works across the visible rows - e.g. it would show the sum of the visible
-ages.  For this reason it doesn't combine well with features that alter the visible rows - in particular pagination
-and grouping.  In the case of pagination, you'll find that it gives you the total for the currently displayed page,
-which isn't intuitively what users would expect.  With grouping it will give the total of the currently expanded
+ages.  For this reason it doesn&#39;t combine well with features that alter the visible rows - in particular pagination
+and grouping.  In the case of pagination, you&#39;ll find that it gives you the total for the currently displayed page,
+which isn&#39;t intuitively what users would expect.  With grouping it will give the total of the currently expanded
 data rows, which again may not be what users intuitively expect.</p>
-
 <p>In the case of grouping the solution is to use the aggregation provided with grouping.</p>
-
 <p><br/>
-You can override the default grid footer template with gridOptions.footerTemplate.  Copy the default ui-grid-footer.html from the source as your starting point.  <i>This is not demonstrated in this tutorial.</i></p><h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-29"></div>
+You can override the default grid footer template with gridOptions.footerTemplate.  Copy the default ui-grid-footer.html from the source as your starting point.  <i>This is not demonstrated in this tutorial.</i></p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-105-footer-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-29"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-28" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-28">
@@ -149,6 +145,7 @@ You can override the default grid footer template with gridOptions.footerTemplat
   });
 </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-28" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-28" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

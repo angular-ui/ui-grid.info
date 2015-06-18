@@ -1,69 +1,58 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>The ui.grid.edit feature allows inline editing of grid data.  To enable, you must include the <code>'ui.grid.edit'</code> module
+<div><div class="tutorial-page tutorial-201-edit-feature-page"><p>The ui.grid.edit feature allows inline editing of grid data.  To enable, you must include the <code>&#39;ui.grid.edit&#39;</code> module
 and you must include the <code>ui-grid-edit</code> directive on your grid element.</p>
-
 <p>You can use the <code>enableCellEdit</code> options in your column definitions to allow a column to be editable.</p>
-
 <p>Editing is invoked via double-click, f2, or start typing any non-navigable key. Cell editing ends on tab, enter or esc (cancel)
 on an input editor, and tab, left or right arrows, enter or esc for a dropdown.</p>
-
-<p>By default an input element is provided, with numeric, date and checkbox editors for fields specified as <code>'number'</code>, <code>'date'</code>
-and <code>'boolean'</code> types, for all other fields a simple text editor is provided. (A point to note about date editors is that for date editors
-to be enabled the datatype of the variable should also be "Date").</p>
-
-<p>A dropdown editor is also available, through setting the <code>editableCellTemplate</code> on the <code>columnDef</code> to <code>'ui-grid/dropdownEditor'</code>.
+<p>By default an input element is provided, with numeric, date and checkbox editors for fields specified as <code>&#39;number&#39;</code>, <code>&#39;date&#39;</code>
+and <code>&#39;boolean&#39;</code> types, for all other fields a simple text editor is provided. (A point to note about date editors is that for date editors
+to be enabled the datatype of the variable should also be &quot;Date&quot;).</p>
+<p>A dropdown editor is also available, through setting the <code>editableCellTemplate</code> on the <code>columnDef</code> to <code>&#39;ui-grid/dropdownEditor&#39;</code>.
 When using a dropdown editor you need to provide an options array through the <code>editDropDownOptionsArray</code> property on the <code>columnDef</code>.
 This array by default should be an array of <code>{id: xxx, value: xxx}</code>, although the field tags can be changed through
 using the <code>editDropdownIdLabel</code> and <code>editDropdownValueLabel</code> options.</p>
-
-<p>A file chooser is available, through setting the 'editableCellTemplate<code>on the</code>columnDef<code>to</code>'ui-grid/fileChooserEditor'`.  This
+<p>A file chooser is available, through setting the &#39;editableCellTemplate<code>on the</code>columnDef<code>to</code>&#39;ui-grid/fileChooserEditor&#39;`.  This
 file chooser will open the file chosen by the user and assign the value of that file to the model element.  In the example below
 we use the file chooser to load a file, and we display the filename in the cell.  The file is stored against the row in a hidden
 column, which we can save to our server or otherwise process.</p>
-
 <p>Custom edit templates should be used for any editor other than the default editors, but be aware that you will likely also
 need to provide a custom directive similar to the uiGridEditor directive so as to provide <code>BEGIN_CELL_EDIT, CANCEL_CELL_EDIT
 and END_CELL_EDIT</code> events.</p>
-
 <p><strong>ColumnDef Options</strong>:</p>
-
 <ul>
 <li><code>editModelField</code> (default: undefined) - a bindable expression to use instead of colDef.field when binding the edit control.</li>
-<li><code>editableCellTemplate</code> (default: <code>'ui-grid/cellEditor'</code>) - Valid html, templateCache Id,  or url that returns html
+<li><code>editableCellTemplate</code> (default: <code>&#39;ui-grid/cellEditor&#39;</code>) - Valid html, templateCache Id,  or url that returns html
 content to be compiled when edit mode is invoked.</li>
-<li><code>enableCellEdit</code> (default: <code>false</code> for columns of type <code>'object'</code>, <code>true</code> for all other columns) - <code>true</code> will enable
+<li><code>enableCellEdit</code> (default: <code>false</code> for columns of type <code>&#39;object&#39;</code>, <code>true</code> for all other columns) - <code>true</code> will enable
 editing and <code>false</code> will disable it.</li>
 <li><code>cellEditableCondition</code>  (default: <code>true</code>)  Can be set to a boolean or a function that will be called with the cellScope
 to determine if the cell should be invoked in edit mode.</li>
-<li><code>type</code> (default: <code>'string'</code>) If set to <code>'number'</code>, <code>'boolean'</code> or <code>'date'</code> the default editor provided for editing will be numeric
-or boolean or date editor respectively.  If set to <code>'object'</code> the column will not be editable by default.  Be aware that this
+<li><code>type</code> (default: <code>&#39;string&#39;</code>) If set to <code>&#39;number&#39;</code>, <code>&#39;boolean&#39;</code> or <code>&#39;date&#39;</code> the default editor provided for editing will be numeric
+or boolean or date editor respectively.  If set to <code>&#39;object&#39;</code> the column will not be editable by default.  Be aware that this
 <code>type</code> column is also used for other purposes within ui-grid, including the sorting logic.</li>
 <li><code>editDropdownOptionsArray</code> If a dropdown, needs to be populated with an array of values, by default those values should be
 <code>{id: xxx, value: xxx}</code>, the labels can be adjusted with the next two options</li>
-<li><code>editDropdownIdLabel</code> (default: <code>'id'</code>) Controls the id label in the options array - so if your array happens to contain
-<code>'code'</code> instead you can use it without having to reprocess the array</li>
-<li><code>editDropdownValueLabel</code> (default: <code>'value'</code>) Controls the value label in the options array - if your array happens to
-contain <code>'name'</code> instead you can use it without having to reprocess the array</li>
+<li><code>editDropdownIdLabel</code> (default: <code>&#39;id&#39;</code>) Controls the id label in the options array - so if your array happens to contain
+ <code>&#39;code&#39;</code> instead you can use it without having to reprocess the array</li>
+<li><code>editDropdownValueLabel</code> (default: <code>&#39;value&#39;</code>) Controls the value label in the options array - if your array happens to
+contain <code>&#39;name&#39;</code> instead you can use it without having to reprocess the array</li>
 <li><code>editDropdownRowEntityOptionsArrayPath</code> can be used as an alternative to editDropdownOptionsArray when the contents of the dropdown depend on the entity backing the row.</li>
-<li><code>editDropdownFilter</code> (default: <code>''</code>) Allows you to apply a filter to the values in the edit dropdown options, for example
-if you were using angular-translate you would set this to <code>'translate'</code></li>
+<li><code>editDropdownFilter</code> (default: <code>&#39;&#39;</code>) Allows you to apply a filter to the values in the edit dropdown options, for example
+if you were using angular-translate you would set this to <code>&#39;translate&#39;</code></li>
 </ul>
-
 <p>The following option is available only if using cellNav feature</p>
-
 <ul>
 <li><code>enableCellEditOnFocus</code> - <code>true</code> to invoke editor as soon as cell has focus</li>
 </ul>
-
 <p><em>Note that the edit functionality uses native html5 edit widgets - the date picker, the dropdown and the input box
-itself.  If your browser does not implement these widgets, then you won't get them.  If your browser implements these
-widgets in a way that isn't ideal (for example, some browsers don't allow number fields to start with '.', so you can't
-type in '.5'), then you need to provide a custom editor instead.  On the medium term roadmap there is intent
+itself.  If your browser does not implement these widgets, then you won&#39;t get them.  If your browser implements these
+widgets in a way that isn&#39;t ideal (for example, some browsers don&#39;t allow number fields to start with &#39;.&#39;, so you can&#39;t
+type in &#39;.5&#39;), then you need to provide a custom editor instead.  On the medium term roadmap there is intent
 to provide a bootstrap feature, which would provide directives that were compatible with angular-bootstrap directives,
 allowing use of the bootstrap datepicker and input fields</em></p>
-
 <pre class="prettyprint linenums">
 $scope.gridOptions.columnDefs = [
    { name: 'name', enableCellEdit: true },
@@ -73,9 +62,10 @@ $scope.gridOptions.columnDefs = [
    { name: 'address.city', enableCellEdit: true, displayName: 'Address (even rows editable)', cellEditableCondition: function($scope){return $scope.rowRenderIndex%2} }
    { name: 'isActive', enableCellEdit: true, type: 'boolean'},
 ]
-</pre><h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-56" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-201-edit-feature-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-56" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-56" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-56">
@@ -201,6 +191,7 @@ $scope.gridOptions.columnDefs = [
 });
 </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-56" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-56" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

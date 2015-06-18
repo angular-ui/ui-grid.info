@@ -1,84 +1,58 @@
-<h1><code ng:non-bindable="">GridUtil</code>
-<span class="hint">(service in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/services/ui-grid-util.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L172" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridUtil</code>
+<div><span class="hint">service in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Grid utility functions</p></div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="createBoundedWrapper">createBoundedWrapper(Object, Method)</h3>
-<div class="createboundedwrapper"><p>Binds given method to given object.</p>
-
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-service-page ui-grid-service-gridutil-page"><p>Grid utility functions</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L199" class="view-source icon-eye-open"> </a><h3 id="methods_createboundedwrapper">createBoundedWrapper(Object, Method)</h3>
+<div class="createboundedwrapper"><div class="createboundedwrapper-page"><p>Binds given method to given object.</p>
 <p>By means of a wrapper, ensures that <code>method</code> is always bound to
 <code>object</code> regardless of its calling environment.
 Iow, inside <code>method</code>, <code>this</code> always points to <code>object</code>.</p>
-
-<p>See http://alistapart.com/article/getoutbindingsituations</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">Object – {object} – </code>
-<p>to bind 'this' to</p></li>
-<li><code ng:non-bindable="">Method – {method} – </code>
-<p>to bind</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Function}</code>
-– <p>The wrapper that performs the binding</p></div>
-</div>
+<p>See <a href="http://alistapart.com/article/getoutbindingsituations">http://alistapart.com/article/getoutbindingsituations</a></p>
+</div><h5 id="methods_createboundedwrapper_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>Object</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="createboundedwrapper-page"><p>to bind &#39;this&#39; to</p>
+</div></td></tr><tr><td>Method</td><td><a href="" class="label type-hint type-hint-method">method</a></td><td><div class="createboundedwrapper-page"><p>to bind</p>
+</div></td></tr></tbody></table><h5 id="methods_createboundedwrapper_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="createboundedwrapper-page"><p>The wrapper that performs the binding</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="debounce">debounce(func, wait, immediate)</h3>
-<div class="debounce"><p>Copied from https://github.com/shahata/angular-debounce
-Takes a function, decorates it to execute only 1 time after multiple calls, and returns the decorated function</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
-<p>function to debounce</p></li>
-<li><code ng:non-bindable="">wait – {number} – </code>
-<p>milliseconds to delay</p></li>
-<li><code ng:non-bindable="">immediate – {bool} – </code>
-<p>execute before delay</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{function}</code>
-– <p>A function that can be executed as debounced function</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L1037" class="view-source icon-eye-open"> </a><h3 id="methods_debounce">debounce(func, wait, immediate)</h3>
+<div class="debounce"><div class="debounce-page"><p>Copied from <a href="https://github.com/shahata/angular-debounce">https://github.com/shahata/angular-debounce</a>
+Takes a function, decorates it to execute only 1 time after multiple calls, and returns the decorated function</p>
+</div><h5 id="methods_debounce_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>func</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="debounce-page"><p>function to debounce</p>
+</div></td></tr><tr><td>wait</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="debounce-page"><p>milliseconds to delay</p>
+</div></td></tr><tr><td>immediate</td><td><a href="" class="label type-hint type-hint-bool">bool</a></td><td><div class="debounce-page"><p>execute before delay</p>
+</div></td></tr></tbody></table><h5 id="methods_debounce_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="debounce-page"><p>A function that can be executed as debounced function</p>
+</div></td></tr></table><h4 id="methods_debounce_example">Example</h4>
+<div class="example"><div class="debounce-page"><pre class="prettyprint linenums">
 var debouncedFunc =  gridUtil.debounce(function(){alert('debounced');}, 500);
 debouncedFunc();
 debouncedFunc();
 debouncedFunc();
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="elementHeight">elementHeight(element, [extra])</h3>
-<div class="elementheight"><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>DOM element</p></li>
-<li><code ng:non-bindable="">[extra] – {string} – </code>
-<p>Optional modifier for calculation. Use 'margin' to account for margins on element</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{number}</code>
-– <p>Element height in pixels, accounting for any borders, etc.</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L456" class="view-source icon-eye-open"> </a><h3 id="methods_elementheight">elementHeight(element, [extra])</h3>
+<div class="elementheight"><h5 id="methods_elementheight_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="elementheight-page"><p>DOM element</p>
+</div></td></tr><tr><td>[extra]</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="elementheight-page"><p>Optional modifier for calculation. Use &#39;margin&#39; to account for margins on element</p>
+</div></td></tr></tbody></table><h5 id="methods_elementheight_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="elementheight-page"><p>Element height in pixels, accounting for any borders, etc.</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="elementWidth">elementWidth(element, [extra])</h3>
-<div class="elementwidth"><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>DOM element</p></li>
-<li><code ng:non-bindable="">[extra] – {string} – </code>
-<p>Optional modifier for calculation. Use 'margin' to account for margins on element</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{number}</code>
-– <p>Element width in pixels, accounting for any borders, etc.</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L442" class="view-source icon-eye-open"> </a><h3 id="methods_elementwidth">elementWidth(element, [extra])</h3>
+<div class="elementwidth"><h5 id="methods_elementwidth_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="elementwidth-page"><p>DOM element</p>
+</div></td></tr><tr><td>[extra]</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="elementwidth-page"><p>Optional modifier for calculation. Use &#39;margin&#39; to account for margins on element</p>
+</div></td></tr></tbody></table><h5 id="methods_elementwidth_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="elementwidth-page"><p>Element width in pixels, accounting for any borders, etc.</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="getColumnsFromData">getColumnsFromData(data)</h3>
-<div class="getcolumnsfromdata"><p>Return a list of column names, given a data set</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">data – {string} – </code>
-<p>Data array for grid</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Object}</code>
-– <p>Column definitions with field accessor and column name</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L288" class="view-source icon-eye-open"> </a><h3 id="methods_getcolumnsfromdata">getColumnsFromData(data)</h3>
+<div class="getcolumnsfromdata"><div class="getcolumnsfromdata-page"><p>Return a list of column names, given a data set</p>
+</div><h5 id="methods_getcolumnsfromdata_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getcolumnsfromdata-page"><p>Data array for grid</p>
+</div></td></tr></tbody></table><h5 id="methods_getcolumnsfromdata_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getcolumnsfromdata-page"><p>Column definitions with field accessor and column name</p>
+</div></td></tr></table><h4 id="methods_getcolumnsfromdata_example">Example</h4>
+<div class="example"><div class="getcolumnsfromdata-page"><pre class="prettyprint linenums">
 var data = [
   { firstName: 'Bob', lastName: 'Jones' },
   { firstName: 'Frank', lastName: 'Smith' }
@@ -96,145 +70,113 @@ columnDefs == [
    name: 'Last Name'
  }
 ];
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="getTemplate">getTemplate(Either)</h3>
-<div class="gettemplate"><p>Get's template from cache / element / url</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">Either – {string|element|promise} – </code>
-<p>a string representing the template id, a string representing the template url,
-an jQuery/Angualr element, or a promise that returns the template contents to use.</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>a promise resolving to template contents</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L347" class="view-source icon-eye-open"> </a><h3 id="methods_gettemplate">getTemplate(Either)</h3>
+<div class="gettemplate"><div class="gettemplate-page"><p>Get&#39;s template from cache / element / url</p>
+</div><h5 id="methods_gettemplate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>Either</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-element">element</a><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="gettemplate-page"><p>a string representing the template id, a string representing the template url,
+an jQuery/Angualr element, or a promise that returns the template contents to use.</p>
+</div></td></tr></tbody></table><h5 id="methods_gettemplate_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="gettemplate-page"><p>a promise resolving to template contents</p>
+</div></td></tr></table><h4 id="methods_gettemplate_example">Example</h4>
+<div class="example"><div class="gettemplate-page"><pre class="prettyprint linenums">
 GridUtil.getTemplate(url).then(function (contents) {
      alert(contents);
    })
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="guessType">guessType(item)</h3>
-<div class="guesstype"><p>guesses the type of an argument</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">item – {string/number/bool/object} – </code>
-<p>variable to examine</p></li>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L414" class="view-source icon-eye-open"> </a><h3 id="methods_guesstype">guessType(item)</h3>
+<div class="guesstype"><div class="guesstype-page"><p>guesses the type of an argument</p>
+</div><h5 id="methods_guesstype_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>item</td><td><a href="" class="label type-hint type-hint-string">string/number/bool/object</a></td><td><div class="guesstype-page"><p>variable to examine</p>
+</div></td></tr></tbody></table><h5 id="methods_guesstype_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="guesstype-page"><p>one of the following</p>
+<ul>
+<li>&#39;string&#39;</li>
+<li>&#39;boolean&#39;</li>
+<li>&#39;number&#39;</li>
+<li>&#39;date&#39;</li>
+<li>&#39;object&#39;</li>
 </ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>one of the following
-- 'string'
-- 'boolean'
-- 'number'
-- 'date'
-- 'object'</p></div>
-</div>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="logDebug">logDebug()</h3>
-<div class="logdebug"><p>wraps the $log method, allowing us to choose different
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L772" class="view-source icon-eye-open"> </a><h3 id="methods_logdebug">logDebug()</h3>
+<div class="logdebug"><div class="logdebug-page"><p>wraps the $log method, allowing us to choose different
 treatment within ui-grid if we so desired.  At present we only log
-debug messages if uiGridConstants.LOG<em>DEBUG</em>MESSAGES is set to true</p></div>
+debug messages if uiGridConstants.LOG_DEBUG_MESSAGES is set to true</p>
+</div></div>
 </li>
-<li><h3 id="logError">logError(logMessage)</h3>
-<div class="logerror"><p>wraps the $log method, allowing us to choose different
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L741" class="view-source icon-eye-open"> </a><h3 id="methods_logerror">logError(logMessage)</h3>
+<div class="logerror"><div class="logerror-page"><p>wraps the $log method, allowing us to choose different
 treatment within ui-grid if we so desired.  At present we only log
-error messages if uiGridConstants.LOG<em>ERROR</em>MESSAGES is set to true</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">logMessage – {string} – </code>
-<p>message to be logged to the console</p></li>
-</ul>
-</div>
+error messages if uiGridConstants.LOG_ERROR_MESSAGES is set to true</p>
+</div><h5 id="methods_logerror_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>logMessage</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="logerror-page"><p>message to be logged to the console</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="logWarn">logWarn(logMessage)</h3>
-<div class="logwarn"><p>wraps the $log method, allowing us to choose different
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L757" class="view-source icon-eye-open"> </a><h3 id="methods_logwarn">logWarn(logMessage)</h3>
+<div class="logwarn"><div class="logwarn-page"><p>wraps the $log method, allowing us to choose different
 treatment within ui-grid if we so desired.  At present we only log
-warning messages if uiGridConstants.LOG<em>WARN</em>MESSAGES is set to true</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">logMessage – {string} – </code>
-<p>message to be logged to the console</p></li>
-</ul>
-</div>
+warning messages if uiGridConstants.LOG_WARN_MESSAGES is set to true</p>
+</div><h5 id="methods_logwarn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>logMessage</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="logwarn-page"><p>message to be logged to the console</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="newId">newId()</h3>
-<div class="newid"><p>Return a unique ID string</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>Unique string</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L322" class="view-source icon-eye-open"> </a><h3 id="methods_newid">newId()</h3>
+<div class="newid"><div class="newid-page"><p>Return a unique ID string</p>
+</div><h5 id="methods_newid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="newid-page"><p>Unique string</p>
+</div></td></tr></table><h4 id="methods_newid_example">Example</h4>
+<div class="example"><div class="newid-page"><pre class="prettyprint linenums">
 var id = GridUtil.newId();
 
 # 1387305700482;
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, grid)</h3>
-<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>The element to get the <code>scrollLeft</code> from.</p></li>
-<li><code ng:non-bindable="">grid – {boolean} – </code>
-<ul>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L925" class="view-source icon-eye-open"> </a><h3 id="methods_normalizescrollleft">normalizeScrollLeft(element, grid)</h3>
+<div class="normalizescrollleft"><div class="normalizescrollleft-page"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p>
+</div><h5 id="methods_normalizescrollleft_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="normalizescrollleft-page"><p>The element to get the <code>scrollLeft</code> from.</p>
+</div></td></tr><tr><td>grid</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="normalizescrollleft-page"><ul>
 <li>grid used to normalize (uses the rtl property)</li>
-</ul></li>
 </ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{int}</code>
-– <p>A normalized scrollLeft value for the current browser.</p></div>
-</div>
+</div></td></tr></tbody></table><h5 id="methods_normalizescrollleft_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="normalizescrollleft-page"><p>A normalized scrollLeft value for the current browser.</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="normalizeScrollLeft">normalizeScrollLeft(element, scrollLeft, grid)</h3>
-<div class="normalizescrollleft"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">element – {element} – </code>
-<p>The element to normalize the <code>scrollLeft</code> value for</p></li>
-<li><code ng:non-bindable="">scrollLeft – {int} – </code>
-<p>The <code>scrollLeft</code> value to denormalize.</p></li>
-<li><code ng:non-bindable="">grid – {boolean} – </code>
-<p>The grid that owns the scroll event.</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{int}</code>
-– <p>A normalized scrollLeft value for the current browser.</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L960" class="view-source icon-eye-open"> </a><h3 id="methods_normalizescrollleft">normalizeScrollLeft(element, scrollLeft, grid)</h3>
+<div class="normalizescrollleft"><div class="normalizescrollleft-page"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p>
+</div><h5 id="methods_normalizescrollleft_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="normalizescrollleft-page"><p>The element to normalize the <code>scrollLeft</code> value for</p>
+</div></td></tr><tr><td>scrollLeft</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="normalizescrollleft-page"><p>The <code>scrollLeft</code> value to denormalize.</p>
+</div></td></tr><tr><td>grid</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="normalizescrollleft-page"><p>The grid that owns the scroll event.</p>
+</div></td></tr></tbody></table><h5 id="methods_normalizescrollleft_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="normalizescrollleft-page"><p>A normalized scrollLeft value for the current browser.</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="normalizeWheelEvent">normalizeWheelEvent(event)</h3>
-<div class="normalizewheelevent"><p>Given an event from this list:</p>
-
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L540" class="view-source icon-eye-open"> </a><h3 id="methods_normalizewheelevent">normalizeWheelEvent(event)</h3>
+<div class="normalizewheelevent"><div class="normalizewheelevent-page"><p>Given an event from this list:</p>
 <p><code>wheel, mousewheel, DomMouseScroll, MozMousePixelScroll</code></p>
-
-<p>"normalize" it
-so that it stays consistent no matter what browser it comes from (i.e. scale it correctly and make sure the direction is right.)</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">event – {event} – </code>
-<p>A mouse wheel event</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{event}</code>
-– <p>A normalized event</p></div>
-</div>
+<p>&quot;normalize&quot; it
+so that it stays consistent no matter what browser it comes from (i.e. scale it correctly and make sure the direction is right.)</p>
+</div><h5 id="methods_normalizewheelevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-event">event</a></td><td><div class="normalizewheelevent-page"><p>A mouse wheel event</p>
+</div></td></tr></tbody></table><h5 id="methods_normalizewheelevent_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-event">event</a></td><td><div class="normalizewheelevent-page"><p>A normalized event</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="preEval">preEval(path)</h3>
-<div class="preeval"><p>Takes a field path and converts it to bracket notation to allow for special characters in path</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">path – {string} – </code>
-<p>Path to evaluate</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>A path that is normalized.</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L1000" class="view-source icon-eye-open"> </a><h3 id="methods_preeval">preEval(path)</h3>
+<div class="preeval"><div class="preeval-page"><p>Takes a field path and converts it to bracket notation to allow for special characters in path</p>
+</div><h5 id="methods_preeval_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>path</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="preeval-page"><p>Path to evaluate</p>
+</div></td></tr></tbody></table><h5 id="methods_preeval_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="preeval-page"><p>A path that is normalized.</p>
+</div></td></tr></table><h4 id="methods_preeval_example">Example</h4>
+<div class="example"><div class="preeval-page"><pre class="prettyprint linenums">
 gridUtil.preEval('property') == 'property'
 gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="readableColumnName">readableColumnName(columnName)</h3>
-<div class="readablecolumnname"><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
-<p>Column name as a string</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>Column name appropriately capitalized and split apart</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><h6>Source</h6>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L235" class="view-source icon-eye-open"> </a><h3 id="methods_readablecolumnname">readableColumnName(columnName)</h3>
+<div class="readablecolumnname"><h5 id="methods_readablecolumnname_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="readablecolumnname-page"><p>Column name as a string</p>
+</div></td></tr></tbody></table><h5 id="methods_readablecolumnname_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="readablecolumnname-page"><p>Column name appropriately capitalized and split apart</p>
+</div></td></tr></table><h4 id="methods_readablecolumnname_example">Example</h4>
+<div class="example"><div class="readablecolumnname-page"><h6 id="methods_readablecolumnname_example_source">Source</h6>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-20" source-edit-css="" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-20" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-20">
@@ -258,37 +200,32 @@ gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
    }]);
  </script>
 </div>
-</div><h6>Demo</h6>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-20" ng-eval-javascript="app.js"></div></div>
+</div><h6 id="methods_readablecolumnname_example_demo">Demo</h6>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-20" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>
 </li>
-<li><h3 id="throttle">throttle(func, wait, params)</h3>
-<div class="throttle"><p>Adapted from debounce function (above)
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/services/ui-grid-util.js#L1096" class="view-source icon-eye-open"> </a><h3 id="methods_throttle">throttle(func, wait, params)</h3>
+<div class="throttle"><div class="throttle-page"><p>Adapted from debounce function (above)
 Potential keys for Params Object are:
    trailing (bool) - whether to trigger after throttle time ends if called multiple times
 Updated to use $interval rather than $timeout, as protractor (e2e tests) is able to work with $interval,
 but not with $timeout</p>
-
 <p>Note that when using throttle, you need to use throttle to create a new function upfront, then use the function
 return from that call each time you need to call throttle.  If you call throttle itself repeatedly, the lastCall
-variable will get overwritten and the throttling won't work</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">func – {function} – </code>
-<p>function to throttle</p></li>
-<li><code ng:non-bindable="">wait – {number} – </code>
-<p>milliseconds to delay after first trigger</p></li>
-<li><code ng:non-bindable="">params – {Object} – </code>
-<p>to use in throttle.</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{function}</code>
-– <p>A function that can be executed as throttled function</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+variable will get overwritten and the throttling won&#39;t work</p>
+</div><h5 id="methods_throttle_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>func</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="throttle-page"><p>function to throttle</p>
+</div></td></tr><tr><td>wait</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="throttle-page"><p>milliseconds to delay after first trigger</p>
+</div></td></tr><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="throttle-page"><p>to use in throttle.</p>
+</div></td></tr></tbody></table><h5 id="methods_throttle_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="throttle-page"><p>A function that can be executed as throttled function</p>
+</div></td></tr></table><h4 id="methods_throttle_example">Example</h4>
+<div class="example"><div class="throttle-page"><pre class="prettyprint linenums">
 var throttledFunc =  gridUtil.throttle(function(){console.log('throttled');}, 500, {trailing: true});
 throttledFunc(); //=&gt; logs throttled
 throttledFunc(); //=&gt; queues attempt to log throttled for ~500ms (since trailing param is truthy)
 throttledFunc(); //=&gt; updates arguments to keep most-recent request, but does not do anything else.
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
 </ul>

@@ -1,317 +1,336 @@
-<h1><code ng:non-bindable="">GridOptions</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridOptions.js#L43" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Default GridOptions class.  GridOptions are defined by the application developer and overlaid
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-gridoptions-page"><p>Default GridOptions class.  GridOptions are defined by the application developer and overlaid
 over this object.  Setting gridOptions within your controller is the most common method for an application 
-developer to configure the behaviour of their ui-grid</p></div>
-<h2 id="Usage">Usage</h2>
+developer to configure the behaviour of their ui-grid</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridOptions();</pre>
 </div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getRowIdentity">getRowIdentity()</h3>
-<div class="getrowidentity"><p>This function returns the identity value uniquely identifying this row, if one is not present it does not set it.</p>
-
-<p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridOptions.js#L182" class="view-source icon-eye-open"> </a><h3 id="methods_getrowidentity">getRowIdentity()</h3>
+<div class="getrowidentity"><div class="getrowidentity-page"><p>This function returns the identity value uniquely identifying this row, if one is not present it does not set it.</p>
+<p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p>
+</div></div>
 </li>
-<li><h3 id="rowEquality">rowEquality(entityA, entityB)</h3>
-<div class="rowequality"><p>By default, rows are compared using object equality.  This option can be overridden
-to compare on any data item property or function</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">entityA – {object} – </code>
-<p>First Data Item to compare</p></li>
-<li><code ng:non-bindable="">entityB – {object} – </code>
-<p>Second Data Item to compare</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridOptions.js#L429" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
+<div class="rowequality"><div class="rowequality-page"><p>By default, rows are compared using object equality.  This option can be overridden
+to compare on any data item property or function</p>
+</div><h5 id="methods_rowequality_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>entityA</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>First Data Item to compare</p>
+</div></td></tr><tr><td>entityB</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>Second Data Item to compare</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="rowIdentity">rowIdentity()</h3>
-<div class="rowidentity"><p>This function is used to get and, if necessary, set the value uniquely identifying this row (i.e. if an identity is not present it will set one).</p>
-
-<p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn't it uses gridUtil.nextUid() to generate one</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridOptions.js#L170" class="view-source icon-eye-open"> </a><h3 id="methods_rowidentity">rowIdentity()</h3>
+<div class="rowidentity"><div class="rowidentity-page"><p>This function is used to get and, if necessary, set the value uniquely identifying this row (i.e. if an identity is not present it will set one).</p>
+<p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn&#39;t it uses gridUtil.nextUid() to generate one</p>
+</div></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="aggregationCalcThrottle">aggregationCalcThrottle</h3>
-<div class="aggregationcalcthrottle"><p>Default time in milliseconds to throttle aggregation calcuations, defaults to 500ms</p></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_aggregationcalcthrottle">aggregationCalcThrottle</h3>
+<div class="aggregationcalcthrottle"><div class="aggregationcalcthrottle-page"><p>Default time in milliseconds to throttle aggregation calcuations, defaults to 500ms</p>
+</div></div>
 </li>
-<li><h3 id="appScopeProvider">appScopeProvider</h3>
-<div class="appscopeprovider"><p>by default, the parent scope of the ui-grid element will be assigned to grid.appScope
-this property allows you to assign any reference you want to grid.appScope</p></div>
+<li><h3 id="properties_appscopeprovider">appScopeProvider</h3>
+<div class="appscopeprovider"><div class="appscopeprovider-page"><p>by default, the parent scope of the ui-grid element will be assigned to grid.appScope
+this property allows you to assign any reference you want to grid.appScope</p>
+</div></div>
 </li>
-<li><h3 id="columnDefs">columnDefs</h3>
-<div class="columndefs"><p>Array of columnDef objects.  Only required property is name.
+<li><h3 id="properties_columndefs">columnDefs</h3>
+<div class="columndefs"><div class="columndefs-page"><p>Array of columnDef objects.  Only required property is name.
 The individual options available in columnDefs are documented in the
 <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a> section
-</br><em>field property can be used in place of name for backwards compatibility with 2.x</em></p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre></div>
+</br><em>field property can be used in place of name for backwards compatibility with 2.x</em></p>
+</div><h4 id="properties_columndefs_example">Example</h4>
+<div class="example"><div class="columndefs-page"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="columnFooterHeight">columnFooterHeight</h3>
-<div class="columnfooterheight"><p>The height of the footer rows (column footer and grid footer) in pixels</p></div>
+<li><h3 id="properties_columnfooterheight">columnFooterHeight</h3>
+<div class="columnfooterheight"><div class="columnfooterheight-page"><p>The height of the footer rows (column footer and grid footer) in pixels</p>
+</div></div>
 </li>
-<li><h3 id="columnVirtualizationThreshold">columnVirtualizationThreshold</h3>
-<div class="columnvirtualizationthreshold"><p>Turn virtualization on when number of columns goes over this number, defaults to 10</p></div>
+<li><h3 id="properties_columnvirtualizationthreshold">columnVirtualizationThreshold</h3>
+<div class="columnvirtualizationthreshold"><div class="columnvirtualizationthreshold-page"><p>Turn virtualization on when number of columns goes over this number, defaults to 10</p>
+</div></div>
 </li>
-<li><h3 id="data">data</h3>
-<div class="data"><p>(mandatory) Array of data to be rendered into the grid, providing the data source or data binding for 
+<li><h3 id="properties_data">data</h3>
+<div class="data"><div class="data-page"><p>(mandatory) Array of data to be rendered into the grid, providing the data source or data binding for
 the grid.</p>
-
 <p>Most commonly the data is an array of objects, where each object has a number of attributes.
 Each attribute automatically becomes a column in your grid.  This array could, for example, be sourced from
 an angularJS $resource query request.  The array can also contain complex objects, refer the binding tutorial 
 for examples of that.</p>
-
 <p>The most flexible usage is to set your data on $scope:</p>
-
 <p><code>$scope.data = data;</code></p>
-
 <p>And then direct the grid to resolve whatever is in $scope.data:</p>
-
-<p><code>$scope.gridOptions.data = 'data';</code></p>
-
+<p><code>$scope.gridOptions.data = &#39;data&#39;;</code></p>
 <p>This is the most flexible approach as it allows you to replace $scope.data whenever you feel like it without
 getting pointer issues.</p>
-
 <p>Alternatively you can directly set the data array:</p>
-
 <p><code>$scope.gridOptions.data = [ ];</code>
 or</p>
-
-<p><code>$http.get('/data/100.json')
+<p><code>$http.get(&#39;/data/100.json&#39;)
 .success(function(data) {
   $scope.myData = data;
   $scope.gridOptions.data = $scope.myData;
  });</code></p>
-
-<p>Where you do this, you need to take care in updating the data - you can't just update <code>$scope.myData</code> to some other 
-array, you need to update $scope.gridOptions.data to point to that new array as well.</p></div>
+<p>Where you do this, you need to take care in updating the data - you can&#39;t just update <code>$scope.myData</code> to some other 
+array, you need to update $scope.gridOptions.data to point to that new array as well.</p>
+</div></div>
 </li>
-<li><h3 id="enableColumnMenus">enableColumnMenus</h3>
-<div class="enablecolumnmenus"><p>True by default. When enabled, this setting displays a column
-menu within each column.</p></div>
+<li><h3 id="properties_enablecolumnmenus">enableColumnMenus</h3>
+<div class="enablecolumnmenus"><div class="enablecolumnmenus-page"><p>True by default. When enabled, this setting displays a column
+menu within each column.</p>
+</div></div>
 </li>
-<li><h3 id="enableFiltering">enableFiltering</h3>
-<div class="enablefiltering"><p>False by default. When enabled, this setting adds filter 
+<li><h3 id="properties_enablefiltering">enableFiltering</h3>
+<div class="enablefiltering"><div class="enablefiltering-page"><p>False by default. When enabled, this setting adds filter
 boxes to each column header, allowing filtering within the column for the entire grid.
-Filtering can then be disabled on individual columns using the columnDefs. </p></div>
+Filtering can then be disabled on individual columns using the columnDefs. </p>
+</div></div>
 </li>
-<li><h3 id="enableHorizontalScrollbar">enableHorizontalScrollbar</h3>
-<div class="enablehorizontalscrollbar"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
-Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER</p></div>
+<li><h3 id="properties_enablehorizontalscrollbar">enableHorizontalScrollbar</h3>
+<div class="enablehorizontalscrollbar"><div class="enablehorizontalscrollbar-page"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the horizontal scrollbar for the grid.
+Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER</p>
+</div></div>
 </li>
-<li><h3 id="enableMinHeightCheck">enableMinHeightCheck</h3>
-<div class="enableminheightcheck"><p>True by default. When enabled, a newly initialized grid will check to see if it is tall enough to display
+<li><h3 id="properties_enableminheightcheck">enableMinHeightCheck</h3>
+<div class="enableminheightcheck"><div class="enableminheightcheck-page"><p>True by default. When enabled, a newly initialized grid will check to see if it is tall enough to display
 at least one row of data.  If the grid is not tall enough, it will resize the DOM element to display minRowsToShow number
-of rows.</p></div>
+of rows.</p>
+</div></div>
 </li>
-<li><h3 id="enableRowHashing">enableRowHashing</h3>
-<div class="enablerowhashing"><p>True by default. When enabled, this setting allows uiGrid to add
+<li><h3 id="properties_enablerowhashing">enableRowHashing</h3>
+<div class="enablerowhashing"><div class="enablerowhashing-page"><p>True by default. When enabled, this setting allows uiGrid to add
 <code>$$hashKey</code>-type properties (similar to Angular) to elements in the <code>data</code> array. This allows
 the grid to maintain state while vastly speeding up the process of altering <code>data</code> by adding/moving/removing rows.</p>
-
 <p>Note that this DOES add properties to your data that you may not want, but they are stripped out when using <code>angular.toJson()</code>. IF
 you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
-and are altering the data set often.</p></div>
+and are altering the data set often.</p>
+</div></div>
 </li>
-<li><h3 id="enableSorting">enableSorting</h3>
-<div class="enablesorting"><p>True by default. When enabled, this setting adds sort
+<li><h3 id="properties_enablesorting">enableSorting</h3>
+<div class="enablesorting"><div class="enablesorting-page"><p>True by default. When enabled, this setting adds sort
 widgets to the column headers, allowing sorting of the data for the entire grid.
-Sorting can then be disabled on individual columns using the columnDefs.</p></div>
+Sorting can then be disabled on individual columns using the columnDefs.</p>
+</div></div>
 </li>
-<li><h3 id="enableVerticalScrollbar">enableVerticalScrollbar</h3>
-<div class="enableverticalscrollbar"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the vertical scrollbar for the grid.
-Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER</p></div>
+<li><h3 id="properties_enableverticalscrollbar">enableVerticalScrollbar</h3>
+<div class="enableverticalscrollbar"><div class="enableverticalscrollbar-page"><p>uiGridConstants.scrollbars.ALWAYS by default. This settings controls the vertical scrollbar for the grid.
+Supported values: uiGridConstants.scrollbars.ALWAYS, uiGridConstants.scrollbars.NEVER</p>
+</div></div>
 </li>
-<li><h3 id="excessColumns">excessColumns</h3>
-<div class="excesscolumns"><p>Extra columns to to render outside of the viewport, which helps with smoothness of scrolling.
-Defaults to 4</p></div>
+<li><h3 id="properties_excesscolumns">excessColumns</h3>
+<div class="excesscolumns"><div class="excesscolumns-page"><p>Extra columns to to render outside of the viewport, which helps with smoothness of scrolling.
+Defaults to 4</p>
+</div></div>
 </li>
-<li><h3 id="excessRows">excessRows</h3>
-<div class="excessrows"><p>Extra rows to to render outside of the viewport, which helps with smoothness of scrolling.
-Defaults to 4</p></div>
+<li><h3 id="properties_excessrows">excessRows</h3>
+<div class="excessrows"><div class="excessrows-page"><p>Extra rows to to render outside of the viewport, which helps with smoothness of scrolling.
+Defaults to 4</p>
+</div></div>
 </li>
-<li><h3 id="excludeProperties">excludeProperties</h3>
-<div class="excludeproperties"><p>Array of property names in data to ignore when auto-generating column names.  Provides the
+<li><h3 id="properties_excludeproperties">excludeProperties</h3>
+<div class="excludeproperties"><div class="excludeproperties-page"><p>Array of property names in data to ignore when auto-generating column names.  Provides the
 inverse of columnDefs - columnDefs is a list of columns to include, excludeProperties is a list of columns
 to exclude. </p>
-
 <p>If columnDefs is defined, this will be ignored.</p>
-
-<p>Defaults to ['$$hashKey']</p></div>
+<p>Defaults to [&#39;$$hashKey&#39;]</p>
+</div></div>
 </li>
-<li><h3 id="flatEntityAccess">flatEntityAccess</h3>
-<div class="flatentityaccess"><p>Set to true if your columns are all related directly to fields in a flat object structure - i.e. 
+<li><h3 id="properties_flatentityaccess">flatEntityAccess</h3>
+<div class="flatentityaccess"><div class="flatentityaccess-page"><p>Set to true if your columns are all related directly to fields in a flat object structure - i.e.
 each of your columns associate directly with a propery one each of the entities in your data array.</p>
-
 <p>In that situation we can avoid all the logic associated with complex binding to functions or to properties of sub-objects,
 which can provide a significant speed improvement with large data sets, with filtering and with sorting.</p>
-
-<p>By default false</p></div>
+<p>By default false</p>
+</div></div>
 </li>
-<li><h3 id="footerTemplate">footerTemplate</h3>
-<div class="footertemplate"><p>(optional) ui-grid/ui-grid-footer by default.  This footer shows the per-column
+<li><h3 id="properties_footertemplate">footerTemplate</h3>
+<div class="footertemplate"><div class="footertemplate-page"><p>(optional) ui-grid/ui-grid-footer by default.  This footer shows the per-column
 aggregation totals. 
-When provided, this setting uses a custom footer template. Can be set to either the name of a template file 'footer_template.html', inline html
+When provided, this setting uses a custom footer template. Can be set to either the name of a template file &#39;footer_template.html&#39;, inline html
 <pre class="prettyprint linenums">'&lt;div class="ui-grid-bottom-panel" style="text-align: center"&gt;I am a Custom Grid Footer&lt;/div&gt;'</pre>, or the id
-of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p></div>
+of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p>
+</div></div>
 </li>
-<li><h3 id="gridFooterTemplate">gridFooterTemplate</h3>
-<div class="gridfootertemplate"><p>(optional) ui-grid/ui-grid-grid-footer by default. This template by default shows the
-total items at the bottom of the grid, and the selected items if selection is enabled.</p></div>
+<li><h3 id="properties_gridfootertemplate">gridFooterTemplate</h3>
+<div class="gridfootertemplate"><div class="gridfootertemplate-page"><p>(optional) ui-grid/ui-grid-grid-footer by default. This template by default shows the
+total items at the bottom of the grid, and the selected items if selection is enabled.</p>
+</div></div>
 </li>
-<li><h3 id="gridMenuCustomItems">gridMenuCustomItems</h3>
-<div class="gridmenucustomitems"><p>(optional) An array of menu items that should be added to
+<li><h3 id="properties_gridmenucustomitems">gridMenuCustomItems</h3>
+<div class="gridmenucustomitems"><div class="gridmenucustomitems-page"><p>(optional) An array of menu items that should be added to
 the gridMenu.  Follow the format documented in the tutorial for column
 menu customisation.  The context provided to the action function will 
 include context.grid.  An alternative if working with dynamic menus is to use the 
 provided api - core.addToGridMenu and core.removeFromGridMenu, which handles
-some of the management of items for you.</p></div>
+some of the management of items for you.</p>
+</div></div>
 </li>
-<li><h3 id="gridMenuShowHideColumns">gridMenuShowHideColumns</h3>
-<div class="gridmenushowhidecolumns"><p>true by default, whether the grid menu should allow hide/show
-of columns</p></div>
+<li><h3 id="properties_gridmenushowhidecolumns">gridMenuShowHideColumns</h3>
+<div class="gridmenushowhidecolumns"><div class="gridmenushowhidecolumns-page"><p>true by default, whether the grid menu should allow hide/show
+of columns</p>
+</div></div>
 </li>
-<li><h3 id="gridMenuTitleFilter">gridMenuTitleFilter</h3>
-<div class="gridmenutitlefilter"><p>(optional) A function that takes a title string 
+<li><h3 id="properties_gridmenutitlefilter">gridMenuTitleFilter</h3>
+<div class="gridmenutitlefilter"><div class="gridmenutitlefilter-page"><p>(optional) A function that takes a title string
 (usually the col.displayName), and converts it into a display value.  The function
 must return either a string or a promise.</p>
-
 <p>Used for internationalization of the grid menu column names - for angular-translate
 you can pass $translate as the function, for i18nService you can pass getSafeText as the 
-function</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+function</p>
+</div><h4 id="properties_gridmenutitlefilter_example">Example</h4>
+<div class="example"><div class="gridmenutitlefilter-page"><pre class="prettyprint linenums">
 gridOptions = {
   gridMenuTitleFilter: $translate
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="headerRowHeight">headerRowHeight</h3>
-<div class="headerrowheight"><p>The height of the header in pixels, defaults to 30</p></div>
+<li><h3 id="properties_headerrowheight">headerRowHeight</h3>
+<div class="headerrowheight"><div class="headerrowheight-page"><p>The height of the header in pixels, defaults to 30</p>
+</div></div>
 </li>
-<li><h3 id="headerTemplate">headerTemplate</h3>
-<div class="headertemplate"><p>Null by default. When provided, this setting uses a custom header
+<li><h3 id="properties_headertemplate">headerTemplate</h3>
+<div class="headertemplate"><div class="headertemplate-page"><p>Null by default. When provided, this setting uses a custom header
 template, rather than the default template. Can be set to either the name of a template file:
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = 'header_template.html';</pre>
 inline html 
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div class="ui-grid-top-panel" style="text-align: center"&gt;I am a Custom Grid Header&lt;/div&gt;'</pre>
-or the id of a precompiled template (TBD how to use this). <br />
-</br>Refer to the custom header tutorial for more information.
+or the id of a precompiled template (TBD how to use this).<br></br>Refer to the custom header tutorial for more information.
 If you want no header at all, you can set to an empty div:
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div&gt;&lt;/div&gt;';</pre>
-
 <p>If you want to only have a static header, then you can set to static content.  If
 you want to tailor the existing column headers, then you should look at the
-current 'ui-grid-header.html' template in github as your starting point.</p></div>
+current &#39;ui-grid-header.html&#39; template in github as your starting point.</p>
+</div></div>
 </li>
-<li><h3 id="horizontalScrollThreshold">horizontalScrollThreshold</h3>
-<div class="horizontalscrollthreshold"><p>Defaults to 4</p></div>
+<li><h3 id="properties_horizontalscrollthreshold">horizontalScrollThreshold</h3>
+<div class="horizontalscrollthreshold"><div class="horizontalscrollthreshold-page"><p>Defaults to 4</p>
+</div></div>
 </li>
-<li><h3 id="infiniteScrollDown">infiniteScrollDown</h3>
-<div class="infinitescrolldown"><p>Whether you allow infinite scroll down, implying that the first page of data
+<li><h3 id="properties_infinitescrolldown">infiniteScrollDown</h3>
+<div class="infinitescrolldown"><div class="infinitescrolldown-page"><p>Whether you allow infinite scroll down, implying that the first page of data
 you have displayed is in the middle of your data set.  If set to true then we trigger the
-needMoreData event when the user hits the bottom of the scrollbar. <br />
-<br> Defaults to true</p></div>
+needMoreData event when the user hits the bottom of the scrollbar.<br><br> Defaults to true</p>
+</div></div>
 </li>
-<li><h3 id="infiniteScrollRowsFromEnd">infiniteScrollRowsFromEnd</h3>
-<div class="infinitescrollrowsfromend"><p>This setting controls how close to the end of the dataset a user gets before
+<li><h3 id="properties_infinitescrollrowsfromend">infiniteScrollRowsFromEnd</h3>
+<div class="infinitescrollrowsfromend"><div class="infinitescrollrowsfromend-page"><p>This setting controls how close to the end of the dataset a user gets before
 more data is requested by the infinite scroll, whether scrolling up or down.  This allows you to
-'prefetch' rows before the user actually runs out of scrolling.</p>
-
-<p>Note that if you set this value too high it may give jumpy scrolling behaviour, if you're getting
-this behaviour you could use the <code>saveScrollPercentageMethod</code> right before loading your data, and we'll
+&#39;prefetch&#39; rows before the user actually runs out of scrolling.</p>
+<p>Note that if you set this value too high it may give jumpy scrolling behaviour, if you&#39;re getting
+this behaviour you could use the <code>saveScrollPercentageMethod</code> right before loading your data, and we&#39;ll
 preserve that scroll position</p>
-
-<p><br> Defaults to 20</p></div>
+<p><br> Defaults to 20</p>
+</div></div>
 </li>
-<li><h3 id="infiniteScrollUp">infiniteScrollUp</h3>
-<div class="infinitescrollup"><p>Whether you allow infinite scroll up, implying that the first page of data
+<li><h3 id="properties_infinitescrollup">infiniteScrollUp</h3>
+<div class="infinitescrollup"><div class="infinitescrollup-page"><p>Whether you allow infinite scroll up, implying that the first page of data
 you have displayed is in the middle of your data set.  If set to true then we trigger the
-needMoreDataTop event when the user hits the top of the scrollbar. <br />
-<br> Defaults to false</p></div>
+needMoreDataTop event when the user hits the top of the scrollbar.<br><br> Defaults to false</p>
+</div></div>
 </li>
-<li><h3 id="maxVisibleColumnCount">maxVisibleColumnCount</h3>
-<div class="maxvisiblecolumncount"><p>Defaults to 200</p></div>
+<li><h3 id="properties_maxvisiblecolumncount">maxVisibleColumnCount</h3>
+<div class="maxvisiblecolumncount"><div class="maxvisiblecolumncount-page"><p>Defaults to 200</p>
+</div></div>
 </li>
-<li><h3 id="minRowsToShow">minRowsToShow</h3>
-<div class="minrowstoshow"><p>Minimum number of rows to show when the grid doesn't have a defined height. Defaults to "10".</p></div>
+<li><h3 id="properties_minrowstoshow">minRowsToShow</h3>
+<div class="minrowstoshow"><div class="minrowstoshow-page"><p>Minimum number of rows to show when the grid doesn&#39;t have a defined height. Defaults to &quot;10&quot;.</p>
+</div></div>
 </li>
-<li><h3 id="minimumColumnSize">minimumColumnSize</h3>
-<div class="minimumcolumnsize"><p>Columns can't be smaller than this, defaults to 10 pixels</p></div>
+<li><h3 id="properties_minimumcolumnsize">minimumColumnSize</h3>
+<div class="minimumcolumnsize"><div class="minimumcolumnsize-page"><p>Columns can&#39;t be smaller than this, defaults to 10 pixels</p>
+</div></div>
 </li>
-<li><h3 id="onRegisterApi">onRegisterApi</h3>
-<div class="onregisterapi"><p>A callback that returns the gridApi once the grid is instantiated, which is 
+<li><h3 id="properties_onregisterapi">onRegisterApi</h3>
+<div class="onregisterapi"><div class="onregisterapi-page"><p>A callback that returns the gridApi once the grid is instantiated, which is
 then used to interact with the grid programatically.</p>
-
 <p>Note that the gridApi.core.renderingComplete event is identical to this 
 callback, but has the advantage that it can be called from multiple places
-if needed</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+if needed</p>
+</div><h4 id="properties_onregisterapi_example">Example</h4>
+<div class="example"><div class="onregisterapi-page"><pre class="prettyprint linenums">
 $scope.gridOptions.onRegisterApi = function ( gridApi ) {
   $scope.gridApi = gridApi;
   $scope.gridApi.selection.selectAllRows( $scope.gridApi.grid );
 };
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="rowHeight">rowHeight</h3>
-<div class="rowheight"><p>The height of the row in pixels, defaults to 30</p></div>
+<li><h3 id="properties_rowheight">rowHeight</h3>
+<div class="rowheight"><div class="rowheight-page"><p>The height of the row in pixels, defaults to 30</p>
+</div></div>
 </li>
-<li><h3 id="rowTemplate">rowTemplate</h3>
-<div class="rowtemplate"><p>'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
+<li><h3 id="properties_rowtemplate">rowTemplate</h3>
+<div class="rowtemplate"><div class="rowtemplate-page"><p>&#39;ui-grid/ui-grid-row&#39; by default. When provided, this setting uses a
 custom row template.  Can be set to either the name of a template file:
 <pre class="prettyprint linenums"> $scope.gridOptions.rowTemplate = 'row_template.html';</pre>
 inline html 
 <pre class="prettyprint linenums">  $scope.gridOptions.rowTemplate = '&lt;div style="background-color: aquamarine" ng-click="grid.appScope.fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;';</pre>
-or the id of a precompiled template (TBD how to use this) can be provided. <br />
-</br>Refer to the custom row template tutorial for more information.</p></div>
+or the id of a precompiled template (TBD how to use this) can be provided.<br></br>Refer to the custom row template tutorial for more information.</p>
+</div></div>
 </li>
-<li><h3 id="scrollDebounce">scrollDebounce</h3>
-<div class="scrolldebounce"><p>Default time in milliseconds to debounce scroll events, defaults to 300ms</p></div>
+<li><h3 id="properties_scrolldebounce">scrollDebounce</h3>
+<div class="scrolldebounce"><div class="scrolldebounce-page"><p>Default time in milliseconds to debounce scroll events, defaults to 300ms</p>
+</div></div>
 </li>
-<li><h3 id="scrollThreshold">scrollThreshold</h3>
-<div class="scrollthreshold"><p>Defaults to 4</p></div>
+<li><h3 id="properties_scrollthreshold">scrollThreshold</h3>
+<div class="scrollthreshold"><div class="scrollthreshold-page"><p>Defaults to 4</p>
+</div></div>
 </li>
-<li><h3 id="showColumnFooter">showColumnFooter</h3>
-<div class="showcolumnfooter"><p>Whether or not to show the column footer, defaults to false
-The column footer displays column aggregates</p></div>
+<li><h3 id="properties_showcolumnfooter">showColumnFooter</h3>
+<div class="showcolumnfooter"><div class="showcolumnfooter-page"><p>Whether or not to show the column footer, defaults to false
+The column footer displays column aggregates</p>
+</div></div>
 </li>
-<li><h3 id="showGridFooter">showGridFooter</h3>
-<div class="showgridfooter"><p>Whether or not to show the footer, defaults to false
-The footer display Total Rows and Visible Rows (filtered rows)</p></div>
+<li><h3 id="properties_showgridfooter">showGridFooter</h3>
+<div class="showgridfooter"><div class="showgridfooter-page"><p>Whether or not to show the footer, defaults to false
+The footer display Total Rows and Visible Rows (filtered rows)</p>
+</div></div>
 </li>
-<li><h3 id="showHeader">showHeader</h3>
-<div class="showheader"><p>True by default. When set to false, this setting will replace the
-standard header template with '<div>
-</div>', resulting in no header being shown.</p>
-
-<p>It will also set the <code>headerRowHeight</code> option to 0.</p></div>
+<li><h3 id="properties_showheader">showHeader</h3>
+<div class="showheader"><div class="showheader-page"><p>True by default. When set to false, this setting will replace the
+standard header template with &#39;<div>
+</div>&#39;, resulting in no header being shown.</p>
+<p>It will also set the <code>headerRowHeight</code> option to 0.</p>
+</div></div>
 </li>
-<li><h3 id="useExternalFiltering">useExternalFiltering</h3>
-<div class="useexternalfiltering"><p>False by default. When enabled, this setting suppresses the internal filtering.
+<li><h3 id="properties_useexternalfiltering">useExternalFiltering</h3>
+<div class="useexternalfiltering"><div class="useexternalfiltering-page"><p>False by default. When enabled, this setting suppresses the internal filtering.
 All UI logic will still operate, allowing filter conditions to be set and modified.</p>
-
 <p>The external filter logic can listen for the <code>filterChange</code> event, which fires whenever
-a filter has been adjusted.</p></div>
+a filter has been adjusted.</p>
+</div></div>
 </li>
-<li><h3 id="useExternalSorting">useExternalSorting</h3>
-<div class="useexternalsorting"><p>Prevents the internal sorting from executing.  Events will
+<li><h3 id="properties_useexternalsorting">useExternalSorting</h3>
+<div class="useexternalsorting"><div class="useexternalsorting-page"><p>Prevents the internal sorting from executing.  Events will
 still be fired when the sort changes, and the sort information on
 the columns will be updated, allowing an external sorter (for example,
-server sorting) to be implemented.  Defaults to false. </p></div>
+server sorting) to be implemented.  Defaults to false. </p>
+</div></div>
 </li>
-<li><h3 id="virtualizationThreshold">virtualizationThreshold</h3>
-<div class="virtualizationthreshold"><p>Turn virtualization on when number of data elements goes over this number, defaults to 20</p></div>
+<li><h3 id="properties_virtualizationthreshold">virtualizationThreshold</h3>
+<div class="virtualizationthreshold"><div class="virtualizationthreshold-page"><p>Turn virtualization on when number of data elements goes over this number, defaults to 20</p>
+</div></div>
 </li>
-<li><h3 id="wheelScrollThrottle">wheelScrollThrottle</h3>
-<div class="wheelscrollthrottle"><p>Default time in milliseconds to throttle scroll events to, defaults to 70ms</p></div>
+<li><h3 id="properties_wheelscrollthrottle">wheelScrollThrottle</h3>
+<div class="wheelscrollthrottle"><div class="wheelscrollthrottle-page"><p>Default time in milliseconds to throttle scroll events to, defaults to 70ms</p>
+</div></div>
 </li>
 </ul>
 </div>
-<h2 id="Example">Example</h2>
-<div class="example"><p>To define your gridOptions within your controller:
+<h2 id="example">Example</h2>
+<div class="example"><div class="ui-grid-class-page ui-grid-class-gridoptions-page"><p>To define your gridOptions within your controller:
 <pre class="prettyprint linenums">$scope.gridOptions = {
   data: $scope.myData,
   columnDefs: [ 
@@ -319,10 +338,8 @@ server sorting) to be implemented.  Defaults to false. </p></div>
     { name: 'field2', visible: false }
  ]
 };</pre>
-
 <p>You can then use this within your html template, when you define your grid:
 <pre class="prettyprint linenums">&lt;div ui-grid="gridOptions"&gt;&lt;/div&gt;</pre>
-
 <p>To provide default options for all of the grids within your application, use an angular
 decorator to modify the GridOptions factory.
 <pre class="prettyprint linenums">
@@ -339,5 +356,6 @@ app.config(function($provide){
     return gridOptions;
   });
 });
-</pre></div>
+</pre>
+</div></div>
 </div>

@@ -1,101 +1,115 @@
-<h1><code ng:non-bindable="">ColumnDef</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.edit</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/edit/js/gridEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/edit/js/gridEdit.js#L192" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">ColumnDef</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.edit</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Column Definition for edit feature, these are available to be
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="cellEditableCondition">cellEditableCondition</h3>
-<div class="celleditablecondition"><p>If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-edit-api-page ui-grid-edit-api-columndef-page"><p>Column Definition for edit feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions.columnDef">gridOptions.columnDefs</a></p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_celleditablecondition">cellEditableCondition</h3>
+<div class="celleditablecondition"><div class="celleditablecondition-page"><p>If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.</p>
+</div><h4 id="properties_celleditablecondition_example">Example</h4>
+<div class="example"><div class="celleditablecondition-page"><pre class="prettyprint linenums">
 function($scope){
   //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
   return true;
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editDropdownFilter">editDropdownFilter</h3>
-<div class="editdropdownfilter"><p>A filter that you would like to apply to the values in the options list
+<li><h3 id="properties_editdropdownfilter">editDropdownFilter</h3>
+<div class="editdropdownfilter"><div class="editdropdownfilter-page"><p>A filter that you would like to apply to the values in the options list
 of the dropdown.  For example if you were using angular-translate you might set this
-to <code>'translate'</code></p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+to <code>&#39;translate&#39;</code></p>
+</div><h4 id="properties_editdropdownfilter_example">Example</h4>
+<div class="example"><div class="editdropdownfilter-page"><pre class="prettyprint linenums">
 $scope.gridOptions = {
   columnDefs: [
     {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status', editDropdownFilter: 'translate' }
   ],
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editDropdownIdLabel">editDropdownIdLabel</h3>
-<div class="editdropdownidlabel"><p>the label for the "id" field
+<li><h3 id="properties_editdropdownidlabel">editDropdownIdLabel</h3>
+<div class="editdropdownidlabel"><div class="editdropdownidlabel-page"><p>the label for the &quot;id&quot; field
 in the editDropdownOptionsArray.  Defaults
-to 'id'</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+to &#39;id&#39;</p>
+</div><h4 id="properties_editdropdownidlabel_example">Example</h4>
+<div class="example"><div class="editdropdownidlabel-page"><pre class="prettyprint linenums">
 $scope.gridOptions = {
   columnDefs: [
     {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
   ],
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editDropdownOptionsArray">editDropdownOptionsArray</h3>
-<div class="editdropdownoptionsarray"><p>an array of values in the format
+<li><h3 id="properties_editdropdownoptionsarray">editDropdownOptionsArray</h3>
+<div class="editdropdownoptionsarray"><div class="editdropdownoptionsarray-page"><p>an array of values in the format
 [ {id: xxx, value: xxx} ], which is populated
-into the edit dropdown</p></div>
+into the edit dropdown</p>
+</div></div>
 </li>
-<li><h3 id="editDropdownRowEntityOptionsArrayPath">editDropdownRowEntityOptionsArrayPath</h3>
-<div class="editdropdownrowentityoptionsarraypath"><p>a path to a property on row.entity containing an
+<li><h3 id="properties_editdropdownrowentityoptionsarraypath">editDropdownRowEntityOptionsArrayPath</h3>
+<div class="editdropdownrowentityoptionsarraypath"><div class="editdropdownrowentityoptionsarraypath-page"><p>a path to a property on row.entity containing an
 array of values in the format
 [ {id: xxx, value: xxx} ], which will be used to populate
 the edit dropdown.  This can be used when the dropdown values are dependent on
 the backing row entity.
-If this property is set then editDropdownOptionsArray will be ignored.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+If this property is set then editDropdownOptionsArray will be ignored.</p>
+</div><h4 id="properties_editdropdownrowentityoptionsarraypath_example">Example</h4>
+<div class="example"><div class="editdropdownrowentityoptionsarraypath-page"><pre class="prettyprint linenums">
 $scope.gridOptions = {
   columnDefs: [
     {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownRowEntityOptionsArrayPath: 'foo.bars[0].baz',
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
   ],
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editDropdownValueLabel">editDropdownValueLabel</h3>
-<div class="editdropdownvaluelabel"><p>the label for the "value" field
+<li><h3 id="properties_editdropdownvaluelabel">editDropdownValueLabel</h3>
+<div class="editdropdownvaluelabel"><div class="editdropdownvaluelabel-page"><p>the label for the &quot;value&quot; field
 in the editDropdownOptionsArray.  Defaults
-to 'value'</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+to &#39;value&#39;</p>
+</div><h4 id="properties_editdropdownvaluelabel_example">Example</h4>
+<div class="example"><div class="editdropdownvaluelabel-page"><pre class="prettyprint linenums">
 $scope.gridOptions = {
   columnDefs: [
     {name: 'status', editableCellTemplate: 'ui-grid/dropdownEditor',
       editDropdownOptionsArray: [{code: 1, status: 'active'}, {code: 2, status: 'inactive'}],
       editDropdownIdLabel: 'code', editDropdownValueLabel: 'status' }
   ],
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editFileChooserCallback">editFileChooserCallback</h3>
-<div class="editfilechoosercallback"><p>A function that should be called when any files have been chosen
+<li><h3 id="properties_editfilechoosercallback">editFileChooserCallback</h3>
+<div class="editfilechoosercallback"><div class="editfilechoosercallback-page"><p>A function that should be called when any files have been chosen
 by the user.  You should use this to process the files appropriately for your
 application.</p>
-
 <p>It passes the gridCol, the gridRow (from which you can get gridRow.entity),
 and the files.  The files are in the format as returned from the file chooser,
-an array of files, with each having useful information such as:
-- <code>files[0].lastModifiedDate</code>
-- <code>files[0].name</code>
-- <code>files[0].size</code>  (appears to be in bytes)
-- <code>files[0].type</code>  (MIME type by the looks)</p>
-
+an array of files, with each having useful information such as:</p>
+<ul>
+<li><code>files[0].lastModifiedDate</code></li>
+<li><code>files[0].name</code></li>
+<li><code>files[0].size</code>  (appears to be in bytes)</li>
+<li><code>files[0].type</code>  (MIME type by the looks)</li>
+</ul>
 <p>Typically you would do something with these files - most commonly you would
-use the filename or read the file itself in.  The example function does both.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+use the filename or read the file itself in.  The example function does both.</p>
+</div><h4 id="properties_editfilechoosercallback_example">Example</h4>
+<div class="example"><div class="editfilechoosercallback-page"><pre class="prettyprint linenums">
 editFileChooserCallBack: function(gridRow, gridCol, files ){
   // ignore all but the first file, it can only choose one anyway
   // set the filename into this column
@@ -109,27 +123,32 @@ editFileChooserCallBack: function(gridRow, gridCol, files ){
   reader.onload = setFile;
   reader.readAsText( files[0] );
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editModelField">editModelField</h3>
-<div class="editmodelfield"><p>a bindable string value that is used when binding to edit controls instead of colDef.field
-<br/> example: You have a complex property on and object like state:{abbrev:'MS',name:'Mississippi'}.  The
+<li><h3 id="properties_editmodelfield">editModelField</h3>
+<div class="editmodelfield"><div class="editmodelfield-page"><p>a bindable string value that is used when binding to edit controls instead of colDef.field
+<br/> example: You have a complex property on and object like state:{abbrev:&#39;MS&#39;,name:&#39;Mississippi&#39;}.  The
 grid should display state.name in the cell and sort/filter based on the state.name property but the editor
 requires the full state object.
-<br/>colDef.field = 'state.name'
-<br/>colDef.editModelField = 'state'</p></div>
+<br/>colDef.field = &#39;state.name&#39;
+<br/>colDef.editModelField = &#39;state&#39;</p>
+</div></div>
 </li>
-<li><h3 id="editableCellTemplate">editableCellTemplate</h3>
-<div class="editablecelltemplate"><p>cell template to be used when editing this column. Can be Url or text template
-<br/>Defaults to gridOptions.editableCellTemplate</p></div>
+<li><h3 id="properties_editablecelltemplate">editableCellTemplate</h3>
+<div class="editablecelltemplate"><div class="editablecelltemplate-page"><p>cell template to be used when editing this column. Can be Url or text template
+<br/>Defaults to gridOptions.editableCellTemplate</p>
+</div></div>
 </li>
-<li><h3 id="enableCellEdit">enableCellEdit</h3>
-<div class="enablecelledit"><p>enable editing on column</p></div>
+<li><h3 id="properties_enablecelledit">enableCellEdit</h3>
+<div class="enablecelledit"><div class="enablecelledit-page"><p>enable editing on column</p>
+</div></div>
 </li>
-<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
-<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
-<br><em>requires both the cellNav feature and the edit feature to be enabled</em></p></div>
+<li><h3 id="properties_enablecelleditonfocus">enableCellEditOnFocus</h3>
+<div class="enablecelleditonfocus"><div class="enablecelleditonfocus-page"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
+<br><em>requires both the cellNav feature and the edit feature to be enabled</em></p>
+</div></div>
 </li>
 </ul>
 </div>

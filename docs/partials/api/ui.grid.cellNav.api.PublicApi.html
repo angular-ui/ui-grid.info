@@ -1,69 +1,60 @@
-<h1><code ng:non-bindable="">PublicApi</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.cellNav</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/cellnav/js/cellnav.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L286" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.cellNav</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Public Api for cellNav feature</p></div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="getCurrentSelection">getCurrentSelection()</h3>
-<div class="getcurrentselection"><p>returns an array containing the current selection
-<br> array is empty if no selection has occurred</p></div>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-cellnav-api-page ui-grid-cellnav-api-publicapi-page"><p>Public Api for cellNav feature</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L349" class="view-source icon-eye-open"> </a><h3 id="methods_getcurrentselection">getCurrentSelection()</h3>
+<div class="getcurrentselection"><div class="getcurrentselection-page"><p>returns an array containing the current selection
+<br> array is empty if no selection has occurred</p>
+</div></div>
 </li>
-<li><h3 id="getFocusedCell">getFocusedCell()</h3>
-<div class="getfocusedcell"><p>returns the current (or last if Grid does not have focus) focused row and column
-<br> value is null if no selection has occurred</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L338" class="view-source icon-eye-open"> </a><h3 id="methods_getfocusedcell">getFocusedCell()</h3>
+<div class="getfocusedcell"><div class="getfocusedcell-page"><p>returns the current (or last if Grid does not have focus) focused row and column
+<br> value is null if no selection has occurred</p>
+</div></div>
 </li>
-<li><h3 id="rowColSelectIndex">rowColSelectIndex(rowCol)</h3>
-<div class="rowcolselectindex"><p>returns the index in the order in which the RowCol was selected, returns -1 if the RowCol
-isn't selected</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowCol – {object} – </code>
-<p>the rowCol to evaluate</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L361" class="view-source icon-eye-open"> </a><h3 id="methods_rowcolselectindex">rowColSelectIndex(rowCol)</h3>
+<div class="rowcolselectindex"><div class="rowcolselectindex-page"><p>returns the index in the order in which the RowCol was selected, returns -1 if the RowCol
+isn&#39;t selected</p>
+</div><h5 id="methods_rowcolselectindex_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowCol</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowcolselectindex-page"><p>the rowCol to evaluate</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="scrollToFocus">scrollToFocus(rowEntity, colDef)</h3>
-<div class="scrolltofocus"><p>brings the specified row and column into view, and sets focus
-to that cell</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>gridOptions.data[] array instance to make visible and set focus</p></li>
-<li><code ng:non-bindable="">colDef – {object} – </code>
-<p>to make visible and set focus</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>a promise that is resolved after any scrolling is finished</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L327" class="view-source icon-eye-open"> </a><h3 id="methods_scrolltofocus">scrollToFocus(rowEntity, colDef)</h3>
+<div class="scrolltofocus"><div class="scrolltofocus-page"><p>brings the specified row and column into view, and sets focus
+to that cell</p>
+</div><h5 id="methods_scrolltofocus_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrolltofocus-page"><p>gridOptions.data[] array instance to make visible and set focus</p>
+</div></td></tr><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrolltofocus-page"><p>to make visible and set focus</p>
+</div></td></tr></tbody></table><h5 id="methods_scrolltofocus_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="scrolltofocus-page"><p>a promise that is resolved after any scrolling is finished</p>
+</div></td></tr></table></div>
 </li>
 </ul>
 </div>
-<div class="member event"><h2 id="Events">Events</h2>
-<ul class="events"><li><h3 id="navigate">navigate</h3>
-<div class="navigate"><p>raised when the active cell is changed
+<div class="member event"><h2 id="events">Events</h2>
+<ul class="events"><li><h3 id="events_navigate">navigate</h3>
+<div class="navigate"><div class="navigate-page"><p>raised when the active cell is changed
 <pre class="prettyprint linenums">
      gridApi.cellNav.on.navigate(scope,function(newRowcol, oldRowCol){})
-</pre><div class="inline"></div>
+</pre>
+</div><div class="inline"></div>
 <div class="inline"></div>
-<h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">newRowCol – {object} – </code>
-<p>new position</p></li>
-<li><code ng:non-bindable="">oldRowCol – {object} – </code>
-<p>old position</p></li>
-</ul>
-</div>
+<h5 id="events_navigate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newRowCol</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="navigate-page"><p>new position</p>
+</div></td></tr><tr><td>oldRowCol</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="navigate-page"><p>old position</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="viewPortKeyDown">viewPortKeyDown</h3>
-<div class="viewportkeydown"><p>is raised when the viewPort receives a keyDown event. Cells never get focus in uiGrid
+<li><h3 id="events_viewportkeydown">viewPortKeyDown</h3>
+<div class="viewportkeydown"><div class="viewportkeydown-page"><p>is raised when the viewPort receives a keyDown event. Cells never get focus in uiGrid
 due to the difficulties of setting focus on a cell that is not visible in the viewport.  Use this
 event whenever you need a keydown event on a cell
-<br/></p><div class="inline"></div>
+<br/></p>
+</div><div class="inline"></div>
 <div class="inline"></div>
-<h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">event – {object} – </code>
-<p>keydown event</p></li>
-<li><code ng:non-bindable="">rowCol – {object} – </code>
-<p>current rowCol position</p></li>
-</ul>
-</div>
+<h5 id="events_viewportkeydown_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="viewportkeydown-page"><p>keydown event</p>
+</div></td></tr><tr><td>rowCol</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="viewportkeydown-page"><p>current rowCol position</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>

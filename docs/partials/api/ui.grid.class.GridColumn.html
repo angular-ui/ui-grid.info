@@ -1,118 +1,111 @@
-<h1><code ng:non-bindable="">GridColumn</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridColumn.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L15" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridColumn</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Represents the viewModel for each column.  Any state or methods needed for a Grid Column
-are defined on this prototype</p></div>
-<h2 id="Usage">Usage</h2>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-gridcolumn-page"><p>Represents the viewModel for each column.  Any state or methods needed for a Grid Column
+are defined on this prototype</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridColumn(colDef, index, grid);</pre>
-<h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColDef} – </code>
-<p>Column definition.</p></li>
-<li><code ng:non-bindable="">index – {number} – </code>
-<p>the current position of the column in the array</p></li>
-<li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>reference to the grid</p></li>
-</ul>
-</div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="GridColumn">GridColumn(colDef, uid, grid)</h3>
-<div class="gridcolumn"><p>Initializes a gridColumn</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
-<p>the column def to associate with this column</p></li>
-<li><code ng:non-bindable="">uid – {number} – </code>
-<p>the unique and immutable uid we'd like to allocate to this column</p></li>
-<li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid we'd like to create this column in</p></li>
-</ul>
-</div>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-coldef">ColDef</a></td><td><div class="ui-grid-class-page ui-grid-class-gridcolumn-page"><p>Column definition.</p>
+</div></td></tr><tr><td>index</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="ui-grid-class-page ui-grid-class-gridcolumn-page"><p>the current position of the column in the array</p>
+</div></td></tr><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="ui-grid-class-page ui-grid-class-gridcolumn-page"><p>reference to the grid</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L102" class="view-source icon-eye-open"> </a><h3 id="methods_gridcolumn">GridColumn(colDef, uid, grid)</h3>
+<div class="gridcolumn"><div class="gridcolumn-page"><p>Initializes a gridColumn</p>
+</div><h5 id="methods_gridcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-columndef">ColumnDef</a></td><td><div class="gridcolumn-page"><p>the column def to associate with this column</p>
+</div></td></tr><tr><td>uid</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="gridcolumn-page"><p>the unique and immutable uid we&#39;d like to allocate to this column</p>
+</div></td></tr><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="gridcolumn-page"><p>the grid we&#39;d like to create this column in</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getAggregationText">getAggregationText(label)</h3>
-<div class="getaggregationtext"><p>Gets the aggregation label from colDef.aggregationLabel if
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L862" class="view-source icon-eye-open"> </a><h3 id="methods_getaggregationtext">getAggregationText(label)</h3>
+<div class="getaggregationtext"><div class="getaggregationtext-page"><p>Gets the aggregation label from colDef.aggregationLabel if
 specified or by using i18n, including deciding whether or not to display
-based on colDef.aggregationHideLabel.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">label – {string} – </code>
-<p>the i18n lookup value to use for the column label</p></li>
-</ul>
-</div>
+based on colDef.aggregationHideLabel.</p>
+</div><h5 id="methods_getaggregationtext_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>label</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getaggregationtext-page"><p>the i18n lookup value to use for the column label</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getAggregationValue">getAggregationValue()</h3>
-<div class="getaggregationvalue"><p>gets the aggregation value based on the aggregation type for this column.
-Debounced using scrollDebounce option setting</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L199" class="view-source icon-eye-open"> </a><h3 id="methods_getaggregationvalue">getAggregationValue()</h3>
+<div class="getaggregationvalue"><div class="getaggregationvalue-page"><p>gets the aggregation value based on the aggregation type for this column.
+Debounced using scrollDebounce option setting</p>
+</div></div>
 </li>
-<li><h3 id="getColClass">getColClass(prefixDot)</h3>
-<div class="getcolclass"><p>Returns the class name for the column</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">prefixDot – {bool} – </code>
-<p>if true, will return .className instead of className</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L775" class="view-source icon-eye-open"> </a><h3 id="methods_getcolclass">getColClass(prefixDot)</h3>
+<div class="getcolclass"><div class="getcolclass-page"><p>Returns the class name for the column</p>
+</div><h5 id="methods_getcolclass_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>prefixDot</td><td><a href="" class="label type-hint type-hint-bool">bool</a></td><td><div class="getcolclass-page"><p>if true, will return .className instead of className</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getColClassDefinition">getColClassDefinition()</h3>
-<div class="getcolclassdefinition"><p>Returns the class definition for th column</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L808" class="view-source icon-eye-open"> </a><h3 id="methods_getcolclassdefinition">getColClassDefinition()</h3>
+<div class="getcolclassdefinition"><div class="getcolclassdefinition-page"><p>Returns the class definition for th column</p>
+</div></div>
 </li>
-<li><h3 id="getRenderContainer">getRenderContainer()</h3>
-<div class="getrendercontainer"><p>Returns the render container object that this column belongs to.</p>
-
-<p>Columns will be default be in the <code>body</code> render container if they aren't allocated to one specifically.</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L820" class="view-source icon-eye-open"> </a><h3 id="methods_getrendercontainer">getRenderContainer()</h3>
+<div class="getrendercontainer"><div class="getrendercontainer-page"><p>Returns the render container object that this column belongs to.</p>
+<p>Columns will be default be in the <code>body</code> render container if they aren&#39;t allocated to one specifically.</p>
+</div></div>
 </li>
-<li><h3 id="hideColumn">hideColumn()</h3>
-<div class="hidecolumn"><p>Hides the column by setting colDef.visible = false</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L116" class="view-source icon-eye-open"> </a><h3 id="methods_hidecolumn">hideColumn()</h3>
+<div class="hidecolumn"><div class="hidecolumn-page"><p>Hides the column by setting colDef.visible = false</p>
+</div></div>
 </li>
-<li><h3 id="isPinnedLeft">isPinnedLeft()</h3>
-<div class="ispinnedleft"><p>Returns true if column is in the left render container</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L787" class="view-source icon-eye-open"> </a><h3 id="methods_ispinnedleft">isPinnedLeft()</h3>
+<div class="ispinnedleft"><div class="ispinnedleft-page"><p>Returns true if column is in the left render container</p>
+</div></div>
 </li>
-<li><h3 id="isPinnedRight">isPinnedRight()</h3>
-<div class="ispinnedright"><p>Returns true if column is in the right render container</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L797" class="view-source icon-eye-open"> </a><h3 id="methods_ispinnedright">isPinnedRight()</h3>
+<div class="ispinnedright"><div class="ispinnedright-page"><p>Returns true if column is in the right render container</p>
+</div></div>
 </li>
-<li><h3 id="setPropertyOrDefault">setPropertyOrDefault(colDef, propName, defaultValue)</h3>
-<div class="setpropertyordefault"><p>Sets a property on the column using the passed in columnDef, and
-setting the defaultValue if the value cannot be found on the colDef</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
-<p>the column def to look in for the property value</p></li>
-<li><code ng:non-bindable="">propName – {string} – </code>
-<p>the property name we'd like to set</p></li>
-<li><code ng:non-bindable="">defaultValue – {object} – </code>
-<p>the value to use if the colDef doesn't provide the setting</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L219" class="view-source icon-eye-open"> </a><h3 id="methods_setpropertyordefault">setPropertyOrDefault(colDef, propName, defaultValue)</h3>
+<div class="setpropertyordefault"><div class="setpropertyordefault-page"><p>Sets a property on the column using the passed in columnDef, and
+setting the defaultValue if the value cannot be found on the colDef</p>
+</div><h5 id="methods_setpropertyordefault_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-columndef">ColumnDef</a></td><td><div class="setpropertyordefault-page"><p>the column def to look in for the property value</p>
+</div></td></tr><tr><td>propName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setpropertyordefault-page"><p>the property name we&#39;d like to set</p>
+</div></td></tr><tr><td>defaultValue</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="setpropertyordefault-page"><p>the value to use if the colDef doesn&#39;t provide the setting</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="showColumn">showColumn()</h3>
-<div class="showcolumn"><p>Makes the column visible by setting colDef.visible = true</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L838" class="view-source icon-eye-open"> </a><h3 id="methods_showcolumn">showColumn()</h3>
+<div class="showcolumn"><div class="showcolumn-page"><p>Makes the column visible by setting colDef.visible = true</p>
+</div></div>
 </li>
-<li><h3 id="updateColumnDef">updateColumnDef(colDef, isNew)</h3>
-<div class="updatecolumndef"><p>Moves settings from the columnDef down onto the column,
-and sets properties as appropriate</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">colDef – {ColumnDef} – </code>
-<p>the column def to look in for the property value</p></li>
-<li><code ng:non-bindable="">isNew – {boolean} – </code>
-<p>whether the column is being newly created, if not
-we're updating an existing column, and some items such as the sort shouldn't
-be copied down</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridColumn.js#L417" class="view-source icon-eye-open"> </a><h3 id="methods_updatecolumndef">updateColumnDef(colDef, isNew)</h3>
+<div class="updatecolumndef"><div class="updatecolumndef-page"><p>Moves settings from the columnDef down onto the column,
+and sets properties as appropriate</p>
+</div><h5 id="methods_updatecolumndef_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-columndef">ColumnDef</a></td><td><div class="updatecolumndef-page"><p>the column def to look in for the property value</p>
+</div></td></tr><tr><td>isNew</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="updatecolumndef-page"><p>whether the column is being newly created, if not
+we&#39;re updating an existing column, and some items such as the sort shouldn&#39;t
+be copied down</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="displayName">displayName</h3>
-<div class="displayname"><p>Column name that will be shown in the header.  If displayName is not
-provided then one is generated using the name.</p></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_displayname">displayName</h3>
+<div class="displayname"><div class="displayname-page"><p>Column name that will be shown in the header.  If displayName is not
+provided then one is generated using the name.</p>
+</div></div>
 </li>
-<li><h3 id="field">field</h3>
-<div class="field"><p>field must be provided if you wish to bind to a 
+<li><h3 id="properties_field">field</h3>
+<div class="field"><div class="field-page"><p>field must be provided if you wish to bind to a
 property in the data source.  Should be an angular expression that evaluates against grid.options.data 
 array element.  Can be a complex expression: <code>employee.address.city</code>, or can be a function: <code>employee.getFullAddress()</code>.
-See the angular docs on binding expressions.</p></div>
+See the angular docs on binding expressions.</p>
+</div></div>
 </li>
-<li><h3 id="filter">filter</h3>
-<div class="filter"><p>Filter on this column.  </p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', flags: { caseSensitive: false }, type: uiGridConstants.filter.SELECT, [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ] }</pre></div>
+<li><h3 id="properties_filter">filter</h3>
+<div class="filter"><div class="filter-page"><p>Filter on this column.</p>
+</div><h4 id="properties_filter_example">Example</h4>
+<div class="example"><div class="filter-page"><pre class="prettyprint linenums">{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', flags: { caseSensitive: false }, type: uiGridConstants.filter.SELECT, [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ] }</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="filters">filters</h3>
-<div class="filters"><p>Filters for this column. Includes 'term' property bound to filter input elements.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">[
+<li><h3 id="properties_filters">filters</h3>
+<div class="filters"><div class="filters-page"><p>Filters for this column. Includes &#39;term&#39; property bound to filter input elements.</p>
+</div><h4 id="properties_filters_example">Example</h4>
+<div class="example"><div class="filters-page"><pre class="prettyprint linenums">[
 {
   term: 'foo', // ngModel for &lt;input&gt;
   condition: uiGridConstants.filter.STARTS_WITH,
@@ -126,16 +119,19 @@ See the angular docs on binding expressions.</p></div>
   condition: uiGridConstants.filter.ENDS_WITH,
   placeholder: 'ends with...'
 }
-] </pre></div>
+] </pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="name">name</h3>
-<div class="name"><p>(mandatory) each column should have a name, although for backward
-compatibility with 2.x name can be omitted if field is present</p></div>
+<li><h3 id="properties_name">name</h3>
+<div class="name"><div class="name-page"><p>(mandatory) each column should have a name, although for backward
+compatibility with 2.x name can be omitted if field is present</p>
+</div></div>
 </li>
-<li><h3 id="sortingAlgorithm">sortingAlgorithm</h3>
-<div class="sortingalgorithm"><p>Algorithm to use for sorting this column. Takes 'a' and 'b' parameters 
-like any normal sorting function.</p></div>
+<li><h3 id="properties_sortingalgorithm">sortingAlgorithm</h3>
+<div class="sortingalgorithm"><div class="sortingalgorithm-page"><p>Algorithm to use for sorting this column. Takes &#39;a&#39; and &#39;b&#39; parameters
+like any normal sorting function.</p>
+</div></div>
 </li>
 </ul>
 </div>

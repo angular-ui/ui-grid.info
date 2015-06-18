@@ -1,52 +1,43 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>This grid example uses the ui-grid-selection directive to row selection. To enable, you must include the 'ui.grid.selection' 
+<div><div class="tutorial-page tutorial-210-selection-page"><p>This grid example uses the ui-grid-selection directive to row selection. To enable, you must include the &#39;ui.grid.selection&#39; 
 module and you must include the ui-grid-selection directive on your grid element.</p>
-
 <p>Uses the gridOptions.onRegisterApi callback to register the rowSelectionChanged event and log when the row is selected.
 By default the selection feature will divide selection changes into batch events and single events, there are
 two different events provided in the api.  By setting <code>enableSelectionBatchEvent: false</code> you can cause it to 
-instead just call the single event in a loop - which may be useful if you're doing client rather than server
+instead just call the single event in a loop - which may be useful if you&#39;re doing client rather than server
 side processing of the changes.</p>
-
 <p>By default the module will provide a row header with checkboxes that allow selection of individual rows.  If you set
 the <code>enableRowHeaderSelection</code> gridOption to false, then the row header is hidden and a click on the row will
 result in selection of that row.  You can see that in this tutorial for grid1 by looking at your javascript console.</p>
-
 <p>If you want to allow both clicking on the row, and also clicking on the rowHeader, you can set <code>enableFullRowSelection</code> to 
 true.</p>
-
 <p>Setting the <code>multiSelect</code> gridOption to true will allow selecting multiple rows, setting to false will allow selection
 of only one row at a time.</p>
-
 <p>If you have <code>multiSelect: false</code>, then an additional option <code>noUnselect</code> will mean that a row is always selected.  You
 can select a different row (which will unselect the current row), but you cannot manually unselect the current row
 by clicking on it.  This means that at least one row is always selected, other than when you first open the grid.  If 
 necessary you could programatically select the first row upon page open.  The second grid demonstrates this.</p>
-
 <p>If <code>multiSelect: true</code>, another option <code>modifierKeysToMultiSelect</code> may be used. If set to true this will allow selecting 
 multiple rows only if the Ctrl-Key, Cmd-Key (Mac) or the Shift-Key is used when selecting, if set to false then it allows
 selecting multiple rows by individually clicking them.</p>
-
 <p>By default a selectAll box is shown at the top of the rowHeader.  If <code>multiSelect: true</code> is set then this will allow
 you to select all visible rows.  Note that the selectAll does not watch for new data, so if you are using the selectAll
 function and you add data to the grid, you need to check <code>grid.api.selection.getSelectAllState</code>, and if it is currently
 ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> after your data has been added.</p>
-
 <p>The selectAll box can be disabled by setting <code>enableSelectAll</code> to false.</p>
-
-<p>You can set the selection row header column width by setting 'selectionRowHeaderWidth' option.</p>
-
+<p>You can set the selection row header column width by setting &#39;selectionRowHeaderWidth&#39; option.</p>
 <p>You can use an <code>isRowSelectable</code> function to determine which rows are selectable.  If you set this function in the options
 after grid initialisation you need to call <code>gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS)</code> to enable
-the option.  In the grid below pressing the button to "set selectable" will set any rows that have an age > 30 to not be
-selectable, and also set the age of the first row to 31.</p><h2 id="Example">Example</h2>
-<div class="example"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.  The first example
+the option.  In the grid below pressing the button to &quot;set selectable&quot; will set any rows that have an age &gt; 30 to not be
+selectable, and also set the age of the first row to 31.</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-210-selection-page"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.  The first example
 auto-selects the first row once the data is loaded.</p>
-
-<h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-67" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-67" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-67" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-67">
@@ -207,6 +198,7 @@ auto-selects the first row once the data is loaded.</p>
     }]);
   </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-67" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-67" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

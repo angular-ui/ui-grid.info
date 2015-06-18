@@ -1,33 +1,40 @@
-<h1><code ng:non-bindable="">GridOptions</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.edit</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/edit/js/gridEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/edit/js/gridEdit.js#L130" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.edit</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Options for configuring the edit feature, these are available to be
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="cellEditableCondition">cellEditableCondition</h3>
-<div class="celleditablecondition"><p>If specified, either a value or function to be used by all columns before editing.
-If falsy, then editing of cell is not allowed.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-edit-api-page ui-grid-edit-api-gridoptions-page"><p>Options for configuring the edit feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_celleditablecondition">cellEditableCondition</h3>
+<div class="celleditablecondition"><div class="celleditablecondition-page"><p>If specified, either a value or function to be used by all columns before editing.
+If falsy, then editing of cell is not allowed.</p>
+</div><h4 id="properties_celleditablecondition_example">Example</h4>
+<div class="example"><div class="celleditablecondition-page"><pre class="prettyprint linenums">
 function($scope){
   //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
   return true;
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="editableCellTemplate">editableCellTemplate</h3>
-<div class="editablecelltemplate"><p>If specified, cellTemplate to use as the editor for all columns.
-<br/> defaults to 'ui-grid/cellTextEditor'</p></div>
+<li><h3 id="properties_editablecelltemplate">editableCellTemplate</h3>
+<div class="editablecelltemplate"><div class="editablecelltemplate-page"><p>If specified, cellTemplate to use as the editor for all columns.
+<br/> defaults to &#39;ui-grid/cellTextEditor&#39;</p>
+</div></div>
 </li>
-<li><h3 id="enableCellEdit">enableCellEdit</h3>
-<div class="enablecelledit"><p>If defined, sets the default value for the editable flag on each individual colDefs
-if their individual enableCellEdit configuration is not defined. Defaults to undefined.</p></div>
+<li><h3 id="properties_enablecelledit">enableCellEdit</h3>
+<div class="enablecelledit"><div class="enablecelledit-page"><p>If defined, sets the default value for the editable flag on each individual colDefs
+if their individual enableCellEdit configuration is not defined. Defaults to undefined.</p>
+</div></div>
 </li>
-<li><h3 id="enableCellEditOnFocus">enableCellEditOnFocus</h3>
-<div class="enablecelleditonfocus"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
-<br/><em>requires cellNav feature and the edit feature to be enabled</em></p></div>
+<li><h3 id="properties_enablecelleditonfocus">enableCellEditOnFocus</h3>
+<div class="enablecelleditonfocus"><div class="enablecelleditonfocus-page"><p>If true, then editor is invoked as soon as cell receives focus. Default false.
+<br/><em>requires cellNav feature and the edit feature to be enabled</em></p>
+</div></div>
 </li>
 </ul>
 </div>

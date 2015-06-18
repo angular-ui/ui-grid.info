@@ -1,31 +1,26 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>The save state feature allows you to save the current look of the grid
+<div><div class="tutorial-page tutorial-208-saving-and-restoring-the-state-of-the-grid-page"><p>The save state feature allows you to save the current look of the grid
 and restore it upon returning to the grid.</p>
-
 <p>For example, you may have an application where your user can reorder the columns,
 adjust column widths, apply sorts and filters, and select a specific cell.  The user
 might adjust their grid to look as they wish, and then navigate to another page.  When
 the user returns to the page with the grid, they might expect it to look like it
 did when they left.  The save state feature permits this.</p>
-
 <p>There are two core methods:</p>
-
 <ul>
 <li>save, which packages the current grid state into an object which the calling application
 then stores somewhere (a cookie, session state, a database)</li>
 <li>restore, which takes a grid state object, and returns the grid to the state that
 is stored in that object</li>
 </ul>
-
 <p>Note that the saveState functionality deliberately sets out to store the transient state -
-the information that isn't held in gridOptions nor columnDefs.  The calling application is responsible for
+the information that isn&#39;t held in gridOptions nor columnDefs.  The calling application is responsible for
 storing gridOptions and columnDefs (and must have had them in order to render the grid the first time).</p>
-
 <p>The feature also provides some options that control what is saved.  All options are true by
 default:</p>
-
 <ul>
 <li>saveWidths</li>
 <li>saveOrder</li>
@@ -39,12 +34,12 @@ default:</p>
 <li>saveGroupingExpandedStates</li>
 <li>saveTreeView</li>
 <li>saveSelection</li>
-</ul><h2 id="Example">Example</h2>
-<div class="example"><p>In this example we provide a button to save the grid state.  You can then modify the grid layout
+</ul>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-208-saving-and-restoring-the-state-of-the-grid-page"><p>In this example we provide a button to save the grid state.  You can then modify the grid layout
 to something different, and use the restore button to set the grid back the way it was.</p>
-
-<h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-63" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-64"></div>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-63" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-64"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-63" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-63">
@@ -165,6 +160,7 @@ to something different, and use the restore button to set the grid back the way 
     });
   </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-63" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-63" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

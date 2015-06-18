@@ -1,13 +1,12 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>The ui-grid API consists of the core ui.grid documentation, plus documentation for each of the features that
+<div><div class="api-page api-index-page"><p>The ui-grid API consists of the core ui.grid documentation, plus documentation for each of the features that
 you can choose to add to the grid.</p>
-
 <p>In general the features will extend the core ui-grid configuration.  So, for example, if you wanted to configure
 the core ui-grid, you might choose to set some options and columns on your grid (the documentation for these is 
 found in <a href="#/api/ui.grid.class:GridOptions">gridOptions</a> and <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a>.</p>
-
 <pre class="prettyprint linenums">
   $scope.gridOptions = {
     enableSorting: true,
@@ -18,11 +17,9 @@ found in <a href="#/api/ui.grid.class:GridOptions">gridOptions</a> and <a href="
     ]
   };
 </pre>
-
 <p>If you had enabled the edit feature, then the columnDefs and gridOptions would have additional settings, the documentation
 for these is at <a href="#/api/ui.grid.edit.api:ColumnDef">columnDef</a> and <a href="#/api/ui.grid.edit.api:GridOptions">gridOptions</a>, but you
 still set these through the same mechanism:</p>
-
 <pre class="prettyprint linenums">
   $scope.gridOptions = {
     enableSorting: true,
@@ -34,6 +31,6 @@ still set these through the same mechanism:</p>
     ]
   };
 </pre>
-
-<p>In general you'll therefore use the documentation for the core ui.grid module, and then the additional documentation
-for any feature that you have enabled.</p></div>
+<p>In general you&#39;ll therefore use the documentation for the core ui.grid module, and then the additional documentation
+for any feature that you have enabled.</p>
+</div></div>

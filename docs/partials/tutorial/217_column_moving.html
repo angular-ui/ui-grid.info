@@ -1,18 +1,18 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>Feature ui.grid.moveColumns allows moving column to a different position. To enable, you must include the <code>ui.grid.moveColumns</code> module
+<div><div class="tutorial-page tutorial-217-column-moving-page"><p>Feature ui.grid.moveColumns allows moving column to a different position. To enable, you must include the <code>ui.grid.moveColumns</code> module
 and you must include the <code>ui-grid-move-columns</code> directive on your grid element.</p>
-
 <p>By default column moving will be enabled for all the columns of the grid. To disable it for all columns of grid property <code>enableColumnMoving</code>
 of grid options can be used. To specifically enable or disable column moving for a specific column property <code>enableColumnMoving</code>
 of column definitions can be used.</p>
-
 <p>Columns can be repositioned by either dragging and dropping them to specific position. Alternatively, gridApi method
 <code>gridApi.colMovable.moveColumn(oldPosition, newPosition)</code> can also be used to move columns. The column position ranging from 0
-(in the leftmost) up to number of visible columns in the grid (in the rightmost).</p><h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-76" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+(in the leftmost) up to number of visible columns in the grid (in the rightmost).</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-217-column-moving-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-76" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-76" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-76">
@@ -53,6 +53,7 @@ of column definitions can be used.</p>
   }]);
 </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-76" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-76" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

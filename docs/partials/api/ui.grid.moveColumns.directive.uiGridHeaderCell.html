@@ -1,23 +1,25 @@
-<h1><code ng:non-bindable="">uiGridHeaderCell</code>
-<span class="hint">(directive in module <code ng:non-bindable="">ui.grid.moveColumns</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/move-columns/js/column-movable.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/move-columns/js/column-movable.js#L239" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridHeaderCell</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">ui.grid.moveColumns</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Stacks on top of ui.grid.uiGridHeaderCell to provide capability to be able to move it to reposition column.</p>
-
-<p>On receiving mouseDown event headerCell is cloned, now as the mouse moves the cloned header cell also moved in the grid.
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-movecolumns-directive-page ui-grid-movecolumns-directive-uigridheadercell-page"><p>Stacks on top of ui.grid.uiGridHeaderCell to provide capability to be able to move it to reposition column.</p>
+<p> On receiving mouseDown event headerCell is cloned, now as the mouse moves the cloned header cell also moved in the grid.
  In case the moving cloned header cell reaches the left or right extreme of grid, grid scrolling is triggered (if horizontal scroll exists).
  On mouseUp event column is repositioned at position where mouse is released and cloned header cell is removed.</p>
-
-<p>Events that invoke cloning of header cell:
-   - mousedown</p>
-
-<p>Events that invoke movement of cloned header cell:
-   - mousemove</p>
-
-<p>Events that invoke repositioning of column:
-   - mouseup</p></div>
-<h2 id="Usage">Usage</h2>
+<p> Events that invoke cloning of header cell:</p>
+<ul>
+<li><p>mousedown</p>
+<p>Events that invoke movement of cloned header cell:</p>
+</li>
+<li><p>mousemove</p>
+<p>Events that invoke repositioning of column:</p>
+</li>
+<li>mouseup</li>
+</ul>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage">as attribute<pre class="prettyprint linenums">&lt;div ui-grid-header-cell&gt;
    ...
 &lt;/div&gt;</pre>

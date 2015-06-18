@@ -1,72 +1,60 @@
-<h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/tree-base/js/tree-base.js#L79" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><h1 id="uigridtreebase">ui.grid.treeBase</h2>
-
+<div><div class="ui-grid-treebase-page"><h2 id="uigridtreebase">ui.grid.treeBase</h2>
 <p>This module provides base tree handling functions that are shared by other features, notably grouping 
 and treeView.  It provides a tree view of the data, with nodes in that
 tree and leaves.</p>
-
-<h2 id="designinformation">Design information:</h3>
-
+<h3 id="uigridtreebase_design-information">Design information:</h3>
 <p>The raw data that is provided must come with a $$treeLevel on any non-leaf node.  Grouping will create
 these on all the group header rows, treeView will expect these to be set in the raw data by the user.
-TreeBase will run a rowsProcessor that:
-- builds <code>treeBase.tree</code> out of the provided rows
-- permits a recursive sort of the tree
-- maintains the expand/collapse state of each node
-- provides the expand/collapse all button and the expand/collapse buttons
-- maintains the count of children for each node</p>
-
+TreeBase will run a rowsProcessor that:</p>
+<ul>
+<li>builds <code>treeBase.tree</code> out of the provided rows</li>
+<li>permits a recursive sort of the tree</li>
+<li>maintains the expand/collapse state of each node</li>
+<li>provides the expand/collapse all button and the expand/collapse buttons</li>
+<li>maintains the count of children for each node</li>
+</ul>
 <p>Each row is updated with a link to the tree node that represents it.  Refer <a href="#/api/ui.grid.treeBase.grid:treeBase.tree">tree documentation</a>
 for information.</p>
-
-<p>TreeBase adds information to the rows 
-- treeLevel: if present and > -1 tells us the level (level 0 is the top level) 
-- treeNode: pointer to the node in the grid.treeBase.tree that refers
-  to this row, allowing us to manipulate the state</p>
-
+<p>TreeBase adds information to the rows </p>
+<ul>
+<li>treeLevel: if present and &gt; -1 tells us the level (level 0 is the top level) </li>
+<li>treeNode: pointer to the node in the grid.treeBase.tree that refers
+to this row, allowing us to manipulate the state</li>
+</ul>
 <p>Since the logic is baked into the rowsProcessors, it should get triggered whenever
 row order or filtering or anything like that is changed.  We recall the expanded state
 across invocations of the rowsProcessors by the reference to the treeNode on the individual
 rows.  We rebuild the tree itself quite frequently, when we do this we use the saved treeNodes to
 get the state, but we overwrite the other data in that treeNode.</p>
-
 <p>By default rows are collapsed, which means all data rows have their visible property
 set to false, and only level 0 group rows are set to visible.</p>
-
 <p>We rely on the rowsProcessors to do the actual expanding and collapsing, so we set the flags we want into
-grid.treeBase.tree, then call refresh.  This is because we can't easily change the visible
-row cache without calling the processors, and once we've built the logic into the rowProcessors we may as
+grid.treeBase.tree, then call refresh.  This is because we can&#39;t easily change the visible
+row cache without calling the processors, and once we&#39;ve built the logic into the rowProcessors we may as
 well use it all the time.</p>
-
 <p>Tree base provides sorting (on non-grouped columns).</p>
-
 <p>Sorting works in two passes.  The standard sorting is performed for any columns that are important to building 
 the tree (for example, any grouped columns).  Then after the tree is built, a recursive tree sort is performed
 for the remaining sort columns (including the original sort) - these columns are sorted within each tree level 
 (so all the level 1 nodes are sorted, then all the level 2 nodes within each level 1 node etc).</p>
-
 <p>To achieve this we make use of the <code>ignoreSort</code> property on the sort configuration.  The parent feature (treeView or grouping)
 must provide a rowsProcessor that runs with very low priority (typically in the 60-65 range), and that sets
 the <code>ignoreSort</code>on any sort that it wants to run on the tree.  TreeBase will clear the ignoreSort on all sorts - so it
-will turn on any sorts that haven't run.  It will then call a recursive sort on the tree.</p>
-
+will turn on any sorts that haven&#39;t run.  It will then call a recursive sort on the tree.</p>
 <p>Tree base provides treeAggregation.  It checks the treeAggregation configuration on each column, and aggregates based on
 the logic provided as it builds the tree.  Aggregation information will be collected in the format:</p>
-
 <pre><code> {
-   type: 'count',
+   type: &#39;count&#39;,
    value: 4,
-   label: 'count: ',
-   rendered: 'count: 4'
+   label: &#39;count: &#39;,
+   rendered: &#39;count: 4&#39;
  }
-</code></pre>
-
-<p>A callback is provided to format the value once it is finalised (aka a valueFilter).</p>
-
+</code></pre><p>A callback is provided to format the value once it is finalised (aka a valueFilter).</p>
 <p><br/>
 <br/></p>
-
 <div doc-module-components="ui.grid.treeBase">
-</div></div>
+</div></div></div>

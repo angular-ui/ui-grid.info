@@ -1,31 +1,30 @@
-<h1><code ng:non-bindable="">PublicApi</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.grouping</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L157" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.grouping</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Public Api for grouping feature</p></div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="aggregateColumn">aggregateColumn(columnName, or, aggregationLabel)</h3>
-<div class="aggregatecolumn"><p>Sets the aggregation type on a column, if the 
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-grouping-api-page ui-grid-grouping-api-publicapi-page"><p>Public Api for grouping feature</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L284" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(columnName, or, aggregationLabel)</h3>
+<div class="aggregatecolumn"><div class="aggregatecolumn-page"><p>Sets the aggregation type on a column, if the
 column is currently grouped then it removes the grouping first.
 If the aggregationDef is null then will result in the aggregation
-being removed</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
-<p>the column we want to aggregate</p></li>
-<li><code ng:non-bindable="">or – {string} – </code>
-<p>{function} aggregationDef one of the recognised types
-from uiGridGroupingConstants or a custom aggregation function.</p></li>
-<li><code ng:non-bindable="">aggregationLabel – {string} – </code>
-<p>(optional) The label to use for this aggregation.</p></li>
-</ul>
-</div>
+being removed</p>
+</div><h5 id="methods_aggregatecolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>the column we want to aggregate</p>
+</div></td></tr><tr><td>or</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>{function} aggregationDef one of the recognised types
+from uiGridGroupingConstants or a custom aggregation function.</p>
+</div></td></tr><tr><td>aggregationLabel</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>(optional) The label to use for this aggregation.</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="clearGrouping">clearGrouping()</h3>
-<div class="cleargrouping"><p>Clear any grouped columns and any aggregations.  Doesn't remove sorting,
-as we don't know whether that sorting was added by grouping or was there beforehand</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L266" class="view-source icon-eye-open"> </a><h3 id="methods_cleargrouping">clearGrouping()</h3>
+<div class="cleargrouping"><div class="cleargrouping-page"><p>Clear any grouped columns and any aggregations.  Doesn&#39;t remove sorting,
+as we don&#39;t know whether that sorting was added by grouping or was there beforehand</p>
+</div></div>
 </li>
-<li><h3 id="getGrouping">getGrouping(getExpanded)</h3>
-<div class="getgrouping"><p>Get the grouping configuration for this grid,
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L185" class="view-source icon-eye-open"> </a><h3 id="methods_getgrouping">getGrouping(getExpanded)</h3>
+<div class="getgrouping"><div class="getgrouping-page"><p>Get the grouping configuration for this grid,
 used by the saveState feature.  Adds expandedState to the information
 provided by the internal getGrouping, and removes any aggregations that have a source
 of grouping (i.e. will be automatically reapplied when we regroup the column)
@@ -36,48 +35,35 @@ where grouping contains an array of objects:
 and aggregations contains an array of objects:
   <code>{ field: column.field, colName: column.name, aggregation: column.grouping.aggregation }</code>
 and expandedState is a hash of the currently expanded nodes</p>
-
-<p>The groupArray will be sorted by groupPriority.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">getExpanded – {boolean} – </code>
-<p>whether or not to return the expanded state</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>grouping configuration</p></div>
-</div>
+<p>The groupArray will be sorted by groupPriority.</p>
+</div><h5 id="methods_getgrouping_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>getExpanded</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="getgrouping-page"><p>whether or not to return the expanded state</p>
+</div></td></tr></tbody></table><h5 id="methods_getgrouping_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="getgrouping-page"><p>grouping configuration</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="groupColumn">groupColumn(columnName)</h3>
-<div class="groupcolumn"><p>Adds this column to the existing grouping, at the end of the priority order.
-If the column doesn't have a sort, adds one, by default ASC</p>
-
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L235" class="view-source icon-eye-open"> </a><h3 id="methods_groupcolumn">groupColumn(columnName)</h3>
+<div class="groupcolumn"><div class="groupcolumn-page"><p>Adds this column to the existing grouping, at the end of the priority order.
+If the column doesn&#39;t have a sort, adds one, by default ASC</p>
 <p>This column will move to the left of any non-group columns, the
-move is handled in a columnProcessor, so gets called as part of refresh</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
-<p>the name of the column we want to group</p></li>
-</ul>
-</div>
+move is handled in a columnProcessor, so gets called as part of refresh</p>
+</div><h5 id="methods_groupcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="groupcolumn-page"><p>the name of the column we want to group</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="setGrouping">setGrouping(config)</h3>
-<div class="setgrouping"><p>Set the grouping configuration for this grid, 
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L219" class="view-source icon-eye-open"> </a><h3 id="methods_setgrouping">setGrouping(config)</h3>
+<div class="setgrouping"><div class="setgrouping-page"><p>Set the grouping configuration for this grid,
 used by the saveState feature, but can also be used by any
-user to specify a combined grouping and aggregation configuration</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">config – {object} – </code>
-<p>the config you want to apply, in the format
-provided out by getGrouping</p></li>
-</ul>
-</div>
+user to specify a combined grouping and aggregation configuration</p>
+</div><h5 id="methods_setgrouping_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="setgrouping-page"><p>the config you want to apply, in the format
+provided out by getGrouping</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="ungroupColumn">ungroupColumn(columnName)</h3>
-<div class="ungroupcolumn"><p>Removes the groupPriority from this column.  If the
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/grouping/js/grouping.js#L253" class="view-source icon-eye-open"> </a><h3 id="methods_ungroupcolumn">ungroupColumn(columnName)</h3>
+<div class="ungroupcolumn"><div class="ungroupcolumn-page"><p>Removes the groupPriority from this column.  If the
 column was previously aggregated the aggregation will come back. 
 The sort will remain.  </p>
-
 <p>This column will move to the right of any other group columns, the
-move is handled in a columnProcessor, so gets called as part of refresh</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnName – {string} – </code>
-<p>the name of the column we want to ungroup</p></li>
-</ul>
-</div>
+move is handled in a columnProcessor, so gets called as part of refresh</p>
+</div><h5 id="methods_ungroupcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="ungroupcolumn-page"><p>the name of the column we want to ungroup</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>

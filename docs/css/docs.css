@@ -15,12 +15,12 @@ img.AngularJS-small {
   line-height: 18px
 }
 
-.header img {
+.navbar img {
   max-height: 40px;
   padding-right: 20px;
 }
 
-.header img+.brand {
+.navbar img+.brand {
   padding: 10px 20px 10px 10px;
 }
 
@@ -47,8 +47,18 @@ img.AngularJS-small {
 /* ============================= */
 /* Bootstrap 3 overrides and patches */
 
-.navbar-default .navbar-nav>.active>a, 
-  .navbar-default .navbar-nav>.active>a:hover, 
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+
+.navbar-default .navbar-nav>.active>a,
+  .navbar-default .navbar-nav>.active>a:hover,
   .navbar-default .navbar-nav>.active>a:focus {
   color: #1abc9c;
   background-color: #2c3e50;
@@ -134,6 +144,8 @@ img.AngularJS-small {
   font-weight: bold;
   font-size: 13px;
   color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .form-search > ul.nav > li > a {
@@ -235,13 +247,33 @@ a:focus {
 /*            Content              */
 /* =============================== */
 
-.improve-docs {
+.edit-example {
+  margin-top: 9px;
+}
+
+.improve-docs, .view-source, .edit-example {
   float: right;
+  margin-left: 35px;
+  position: relative;
+}
+
+.improve-docs i, .view-source i, .edit-example i {
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  margin-top: -.5em;
+  text-decoration: none !important;
+}
+
+.methods .view-source {
+  margin: -0.5em 0 0 0;
+  text-decoration: none !important;
 }
 
 .hint {
   font-size: .6em;
   color: #c0c0c0;
+  display: block;
 }
 
 .content code {
@@ -312,7 +344,7 @@ ul.methods > li > h3,
 ul.properties > li > h3,
 ul.events > li > h3 {
   margin: -19px -19px 1em -19px;
-  padding: .25em 19px;
+  padding: .25em 39px .25em 19px;
   background-color: #d3d3d3;
   font-family: monospace;
 }
@@ -355,4 +387,44 @@ ul.events > li > h3 {
 
 .clear {
   clear: both;
+}
+
+.variables-matrix td {
+  vertical-align:top;
+  padding:5px;
+}
+
+.type-hint {
+  display:inline-block;
+  background: #23241f;
+}
+
+.variables-matrix .type-hint {
+  text-align:center;
+  display:block;
+  min-width:60px;
+}
+
+.type-hint + .type-hint {
+  margin-top:5px;
+}
+
+.type-hint-string {
+  background:#3a87ad;
+}
+
+.type-hint-object {
+  background:#999;
+}
+
+.type-hint-array {
+  background:#F90;
+}
+
+.type-hint-boolean {
+  background:rgb(18, 131, 39);
+}
+
+.type-hint-number {
+  background:rgb(189, 63, 66);
 }

@@ -53,7 +53,7 @@ directive.syntax = function() {
     restrict: 'A',
     link: function(scope, element, attrs) {
       function makeLink(type, text, link, icon) {
-        return '<a href="' + link + '" class="btn syntax-' + type + '" target="_blank" rel="nofollow">' + 
+        return '<a href="' + link + '" class="btn syntax-' + type + '" target="_blank" rel="nofollow">' +
                 '<span class="' + icon + '"></span> ' + text +
                '</a>';
       };
@@ -193,7 +193,7 @@ directive.table = function() {
   return {
     restrict: 'E',
     link: function(scope, element, attrs) {
-      if (!attrs.class) {
+      if (!attrs['class']) {
         element.addClass('table table-bordered table-striped code-table');
       }
     }
@@ -257,7 +257,7 @@ var popoverElement = function() {
       return this.titleElement.html(value);
     },
 
-    content : function(value) { 
+    content : function(value) {
       if(value && value.length > 0) {
         value = marked(value);
       }

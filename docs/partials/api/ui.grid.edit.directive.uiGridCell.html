@@ -1,39 +1,41 @@
-<h1><code ng:non-bindable="">uiGridCell</code>
-<span class="hint">(directive in module <code ng:non-bindable="">ui.grid.edit</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/edit/js/gridEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/edit/js/gridEdit.js#L440" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridCell</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">ui.grid.edit</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Stacks on top of ui.grid.uiGridCell to provide in-line editing capabilities to the cell
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-edit-directive-page ui-grid-edit-directive-uigridcell-page"><p>Stacks on top of ui.grid.uiGridCell to provide in-line editing capabilities to the cell
 Editing Actions.</p>
-
 <p>Binds edit start events to the uiGridCell element.  When the events fire, the gridCell element is appended
-with the columnDef.editableCellTemplate element ('cellEditor.html' by default).</p>
-
+with the columnDef.editableCellTemplate element (&#39;cellEditor.html&#39; by default).</p>
 <p>The editableCellTemplate should respond to uiGridEditConstants.events.BEGIN_CELL_EDIT angular event
 and do the initial steps needed to edit the cell (setfocus on input element, etc).</p>
-
 <p>When the editableCellTemplate recognizes that the editing is ended (blur event, Enter key, etc.)
 it should emit the uiGridEditConstants.events.END_CELL_EDIT event.</p>
-
 <p>If editableCellTemplate recognizes that the editing has been cancelled (esc key)
 it should emit the uiGridEditConstants.events.CANCEL_CELL_EDIT event.  The original value
 will be set back on the model by the uiGridCell directive.</p>
-
-<p>Events that invoke editing:
-  - dblclick
-  - F2 keydown (when using cell selection)</p>
-
-<p>Events that end editing:
-  - Dependent on the specific editableCellTemplate
-  - Standards should be blur and enter keydown</p>
-
-<p>Events that cancel editing:
-  - Dependent on the specific editableCellTemplate
-  - Standards should be Esc keydown</p>
-
-<p>Grid Events that end editing:
-  - uiGridConstants.events.GRID_SCROLL</p></div>
-<h2 id="Usage">Usage</h2>
+<p>Events that invoke editing:</p>
+<ul>
+<li>dblclick</li>
+<li>F2 keydown (when using cell selection)</li>
+</ul>
+<p>Events that end editing:</p>
+<ul>
+<li>Dependent on the specific editableCellTemplate</li>
+<li>Standards should be blur and enter keydown</li>
+</ul>
+<p>Events that cancel editing:</p>
+<ul>
+<li>Dependent on the specific editableCellTemplate</li>
+<li>Standards should be Esc keydown</li>
+</ul>
+<p>Grid Events that end editing:</p>
+<ul>
+<li>uiGridConstants.events.GRID_SCROLL</li>
+</ul>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage">as attribute<pre class="prettyprint linenums">&lt;div ui-grid-cell&gt;
    ...
 &lt;/div&gt;</pre>

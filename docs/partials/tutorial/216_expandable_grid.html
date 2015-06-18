@@ -1,8 +1,8 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>Module 'ui.grid.expandable' adds the subgrid feature to grid. To show the subgrid you need to provide following grid option:</p>
-
+<div><div class="tutorial-page tutorial-216-expandable-grid-page"><p>Module &#39;ui.grid.expandable&#39; adds the subgrid feature to grid. To show the subgrid you need to provide following grid option:</p>
 <pre class="prettyprint linenums">
   $scope.gridOptions = {
     //This is the template that will be used to render subgrid.
@@ -13,11 +13,9 @@
     expandableRowScope: expandableScope
   }
 </pre>
-
 <p>rowExpandableTemplate will be template for subgrid and expandableRowHeight will be height of the subgrid, expandableRowScope can be used
 to added variables to scope of expanded grid. These variables can then be access from expandableRowTemplate. The grid api
 provided following events and methods fos subGrids:</p>
-
 <pre class="prettyprint linenums">
     //rowExpandedStateChanged is fired for each row as its expanded:
     gridApi.expandable.on.rowExpandedStateChanged($scope,function(row){
@@ -26,13 +24,12 @@ provided following events and methods fos subGrids:</p>
     gridApi.expandable.expandAllRows();
     gridApi.expandable.collapseAllRows();
 </pre>
-
 <p>SubGrid nesting can be done upto multiple levels.</p>
-
-<p>In addition to above configuration 'scrollFillerClass' is also available and can be used to style the scroll filler, scroll filler
-appears when you quickly scroll through the grid.</p><h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-75 expandableRowTemplate.html" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<p>In addition to above configuration &#39;scrollFillerClass&#39; is also available and can be used to style the scroll filler, scroll filler
+appears when you quickly scroll through the grid.</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-216-expandable-grid-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-75 expandableRowTemplate.html" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-75" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-75">
@@ -177,6 +174,7 @@ appears when you quickly scroll through the grid.</p><h2 id="Example">Example</h
       }]);
 </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-75" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-75" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

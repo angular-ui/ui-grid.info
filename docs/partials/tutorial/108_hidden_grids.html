@@ -1,46 +1,38 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><h3>A Hidden Grid Manifesto</h3>
+<div><div class="tutorial-page tutorial-108-hidden-grids-page"><h3 id="a-hidden-grid-manifesto">A Hidden Grid Manifesto</h3>
 
 <p>A common problem when using UI Grid is the need to put the grid in a place that is <strong>not visible on initial page load</strong>, such as in a tab in a tabset, or inside an accordion.
-The end result is often a grid that appears to be rendered "incorrectly" with squished columns or unexpected widths or heights. Let's start with this scenario:</p>
-
-<p>Imagine you have a container <code>&lt;div&gt;</code> that you're going to put your grid in. This container has no width or height, it's simply going to hold your grid. You supply the grid
+The end result is often a grid that appears to be rendered &quot;incorrectly&quot; with squished columns or unexpected widths or heights. Let&#39;s start with this scenario:</p>
+<p>Imagine you have a container <code>&lt;div&gt;</code> that you&#39;re going to put your grid in. This container has no width or height, it&#39;s simply going to hold your grid. You supply the grid
 no CSS class so its <code>height</code> and <code>width</code> CSS values  are set to <code>auto</code>, which means the browser will calculate them automatically.</p>
-
 <p>UI Grid is built from the ground-up to
-make displaying and traversing large amounts of data easier. It does this through a process called "virtualization". This means that if you have 10,000 rows and 50 columns,
-instead of rendering 500,000 DOM elements and crippling the browser, UI Grid will do its best to only display the minimum amount it needs to, and "fake" the representation to
+make displaying and traversing large amounts of data easier. It does this through a process called &quot;virtualization&quot;. This means that if you have 10,000 rows and 50 columns,
+instead of rendering 500,000 DOM elements and crippling the browser, UI Grid will do its best to only display the minimum amount it needs to, and &quot;fake&quot; the representation to
 the user. To them it looks like all the data is right there on the screen when in fact a tiny fraction is being rendered.</p>
-
-<p>This becomes a problem in the scenario we created above, because while we may have told UI Grid that we have 10,000 rows and 50 columns, it knows that we don't actually want
-to display them all at once, so it has to figure out the visible space it's allowed to "draw" in. This space is called the "viewport". It's the "port" through which we "view"
+<p>This becomes a problem in the scenario we created above, because while we may have told UI Grid that we have 10,000 rows and 50 columns, it knows that we don&#39;t actually want
+to display them all at once, so it has to figure out the visible space it&#39;s allowed to &quot;draw&quot; in. This space is called the &quot;viewport&quot;. It&#39;s the &quot;port&quot; through which we &quot;view&quot;
 the data. Everything outside this viewport is essentially empty space, except for some extra rows and columns that we add to let scrolling appear smoother.</p>
-
 <p>When you put the grid in a container <code>div</code> that has no height specified, and the grid has no height specified with CSS, then it has no idea how big you want it to be.
 Do you want to see 5 rows? 100? It cannot tell. Currently it just assumes that 10 rows is a good default value and resizes itself to fit that number of rows in its viewport.
 You can alter this value with the <code>minRowsToShow</code> option.</p>
-
-<p>What if you give the grid a height of <code>100%</code> but its parent container <code>div</code> has no height? Then once again it has no idea how big it's supposed to be. 100% of what? Nothing?
-Once again, it will simply resize itself to fit the number of rows specified by <code>minRowsToShow</code>.  You can fix this problem by either giving the grid a specific height, or a variable height and then giving its container a valid height or putting other elements in the container that are present before the grid is linked up, i.e if there's an image in the same container as the grid and the image is 500px high, and the grid is specified to have <code>height: 50%</code>, then it will be 250px high.</p>
-
-<p>Let's move on to the case of a grid that is hidden , whether in an tab or an accordion or behind an <code>ng-show</code> expression. Hidden elements have no height or width, because they are unrendered. If you were to take an element with the CSS property <code>display: none</code> on it, and log out its <code>offsetWidth</code> property, it would be 0. Even if when it is visible it's 1000px high, when it's hidden it has no height.  UI Grid gets around this in the same way that jQuery does: cheating. It creates a "fake" clone of the element in question, changes <code>display: none</code> to <code>visibility: hidden</code> (which means it is not visible but still takes up space), appends this cloned element to the <code>&lt;body&gt;</code>, calculates its height, then removes it. The <code>&lt;body&gt;</code> is the only safe place to do this because when a hidden element takes up space it can move the flow other elements around and cause a "flickering" effect.</p>
-
-<p>So when you put the grid in a place that's not rendered, and don't give the grid any specific CSS to tell it how big it has to be, when it creates this cloned element and measures it, it will have 0 height and 0 width. The grid will do its best to resize, i.e. 0px is too small to be usable so it'll resize its height as above, but there's really no way to tell how wide it should be, so the columns all end up being their minimum width (30px or so), the viewport will be tiny, and it looks like the grid has rendered incorrectly because while the viewport is very small the grid element itself will just take up the
+<p>What if you give the grid a height of <code>100%</code> but its parent container <code>div</code> has no height? Then once again it has no idea how big it&#39;s supposed to be. 100% of what? Nothing?
+Once again, it will simply resize itself to fit the number of rows specified by <code>minRowsToShow</code>.  You can fix this problem by either giving the grid a specific height, or a variable height and then giving its container a valid height or putting other elements in the container that are present before the grid is linked up, i.e if there&#39;s an image in the same container as the grid and the image is 500px high, and the grid is specified to have <code>height: 50%</code>, then it will be 250px high.</p>
+<p>Let&#39;s move on to the case of a grid that is hidden , whether in an tab or an accordion or behind an <code>ng-show</code> expression. Hidden elements have no height or width, because they are unrendered. If you were to take an element with the CSS property <code>display: none</code> on it, and log out its <code>offsetWidth</code> property, it would be 0. Even if when it is visible it&#39;s 1000px high, when it&#39;s hidden it has no height.  UI Grid gets around this in the same way that jQuery does: cheating. It creates a &quot;fake&quot; clone of the element in question, changes <code>display: none</code> to <code>visibility: hidden</code> (which means it is not visible but still takes up space), appends this cloned element to the <code>&lt;body&gt;</code>, calculates its height, then removes it. The <code>&lt;body&gt;</code> is the only safe place to do this because when a hidden element takes up space it can move the flow other elements around and cause a &quot;flickering&quot; effect.</p>
+<p>So when you put the grid in a place that&#39;s not rendered, and don&#39;t give the grid any specific CSS to tell it how big it has to be, when it creates this cloned element and measures it, it will have 0 height and 0 width. The grid will do its best to resize, i.e. 0px is too small to be usable so it&#39;ll resize its height as above, but there&#39;s really no way to tell how wide it should be, so the columns all end up being their minimum width (30px or so), the viewport will be tiny, and it looks like the grid has rendered incorrectly because while the viewport is very small the grid element itself will just take up the
 width of the parent container, which is what the <code>auto</code> value for width tells elements to do.</p>
-
 <p>In order to fix this you <strong>must</strong> give the grid something to work with. Here are some options:</p>
-
 <ol>
 <li>Give the grid a specific height and width as in the example below.</li>
 <li>Use an <code>ng-if</code> to prevent the grid from being rendered until the element it is in (tab/accordion/etc) is active, as in <a href="http://plnkr.co/edit/LtpFnDUTofuxitb4Vh9x?p=preview">this plunker</a>.</li>
-<li>Use the <code>autoResize</code> feature let the grid redraw itself as needed. This may cause some flickering as the check is on a 250ms cycle. <a href="http://plnkr.co/edit/fwdXMamTBrR1yKVwcohZ?p=preview">Here's is a plunker demonstrating this</a>.</li>
+<li>Use the <code>autoResize</code> feature let the grid redraw itself as needed. This may cause some flickering as the check is on a 250ms cycle. <a href="http://plnkr.co/edit/fwdXMamTBrR1yKVwcohZ?p=preview">Here&#39;s is a plunker demonstrating this</a>.</li>
 </ol>
-
-<p>It's all up to you. And if you know a better way then please submit it in an issue or a pull request. There's always room for improvement and innovation.</p><h2 id="Example">Example</h2>
-<div class="example"><h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-32" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+<p>It&#39;s all up to you. And if you know a better way then please submit it in an issue or a pull request. There&#39;s always room for improvement and innovation.</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-108-hidden-grids-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-32" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-32" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-32">
@@ -81,6 +73,7 @@ width of the parent container, which is what the <code>auto</code> value for wid
   }]);
 </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-32" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-32" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

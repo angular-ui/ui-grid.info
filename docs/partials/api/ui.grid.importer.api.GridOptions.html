@@ -1,93 +1,74 @@
-<h1><code ng:non-bindable="">GridOptions</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.importer</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/importer/js/importer.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/importer/js/importer.js#L128" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.importer</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>GridOptions for importer feature, these are available to be <br />
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="importerDataAddCallback">importerDataAddCallback(grid, newObjects)</h3>
-<div class="importerdataaddcallback"><p>A mandatory callback function that adds data to the source data array.  The grid
-generally doesn't add rows to the source data array, it is tidier to handle this through a user
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-importer-api-page ui-grid-importer-api-gridoptions-page"><p>GridOptions for importer feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/importer/js/importer.js#L256" class="view-source icon-eye-open"> </a><h3 id="methods_importerdataaddcallback">importerDataAddCallback(grid, newObjects)</h3>
+<div class="importerdataaddcallback"><div class="importerdataaddcallback-page"><p>A mandatory callback function that adds data to the source data array.  The grid
+generally doesn&#39;t add rows to the source data array, it is tidier to handle this through a user
 callback.</p>
-
 <pre class="prettyprint linenums">
      gridOptions.importerDataAddCallback: function( grid, newObjects ) {
        $scope.myData = $scope.myData.concat( newObjects );
      })
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid we're importing into, may be useful in some way</p></li>
-<li><code ng:non-bindable="">newObjects – {array} – </code>
-<p>an array of new objects that you should add to your data</p></li>
-</ul>
-</div>
+</pre>
+</div><h5 id="methods_importerdataaddcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="importerdataaddcallback-page"><p>the grid we&#39;re importing into, may be useful in some way</p>
+</div></td></tr><tr><td>newObjects</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="importerdataaddcallback-page"><p>an array of new objects that you should add to your data</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="importerErrorCallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
-<div class="importererrorcallback"><p>A callback function that provides custom error handling, rather
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/importer/js/importer.js#L235" class="view-source icon-eye-open"> </a><h3 id="methods_importererrorcallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
+<div class="importererrorcallback"><div class="importererrorcallback-page"><p>A callback function that provides custom error handling, rather
 than the standard grid behaviour of an alert box and a console message.  You 
 might use this to internationalise the console log messages, or to write to a 
 custom logging routine that returned errors to the server.</p>
-
 <pre class="prettyprint linenums">
      gridOptions.importerErrorCallback: function( grid, errorKey, consoleMessage, context ) {
        myUserDisplayRoutine( errorKey );
        myLoggingRoutine( consoleMessage, context );
      })
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid we're importing into, may be useful if you're positioning messages
-in some way</p></li>
-<li><code ng:non-bindable="">errorKey – {string} – </code>
-<p>one of the i18n keys the importer can return - importer.noHeaders, 
-importer.noObjects, importer.invalidCsv, importer.invalidJson, importer.jsonNotArray</p></li>
-<li><code ng:non-bindable="">consoleMessage – {string} – </code>
-<p>the English console message that importer would have written</p></li>
-<li><code ng:non-bindable="">context – {object} – </code>
-<p>the context data that importer would have appended to that console message,
-often the file content itself or the element that is in error</p></li>
-</ul>
-</div>
+</pre>
+</div><h5 id="methods_importererrorcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="importererrorcallback-page"><p>the grid we&#39;re importing into, may be useful if you&#39;re positioning messages
+in some way</p>
+</div></td></tr><tr><td>errorKey</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="importererrorcallback-page"><p>one of the i18n keys the importer can return - importer.noHeaders,
+importer.noObjects, importer.invalidCsv, importer.invalidJson, importer.jsonNotArray</p>
+</div></td></tr><tr><td>consoleMessage</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="importererrorcallback-page"><p>the English console message that importer would have written</p>
+</div></td></tr><tr><td>context</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="importererrorcallback-page"><p>the context data that importer would have appended to that console message,
+often the file content itself or the element that is in error</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="importerHeaderFilter">importerHeaderFilter(displayName)</h3>
-<div class="importerheaderfilter"><p>A callback function that will filter (usually translate) a single
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/importer/js/importer.js#L209" class="view-source icon-eye-open"> </a><h3 id="methods_importerheaderfilter">importerHeaderFilter(displayName)</h3>
+<div class="importerheaderfilter"><div class="importerheaderfilter-page"><p>A callback function that will filter (usually translate) a single
 header.  Used when you want to match the passed in column names to the column
 displayName after the header filter.</p>
-
 <p>Your callback routine needs to return the filtered header value. 
 <pre class="prettyprint linenums">
      gridOptions.importerHeaderFilter: function( displayName ) {
        return $translate.instant( displayName );
      })
 </pre>
-
 <p>or:
 <pre class="prettyprint linenums">
      gridOptions.importerHeaderFilter: $translate.instant
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">displayName – {string} – </code>
-<p>the displayName that we'd like to translate</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>the translated name</p></div>
-</div>
+</pre>
+</div><h5 id="methods_importerheaderfilter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>displayName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="importerheaderfilter-page"><p>the displayName that we&#39;d like to translate</p>
+</div></td></tr></tbody></table><h5 id="methods_importerheaderfilter_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="importerheaderfilter-page"><p>the translated name</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="importerObjectCallback">importerObjectCallback(grid, newObject)</h3>
-<div class="importerobjectcallback"><p>A callback that massages the data for each object.  For example,
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/importer/js/importer.js#L313" class="view-source icon-eye-open"> </a><h3 id="methods_importerobjectcallback">importerObjectCallback(grid, newObject)</h3>
+<div class="importerobjectcallback"><div class="importerobjectcallback-page"><p>A callback that massages the data for each object.  For example,
 you might have data stored as a code value, but display the decode.  This callback
-can be used to change the decoded value back into a code.  Defaults to doing nothing.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>in case you need it</p></li>
-<li><code ng:non-bindable="">newObject – {object} – </code>
-<p>the new object as importer has created it, modify it
-then return the modified version</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>the modified object</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+can be used to change the decoded value back into a code.  Defaults to doing nothing.</p>
+</div><h5 id="methods_importerobjectcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="importerobjectcallback-page"><p>in case you need it</p>
+</div></td></tr><tr><td>newObject</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="importerobjectcallback-page"><p>the new object as importer has created it, modify it
+then return the modified version</p>
+</div></td></tr></tbody></table><h5 id="methods_importerobjectcallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="importerobjectcallback-page"><p>the modified object</p>
+</div></td></tr></table><h4 id="methods_importerobjectcallback_example">Example</h4>
+<div class="example"><div class="importerobjectcallback-page"><pre class="prettyprint linenums">
 gridOptions.importerObjectCallback = function ( grid, newObject ) {
   switch newObject.status {
     case 'Active':
@@ -99,23 +80,21 @@ gridOptions.importerObjectCallback = function ( grid, newObject ) {
   }
   return newObject;
 };
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="importerProcessHeaders">importerProcessHeaders(grid, headerArray)</h3>
-<div class="importerprocessheaders"><p>A callback function that will process headers using custom
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/importer/js/importer.js#L184" class="view-source icon-eye-open"> </a><h3 id="methods_importerprocessheaders">importerProcessHeaders(grid, headerArray)</h3>
+<div class="importerprocessheaders"><div class="importerprocessheaders-page"><p>A callback function that will process headers using custom
 logic.  Set this callback function if the headers that your user will provide in their 
-import file don't necessarily match the grid header or field names.  This might commonly
+import file don&#39;t necessarily match the grid header or field names.  This might commonly
 occur where your application is internationalised, and therefore the field names
 that the user recognises are in a different language than the field names that
 ui-grid knows about.</p>
-
 <p>Defaults to the internal <code>processHeaders</code> method, which seeks to match using both
 displayName and column.name.  Any non-matching columns are discarded.</p>
-
 <p>Your callback routine should respond by processing the header array, and returning an array
-of matching column names.  A null value in any given position means "don't import this column"</p>
-
+of matching column names.  A null value in any given position means &quot;don&#39;t import this column&quot;</p>
 <pre class="prettyprint linenums">
      gridOptions.importerProcessHeaders: function( headerArray ) {
        var myHeaderColumns = [];
@@ -127,39 +106,37 @@ of matching column names.  A null value in any given position means "don't impor
        
        return myHeaderCols;
      })
-</pre><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid we're importing into</p></li>
-<li><code ng:non-bindable="">headerArray – {array} – </code>
-<p>an array of the text from the first row of the csv file,
-which you need to match to column.names</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{array}</code>
-– <p>array of matching column names, in the same order as the headerArray</p></div>
-</div>
+</pre>
+</div><h5 id="methods_importerprocessheaders_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="importerprocessheaders-page"><p>the grid we&#39;re importing into</p>
+</div></td></tr><tr><td>headerArray</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="importerprocessheaders-page"><p>an array of the text from the first row of the csv file,
+which you need to match to column.names</p>
+</div></td></tr></tbody></table><h5 id="methods_importerprocessheaders_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="importerprocessheaders-page"><p>array of matching column names, in the same order as the headerArray</p>
+</div></td></tr></table></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="enableImporter">enableImporter</h3>
-<div class="enableimporter"><p>Whether or not importer is enabled.  Automatically set
-to false if the user's browser does not support the required fileApi.
-Otherwise defaults to true.</p></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_enableimporter">enableImporter</h3>
+<div class="enableimporter"><div class="enableimporter-page"><p>Whether or not importer is enabled.  Automatically set
+to false if the user&#39;s browser does not support the required fileApi.
+Otherwise defaults to true.</p>
+</div></div>
 </li>
-<li><h3 id="importerNewObject">importerNewObject</h3>
-<div class="importernewobject"><p>An object on which we call <code>new</code> to create each new row before inserting it into
-the data array.  Typically this would be a $resource entity, which means that if you're using 
+<li><h3 id="properties_importernewobject">importerNewObject</h3>
+<div class="importernewobject"><div class="importernewobject-page"><p>An object on which we call <code>new</code> to create each new row before inserting it into
+the data array.  Typically this would be a $resource entity, which means that if you&#39;re using 
 the rowEdit feature, you can directly call save on this entity when the save event is triggered.</p>
-
-<p>Defaults to a vanilla javascript object</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<p>Defaults to a vanilla javascript object</p>
+</div><h4 id="properties_importernewobject_example">Example</h4>
+<div class="example"><div class="importernewobject-page"><pre class="prettyprint linenums">
 gridOptions.importerNewObject = MyRes;
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="importerShowMenu">importerShowMenu</h3>
-<div class="importershowmenu"><p>Whether or not to show an item in the grid menu.  Defaults to true.</p></div>
+<li><h3 id="properties_importershowmenu">importerShowMenu</h3>
+<div class="importershowmenu"><div class="importershowmenu-page"><p>Whether or not to show an item in the grid menu.  Defaults to true.</p>
+</div></div>
 </li>
 </ul>
 </div>

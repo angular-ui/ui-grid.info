@@ -1,122 +1,101 @@
-<h1><code ng:non-bindable="">GridRow</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridRow.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L15" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridRow</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>GridRow is the viewModel for one logical row on the grid.  A grid Row is not necessarily a one-to-one
-relation to gridOptions.data.</p></div>
-<h2 id="Usage">Usage</h2>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-gridrow-page"><p>GridRow is the viewModel for one logical row on the grid.  A grid Row is not necessarily a one-to-one
+relation to gridOptions.data.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridRow(entity, index, reference);</pre>
-<h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">entity – {object} – </code>
-<p>the array item from GridOptions.data</p></li>
-<li><code ng:non-bindable="">index – {number} – </code>
-<p>the current position of the row in the array</p></li>
-<li><code ng:non-bindable="">reference – {Grid} – </code>
-<p>to the parent grid</p></li>
-</ul>
-</div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="clearRowInvisible">clearRowInvisible(row)</h3>
-<div class="clearrowinvisible"><p>Clears an override on the row that forces it to always
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>entity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="ui-grid-class-page ui-grid-class-gridrow-page"><p>the array item from GridOptions.data</p>
+</div></td></tr><tr><td>index</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="ui-grid-class-page ui-grid-class-gridrow-page"><p>the current position of the row in the array</p>
+</div></td></tr><tr><td>reference</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="ui-grid-class-page ui-grid-class-gridrow-page"><p>to the parent grid</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L138" class="view-source icon-eye-open"> </a><h3 id="methods_clearrowinvisible">clearRowInvisible(row)</h3>
+<div class="clearrowinvisible"><div class="clearrowinvisible-page"><p>Clears an override on the row that forces it to always
 be invisible. Emits the rowsVisibleChanged event if it changed the row visibility.</p>
-
 <p>This method can be called from the api, passing in the gridRow we want
-altered.  It should really work by calling gridRow.clearRowInvisible, but that's
+altered.  It should really work by calling gridRow.clearRowInvisible, but that&#39;s
 not the way I coded it, and too late to change now.  Changed to just call
-the internal function row.clearThisRowInvisible().</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to clear the invisible flag</p></li>
-</ul>
-</div>
+the internal function row.clearThisRowInvisible().</p>
+</div><h5 id="methods_clearrowinvisible_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="clearrowinvisible-page"><p>the row we want to clear the invisible flag</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="clearRowInvisible">clearRowInvisible(reason, fromRowsProcessor)</h3>
-<div class="clearrowinvisible"><p>Clears any override on the row visibility, returning it 
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L177" class="view-source icon-eye-open"> </a><h3 id="methods_clearrowinvisible">clearRowInvisible(reason, fromRowsProcessor)</h3>
+<div class="clearrowinvisible"><div class="clearrowinvisible-page"><p>Clears any override on the row visibility, returning it
 to normal visibility calculations.  Emits the rowsVisibleChanged
-event</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">reason – {string} – </code>
-<p>the reason (usually the module) for the row to be invisible.
-E.g. grouping, user, filter</p></li>
-<li><code ng:non-bindable="">fromRowsProcessor – {boolean} – </code>
-<p>whether we were called from a rowsProcessor, passed through to evaluateRowVisibility</p></li>
-</ul>
-</div>
+event</p>
+</div><h5 id="methods_clearrowinvisible_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>reason</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="clearrowinvisible-page"><p>the reason (usually the module) for the row to be invisible.
+E.g. grouping, user, filter</p>
+</div></td></tr><tr><td>fromRowsProcessor</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="clearrowinvisible-page"><p>whether we were called from a rowsProcessor, passed through to evaluateRowVisibility</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="evaluateRowVisibility">evaluateRowVisibility(fromRowProcessor)</h3>
-<div class="evaluaterowvisibility"><p>Determines whether the row should be visible based on invisibleReason, 
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L196" class="view-source icon-eye-open"> </a><h3 id="methods_evaluaterowvisibility">evaluateRowVisibility(fromRowProcessor)</h3>
+<div class="evaluaterowvisibility"><div class="evaluaterowvisibility-page"><p>Determines whether the row should be visible based on invisibleReason,
 and if it changes the row visibility, then emits the rowsVisibleChanged event.</p>
-
-<p>Queues a grid refresh, but doesn't call it directly to avoid hitting lots of grid refreshes.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">fromRowProcessor – {boolean} – </code>
-<p>if true, then it won't raise events or queue the refresh, the
-row processor does that already</p></li>
-</ul>
-</div>
+<p>Queues a grid refresh, but doesn&#39;t call it directly to avoid hitting lots of grid refreshes.</p>
+</div><h5 id="methods_evaluaterowvisibility_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>fromRowProcessor</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="evaluaterowvisibility-page"><p>if true, then it won&#39;t raise events or queue the refresh, the
+row processor does that already</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getEntityQualifiedColField">getEntityQualifiedColField(col)</h3>
-<div class="getentityqualifiedcolfield"><p>returns the qualified field name minus the row path
-ie: entity.fieldA</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">col – {GridCol} – </code>
-<p>column instance</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>resulting name that can be evaluated against a row</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L96" class="view-source icon-eye-open"> </a><h3 id="methods_getentityqualifiedcolfield">getEntityQualifiedColField(col)</h3>
+<div class="getentityqualifiedcolfield"><div class="getentityqualifiedcolfield-page"><p>returns the qualified field name minus the row path
+ie: entity.fieldA</p>
+</div><h5 id="methods_getentityqualifiedcolfield_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="getentityqualifiedcolfield-page"><p>column instance</p>
+</div></td></tr></tbody></table><h5 id="methods_getentityqualifiedcolfield_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getentityqualifiedcolfield-page"><p>resulting name that can be evaluated against a row</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="getQualifiedColField">getQualifiedColField(col)</h3>
-<div class="getqualifiedcolfield"><p>returns the qualified field name as it exists on scope
-ie: row.entity.fieldA</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">col – {GridCol} – </code>
-<p>column instance</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>resulting name that can be evaluated on scope</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L83" class="view-source icon-eye-open"> </a><h3 id="methods_getqualifiedcolfield">getQualifiedColField(col)</h3>
+<div class="getqualifiedcolfield"><div class="getqualifiedcolfield-page"><p>returns the qualified field name as it exists on scope
+ie: row.entity.fieldA</p>
+</div><h5 id="methods_getqualifiedcolfield_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="getqualifiedcolfield-page"><p>column instance</p>
+</div></td></tr></tbody></table><h5 id="methods_getqualifiedcolfield_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getqualifiedcolfield-page"><p>resulting name that can be evaluated on scope</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="setRowInvisible">setRowInvisible(row)</h3>
-<div class="setrowinvisible"><p>Sets an override on the row that forces it to always
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L116" class="view-source icon-eye-open"> </a><h3 id="methods_setrowinvisible">setRowInvisible(row)</h3>
+<div class="setrowinvisible"><div class="setrowinvisible-page"><p>Sets an override on the row that forces it to always
 be invisible. Emits the rowsVisibleChanged event if it changed the row visibility.</p>
-
 <p>This method can be called from the api, passing in the gridRow we want
-altered.  It should really work by calling gridRow.setRowInvisible, but that's
+altered.  It should really work by calling gridRow.setRowInvisible, but that&#39;s
 not the way I coded it, and too late to change now.  Changed to just call
-the internal function row.setThisRowInvisible().</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>the row we want to set to invisible</p></li>
-</ul>
-</div>
+the internal function row.setThisRowInvisible().</p>
+</div><h5 id="methods_setrowinvisible_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="setrowinvisible-page"><p>the row we want to set to invisible</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="setThisRowInvisible">setThisRowInvisible(reason, fromRowsProcessor)</h3>
-<div class="setthisrowinvisible"><p>Sets an override on the row that forces it to always
-be invisible. Emits the rowsVisibleChanged event if it changed the row visibility</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">reason – {string} – </code>
-<p>the reason (usually the module) for the row to be invisible.
-E.g. grouping, user, filter</p></li>
-<li><code ng:non-bindable="">fromRowsProcessor – {boolean} – </code>
-<p>whether we were called from a rowsProcessor, passed through to evaluateRowVisibility</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/GridRow.js#L156" class="view-source icon-eye-open"> </a><h3 id="methods_setthisrowinvisible">setThisRowInvisible(reason, fromRowsProcessor)</h3>
+<div class="setthisrowinvisible"><div class="setthisrowinvisible-page"><p>Sets an override on the row that forces it to always
+be invisible. Emits the rowsVisibleChanged event if it changed the row visibility</p>
+</div><h5 id="methods_setthisrowinvisible_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>reason</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setthisrowinvisible-page"><p>the reason (usually the module) for the row to be invisible.
+E.g. grouping, user, filter</p>
+</div></td></tr><tr><td>fromRowsProcessor</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="setthisrowinvisible-page"><p>whether we were called from a rowsProcessor, passed through to evaluateRowVisibility</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="entity">entity</h3>
-<div class="entity"><p>A reference to an item in gridOptions.data[]</p></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_entity">entity</h3>
+<div class="entity"><div class="entity-page"><p>A reference to an item in gridOptions.data[]</p>
+</div></div>
 </li>
-<li><h3 id="grid">grid</h3>
-<div class="grid"><p>A reference back to the grid</p></div>
+<li><h3 id="properties_grid">grid</h3>
+<div class="grid"><div class="grid-page"><p>A reference back to the grid</p>
+</div></div>
 </li>
-<li><h3 id="height">height</h3>
-<div class="height"><p>height of each individual row. changing the height will flag all
-row renderContainers to recalculate their canvas height</p></div>
+<li><h3 id="properties_height">height</h3>
+<div class="height"><div class="height-page"><p>height of each individual row. changing the height will flag all
+row renderContainers to recalculate their canvas height</p>
+</div></div>
 </li>
-<li><h3 id="uid">uid</h3>
-<div class="uid"><p>UniqueId of row</p></div>
+<li><h3 id="properties_uid">uid</h3>
+<div class="uid"><div class="uid-page"><p>UniqueId of row</p>
+</div></div>
 </li>
-<li><h3 id="visible">visible</h3>
-<div class="visible"><p>If true, the row will be rendered</p></div>
+<li><h3 id="properties_visible">visible</h3>
+<div class="visible"><div class="visible-page"><p>If true, the row will be rendered</p>
+</div></div>
 </li>
 </ul>
 </div>

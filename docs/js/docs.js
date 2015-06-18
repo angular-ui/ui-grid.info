@@ -4,6 +4,7 @@ var docsApp = {
   serviceFactory: {}
 };
 
+
 docsApp.directive.ngHtmlWrapLoaded = function(reindentCode, templateMerge, loadedUrls) {
   function escape(text) {
     return text.
@@ -56,10 +57,10 @@ docsApp.directive.ngHtmlWrapLoaded = function(reindentCode, templateMerge, loade
 docsApp.directive.focused = function($timeout) {
   return function(scope, element, attrs) {
     element[0].focus();
-    element.bind('focus', function() {
+    element.on('focus', function() {
       scope.$apply(attrs.focused + '=true');
     });
-    element.bind('blur', function() {
+    element.on('blur', function() {
       // have to use $timeout, so that we close the drop-down after the user clicks,
       // otherwise when the user clicks we process the closing before we process the click.
       $timeout(function() {
@@ -77,18 +78,11 @@ docsApp.directive.code = function() {
 
 
 docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
-  return {
-    template: '<div class="btn-group pull-right">' +
-        '<a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href>' +
-        '  <i class="icon-pencil icon-white"></i> Edit <span class="caret"></span>' +
-        '</a>' +
-        '<ul class="dropdown-menu">' +
-        '  <li><a ng-click="plunkr($event)" href="">In Plunkr</a></li>' +
-        '  <li><a ng-click="fiddle($event)" href="">In JsFiddle</a></li>' +
-        '</ul>' +
-        '</div>',
+  return NG_DOCS.editExample ? {
+    template: '<a class="edit-example pull-right" ng-click="plunkr($event)" href>' +
+      '<i class="icon-edit"></i> Edit in Plunkr</a>',
     scope: true,
-    controller: function($scope, $attrs, openJsFiddle, openPlunkr) {
+    controller: function($scope, $attrs, openPlunkr) {
       var sources = {
         module: $attrs.sourceEdit,
         deps: read($attrs.sourceEditDeps),
@@ -98,16 +92,12 @@ docsApp.directive.sourceEdit = function(getEmbeddedTemplate) {
         unit: read($attrs.sourceEditUnit),
         scenario: read($attrs.sourceEditScenario)
       };
-      $scope.fiddle = function(e) {
-        e.stopPropagation();
-        openJsFiddle(sources);
-      };
       $scope.plunkr = function(e) {
         e.stopPropagation();
         openPlunkr(sources);
       };
     }
-  };
+  } : {};
 
   function read(text) {
     var files = [];
@@ -238,46 +228,6 @@ docsApp.serviceFactory.openPlunkr = function(templateMerge, formPostData, loaded
   };
 };
 
-docsApp.serviceFactory.openJsFiddle = function(templateMerge, formPostData, loadedUrls) {
-
-  var HTML = '<div ng-app=\"{{module}}\">\n{{html:2}}</div>',
-      SCRIPT_CACHE = '\n\n<!-- {{name}} -->\n<script type="text/ng-template" id="{{name}}">\n{{content:2}}</script>';
-
-  return function(content) {
-    var prop = {
-          module: content.module,
-          html: '',
-          css: '',
-          script: ''
-        };
-
-    angular.forEach(content.html, function(file, index) {
-      if (index) {
-        prop.html += templateMerge(SCRIPT_CACHE, file);
-      } else {
-        prop.html += file.content;
-      }
-    });
-
-    angular.forEach(content.js, function(file, index) {
-      prop.script += file.content;
-    });
-
-    angular.forEach(content.css, function(file, index) {
-      prop.css += file.content;
-    });
-
-    formPostData("http://jsfiddle.net/api/post/library/pure/dependencies/more/", {
-      title: 'AngularJS Example',
-      html: templateMerge(HTML, prop),
-      js: prop.script,
-      css: prop.css,
-      resources: loadedUrls.base.join(','),
-      wrap: 'b'
-    });
-  };
-};
-
 
 docsApp.serviceFactory.sections = function serviceFactory() {
   var sections = {
@@ -316,9 +266,10 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
       GLOBALS = /^angular\.([^\.]+)$/,
       MODULE = /^([^\.]+)$/,
       MODULE_MOCK = /^angular\.mock\.([^\.]+)$/,
-      MODULE_DIRECTIVE = /^(.+)\.directive:([^\.]+)$/,
-      MODULE_DIRECTIVE_INPUT = /^(.+)\.directive:input\.([^\.]+)$/,
-      MODULE_FILTER = /^(.+)\.filter:([^\.]+)$/,
+      MODULE_CONTROLLER = /^(.+)\.controllers?:([^\.]+)$/,
+      MODULE_DIRECTIVE = /^(.+)\.directives?:([^\.]+)$/,
+      MODULE_DIRECTIVE_INPUT = /^(.+)\.directives?:input\.([^\.]+)$/,
+      MODULE_FILTER = /^(.+)\.filters?:([^\.]+)$/,
       MODULE_CUSTOM = /^(.+)\.([^\.]+):([^\.]+)$/,
       MODULE_SERVICE = /^(.+)\.([^\.]+?)(Provider)?$/,
       MODULE_TYPE = /^([^\.]+)\..+\.([A-Z][^\.]+)$/;
@@ -328,6 +279,15 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
    Publish methods
    ***********************************/
 
+  $scope.skipToContent = function(id){
+    $timeout(function(){
+      var elt = document.getElementById(id);
+      if (elt){
+        elt.focus();
+      }
+    });
+  };
+
   $scope.navClass = function(page1, page2) {
     return {
       first: this.$first,
@@ -335,7 +295,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
       active: page1 && this.currentPage == page1 || page2 && this.currentPage == page2,
       match: this.focused && this.currentPage != page1 &&
              this.bestMatch.rank > 0 && this.bestMatch.page == page1
-             
+
     };
   };
 
@@ -420,7 +380,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
 
     function update() {
       // Set default version
-
       var parts = path.split('/'),
         sectionId = parts[1],
         partialId = parts[2],
@@ -432,6 +391,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
 
       if (!$scope.currentPage) {
         $scope.partialTitle = 'Error: Page Not Found!';
+        page = {};
       }
 
       updateSearch();
@@ -448,8 +408,13 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
         } else if (match = partialId.match(GLOBALS)) {
           breadcrumb.push({ name: partialId });
         } else if (match = partialId.match(MODULE)) {
+          match[1] = page.moduleName || match[1];
           breadcrumb.push({ name: match[1] });
         } else if (match = partialId.match(MODULE_FILTER)) {
+          match[1] = page.moduleName || match[1];
+          breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+          breadcrumb.push({ name: match[2] });
+        } else if (match = partialId.match(MODULE_CONTROLLER)) {
           breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
           breadcrumb.push({ name: match[2] });
         } else if (match = partialId.match(MODULE_DIRECTIVE)) {
@@ -460,9 +425,11 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
           breadcrumb.push({ name: 'input' });
           breadcrumb.push({ name: match[2] });
         } else if (match = partialId.match(MODULE_CUSTOM)) {
+          match[1] = page.moduleName || match[1];
           breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
           breadcrumb.push({ name: match[3] });
         } else if (match = partialId.match(MODULE_TYPE)) {
+          match[1] = page.moduleName || match[1];
           breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
           breadcrumb.push({ name: match[2] });
         }  else if (match = partialId.match(MODULE_SERVICE)) {
@@ -470,6 +437,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
             // module name with dots looks like a service
             breadcrumb.push({ name: partialId });
           } else {
+            match[1] = page.moduleName || match[1];
             breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
             breadcrumb.push({ name: match[2] + (match[3] || '') });
           }
@@ -494,21 +462,12 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
 
   $scope.versionNumber = angular.version.full;
   $scope.version = angular.version.full + "  " + angular.version.codeName;
-  $scope.subpage = false;
   $scope.futurePartialTitle = null;
   $scope.loading = 0;
 
   if (!$location.path() || INDEX_PATH.test($location.path())) {
     $location.path(NG_DOCS.startPage).replace();
   }
-  // bind escape to hash reset callback
-  angular.element(window).bind('keydown', function(e) {
-    if (e.keyCode === 27) {
-      $scope.$apply(function() {
-        $scope.subpage = false;
-      });
-    }
-  });
 
   /**********************************
    Private methods
@@ -544,15 +503,28 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
       } else if (match = id.match(MODULE)) {
         module(match[1], section);
       } else if (match = id.match(MODULE_FILTER)) {
-        module(match[1], section).filters.push(page);
+        module(page.moduleName || match[1], section).filters.push(page);
+      } else if (match = id.match(MODULE_CONTROLLER) && page.type === 'controller') {
+        module(page.moduleName || match[1], section).controllers.push(page);
       } else if (match = id.match(MODULE_DIRECTIVE)) {
         module(match[1], section).directives.push(page);
       } else if (match = id.match(MODULE_DIRECTIVE_INPUT)) {
         module(match[1], section).directives.push(page);
       } else if (match = id.match(MODULE_CUSTOM)) {
-        module(match[1], section).others.push(page);
-      } else if (match = id.match(MODULE_TYPE)) {
-        module(match[1], section).types.push(page);
+        if (page.type === 'service') {
+          module(page.moduleName || match[1], section).service(match[3])[page.id.match(/^.+Provider$/) ? 'provider' : 'instance'] = page;
+        } else {
+          var m = module(page.moduleName || match[1], section),
+            listName = page.type + 's';
+
+          if (m[listName]) {
+            m[listName].push(page);
+          } else {
+            m.others.push(page);
+          }
+        }
+      } else if (match = id.match(MODULE_TYPE) && page.type === 'type') {
+        module(page.moduleName || match[1], section).types.push(page);
       } else if (match = id.match(MODULE_SERVICE)) {
         if (page.type === 'overview') {
           module(id, section);
@@ -576,6 +548,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
           name: name,
           url: (NG_DOCS.html5Mode ? '' : '#/') + section + '/' + name,
           globals: [],
+          controllers: [],
           directives: [],
           services: [],
           others: [],
@@ -640,7 +613,19 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
   }
 };
 
-angular.module('docsApp', ['bootstrap', 'bootstrapPrettify']).
+function module(name, modules, optional) {
+  if (optional) {
+    angular.forEach(optional, function(name) {
+      try {
+        angular.module(name);
+        modules.push(name);
+      } catch(e) {}
+    });
+  }
+  return angular.module(name, modules);
+}
+
+module('docsApp', ['bootstrap', 'bootstrapPrettify'], ['ngAnimate']).
   config(function($locationProvider) {
     if (NG_DOCS.html5Mode) {
       $locationProvider.html5Mode(true).hashPrefix('!');

@@ -1,28 +1,24 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>The tree feature offers a number of advanced features, care should be taken in
+<div><div class="tutorial-page tutorial-319-complex-trees-page"><p>The tree feature offers a number of advanced features, care should be taken in
 using these that you understand exactly what you are trying to achieve, and how to utilise
 the tree to achieve that.</p>
-
 <p>Firstly, aggregation.  The baseTree provides aggregation logic, this logic is used by grouping
 to provide totals, averages etc.  The aggregation logic works well with grouping, as grouping
 creates new blank rows into which the aggregated totals can be written.</p>
-
 <p>With treeView, you can set aggregations, and that aggregation will by default be written into the entity
 for the non-leaf nodes, masking (but not replacing) the data in that column for that entity.</p>
-
 <p>Note also that aggregation only aggregates data from leaf nodes - a node with a $$treeLevel will not
 be aggregated.</p>
-
 <p>There are therefore a few options for how you use aggregation with treeView:</p>
-
 <ol>
 <li>You have a column that has data only for leaf nodes, and therefore this data can be aggregated in
 the non-leaf nodes.  For example, if you were building a tree representing a file system, the files themselves
-might have sizes, and you might want to aggregate these sizes to show folder size.  The folders wouldn't have
+might have sizes, and you might want to aggregate these sizes to show folder size.  The folders wouldn&#39;t have
 their own sizes, therefore there is an available space to write the aggregation data</li>
-<li>You create a custom column that references the same field as an existing column but has it's own
+<li>You create a custom column that references the same field as an existing column but has it&#39;s own
 column name.  The aggregations are visible in this column, and you work some magic with the cellTemplates
 to make this work as you desire</li>
 <li>You write a custom cellTemplate that shows both the value for that non-leaf node and the aggregated value in 
@@ -30,33 +26,27 @@ the same cell.  These values are in different places in the entity - the origina
 the aggregated value is in <code>entity.$$colUid.value</code> (refer to the treeBase documentation to get more details from
 the aggregation such as the label or the rendered value).  You can write a cellTemplate that displays both of these.</li>
 <li>You set the <code>treeAggregationUpdateEntity</code> flag on the colDef.  The data will then be left in <code>row.treeNode.aggregations</code>
-in an array form.  You need to process that array to get the data out.  You might use this if you're building 
-a graph behind the scenes, or something similar.  If so, you'd probably look to get the aggregation data out
+in an array form.  You need to process that array to get the data out.  You might use this if you&#39;re building 
+a graph behind the scenes, or something similar.  If so, you&#39;d probably look to get the aggregation data out
 of grid.treeBase.tree, rather than extracting it from the rows.  You can access the subtree under a given
-row (if you're building a graph for the selected row) through <code>row.treeNode</code>.</li>
+row (if you&#39;re building a graph for the selected row) through <code>row.treeNode</code>.</li>
 </ol>
-
-<p>TreeView doesn't provide a UI for setting aggregations - unlike grouping you cannot select a column and pick an
+<p>TreeView doesn&#39;t provide a UI for setting aggregations - unlike grouping you cannot select a column and pick an
 aggregation.  You can add this UI yourself through custom menu items, but given the above comments
 you need to be careful how you use it.</p>
-
 <p>Aggregations are set on the columnDef or column in the format:</p>
-
 <pre><code>  colDef.treeAggregationType = uiGridTreeViewConstants.SUM;
-</code></pre>
-
-<p>You can provide a custom aggregation function, but note that the aggregation is performed as a running total, so
+</code></pre><p>You can provide a custom aggregation function, but note that the aggregation is performed as a running total, so
 your function needs to work within that framework.  Refer the documentation for <code>treeAggregationFn</code> under
 <a href="#/api/ui.grid.treeBase.api:ColumnDef">columnDef</a>.</p>
-
 <p>You can provide a custom finalizer function, which can be used to format or otherwise complete your aggregation
 once the leaf nodes under a particular node have been aggregated.  Refer the documentation for <code>customTreeAggregationFinalizerFn</code>
-under <a href="#/api/ui.grid.treeBase.api:ColumnDef">columnDef</a>.</p><h2 id="Example">Example</h2>
-<div class="example"><p>In this example the balance field is averaged, and then displayed in the standard column using a custom cellTemplate
+under <a href="#/api/ui.grid.treeBase.api:ColumnDef">columnDef</a>.</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-319-complex-trees-page"><p>In this example the balance field is averaged, and then displayed in the standard column using a custom cellTemplate
 that shows both the value for that row as well as the aggregated value.</p>
-
-<h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-94" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-95"></div>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-94" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-95"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-94" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-94">
@@ -143,6 +133,7 @@ that shows both the value for that row as well as the aggregated value.</p>
     });
   </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-94" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-94" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

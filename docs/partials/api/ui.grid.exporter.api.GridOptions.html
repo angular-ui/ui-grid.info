@@ -1,115 +1,126 @@
-<h1><code ng:non-bindable="">GridOptions</code>
-<span class="hint">(api in module <code ng:non-bindable="">ui.grid.exporter</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/exporter/js/exporter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L163" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid.exporter</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>GridOptions for exporter feature, these are available to be <br />
-set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p></div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="exporterAllDataFn">exporterAllDataFn</h3>
-<div class="exporteralldatafn"><p>This promise is needed when exporting all rows,
-and the data need to be provided by server side. Default is null.</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Promise}</code>
-– <p>a promise to load all data from server</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-exporter-api-page ui-grid-exporter-api-gridoptions-page"><p>GridOptions for exporter feature, these are available to be
+set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_exporteralldatafn">exporterAllDataFn</h3>
+<div class="exporteralldatafn"><div class="exporteralldatafn-page"><p>This promise is needed when exporting all rows,
+and the data need to be provided by server side. Default is null.</p>
+</div><h5 id="properties_exporteralldatafn_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="exporteralldatafn-page"><p>a promise to load all data from server</p>
+</div></td></tr></table><h4 id="properties_exporteralldatafn_example">Example</h4>
+<div class="example"><div class="exporteralldatafn-page"><pre class="prettyprint linenums">
 gridOptions.exporterAllDataFn = function () {
   return $http.get('/data/100.json')
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="exporterAllDataPromise">exporterAllDataPromise</h3>
-<div class="exporteralldatapromise"><p>DEPRECATED - exporterAllDataFn used to be 
-called this, but it wasn't a promise, it was a function that returned
+<li><h3 id="properties_exporteralldatapromise">exporterAllDataPromise</h3>
+<div class="exporteralldatapromise"><div class="exporteralldatapromise-page"><p>DEPRECATED - exporterAllDataFn used to be
+called this, but it wasn&#39;t a promise, it was a function that returned
 a promise.  Deprecated, but supported for backward compatibility, use
-exporterAllDataFn instead.</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Promise}</code>
-– <p>a promise to load all data from server</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+exporterAllDataFn instead.</p>
+</div><h5 id="properties_exporteralldatapromise_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="exporteralldatapromise-page"><p>a promise to load all data from server</p>
+</div></td></tr></table><h4 id="properties_exporteralldatapromise_example">Example</h4>
+<div class="example"><div class="exporteralldatapromise-page"><pre class="prettyprint linenums">
 gridOptions.exporterAllDataFn = function () {
   return $http.get('/data/100.json')
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="exporterCsvColumnSeparator">exporterCsvColumnSeparator</h3>
-<div class="exportercsvcolumnseparator"><p>The character to use as column separator
+<li><h3 id="properties_exportercsvcolumnseparator">exporterCsvColumnSeparator</h3>
+<div class="exportercsvcolumnseparator"><div class="exportercsvcolumnseparator-page"><p>The character to use as column separator
 link
-<br/>Defaults to ','</p></div>
+<br/>Defaults to &#39;,&#39;</p>
+</div></div>
 </li>
-<li><h3 id="exporterCsvFilename">exporterCsvFilename</h3>
-<div class="exportercsvfilename"><p>The default filename to use when saving the downloaded csv. <br />
+<li><h3 id="properties_exportercsvfilename">exporterCsvFilename</h3>
+<div class="exportercsvfilename"><div class="exportercsvfilename-page"><p>The default filename to use when saving the downloaded csv.
 This will only work in some browsers.
-<br/>Defaults to 'download.csv'</p></div>
+<br/>Defaults to &#39;download.csv&#39;</p>
+</div></div>
 </li>
-<li><h3 id="exporterFieldCallback">exporterFieldCallback</h3>
-<div class="exporterfieldcallback"><p>A function to call for each field before exporting it.  Allows 
+<li><h3 id="properties_exporterfieldcallback">exporterFieldCallback</h3>
+<div class="exporterfieldcallback"><div class="exporterfieldcallback-page"><p>A function to call for each field before exporting it.  Allows
 massaging of raw data into a display format, for example if you have applied 
 filters to convert codes into decodes, or you require
 a specific date format in the exported content.</p>
-
 <p>The method is called once for each field exported, and provides the grid, the
-gridCol and the GridRow for you to use as context in massaging the data.</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>you must return the massaged value ready for exporting</p></div>
-<h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+gridCol and the GridRow for you to use as context in massaging the data.</p>
+</div><h5 id="properties_exporterfieldcallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="exporterfieldcallback-page"><p>you must return the massaged value ready for exporting</p>
+</div></td></tr></table><h4 id="properties_exporterfieldcallback_example">Example</h4>
+<div class="example"><div class="exporterfieldcallback-page"><pre class="prettyprint linenums">
 gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
   if ( col.name === 'status' ){
     value = decodeStatus( value );
   }
   return value;
 }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="exporterHeaderFilter">exporterHeaderFilter</h3>
-<div class="exporterheaderfilter"><p>A function to apply to the header displayNames before exporting.  Useful for internationalisation,
-for example if you were using angular-translate you'd set this to <code>$translate.instant</code>.  Note that this
+<li><h3 id="properties_exporterheaderfilter">exporterHeaderFilter</h3>
+<div class="exporterheaderfilter"><div class="exporterheaderfilter-page"><p>A function to apply to the header displayNames before exporting.  Useful for internationalisation,
+for example if you were using angular-translate you&#39;d set this to <code>$translate.instant</code>.  Note that this
 call must be synchronous, it cannot be a call that returns a promise.</p>
-
-<p>Behaviour can be changed to pass in <code>name</code> instead of <code>displayName</code> through use of <code>exporterHeaderFilterUseName: true</code>.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<p>Behaviour can be changed to pass in <code>name</code> instead of <code>displayName</code> through use of <code>exporterHeaderFilterUseName: true</code>.</p>
+</div><h4 id="properties_exporterheaderfilter_example">Example</h4>
+<div class="example"><div class="exporterheaderfilter-page"><pre class="prettyprint linenums">
 gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + name; };
 </pre>
 OR
 <pre class="prettyprint linenums">
 gridOptions.exporterHeaderFilter = $translate.instant;
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="exporterHeaderFilterUseName">exporterHeaderFilterUseName</h3>
-<div class="exporterheaderfilterusename"><p>Defaults to false, which leads to <code>displayName</code> being passed into the headerFilter.
-If set to true, then will pass <code>name</code> instead.</p><h4 id="Example">Example</h4>
-<div class="example"><pre class="prettyprint linenums">
+<li><h3 id="properties_exporterheaderfilterusename">exporterHeaderFilterUseName</h3>
+<div class="exporterheaderfilterusename"><div class="exporterheaderfilterusename-page"><p>Defaults to false, which leads to <code>displayName</code> being passed into the headerFilter.
+If set to true, then will pass <code>name</code> instead.</p>
+</div><h4 id="properties_exporterheaderfilterusename_example">Example</h4>
+<div class="example"><div class="exporterheaderfilterusename-page"><pre class="prettyprint linenums">
 gridOptions.exporterHeaderFilterUseName = true;
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="exporterMenuCsv">exporterMenuCsv</h3>
-<div class="exportermenucsv"><p>Add csv export menu items to the ui-grid grid menu, if it's present.  Defaults to true.</p></div>
+<li><h3 id="properties_exportermenucsv">exporterMenuCsv</h3>
+<div class="exportermenucsv"><div class="exportermenucsv-page"><p>Add csv export menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.</p>
+</div></div>
 </li>
-<li><h3 id="exporterMenuLabel">exporterMenuLabel</h3>
-<div class="exportermenulabel"><p>The text to show on the exporter menu button
+<li><h3 id="properties_exportermenulabel">exporterMenuLabel</h3>
+<div class="exportermenulabel"><div class="exportermenulabel-page"><p>The text to show on the exporter menu button
 link
-<br/>Defaults to 'Export'</p></div>
+<br/>Defaults to &#39;Export&#39;</p>
+</div></div>
 </li>
-<li><h3 id="exporterMenuPdf">exporterMenuPdf</h3>
-<div class="exportermenupdf"><p>Add pdf export menu items to the ui-grid grid menu, if it's present.  Defaults to true.</p></div>
+<li><h3 id="properties_exportermenupdf">exporterMenuPdf</h3>
+<div class="exportermenupdf"><div class="exportermenupdf-page"><p>Add pdf export menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.</p>
+</div></div>
 </li>
-<li><h3 id="exporterOlderExcelCompatibility">exporterOlderExcelCompatibility</h3>
-<div class="exporterolderexcelcompatibility"><p>Some versions of excel don't like the utf-16 BOM on the front, and it comes
+<li><h3 id="properties_exporterolderexcelcompatibility">exporterOlderExcelCompatibility</h3>
+<div class="exporterolderexcelcompatibility"><div class="exporterolderexcelcompatibility-page"><p>Some versions of excel don&#39;t like the utf-16 BOM on the front, and it comes
 through as ï»¿ in the first column header.  Setting this option to false will suppress this, at the
 expense of proper utf-16 handling in applications that do recognise the BOM
-<br/>Defaults to false</p></div>
+<br/>Defaults to false</p>
+</div></div>
 </li>
-<li><h3 id="exporterPdfCustomFormatter">exporterPdfCustomFormatter</h3>
-<div class="exporterpdfcustomformatter"><p>A custom callback routine that changes the pdf document, adding any
+<li><h3 id="properties_exporterpdfcustomformatter">exporterPdfCustomFormatter</h3>
+<div class="exporterpdfcustomformatter"><div class="exporterpdfcustomformatter-page"><p>A custom callback routine that changes the pdf document, adding any
 custom styling or content that is supported by pdfMake.  Takes in the complete docDefinition, and
-must return an updated docDefinition ready for pdfMake.</p><h4 id="Example">Example</h4>
-<div class="example"><p>In this example we add a style to the style array, so that we can use it in our
+must return an updated docDefinition ready for pdfMake.</p>
+</div><h4 id="properties_exporterpdfcustomformatter_example">Example</h4>
+<div class="example"><div class="exporterpdfcustomformatter-page"><p>In this example we add a style to the style array, so that we can use it in our
 footer definition.
 <pre class="prettyprint linenums">
   gridOptions.exporterPdfCustomFormatter = function ( docDefinition ) {
@@ -118,24 +129,27 @@ footer definition.
   }
 
   gridOptions.exporterPdfFooter = { text: 'My footer', style: 'footerStyle' }
-</pre></div>
+</pre>
+</div></div>
 </div>
 </li>
-<li><h3 id="exporterPdfDefaultStyle">exporterPdfDefaultStyle</h3>
-<div class="exporterpdfdefaultstyle"><p>The default style in pdfMake format
+<li><h3 id="properties_exporterpdfdefaultstyle">exporterPdfDefaultStyle</h3>
+<div class="exporterpdfdefaultstyle"><div class="exporterpdfdefaultstyle-page"><p>The default style in pdfMake format
 <br/>Defaults to:
 <pre class="prettyprint linenums">
   {
     fontSize: 11
   }
-</pre></div>
+</pre>
+</div></div>
 </li>
-<li><h3 id="exporterPdfFilename">exporterPdfFilename</h3>
-<div class="exporterpdffilename"><p>The default filename to use when saving the downloaded pdf, only used in IE (other browsers open pdfs in a new window)
-<br/>Defaults to 'download.pdf'</p></div>
+<li><h3 id="properties_exporterpdffilename">exporterPdfFilename</h3>
+<div class="exporterpdffilename"><div class="exporterpdffilename-page"><p>The default filename to use when saving the downloaded pdf, only used in IE (other browsers open pdfs in a new window)
+<br/>Defaults to &#39;download.pdf&#39;</p>
+</div></div>
 </li>
-<li><h3 id="exporterPdfFooter">exporterPdfFooter</h3>
-<div class="exporterpdffooter"><p>The header section for pdf exports.  Can be
+<li><h3 id="properties_exporterpdffooter">exporterPdfFooter</h3>
+<div class="exporterpdffooter"><div class="exporterpdffooter-page"><p>The header section for pdf exports.  Can be
 simple text:
 <pre class="prettyprint linenums">
   gridOptions.exporterPdfFooter = 'My Footer';
@@ -152,10 +166,11 @@ Can be a more complex object in pdfMake format:
 Or can be a function, allowing page numbers and the like
 <pre class="prettyprint linenums">
   gridOptions.exporterPdfFooter: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; };
-</pre></div>
+</pre>
+</div></div>
 </li>
-<li><h3 id="exporterPdfHeader">exporterPdfHeader</h3>
-<div class="exporterpdfheader"><p>The header section for pdf exports.  Can be
+<li><h3 id="properties_exporterpdfheader">exporterPdfHeader</h3>
+<div class="exporterpdfheader"><div class="exporterpdfheader-page"><p>The header section for pdf exports.  Can be
 simple text:
 <pre class="prettyprint linenums">
   gridOptions.exporterPdfHeader = 'My Header';
@@ -172,27 +187,31 @@ Can be a more complex object in pdfMake format:
 Or can be a function, allowing page numbers and the like
 <pre class="prettyprint linenums">
   gridOptions.exporterPdfHeader: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; };
-</pre></div>
+</pre>
+</div></div>
 </li>
-<li><h3 id="exporterPdfMaxGridWidth">exporterPdfMaxGridWidth</h3>
-<div class="exporterpdfmaxgridwidth"><p>The maxium grid width - the current grid width 
+<li><h3 id="properties_exporterpdfmaxgridwidth">exporterPdfMaxGridWidth</h3>
+<div class="exporterpdfmaxgridwidth"><div class="exporterpdfmaxgridwidth-page"><p>The maxium grid width - the current grid width
 will be scaled to match this, with any fixed width columns
 being adjusted accordingly.
-<br/>Defaults to 720 (for A4 landscape), use 670 for LETTER </p></div>
+<br/>Defaults to 720 (for A4 landscape), use 670 for LETTER </p>
+</div></div>
 </li>
-<li><h3 id="exporterPdfOrientation">exporterPdfOrientation</h3>
-<div class="exporterpdforientation"><p>The orientation, should be a valid pdfMake value,
-'landscape' or 'portrait'
-<br/>Defaults to landscape</p></div>
+<li><h3 id="properties_exporterpdforientation">exporterPdfOrientation</h3>
+<div class="exporterpdforientation"><div class="exporterpdforientation-page"><p>The orientation, should be a valid pdfMake value,
+&#39;landscape&#39; or &#39;portrait&#39;
+<br/>Defaults to landscape</p>
+</div></div>
 </li>
-<li><h3 id="exporterPdfPageSize">exporterPdfPageSize</h3>
-<div class="exporterpdfpagesize"><p>The orientation, should be a valid pdfMake
-paper size, usually 'A4' or 'LETTER'
+<li><h3 id="properties_exporterpdfpagesize">exporterPdfPageSize</h3>
+<div class="exporterpdfpagesize"><div class="exporterpdfpagesize-page"><p>The orientation, should be a valid pdfMake
+paper size, usually &#39;A4&#39; or &#39;LETTER&#39;
 <a href="https://github.com/bpampuch/pdfmake/blob/master/src/standardPageSizes.js">pdfMake page sizes</a>
-<br/>Defaults to A4</p></div>
+<br/>Defaults to A4</p>
+</div></div>
 </li>
-<li><h3 id="exporterPdfTableHeaderStyle">exporterPdfTableHeaderStyle</h3>
-<div class="exporterpdftableheaderstyle"><p>The tableHeader style in pdfMake format
+<li><h3 id="properties_exporterpdftableheaderstyle">exporterPdfTableHeaderStyle</h3>
+<div class="exporterpdftableheaderstyle"><div class="exporterpdftableheaderstyle-page"><p>The tableHeader style in pdfMake format
 <br/>Defaults to:
 <pre class="prettyprint linenums">
   {
@@ -200,36 +219,41 @@ paper size, usually 'A4' or 'LETTER'
     fontSize: 12,
     color: 'black'
   }
-</pre></div>
+</pre>
+</div></div>
 </li>
-<li><h3 id="exporterPdfTableLayout">exporterPdfTableLayout</h3>
-<div class="exporterpdftablelayout"><p>A tableLayout in pdfMake format, 
+<li><h3 id="properties_exporterpdftablelayout">exporterPdfTableLayout</h3>
+<div class="exporterpdftablelayout"><div class="exporterpdftablelayout-page"><p>A tableLayout in pdfMake format,
 controls gridlines and the like.  We use the default
 layout usually.
-<br/>Defaults to null, which means no layout </p></div>
+<br/>Defaults to null, which means no layout </p>
+</div></div>
 </li>
-<li><h3 id="exporterPdfTableStyle">exporterPdfTableStyle</h3>
-<div class="exporterpdftablestyle"><p>The table style in pdfMake format
+<li><h3 id="properties_exporterpdftablestyle">exporterPdfTableStyle</h3>
+<div class="exporterpdftablestyle"><div class="exporterpdftablestyle-page"><p>The table style in pdfMake format
 <br/>Defaults to:
 <pre class="prettyprint linenums">
   {
     margin: [0, 5, 0, 15]
   }
-</pre></div>
+</pre>
+</div></div>
 </li>
-<li><h3 id="exporterSuppressColumns">exporterSuppressColumns</h3>
-<div class="exportersuppresscolumns"><p>Columns that should not be exported.  The selectionRowHeader is already automatically
-suppressed, but if you had a button column or some other "system" column that shouldn't be shown in the
+<li><h3 id="properties_exportersuppresscolumns">exporterSuppressColumns</h3>
+<div class="exportersuppresscolumns"><div class="exportersuppresscolumns-page"><p>Columns that should not be exported.  The selectionRowHeader is already automatically
+suppressed, but if you had a button column or some other &quot;system&quot; column that shouldn&#39;t be shown in the
 output then add it in this list.  You should provide an array of column names.
 <br/>Defaults to: []
 <pre class="prettyprint linenums">
   gridOptions.exporterSuppressColumns = [ 'buttons' ];
-</pre></div>
+</pre>
+</div></div>
 </li>
-<li><h3 id="exporterSuppressMenu">exporterSuppressMenu</h3>
-<div class="exportersuppressmenu"><p>Don't show the export menu button, implying the user
+<li><h3 id="properties_exportersuppressmenu">exporterSuppressMenu</h3>
+<div class="exportersuppressmenu"><div class="exportersuppressmenu-page"><p>Don&#39;t show the export menu button, implying the user
 will roll their own UI for calling the exporter
-<br/>Defaults to false</p></div>
+<br/>Defaults to false</p>
+</div></div>
 </li>
 </ul>
 </div>

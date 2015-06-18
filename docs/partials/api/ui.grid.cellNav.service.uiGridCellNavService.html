@@ -1,56 +1,48 @@
-<h1><code ng:non-bindable="">uiGridCellNavService</code>
-<span class="hint">(service in module <code ng:non-bindable="">ui.grid.cellNav</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/cellnav/js/cellnav.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L260" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridCellNavService</code>
+<div><span class="hint">service in module <code ng:non-bindable="">ui.grid.cellNav</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Services for cell navigation features. If you don't like the key maps we use,
-or the direction cells navigation, override with a service decorator (see angular docs)</p></div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="cellNavColumnBuilder">cellNavColumnBuilder()</h3>
-<div class="cellnavcolumnbuilder"><p>columnBuilder function that adds cell navigation properties to grid column</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>promise that will load any needed templates when resolved</p></div>
-</div>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-cellnav-service-page ui-grid-cellnav-service-uigridcellnavservice-page"><p>Services for cell navigation features. If you don&#39;t like the key maps we use,
+or the direction cells navigation, override with a service decorator (see angular docs)</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L469" class="view-source icon-eye-open"> </a><h3 id="methods_cellnavcolumnbuilder">cellNavColumnBuilder()</h3>
+<div class="cellnavcolumnbuilder"><div class="cellnavcolumnbuilder-page"><p>columnBuilder function that adds cell navigation properties to grid column</p>
+</div><h5 id="methods_cellnavcolumnbuilder_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="cellnavcolumnbuilder-page"><p>promise that will load any needed templates when resolved</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="decorateRenderContainers">decorateRenderContainers()</h3>
-<div class="decoraterendercontainers"><p>decorates grid renderContainers with cellNav functions</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L409" class="view-source icon-eye-open"> </a><h3 id="methods_decoraterendercontainers">decorateRenderContainers()</h3>
+<div class="decoraterendercontainers"><div class="decoraterendercontainers-page"><p>decorates grid renderContainers with cellNav functions</p>
+</div></div>
 </li>
-<li><h3 id="getDirection">getDirection()</h3>
-<div class="getdirection"><p>determines which direction to for a given keyDown event</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{uiGridCellNavConstants.direction}</code>
-– <p>direction</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L431" class="view-source icon-eye-open"> </a><h3 id="methods_getdirection">getDirection()</h3>
+<div class="getdirection"><div class="getdirection-page"><p>determines which direction to for a given keyDown event</p>
+</div><h5 id="methods_getdirection_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-uigridcellnavconstants">uiGridCellNavConstants.direction</a></td><td><div class="getdirection-page"><p>direction</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="getLeftWidth">getLeftWidth(grid, upToCol)</h3>
-<div class="getleftwidth"><p>Get the current drawn width of the columns in the
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L542" class="view-source icon-eye-open"> </a><h3 id="methods_getleftwidth">getLeftWidth(grid, upToCol)</h3>
+<div class="getleftwidth"><div class="getleftwidth-page"><p>Get the current drawn width of the columns in the
 grid up to the numbered column, and add an apportionment for the
-column that we're on.  So if we are on column 0, we want to scroll
-0% (i.e. exclude this column from calc).  If we're on the last column
+column that we&#39;re on.  So if we are on column 0, we want to scroll
+0% (i.e. exclude this column from calc).  If we&#39;re on the last column
 we want to scroll to 100% (i.e. include this column in the calc). So
-we include (thisColIndex / totalNumberCols) % of this column width</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid you'd like to act upon, usually available
-from gridApi.grid</p></li>
-<li><code ng:non-bindable="">upToCol – {gridCol} – </code>
-<p>the column to total up to and including</p></li>
-</ul>
-</div>
+we include (thisColIndex / totalNumberCols) % of this column width</p>
+</div><h5 id="methods_getleftwidth_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getleftwidth-page"><p>the grid you&#39;d like to act upon, usually available
+from gridApi.grid</p>
+</div></td></tr><tr><td>upToCol</td><td><a href="" class="label type-hint type-hint-gridcol">gridCol</a></td><td><div class="getleftwidth-page"><p>the column to total up to and including</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="scrollToFocus">scrollToFocus(grid, rowEntity, colDef)</h3>
-<div class="scrolltofocus"><p>Scroll the grid such that the specified
-row and column is in view, and set focus to the cell in that row and column</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid you'd like to act upon, usually available
-from gridApi.grid</p></li>
-<li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>gridOptions.data[] array instance to make visible and set focus to</p></li>
-<li><code ng:non-bindable="">colDef – {object} – </code>
-<p>to make visible and set focus to</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>a promise that is resolved after any scrolling is finished</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/cellnav/js/cellnav.js#L504" class="view-source icon-eye-open"> </a><h3 id="methods_scrolltofocus">scrollToFocus(grid, rowEntity, colDef)</h3>
+<div class="scrolltofocus"><div class="scrolltofocus-page"><p>Scroll the grid such that the specified
+row and column is in view, and set focus to the cell in that row and column</p>
+</div><h5 id="methods_scrolltofocus_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="scrolltofocus-page"><p>the grid you&#39;d like to act upon, usually available
+from gridApi.grid</p>
+</div></td></tr><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrolltofocus-page"><p>gridOptions.data[] array instance to make visible and set focus to</p>
+</div></td></tr><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrolltofocus-page"><p>to make visible and set focus to</p>
+</div></td></tr></tbody></table><h5 id="methods_scrolltofocus_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="scrolltofocus-page"><p>a promise that is resolved after any scrolling is finished</p>
+</div></td></tr></table></div>
 </li>
 </ul>
 </div>

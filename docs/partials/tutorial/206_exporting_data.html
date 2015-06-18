@@ -1,41 +1,34 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>The exporter feature allows data to be exported from the grid in 
+<div><div class="tutorial-page tutorial-206-exporting-data-with-native-ui-page"><p>The exporter feature allows data to be exported from the grid in
 csv or pdf format.  The exporter can export all data, visible data or selected data.</p>
-
 <p>To use the exporter you need to include the ui-grid-exporter directive on
 your grid.  If you want to export selected rows you must include the ui-grid-selection
 directive on your grid.  If you want to export as PDF you need to have installed pdfMake, 
 available through:
 <pre class="prettyprint linenums">  bower install pdfmake  </pre>
-
 <p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>.</p>
-
 <p>The exporter adds menu items to the grid menu, to use the native UI you need to enable
 the grid menu using the gridOption <code>enableGridMenu</code></p>
-
 <p>Note that the option to export selected data is only visible if you have data selected.</p>
-
 <p>If you are using internet explorer then the pdf will automatically download rather than opening,
 there are issues with pdfMake not being able to automatically open tabs in internet explorer
-(refer https://github.com/bpampuch/pdfmake/issues/16 and other issues in that repo).</p>
-
-<p>Some earlier versions of Excel don't like the utf-16 BOM - the first handful of characters
+(refer <a href="https://github.com/bpampuch/pdfmake/issues/16">https://github.com/bpampuch/pdfmake/issues/16</a> and other issues in that repo).</p>
+<p>Some earlier versions of Excel don&#39;t like the utf-16 BOM - the first handful of characters
 that say a csv file contains utf-16 content.  Most other applications, and newer Excel versions,
 do use it successfully.  If you have a problem with getting <code>ï»¿</code> as the first few characters in
 an Excel spreadsheet after csv import, you can try setting <code>exporterOlderExcelCompatibility: true</code></p>
-
 <p>Note that some other applications will then have problems instead.</p>
-
 <p>You may find that you have problems including pdfMake in your toolchain - it sometimes breaks when 
 minified.  If you have this problem it is recommended to instead include pdfmake.js and vfs_fonts.js
 as assets (or the equivalent minified versions), and then include them as a script in your application
-rather than as part of a minification of your entire javascript library.</p><h2 id="Example">Example</h2>
-<div class="example"><p>In this example we use the native grid menu buttons, and we show both the pdf and csv export options.</p>
-
-<h4>Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-61" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario=""></div>
+rather than as part of a minification of your entire javascript library.</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-206-exporting-data-with-native-ui-page"><p>In this example we use the native grid menu buttons, and we show both the pdf and csv export options.</p>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-61" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-61" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-61">
@@ -97,6 +90,7 @@ rather than as part of a minification of your entire javascript library.</p><h2 
     }]);
   </script>
 </div>
-</div><h4>Demo</h4>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-61" ng-eval-javascript="app.js"></div></div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-61" ng-eval-javascript="app.js"></div>
+</div></div>
 </div>

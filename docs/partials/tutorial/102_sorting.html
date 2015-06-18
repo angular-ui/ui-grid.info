@@ -1,36 +1,28 @@
 <h1><code ng:non-bindable=""></code>
-<span class="hint"></span>
+<div><span class="hint"></span>
+</div>
 </h1>
-<div><p>UI-Grid allows you to sort rows. The feature is on by default. You can set the <code>enableSorting</code> flag in your grid options to enable/disable it.</p>
-
+<div><div class="tutorial-page tutorial-102-sorting-page"><p>UI-Grid allows you to sort rows. The feature is on by default. You can set the <code>enableSorting</code> flag in your grid options to enable/disable it.</p>
 <p><span class="col-xs-12 alert alert-warning">
-  <strong>Note:</strong> You can sort columns by accessing the column menu. You must include ngAnimate in your application if you want the menu to slide up/down, but it's not required.
+  <strong>Note:</strong> You can sort columns by accessing the column menu. You must include ngAnimate in your application if you want the menu to slide up/down, but it&#39;s not required.
 </span></p>
-
 <p>Sorting can be disabled at the column level by setting <code>enableSorting: false</code> in the column def. See the last column below for an example.</p>
-
 <p>Multiple columns can be sorted by shift-clicking on the 2-n columns.  To see it in action, sort Gender then shift-click Name.</p>
-
 <p>When sorting using the menus, the sorts are additive.  So if you have one column sorted and you pick another sort
-from a column menu, it will add on to the existing sort rather than replacing it.  You need to use the 'remove sort' option
-on the existing column if you don't want to sort by it any more.</p>
-
+from a column menu, it will add on to the existing sort rather than replacing it.  You need to use the &#39;remove sort&#39; option
+on the existing column if you don&#39;t want to sort by it any more.</p>
 <p>When sorting using the headers, clicking on a header removes all other sorts unless you shift-click.</p>
-
 <p>The sort is automatically recalculated when you edit a field (the edit feature calls the dataChange api to notify of a data change).  If
-you change the data "behind the scenes" and want the sort to be recalculated, you can notify the grid that your
+you change the data &quot;behind the scenes&quot; and want the sort to be recalculated, you can notify the grid that your
 data has changed by calling <code>gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT )</code></p>
-
 <p>If you set a default sort, you can prevent the user from removing that sort by setting <code>suppressRemoveSort: true</code>
 for that column.  This will let the user change the direction of the sort, but take away the option to remove the sort.</p>
-
 <p>The sort algorithm is chosen based on the column type.  ui-grid will guess the type based on the data, although if you load data
 asynchronously after the columns it will often decide all your columns are string.  You can explicitly set the column type in the
-column def using <code>type='number'</code>.  Valid types are documented in <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a>, and
+column def using <code>type=&#39;number&#39;</code>.  Valid types are documented in <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a>, and
 include <code>string</code>, <code>number</code>, <code>numberStr</code> and <code>date</code>.  If you use date be aware the code expects a javascript date object.</p>
-
-<h3>Source</h3>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-23" source-edit-css="main.css" source-edit-js="app.js" source-edit-unit="" source-edit-scenario="scenario.js-24"></div>
+<h3 id="source">Source</h3>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-23" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-24"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-23" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-23">
@@ -311,5 +303,6 @@ include <code>string</code>, <code>number</code>, <code>numberStr</code> and <co
 
   </script>
 </div>
-</div><h3>Demo</h3>
-<div class="well doc-example-live animator-container" ng-embed-app="app" ng-set-html="index.html-23" ng-eval-javascript="app.js"></div></div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-23" ng-eval-javascript="app.js"></div>
+</div></div>

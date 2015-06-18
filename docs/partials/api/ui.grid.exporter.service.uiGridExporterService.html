@@ -1,240 +1,178 @@
-<h1><code ng:non-bindable="">uiGridExporterService</code>
-<span class="hint">(service in module <code ng:non-bindable="">ui.grid.exporter</code>
-)</span>
-</h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Services for exporter feature</p></div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="addToMenu">addToMenu(grid)</h3>
-<div class="addtomenu"><p>Adds export items to the grid menu,
-allowing the user to select export options </p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-</ul>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/exporter/js/exporter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L74" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridExporterService</code>
+<div><span class="hint">service in module <code ng:non-bindable="">ui.grid.exporter</code>
+</span>
 </div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-exporter-service-page ui-grid-exporter-service-uigridexporterservice-page"><p>Services for exporter feature</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L521" class="view-source icon-eye-open"> </a><h3 id="methods_addtomenu">addToMenu(grid)</h3>
+<div class="addtomenu"><div class="addtomenu-page"><p>Adds export items to the grid menu,
+allowing the user to select export options </p>
+</div><h5 id="methods_addtomenu_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="addtomenu-page"><p>the grid from which data should be exported</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="calculatePdfHeaderWidths">calculatePdfHeaderWidths(grid, exportHeaders)</h3>
-<div class="calculatepdfheaderwidths"><p>Determines the column widths base on the 
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L1105" class="view-source icon-eye-open"> </a><h3 id="methods_calculatepdfheaderwidths">calculatePdfHeaderWidths(grid, exportHeaders)</h3>
+<div class="calculatepdfheaderwidths"><div class="calculatepdfheaderwidths-page"><p>Determines the column widths base on the
 widths we got from the grid.  If the column is drawn
 then we have a drawnWidth.  If the column is not visible
-then we have '*', 'x%' or a width.  When columns are
-not visible they don't contribute to the overall gridWidth,
+then we have &#39;*&#39;, &#39;x%&#39; or a width.  When columns are
+not visible they don&#39;t contribute to the overall gridWidth,
 so we need to adjust to allow for extra columns</p>
-
 <p>Our basic heuristic is to take the current gridWidth, plus 
 numeric columns and call this the base gridwidth.</p>
-
-<p>To that we add 100 for any '*' column, and x% of the base gridWidth
-for any column that is a %</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">exportHeaders – {array} – </code>
-<p>array of header information </p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>an array of header widths</p></div>
-</div>
+<p>To that we add 100 for any &#39;*&#39; column, and x% of the base gridWidth
+for any column that is a %</p>
+</div><h5 id="methods_calculatepdfheaderwidths_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="calculatepdfheaderwidths-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>exportHeaders</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="calculatepdfheaderwidths-page"><p>array of header information</p>
+</div></td></tr></tbody></table><h5 id="methods_calculatepdfheaderwidths_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="calculatepdfheaderwidths-page"><p>an array of header widths</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="csvExport">csvExport(grid, rowTypes, colTypes)</h3>
-<div class="csvexport"><p>Exports rows from the grid in csv format, 
-the data exported is selected based on the provided options</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">rowTypes – {string} – </code>
-<p>which rows to export, valid values are
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L603" class="view-source icon-eye-open"> </a><h3 id="methods_csvexport">csvExport(grid, rowTypes, colTypes)</h3>
+<div class="csvexport"><div class="csvexport-page"><p>Exports rows from the grid in csv format,
+the data exported is selected based on the provided options</p>
+</div><h5 id="methods_csvexport_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="csvexport-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>rowTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="csvexport-page"><p>which rows to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-<li><code ng:non-bindable="">colTypes – {string} – </code>
-<p>which columns to export, valid values are
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr><tr><td>colTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="csvexport-page"><p>which columns to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-</ul>
-</div>
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="downloadFile">downloadFile(fileName, csvContent, exporterOlderExcelCompatibility)</h3>
-<div class="downloadfile"><p>Triggers download of a csv file.  Logic provided
-by @cssensei (from his colleagues at https://github.com/ifeelgoods) in issue #2391</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">fileName – {string} – </code>
-<p>the filename we'd like our file to be
-given</p></li>
-<li><code ng:non-bindable="">csvContent – {string} – </code>
-<p>the csv content that we'd like to 
-download as a file</p></li>
-<li><code ng:non-bindable="">exporterOlderExcelCompatibility – {boolean} – </code>
-<p>whether or not we put a utf-16 BOM on the from (\uFEFF)</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L877" class="view-source icon-eye-open"> </a><h3 id="methods_downloadfile">downloadFile(fileName, csvContent, exporterOlderExcelCompatibility)</h3>
+<div class="downloadfile"><div class="downloadfile-page"><p>Triggers download of a csv file.  Logic provided
+by @cssensei (from his colleagues at <a href="https://github.com/ifeelgoods">https://github.com/ifeelgoods</a>) in issue #2391</p>
+</div><h5 id="methods_downloadfile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>fileName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="downloadfile-page"><p>the filename we&#39;d like our file to be
+given</p>
+</div></td></tr><tr><td>csvContent</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="downloadfile-page"><p>the csv content that we&#39;d like to
+download as a file</p>
+</div></td></tr><tr><td>exporterOlderExcelCompatibility</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="downloadfile-page"><p>whether or not we put a utf-16 BOM on the from (\uFEFF)</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="downloadPdf">downloadPdf(fileName, docDefinition)</h3>
-<div class="downloadpdf"><p>Generates and retrieves the pdf as a blob, then downloads
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L984" class="view-source icon-eye-open"> </a><h3 id="methods_downloadpdf">downloadPdf(fileName, docDefinition)</h3>
+<div class="downloadpdf"><div class="downloadpdf-page"><p>Generates and retrieves the pdf as a blob, then downloads
 it as a file.  Only used in IE, in all other browsers we use the native
-pdfMake.open function to just open the PDF</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">fileName – {string} – </code>
-<p>the filename to give to the pdf, can be set
-through exporterPdfFilename</p></li>
-<li><code ng:non-bindable="">docDefinition – {object} – </code>
-<p>a pdf docDefinition that we can generate
-and get a blob from</p></li>
-</ul>
-</div>
+pdfMake.open function to just open the PDF</p>
+</div><h5 id="methods_downloadpdf_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>fileName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="downloadpdf-page"><p>the filename to give to the pdf, can be set
+through exporterPdfFilename</p>
+</div></td></tr><tr><td>docDefinition</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="downloadpdf-page"><p>a pdf docDefinition that we can generate
+and get a blob from</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="formatAsCSV">formatAsCSV(exportColumnHeaders, exportData)</h3>
-<div class="formatascsv"><p>Formats the column headers and data as a CSV, 
-and sends that data to the user</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">exportColumnHeaders – {array} – </code>
-<p>an array of column headers, 
-where each header is an object with name, width and maybe alignment</p></li>
-<li><code ng:non-bindable="">exportData – {array} – </code>
-<p>an array of rows, where each row is
-an array of column data</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>csv the formatted csv as a string</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L797" class="view-source icon-eye-open"> </a><h3 id="methods_formatascsv">formatAsCSV(exportColumnHeaders, exportData)</h3>
+<div class="formatascsv"><div class="formatascsv-page"><p>Formats the column headers and data as a CSV,
+and sends that data to the user</p>
+</div><h5 id="methods_formatascsv_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>exportColumnHeaders</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="formatascsv-page"><p>an array of column headers,
+where each header is an object with name, width and maybe alignment</p>
+</div></td></tr><tr><td>exportData</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="formatascsv-page"><p>an array of rows, where each row is
+an array of column data</p>
+</div></td></tr></tbody></table><h5 id="methods_formatascsv_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatascsv-page"><p>csv the formatted csv as a string</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="formatFieldAsCsv">formatFieldAsCsv(field)</h3>
-<div class="formatfieldascsv"><p>Renders a single field as a csv field, including
-quotes around the value</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">field – {field} – </code>
-<p>the field to be turned into a csv string,
-may be of any type</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>a csv-ified version of the field</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L835" class="view-source icon-eye-open"> </a><h3 id="methods_formatfieldascsv">formatFieldAsCsv(field)</h3>
+<div class="formatfieldascsv"><div class="formatfieldascsv-page"><p>Renders a single field as a csv field, including
+quotes around the value</p>
+</div><h5 id="methods_formatfieldascsv_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>field</td><td><a href="" class="label type-hint type-hint-field">field</a></td><td><div class="formatfieldascsv-page"><p>the field to be turned into a csv string,
+may be of any type</p>
+</div></td></tr></tbody></table><h5 id="methods_formatfieldascsv_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatfieldascsv-page"><p>a csv-ified version of the field</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="formatFieldAsCsv">formatFieldAsCsv(field)</h3>
-<div class="formatfieldascsv"><p>Renders a single field as a pdf-able field, which
-is different from a csv field only in that strings don't have quotes
-around them</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">field – {field} – </code>
-<p>the field to be turned into a pdf string,
-may be of any type</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>a string-ified version of the field</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L1162" class="view-source icon-eye-open"> </a><h3 id="methods_formatfieldascsv">formatFieldAsCsv(field)</h3>
+<div class="formatfieldascsv"><div class="formatfieldascsv-page"><p>Renders a single field as a pdf-able field, which
+is different from a csv field only in that strings don&#39;t have quotes
+around them</p>
+</div><h5 id="methods_formatfieldascsv_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>field</td><td><a href="" class="label type-hint type-hint-field">field</a></td><td><div class="formatfieldascsv-page"><p>the field to be turned into a pdf string,
+may be of any type</p>
+</div></td></tr></tbody></table><h5 id="methods_formatfieldascsv_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatfieldascsv-page"><p>a string-ified version of the field</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="formatRowAsCsv">formatRowAsCsv(exporter, row)</h3>
-<div class="formatrowascsv"><p>Renders a single field as a csv field, including
-quotes around the value</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">exporter – {exporterService} – </code>
-<p>pass in exporter </p></li>
-<li><code ng:non-bindable="">row – {array} – </code>
-<p>the row to be turned into a csv string</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>a csv-ified version of the row</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L819" class="view-source icon-eye-open"> </a><h3 id="methods_formatrowascsv">formatRowAsCsv(exporter, row)</h3>
+<div class="formatrowascsv"><div class="formatrowascsv-page"><p>Renders a single field as a csv field, including
+quotes around the value</p>
+</div><h5 id="methods_formatrowascsv_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>exporter</td><td><a href="" class="label type-hint type-hint-exporterservice">exporterService</a></td><td><div class="formatrowascsv-page"><p>pass in exporter</p>
+</div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="formatrowascsv-page"><p>the row to be turned into a csv string</p>
+</div></td></tr></tbody></table><h5 id="methods_formatrowascsv_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatrowascsv-page"><p>a csv-ified version of the row</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="formatRowAsPdf">formatRowAsPdf(exporter, row)</h3>
-<div class="formatrowaspdf"><p>Renders a row in a format consumable by PDF,
-mainly meaning casting everything to a string</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">exporter – {exporterService} – </code>
-<p>pass in exporter </p></li>
-<li><code ng:non-bindable="">row – {array} – </code>
-<p>the row to be turned into a csv string</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{string}</code>
-– <p>a csv-ified version of the row</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L1144" class="view-source icon-eye-open"> </a><h3 id="methods_formatrowaspdf">formatRowAsPdf(exporter, row)</h3>
+<div class="formatrowaspdf"><div class="formatrowaspdf-page"><p>Renders a row in a format consumable by PDF,
+mainly meaning casting everything to a string</p>
+</div><h5 id="methods_formatrowaspdf_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>exporter</td><td><a href="" class="label type-hint type-hint-exporterservice">exporterService</a></td><td><div class="formatrowaspdf-page"><p>pass in exporter</p>
+</div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="formatrowaspdf-page"><p>the row to be turned into a csv string</p>
+</div></td></tr></tbody></table><h5 id="methods_formatrowaspdf_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatrowaspdf-page"><p>a csv-ified version of the row</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="getColumnHeaders">getColumnHeaders(grid, colTypes)</h3>
-<div class="getcolumnheaders"><p>Gets the column headers from the grid to use
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L667" class="view-source icon-eye-open"> </a><h3 id="methods_getcolumnheaders">getColumnHeaders(grid, colTypes)</h3>
+<div class="getcolumnheaders"><div class="getcolumnheaders-page"><p>Gets the column headers from the grid to use
 as a title row for the exported file, all headers have 
 headerCellFilters applied as appropriate.</p>
-
 <p>Column headers are an array of objects, each object has
 name, displayName, width and align attributes.  Only name is
-used for csv, all attributes are used for pdf.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">colTypes – {string} – </code>
-<p>which columns to export, valid values are
+used for csv, all attributes are used for pdf.</p>
+</div><h5 id="methods_getcolumnheaders_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getcolumnheaders-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>colTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getcolumnheaders-page"><p>which columns to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-</ul>
-</div>
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getData">getData(grid, rowTypes, colTypes)</h3>
-<div class="getdata"><p>Gets data from the grid based on the provided options,
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L732" class="view-source icon-eye-open"> </a><h3 id="methods_getdata">getData(grid, rowTypes, colTypes)</h3>
+<div class="getdata"><div class="getdata-page"><p>Gets data from the grid based on the provided options,
 all cells have cellFilters applied as appropriate.  Any rows marked
-<code>exporterEnableExporting: false</code> will not be exported</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">rowTypes – {string} – </code>
-<p>which rows to export, valid values are
+<code>exporterEnableExporting: false</code> will not be exported</p>
+</div><h5 id="methods_getdata_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getdata-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>rowTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getdata-page"><p>which rows to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-<li><code ng:non-bindable="">colTypes – {string} – </code>
-<p>which columns to export, valid values are
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr><tr><td>colTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getdata-page"><p>which columns to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-</ul>
-</div>
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="isIE">isIE()</h3>
-<div class="isie"><p>Checks whether current browser is IE and returns it's version if it is</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L859" class="view-source icon-eye-open"> </a><h3 id="methods_isie">isIE()</h3>
+<div class="isie"><div class="isie-page"><p>Checks whether current browser is IE and returns it&#39;s version if it is</p>
+</div></div>
 </li>
-<li><h3 id="loadAllDataIfNeeded">loadAllDataIfNeeded(grid, rowTypes, colTypes)</h3>
-<div class="loadalldataifneeded"><p>When using server side pagination, use exporterAllDataFn to
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L630" class="view-source icon-eye-open"> </a><h3 id="methods_loadalldataifneeded">loadAllDataIfNeeded(grid, rowTypes, colTypes)</h3>
+<div class="loadalldataifneeded"><div class="loadalldataifneeded-page"><p>When using server side pagination, use exporterAllDataFn to
 load all data before continuing processing.
 When using client side pagination, return a resolved promise so processing
-continues immediately</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">rowTypes – {string} – </code>
-<p>which rows to export, valid values are
+continues immediately</p>
+</div><h5 id="methods_loadalldataifneeded_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="loadalldataifneeded-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>rowTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="loadalldataifneeded-page"><p>which rows to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-<li><code ng:non-bindable="">colTypes – {string} – </code>
-<p>which columns to export, valid values are
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr><tr><td>colTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="loadalldataifneeded-page"><p>which columns to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-</ul>
-</div>
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="pdfExport">pdfExport(grid, rowTypes, colTypes)</h3>
-<div class="pdfexport"><p>Exports rows from the grid in pdf format, 
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L956" class="view-source icon-eye-open"> </a><h3 id="methods_pdfexport">pdfExport(grid, rowTypes, colTypes)</h3>
+<div class="pdfexport"><div class="pdfexport-page"><p>Exports rows from the grid in pdf format,
 the data exported is selected based on the provided options.
 Note that this function has a dependency on pdfMake, which must
 be installed.  The resulting pdf opens in a new
-browser window.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">rowTypes – {string} – </code>
-<p>which rows to export, valid values are
+browser window.</p>
+</div><h5 id="methods_pdfexport_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="pdfexport-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>rowTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="pdfexport-page"><p>which rows to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-<li><code ng:non-bindable="">colTypes – {string} – </code>
-<p>which columns to export, valid values are
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr><tr><td>colTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="pdfexport-page"><p>which columns to export, valid values are
 uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p></li>
-</ul>
-</div>
+uiGridExporterConstants.SELECTED</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="renderAsPdf">renderAsPdf(grid, exportColumnHeaders, exportData)</h3>
-<div class="renderaspdf"><p>Renders the data into a pdf, and opens that pdf.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">grid – {Grid} – </code>
-<p>the grid from which data should be exported</p></li>
-<li><code ng:non-bindable="">exportColumnHeaders – {array} – </code>
-<p>an array of column headers, 
-where each header is an object with name, width and maybe alignment</p></li>
-<li><code ng:non-bindable="">exportData – {array} – </code>
-<p>an array of rows, where each row is
-an array of column data</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{object}</code>
-– <p>a pdfMake format document definition, ready 
-for generation</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/features/exporter/js/exporter.js#L1035" class="view-source icon-eye-open"> </a><h3 id="methods_renderaspdf">renderAsPdf(grid, exportColumnHeaders, exportData)</h3>
+<div class="renderaspdf"><div class="renderaspdf-page"><p>Renders the data into a pdf, and opens that pdf.</p>
+</div><h5 id="methods_renderaspdf_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="renderaspdf-page"><p>the grid from which data should be exported</p>
+</div></td></tr><tr><td>exportColumnHeaders</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="renderaspdf-page"><p>an array of column headers,
+where each header is an object with name, width and maybe alignment</p>
+</div></td></tr><tr><td>exportData</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="renderaspdf-page"><p>an array of rows, where each row is
+an array of column data</p>
+</div></td></tr></tbody></table><h5 id="methods_renderaspdf_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="renderaspdf-page"><p>a pdfMake format document definition, ready
+for generation</p>
+</div></td></tr></table></div>
 </li>
 </ul>
 </div>

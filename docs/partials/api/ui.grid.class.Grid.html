@@ -1,178 +1,160 @@
-<h1><code ng:non-bindable="">Grid</code>
-<span class="hint">(class in module <code ng:non-bindable="">ui.grid</code>
-)</span>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/Grid.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L21" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">Grid</code>
+<div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
 </h1>
-<div><h2 id="Description">Description</h2>
-<div class="description"><p>Grid is the main viewModel.  Any properties or methods needed to maintain state are defined in
-this prototype.  One instance of Grid is created per Grid directive instance.</p></div>
-<h2 id="Usage">Usage</h2>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-class-page ui-grid-class-grid-page"><p>Grid is the main viewModel.  Any properties or methods needed to maintain state are defined in
+this prototype.  One instance of Grid is created per Grid directive instance.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">Grid(options);</pre>
-<h3 id="Parameters">Parameters</h3>
-<ul class="parameters"><li><code ng:non-bindable="">options – {object} – </code>
-<p>Object map of options to pass into the grid. An 'id' property is expected.</p></li>
-</ul>
-</div>
-<div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="addRowHeaderColumn">addRowHeaderColumn(column)</h3>
-<div class="addrowheadercolumn"><p>adds a row header column to the grid</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">column – {object} – </code>
-<p>def</p></li>
-</ul>
-</div>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="ui-grid-class-page ui-grid-class-grid-page"><p>Object map of options to pass into the grid. An &#39;id&#39; property is expected.</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L755" class="view-source icon-eye-open"> </a><h3 id="methods_addrowheadercolumn">addRowHeaderColumn(column)</h3>
+<div class="addrowheadercolumn"><div class="addrowheadercolumn-page"><p>adds a row header column to the grid</p>
+</div><h5 id="methods_addrowheadercolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>column</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="addrowheadercolumn-page"><p>def</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="assignTypes">assignTypes()</h3>
-<div class="assigntypes"><p>uses the first row of data to assign colDef.type for any types not defined.</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L701" class="view-source icon-eye-open"> </a><h3 id="methods_assigntypes">assignTypes()</h3>
+<div class="assigntypes"><div class="assigntypes-page"><p>uses the first row of data to assign colDef.type for any types not defined.</p>
+</div></div>
 </li>
-<li><h3 id="buildColumnDefsFromData">buildColumnDefsFromData(rowBuilder)</h3>
-<div class="buildcolumndefsfromdata"><p>Populates columnDefs from the provided data</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowBuilder – {function(colDef, col, gridOptions)} – </code>
-<p>function to be called</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L513" class="view-source icon-eye-open"> </a><h3 id="methods_buildcolumndefsfromdata">buildColumnDefsFromData(rowBuilder)</h3>
+<div class="buildcolumndefsfromdata"><div class="buildcolumndefsfromdata-page"><p>Populates columnDefs from the provided data</p>
+</div><h5 id="methods_buildcolumndefsfromdata_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowBuilder</td><td><a href="" class="label type-hint type-hint-function">function(colDef, col, gridOptions</a></td><td><div class="buildcolumndefsfromdata-page"><p>function to be called</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="buildColumns">buildColumns(options)</h3>
-<div class="buildcolumns"><p>creates GridColumn objects from the columnDefinition.  Calls each registered
-columnBuilder to further process the column</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">options – {object} – </code>
-<p>An object contains options to use when building columns</p>
-
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L813" class="view-source icon-eye-open"> </a><h3 id="methods_buildcolumns">buildColumns(options)</h3>
+<div class="buildcolumns"><div class="buildcolumns-page"><p>creates GridColumn objects from the columnDefinition.  Calls each registered
+columnBuilder to further process the column</p>
+</div><h5 id="methods_buildcolumns_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="buildcolumns-page"><p>An object contains options to use when building columns</p>
 <ul>
 <li><strong>orderByColumnDefs</strong>: defaults to <strong>false</strong>. When true, <code>buildColumns</code> will reorder existing columns according to the order within the column definitions.</li>
-</ul></li>
 </ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Promise}</code>
-– <p>a promise to load any needed column resources</p></div>
-</div>
+</div></td></tr></tbody></table><h5 id="methods_buildcolumns_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="buildcolumns-page"><p>a promise to load any needed column resources</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="buildStyles">buildStyles()</h3>
-<div class="buildstyles"><p>calls each styleComputation function</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1575" class="view-source icon-eye-open"> </a><h3 id="methods_buildstyles">buildStyles()</h3>
+<div class="buildstyles"><div class="buildstyles-page"><p>calls each styleComputation function</p>
+</div></div>
 </li>
-<li><h3 id="callDataChangeCallbacks">callDataChangeCallbacks(type)</h3>
-<div class="calldatachangecallbacks"><p>Calls the callbacks based on the type of data change that
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L584" class="view-source icon-eye-open"> </a><h3 id="methods_calldatachangecallbacks">callDataChangeCallbacks(type)</h3>
+<div class="calldatachangecallbacks"><div class="calldatachangecallbacks-page"><p>Calls the callbacks based on the type of data change that
 has occurred. Always calls the ALL callbacks, calls the ROW, EDIT, COLUMN and OPTIONS callbacks if the
-event type is matching, or if the type is ALL.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">type – {number} – </code>
-<p>the type of event that occurred - one of the
-uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p></li>
-</ul>
-</div>
+event type is matching, or if the type is ALL.</p>
+</div><h5 id="methods_calldatachangecallbacks_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>type</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="calldatachangecallbacks-page"><p>the type of event that occurred - one of the
+uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="clearAllFilters">clearAllFilters()</h3>
-<div class="clearallfilters"><p>Clears all filters and optionally refreshes the visible rows.</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>If <code>refreshRows</code> is true, returns a promise of the rows refreshing.</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2426" class="view-source icon-eye-open"> </a><h3 id="methods_clearallfilters">clearAllFilters()</h3>
+<div class="clearallfilters"><div class="clearallfilters-page"><p>Clears all filters and optionally refreshes the visible rows.</p>
+</div><h5 id="methods_clearallfilters_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="clearallfilters-page"><p>If <code>refreshRows</code> is true, returns a promise of the rows refreshing.</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="columnRefreshCallback">columnRefreshCallback(name)</h3>
-<div class="columnrefreshcallback"><p>refreshes the grid when a column refresh
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L633" class="view-source icon-eye-open"> </a><h3 id="methods_columnrefreshcallback">columnRefreshCallback(name)</h3>
+<div class="columnrefreshcallback"><div class="columnrefreshcallback-page"><p>refreshes the grid when a column refresh
 is notified, which triggers handling of the visible flag.
 This is called on uiGridConstants.dataChange.COLUMN, and is
-registered as a dataChangeCallback in grid.js</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
-<p>column name</p></li>
-</ul>
-</div>
+registered as a dataChangeCallback in grid.js</p>
+</div><h5 id="methods_columnrefreshcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="columnrefreshcallback-page"><p>column name</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="createLeftContainer">createLeftContainer()</h3>
-<div class="createleftcontainer"><p>creates the left render container if it doesn't already exist</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L948" class="view-source icon-eye-open"> </a><h3 id="methods_createleftcontainer">createLeftContainer()</h3>
+<div class="createleftcontainer"><div class="createleftcontainer-page"><p>creates the left render container if it doesn&#39;t already exist</p>
+</div></div>
 </li>
-<li><h3 id="createRightContainer">createRightContainer()</h3>
-<div class="createrightcontainer"><p>creates the right render container if it doesn't already exist</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L960" class="view-source icon-eye-open"> </a><h3 id="methods_createrightcontainer">createRightContainer()</h3>
+<div class="createrightcontainer"><div class="createrightcontainer-page"><p>creates the right render container if it doesn&#39;t already exist</p>
+</div></div>
 </li>
-<li><h3 id="flagScrollingHorizontally">flagScrollingHorizontally()</h3>
-<div class="flagscrollinghorizontally"><p>sets isScrollingHorizontally to true and sets it to false in a debounced function</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L177" class="view-source icon-eye-open"> </a><h3 id="methods_flagscrollinghorizontally">flagScrollingHorizontally()</h3>
+<div class="flagscrollinghorizontally"><div class="flagscrollinghorizontally-page"><p>sets isScrollingHorizontally to true and sets it to false in a debounced function</p>
+</div></div>
 </li>
-<li><h3 id="flagScrollingVertically">flagScrollingVertically()</h3>
-<div class="flagscrollingvertically"><p>sets isScrollingVertically to true and sets it to false in a debounced function</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L158" class="view-source icon-eye-open"> </a><h3 id="methods_flagscrollingvertically">flagScrollingVertically()</h3>
+<div class="flagscrollingvertically"><div class="flagscrollingvertically-page"><p>sets isScrollingVertically to true and sets it to false in a debounced function</p>
+</div></div>
 </li>
-<li><h3 id="getCellValue">getCellValue(row, col)</h3>
-<div class="getcellvalue"><p>Gets the value of a cell for a particular row and column</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">row – {GridRow} – </code>
-<p>Row to access</p></li>
-<li><code ng:non-bindable="">col – {GridColumn} – </code>
-<p>Column to access</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1820" class="view-source icon-eye-open"> </a><h3 id="methods_getcellvalue">getCellValue(row, col)</h3>
+<div class="getcellvalue"><div class="getcellvalue-page"><p>Gets the value of a cell for a particular row and column</p>
+</div><h5 id="methods_getcellvalue_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="getcellvalue-page"><p>Row to access</p>
+</div></td></tr><tr><td>col</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="getcellvalue-page"><p>Column to access</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getColDef">getColDef(name)</h3>
-<div class="getcoldef"><p>returns a grid colDef for the column name</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
-<p>column.field</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L688" class="view-source icon-eye-open"> </a><h3 id="methods_getcoldef">getColDef(name)</h3>
+<div class="getcoldef"><div class="getcoldef-page"><p>returns a grid colDef for the column name</p>
+</div><h5 id="methods_getcoldef_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getcoldef-page"><p>column.field</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getColumn">getColumn(name)</h3>
-<div class="getcolumn"><p>returns a grid column for the column name</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
-<p>column name</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L674" class="view-source icon-eye-open"> </a><h3 id="methods_getcolumn">getColumn(name)</h3>
+<div class="getcolumn"><div class="getcolumn-page"><p>returns a grid column for the column name</p>
+</div><h5 id="methods_getcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getcolumn-page"><p>column name</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getColumnSorting">getColumnSorting()</h3>
-<div class="getcolumnsorting"><p>Return the columns that the grid is currently being sorted by</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Array[GridColumn]}</code>
-– <p>An array of GridColumn objects</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1872" class="view-source icon-eye-open"> </a><h3 id="methods_getcolumnsorting">getColumnSorting()</h3>
+<div class="getcolumnsorting"><div class="getcolumnsorting-page"><p>Return the columns that the grid is currently being sorted by</p>
+</div><h5 id="methods_getcolumnsorting_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array[GridColumn]</a></td><td><div class="getcolumnsorting-page"><p>An array of GridColumn objects</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="getGridQualifiedColField">getGridQualifiedColField(col)</h3>
-<div class="getgridqualifiedcolfield"><p>Returns the $parse-able accessor for a column within its $scope</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">col – {GridColumn} – </code>
-<p>col object</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L938" class="view-source icon-eye-open"> </a><h3 id="methods_getgridqualifiedcolfield">getGridQualifiedColField(col)</h3>
+<div class="getgridqualifiedcolfield"><div class="getgridqualifiedcolfield-page"><p>Returns the $parse-able accessor for a column within its $scope</p>
+</div><h5 id="methods_getgridqualifiedcolfield_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="getgridqualifiedcolfield-page"><p>col object</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="getOnlyDataColumns">getOnlyDataColumns()</h3>
-<div class="getonlydatacolumns"><p>returns all columns except for rowHeader columns</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L790" class="view-source icon-eye-open"> </a><h3 id="methods_getonlydatacolumns">getOnlyDataColumns()</h3>
+<div class="getonlydatacolumns"><div class="getonlydatacolumns-page"><p>returns all columns except for rowHeader columns</p>
+</div></div>
 </li>
-<li><h3 id="getRow">getRow(rowEntity, rows)</h3>
-<div class="getrow"><p>returns the GridRow that contains the rowEntity</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>the gridOptions.data array element instance</p></li>
-<li><code ng:non-bindable="">rows – {array} – </code>
-<p>[optional] the rows to look in - if not provided then
-looks in grid.rows</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1048" class="view-source icon-eye-open"> </a><h3 id="methods_getrow">getRow(rowEntity, rows)</h3>
+<div class="getrow"><div class="getrow-page"><p>returns the GridRow that contains the rowEntity</p>
+</div><h5 id="methods_getrow_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="getrow-page"><p>the gridOptions.data array element instance</p>
+</div></td></tr><tr><td>rows</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="getrow-page"><p>[optional] the rows to look in - if not provided then
+looks in grid.rows</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="handleWindowResize">handleWindowResize()</h3>
-<div class="handlewindowresize"><p>Triggered when the browser window resizes; automatically resizes the grid</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1493" class="view-source icon-eye-open"> </a><h3 id="methods_handlewindowresize">handleWindowResize()</h3>
+<div class="handlewindowresize"><div class="handlewindowresize-page"><p>Triggered when the browser window resizes; automatically resizes the grid</p>
+</div></div>
 </li>
-<li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if rightContainer exists</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L982" class="view-source icon-eye-open"> </a><h3 id="methods_hasleftcontainer">hasLeftContainer()</h3>
+<div class="hasleftcontainer"><div class="hasleftcontainer-page"><p>returns true if rightContainer exists</p>
+</div></div>
 </li>
-<li><h3 id="hasLeftContainer">hasLeftContainer()</h3>
-<div class="hasleftcontainer"><p>returns true if leftContainer exists</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L972" class="view-source icon-eye-open"> </a><h3 id="methods_hasleftcontainer">hasLeftContainer()</h3>
+<div class="hasleftcontainer"><div class="hasleftcontainer-page"><p>returns true if leftContainer exists</p>
+</div></div>
 </li>
-<li><h3 id="hasLeftContainerColumns">hasLeftContainerColumns()</h3>
-<div class="hasleftcontainercolumns"><p>returns true if leftContainer has columns</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2219" class="view-source icon-eye-open"> </a><h3 id="methods_hasleftcontainercolumns">hasLeftContainerColumns()</h3>
+<div class="hasleftcontainercolumns"><div class="hasleftcontainercolumns-page"><p>returns true if leftContainer has columns</p>
+</div></div>
 </li>
-<li><h3 id="hasRightContainerColumns">hasRightContainerColumns()</h3>
-<div class="hasrightcontainercolumns"><p>returns true if rightContainer has columns</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2229" class="view-source icon-eye-open"> </a><h3 id="methods_hasrightcontainercolumns">hasRightContainerColumns()</h3>
+<div class="hasrightcontainercolumns"><div class="hasrightcontainercolumns-page"><p>returns true if rightContainer has columns</p>
+</div></div>
 </li>
-<li><h3 id="isRTL">isRTL()</h3>
-<div class="isrtl"><p>Returns true if grid is RightToLeft</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L489" class="view-source icon-eye-open"> </a><h3 id="methods_isrtl">isRTL()</h3>
+<div class="isrtl"><div class="isrtl-page"><p>Returns true if grid is RightToLeft</p>
+</div></div>
 </li>
-<li><h3 id="isRowHeaderColumn">isRowHeaderColumn(column)</h3>
-<div class="isrowheadercolumn"><p>returns true if the column is a row Header</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">column – {object} – </code>
-<p>column</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L744" class="view-source icon-eye-open"> </a><h3 id="methods_isrowheadercolumn">isRowHeaderColumn(column)</h3>
+<div class="isrowheadercolumn"><div class="isrowheadercolumn-page"><p>returns true if the column is a row Header</p>
+</div><h5 id="methods_isrowheadercolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>column</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="isrowheadercolumn-page"><p>column</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="modifyRows">modifyRows()</h3>
-<div class="modifyrows"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1090" class="view-source icon-eye-open"> </a><h3 id="methods_modifyrows">modifyRows()</h3>
+<div class="modifyrows"><div class="modifyrows-page"><p>creates or removes GridRow objects from the newRawData array.  Calls each registered
 rowBuilder to further process the row</p>
-
-<p>This method aims to achieve three things:
-1. the resulting rows array is in the same order as the newRawData, we'll call
-rowsProcessors immediately after to sort the data anyway
-2. if we have row hashing available, we try to use the rowHash to find the row
-3. no memory leaks - rows that are no longer in newRawData need to be garbage collected</p>
-
+<p>This method aims to achieve three things:</p>
+<ol>
+<li>the resulting rows array is in the same order as the newRawData, we&#39;ll call
+rowsProcessors immediately after to sort the data anyway</li>
+<li>if we have row hashing available, we try to use the rowHash to find the row</li>
+<li>no memory leaks - rows that are no longer in newRawData need to be garbage collected</li>
+</ol>
 <p>The basic logic flow makes use of the newRawData, oldRows and oldHash, and creates
 the newRows and newHash</p>
-
 <p>```
 newRawData.forEach newEntity
   if (hashing enabled)
@@ -183,100 +165,85 @@ newRawData.forEach newEntity
     create newRow
   append to the newRows and add to newHash
   run the processors</p>
-
 <p>Rows are identified using the hashKey if configured.  If not configured, then rows
-are identified using the gridOptions.rowEquality function</p></div>
+are identified using the gridOptions.rowEquality function</p>
+</div></div>
 </li>
-<li><h3 id="notifyDataChange">notifyDataChange(type)</h3>
-<div class="notifydatachange"><p>Notifies us that a data change has occurred, used in the public
-api for users to tell us when they've changed data or some other event that
-our watches cannot pick up</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">type – {string} – </code>
-<p>the type of event that occurred - one of the
-uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L609" class="view-source icon-eye-open"> </a><h3 id="methods_notifydatachange">notifyDataChange(type)</h3>
+<div class="notifydatachange"><div class="notifydatachange-page"><p>Notifies us that a data change has occurred, used in the public
+api for users to tell us when they&#39;ve changed data or some other event that
+our watches cannot pick up</p>
+</div><h5 id="methods_notifydatachange_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>type</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="notifydatachange-page"><p>the type of event that occurred - one of the
+uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN)</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="preCompileCellTemplates">preCompileCellTemplates()</h3>
-<div class="precompilecelltemplates"><p>precompiles all cell templates</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L905" class="view-source icon-eye-open"> </a><h3 id="methods_precompilecelltemplates">preCompileCellTemplates()</h3>
+<div class="precompilecelltemplates"><div class="precompilecelltemplates-page"><p>precompiles all cell templates</p>
+</div></div>
 </li>
-<li><h3 id="processRowBuilders">processRowBuilders(gridRow)</h3>
-<div class="processrowbuilders"><p>processes all RowBuilders for the gridRow</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">gridRow – {GridRow} – </code>
-<p>reference to gridRow</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{GridRow}</code>
-– <p>the gridRow with all additional behavior added</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1165" class="view-source icon-eye-open"> </a><h3 id="methods_processrowbuilders">processRowBuilders(gridRow)</h3>
+<div class="processrowbuilders"><div class="processrowbuilders-page"><p>processes all RowBuilders for the gridRow</p>
+</div><h5 id="methods_processrowbuilders_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="processrowbuilders-page"><p>reference to gridRow</p>
+</div></td></tr></tbody></table><h5 id="methods_processrowbuilders_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="processrowbuilders-page"><p>the gridRow with all additional behavior added</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="processRowsCallback">processRowsCallback(name)</h3>
-<div class="processrowscallback"><p>calls the row processors, specifically
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L648" class="view-source icon-eye-open"> </a><h3 id="methods_processrowscallback">processRowsCallback(name)</h3>
+<div class="processrowscallback"><div class="processrowscallback-page"><p>calls the row processors, specifically
 intended to reset the sorting when an edit is called,
-registered as a dataChangeCallback on uiGridConstants.dataChange.EDIT</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
-<p>column name</p></li>
-</ul>
-</div>
+registered as a dataChangeCallback on uiGridConstants.dataChange.EDIT</p>
+</div><h5 id="methods_processrowscallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="processrowscallback-page"><p>column name</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="queueGridRefresh">queueGridRefresh()</h3>
-<div class="queuegridrefresh"><p>queues a grid refresh, a way of debouncing all the refreshes we might otherwise issue</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1533" class="view-source icon-eye-open"> </a><h3 id="methods_queuegridrefresh">queueGridRefresh()</h3>
+<div class="queuegridrefresh"><div class="queuegridrefresh-page"><p>queues a grid refresh, a way of debouncing all the refreshes we might otherwise issue</p>
+</div></div>
 </li>
-<li><h3 id="queueRefresh">queueRefresh()</h3>
-<div class="queuerefresh"><p>queues a grid refreshCanvas, a way of debouncing all the refreshes we might otherwise issue</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1508" class="view-source icon-eye-open"> </a><h3 id="methods_queuerefresh">queueRefresh()</h3>
+<div class="queuerefresh"><div class="queuerefresh-page"><p>queues a grid refreshCanvas, a way of debouncing all the refreshes we might otherwise issue</p>
+</div></div>
 </li>
-<li><h3 id="redrawCanvas">redrawCanvas([rowsAdded])</h3>
-<div class="redrawcanvas"><p>Redraw the rows and columns based on our current scroll position</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">[rowsAdded] – {boolean} – </code>
-<p>Optional to indicate rows are added and the scroll percentage must be recalculated</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2192" class="view-source icon-eye-open"> </a><h3 id="methods_redrawcanvas">redrawCanvas([rowsAdded])</h3>
+<div class="redrawcanvas"><div class="redrawcanvas-page"><p>Redraw the rows and columns based on our current scroll position</p>
+</div><h5 id="methods_redrawcanvas_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>[rowsAdded]</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="redrawcanvas-page"><p>Optional to indicate rows are added and the scroll percentage must be recalculated</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="refresh">refresh()</h3>
-<div class="refresh"><p>Refresh the rendered grid on screen.</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1983" class="view-source icon-eye-open"> </a><h3 id="methods_refresh">refresh()</h3>
+<div class="refresh"><div class="refresh-page"><p>Refresh the rendered grid on screen.</p>
+</div></div>
 </li>
-<li><h3 id="refreshCanvas">refreshCanvas()</h3>
-<div class="refreshcanvas"><p>Builds all styles and recalculates much of the grid sizing</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>promise that is resolved when the canvas
-has been refreshed</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2032" class="view-source icon-eye-open"> </a><h3 id="methods_refreshcanvas">refreshCanvas()</h3>
+<div class="refreshcanvas"><div class="refreshcanvas-page"><p>Builds all styles and recalculates much of the grid sizing</p>
+</div><h5 id="methods_refreshcanvas_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="refreshcanvas-page"><p>promise that is resolved when the canvas
+has been refreshed</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="refreshRows">refreshRows()</h3>
-<div class="refreshrows"><p>Refresh the rendered rows on screen?  Note: not functional at present</p><h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>promise that is resolved when render completes?</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2009" class="view-source icon-eye-open"> </a><h3 id="methods_refreshrows">refreshRows()</h3>
+<div class="refreshrows"><div class="refreshrows-page"><p>Refresh the rendered rows on screen?  Note: not functional at present</p>
+</div><h5 id="methods_refreshrows_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="refreshrows-page"><p>promise that is resolved when render completes?</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="registerColumnBuilder">registerColumnBuilder(columnBuilder)</h3>
-<div class="registercolumnbuilder"><p>When the build creates columns from column definitions, the columnbuilders will be called to add
-additional properties to the column.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnBuilder – {function(colDef, col, gridOptions)} – </code>
-<p>function to be called</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L502" class="view-source icon-eye-open"> </a><h3 id="methods_registercolumnbuilder">registerColumnBuilder(columnBuilder)</h3>
+<div class="registercolumnbuilder"><div class="registercolumnbuilder-page"><p>When the build creates columns from column definitions, the columnbuilders will be called to add
+additional properties to the column.</p>
+</div><h5 id="methods_registercolumnbuilder_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnBuilder</td><td><a href="" class="label type-hint type-hint-function">function(colDef, col, gridOptions</a></td><td><div class="registercolumnbuilder-page"><p>function to be called</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerColumnsProcessor">registerColumnsProcessor(columnProcessor, priority)</h3>
-<div class="registercolumnsprocessor"><p>Register a "columns processor" function. When the columns are updated,
-the grid calls each registered "columns processor", which has a chance
-to alter the set of columns, as long as the count is not modified.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">columnProcessor – {function(renderedColumnsToProcess, rows)} – </code>
-<p>column processor function, which
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1379" class="view-source icon-eye-open"> </a><h3 id="methods_registercolumnsprocessor">registerColumnsProcessor(columnProcessor, priority)</h3>
+<div class="registercolumnsprocessor"><div class="registercolumnsprocessor-page"><p>Register a &quot;columns processor&quot; function. When the columns are updated,
+the grid calls each registered &quot;columns processor&quot;, which has a chance
+to alter the set of columns, as long as the count is not modified.</p>
+</div><h5 id="methods_registercolumnsprocessor_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnProcessor</td><td><a href="" class="label type-hint type-hint-function">function(renderedColumnsToProcess, rows</a></td><td><div class="registercolumnsprocessor-page"><p>column processor function, which
 is run in the context of the grid (i.e. this for the function will be the grid), and
 which must return an updated renderedColumnsToProcess which can be passed to the next processor
-in the chain</p></li>
-<li><code ng:non-bindable="">priority – {number} – </code>
-<p>the priority of this processor.  In general we try to do them in 100s to leave room
+in the chain</p>
+</div></td></tr><tr><td>priority</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="registercolumnsprocessor-page"><p>the priority of this processor.  In general we try to do them in 100s to leave room
 for other people to inject columns processors at intermediate priorities.  Lower priority columnsProcessors run earlier.</p>
-
-<p>At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p></li>
-</ul>
-</div>
+<p>At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerDataChangeCallback">registerDataChangeCallback(callback, types)</h3>
-<div class="registerdatachangecallback"><p>When a data change occurs, the data change callbacks of the specified type
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L557" class="view-source icon-eye-open"> </a><h3 id="methods_registerdatachangecallback">registerDataChangeCallback(callback, types)</h3>
+<div class="registerdatachangecallback"><div class="registerdatachangecallback-page"><p>When a data change occurs, the data change callbacks of the specified type
 will be called.  The rules are:</p>
-
 <ul>
 <li>when the data watch fires, that is considered a ROW change (the data watch only notices
 added or removed rows)</li>
@@ -285,150 +252,122 @@ added or removed rows)</li>
 <li>when the columnDef watch fires, the COLUMN callbacks are triggered</li>
 <li>when the options watch fires, the OPTIONS callbacks are triggered</li>
 </ul>
-
-<p>For a given event:
-- ALL calls ROW, EDIT, COLUMN, OPTIONS and ALL callbacks
-- ROW calls ROW and ALL callbacks
-- EDIT calls EDIT and ALL callbacks
-- COLUMN calls COLUMN and ALL callbacks
-- OPTIONS calls OPTIONS and ALL callbacks</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">callback – {function(grid)} – </code>
-<p>function to be called</p></li>
-<li><code ng:non-bindable="">types – {array} – </code>
-<p>the types of data change you want to be informed of.  Values from
+<p>For a given event:</p>
+<ul>
+<li>ALL calls ROW, EDIT, COLUMN, OPTIONS and ALL callbacks</li>
+<li>ROW calls ROW and ALL callbacks</li>
+<li>EDIT calls EDIT and ALL callbacks</li>
+<li>COLUMN calls COLUMN and ALL callbacks</li>
+<li>OPTIONS calls OPTIONS and ALL callbacks</li>
+</ul>
+</div><h5 id="methods_registerdatachangecallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function(grid</a></td><td><div class="registerdatachangecallback-page"><p>function to be called</p>
+</div></td></tr><tr><td>types</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="registerdatachangecallback-page"><p>the types of data change you want to be informed of.  Values from
 the uiGridConstants.dataChange values ( ALL, EDIT, ROW, COLUMN, OPTIONS ).  Optional and defaults to
-ALL</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{function}</code>
-– <p>deregister function - a function that can be called to deregister this callback</p></div>
-</div>
+ALL</p>
+</div></td></tr></tbody></table><h5 id="methods_registerdatachangecallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="registerdatachangecallback-page"><p>deregister function - a function that can be called to deregister this callback</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="registerRowBuilder">registerRowBuilder(rowBuilder)</h3>
-<div class="registerrowbuilder"><p>When the build creates rows from gridOptions.data, the rowBuilders will be called to add
-additional properties to the row.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowBuilder – {function(row, gridOptions)} – </code>
-<p>function to be called</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L525" class="view-source icon-eye-open"> </a><h3 id="methods_registerrowbuilder">registerRowBuilder(rowBuilder)</h3>
+<div class="registerrowbuilder"><div class="registerrowbuilder-page"><p>When the build creates rows from gridOptions.data, the rowBuilders will be called to add
+additional properties to the row.</p>
+</div><h5 id="methods_registerrowbuilder_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowBuilder</td><td><a href="" class="label type-hint type-hint-function">function(row, gridOptions</a></td><td><div class="registerrowbuilder-page"><p>function to be called</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerRowsProcessor">registerRowsProcessor(processorFunction, priority)</h3>
-<div class="registerrowsprocessor"><p>Register a "rows processor" function. When the rows are updated,
-the grid calls each registered "rows processor", which has a chance
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1232" class="view-source icon-eye-open"> </a><h3 id="methods_registerrowsprocessor">registerRowsProcessor(processorFunction, priority)</h3>
+<div class="registerrowsprocessor"><div class="registerrowsprocessor-page"><p>Register a &quot;rows processor&quot; function. When the rows are updated,
+the grid calls each registered &quot;rows processor&quot;, which has a chance
 to alter the set of rows (sorting, etc) as long as the count is not
-modified.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">processorFunction – {function(renderedRowsToProcess, columns )} – </code>
-<p>rows processor function, which
+modified.</p>
+</div><h5 id="methods_registerrowsprocessor_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>processorFunction</td><td><a href="" class="label type-hint type-hint-function">function(renderedRowsToProcess, columns </a></td><td><div class="registerrowsprocessor-page"><p>rows processor function, which
 is run in the context of the grid (i.e. this for the function will be the grid), and must
-return the updated rows list, which is passed to the next processor in the chain</p></li>
-<li><code ng:non-bindable="">priority – {number} – </code>
-<p>the priority of this processor.  In general we try to do them in 100s to leave room
+return the updated rows list, which is passed to the next processor in the chain</p>
+</div></td></tr><tr><td>priority</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="registerrowsprocessor-page"><p>the priority of this processor.  In general we try to do them in 100s to leave room
 for other people to inject rows processors at intermediate priorities.  Lower priority rowsProcessors run earlier.</p>
-
-<p>At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p></li>
-</ul>
-</div>
+<p>At present all rows visible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="registerStyleComputation">registerStyleComputation(styleComputation)</h3>
-<div class="registerstylecomputation"><p>registered a styleComputation function</p>
-
-<p>If the function returns a value it will be appended into the grid's <code>&lt;style&gt;</code> block</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">styleComputation – {function($scope)} – </code>
-<p>function</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1184" class="view-source icon-eye-open"> </a><h3 id="methods_registerstylecomputation">registerStyleComputation(styleComputation)</h3>
+<div class="registerstylecomputation"><div class="registerstylecomputation-page"><p>registered a styleComputation function</p>
+<p>If the function returns a value it will be appended into the grid&#39;s <code>&lt;style&gt;</code> block</p>
+</div><h5 id="methods_registerstylecomputation_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>styleComputation</td><td><a href="" class="label type-hint type-hint-function">function($scope</a></td><td><div class="registerstylecomputation-page"><p>function</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="removeRowsProcessor">removeRowsProcessor(rows)</h3>
-<div class="removerowsprocessor"><p>Remove a registered rows processor</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rows – {function(renderableRows)} – </code>
-<p>processor function</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1250" class="view-source icon-eye-open"> </a><h3 id="methods_removerowsprocessor">removeRowsProcessor(rows)</h3>
+<div class="removerowsprocessor"><div class="removerowsprocessor-page"><p>Remove a registered rows processor</p>
+</div><h5 id="methods_removerowsprocessor_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rows</td><td><a href="" class="label type-hint type-hint-function">function(renderableRows</a></td><td><div class="removerowsprocessor-page"><p>processor function</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="resetColumnSorting">resetColumnSorting([excludedColumn])</h3>
-<div class="resetcolumnsorting"><p>Return the columns that the grid is currently being sorted by</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">[excludedColumn] – {GridColumn} – </code>
-<p>Optional GridColumn to exclude from having its sorting reset</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1855" class="view-source icon-eye-open"> </a><h3 id="methods_resetcolumnsorting">resetColumnSorting([excludedColumn])</h3>
+<div class="resetcolumnsorting"><div class="resetcolumnsorting-page"><p>Return the columns that the grid is currently being sorted by</p>
+</div><h5 id="methods_resetcolumnsorting_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>[excludedColumn]</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="resetcolumnsorting-page"><p>Optional GridColumn to exclude from having its sorting reset</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="scrollTo">scrollTo(rowEntity, colDef)</h3>
-<div class="scrollto"><p>Scroll the grid such that the specified
-row and column is in view</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">rowEntity – {object} – </code>
-<p>gridOptions.data[] array instance to make visible</p></li>
-<li><code ng:non-bindable="">colDef – {object} – </code>
-<p>to make visible</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>a promise that is resolved after any scrolling is finished</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2403" class="view-source icon-eye-open"> </a><h3 id="methods_scrollto">scrollTo(rowEntity, colDef)</h3>
+<div class="scrollto"><div class="scrollto-page"><p>Scroll the grid such that the specified
+row and column is in view</p>
+</div><h5 id="methods_scrollto_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrollto-page"><p>gridOptions.data[] array instance to make visible</p>
+</div></td></tr><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrollto-page"><p>to make visible</p>
+</div></td></tr></tbody></table><h5 id="methods_scrollto_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="scrollto-page"><p>a promise that is resolved after any scrolling is finished</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="scrollToIfNecessary">scrollToIfNecessary(gridRow, gridCol)</h3>
-<div class="scrolltoifnecessary"><p>Scrolls the grid to make a certain row and column combo visible,
-in the case that it is not completely visible on the screen already.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">gridRow – {GridRow} – </code>
-<p>row to make visible</p></li>
-<li><code ng:non-bindable="">gridCol – {GridCol} – </code>
-<p>column to make visible</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{promise}</code>
-– <p>a promise that is resolved when scrolling is complete</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L2243" class="view-source icon-eye-open"> </a><h3 id="methods_scrolltoifnecessary">scrollToIfNecessary(gridRow, gridCol)</h3>
+<div class="scrolltoifnecessary"><div class="scrolltoifnecessary-page"><p>Scrolls the grid to make a certain row and column combo visible,
+in the case that it is not completely visible on the screen already.</p>
+</div><h5 id="methods_scrolltoifnecessary_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="scrolltoifnecessary-page"><p>row to make visible</p>
+</div></td></tr><tr><td>gridCol</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="scrolltoifnecessary-page"><p>column to make visible</p>
+</div></td></tr></tbody></table><h5 id="methods_scrolltoifnecessary_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="scrolltoifnecessary-page"><p>a promise that is resolved when scrolling is complete</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="sortColumn">sortColumn(column, [direction], [add])</h3>
-<div class="sortcolumn"><p>Set the sorting on a given column, optionally resetting any existing sorting on the Grid.
-Emits the sortChanged event whenever the sort criteria are changed.</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">column – {GridColumn} – </code>
-<p>Column to set the sorting on</p></li>
-<li><code ng:non-bindable="">[direction] – {uiGridConstants.ASC|uiGridConstants.DESC} – </code>
-<p>Direction to sort by, either descending or ascending.
-If not provided, the column will iterate through the sort directions: ascending, descending, unsorted.</p></li>
-<li><code ng:non-bindable="">[add] – {boolean} – </code>
-<p>Add this column to the sorting. If not provided or set to <code>false</code>, the Grid will reset any existing sorting and sort
-by this column only</p></li>
-</ul>
-<h4 id="Returns">Returns</h4>
-<div class="returns"><code ng:non-bindable="">{Promise}</code>
-– <p>A resolved promise that supplies the column.</p></div>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1903" class="view-source icon-eye-open"> </a><h3 id="methods_sortcolumn">sortColumn(column, [direction], [add])</h3>
+<div class="sortcolumn"><div class="sortcolumn-page"><p>Set the sorting on a given column, optionally resetting any existing sorting on the Grid.
+Emits the sortChanged event whenever the sort criteria are changed.</p>
+</div><h5 id="methods_sortcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="sortcolumn-page"><p>Column to set the sorting on</p>
+</div></td></tr><tr><td>[direction]</td><td><a href="" class="label type-hint type-hint-uigridconstants">uiGridConstants.ASC</a><a href="" class="label type-hint type-hint-uigridconstants">uiGridConstants.DESC</a></td><td><div class="sortcolumn-page"><p>Direction to sort by, either descending or ascending.
+If not provided, the column will iterate through the sort directions: ascending, descending, unsorted.</p>
+</div></td></tr><tr><td>[add]</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="sortcolumn-page"><p>Add this column to the sorting. If not provided or set to <code>false</code>, the Grid will reset any existing sorting and sort
+by this column only</p>
+</div></td></tr></tbody></table><h5 id="methods_sortcolumn_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">Promise</a></td><td><div class="sortcolumn-page"><p>A resolved promise that supplies the column.</p>
+</div></td></tr></table></div>
 </li>
-<li><h3 id="updateCanvasHeight">updateCanvasHeight()</h3>
-<div class="updatecanvasheight"><p>flags all render containers to update their canvas height</p></div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L1558" class="view-source icon-eye-open"> </a><h3 id="methods_updatecanvasheight">updateCanvasHeight()</h3>
+<div class="updatecanvasheight"><div class="updatecanvasheight-page"><p>flags all render containers to update their canvas height</p>
+</div></div>
 </li>
-<li><h3 id="updateFooterHeightCallback">updateFooterHeightCallback(name)</h3>
-<div class="updatefooterheightcallback"><p>recalculates the footer height,
-registered as a dataChangeCallback on uiGridConstants.dataChange.OPTIONS</p><h4 id="Parameters">Parameters</h4>
-<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
-<p>column name</p></li>
-</ul>
-</div>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/0ef31ac/src/js/core/factories/Grid.js#L661" class="view-source icon-eye-open"> </a><h3 id="methods_updatefooterheightcallback">updateFooterHeightCallback(name)</h3>
+<div class="updatefooterheightcallback"><div class="updatefooterheightcallback-page"><p>recalculates the footer height,
+registered as a dataChangeCallback on uiGridConstants.dataChange.OPTIONS</p>
+</div><h5 id="methods_updatefooterheightcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="updatefooterheightcallback-page"><p>column name</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>
-<div class="member property"><h2 id="Properties">Properties</h2>
-<ul class="properties"><li><h3 id="appScope">appScope</h3>
-<div class="appscope"><p>reference to the application scope (the parent scope of the ui-grid element).  Assigned in ui-grid controller
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_appscope">appScope</h3>
+<div class="appscope"><div class="appscope-page"><p>reference to the application scope (the parent scope of the ui-grid element).  Assigned in ui-grid controller
 <br/>
-use gridOptions.appScopeProvider to override the default assignment of $scope.$parent with any reference</p></div>
+use gridOptions.appScopeProvider to override the default assignment of $scope.$parent with any reference</p>
+</div></div>
 </li>
-<li><h3 id="columnFooterHeight">columnFooterHeight</h3>
-<div class="columnfooterheight"><p>returns the total column footer height</p></div>
+<li><h3 id="properties_columnfooterheight">columnFooterHeight</h3>
+<div class="columnfooterheight"><div class="columnfooterheight-page"><p>returns the total column footer height</p>
+</div></div>
 </li>
-<li><h3 id="footerHeight">footerHeight</h3>
-<div class="footerheight"><p>returns the total footer height gridFooter + columnFooter</p></div>
+<li><h3 id="properties_footerheight">footerHeight</h3>
+<div class="footerheight"><div class="footerheight-page"><p>returns the total footer height gridFooter + columnFooter</p>
+</div></div>
 </li>
-<li><h3 id="isScrollingHorizontally">isScrollingHorizontally</h3>
-<div class="isscrollinghorizontally"><p>set to true when Grid is scrolling horizontally. Set to false via debounced method</p></div>
+<li><h3 id="properties_isscrollinghorizontally">isScrollingHorizontally</h3>
+<div class="isscrollinghorizontally"><div class="isscrollinghorizontally-page"><p>set to true when Grid is scrolling horizontally. Set to false via debounced method</p>
+</div></div>
 </li>
-<li><h3 id="isScrollingVertically">isScrollingVertically</h3>
-<div class="isscrollingvertically"><p>set to true when Grid is scrolling vertically. Set to false via debounced method</p></div>
+<li><h3 id="properties_isscrollingvertically">isScrollingVertically</h3>
+<div class="isscrollingvertically"><div class="isscrollingvertically-page"><p>set to true when Grid is scrolling vertically. Set to false via debounced method</p>
+</div></div>
 </li>
-<li><h3 id="scrollDirection">scrollDirection</h3>
-<div class="scrolldirection"><p>set one of the uiGridConstants.scrollDirection values (UP, DOWN, LEFT, RIGHT, NONE), which tells
-us which direction we are scrolling. Set to NONE via debounced method</p></div>
+<li><h3 id="properties_scrolldirection">scrollDirection</h3>
+<div class="scrolldirection"><div class="scrolldirection-page"><p>set one of the uiGridConstants.scrollDirection values (UP, DOWN, LEFT, RIGHT, NONE), which tells
+us which direction we are scrolling. Set to NONE via debounced method</p>
+</div></div>
 </li>
 </ul>
 </div>
