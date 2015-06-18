@@ -240,6 +240,141 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.directive:uiGridOneBind",
+      "shortName": "uiGridOneBind",
+      "type": "overview",
+      "moduleName": "ui.grid",
+      "shortDescription": "A group of directives that provide a one time bind to a dom element.",
+      "keywords": "add angular api behavior bind bindings capability directive directives dom element example grid group imagename jpg myimagedir ng-init number overview provdes provide reduce src supported text time ui ui-grid-one-bind-src ui-grid-one-bind-text uigridonebindarialabelledbygrid uigridonebindidgrid watchers"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindAlt",
+      "shortName": "uiGridOneBindAlt",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the alt dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "alt angular api bind binding directive div dom don grid interpolation string support tag time ui uigridonebindalt"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindAriaLabel",
+      "shortName": "uiGridOneBindAriaLabel",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the aria-label dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "add angular api aria-label bind binding directive div dom don grid interpolation ng-init string support tag text time ui ui-grid-one-bind-aria-label uigridonebindarialabel"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindAriaLabelledby",
+      "shortName": "uiGridOneBindAriaLabelledby",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the aria-labelledby dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular anid api aria-labelledby bind binding directive div dom don grid gridid32 interpolation ng-init string support tag time ui ui-grid-one-bind-aria-labelledby uigridonebindarialabelledby"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindAriaLabelledbyGrid",
+      "shortName": "uiGridOneBindAriaLabelledbyGrid",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the aria-labelledby dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "actual add angular anid api aria-labelledby aria-labelledby-grid bind binding directive div dom don dynamically grid gridid32 ids interpolation list ng-init replaced space string support supports tag time ui ui-grid-one-bind-aria-labelledby-grid uigridonebindarialabelledbygrid works"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindClass",
+      "shortName": "uiGridOneBindClass",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the class dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api array bind binding class classes directive div dom don element grid initialized interpolation null object prevent removed scope string support tag time ui uigridonebindclass undefined values watcher"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindHref",
+      "shortName": "uiGridOneBindHref",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the href dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api bind binding directive div dom don grid href interpolation string support tag time ui uigridonebindhref"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindHtml",
+      "shortName": "uiGridOneBindHtml",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the html method on a dom element. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api bind binding directive div dom don element grid html interpolation method string support time ui uigridonebindhtml"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindId",
+      "shortName": "uiGridOneBindId",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the value dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api bind binding directive div dom don grid interpolation string support tag time ui uigridonebindid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindIdGrid",
+      "shortName": "uiGridOneBindIdGrid",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the id dom tag.",
+      "keywords": "angular api appended begining bind binding controller directive div document dom don duplicate ensure error grid grids interpolation note order parameter parent passed prevent scope search string substring support tag tags throws time ui uigridcontroller uigridonebindid uniqueness"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindSrc",
+      "shortName": "uiGridOneBindSrc",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the src dom tag.",
+      "keywords": "angular api bind binding directive dom don grid img interpolation src string support tag time ui uigridonebindsrc"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindStyle",
+      "shortName": "uiGridOneBindStyle",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the style dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api bind binding directive div dom don grid interpolation string style support tag time ui uigridonebindstyle"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindText",
+      "shortName": "uiGridOneBindText",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the text dom tag.",
+      "keywords": "angular api bind binding directive div dom don grid interpolation string support tag text time ui uigridonebindtext"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindTitle",
+      "shortName": "uiGridOneBindTitle",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the title dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api bind binding directive div dom don grid interpolation string support tag time title ui uigridonebindtitle"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.directive:uiGridOneBindValue",
+      "shortName": "uiGridOneBindValue",
+      "type": "directive",
+      "moduleName": "ui.grid",
+      "shortDescription": "One time binding for the value dom tag. For more information see ui.grid.directive:uiGridOneBind.",
+      "keywords": "angular api bind binding directive div dom don grid interpolation string support tag time ui uigridonebindvalue"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.directive:uiGridStyle",
       "shortName": "uiGridStyle",
       "type": "directive",
