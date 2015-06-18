@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-0ef31ac - 2015-06-18
+ * ui-grid - v3.0.0-rc.22-30c597f - 2015-06-18
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3742,7 +3742,6 @@ angular.module('ui.grid')
           colDef.type = gridUtil.guessType(self.getCellValue(firstRow, col));
         }
         else {
-          gridUtil.logWarn('Unable to assign type from data, so defaulting to string');
           colDef.type = 'string';
         }
       }
