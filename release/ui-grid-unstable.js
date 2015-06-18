@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-81766f4 - 2015-06-18
+ * ui-grid - v3.0.0-rc.22-47ebfb3 - 2015-06-18
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6000,10 +6000,9 @@ angular.module('ui.grid')
           var listeners = angular.isArray(listenerFuncs) ? listenerFuncs : [listenerFuncs];
 
           //find all registered listeners
-          var foundListeners = [];
-          listeners.forEach(function (l) {
-            foundListeners = self.listeners.filter(function (lstnr) {
-              return l === lstnr.handler;
+          var foundListeners = self.listeners.filter(function(listener) {
+            return listeners.some(function(l) {
+              return listener.handler === l;
             });
           });
 
