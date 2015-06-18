@@ -1,30 +1,30 @@
-<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/30c597f/src/js/core/factories/GridOptions.js#L43" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/e31b759/src/js/core/factories/GridOptions.js#L43" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
 </span>
 </div>
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="ui-grid-class-page ui-grid-class-gridoptions-page"><p>Default GridOptions class.  GridOptions are defined by the application developer and overlaid
-over this object.  Setting gridOptions within your controller is the most common method for an application 
+over this object.  Setting gridOptions within your controller is the most common method for an application
 developer to configure the behaviour of their ui-grid</p>
 </div></div>
 <h2 id="usage">Usage</h2>
 <div class="usage"><pre class="prettyprint linenums">GridOptions();</pre>
 </div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/30c597f/src/js/core/factories/GridOptions.js#L182" class="view-source icon-eye-open"> </a><h3 id="methods_getrowidentity">getRowIdentity()</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/e31b759/src/js/core/factories/GridOptions.js#L182" class="view-source icon-eye-open"> </a><h3 id="methods_getrowidentity">getRowIdentity()</h3>
 <div class="getrowidentity"><div class="getrowidentity-page"><p>This function returns the identity value uniquely identifying this row, if one is not present it does not set it.</p>
 <p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ng-grid/blob/30c597f/src/js/core/factories/GridOptions.js#L429" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/e31b759/src/js/core/factories/GridOptions.js#L427" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
 <div class="rowequality"><div class="rowequality-page"><p>By default, rows are compared using object equality.  This option can be overridden
 to compare on any data item property or function</p>
 </div><h5 id="methods_rowequality_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>entityA</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>First Data Item to compare</p>
 </div></td></tr><tr><td>entityB</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>Second Data Item to compare</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ng-grid/blob/30c597f/src/js/core/factories/GridOptions.js#L170" class="view-source icon-eye-open"> </a><h3 id="methods_rowidentity">rowIdentity()</h3>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/e31b759/src/js/core/factories/GridOptions.js#L170" class="view-source icon-eye-open"> </a><h3 id="methods_rowidentity">rowIdentity()</h3>
 <div class="rowidentity"><div class="rowidentity-page"><p>This function is used to get and, if necessary, set the value uniquely identifying this row (i.e. if an identity is not present it will set one).</p>
 <p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn&#39;t it uses gridUtil.nextUid() to generate one</p>
 </div></div>
@@ -64,7 +64,7 @@ The individual options available in columnDefs are documented in the
 the grid.</p>
 <p>Most commonly the data is an array of objects, where each object has a number of attributes.
 Each attribute automatically becomes a column in your grid.  This array could, for example, be sourced from
-an angularJS $resource query request.  The array can also contain complex objects, refer the binding tutorial 
+an angularJS $resource query request.  The array can also contain complex objects, refer the binding tutorial
 for examples of that.</p>
 <p>The most flexible usage is to set your data on $scope:</p>
 <p><code>$scope.data = data;</code></p>
@@ -80,7 +80,7 @@ or</p>
   $scope.myData = data;
   $scope.gridOptions.data = $scope.myData;
  });</code></p>
-<p>Where you do this, you need to take care in updating the data - you can&#39;t just update <code>$scope.myData</code> to some other 
+<p>Where you do this, you need to take care in updating the data - you can&#39;t just update <code>$scope.myData</code> to some other
 array, you need to update $scope.gridOptions.data to point to that new array as well.</p>
 </div></div>
 </li>
@@ -92,7 +92,7 @@ menu within each column.</p>
 <li><h3 id="properties_enablefiltering">enableFiltering</h3>
 <div class="enablefiltering"><div class="enablefiltering-page"><p>False by default. When enabled, this setting adds filter
 boxes to each column header, allowing filtering within the column for the entire grid.
-Filtering can then be disabled on individual columns using the columnDefs. </p>
+Filtering can then be disabled on individual columns using the columnDefs.</p>
 </div></div>
 </li>
 <li><h3 id="properties_enablehorizontalscrollbar">enableHorizontalScrollbar</h3>
@@ -139,7 +139,7 @@ Defaults to 4</p>
 <li><h3 id="properties_excludeproperties">excludeProperties</h3>
 <div class="excludeproperties"><div class="excludeproperties-page"><p>Array of property names in data to ignore when auto-generating column names.  Provides the
 inverse of columnDefs - columnDefs is a list of columns to include, excludeProperties is a list of columns
-to exclude. </p>
+to exclude.</p>
 <p>If columnDefs is defined, this will be ignored.</p>
 <p>Defaults to [&#39;$$hashKey&#39;]</p>
 </div></div>
@@ -154,7 +154,7 @@ which can provide a significant speed improvement with large data sets, with fil
 </li>
 <li><h3 id="properties_footertemplate">footerTemplate</h3>
 <div class="footertemplate"><div class="footertemplate-page"><p>(optional) ui-grid/ui-grid-footer by default.  This footer shows the per-column
-aggregation totals. 
+aggregation totals.
 When provided, this setting uses a custom footer template. Can be set to either the name of a template file &#39;footer_template.html&#39;, inline html
 <pre class="prettyprint linenums">'&lt;div class="ui-grid-bottom-panel" style="text-align: center"&gt;I am a Custom Grid Footer&lt;/div&gt;'</pre>, or the id
 of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p>
@@ -195,17 +195,14 @@ gridOptions = {
 </div></div>
 </div>
 </li>
-<li><h3 id="properties_headerrowheight">headerRowHeight</h3>
-<div class="headerrowheight"><div class="headerrowheight-page"><p>The height of the header in pixels, defaults to 30</p>
-</div></div>
-</li>
 <li><h3 id="properties_headertemplate">headerTemplate</h3>
 <div class="headertemplate"><div class="headertemplate-page"><p>Null by default. When provided, this setting uses a custom header
 template, rather than the default template. Can be set to either the name of a template file:
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = 'header_template.html';</pre>
-inline html 
+inline html
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div class="ui-grid-top-panel" style="text-align: center"&gt;I am a Custom Grid Header&lt;/div&gt;'</pre>
-or the id of a precompiled template (TBD how to use this).<br></br>Refer to the custom header tutorial for more information.
+or the id of a precompiled template (TBD how to use this).
+</br>Refer to the custom header tutorial for more information.
 If you want no header at all, you can set to an empty div:
 <pre class="prettyprint linenums">  $scope.gridOptions.headerTemplate = '&lt;div&gt;&lt;/div&gt;';</pre>
 <p>If you want to only have a static header, then you can set to static content.  If
@@ -254,7 +251,7 @@ needMoreDataTop event when the user hits the top of the scrollbar.<br><br> Defau
 <li><h3 id="properties_onregisterapi">onRegisterApi</h3>
 <div class="onregisterapi"><div class="onregisterapi-page"><p>A callback that returns the gridApi once the grid is instantiated, which is
 then used to interact with the grid programatically.</p>
-<p>Note that the gridApi.core.renderingComplete event is identical to this 
+<p>Note that the gridApi.core.renderingComplete event is identical to this
 callback, but has the advantage that it can be called from multiple places
 if needed</p>
 </div><h4 id="properties_onregisterapi_example">Example</h4>
@@ -275,9 +272,10 @@ $scope.gridOptions.onRegisterApi = function ( gridApi ) {
 <div class="rowtemplate"><div class="rowtemplate-page"><p>&#39;ui-grid/ui-grid-row&#39; by default. When provided, this setting uses a
 custom row template.  Can be set to either the name of a template file:
 <pre class="prettyprint linenums"> $scope.gridOptions.rowTemplate = 'row_template.html';</pre>
-inline html 
+inline html
 <pre class="prettyprint linenums">  $scope.gridOptions.rowTemplate = '&lt;div style="background-color: aquamarine" ng-click="grid.appScope.fnOne(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell&gt;&lt;/div&gt;';</pre>
-or the id of a precompiled template (TBD how to use this) can be provided.<br></br>Refer to the custom row template tutorial for more information.</p>
+or the id of a precompiled template (TBD how to use this) can be provided.
+</br>Refer to the custom row template tutorial for more information.</p>
 </div></div>
 </li>
 <li><h3 id="properties_scrolldebounce">scrollDebounce</h3>
@@ -302,7 +300,6 @@ The footer display Total Rows and Visible Rows (filtered rows)</p>
 <div class="showheader"><div class="showheader-page"><p>True by default. When set to false, this setting will replace the
 standard header template with &#39;<div>
 </div>&#39;, resulting in no header being shown.</p>
-<p>It will also set the <code>headerRowHeight</code> option to 0.</p>
 </div></div>
 </li>
 <li><h3 id="properties_useexternalfiltering">useExternalFiltering</h3>
@@ -333,7 +330,7 @@ server sorting) to be implemented.  Defaults to false. </p>
 <div class="example"><div class="ui-grid-class-page ui-grid-class-gridoptions-page"><p>To define your gridOptions within your controller:
 <pre class="prettyprint linenums">$scope.gridOptions = {
   data: $scope.myData,
-  columnDefs: [ 
+  columnDefs: [
     { name: 'field1', displayName: 'pretty display name' },
     { name: 'field2', visible: false }
  ]
