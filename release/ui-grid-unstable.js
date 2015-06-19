@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-1338b6c - 2015-06-19
+ * ui-grid - v3.0.0-rc.22-e582174 - 2015-06-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2486,7 +2486,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
                 scrollTop = containerCtrl.viewport[0].scrollTop;
                 // Get the scroll percentage
-                var scrollYPercentage = (scrollTop + scrollYAmount) / rowContainer.getVerticalScrollLength();
+                scrollEvent.verticalScrollLength = rowContainer.getVerticalScrollLength();
+                var scrollYPercentage = (scrollTop + scrollYAmount) / scrollEvent.verticalScrollLength;
 
                 // Keep scrollPercentage within the range 0-1.
                 if (scrollYPercentage < 0) { scrollYPercentage = 0; }
@@ -2499,7 +2500,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
 
                 // Get the scroll percentage
                 scrollLeft = gridUtil.normalizeScrollLeft(containerCtrl.viewport, grid);
-                var scrollXPercentage = (scrollLeft + scrollXAmount) / (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
+                scrollEvent.horizontalScrollLength = (colContainer.getCanvasWidth() - colContainer.getViewportWidth());
+                var scrollXPercentage = (scrollLeft + scrollXAmount) / scrollEvent.horizontalScrollLength;
 
                 // Keep scrollPercentage within the range 0-1.
                 if (scrollXPercentage < 0) { scrollXPercentage = 0; }
@@ -8644,6 +8646,9 @@ angular.module('ui.grid')
         self.x = null;
         self.y = null;
 
+        self.verticalScrollLength = -9999999;
+        self.horizontalScrollLength = -999999;
+
 
         /**
          *  @ngdoc function
@@ -8723,19 +8728,19 @@ angular.module('ui.grid')
       };
 
       ScrollEvent.prototype.atTop = function(scrollTop) {
-        return (this.y && this.y.percentage === 0 && scrollTop === 0);
+        return (this.y && (this.y.percentage === 0 || this.verticalScrollLength < 0) && scrollTop === 0);
       };
 
       ScrollEvent.prototype.atBottom = function(scrollTop) {
-        return (this.y && this.y.percentage === 1 && scrollTop > 0);
+        return (this.y && (this.y.percentage === 1 || this.verticalScrollLength === 0) && scrollTop > 0);
       };
 
       ScrollEvent.prototype.atLeft = function(scrollLeft) {
-        return (this.x && this.x.percentage === 0 && scrollLeft === 0);
+        return (this.x && (this.x.percentage === 0 || this.horizontalScrollLength < 0) && scrollLeft === 0);
       };
 
       ScrollEvent.prototype.atRight = function(scrollLeft) {
-        return (this.x && this.x.percentage === 1 && scrollLeft > 0);
+        return (this.x && (this.x.percentage === 1 || this.horizontalScrollLength ===0) && scrollLeft > 0);
       };
 
 
