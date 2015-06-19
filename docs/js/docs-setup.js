@@ -326,7 +326,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "ui.grid",
       "shortDescription": "One time binding for the id dom tag.",
-      "keywords": "angular api appended begining bind binding controller directive div document dom don duplicate ensure error grid grids interpolation note order parameter parent passed prevent scope search string substring support tag tags throws time ui uigridcontroller uigridonebindid uniqueness"
+      "keywords": "angular api appended begining bind binding controller directive div document dom don duplicate ensure error grid grids interpolation note order parameter parent passed prevent scope search string substring support tag tags throws time ui uigridcontroller uigridonebindidgrid uniqueness"
     },
     {
       "section": "api",

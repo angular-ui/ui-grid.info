@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-e582174 - 2015-06-19
+ * ui-grid - v3.0.0-rc.22-a65acfd - 2015-06-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2227,7 +2227,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
        * @name ui.grid.directive:uiGridOneBindIdGrid
        * @element div
        * @restrict A
-       * @param {String} uiGridOneBindId The angular string you want to bind. Does not support interpolation. Don't use <code>{{scopeElt}}</code> instead use <code>scopeElt</code>.
+       * @param {String} uiGridOneBindIdGrid The angular string you want to bind. Does not support interpolation. Don't use <code>{{scopeElt}}</code> instead use <code>scopeElt</code>.
        * @description One time binding for the id dom tag.
        * <h1>Important Note!</h1>
        * If the id tag passed as a parameter does <b>not</b> contain the grid id as a substring
