@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-47ebfb3 - 2015-06-18
+ * ui-grid - v3.0.0-rc.22-1338b6c - 2015-06-19
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11446,7 +11446,8 @@ module.filter('px', function() {
         },
         pagination: {
           sizes: 'items per page',
-          totalItems: 'items'
+          totalItems: 'items',
+          of: 'of'
         },
         grouping: {
           group: 'Group',
@@ -11524,6 +11525,21 @@ module.filter('px', function() {
           invalidCsv: 'No fue posible procesar el archivo, ¿es un CSV válido?',
           invalidJson: 'No fue posible procesar el archivo, ¿es un Json válido?',
           jsonNotArray: 'El archivo json importado debe contener un array, abortando.'
+        },
+        pagination: {
+          sizes: 'registros por página',
+          totalItems: 'registros',
+          of: 'de'
+        },
+        grouping: {
+          group: 'Agrupar',
+          ungroup: 'Desagrupar',
+          aggregate_count: 'Agr: Cont',
+          aggregate_sum: 'Agr: Sum',
+          aggregate_max: 'Agr: Máx',
+          aggregate_min: 'Agr: Min',
+          aggregate_avg: 'Agr: Prom',
+          aggregate_remove: 'Agr: Quitar'
         }
       });
       return $delegate;
@@ -19951,7 +19967,7 @@ module.filter('px', function() {
 
           grid.api.registerEventsFromObject(publicApi.events);
           grid.api.registerMethodsFromObject(publicApi.methods);
-          
+
           var processPagination = function( renderableRows ){
             if (grid.options.useExternalPagination || !grid.options.enablePagination) {
               return renderableRows;
@@ -19959,7 +19975,7 @@ module.filter('px', function() {
             //client side pagination
             var pageSize = parseInt(grid.options.paginationPageSize, 10);
             var currentPage = parseInt(grid.options.paginationCurrentPage, 10);
-            
+
             var visibleRows = renderableRows.filter(function (row) { return row.visible; });
             grid.options.totalItems = visibleRows.length;
 
@@ -19970,7 +19986,7 @@ module.filter('px', function() {
             }
             return visibleRows.slice(firstRow, firstRow + pageSize);
           };
-          
+
           grid.registerRowsProcessor(processPagination, 900 );
 
         },
@@ -20034,7 +20050,7 @@ module.filter('px', function() {
           if (gridUtil.isNullOrUndefined(gridOptions.paginationPageSize)) {
             if (gridOptions.paginationPageSizes.length > 0) {
               gridOptions.paginationPageSize = gridOptions.paginationPageSizes[0];
-            } else {              
+            } else {
               gridOptions.paginationPageSize = 0;
             }
           }
@@ -20074,7 +20090,7 @@ module.filter('px', function() {
             }
         }
       };
-      
+
       return service;
     }
   ]);
@@ -20163,20 +20179,21 @@ module.filter('px', function() {
           $scope.paginationApi = uiGridCtrl.grid.api.pagination;
           $scope.sizesLabel = i18nService.getSafeText('pagination.sizes');
           $scope.totalItemsLabel = i18nService.getSafeText('pagination.totalItems');
-          
+          $scope.paginationOf = i18nService.getSafeText('pagination.of');
+
           var options = uiGridCtrl.grid.options;
-          
+
           uiGridCtrl.grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
             adjustment.height = adjustment.height - gridUtil.elementHeight($elm);
             return adjustment;
           });
-          
+
           var dataChangeDereg = uiGridCtrl.grid.registerDataChangeCallback(function (grid) {
             if (!grid.options.useExternalPagination) {
               grid.options.totalItems = grid.rows.length;
             }
           }, [uiGridConstants.dataChange.ROW]);
-          
+
           $scope.$on('$destroy', dataChangeDereg);
 
           var setShowing = function () {
@@ -20187,8 +20204,8 @@ module.filter('px', function() {
           var deregT = $scope.$watch('grid.options.totalItems + grid.options.paginationPageSize', setShowing);
 
           var deregP = $scope.$watch('grid.options.paginationCurrentPage + grid.options.paginationPageSize', function (newValues, oldValues) {
-              if (newValues === oldValues) { 
-                return; 
+              if (newValues === oldValues) {
+                return;
               }
 
               if (!angular.isNumber(options.paginationCurrentPage) || options.paginationCurrentPage < 1) {
@@ -20218,7 +20235,7 @@ module.filter('px', function() {
               return options.data.length < 1;
             }
           };
-          
+
           $scope.cantPageToLast = function () {
             if (options.totalItems > 0) {
               return $scope.cantPageForward();
@@ -20226,7 +20243,7 @@ module.filter('px', function() {
               return true;
             }
           };
-          
+
           $scope.cantPageBackward = function () {
             return options.paginationCurrentPage <= 1;
           };
@@ -25441,7 +25458,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/pagination',
-    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" ng-click=\"paginationApi.seek(1)\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle\"><div class=\"first-bar\"></div></div></button> <button type=\"button\" ng-click=\"paginationApi.previousPage()\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle prev-triangle\"></div></button> <input type=\"number\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\">/ {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" ng-click=\"paginationApi.nextPage()\" ng-disabled=\"cantPageForward()\"><div class=\"last-triangle next-triangle\"></div></button> <button type=\"button\" ng-click=\"paginationApi.seek(paginationApi.getTotalPages())\" ng-disabled=\"cantPageToLast()\"><div class=\"last-triangle\"><div class=\"last-bar\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\"><select ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{showingLow}} - {{showingHigh}} of {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
+    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" ng-click=\"paginationApi.seek(1)\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle\"><div class=\"first-bar\"></div></div></button> <button type=\"button\" ng-click=\"paginationApi.previousPage()\" ng-disabled=\"cantPageBackward()\"><div class=\"first-triangle prev-triangle\"></div></button> <input type=\"number\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\">/ {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" ng-click=\"paginationApi.nextPage()\" ng-disabled=\"cantPageForward()\"><div class=\"last-triangle next-triangle\"></div></button> <button type=\"button\" ng-click=\"paginationApi.seek(paginationApi.getTotalPages())\" ng-disabled=\"cantPageToLast()\"><div class=\"last-triangle\"><div class=\"last-bar\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\"><select ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{showingLow}} - {{showingHigh}} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
   );
 
 
