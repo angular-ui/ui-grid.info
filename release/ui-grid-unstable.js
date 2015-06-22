@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-25480b5 - 2015-06-22
+ * ui-grid - v3.0.0-rc.22-c32abca - 2015-06-22
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3581,7 +3581,7 @@ angular.module('ui.grid')
      * @returns {promise} promise that is resolved when render completes?
      *
      */
-    self.api.registerMethod( 'core', 'refreshRows', this.queueRefresh );
+    self.api.registerMethod( 'core', 'queueRefresh', this.queueRefresh );
 
     /**
      * @ngdoc function
