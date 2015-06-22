@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-a65acfd - 2015-06-19
+ * ui-grid - v3.0.0-rc.22-25480b5 - 2015-06-22
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8880,7 +8880,9 @@ angular.module('ui.grid')
                   }
 
                   if ( filterType ){
-                    col[templateType] = template.replace(uiGridConstants.CUSTOM_FILTERS, col[filterType] ? "|" + col[filterType] : "");
+                    col[templateType] = template.replace(uiGridConstants.CUSTOM_FILTERS, function() {
+                      return col[filterType] ? "|" + col[filterType] : "";
+                    });
                   } else {
                     col[templateType] = template;
                   }
