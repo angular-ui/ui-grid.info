@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-aa97ecd - 2015-06-23
+ * ui-grid - v3.0.0-rc.22-41b2ae8 - 2015-06-23
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2401,7 +2401,8 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
                 //Removes the watcher on itself after the bind
                 rmWatcher();
               }
-            }); //End rm watchers
+            // True ensures that equality is determined using angular.equals instead of ===
+            }, true); //End rm watchers
           } //End compile function
         }; //End directive return
       } // End directive function
