@@ -223,9 +223,9 @@ to make any columns with a filter condition have blue text.</p>
     });
 
     it('cancel filter on gender column and on date column, should now see Bishop Carr in third row', function() {
-      gridTestUtils.cancelFilterInColumnFor103( 'grid1', 1 )
+      gridTestUtils.cancelFilterInColumn( 'grid1', 1 )
         .then(function () {
-          return gridTestUtils.cancelFilterInColumnFor103( 'grid1', 6 );
+          return gridTestUtils.cancelFilterInColumn( 'grid1', 6 );
         })
         .then(function () {
           gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'Bishop Carr' );
@@ -233,9 +233,9 @@ to make any columns with a filter condition have blue text.</p>
     });
 
     it('filter on email column, should automatically do "ends with"', function() {
-      gridTestUtils.cancelFilterInColumnFor103( 'grid1', 1 )
+      gridTestUtils.cancelFilterInColumn( 'grid1', 1 )
         .then(function () {
-          return gridTestUtils.cancelFilterInColumnFor103( 'grid1', 6 );
+          return gridTestUtils.cancelFilterInColumn( 'grid1', 6 );
         })
         .then(function () {
           return gridTestUtils.enterFilterInColumn( 'grid1', 3, 'digirang.com' );
