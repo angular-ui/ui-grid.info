@@ -2,13 +2,18 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-208-saving-and-restoring-the-state-of-the-grid-page"><p>The save state feature allows you to save the current look of the grid
+<div><div class="tutorial-page tutorial-208-save-and-restore-state-page"><p>The save state feature allows you to save the current look of the grid
 and restore it upon returning to the grid.</p>
 <p>For example, you may have an application where your user can reorder the columns,
 adjust column widths, apply sorts and filters, and select a specific cell.  The user
 might adjust their grid to look as they wish, and then navigate to another page.  When
 the user returns to the page with the grid, they might expect it to look like it
 did when they left.  The save state feature permits this.</p>
+<p>Documentation for the saveState feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#/api/ui.grid.saveState.api:GridOptions">gridOptions</a></li>
+<li><a href="#/api/ui.grid.saveState.api:PublicApi">publicApi</a></li>
+</ul>
 <p>There are two core methods:</p>
 <ul>
 <li>save, which packages the current grid state into an object which the calling application
@@ -36,7 +41,7 @@ default:</p>
 <li>saveSelection</li>
 </ul>
 </div><h2 id="example">Example</h2>
-<div class="example"><div class="tutorial-page tutorial-208-saving-and-restoring-the-state-of-the-grid-page"><p>In this example we provide a button to save the grid state.  You can then modify the grid layout
+<div class="example"><div class="tutorial-page tutorial-208-save-and-restore-state-page"><p>In this example we provide a button to save the grid state.  You can then modify the grid layout
 to something different, and use the restore button to set the grid back the way it was.</p>
 <h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-63" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-64"></div>

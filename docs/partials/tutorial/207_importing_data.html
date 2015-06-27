@@ -2,11 +2,16 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-207-importing-data-with-native-ui-page"><p>The importer feature allows data to be imported into the grid in
+<div><div class="tutorial-page tutorial-207-importing-data-page"><p>The importer feature allows data to be imported into the grid in
 csv or json format.  The importer can use the native grid menu, or can accept a 
 file from a custom file picker implemented by the user.</p>
 <p>The importer imports files in json or csv format, with the ability to be extended
 to other file formats if demand exists.</p>
+<p>Documentation for the importer feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#/api/ui.grid.importer.api:GridOptions">gridOptions</a></li>
+<li><a href="#/api/ui.grid.importer.api:PublicApi">publicApi</a></li>
+</ul>
 <p>For json format files the received elements are assumed to match the column.field 
 attributes in your columnDefs, and are loaded into the provided entity.  </p>
 <p>For csv files the data is mapped to the columnDefs, with columns in the heading row in the 
@@ -31,7 +36,7 @@ for more information. </p>
 the grid menu using the gridOption <code>enableGridMenu</code>.  You can turn the menu items off by
 setting <code>importerShowMenu: false</code>.</p>
 </div><h2 id="example">Example</h2>
-<div class="example"><div class="tutorial-page tutorial-207-importing-data-with-native-ui-page"><p>In this example we use the native grid menu to import a file.  You need to provide a file
+<div class="example"><div class="tutorial-page tutorial-207-importing-data-page"><p>In this example we use the native grid menu to import a file.  You need to provide a file
 from your file system to use the tutorial, you can copy either import.json or import.csv
 as a test file.</p>
 <p>The grid will start empty, and will auto-populate the column defs and data once the file 

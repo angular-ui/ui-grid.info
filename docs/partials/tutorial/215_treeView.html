@@ -8,6 +8,14 @@ of your data rows are nodes and which are leaves.</p>
 of the logic into a treeBase module.  This means that you may need to include the treeBase module
 in your code, and that some of the events and methods have moved to grid.api.treeBase instead
 of grid.api.treeView</em></strong></p>
+<p>Documentation for the treeView feature is provided in the api documentation, both under
+treeView itself, and shared functions in the treeBase documentation.  In particular:</p>
+<ul>
+<li><a href="#/api/ui.grid.treeBase.api:ColumnDef">treeBase columnDef</a></li>
+<li><a href="#/api/ui.grid.treeView.api:GridOptions">treeView gridOptions</a> and <a href="#/api/ui.grid.treeBase.api:GridOptions">treeBase gridOptions</a></li>
+<li><a href="#/api/ui.grid.treeView.api:PublicApi">treeView publicApi</a> and <a href="#/api/ui.grid.treeBase.api:PublicApi">treeBase publicApi</a></li>
+</ul>
+<p>The tree structure itself is documented at <a href="#/api/ui.grid.treeBase.grid:treeBase">treeBase</a>.</p>
 <p>In your data you tell us the nodes by setting the property $$treeLevel on a given row.  Levels
 start at 0 and increase as you move down the tree.</p>
 <p>If you wish to load your tree incrementally, you can listen to the rowExpanded event, which will
@@ -40,10 +48,10 @@ you to dynamically load children.  If set to false there&#39;ll be no + if there
 <div class="example"><div class="tutorial-page tutorial-215-tree-view-page"><p>In this example most of the data is loaded on initial page load.  The nodes under Guerrero Lopez, however,
 are loaded only when that row is expanded.  They have a 2 second delay to simulate loading from a server.</p>
 <h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-73" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-74"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-71" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-72"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-73" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-73">
+<pre class="prettyprint linenums" ng-set-text="index.html-71" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-71">
     <div ng-controller="MainCtrl">
       <button id="expandAll" type="button" class="btn btn-success" ng-click="expandAll()">Expand All</button>
       <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row</button>
@@ -129,14 +137,14 @@ are loaded only when that row is expanded.  They have a 2 second delay to simula
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-74"></pre>
-<script type="text/ng-template" id="scenario.js-74">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-72"></pre>
+<script type="text/ng-template" id="scenario.js-72">
     var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
     describe( '215 tree view', function() {
     });
   </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-73" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-71" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>

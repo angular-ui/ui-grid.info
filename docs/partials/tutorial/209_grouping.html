@@ -6,7 +6,7 @@
 values in specific columns, providing an effect similar in some ways to an Excel pivot table.
 Columns that aren&#39;t grouped by can be aggregated, providing for example a running count
 of the number of rows in each group.</p>
-<p>_**BREAKING CHANGES IN RC22 for grouping.  Prior to RC22 grouping was a standalone feature, with RC22
+<p>_** BREAKING CHANGES IN RC22 for grouping.  Prior to RC22 grouping was a standalone feature, with RC22
 a number of things have changed as grouping and treeView move to a shared code base.  In particular:</p>
 <ul>
 <li>methods such as expandAll are now on treeBase, not on grouping</li>
@@ -20,6 +20,14 @@ saved states may not reload cleanly</li>
 <li>groupingRowHeaderAlwaysVisible is now treeRowHeaderAlwaysVisible, and default has changed to true</li>
 </ul>
 <hr>
+<p>Documentation for the grouping feature is provided in the api documentation, both under
+grouping itself, and shared functions in the treeBase documentation.  In particular:</p>
+<ul>
+<li><a href="#/api/ui.grid.grouping.api:ColumnDef">grouping columnDef</a> and <a href="#/api/ui.grid.treeBase.api:ColumnDef">treeBase columnDef</a></li>
+<li><a href="#/api/ui.grid.grouping.api:GridOptions">grouping gridOptions</a> and <a href="#/api/ui.grid.treeBase.api:GridOptions">treeBase gridOptions</a></li>
+<li><a href="#/api/ui.grid.grouping.api:PublicApi">grouping publicApi</a> and <a href="#/api/ui.grid.treeBase.api:PublicApi">treeBase publicApi</a></li>
+</ul>
+<p>The tree structure itself is documented at <a href="#/api/ui.grid.treeBase.grid:treeBase">treeBase</a>.</p>
 <p>Grouping can be set programmatically by using the columnDef option <code>grouping: { groupPriority: 0 }</code>,
 or for aggregations on a column by setting <code>treeAggregation: {type: uiGridGroupingConstants.aggregation.COUNT}</code>. </p>
 <p>Optionally (and by default) grouped columns are moved to the front of the grid, which provides a more

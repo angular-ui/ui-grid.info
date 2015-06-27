@@ -2,14 +2,19 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-206-exporting-data-with-native-ui-page"><p>The exporter feature allows data to be exported from the grid in
+<div><div class="tutorial-page tutorial-206-exporting-data-page"><p>The exporter feature allows data to be exported from the grid in
 csv or pdf format.  The exporter can export all data, visible data or selected data.</p>
 <p>To use the exporter you need to include the ui-grid-exporter directive on
 your grid.  If you want to export selected rows you must include the ui-grid-selection
 directive on your grid.  If you want to export as PDF you need to have installed pdfMake, 
 available through:
 <pre class="prettyprint linenums">  bower install pdfmake  </pre>
-<p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>.</p>
+<p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>, and</p>
+<ul>
+<li><a href="#/api/ui.grid.exporter.api:ColumnDef">columnDef</a></li>
+<li><a href="#/api/ui.grid.exporter.api:GridOptions">gridOptions</a></li>
+<li><a href="#/api/ui.grid.exporter.api:PublicApi">publicApi</a></li>
+</ul>
 <p>The exporter adds menu items to the grid menu, to use the native UI you need to enable
 the grid menu using the gridOption <code>enableGridMenu</code></p>
 <p>Note that the option to export selected data is only visible if you have data selected.</p>
@@ -26,7 +31,7 @@ minified.  If you have this problem it is recommended to instead include pdfmake
 as assets (or the equivalent minified versions), and then include them as a script in your application
 rather than as part of a minification of your entire javascript library.</p>
 </div><h2 id="example">Example</h2>
-<div class="example"><div class="tutorial-page tutorial-206-exporting-data-with-native-ui-page"><p>In this example we use the native grid menu buttons, and we show both the pdf and csv export options.</p>
+<div class="example"><div class="tutorial-page tutorial-206-exporting-data-page"><p>In this example we use the native grid menu buttons, and we show both the pdf and csv export options.</p>
 <h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-61" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">

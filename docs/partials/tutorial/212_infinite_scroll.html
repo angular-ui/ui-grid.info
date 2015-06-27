@@ -2,7 +2,12 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-212-infinite-scroll-page"><p>The infinite scroll feature allows the user to lazy load their data to gridOptions.data.  </p>
+<div><div class="tutorial-page tutorial-212-infinite-scroll-page"><p>The infinite scroll feature allows the user to lazy load their data to gridOptions.data.</p>
+<p>Documentation for the infiniteScroll feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#/api/ui.grid.infiniteScroll.api:GridOptions">gridOptions</a></li>
+<li><a href="#/api/ui.grid.infiniteScroll.api:PublicAPI">publicApi</a></li>
+</ul>
 <p>Once you reach the top (or bottom) of your real data set, you can notify that no more pages exist
 up (or down), and infinite scroll will stop triggering events in that direction.  You can also
 optionally tell us up-front that there are no more pages up through <code>infiniteScrollUp = true</code> or down through
@@ -45,10 +50,10 @@ will discard pages and reset the scrollUp and scrollDown appropriately.  Again, 
 hold the scroll position.</p>
 <p>Finally, we can reset the data, which gets us back to the middle page and sets the scroll to the top.</p>
 <h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-70" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-68" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-70" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-70">
+<pre class="prettyprint linenums" ng-set-text="index.html-68" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-68">
     <div ng-controller="MainCtrl">
       <button id="reset" class="button" ng-click="reset()">Reset</button>
       <span> &nbsp; &nbsp; First page: {{ firstPage }} &nbsp; &nbsp; Last page: {{ lastPage }}  &nbsp; &nbsp; data.length: {{ data.length }} </span>
@@ -204,6 +209,6 @@ hold the scroll position.</p>
   </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-70" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-68" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>
