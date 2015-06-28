@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-1ab77df - 2015-06-27
+ * ui-grid - v3.0.0-rc.22-7a8c4cc - 2015-06-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -22355,10 +22355,10 @@ module.filter('px', function() {
          * @param {object} columnsState the list of columns we had before, with their state
          */
         restoreColumns: function( grid, columnsState ){
+          var isSortChanged = false;
+
           columnsState.forEach( function( columnState, index ) {
             var currentCol = grid.getColumn( columnState.name );
-
-
 
             if ( currentCol && !grid.isRowHeaderColumn(currentCol) ){
               if ( grid.options.saveVisible &&
@@ -22377,7 +22377,7 @@ module.filter('px', function() {
                    !angular.equals(currentCol.sort, columnState.sort) &&
                    !( currentCol.sort === undefined && angular.isEmpty(columnState.sort) ) ){
                 currentCol.sort = angular.copy( columnState.sort );
-                grid.api.core.raise.sortChanged();
+                isSortChanged = true;
               }
 
               if ( grid.options.saveFilter &&
@@ -22404,6 +22404,10 @@ module.filter('px', function() {
               }
             }
           });
+
+          if ( isSortChanged ) { 
+            grid.api.core.raise.sortChanged( grid, grid.getColumnSorting() );
+          }
         },
 
 
