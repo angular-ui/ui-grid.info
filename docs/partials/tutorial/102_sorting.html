@@ -21,6 +21,8 @@ for that column.  This will let the user change the direction of the sort, but t
 asynchronously after the columns it will often decide all your columns are string.  You can explicitly set the column type in the
 column def using <code>type=&#39;number&#39;</code>.  Valid types are documented in <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a>, and
 include <code>string</code>, <code>number</code>, <code>numberStr</code> and <code>date</code>.  If you use date be aware the code expects a javascript date object.</p>
+<p>By default the sorting algorithm will be applied to the row value before any <code>cellFilters</code> are applied. The <a href="#/api/ui.grid.class:GridOptions.columnDef#sortcellfiltered">sortCellFiltered</a>
+columnDef option will cause sorting to be applied after the <code>cellFilters</code> are applied. For an example of this see the &quot;Month Joined&quot; column in the <a href="#/tutorial/401_AllFeatures">AllFeatures tutorial</a>.</p>
 <h3 id="source">Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-23" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-24"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">

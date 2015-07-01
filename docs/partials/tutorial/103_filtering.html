@@ -50,6 +50,9 @@ this button.</p>
 <p>In this example we&#39;ve provided a &quot;toggle filters&quot; button to allow you to turn the filter row on and off.  To
 still visually indicate which columns are filtered even when the filters aren&#39;t present, we&#39;ve used the headerCellClass
 to make any columns with a filter condition have blue text.</p>
+<h4 id="cellfilters">cellFilters</h4>
+<p>By default the filtering will not use the formatted value after applying <code>cellFilters</code>, it uses the raw value from the row. The <a href="#/api/ui.grid.class:GridOptions.columnDef#filtercellfiltered">filterCellFiltered</a>
+columnDef option will cause filtering to be applied after the <code>cellFilters</code> are evaluated, as seen on the &quot;Long Date&quot; field.</p>
 <h4 id="single-filter-box">Single filter box (similar to 2.x)</h4>
 <p>Refer <a href="#/tutorial/321_singleFilter">singleFilter tutorial</a>, it is possible to implement this using a rowsProcessor.</p>
 </div><h2 id="example">Example</h2>
@@ -159,6 +162,8 @@ to make any columns with a filter condition have blue text.</p>
             placeholder: 'less than',
             term: nextWeek
           }, headerCellClass: $scope.highlightFilteredHeader
+        },
+        { field: 'mixedDate', displayName: "Long Date", cellFilter: 'date:"longDate"', filterCellFiltered:true, width: '15%',
         }
       ]
     };

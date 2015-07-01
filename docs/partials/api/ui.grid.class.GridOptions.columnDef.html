@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/8941dcb/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/a0ec813/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.class:GridOptions</code>
 </span>
 </div>
@@ -130,6 +130,11 @@ will not be shown.</li>
 ]; </pre>
 </div></div>
 </div>
+</li>
+<li><h3 id="properties_filtercellfiltered">filterCellFiltered</h3>
+<div class="filtercellfiltered"><div class="filtercellfiltered-page"><p>(optional) False by default. When <code>true</code> uiGrid will apply the cellFilter before
+applying &quot;search&quot; <code>filters</code>.</p>
+</div></div>
 </li>
 <li><h3 id="properties_filterheadertemplate">filterHeaderTemplate</h3>
 <div class="filterheadertemplate"><div class="filterheadertemplate-page"><p>a custom template for the filter input.  The default is ui-grid/ui-grid-filter</p>
@@ -268,6 +273,15 @@ compatibility with 2.x name can be omitted if field is present</p>
 <div class="example"><div class="sort-page"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC, ignoreSort: true }}] </pre>
 </div></div>
 </div>
+</li>
+<li><h3 id="properties_sortcellfiltered">sortCellFiltered</h3>
+<div class="sortcellfiltered"><div class="sortcellfiltered-page"><p>(optional) False by default. When <code>true</code> uiGrid will apply the cellFilter before
+sorting the data. Note that when using this option uiGrid will assume that the displayed value is
+a string, and use the <a href="#/api/ui.grid.class:RowSorter#sortalpha">sortAlpha</a> <code>sortFn</code>. It is possible
+to return a non-string value from an angularjs filter, in which case you should define a <a href="#/api/ui.grid.class:GridOptions.columnDef#sortingalgorithm">sortingAlgorithm</a>
+for the column which hanldes the returned type. You may specify one of the <code>sortingAlgorithms</code>
+found in the <a href="#/api/ui.grid.RowSorter">rowSorter</a> service.</p>
+</div></div>
 </li>
 <li><h3 id="properties_sortingalgorithm">sortingAlgorithm</h3>
 <div class="sortingalgorithm"><div class="sortingalgorithm-page"><p>Algorithm to use for sorting this column. Takes &#39;a&#39; and &#39;b&#39; parameters

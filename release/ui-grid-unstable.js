@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-8941dcb - 2015-07-01
+ * ui-grid - v3.0.0-rc.22-a0ec813 - 2015-07-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -5165,6 +5165,30 @@ angular.module('ui.grid')
     }
   };
 
+  /**
+   * @ngdoc function
+   * @name getCellDisplayValue
+   * @methodOf ui.grid.class:Grid
+   * @description Gets the displayed value of a cell after applying any the `cellFilter`
+   * @param {GridRow} row Row to access
+   * @param {GridColumn} col Column to access
+   */
+  Grid.prototype.getCellDisplayValue = function getCellDisplayValue(row, col) {
+    if ( !col.cellDisplayGetterCache ) {
+      var custom_filter = col.cellFilter ? " | " + col.cellFilter : "";
+
+      if (typeof(row.entity['$$' + col.uid]) !== 'undefined') {
+        col.cellDisplayGetterCache = $parse(row.entity['$$' + col.uid].rendered + custom_filter);
+      } else if (this.options.flatEntityAccess && typeof(col.field) !== 'undefined') {
+        col.cellDisplayGetterCache = $parse(row.entity[col.field] + custom_filter);
+      } else {
+        col.cellDisplayGetterCache = $parse(row.getEntityQualifiedColField(col) + custom_filter);
+      }
+    }
+
+    return col.cellDisplayGetterCache(row);
+  };
+
 
   Grid.prototype.getNextColumnSortPriority = function getNextColumnSortPriority() {
     var self = this,
@@ -6780,6 +6804,28 @@ angular.module('ui.grid')
      *
      */
     self.cellFilter = colDef.cellFilter ? colDef.cellFilter : "";
+
+    /**
+     * @ngdoc boolean
+     * @name sortCellFiltered
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description (optional) False by default. When `true` uiGrid will apply the cellFilter before
+     * sorting the data. Note that when using this option uiGrid will assume that the displayed value is
+     * a string, and use the {@link ui.grid.class:RowSorter#sortAlpha sortAlpha} `sortFn`. It is possible
+     * to return a non-string value from an angularjs filter, in which case you should define a {@link ui.grid.class:GridOptions.columnDef#sortingAlgorithm sortingAlgorithm}
+     * for the column which hanldes the returned type. You may specify one of the `sortingAlgorithms`
+     * found in the {@link ui.grid.RowSorter rowSorter} service.
+     */
+    self.sortCellFiltered = colDef.sortCellFiltered ? true : false;
+
+    /**
+     * @ngdoc boolean
+     * @name filterCellFiltered
+     * @propertyOf ui.grid.class:GridOptions.columnDef
+     * @description (optional) False by default. When `true` uiGrid will apply the cellFilter before
+     * applying "search" `filters`.
+     */
+    self.filterCellFiltered = colDef.filterCellFiltered ? true : false;
 
     /**
      * @ngdoc property
@@ -9186,7 +9232,13 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     var term = filter.term;
 
     // Get the column value for this row
-    var value = grid.getCellValue(row, column);
+    var value;
+    if ( column.filterCellFiltered ){
+      value = grid.getCellDisplayValue(row, column);
+    } else {
+      value = grid.getCellValue(row, column);
+    }
+
 
     // If the filter's condition is a RegExp, then use it
     if (filter.condition instanceof RegExp) {
@@ -9691,6 +9743,11 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       sortFn = col.sortingAlgorithm;
       rowSorter.colSortFnCache[col.colDef.name] = col.sortingAlgorithm;
     }
+    // Always default to sortAlpha when sorting after a cellFilter
+    else if ( col.sortCellFiltered && col.cellFilter ){
+      sortFn = rowSorter.sortAlpha;
+      rowSorter.colSortFnCache[col.colDef.name] = sortFn;
+    }
     // Try and guess what sort function to use
     else {
       // Guess the sort function
@@ -9829,8 +9886,15 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
         sortFn = rowSorter.getSortFn(grid, col, r);
         
-        var propA = grid.getCellValue(rowA, col);
-        var propB = grid.getCellValue(rowB, col);
+        var propA, propB;
+
+        if ( col.sortCellFiltered ){
+          propA = grid.getCellDisplayValue(rowA, col);
+          propB = grid.getCellDisplayValue(rowB, col);
+        } else {
+          propA = grid.getCellValue(rowA, col);
+          propB = grid.getCellValue(rowB, col);
+        }
 
         tem = sortFn(propA, propB);
 
