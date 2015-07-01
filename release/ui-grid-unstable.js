@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-b7002ba - 2015-07-01
+ * ui-grid - v3.0.0-rc.22-f2368cc - 2015-07-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -25043,8 +25043,15 @@ module.filter('px', function() {
        * @param {array} parents the parents that we would want to aggregate onto
        */
       aggregate: function( grid, row, parents ){
-        if ( parents.length === 0 ){
-          return;
+        if ( parents.length === 0 && row.treeNode && row.treeNode.aggregations ){
+          row.treeNode.aggregations.forEach(function(aggregation){
+            // Calculate aggregations for footer even if there are no grouped rows
+            if ( typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ) {
+              var fieldValue = grid.getCellValue(row, aggregation.col);
+              var numValue = Number(fieldValue);
+              aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
+            }
+          });
         }
 
         parents.forEach( function( parent, index ){
@@ -25054,7 +25061,7 @@ module.filter('px', function() {
               var numValue = Number(fieldValue);
               aggregation.col.treeAggregationFn(aggregation, fieldValue, numValue, row);
 
-              if ( index === 0 && typeof aggregation.col.treeFooterAggregation !== 'undefined' ){
+              if ( index === 0 && typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ){
                 aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
               }
             });
@@ -25223,6 +25230,10 @@ module.filter('px', function() {
        */
       treeFooterAggregationType: function( rows, column ) {
         service.finaliseAggregation(undefined, column.treeFooterAggregation);
+        if ( typeof(column.treeFooterAggregation.value) === 'undefined' || column.treeFooterAggregation.rendered === null ){
+          // The was apparently no aggregation performed (perhaps this is a grouped column
+          return '';
+        }
         return column.treeFooterAggregation.rendered;
       }
     };
