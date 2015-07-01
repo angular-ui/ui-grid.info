@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-4157771 - 2015-07-01
+ * ui-grid - v3.0.0-rc.22-8941dcb - 2015-07-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2541,11 +2541,15 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants) {
               var canvasHeight = rowContainer.getCanvasHeight();
 
               //add additional height for scrollbar on left and right container
-              if ($scope.containerId !== 'body') {
-                canvasHeight += grid.scrollbarHeight;
-              }
+              //if ($scope.containerId !== 'body') {
+              //  canvasHeight -= grid.scrollbarHeight;
+              //}
 
               var viewportHeight = rowContainer.getViewportHeight();
+              //shorten the height to make room for a scrollbar placeholder
+              if (colContainer.needsHScrollbarPlaceholder()) {
+                viewportHeight -= grid.scrollbarHeight;
+              }
 
               var headerViewportWidth,
                   footerViewportWidth;
@@ -3299,9 +3303,9 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
                 // TODO(c0bra): Subtract sum of col widths from grid viewport width and update it
                 $elm.attr('style', null);
 
-                var myHeight = grid.renderContainers.body.getViewportHeight(); // + grid.horizontalScrollbarHeight;
+             //   var myHeight = grid.renderContainers.body.getViewportHeight(); // + grid.horizontalScrollbarHeight;
 
-                ret += '.grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.side + ', .grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.side + ' .ui-grid-render-container-' + $scope.side + ' .ui-grid-viewport { width: ' + myWidth + 'px; height: ' + myHeight + 'px; } ';
+                ret += '.grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.side + ', .grid' + grid.id + ' .ui-grid-pinned-container-' + $scope.side + ' .ui-grid-render-container-' + $scope.side + ' .ui-grid-viewport { width: ' + myWidth + 'px; } ';
               }
 
               return ret;
@@ -7650,6 +7654,22 @@ angular.module('ui.grid')
 
     /**
      *  @ngdoc boolean
+     *  @name hasHScrollbar
+     *  @propertyOf  ui.grid.class:GridRenderContainer
+     *  @description flag to signal that container has a horizontal scrollbar
+     */
+    self.hasHScrollbar = false;
+
+    /**
+     *  @ngdoc boolean
+     *  @name hasHScrollbar
+     *  @propertyOf  ui.grid.class:GridRenderContainer
+     *  @description flag to signal that container has a vertical scrollbar
+     */
+    self.hasVScrollbar = false;
+
+    /**
+     *  @ngdoc boolean
      *  @name canvasHeightShouldUpdate
      *  @propertyOf  ui.grid.class:GridRenderContainer
      *  @description flag to signal that container should recalculate the canvas size
@@ -8318,9 +8338,16 @@ angular.module('ui.grid')
     this.columnStyles = ret;
   };
 
+  GridRenderContainer.prototype.needsHScrollbarPlaceholder = function () {
+    return this.grid.options.enableHorizontalScrollbar && !this.hasHScrollbar;
+  };
+
   GridRenderContainer.prototype.getViewportStyle = function () {
     var self = this;
     var styles = {};
+    
+    self.hasHScrollbar = false;
+    self.hasVScrollbar = false;
 
     if (self.grid.disableScrolling) {
       styles['overflow-x'] = 'hidden';
@@ -8329,32 +8356,28 @@ angular.module('ui.grid')
     }
 
     if (self.name === 'body') {
-      styles['overflow-x'] = self.grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll';
+      self.hasHScrollbar = self.grid.options.enableHorizontalScrollbar !== uiGridConstants.scrollbars.NEVER;
       if (!self.grid.isRTL()) {
-        if (self.grid.hasRightContainerColumns()) {
-          styles['overflow-y'] = 'hidden';
-        }
-        else {
-          styles['overflow-y'] = self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll';
+        if (!self.grid.hasRightContainerColumns()) {
+          self.hasVScrollbar = self.grid.options.enableVerticalScrollbar !== uiGridConstants.scrollbars.NEVER;
         }
       }
       else {
-        if (self.grid.hasLeftContainerColumns()) {
-          styles['overflow-y'] = 'hidden';
-        }
-        else {
-          styles['overflow-y'] = self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll';
+        if (!self.grid.hasLeftContainerColumns()) {
+          self.hasVScrollbar = self.grid.options.enableVerticalScrollbar !== uiGridConstants.scrollbars.NEVER;
         }
       }
     }
     else if (self.name === 'left') {
-      styles['overflow-x'] = 'hidden';
-      styles['overflow-y'] = self.grid.isRTL() ? (self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll') : 'hidden';
+      self.hasVScrollbar = self.grid.isRTL() ? self.grid.options.enableVerticalScrollbar !== uiGridConstants.scrollbars.NEVER : false;
     }
     else {
-      styles['overflow-x'] = 'hidden';
-      styles['overflow-y'] = !self.grid.isRTL() ? (self.grid.options.enableVerticalScrollbar === uiGridConstants.scrollbars.NEVER ? 'hidden' : 'scroll') : 'hidden';
+      self.hasVScrollbar = !self.grid.isRTL() ? self.grid.options.enableVerticalScrollbar !== uiGridConstants.scrollbars.NEVER : false;
     }
+
+    styles['overflow-x'] = self.hasHScrollbar ? 'scroll' : 'hidden';
+    styles['overflow-y'] = self.hasVScrollbar ? 'scroll' : 'hidden';
+
 
     return styles;
 
@@ -25558,7 +25581,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': colContainer.getMargin('left') + 'px', 'margin-right': colContainer.getMargin('right') + 'px' }\"><div ui-grid-header></div><div ui-grid-viewport></div><div ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></div></div>"
+    "<div class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': colContainer.getMargin('left') + 'px', 'margin-right': colContainer.getMargin('right') + 'px' }\"><div ui-grid-header></div><div ui-grid-viewport></div><div ng-if=\"colContainer.needsHScrollbarPlaceholder()\" class=\"ui-grid-scrollbar-placeholder\" style=\"height:{{colContainer.grid.scrollbarHeight}}px\"></div><div ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></div></div>"
   );
 
 
