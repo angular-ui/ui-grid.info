@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-f2368cc - 2015-07-01
+ * ui-grid - v3.0.0-rc.22-448168b - 2015-07-02
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -10850,9 +10850,9 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
      * @methodOf ui.grid.service:GridUtil
      *
      * @param {element} element The element to get the `scrollLeft` from.
-     * @param {boolean} grid -  grid used to normalize (uses the rtl property)
+     * @param {grid} grid -  grid used to normalize (uses the rtl property)
      *
-     * @returns {int} A normalized scrollLeft value for the current browser.
+     * @returns {number} A normalized scrollLeft value for the current browser.
      *
      * @description
      * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them
@@ -10880,14 +10880,14 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
   /**
   * @ngdoc method
-  * @name normalizeScrollLeft
+  * @name denormalizeScrollLeft
   * @methodOf ui.grid.service:GridUtil
   *
   * @param {element} element The element to normalize the `scrollLeft` value for
-  * @param {int} scrollLeft The `scrollLeft` value to denormalize.
-  * @param {boolean} grid The grid that owns the scroll event.
+  * @param {number} scrollLeft The `scrollLeft` value to denormalize.
+  * @param {grid} grid The grid that owns the scroll event.
   *
-  * @returns {int} A normalized scrollLeft value for the current browser.
+  * @returns {number} A normalized scrollLeft value for the current browser.
   *
   * @description
   * Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.
@@ -10954,7 +10954,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
    *
    * @param {function} func function to debounce
    * @param {number} wait milliseconds to delay
-   * @param {bool} immediate execute before delay
+   * @param {boolean} immediate execute before delay
    *
    * @returns {function} A function that can be executed as debounced function
    *
