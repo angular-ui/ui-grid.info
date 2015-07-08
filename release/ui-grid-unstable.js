@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-acb7e7b - 2015-07-06
+ * ui-grid - v3.0.0-rc.22-482dc67 - 2015-07-08
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -20345,7 +20345,7 @@ module.filter('px', function() {
         columnDefs: [
           {name: 'name'},
           {name: 'car'}
-        ];
+        ]
        }
     }]);
    </file>
