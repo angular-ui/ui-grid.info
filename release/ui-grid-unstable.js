@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-e8fe073 - 2015-07-08
+ * ui-grid - v3.0.0-rc.22-6a69120 - 2015-07-14
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1761,7 +1761,7 @@ angular.module('ui.grid')
      * 
      */
     setMenuItemTitle: function( menuItem, colDef, grid ){
-      var title = grid.options.gridMenuTitleFilter( colDef.displayName || colDef.name || colDef.field );
+      var title = grid.options.gridMenuTitleFilter( colDef.displayName || gridUtil.readableColumnName(colDef.name) || colDef.field );
       
       if ( typeof(title) === 'string' ){
         menuItem.title = title;
