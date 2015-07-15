@@ -2,7 +2,9 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-216-expandable-grid-page"><p>Module &#39;ui.grid.expandable&#39; adds the subgrid feature to grid. To show the subgrid you need to provide following grid option:</p>
+<div><div class="tutorial-page tutorial-216-expandable-grid-page"><div class="alert alert-warning" role="alert"><strong>Alpha</strong> This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.</div>
+
+<p>The <code>ui.grid.expandable</code> module adds the subgrid feature to grid. To show the subgrid you need to provide following grid option:</p>
 <p>Documentation for the expandable feature is provided in the api documentation, in particular:</p>
 <ul>
 <li><a href="#/api/ui.grid.expandable.api:GridOptions">gridOptions</a></li>
@@ -141,7 +143,7 @@ appears when you quickly scroll through the grid.</p>
             $scope.gridOptions.data = data;
           });
       }]);
-      
+
   app.controller('ThirdCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
         $scope.gridOptions = {
           expandableRowTemplate: 'expandableRowTemplate.html',
@@ -155,7 +157,7 @@ appears when you quickly scroll through the grid.</p>
                       { name: 'gender'},
                       { name: 'company'}
                     ]};
-                  
+
                     $http.get('/data/100.json')
                       .success(function(data) {
                         row.entity.subGridOptions.data = data;

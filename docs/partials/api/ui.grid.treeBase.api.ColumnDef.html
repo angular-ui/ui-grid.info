@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/tree-base/js/tree-base.js#L122" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">ColumnDef</code>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/tree-base/js/tree-base.js#L125" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">ColumnDef</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.treeBase</code>
 </span>
 </div>
@@ -71,7 +71,7 @@ name of an aggregation function defined with <a href="#/api/ui.grid.treeBase.api
 <ul>
 <li>also use grouping, in which case the aggregations are displayed in the group header, OR</li>
 <li>use treeView, in which case you can set <code>treeAggregationUpdateEntity: true</code> in the colDef, and
-treeBase will store the aggregation information in the entity, or you can set <code>treeAggregationUpdateEntity: false</code> 
+treeBase will store the aggregation information in the entity, or you can set <code>treeAggregationUpdateEntity: false</code>
 in the colDef, and you need to manual retrieve the calculated aggregations from the row.treeNode.aggregations</li>
 </ul>
 <p><br/>Takes precendence over a treeAggregationFn, the two options should not be used together.
@@ -83,17 +83,17 @@ in the colDef, and you need to manual retrieve the calculated aggregations from 
 to be displayed in the grid using a standard cellTemplate.  This defaults to true,
 if you are using grouping then you shouldn&#39;t set it to false, as then the aggregations won&#39;t
 display.</p>
-<p>If you are using treeView in most cases you&#39;ll want to set this to true.  This will result in 
+<p>If you are using treeView in most cases you&#39;ll want to set this to true.  This will result in
 getCellValue returning the aggregation rather than whatever was stored in the cell attribute on
 the entity.  If you want to render the underlying entity value (and do something else with the aggregation)
 then you could use a custom cellTemplate to display <code>row.entity.myAttribute</code>, rather than using getCellValue.</p>
 <p><br/>Defaults to true</p>
 </div><h4 id="properties_treeaggregationupdateentity_example">Example</h4>
 <div class="example"><div class="treeaggregationupdateentity-page"><pre class="prettyprint linenums">
-gridOptions.columns = [{ 
-  name: 'myCol', 
-  treeAggregation: { type: uiGridTreeBaseConstants.aggregation.SUM }, 
-  treeAggregationUpdateEntity: true 
+gridOptions.columns = [{
+  name: 'myCol',
+  treeAggregation: { type: uiGridTreeBaseConstants.aggregation.SUM },
+  treeAggregationUpdateEntity: true
   cellTemplate: '&lt;div&gt;{{row.entity.myCol + " " + row.treeNode.aggregations[0].rendered}}&lt;/div&gt;'
 }];
 </pre>

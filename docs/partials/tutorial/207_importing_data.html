@@ -2,8 +2,10 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-207-importing-data-page"><p>The importer feature allows data to be imported into the grid in
-csv or json format.  The importer can use the native grid menu, or can accept a 
+<div><div class="tutorial-page tutorial-207-importing-data-page"><div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
+
+<p>The importer feature allows data to be imported into the grid in
+csv or json format.  The importer can use the native grid menu, or can accept a
 file from a custom file picker implemented by the user.</p>
 <p>The importer imports files in json or csv format, with the ability to be extended
 to other file formats if demand exists.</p>
@@ -12,25 +14,25 @@ to other file formats if demand exists.</p>
 <li><a href="#/api/ui.grid.importer.api:GridOptions">gridOptions</a></li>
 <li><a href="#/api/ui.grid.importer.api:PublicApi">publicApi</a></li>
 </ul>
-<p>For json format files the received elements are assumed to match the column.field 
-attributes in your columnDefs, and are loaded into the provided entity.  </p>
-<p>For csv files the data is mapped to the columnDefs, with columns in the heading row in the 
+<p>For json format files the received elements are assumed to match the column.field
+attributes in your columnDefs, and are loaded into the provided entity.</p>
+<p>For csv files the data is mapped to the columnDefs, with columns in the heading row in the
 csv needing to match either the column.name or column.displayName.  Optionally you can
-provide a custom function that maps headings to column.name, and this will be used instead, 
+provide a custom function that maps headings to column.name, and this will be used instead,
 you could use this to implement a custom &quot;column picker&quot; type routine.  If you are using
 internationalisation on the headers (say, via adding a cellHeaderFilter), then you can
 also optionally pass a filter function into the <code>importerHeaderFilterCallback</code> routine.
 This routine will be called on the displayName to try to match the translated text, if
-you provide this routine it must return an immediate translation, not a promise - so if 
+you provide this routine it must return an immediate translation, not a promise - so if
 using angular-translate you need to use <code>$translate.instant</code>.</p>
-<p>Optionally you can provide a custom function that maps the data within each entity as it is 
+<p>Optionally you can provide a custom function that maps the data within each entity as it is
 imported, refer the documentation for <code>importerObjectCallback</code>.</p>
 <p>To use the importer you need to include the ui-grid-importer directive on
 your grid, and you must provide a <code>gridOptions.importerDataAddCallback</code> function that adds
 the created objects into your data array.  You also need to have installed the csv-js library,
 <code>bower install --savedev csv-js</code>.  You can configure the csv-js library through use of globals,
-for example <code>CSV.DETECT_TYPES = false;</code>, refer to the {<a href="https://github.com/gkindel/CSV-JS">https://github.com/gkindel/CSV-JS</a> csv-js documentation} 
-for more information. </p>
+for example <code>CSV.DETECT_TYPES = false;</code>, refer to the {<a href="https://github.com/gkindel/CSV-JS">https://github.com/gkindel/CSV-JS</a> csv-js documentation}
+for more information.</p>
 <p>The options and API for importer can be found at <a href="#/api/ui.grid.importer">ui.grid.importer</a>.</p>
 <p>The importer adds menu items to the grid menu, to use the native UI you need to enable
 the grid menu using the gridOption <code>enableGridMenu</code>.  You can turn the menu items off by
@@ -39,7 +41,7 @@ setting <code>importerShowMenu: false</code>.</p>
 <div class="example"><div class="tutorial-page tutorial-207-importing-data-page"><p>In this example we use the native grid menu to import a file.  You need to provide a file
 from your file system to use the tutorial, you can copy either import.json or import.csv
 as a test file.</p>
-<p>The grid will start empty, and will auto-populate the column defs and data once the file 
+<p>The grid will start empty, and will auto-populate the column defs and data once the file
 has been imported (in many uses you would define the column defs up front, this example
 illustrates that doing so is not mandatory).</p>
 <h4 id="example_source">Source</h4>
@@ -74,7 +76,7 @@ illustrates that doing so is not mandatory).</p>
         importerDataAddCallback: function ( grid, newObjects ) {
           $scope.data = $scope.data.concat( newObjects );
         },
-        onRegisterApi: function(gridApi){ 
+        onRegisterApi: function(gridApi){
           $scope.gridApi = gridApi;
         }
       };

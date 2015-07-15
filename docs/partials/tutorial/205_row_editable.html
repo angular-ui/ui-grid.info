@@ -2,7 +2,9 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-205-row-edit-feature-page"><p>The ui.grid.rowedit extends the edit feature to support callbacks for server saving of the data,
+<div><div class="tutorial-page tutorial-205-row-edit-feature-page"><div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
+
+<p>The ui.grid.rowedit extends the edit feature to support callbacks for server saving of the data,
 with that data saved &quot;row at a time.&quot;  This feature attempts to give a user an experience similar
 to a spreadsheet - in that they can edit whichever fields they wish, and the feature will seek to
 save the data &quot;row at a time&quot;.  To the extent that the data doesn&#39;t generate errors, from a user
@@ -16,10 +18,10 @@ grey, but otherwise the user edits as if the data were local.</p>
 <p>Each row is in one of four states at any point in time:</p>
 <ul>
 <li>clean:  No edits have been made (or no edits since the last save)</li>
-<li><code>isDirty</code>:  Edits have been made, but the data has not yet been saved, either because the 
+<li><code>isDirty</code>:  Edits have been made, but the data has not yet been saved, either because the
 user is still editing the row or because the timer hasn&#39;t triggered as yet</li>
 <li><code>isSaving</code>: The callback to save the row has been called and has not yet returned.  The row is
-not editable during this time, and is shown as greyed out, so as to avoid the user 
+not editable during this time, and is shown as greyed out, so as to avoid the user
 causing locking exceptions by editing the row again</li>
 <li><code>isError</code>: The save callback returned an error.  The row still has the updated data displayed,
 but will be shown in red</li>
@@ -33,7 +35,7 @@ will wait on that promise.</p>
 <p>If the cellNav feature is also enabled, then a setFocus on a cell within the row is sufficient to delay
 the timer (this more easily deals with situations where only some columns are editable, and a user tabs
 or clicks to a non-editable field on the same row).</p>
-<p>If the promise is successfully resolved then the row is set back to clean.  If the promise is rejected then the 
+<p>If the promise is successfully resolved then the row is set back to clean.  If the promise is rejected then the
 row is set to a status of <code>isError</code>.</p>
 <p>Optionally, the calling application can request <code>flushDirtyRows</code>, which will trigger the save event for all
 currently dirty rows.  If the <code>rowEditWaitInterval</code> grid option is set to -1, then saves will never be triggered
@@ -42,13 +44,13 @@ by timer, and only be triggered when manually called.</p>
 <ul>
 <li><code>getDirtyRows()</code>: returns an array of gridRows of all currently dirty rows</li>
 <li><code>getErrorRows()</code>: returns an array of gridRows of all currently errored rows</li>
-<li><code>flushDirtyRows()</code>: flushes all currently dirty rows to the server, might be used 
+<li><code>flushDirtyRows()</code>: flushes all currently dirty rows to the server, might be used
 on a page navigation request or pressing of a save button</li>
 <li><code>saveRow( rowEntity )</code>: event called when a row is ready for saving</li>
 <li><code>rowEditWaitInterval</code>: grid option that controls how long a wait will be before a save is triggered (in ms)</li>
 </ul>
 </div><h2 id="example">Example</h2>
-<div class="example"><div class="tutorial-page tutorial-205-row-edit-feature-page"><p>In this example rows are saved 2 seconds after moving off, and the save is faked using a timeout of 3 seconds, so 
+<div class="example"><div class="tutorial-page tutorial-205-row-edit-feature-page"><p>In this example rows are saved 2 seconds after moving off, and the save is faked using a timeout of 3 seconds, so
 each save will take 3 seconds to complete.  Any row saved with a gender of &quot;male&quot; will error.</p>
 <h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-60" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
@@ -102,7 +104,7 @@ each save will take 3 seconds to complete.  Any row saved with a gender of &quot
         // create a fake promise - normally you'd use the promise returned by $http or $resource
         var promise = $q.defer();
         $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
-       
+
         // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
         $interval( function() {
           if (rowEntity.gender === 'male' ){
@@ -111,14 +113,14 @@ each save will take 3 seconds to complete.  Any row saved with a gender of &quot
             promise.resolve();
           }
         }, 3000, 1);
-      }; 
+      };
 
       $scope.gridOptions.onRegisterApi = function(gridApi){
         //set gridApi on scope
         $scope.gridApi = gridApi;
         gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
       };
-  
+
       $http.get('/data/500_complex.json')
       .success(function(data) {
         for(i = 0; i < data.length; i++){

@@ -29,7 +29,16 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.autoResize",
       "shortDescription": "ui.grid.autoResize",
-      "keywords": "api auto-resizing autoresize functionality grid module overview ui ui-grid"
+      "keywords": "alert alert-warning api auto-resizing autoresize bugs class feature functionality grid hasn lot module overview ready role testing ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.cellNav",
+      "shortName": "ui.grid.cellNav",
+      "type": "overview",
+      "moduleName": "ui.grid.cellNav",
+      "shortDescription": "ui.grid.cellNav",
+      "keywords": "alert alert-success api auto-resizing breaking cellnav changes class deprecation feature functionality grid longer module overview role stable ui ui-grid warning"
     },
     {
       "section": "api",
@@ -388,8 +397,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.",
-      "keywords": "api e2etestlibrary functions grid overview test ui"
+      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
+      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
     },
     {
       "section": "api",
@@ -397,8 +406,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
-      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
+      "shortDescription": "End to end test functions.",
+      "keywords": "api e2etestlibrary functions grid overview test ui"
     },
     {
       "section": "api",
@@ -425,7 +434,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.edit",
       "shortDescription": "ui.grid.edit",
-      "keywords": "allow api arrow capability cell cellnav cells data doc-module-components edit editing emulate enter entry full goal grid key keyboard keying module overview spreadsheet spreadsheet-like tab ui user"
+      "keywords": "alert alert-success allow api arrow breaking capability cell cellnav cells changes class data deprecation doc-module-components edit editing emulate enter entry feature full goal grid key keyboard keying longer module overview role spreadsheet spreadsheet-like stable tab ui user warning"
     },
     {
       "section": "api",
@@ -551,7 +560,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.expandable",
       "shortDescription": "ui.grid.expandable",
-      "keywords": "ability api create doc-module-components expand expandable grid module overview row subgrid subgrids ui"
+      "keywords": "ability alert alert-warning api breaking bugs changes class create development doc-module-components expand expandable feature grid major module outstanding overview role row subgrid subgrids ui"
     },
     {
       "section": "api",
@@ -632,7 +641,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.exporter",
       "shortDescription": "ui.grid.exporter",
-      "keywords": "ability api appropriate caller columns data doc-module-components enable exported exporter formats grid gridmenu module overview provide provided range rows selected ui visible"
+      "keywords": "ability alert alert-success api appropriate breaking caller changes class columns data deprecation doc-module-components enable exported exporter feature formats grid gridmenu longer module overview provide provided range role rows selected stable ui visible warning"
     },
     {
       "section": "api",
@@ -713,7 +722,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.grouping",
       "shortDescription": "ui.grid.grouping",
-      "keywords": "add aggregate aggregations allow api attributes avoid baked based break cache change changed collapsed column columns concept core created creates data day default defined design doc-module-components excel false feature filtering footer forces front functionality grid group grouped groupheader grouping headers hold identifying ignore insert inserting instantiation internalrow invocations isn items key level leverages logic menu module move multiple nested order overview precedence preserve process processing property provide real reflect respect row rows rowsprocessors set sort sorted sorting sorts specific tells thing time tree treebase treelevels triggered true ui visible"
+      "keywords": "add aggregate aggregations alert alert-warning allow api attributes avoid baked based break bugs cache change changed class collapsed column columns concept core created creates data day default defined design doc-module-components excel false feature filtering footer forces front functionality grid group grouped groupheader grouping hasn headers hold identifying ignore insert inserting instantiation internalrow invocations isn items key level leverages logic lot menu module move multiple nested order overview precedence preserve process processing property provide ready real reflect respect role row rows rowsprocessors set sort sorted sorting sorts specific tells testing thing time tree treebase treelevels triggered true ui visible"
     },
     {
       "section": "api",
@@ -812,7 +821,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.importer",
       "shortDescription": "ui.grid.importer",
-      "keywords": "$resource ability allows api application attributes belongs callback calls class column configured copies created creates csv currently data default defs displayname displays doesn don enabled entities errors feature file files formats grid header headings identification import imported importer imports instance internationalised json match matching menu module names newly object objects optionally overview process properties provision relies requesting row rowedit save sees time type ui ui-grid-importer user work"
+      "keywords": "$resource ability alert alert-success allows api application attributes belongs breaking callback calls changes class column configured copies created creates csv currently data default defs deprecation displayname displays doesn don enabled entities errors feature file files formats grid header headings identification import imported importer imports instance internationalised json longer match matching menu module names newly object objects optionally overview process properties provision relies requesting role row rowedit save sees stable time type ui ui-grid-importer user warning work"
     },
     {
       "section": "api",
@@ -875,7 +884,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.infiniteScroll",
       "shortDescription": "ui.grid.infiniteScroll",
-      "keywords": "api functionality grid infinite infinitescroll module overview scroll ui ui-grid"
+      "keywords": "alert alert-warning api bugs class feature functionality grid hasn infinite infinitescroll lot module overview ready role scroll testing ui ui-grid"
     },
     {
       "section": "api",
@@ -920,7 +929,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.moveColumns",
       "shortDescription": "ui.grid.moveColumns",
-      "keywords": "api capability change column columns doc-module-components enables grid module movecolumns moving overview position ui"
+      "keywords": "alert alert-warning api breaking bugs capability change changes class column columns development doc-module-components enables feature grid major module movecolumns moving outstanding overview position role ui"
     },
     {
       "section": "api",
@@ -983,7 +992,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.pagination",
       "shortDescription": "ui.grid.pagination",
-      "keywords": "api grid module overview pagination support ui ui-grid"
+      "keywords": "alert alert-warning api breaking bugs changes class development feature grid major module outstanding overview pagination role support ui ui-grid"
     },
     {
       "section": "api",
@@ -1037,7 +1046,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.pinning",
       "shortDescription": "ui.grid.pinning",
-      "keywords": "api column doc-module-components grid header menu module options overview pinning ui user"
+      "keywords": "alert alert-success api breaking changes class column deprecation doc-module-components feature grid header longer menu module options overview pinning role stable ui user warning"
     },
     {
       "section": "api",
@@ -1065,6 +1074,15 @@ NG_DOCS={
       "moduleName": "ui.grid.pinning",
       "shortDescription": "Public Api for pinning feature",
       "keywords": "api col column container feature function grid gridapi left object pin pincolumn pinned pinning public recognised types ui uigridpinningconstants"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.resizeColumns",
+      "shortName": "ui.grid.resizeColumns",
+      "type": "overview",
+      "moduleName": "ui.grid.resizeColumns",
+      "shortDescription": "ui.grid.resizeColumns",
+      "keywords": "alert alert-success allows api breaking changes class columns deprecation feature grid longer module overview resizecolumns resized role stable ui warning"
     },
     {
       "section": "api",
@@ -1118,7 +1136,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.rowEdit",
       "shortDescription": "ui.grid.rowEdit",
-      "keywords": "api benefits best data depends edit editing experience extends feature full grid module overview provide rowedit rows saving spreadsheet-like tracking tutorial ui ui-grid-cellnav ui-grid-edit usage"
+      "keywords": "alert alert-success api benefits best breaking changes class data depends deprecation edit editing experience extends feature full grid longer module overview provide role rowedit rows saving spreadsheet-like stable tracking tutorial ui ui-grid-cellnav ui-grid-edit usage warning"
     },
     {
       "section": "api",
@@ -1181,7 +1199,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.saveState",
       "shortDescription": "ui.grid.saveState",
-      "keywords": "ability api appropriate caller doc-module-components events grid module navigate overview provide provided restore returns save save-state savestate ui user"
+      "keywords": "ability alert alert-success api appropriate breaking caller changes class deprecation doc-module-components events feature grid longer module navigate overview provide provided restore returns role save save-state savestate stable ui user warning"
     },
     {
       "section": "api",
@@ -1235,7 +1253,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.selection",
       "shortDescription": "ui.grid.selection",
-      "keywords": "api doc-module-components grid module overview row selection ui"
+      "keywords": "alert alert-success api breaking changes class deprecation doc-module-components feature grid longer module overview role row selection stable ui warning"
     },
     {
       "section": "api",
@@ -1361,7 +1379,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.treeBase",
       "shortDescription": "ui.grid.treeBase",
-      "keywords": "achieve actual adds aggregates aggregation allowing api baked base based building builds built button buttons cache call callback calling change changed checks children clear collapsed collapsing collected column columns configuration core count create data default design doc-module-components documentation easily example expand expanded expanding expect false feature features filtering finalised flags footer format frequently functions grid group grouped grouping handling haven header ignoresort individual invocations label leaf leaves level link logic low maintains manipulate module node nodes non-grouped non-leaf notably operates opposed order original overview overwrite parent passes performed permits pointer priority processors property provide provided range raw rebuild recall recursive refer reference refers refresh rely remaining rendered represents row rowprocessors rows rowsprocessor rowsprocessors runs saved set sets setting shared showcolumnfooter sort sorted sorting sorts standard tells time top tree treeaggregation treeaggregations treebase treelevel treenode treenodes treeview triggered true turn type ui uigrid updated user valuefilter ve view visible works"
+      "keywords": "achieve actual adds aggregates aggregation alert alert-warning allowing api baked base based bugs building builds built button buttons cache call callback calling change changed checks children class clear collapsed collapsing collected column columns configuration core count create data default design doc-module-components documentation easily example expand expanded expanding expect false feature features filtering finalised flags footer format frequently functions grid group grouped grouping handling hasn haven header ignoresort individual invocations label leaf leaves level link logic lot low maintains manipulate module node nodes non-grouped non-leaf notably operates opposed order original overview overwrite parent passes performed permits pointer priority processors property provide provided range raw ready rebuild recall recursive refer reference refers refresh rely remaining rendered represents role row rowprocessors rows rowsprocessor rowsprocessors runs saved set sets setting shared showcolumnfooter sort sorted sorting sorts standard tells testing time top tree treeaggregation treeaggregations treebase treelevel treenode treenodes treeview triggered true turn type ui uigrid updated user valuefilter ve view visible works"
     },
     {
       "section": "api",
@@ -1451,7 +1469,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.treeView",
       "shortDescription": "ui.grid.treeView",
-      "keywords": "api array data design doc-module-components functionality grid grouping inherent leaves logic module moved nodes overview property provided thin tree treebase treeview ui underlying view wrapper"
+      "keywords": "alert alert-warning api array bugs class data design doc-module-components feature functionality grid grouping hasn inherent leaves logic lot module moved nodes overview property provided ready role testing thin tree treebase treeview ui underlying view wrapper"
     },
     {
       "section": "api",
@@ -1738,8 +1756,8 @@ NG_DOCS={
       "shortName": "201 Edit Feature",
       "type": "overview",
       "moduleName": "Tutorial: 201 Edit Feature",
-      "shortDescription": "The ui.grid.edit feature allows inline editing of grid data.  To enable, you must include the &#39;ui.grid.edit&#39; module",
-      "keywords": "$apply $http $scope __columndef _note active address addressformatter adjusted aftercelledit age allow allowing allows alternative angular angular-bootstrap angular-translate api app apply array arrows assign aware backing bar begin_cell_edit bindable binding boolean bootstrap box browser browsers called cancel_cell_edit cat cell celleditablecondition cellfilter cellnav cellscope changed checkbox chooser chosen city class code coldef column columndef columndefs columns compatible compiled content contents control controller controls css currenttarget custom data datatype datepicker default definitions depend determine directive directives disable display displayname documentation dog don double-click dropdown edit editable editablecelltemplate editdropdownfilter editdropdownidlabel editdropdownoptionsarray editdropdownrowentityoptionsarraypath editdropdownvaluelabel edited editfilechoosercallback editing editmodelfield editor editors element enable enablecelledit enablecelleditonfocus enabled end_cell_edit ends enter entity esc events example expression f2 false feature female field fields fields_ file filecontent filename filereader files filter fish focus foo function functionality gender genderhash grid gridapi gridcol gridoptions gridrow hamster height hidden html html5 ideal ignore implement implements include including inline input intent invoke invoked isactive isn js json key label labels lastcelledited lastfile left length load logic main mainctrl male mapgender medium mode model module msg native newvalue ng-controller ngtouch non-navigable note number numeric object oldvalue onload onregisterapi open option options options__ overview pet picker point populated process property provide provided publicapi purposes read readastext reader registered reprocess result return returns roadmap row rowentity rowrenderindex rows save scope select server set setfile setting simple sorting start stored storefile street string stuff success tab tags templatecache templates term text translate true tutorial type types typing ui ui-grid ui-grid-edit uigrideditor undefined uploaded url user valid values var variable widgets width won xxx yyyy-mm-dd zip"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$apply $http $scope __columndef _note active address addressformatter adjusted aftercelledit age alert alert-success allow allowing allows alternative angular angular-bootstrap angular-translate api app apply array arrows assign aware backing bar begin_cell_edit bindable binding boolean bootstrap box breaking browser browsers called cancel_cell_edit cat cell celleditablecondition cellfilter cellnav cellscope changed changes checkbox chooser chosen city class code coldef column columndef columndefs columns compatible compiled content contents control controller controls css currenttarget custom data datatype datepicker default definitions depend deprecation determine directive directives disable display displayname documentation dog don double-click dropdown edit editable editablecelltemplate editdropdownfilter editdropdownidlabel editdropdownoptionsarray editdropdownrowentityoptionsarraypath editdropdownvaluelabel edited editfilechoosercallback editing editmodelfield editor editors element enable enablecelledit enablecelleditonfocus enabled end_cell_edit ends enter entity esc events example expression f2 false feature female field fields fields_ file filecontent filename filereader files filter fish focus foo function functionality gender genderhash grid gridapi gridcol gridoptions gridrow hamster height hidden html html5 ideal ignore implement implements include including inline input intent invoke invoked isactive isn js json key label labels lastcelledited lastfile left length load logic longer main mainctrl male mapgender medium mode model module msg native newvalue ng-controller ngtouch non-navigable note number numeric object oldvalue onload onregisterapi open option options options__ overview pet picker point populated process property provide provided publicapi purposes read readastext reader registered reprocess result return returns roadmap role row rowentity rowrenderindex rows save scope select server set setfile setting simple sorting stable start stored storefile street string stuff success tab tags templatecache templates term text translate true tutorial type types typing ui ui-grid ui-grid-edit uigrideditor undefined uploaded url user valid values var variable warning widgets width won xxx yyyy-mm-dd zip"
     },
     {
       "section": "tutorial",
@@ -1747,8 +1765,8 @@ NG_DOCS={
       "shortName": "202 Cell Navigation",
       "type": "overview",
       "moduleName": "Tutorial: 202 Cell Navigation",
-      "shortDescription": "This grid example uses the ui-grid-cellNav directive to add cell navigation. To enable, you must include the &#39;ui.grid.cellNav&#39; ",
-      "keywords": "$http $log $scope add address age allowcellfocus allowing allows angular api app arrow balance btn btn-success button callback cell cellnav cells city class click col coldef colindex column columndef columndefs combined company continue controller core css current currentfocused currentselection data deep directive displayname documentation edit editable editing element email enable enter entity event example extract false feature focus focusable focused function getcurrentfocus getcurrentselection getfocusedcell grid gridapi gridoptions guid height html include info js json key left left-right length log main mainctrl margin-top mode modifierkeystomultiselectcells module move msg navigate navigated navigation newrowcol ng-bind ng-click ng-controller ng-model ngtouch null oldrowcol on_cellnav onregisterapi option overview pg-down pg-up phone pinning placeholder position print printselection programatically provided publicapi push register remembering requesting returns row rowcol rowindex scroll scrolling scrollto scrolltofocus selected selection setting shift-enter shift-tab showgridfooter specific subsumed success tab text tojson tostring true tutorial type ui ui-grid ui-grid-cellnav ui-grid-pinning user utilizing values var width"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $log $scope add address age alert alert-success allowcellfocus allowing allows angular api app arrow balance breaking btn btn-success button callback cell cellnav cells changes city class click col coldef colindex column columndef columndefs combined company continue controller core css current currentfocused currentselection data deep deprecation directive displayname documentation edit editable editing element email enable enter entity event example extract false feature focus focusable focused function getcurrentfocus getcurrentselection getfocusedcell grid gridapi gridoptions guid height html include info js json key left left-right length log longer main mainctrl margin-top mode modifierkeystomultiselectcells module move msg navigate navigated navigation newrowcol ng-bind ng-click ng-controller ng-model ngtouch null oldrowcol on_cellnav onregisterapi option overview pg-down pg-up phone pinning placeholder position print printselection programatically provided publicapi push register remembering requesting returns role row rowcol rowindex scroll scrolling scrollto scrolltofocus selected selection setting shift-enter shift-tab showgridfooter specific stable subsumed success tab text tojson tostring true tutorial type ui ui-grid ui-grid-cellnav ui-grid-pinning user utilizing values var warning width"
     },
     {
       "section": "tutorial",
@@ -1756,8 +1774,8 @@ NG_DOCS={
       "shortName": "203 Pinning",
       "type": "overview",
       "moduleName": "Tutorial: 203 Pinning",
-      "shortDescription": "The pinning feature allows the user to pin a column to left or right. To enable, you must include the &#39;ui.grid.pinning&#39; module and you must include the ui-grid-pinning directive on your grid element.",
-      "keywords": "$http $log $scope address age allows angular api app city class column columndef columndefs company controller css data definition directive disable displayname documentation element email enable enablepinning example feature friend friends function grid gridoptions height html include js json left level main mainctrl module ng-controller ngtouch note overview phone pin pinnedleft pinnedright pinning provided publicapi street success tutorial ui ui-grid ui-grid-pinning user var width zip"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $log $scope address age alert alert-success allows angular api app breaking changes city class column columndef columndefs company controller css data definition deprecation directive disable displayname documentation element email enable enablepinning example feature friend friends function grid gridoptions height html include js json left level longer main mainctrl module ng-controller ngtouch note overview phone pin pinnedleft pinnedright pinning provided publicapi role stable street success tutorial ui ui-grid ui-grid-pinning user var warning width zip"
     },
     {
       "section": "tutorial",
@@ -1765,8 +1783,8 @@ NG_DOCS={
       "shortName": "204 Column Resizing",
       "type": "overview",
       "moduleName": "Tutorial: 204 Column Resizing",
-      "shortDescription": "The Resize Columns feature allows each column to be resized.",
-      "keywords": "$http $scope allow allows angular api app automatically class coldef column columndef columndefs columns company constraints contents controller css data definition directive disable documentation element enable enablecolumnresizing enablesorting entire explicitly false feature field fill fixed full function gender grid gridoptions height html include individual js json left long main mainctrl maxwidth minwidth module movecolumns ng-controller ngtouch obey option options overview pixel prevents property provided publicapi reason recommended reduce reduced remaining rendered resize resizeable resizecolumns resized resizing retain separator set setting size space success total true tutorial ui ui-grid ui-grid-move-columns ui-grid-resize-columns var variable ve width widths won yourapp"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $scope alert alert-success allow allows angular api app automatically breaking changes class coldef column columndef columndefs columns company constraints contents controller css data definition deprecation directive disable documentation element enable enablecolumnresizing enablesorting entire explicitly false feature field fill fixed full function gender grid gridoptions height html include individual js json left long longer main mainctrl maxwidth minwidth module movecolumns ng-controller ngtouch obey option options overview pixel prevents property provided publicapi reason recommended reduce reduced remaining rendered resize resizeable resizecolumns resized resizing retain role separator set setting size space stable success total true tutorial ui ui-grid ui-grid-move-columns ui-grid-resize-columns var variable ve warning width widths won yourapp"
     },
     {
       "section": "tutorial",
@@ -1774,8 +1792,8 @@ NG_DOCS={
       "shortName": "205 Row Edit Feature",
       "type": "overview",
       "moduleName": "Tutorial: 205 Row Edit Feature",
-      "shortDescription": "The ui.grid.rowedit extends the edit feature to support callbacks for server saving of the data,",
-      "keywords": "$http $interval $q $resource $scope active address addressformatter aftercelledit age angular api app application array attempts avoid basic boolean button callback callbacks called calling causing cell celleditablecondition cellfilter cellnav city class clean clicks columndefs columns commences complete completing configurable controller controls create css currently data deals defer delay destroyed dirty displayed displayname documentation doesn easily edit editable edited editing edits enablecelledit enabled error errored errors event example exceptions experience extends extent fake faked false feature field fields filter flag flushdirtyrows flushes function gender generate getdirtyrows geterrorrows grey greyed grid gridapi gridoptions gridrows hasn height html input invisible isactive isdirty iserror issaving js json length local locking long main mainctrl male manually method methods module moving ms navigation ng-controller ngtouch non-editable number object occassionally occurs onregisterapi operate operation option optionally overview perspective point pressing promise properties provided publicapi ready red regime registered reject rejected request resolve resolved return returned returns row rowedit roweditwaitinterval rowentity rowrenderindex rows save saved saverow saves savetimer saving scope seconds seek server set setfocus setsavepromise situations spreadsheet status street success sufficient support tabs time timeout timer trigger triggered tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit ui-grid-row-edit updated user var wait whichever whilst width yyyy-mm-dd zip"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $interval $q $resource $scope active address addressformatter aftercelledit age alert alert-success angular api app application array attempts avoid basic boolean breaking button callback callbacks called calling causing cell celleditablecondition cellfilter cellnav changes city class clean clicks columndefs columns commences complete completing configurable controller controls create css currently data deals defer delay deprecation destroyed dirty displayed displayname documentation doesn easily edit editable edited editing edits enablecelledit enabled error errored errors event example exceptions experience extends extent fake faked false feature field fields filter flag flushdirtyrows flushes function gender generate getdirtyrows geterrorrows grey greyed grid gridapi gridoptions gridrows hasn height html input invisible isactive isdirty iserror issaving js json length local locking long longer main mainctrl male manually method methods module moving ms navigation ng-controller ngtouch non-editable number object occassionally occurs onregisterapi operate operation option optionally overview perspective point pressing promise properties provided publicapi ready red regime registered reject rejected request resolve resolved return returned returns role row rowedit roweditwaitinterval rowentity rowrenderindex rows save saved saverow saves savetimer saving scope seconds seek server set setfocus setsavepromise situations spreadsheet stable status street success sufficient support tabs time timeout timer trigger triggered tutorial type ui ui-grid ui-grid-cellnav ui-grid-edit ui-grid-row-edit updated user var wait warning whichever whilst width yyyy-mm-dd zip"
     },
     {
       "section": "tutorial",
@@ -1783,8 +1801,8 @@ NG_DOCS={
       "shortName": "206 Exporting Data",
       "type": "overview",
       "moduleName": "Tutorial: 206 Exporting Data",
-      "shortDescription": "The exporter feature allows data to be exported from the grid in",
-      "keywords": "$http $scope adds allows angular api app application applications assets automatically bold bom bower breaks buttons characters class color columndef columndefs company content controller css csv currentpage custom-csv-link-location data directive docdefinition don download earlier element enable enablegridmenu enableselectall entire equivalent example excel explorer export exported exporter exportercsvfilename exportercsvlinkelement exporterolderexcelcompatibility exporterpdfcustomformatter exporterpdfdefaultstyle exporterpdffooter exporterpdfheader exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablestyle exporting false feature field file find fontsize footerstyle format function gender grid gridapi gridoption gridoptions handful header headerstyle height html https import include including install installed internet issues italics items javascript js json letter library main mainctrl menu minification minified module myfile native newer ng-controller nganimate ngtouch note onregisterapi open opening option options overview pagecount pdf pdfmake portrait problem problems publicapi queryselectorall recommended red repo return rows script selected selection setting spreadsheet style styles success tabs text toolchain tostring true tutorial ui ui-grid ui-grid-exporter ui-grid-selection utf-16 var versions vfs_fonts visible width"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $scope adds alert alert-success allows angular api app application applications assets automatically bold bom bower breaking breaks buttons changes characters class color columndef columndefs company content controller css csv currentpage custom-csv-link-location data deprecation directive docdefinition don download earlier element enable enablegridmenu enableselectall entire equivalent example excel explorer export exported exporter exportercsvfilename exportercsvlinkelement exporterolderexcelcompatibility exporterpdfcustomformatter exporterpdfdefaultstyle exporterpdffooter exporterpdfheader exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablestyle exporting false feature field file find fontsize footerstyle format function gender grid gridapi gridoption gridoptions handful header headerstyle height html https import include including install installed internet issues italics items javascript js json letter library longer main mainctrl menu minification minified module myfile native newer ng-controller nganimate ngtouch note onregisterapi open opening option options overview pagecount pdf pdfmake portrait problem problems publicapi queryselectorall recommended red repo return role rows script selected selection setting spreadsheet stable style styles success tabs text toolchain tostring true tutorial ui ui-grid ui-grid-exporter ui-grid-selection utf-16 var versions vfs_fonts visible warning width"
     },
     {
       "section": "tutorial",
@@ -1792,8 +1810,8 @@ NG_DOCS={
       "shortName": "207 Importing Data",
       "type": "overview",
       "moduleName": "Tutorial: 207 Importing Data",
-      "shortDescription": "The importer feature allows data to be imported into the grid in",
-      "keywords": "$http $interval $scope $translate ability accept adding adds allows angular angular-translate api app array assumed attributes auto-populate bower called cellheaderfilter class column columndefs columns company concat configure controller copy created css csv csv-js custom data define defs demand detect_types directive displayname documentation doe elements empty enable enablegridmenu entity example exists extended false fasttruck fasttrucks feature female field file files filter format formats front function gender globals grid gridapi gridoption gridoptions headers heading headings height html illustrates implement implemented import imported importer importerdataaddcallback importerheaderfiltercallback importerobjectcallback importershowmenu importing imports include install installed instant internationalisation items jane john js json library loaded main mainctrl male mandatory mapped maps match menu module native needing newobjects ng-controller nganimate ngtouch objects onregisterapi optionally options overview pass picker promise provide provided publicapi received refer return routine row setting smith start system test testicon text translated translation true turn tutorial type ui ui-grid ui-grid-importer user var width"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $interval $scope $translate ability accept adding adds alert alert-success allows angular angular-translate api app array assumed attributes auto-populate bower breaking called cellheaderfilter changes class column columndefs columns company concat configure controller copy created css csv csv-js custom data define defs demand deprecation detect_types directive displayname documentation doe elements empty enable enablegridmenu entity example exists extended false fasttruck fasttrucks feature female field file files filter format formats front function gender globals grid gridapi gridoption gridoptions headers heading headings height html illustrates implement implemented import imported importer importerdataaddcallback importerheaderfiltercallback importerobjectcallback importershowmenu importing imports include install installed instant internationalisation items jane john js json library loaded longer main mainctrl male mandatory mapped maps match menu module native needing newobjects ng-controller nganimate ngtouch objects onregisterapi optionally options overview pass picker promise provide provided publicapi received refer return role routine row setting smith stable start system test testicon text translated translation true turn tutorial type ui ui-grid ui-grid-importer user var warning width"
     },
     {
       "section": "tutorial",
@@ -1801,8 +1819,8 @@ NG_DOCS={
       "shortName": "208 Save and restore state",
       "type": "overview",
       "moduleName": "Tutorial: 208 Save and restore state",
-      "shortDescription": "The save state feature allows you to save the current look of the grid",
-      "keywords": "$http $interval $scope adjust alexander allows angular api app application apply btn btn-success button calling cancelfilterincolumn cell cellnav class click clickcolumnmenuhide clickcolumnmenuremovesort clickcolumnmenusortasc column columndefs columns company control controller cookie core css current data database default deliberately describe documentation element enablefiltering enterfilterincolumn ethel example expect expectcellvaluematch expectheadercellvaluematch expectheadercolumncount false feature female filter filters firefoxreload foley freda function functionality gee gender grid grid1 gridapi gridoptions gridtestutils grouping height held hide html isn js json layout left main mainctrl mason methods modify module movecolumns navigate ng-click ng-controller nganimate ngtouch note object onregisterapi options order overview packages permits pinning price provide provided publicapi remove render reorder require resizecolumns responsible restore restorestate return returning returns save saved savefilter savefocus savegrouping savegroupingexpandedstates saveorder savepinning savescroll saveselection savesort savestate savetreeview savevisible savewidths scenario select selection session set sets sort sorts spec specific store stored stores storing success takes time transient true tutorial type ui ui-grid ui-grid-cellnav ui-grid-grouping ui-grid-move-columns ui-grid-pinning ui-grid-resize-columns ui-grid-save-state ui-grid-selection user var width widths"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $interval $scope adjust alert alert-success alexander allows angular api app application apply breaking btn btn-success button calling cancelfilterincolumn cell cellnav changes class click clickcolumnmenuhide clickcolumnmenuremovesort clickcolumnmenusortasc column columndefs columns company control controller cookie core css current data database default deliberately deprecation describe documentation element enablefiltering enterfilterincolumn ethel example expect expectcellvaluematch expectheadercellvaluematch expectheadercolumncount false feature female filter filters firefoxreload foley freda function functionality gee gender grid grid1 gridapi gridoptions gridtestutils grouping height held hide html isn js json layout left longer main mainctrl mason methods modify module movecolumns navigate ng-click ng-controller nganimate ngtouch note object onregisterapi options order overview packages permits pinning price provide provided publicapi remove render reorder require resizecolumns responsible restore restorestate return returning returns role save saved savefilter savefocus savegrouping savegroupingexpandedstates saveorder savepinning savescroll saveselection savesort savestate savetreeview savevisible savewidths scenario select selection session set sets sort sorts spec specific stable store stored stores storing success takes time transient true tutorial type ui ui-grid ui-grid-cellnav ui-grid-grouping ui-grid-move-columns ui-grid-pinning ui-grid-resize-columns ui-grid-save-state ui-grid-selection user var warning width widths"
     },
     {
       "section": "tutorial",
@@ -1810,8 +1828,8 @@ NG_DOCS={
       "shortName": "209 Grouping",
       "type": "overview",
       "moduleName": "Tutorial: 209 Grouping",
-      "shortDescription": "The grouping feature allows you to group rows together based on similar",
-      "keywords": "$http $interval $scope address adds age aggregate aggregatecolumn aggregated aggregates aggregatestree aggregation aggregations aggval allow allowing allows alpha angular api app applying asc attributecol automatically average avg avoid balance base based body breaking breaks btn btn-success button buttons calculate calling cellfilter celltemplate change changed changegrouping changes children class cleanly cleargrouping clears code col colname column columndef columndefs columns columnsprocessor company config consideration console controller count counting counts creating css currency current custom custom_filters customtreeaggregationfinalizerfn customtreeaggregationfinalizertext data deeper default define defining delete dependency desc describe development differently direction distribution documentation documented easily edited enablefiltering enhancement entity example excel existing expand expandall expandallrows exported exporter external extracts false feature female files filter filtered filtering finalizer find foreach format formatting front function functionality functions gender genderhash genders getaggregates getfullyear getgrouping getmonth grid grid1 gridapi gridoption gridoptions gridtestutils group groupcolumn grouped groupheader grouping groupingcolumnprocessor groupingindent groupingrowheaderalwaysvisible groupingrowheaderwidth groupingsuppressaggregationtext grouplevel grouppriority grouprowheader groups groupval handled handles header height high higher html include included including inclusion indent indented individual initialisation input insertion instantiations interact isn js json larger length level leverages limit list log main mainctrl male map mapgender marked match max methods min module move moved moving names newnode ng-click ng-controller ng-if nganimate ngtouch nicer node notable null number onregisterapi option optionally options order otheraggregations outstandings overriding overview people permit persisted pinning pivot pixels pleasing prior priority programmatically provided providing proxy publicapi rc22 recursiveextract registered registereddate reload remove removes removing rendercontainers rendered replace require result return returned reversed row rowheader rownum rows rtl running runs saved savestate scenario second selected selection set setgrouping sets setting settings shared showing skip skipping slice sort sorted space spec special specific standalone start structure success suppress suppressremovesort table templates testing text things title togglefirstrow togglerow togglerowtreestate togglesecondrow tooltip tree treeaggregation treeaggregationfn treeaggregationtype treebase treechildren treeindent treelevel treerowheaderalwaysvisible treerowheaderwidth treeview true tuning tutorial type typeof ui ui-grid ui-grid-cell-contents ui-grid-grouping uigridgroupingconstants undefined ungroupcolumn ungrouped ungroups unit user values var visible visiblerowcache visually wanted watch ways width work working write writes xxxx"
+      "shortDescription": "Beta This feature is ready for testing, but it either hasn&#39;t seen a lot of use or has some known bugs.",
+      "keywords": "$http $interval $scope address adds age aggregate aggregatecolumn aggregated aggregates aggregatestree aggregation aggregations aggval alert alert-warning allow allowing allows alpha angular api app applying asc attributecol automatically average avg avoid balance base based body breaking breaks btn btn-success bugs button buttons calculate calling cellfilter celltemplate change changed changegrouping changes children class cleanly cleargrouping clears code col colname column columndef columndefs columns columnsprocessor company config consideration console controller count counting counts creating css currency current custom custom_filters customtreeaggregationfinalizerfn customtreeaggregationfinalizertext data deeper default define defining delete dependency desc describe development differently direction distribution documentation documented easily edited enablefiltering enhancement entity example excel existing expand expandall expandallrows exported exporter external extracts false feature female files filter filtered filtering finalizer find foreach format formatting front function functionality functions gender genderhash genders getaggregates getfullyear getgrouping getmonth grid grid1 gridapi gridoption gridoptions gridtestutils group groupcolumn grouped groupheader grouping groupingcolumnprocessor groupingindent groupingrowheaderalwaysvisible groupingrowheaderwidth groupingsuppressaggregationtext grouplevel grouppriority grouprowheader groups groupval handled handles hasn header height high higher html include included including inclusion indent indented individual initialisation input insertion instantiations interact isn js json larger length level leverages limit list log lot main mainctrl male map mapgender marked match max methods min module move moved moving names newnode ng-click ng-controller ng-if nganimate ngtouch nicer node notable null number onregisterapi option optionally options order otheraggregations outstandings overriding overview people permit persisted pinning pivot pixels pleasing prior priority programmatically provided providing proxy publicapi rc22 ready recursiveextract registered registereddate reload remove removes removing rendercontainers rendered replace require result return returned reversed role row rowheader rownum rows rtl running runs saved savestate scenario second selected selection set setgrouping sets setting settings shared showing skip skipping slice sort sorted space spec special specific standalone start structure success suppress suppressremovesort table templates testing text things title togglefirstrow togglerow togglerowtreestate togglesecondrow tooltip tree treeaggregation treeaggregationfn treeaggregationtype treebase treechildren treeindent treelevel treerowheaderalwaysvisible treerowheaderwidth treeview true tuning tutorial type typeof ui ui-grid ui-grid-cell-contents ui-grid-grouping uigridgroupingconstants undefined ungroupcolumn ungrouped ungroups unit user values var visible visiblerowcache visually wanted watch ways width work working write writes xxxx"
     },
     {
       "section": "tutorial",
@@ -1819,8 +1837,8 @@ NG_DOCS={
       "shortName": "210 Selection",
       "type": "overview",
       "moduleName": "Tutorial: 210 Selection",
-      "shortDescription": "This grid example uses the ui-grid-selection directive to row selection. To enable, you must include the &#39;ui.grid.selection&#39; ",
-      "keywords": "$http $interval $log $scope $timeout add additional address age allow allowcellfocus allowing allows angular api app auto-selects batch box btn btn-success button call callback changed changes check checkboxes city class clearall clearselectedrows click clicking client cmd-key column columndefs console controller core css ctrl-key current currently data datachange default demonstrates determine digest directive disabled displayname divide documentation dynamically edit element enable enablefullrowselection enablerowheaderselection enablerowselection enableselectall enableselectionbatchevent entity event events example examples false feature focusable full function getselectallstate grid grid1 gridapi gridoption gridoptions header height hidden html include individual individually info initialisation isrowselectable isselected javascript js json length loaded log loop main mainctrl manually modifierkeystomultiselect module msg multi-select multiple multiselect ng-bind ng-click ng-controller ng-disabled ngtouch note notifydatachange nounselect onregisterapi open option options overview pressing processing programatically provide provided publicapi register result return row rowheader rowheaderselection rowheight rows rowselection rowselectionchanged rowselectionchangedbatch scope second secondctrl select selectable selectall selectallrows selectallvisiblerows selected selecting selection selectionrowheaderwidth selectrow server set setmodifierkeystomultiselect setmultiselect setselectable setting shift-key showgridfooter side single success ticked time toggled togglefullrowselection togglemodifierkeystomultiselect togglemultiselect togglerow1 togglerowselection top true tutorial type ui ui-grid ui-grid-selection uigridconstants unselect var visible wait watch whilst width"
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $interval $log $scope $timeout add additional address age alert alert-success allow allowcellfocus allowing allows angular api app auto-selects batch box breaking btn btn-success button call callback changed changes check checkboxes city class clearall clearselectedrows click clicking client cmd-key column columndefs console controller core css ctrl-key current currently data datachange default demonstrates deprecation determine digest directive disabled displayname divide documentation dynamically edit element enable enablefullrowselection enablerowheaderselection enablerowselection enableselectall enableselectionbatchevent entity event events example examples false feature focusable full function getselectallstate grid grid1 gridapi gridoption gridoptions header height hidden html include individual individually info initialisation isrowselectable isselected javascript js json length loaded log longer loop main mainctrl manually modifierkeystomultiselect module msg multi-select multiple multiselect ng-bind ng-click ng-controller ng-disabled ngtouch note notifydatachange nounselect onregisterapi open option options overview pressing processing programatically provide provided publicapi register result return role row rowheader rowheaderselection rowheight rows rowselection rowselectionchanged rowselectionchangedbatch scope second secondctrl select selectable selectall selectallrows selectallvisiblerows selected selecting selection selectionrowheaderwidth selectrow server set setmodifierkeystomultiselect setmultiselect setselectable setting shift-key showgridfooter side single stable success ticked time toggled togglefullrowselection togglemodifierkeystomultiselect togglemultiselect togglerow1 togglerowselection top true tutorial type ui ui-grid ui-grid-selection uigridconstants unselect var visible wait warning watch whilst width"
     },
     {
       "section": "tutorial",
@@ -1828,8 +1846,8 @@ NG_DOCS={
       "shortName": "212 Infinite scroll",
       "type": "overview",
       "moduleName": "Tutorial: 212 Infinite scroll",
-      "shortDescription": "The infinite scroll feature allows the user to lazy load their data to gridOptions.data.",
-      "keywords": "$http $q $scope $timeout account add adjust adjusts age aim allow allows angular api app appearance appropriately array assume attempt avoid basically behaviour bottom button call calling changes checkdatalength circumstances class columndefs complete concat container continuous controller css cycle data dataloaded dataremovedbottom dataremovedtop dataset decided default defer digest direction discard discarddirection discarded discarding documentation enable enabled error event events example exist explicitly external false feature filter filtering finally finish firstpage firstpage-- function generate getdatadown getdataup getfirstdata getpage grid gridapi gridoptions handling height high hit hitting hold hopefully html infinite infinitescroll infinitescrolldown infinitescrollrowsfromend infinitescrollup ingest ingested ingesting js json jumpy keeping lastpage lastpage-- lazy length listen ll load loaded main mainctrl memory middle module move needed needloadmoredata needloadmoredatatop needmoredata needmoredatatop newdata newly ng-click ng-controller ngtouch normal notify number occur onregisterapi optionally overview parent passed pixel position prefetching preserve previous process promise propagate propagating provided publicapi push raise reach reached real record records reflect reject reload remove removed request requests res reset resetdata resetscroll resolve respond retrieved return rows rowsfromend save savescrollpercentage scroll scrolldown scrolling scrollup set sets setscrolldirections showing situation slice slowly smooth sorting start starts success suddenly suppress time timeout told top touchpad trigger triggering true turn tutorial ui ui-grid ui-grid-infinite-scroll up-front upwards user var ve wait width won work"
+      "shortDescription": "Beta This feature is ready for testing, but it either hasn&#39;t seen a lot of use or has some known bugs.",
+      "keywords": "$http $q $scope $timeout account add adjust adjusts age aim alert alert-warning allow allows angular api app appearance appropriately array assume attempt avoid basically behaviour bottom bugs button call calling changes checkdatalength circumstances class columndefs complete concat container continuous controller css cycle data dataloaded dataremovedbottom dataremovedtop dataset decided default defer digest direction discard discarddirection discarded discarding documentation enable enabled error event events example exist explicitly external false feature filter filtering finally finish firstpage firstpage-- function generate getdatadown getdataup getfirstdata getpage grid gridapi gridoptions handling hasn height high hit hitting hold hopefully html infinite infinitescroll infinitescrolldown infinitescrollrowsfromend infinitescrollup ingest ingested ingesting js json jumpy keeping lastpage lastpage-- lazy length listen ll load loaded lot main mainctrl memory middle module move needed needloadmoredata needloadmoredatatop needmoredata needmoredatatop newdata newly ng-click ng-controller ngtouch normal notify number occur onregisterapi optionally overview parent passed pixel position prefetching preserve previous process promise propagate propagating provided publicapi push raise reach reached ready real record records reflect reject reload remove removed request requests res reset resetdata resetscroll resolve respond retrieved return role rows rowsfromend save savescrollpercentage scroll scrolldown scrolling scrollup set sets setscrolldirections showing situation slice slowly smooth sorting start starts success suddenly suppress testing time timeout told top touchpad trigger triggering true turn tutorial ui ui-grid ui-grid-infinite-scroll up-front upwards user var ve wait width won work"
     },
     {
       "section": "tutorial",
@@ -1837,8 +1855,8 @@ NG_DOCS={
       "shortName": "213 Auto-Resizing",
       "type": "overview",
       "moduleName": "Tutorial: 213 Auto-Resizing",
-      "shortDescription": "The auto-resize feature will enable the grid to resize itself when its container changes size.",
-      "keywords": "$http $log $scope add adding address affect age angular app application auto-resize auto-resizing autoresize btn btn-success button changed changes checker city class columndefs company container controller css data dependencies directive displayname element email enable feature floor friend friends function getelementsbyclassname grid gridoptions height html include interval js json main mainctrl math module negatively newheight newwidth ng-click ng-controller ngtouch overview performance phone pinnedleft pinnedright px random randomsize resize sees site size street success tutorial type ui ui-grid ui-grid-auto-resize var width works zip"
+      "shortDescription": "Beta This feature is ready for testing, but it either hasn&#39;t seen a lot of use or has some known bugs.",
+      "keywords": "$http $log $scope add adding address affect age alert alert-warning angular app application auto-resize auto-resizing autoresize btn btn-success bugs button changed changes checker city class columndefs company container controller css data dependencies directive displayname element email enable feature floor friend friends function getelementsbyclassname grid gridoptions hasn height html include interval js json lot main mainctrl math module negatively newheight newwidth ng-click ng-controller ngtouch overview performance phone pinnedleft pinnedright px random randomsize ready resize role sees site size street success testing tutorial type ui ui-grid ui-grid-auto-resize var width works zip"
     },
     {
       "section": "tutorial",
@@ -1846,8 +1864,8 @@ NG_DOCS={
       "shortName": "214 Pagination",
       "type": "overview",
       "moduleName": "Tutorial: 214 Pagination",
-      "shortDescription": "When pagination is enabled, the data is displayed in pages that can be browsed using using the built in pagination selector.",
-      "keywords": "$http $scope angular api app based browsed btn btn-success built button class columndefs company consider controlled controller controls css data displayed documentation enabled enablepaginationcontrols external false feature function gender getpage gettotalpages grid gridapi gridapi2 gridoptions gridoptions1 gridoptions2 html infinite js json main mainctrl module native nextpage ng-click ng-controller ngtouch onregisterapi overview pagination paginationpagesize paginationpagesizes previous previouspage provided publicapi retrieves scroll seek selector server success tutorial type ui ui-grid ui-grid-pagination var wanted width"
+      "shortDescription": "Alpha This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.",
+      "keywords": "$http $scope alert alert-warning angular api app based breaking browsed btn btn-success bugs built button changes class columndefs company consider controlled controller controls css data development displayed documentation enabled enablepaginationcontrols external false feature function gender getpage gettotalpages grid gridapi gridapi2 gridoptions gridoptions1 gridoptions2 html infinite js json main mainctrl major module native nextpage ng-click ng-controller ngtouch onregisterapi outstanding overview pagination paginationpagesize paginationpagesizes previous previouspage provided publicapi retrieves role scroll seek selector server success tutorial type ui ui-grid ui-grid-pagination var wanted width"
     },
     {
       "section": "tutorial",
@@ -1855,8 +1873,8 @@ NG_DOCS={
       "shortName": "215 Tree View",
       "type": "overview",
       "moduleName": "Tutorial: 215 Tree View",
-      "shortDescription": "The tree view feature allows you to create a tree from your grid, specifying which",
-      "keywords": "$http $interval $scope adding additional address age aggregation allow allows alpha angular api app arrangement array arrives automatically balance body breaking btn btn-success button buttons cellfilter change changes children class code columndef columndefs combining company complex controller create css currency current data deeper defaults delay describe detail development display distribution documentation documented doesn dynamic dynamically enablefiltering enablesorting entity event events example expand expandall expandallrows expanded false feature female files filtered filtering filters function functions gender grid grid1 gridapi griddable gridoptions grids gridtestutils grouping guerrero header height hourglass html icon implemented implements include included includes increase incrementally indented initial js json larger leaves length level levels listen ll load loaded loading logic lopez main mainctrl male methods module move moved ng-click ng-controller nganimate ngtouch nice nicer nodeloaded nodes notable note number onregisterapi options outstandings overview parents people pixels point property provided publicapi recursive refer refresh render rendercontainers replace require retrieve row rowexpanded rownum rows scenario second server set setting shared showtreeexpandnochildren simulate slice sort sorting sorts spec splice start structure success toggleexpandnochildren togglefirstrow togglerow togglerowtreestate togglesecondrow tree treebase treeindent treerowheaderwidth trees treeview treeview_ true tutorial type ui ui-grid ui-grid-tree-view uigridtreeviewconstants users values var view visible visiblerowcache watch whilst width"
+      "shortDescription": "Beta This feature is ready for testing, but it either hasn&#39;t seen a lot of use or has some known bugs.",
+      "keywords": "$http $interval $scope adding additional address age aggregation alert alert-warning allow allows alpha angular api app arrangement array arrives automatically balance body breaking btn btn-success bugs button buttons cellfilter change changes children class code columndef columndefs combining company complex controller create css currency current data deeper defaults delay describe detail development display distribution documentation documented doesn dynamic dynamically enablefiltering enablesorting entity event events example expand expandall expandallrows expanded false feature female files filtered filtering filters function functions gender grid grid1 gridapi griddable gridoptions grids gridtestutils grouping guerrero hasn header height hourglass html icon implemented implements include included includes increase incrementally indented initial js json larger leaves length level levels listen ll load loaded loading logic lopez lot main mainctrl male methods module move moved ng-click ng-controller nganimate ngtouch nice nicer nodeloaded nodes notable note number onregisterapi options outstandings overview parents people pixels point property provided publicapi ready recursive refer refresh render rendercontainers replace require retrieve role row rowexpanded rownum rows scenario second server set setting shared showtreeexpandnochildren simulate slice sort sorting sorts spec splice start structure success testing toggleexpandnochildren togglefirstrow togglerow togglerowtreestate togglesecondrow tree treebase treeindent treerowheaderwidth trees treeview treeview_ true tutorial type ui ui-grid ui-grid-tree-view uigridtreeviewconstants users values var view visible visiblerowcache watch whilst width"
     },
     {
       "section": "tutorial",
@@ -1864,8 +1882,8 @@ NG_DOCS={
       "shortName": "216 Expandable grid",
       "type": "overview",
       "moduleName": "Tutorial: 216 Expandable grid",
-      "shortDescription": "Module &#39;ui.grid.expandable&#39; adds the subgrid feature to grid. To show the subgrid you need to provide following grid option:",
-      "keywords": "$http $log $scope access addition address adds age angular api app appears btn btn-small button checkboxes city class collapse collapseallrows columndefs company configuration control-group controller css data documentation enablerowselection entity events expand expandable expandablerowheight expandablerowscope expandablerowtemplate expandablescope expandallrows expanded expanding feature field filler fired fos friends function gender grid gridapi gridoptions height html isexpanded js json left length levels main mainctrl methods module multiple nesting ng-click ng-controller ngtouch object onregisterapi option overview pinnedleft pinning pins provide provided publicapi render retrieve row rowexpandabletemplate rowexpandedstatechanged rows scope scroll scrollfillerclass secondctrl selection style subgrid subgridoptions subgrids subgridscopevariable subgridvariable success template thirdctrl true tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning ui-grid-selection upto var variables width works"
+      "shortDescription": "Alpha This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.",
+      "keywords": "$http $log $scope access addition address adds age alert alert-warning angular api app appears breaking btn btn-small bugs button changes checkboxes city class collapse collapseallrows columndefs company configuration control-group controller css data development documentation enablerowselection entity events expand expandable expandablerowheight expandablerowscope expandablerowtemplate expandablescope expandallrows expanded expanding feature field filler fired fos friends function gender grid gridapi gridoptions height html isexpanded js json left length levels main mainctrl major methods module multiple nesting ng-click ng-controller ngtouch object onregisterapi option outstanding overview pinnedleft pinning pins provide provided publicapi render retrieve role row rowexpandabletemplate rowexpandedstatechanged rows scope scroll scrollfillerclass secondctrl selection style subgrid subgridoptions subgrids subgridscopevariable subgridvariable success template thirdctrl true tutorial type ui ui-grid ui-grid-expandable ui-grid-pinning ui-grid-selection upto var variables width works"
     },
     {
       "section": "tutorial",
@@ -1873,8 +1891,8 @@ NG_DOCS={
       "shortName": "217 Column Moving",
       "type": "overview",
       "moduleName": "Tutorial: 217 Column Moving",
-      "shortDescription": "Feature ui.grid.moveColumns allows moving column to a different position. To enable, you must include the ui.grid.moveColumns module",
-      "keywords": "$http $scope age allows alternatively angular api app class colmovable column columndef columndefs columns controller css data default definitions directive disable documentation dragging dropping element email enable enablecolumnmoving enabled feature function gender grid gridapi gridoptions height html include js json leftmost main mainctrl method module move movecolumn movecolumns moving newposition ng-controller ngtouch number options overview position property provided publicapi ranging repositioned rightmost specific success tutorial ui ui-grid ui-grid-move-columns var visible width"
+      "shortDescription": "Alpha This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.",
+      "keywords": "$http $scope age alert alert-warning allows alternatively angular api app breaking bugs changes class colmovable column columndef columndefs columns controller css data default definitions development directive disable documentation dragging dropping element email enable enablecolumnmoving enabled feature function gender grid gridapi gridoptions height html include js json leftmost main mainctrl major method module move movecolumn movecolumns moving newposition ng-controller ngtouch number options outstanding overview position property provided publicapi ranging repositioned rightmost role specific success tutorial ui ui-grid ui-grid-move-columns var visible width"
     },
     {
       "section": "tutorial",

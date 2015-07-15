@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/importer/js/importer.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/importer/js/importer.js#L128" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ng-grid/edit/master/src/features/importer/js/importer.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/importer/js/importer.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.importer</code>
 </span>
 </div>
@@ -8,7 +8,7 @@
 set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a></p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/importer/js/importer.js#L256" class="view-source icon-eye-open"> </a><h3 id="methods_importerdataaddcallback">importerDataAddCallback(grid, newObjects)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/importer/js/importer.js#L259" class="view-source icon-eye-open"> </a><h3 id="methods_importerdataaddcallback">importerDataAddCallback(grid, newObjects)</h3>
 <div class="importerdataaddcallback"><div class="importerdataaddcallback-page"><p>A mandatory callback function that adds data to the source data array.  The grid
 generally doesn&#39;t add rows to the source data array, it is tidier to handle this through a user
 callback.</p>
@@ -21,10 +21,10 @@ callback.</p>
 </div></td></tr><tr><td>newObjects</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="importerdataaddcallback-page"><p>an array of new objects that you should add to your data</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/importer/js/importer.js#L235" class="view-source icon-eye-open"> </a><h3 id="methods_importererrorcallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/importer/js/importer.js#L238" class="view-source icon-eye-open"> </a><h3 id="methods_importererrorcallback">importerErrorCallback(grid, errorKey, consoleMessage, context)</h3>
 <div class="importererrorcallback"><div class="importererrorcallback-page"><p>A callback function that provides custom error handling, rather
-than the standard grid behaviour of an alert box and a console message.  You 
-might use this to internationalise the console log messages, or to write to a 
+than the standard grid behaviour of an alert box and a console message.  You
+might use this to internationalise the console log messages, or to write to a
 custom logging routine that returned errors to the server.</p>
 <pre class="prettyprint linenums">
      gridOptions.importerErrorCallback: function( grid, errorKey, consoleMessage, context ) {
@@ -41,11 +41,11 @@ importer.noObjects, importer.invalidCsv, importer.invalidJson, importer.jsonNotA
 often the file content itself or the element that is in error</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/importer/js/importer.js#L209" class="view-source icon-eye-open"> </a><h3 id="methods_importerheaderfilter">importerHeaderFilter(displayName)</h3>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/importer/js/importer.js#L212" class="view-source icon-eye-open"> </a><h3 id="methods_importerheaderfilter">importerHeaderFilter(displayName)</h3>
 <div class="importerheaderfilter"><div class="importerheaderfilter-page"><p>A callback function that will filter (usually translate) a single
 header.  Used when you want to match the passed in column names to the column
 displayName after the header filter.</p>
-<p>Your callback routine needs to return the filtered header value. 
+<p>Your callback routine needs to return the filtered header value.
 <pre class="prettyprint linenums">
      gridOptions.importerHeaderFilter: function( displayName ) {
        return $translate.instant( displayName );
@@ -59,7 +59,7 @@ displayName after the header filter.</p>
 </div></td></tr></tbody></table><h5 id="methods_importerheaderfilter_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="importerheaderfilter-page"><p>the translated name</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/importer/js/importer.js#L313" class="view-source icon-eye-open"> </a><h3 id="methods_importerobjectcallback">importerObjectCallback(grid, newObject)</h3>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/importer/js/importer.js#L316" class="view-source icon-eye-open"> </a><h3 id="methods_importerobjectcallback">importerObjectCallback(grid, newObject)</h3>
 <div class="importerobjectcallback"><div class="importerobjectcallback-page"><p>A callback that massages the data for each object.  For example,
 you might have data stored as a code value, but display the decode.  This callback
 can be used to change the decoded value back into a code.  Defaults to doing nothing.</p>
@@ -84,9 +84,9 @@ gridOptions.importerObjectCallback = function ( grid, newObject ) {
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ng-grid/blob/18a487e/src/features/importer/js/importer.js#L184" class="view-source icon-eye-open"> </a><h3 id="methods_importerprocessheaders">importerProcessHeaders(grid, headerArray)</h3>
+<li><a href="https://github.com/angular-ui/ng-grid/blob/70fbc45/src/features/importer/js/importer.js#L187" class="view-source icon-eye-open"> </a><h3 id="methods_importerprocessheaders">importerProcessHeaders(grid, headerArray)</h3>
 <div class="importerprocessheaders"><div class="importerprocessheaders-page"><p>A callback function that will process headers using custom
-logic.  Set this callback function if the headers that your user will provide in their 
+logic.  Set this callback function if the headers that your user will provide in their
 import file don&#39;t necessarily match the grid header or field names.  This might commonly
 occur where your application is internationalised, and therefore the field names
 that the user recognises are in a different language than the field names that
@@ -101,9 +101,9 @@ of matching column names.  A null value in any given position means &quot;don&#3
        var thisCol;
        headerArray.forEach( function( value, index ) {
          thisCol = mySpecialLookupFunction( value );
-         myHeaderColumns.push( thisCol.name ); 
+         myHeaderColumns.push( thisCol.name );
        });
-       
+
        return myHeaderCols;
      })
 </pre>
@@ -124,7 +124,7 @@ Otherwise defaults to true.</p>
 </li>
 <li><h3 id="properties_importernewobject">importerNewObject</h3>
 <div class="importernewobject"><div class="importernewobject-page"><p>An object on which we call <code>new</code> to create each new row before inserting it into
-the data array.  Typically this would be a $resource entity, which means that if you&#39;re using 
+the data array.  Typically this would be a $resource entity, which means that if you&#39;re using
 the rowEdit feature, you can directly call save on this entity when the save event is triggered.</p>
 <p>Defaults to a vanilla javascript object</p>
 </div><h4 id="properties_importernewobject_example">Example</h4>

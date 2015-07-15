@@ -2,7 +2,9 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-215-tree-view-page"><p>The tree view feature allows you to create a tree from your grid, specifying which
+<div><div class="tutorial-page tutorial-215-tree-view-page"><div class="alert alert-warning" role="alert"><strong>Beta</strong> This feature is ready for testing, but it either hasn&#39;t seen a lot of use or has some known bugs.</div>
+
+<p>The tree view feature allows you to create a tree from your grid, specifying which
 of your data rows are nodes and which are leaves.</p>
 <p><strong><em>Note that recent breaking changes have been implemented on treeView and grouping, combining much
 of the logic into a treeBase module.  This means that you may need to include the treeBase module
@@ -20,7 +22,7 @@ treeView itself, and shared functions in the treeBase documentation.  In particu
 start at 0 and increase as you move down the tree.</p>
 <p>If you wish to load your tree incrementally, you can listen to the rowExpanded event, which will
 tell you whenever a row is expanded.  You can then retrieve additional data from the server and
-splice it into the data array at the right point, the grid will automatically render the data 
+splice it into the data array at the right point, the grid will automatically render the data
 when it arrives.</p>
 <p>Treeview allows sorting, and implements it as a recursive tree sort - it sorts the children of
 each of the nodes of the tree.</p>
@@ -120,7 +122,7 @@ are loaded only when that row is expanded.  They have a 2 second delay to simula
        data[51].$$treeLevel = 0;
        $scope.gridOptions.data = data;
      });
- 
+
       $scope.expandAll = function(){
         $scope.gridApi.treeBase.expandAllRows();
       };
