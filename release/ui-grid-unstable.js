@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.0-rc.22-c1dead9 - 2015-07-15
+ * ui-grid - v3.0.0-rc.22-5695cd6 - 2015-07-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13641,7 +13641,7 @@ module.filter('px', function() {
           }
 
           if (evt.keyCode === uiGridConstants.keymap.DOWN ||
-            evt.keyCode === uiGridConstants.keymap.ENTER) {
+            evt.keyCode === uiGridConstants.keymap.ENTER && !(evt.ctrlKey || evt.altKey)) {
             return uiGridCellNavConstants.direction.DOWN;
           }
 
