@@ -2141,11 +2141,11 @@ NG_DOCS={
   "versions": {
     "stable": [
       {
-        "src": "/release/ui-grid.js",
+        "src": "/release/ui-grid-stable.js",
         "type": "script"
       },
       {
-        "src": "/release/ui-grid.css",
+        "src": "/release/ui-grid-stable.css",
         "type": "css"
       }
     ],
