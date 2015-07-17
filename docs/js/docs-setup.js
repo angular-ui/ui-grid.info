@@ -1568,7 +1568,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 101 Intro to UI-Grid",
       "shortDescription": "UI-Grid 3.0 (formerly ng-grid), is a 100% angular grid written with no dependencies other than AngularJS. It is designed around",
-      "keywords": "$scope add allows angular angularjs app array asc basic better bulk carney cell cells change checking class columns company complex comveyer contents controller convenient core cox create css custom data dependencies dependency desc describe designed dimensions directive directives employed enormo errors example executing expectcellvaluematch expected expectheadercolumns expectrowcount expectrowvaluesmatch extra false features filtering firstname focused fuelton function functions googleapis grid grid1 gridobjecttest header height href html http individual informative intro js json label lastname layered lorraine main mainctrl margin module modules mydata mygrid nancy ng-controller ng-grid ngtouch object overview properties property referencing rel release rendered require row rows scenario script small sorting spec src stack steps style stylesheet templates three trace translations true tutorial ui ui-grid uigrid values var viewport visible waters width wise write written"
+      "keywords": "$scope add allows angular angularjs app array asc basic better bulk carney cell cells change checking class columns company complex comveyer contents controller convenient core cox create css custom data dependencies dependency desc describe designed dimensions directive directives employed enormo errors example executing expectcellvaluematch expected expectheadercolumns expectrowcount expectrowvaluesmatch extra false features filtering firstname focused fuelton function functions googleapis grid grid1 gridobjecttest header height href html http individual informative intro js json label lastname layered lorraine main mainctrl margin min module modules mydata mygrid nancy ng-controller ng-grid ngtouch object overview properties property referencing rel release rendered require row rows scenario script small sorting spec src stack steps style stylesheet templates three trace translations true tutorial ui ui-grid uigrid values var viewport visible waters width wise write written"
     },
     {
       "section": "tutorial",
@@ -2089,7 +2089,7 @@ NG_DOCS={
       "shortName": "403 End to End Testing",
       "type": "overview",
       "moduleName": "Tutorial: 403 End to End Testing",
-      "shortDescription": "Testing the grid with protractor can be complex.  In order to assist the project provides a ",
+      "shortDescription": "Testing the grid with protractor can be complex.  In order to assist the project provides a",
       "keywords": "abstracts api assist cell check checking clicking complex counting declaring describe documentation e2e e2etestlibrary elements example expectrowcount file folder function functions git github grid grid1 gridid gridobjecttest gridtest gridtestutil gridtestutils held helper https involves js key latest library methods mygrid newer note order overview potential project protractor provided providing refer require requires rows scenario series spec specific synch syntax tab test testing tests three top tutorial tutorials var version visible worthwhile"
     },
     {
@@ -2136,7 +2136,7 @@ NG_DOCS={
     "vfs_fonts.js"
   ]
 }; VERSIONED_FILES={
-  "default": "unstable",
+  "default": "stable",
   "waitEval": "(function() { var ret = true; try { angular.module('ui.grid'); } catch (e) { ret = false; } return ret; })()",
   "versions": {
     "stable": [

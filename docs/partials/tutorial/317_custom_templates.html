@@ -5,12 +5,12 @@
 <div><div class="tutorial-page tutorial-317-custom-templates-page"><p>The grid allows you to override most of the templates, including cellTemplate, headerCellTemplate, rowTemplate
 and others.  You would typically do this to inject functionality like buttons or to get a very different look and
 feel that you couldn&#39;t achieve through cell classes and other settings.</p>
-<p>It is generally good practice to at least review the standard template in <a href="https://github.com/angular-ui/ng-grid/tree/master/src/templates/ui-grid">https://github.com/angular-ui/ng-grid/tree/master/src/templates/ui-grid</a>
-to make sure there isn&#39;t functionality that you are overriding that you needed to keep.  In many cases it is desirable to 
+<p>It is generally good practice to at least review the standard template in <a href="https://github.com/angular-ui/ui-grid/tree/master/src/templates/ui-grid">https://github.com/angular-ui/ui-grid/tree/master/src/templates/ui-grid</a>
+to make sure there isn&#39;t functionality that you are overriding that you needed to keep.  In many cases it is desirable to
 use the standard template as a starting point, and add your customisations on top.  Also remember that new features
 or code changes may mean that you need to upgrade your custom template (if the standard template has been modified).</p>
 <p>In this example we create a grid almost the same as the most basic one, but with a custom row template, and
-with a cellTemplate that totals all the items above it in the grid.  This template continues to work when the data is 
+with a cellTemplate that totals all the items above it in the grid.  This template continues to work when the data is
 filtered or sorted.</p>
 <p>The custom row template merges all the cells together when the entity.merge value is true.</p>
 <p>You can use <a href="/docs/#/tutorial/305_appScope">grid.appScope</a> in your row template to access
@@ -69,7 +69,7 @@ may want to test for <code>ng-if=&quot;colContainer.name === \&#39;body\&#39;&qu
 
     // Access outside scope functions from row template
     $scope.rowFormatter = function( row ) {
-      return row.entity.gender === 'male'; 
+      return row.entity.gender === 'male';
     };
 
     $scope.waiting = 'Waiting for row template...';
@@ -98,7 +98,7 @@ may want to test for <code>ng-if=&quot;colContainer.name === \&#39;body\&#39;&qu
         { name: 'cumulativeWidgets', field: 'widgets', cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP">{{grid.appScope.cumulative(grid, row)}}</div>' }
       ]
     };
-    
+
     $scope.cumulative = function( grid, myRow ) {
       var myRowFound = false;
       var cumulativeTotal = 0;
