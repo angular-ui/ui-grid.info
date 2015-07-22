@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-8f1dc7e - 2015-07-21
+ * ui-grid - v3.0.1-d533200 - 2015-07-22
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -10099,7 +10099,7 @@ function getLineHeight(elm) {
   return parseInt( getStyles(parent).fontSize ) || parseInt( getStyles(elm).fontSize ) || 16;
 }
 
-var uid = ['0', '0', '0'];
+var uid = ['0', '0', '0', '0'];
 var uidPrefix = 'uiGrid-';
 
 /**
