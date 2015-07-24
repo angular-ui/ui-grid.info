@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-e611b66 - 2015-07-24
+ * ui-grid - v3.0.1-0c15686 - 2015-07-24
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11857,7 +11857,8 @@ module.filter('px', function() {
         },
         pagination: {
           sizes: 'éléments par page',
-          totalItems: 'éléments'
+          totalItems: 'éléments',
+          of: 'sur'
         },
         grouping: {
           group: 'Grouper',
