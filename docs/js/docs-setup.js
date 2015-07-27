@@ -1595,7 +1595,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 100 Prerequisites",
       "shortDescription": "Browsers",
-      "keywords": "_blank ability adequately base behaviour browsers cases compatibility control critical current decided desired functions href https ie9 labs limited list marginal note number organisations overview performance poor prerequisites recommend retain small specific supported target tested testing tutorial verify work"
+      "keywords": "_blank ability adequately base behaviour browsers cases compatibility control critical current decided desired functions href https ie9 labs limited list marginal note number organizations overview performance poor prerequisites recommend retain small specific supported target tested testing tutorial verify work"
     },
     {
       "section": "tutorial",
