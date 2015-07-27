@@ -1,7 +1,21 @@
 /*!
- * ui-grid - v3.0.1-06e27df - 2015-07-27
+ * ui-grid - v3.0.1-22c7300 - 2015-07-27
  * Copyright (c) 2015 ; License: MIT 
  */
+#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
+#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
+#ui-grid-twbs #ui-grid-twbs .btn-toolbar:before,
+#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
+#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:before,
+#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
+  content: " ";
+  display: table;
+}
+#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
+#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
+#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
+  clear: both;
+}
 .ui-grid {
   border: 1px solid #d4d4d4;
   box-sizing: content-box;
