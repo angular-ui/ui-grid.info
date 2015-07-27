@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/22c7300/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/7420b4b/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.class:GridOptions</code>
 </span>
 </div>
@@ -15,11 +15,11 @@ in the aggregation footer, so only the value is displayed.</p>
 </li>
 <li><h3 id="properties_aggregationtype">aggregationType</h3>
 <div class="aggregationtype"><div class="aggregationtype-page"><p>The aggregation that you&#39;d like to show in the columnFooter for this
-column.  Valid values are in uiGridConstants, and currently include <code>uiGridConstants.aggregationTypes.count</code>, 
-<code>uiGridConstants.aggregationTypes.sum</code>, <code>uiGridConstants.aggregationTypes.avg</code>, <code>uiGridConstants.aggregationTypes.min</code>, 
+column.  Valid values are in uiGridConstants, and currently include <code>uiGridConstants.aggregationTypes.count</code>,
+<code>uiGridConstants.aggregationTypes.sum</code>, <code>uiGridConstants.aggregationTypes.avg</code>, <code>uiGridConstants.aggregationTypes.min</code>,
 <code>uiGridConstants.aggregationTypes.max</code>.</p>
 <p>You can also provide a function as the aggregation type, in this case your function needs to accept the full
-set of visible rows, and return a value that should be shown </p>
+set of visible rows, and return a value that should be shown</p>
 </div></div>
 </li>
 <li><h3 id="properties_cellclass">cellClass</h3>
@@ -88,7 +88,7 @@ widgets to the column header, allowing sorting of the data in the individual col
 </li>
 <li><h3 id="properties_field">field</h3>
 <div class="field"><div class="field-page"><p>field must be provided if you wish to bind to a
-property in the data source.  Should be an angular expression that evaluates against grid.options.data 
+property in the data source.  Should be an angular expression that evaluates against grid.options.data
 array element.  Can be a complex expression: <code>employee.address.city</code>, or can be a function: <code>employee.getFullAddress()</code>.    <em> See the angular docs on binding expressions.    </em></p>
 </div></div>
 </li>
@@ -102,6 +102,7 @@ that gets passed the following arguments: [searchTerm, cellValue, row, column].<
 <li>term: If set, the filter field will be pre-populated
 with this value.</li>
 <li>placeholder: String that will be set to the <code>&lt;input&gt;.placeholder</code> attribute.</li>
+<li>ariaLabel: String that will be set to the <code>&lt;input&gt;.ariaLabel</code> attribute. This is what is read as a label to screen reader users.</li>
 <li>noTerm: set this to true if you have defined a custom function in condition, and
 your custom function doesn&#39;t require a term (so it can run even when the term is null)</li>
 <li>flags: only flag currently available is <code>caseSensitive</code>, set to false if you don&#39;t want
@@ -121,6 +122,7 @@ will not be shown.</li>
     term: 'xx',
     condition: uiGridConstants.filter.STARTS_WITH,
     placeholder: 'starts with...',
+    ariaLabel: 'Starts with filter for field1',
     flags: { caseSensitive: false },
     type: uiGridConstants.filter.SELECT,
     selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ],
@@ -143,13 +145,14 @@ applying &quot;search&quot; <code>filters</code>.</p>
 <li><h3 id="properties_filters">filters</h3>
 <div class="filters"><div class="filters-page"><p>Specify multiple filter fields.</p>
 </div><h4 id="properties_filters_example">Example</h4>
-<div class="example"><div class="filters-page"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [ 
+<div class="example"><div class="filters-page"><pre class="prettyprint linenums">$scope.gridOptions.columnDefs = [
 {
   field: 'field1', filters: [
     {
       term: 'aa',
       condition: uiGridConstants.filter.STARTS_WITH,
       placeholder: 'starts with...',
+      ariaLabel: 'Filter for field1',
       flags: { caseSensitive: false },
       type: uiGridConstants.filter.SELECT,
       selectOptions: [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ]
@@ -229,7 +232,7 @@ functionality.  A number of settings are supported:</p>
 <li>leaveOpen: if set to true, the menu should stay open after the action, defaults to false</li>
 </ul>
 </div><h4 id="properties_menuitems_example">Example</h4>
-<div class="example"><div class="menuitems-page"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ 
+<div class="example"><div class="menuitems-page"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [
 { field: 'field1', menuItems: [
   {
     title: 'Outer Scope Alert',
@@ -312,7 +315,7 @@ Note that if you choose date, your dates should be in a javascript date type</li
 <div class="visible"><div class="visible-page"><p>sets whether or not the column is visible
 </br>Default is true</p>
 </div><h4 id="properties_visible_example">Example</h4>
-<div class="example"><div class="visible-page"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ 
+<div class="example"><div class="visible-page"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [
 { field: 'field1', visible: true},
 { field: 'field2', visible: false }
 ]; </pre>

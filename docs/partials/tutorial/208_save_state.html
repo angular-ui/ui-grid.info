@@ -46,10 +46,10 @@ default:</p>
 <div class="example"><div class="tutorial-page tutorial-208-save-and-restore-state-page"><p>In this example we provide a button to save the grid state.  You can then modify the grid layout
 to something different, and use the restore button to set the grid back the way it was.</p>
 <h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-63" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-64"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-65" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-66"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-63" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-63">
+<pre class="prettyprint linenums" ng-set-text="index.html-65" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-65">
     <div ng-controller="MainCtrl">
       <div id="grid1" ui-grid="gridOptions" ui-grid-save-state ui-grid-selection ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-grouping class="grid"></div>
       <button id="save" type="button" class="btn btn-success" ng-click="saveState()">Save</button>
@@ -104,8 +104,8 @@ to something different, and use the restore button to set the grid back the way 
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-64"></pre>
-<script type="text/ng-template" id="scenario.js-64">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-66"></pre>
+<script type="text/ng-template" id="scenario.js-66">
     var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
     describe( '208 save state', function() {
       gridTestUtils.firefoxReload();
@@ -165,6 +165,6 @@ to something different, and use the restore button to set the grid back the way 
   </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-63" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-65" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>

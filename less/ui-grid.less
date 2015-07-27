@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-22c7300 - 2015-07-27
+ * ui-grid - v3.0.1-7420b4b - 2015-07-27
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -607,6 +607,21 @@ input[type="text"].ui-grid-filter-input {
   width: 100%;
 }
 
+// Only display content to screen readers
+//
+// See: http://a11yproject.com/posts/how-to-hide-content/
+
+.ui-grid-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
 
 .ui-grid-top-panel-background {
   .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);
@@ -940,6 +955,20 @@ select.ui-grid-filter-select {
 
   .rounded(@gridBorderRadius);
   .box-shadow(e("0 10px 20px rgba(0, 0, 0, 0.2), inset 0 12px 12px -14px rgba(0, 0, 0, 0.2)"));
+
+  // Small hidden close button that only appears when focused.
+  .ui-grid-menu-close-button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    #ui-grid-twbs > .btn();
+    #ui-grid-twbs > .button-size(1px; 1px; 10px; 1; 2px);
+    #ui-grid-twbs > .button-variant(transparent, transparent, transparent);
+    > i {
+      opacity: 0.75;
+      color: black;
+    }
+  }
 }
 
 .ui-grid-menu .ui-grid-menu-inner ul {
@@ -948,23 +977,29 @@ select.ui-grid-filter-select {
   list-style-type: none;
 
   li {
-    padding: 8px;
-    cursor: pointer;
+    padding: 0px;
+    button {
+      min-width: 100%;
+      padding: 8px;
+      text-align: left;
+      background: transparent;
+      border: none;
 
-    // Show a shadow when hovering over a menu item
-    &:hover {
-      // background-color: negation(@headerBackgroundColor, #fff);
-      .inner-shadow(@vertical: 0, @blur: 14px, @alpha: 0.2);
-    }
-
-    &.ui-grid-menu-item-active {
-      .inner-shadow(@vertical: 0, @blur: 14px, @alpha: 0.2);
-      background-color: @selectedColor;
+      // Show a shadow when hovering over a menu item
+      &:hover,
+      &:focus {
+        // background-color: negation(@headerBackgroundColor, #fff);
+        .inner-shadow(@vertical: 0, @blur: 14px, @alpha: 0.2);
+      }
+      &.ui-grid-menu-item-active {
+        .inner-shadow(@vertical: 0, @blur: 14px, @alpha: 0.2);
+        background-color: @selectedColor;
+      }
     }
   }
 
   // Show a bottom border on all but the last menu item
-  li:not(:last-child) {
+  li:not(:last-child) > button {
     border-bottom: @gridBorderWidth solid @borderColor;
   }
 }
@@ -1126,6 +1161,12 @@ select.ui-grid-filter-select {
 //Border to be applied to editors when the input value or invalid
 @invalidValueBorder: 1px solid rgb(252, 143, 143);
 @validValueBorder: 1px solid @borderColor;
+
+//Pagination controls
+@paginationButtonColor: @headerGradientStart;
+@paginationButtonBackgroundColor: @headerBackgroundColor;
+@paginationButtonBorderColor: #ccc;
+
 
 /**
 * @section font library path
