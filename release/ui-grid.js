@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-e7b66e0 - 2015-07-26
+ * ui-grid - v3.0.1-06e27df - 2015-07-27
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -4317,7 +4317,7 @@ angular.module('ui.grid')
 
   /**
    * @ngdoc function
-   * @name hasLeftContainer
+   * @name hasRightContainer
    * @methodOf ui.grid.class:Grid
    * @description returns true if rightContainer exists
    */
