@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-13d93f4 - 2015-07-28
+ * ui-grid - v3.0.1-eafce6a - 2015-07-28
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -10758,7 +10758,12 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       var $animate;
       try {
         $animate = $injector.get('$animate');
-        $animate.enabled(false, element);
+        // See: http://brianhann.com/angular-1-4-breaking-changes-to-be-aware-of/#animate
+        if (angular.version.major > 1 || (angular.version.major === 1 && angular.version.minor >= 4)) {
+          $animate.enabled(element, false);
+        } else {
+          $animate.enabled(false, element);
+        }
       }
       catch (e) {}
     },
@@ -10767,7 +10772,12 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       var $animate;
       try {
         $animate = $injector.get('$animate');
-        $animate.enabled(true, element);
+        // See: http://brianhann.com/angular-1-4-breaking-changes-to-be-aware-of/#animate
+        if (angular.version.major > 1 || (angular.version.major === 1 && angular.version.minor >= 4)) {
+          $animate.enabled(element, true);
+        } else {
+          $animate.enabled(true, element);
+        }
         return $animate;
       }
       catch (e) {}

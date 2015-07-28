@@ -48,7 +48,7 @@
         });
       }
     });
-    
+
     var data = [];
 
     $timeout( function() {
@@ -64,6 +64,10 @@
     });
 
     $scope.gridOptions.data = data;
+
+    $scope.$on("destroy", function(){
+      $timeout.cancel();
+    });
   }]);
 </script>
 </div>
@@ -72,11 +76,12 @@
 <script type="text/ng-template" id="scenario.js-57">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   describe( '191 horizontal scrolling', function() {
+    gridTestUtils.firefoxReload();
     it('check first couple of headers and cells - make sure grid has rendered', function () {
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Col0' );
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Col1' );
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'Col2' );
-      
+
       gridTestUtils.expectCellValueMatch( 'grid1', 0, 0, 'r0c0' );
       gridTestUtils.expectCellValueMatch( 'grid1', 1, 0, 'r1c0' );
       gridTestUtils.expectCellValueMatch( 'grid1', 2, 0, 'r2c0' );

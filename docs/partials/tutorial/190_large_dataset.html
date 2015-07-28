@@ -36,7 +36,7 @@
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
-  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+  app.controller('MainCtrl', ['$scope', '$http', '$q', function ($scope, $http, $q) {
     $scope.gridOptions = {
     };
 
@@ -48,10 +48,15 @@
       {name: 'age again', field:'age'}
     ];
 
-    $http.get('/data/10000_complex.json')
+    var canceler = $q.defer();
+    $http.get('/data/10000_complex.json', {timeout: canceler.promise})
       .success(function(data) {
         $scope.gridOptions.data = data;
       });
+
+    $scope.$on('destroy', function(){
+      canceler.resolve();  // Aborts the $http request if it isn't finished.
+    });
   }]);
 </script>
 </div>
@@ -76,7 +81,7 @@
       gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ '0', 'Ramsey Cummings', '52', 'Glendale', '52' ] );
       gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ '1', 'Stefanie Huff', '70', 'Beaverdale', '70' ] );
     });
-  });    
+  });
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
