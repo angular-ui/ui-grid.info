@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-d9c50cf - 2015-07-29
+ * ui-grid - v3.0.1-2d4fb97 - 2015-07-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -22248,7 +22248,7 @@ module.filter('px', function() {
          */
         flushDirtyRows: function(grid){
           var promises = [];
-          grid.rowEdit.dirtyRows.forEach( function( gridRow ){
+          grid.api.rowEdit.getDirtyRows().forEach( function( gridRow ){
             service.saveRow( grid, gridRow )();
             promises.push( gridRow.rowEditSavePromise );
           });
