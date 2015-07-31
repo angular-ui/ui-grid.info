@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-6b5807f - 2015-07-31
+ * ui-grid - v3.0.1-36f386f - 2015-07-31
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14401,13 +14401,15 @@ module.filter('px', function() {
 
               var grid = uiGridCtrl.grid;
 
+              //run each time a render container is created
+              uiGridCellNavService.decorateRenderContainers(grid);
+
               // focusser only created for body
               if (containerId !== 'body') {
                 return;
               }
 
-              // Needs to run last after all renderContainers are built
-              uiGridCellNavService.decorateRenderContainers(grid);
+
 
               if (uiGridCtrl.grid.options.modifierKeysToMultiSelectCells){
                 $elm.attr('aria-multiselectable', true);
