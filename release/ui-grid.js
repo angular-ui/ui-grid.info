@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-69f0a80 - 2015-07-31
+ * ui-grid - v3.0.1-6b5807f - 2015-07-31
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14601,11 +14601,28 @@ module.filter('px', function() {
            * Since the focus event doesn't include key press information we can't use it
            * as our primary source of the event.
            */
-          $elm.on('mousedown', function(evt) {
+          $elm.on('mousedown', preventMouseDown);
+
+          //turn on and off for edit events
+          if (uiGridCtrl.grid.api.edit) {
+            uiGridCtrl.grid.api.edit.on.beginCellEdit($scope, function () {
+              $elm.off('mousedown', preventMouseDown);
+            });
+
+            uiGridCtrl.grid.api.edit.on.afterCellEdit($scope, function () {
+              $elm.on('mousedown', preventMouseDown);
+            });
+
+            uiGridCtrl.grid.api.edit.on.cancelCellEdit($scope, function () {
+              $elm.on('mousedown', preventMouseDown);
+            });
+          }
+
+          function preventMouseDown(evt) {
             //Prevents the foucus event from firing if the click event is already going to fire.
             //If both events fire it will cause bouncing behavior.
             evt.preventDefault();
-          });
+          }
 
           //You can only focus on elements with a tabindex value
           $elm.on('focus', function (evt) {
@@ -15433,7 +15450,10 @@ module.filter('px', function() {
               });
 
               $scope.$broadcast(uiGridEditConstants.events.BEGIN_CELL_EDIT, triggerEvent);
-              $scope.grid.api.edit.raise.beginCellEdit($scope.row.entity, $scope.col.colDef, triggerEvent);
+              $timeout(function () {
+                //execute in a timeout to give any complex editor templates a cycle to completely render
+                $scope.grid.api.edit.raise.beginCellEdit($scope.row.entity, $scope.col.colDef, triggerEvent);
+              });
             }
 
             function endEdit() {
