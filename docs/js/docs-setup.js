@@ -1775,7 +1775,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 190 Large Dataset",
       "shortDescription": "This grid example uses a data set of 10,000 records.",
-      "keywords": "$http $on $q $scope aborts address age angular app backwards beaverdale canceler city class column columndefs columns compatibility complex controller couple css cummings data dataset defer demonstrates describe destroy example expected expectheadercellvaluematch expectheadercolumncount expectrowvaluesmatch field finished function glendale grid grid1 gridoptions gridtestutils headers height html huff isn js json large length listed main mainctrl module ng-controller ngtouch number overview place promise properties ramsey records request require resolve rows scenario set showing spec stefanie success tutorial ui ui-grid var visible width"
+      "keywords": "$destroy $http $on $q $scope aborts address age angular app backwards beaverdale canceler city class column columndefs columns compatibility complex controller couple css cummings data dataset defer demonstrates describe example expected expectheadercellvaluematch expectheadercolumncount expectrowvaluesmatch field finished function glendale grid grid1 gridoptions gridtestutils headers height html huff isn js json large length listed main mainctrl module ng-controller ngtouch number overview place promise properties ramsey records request require resolve rows scenario set showing spec stefanie success tutorial ui ui-grid var visible width"
     },
     {
       "section": "tutorial",

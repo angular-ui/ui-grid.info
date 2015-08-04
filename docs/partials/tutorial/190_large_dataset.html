@@ -54,7 +54,7 @@
         $scope.gridOptions.data = data;
       });
 
-    $scope.$on('destroy', function(){
+    $scope.$on('$destroy', function(){
       canceler.resolve();  // Aborts the $http request if it isn't finished.
     });
   }]);
