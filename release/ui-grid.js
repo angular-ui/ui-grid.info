@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-ebfdede - 2015-08-04
+ * ui-grid - v3.0.1-65417da - 2015-08-04
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -874,7 +874,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             var dataChangeDereg = $scope.grid.registerDataChangeCallback( updateClass, [uiGridConstants.dataChange.COLUMN]);
             // listen for visible rows change and update aggregation values
             $scope.grid.api.core.on.rowsRendered( $scope, $scope.col.updateAggregationValue );
-
+            $scope.grid.api.core.on.rowsRendered( $scope, updateClass );
             $scope.$on( '$destroy', dataChangeDereg );
           }
         };
@@ -7983,10 +7983,10 @@ angular.module('ui.grid')
    * @description Removes an adjuster, should be used when your element is destroyed
    * @param {function} func the adjuster function we want to remove
    */
-  GridRenderContainer.prototype.removeViewportAdjuster = function registerViewportAdjuster(func) {
+  GridRenderContainer.prototype.removeViewportAdjuster = function removeViewportAdjuster(func) {
     var idx = this.viewportAdjusters.indexOf(func);
 
-    if (typeof(idx) !== 'undefined' && idx !== undefined) {
+    if (idx > -1) {
       this.viewportAdjusters.splice(idx, 1);
     }
   };
