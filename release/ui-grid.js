@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-65417da - 2015-08-04
+ * ui-grid - v3.0.1-d609a10 - 2015-08-04
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -15464,14 +15464,14 @@ module.filter('px', function() {
               if (!inEdit) {
                 return;
               }
-              
+
               //sometimes the events can't keep up with the keyboard and grid focus is lost, so always focus
               //back to grid here. The focus call needs to be before the $destroy and removal of the control,
               //otherwise ng-model-options of UpdateOn: 'blur' will not work.
               if (uiGridCtrl && uiGridCtrl.grid.api.cellNav) {
                 uiGridCtrl.focus();
               }
-              
+
               var gridCellContentsEl = angular.element($elm.children()[0]);
               //remove edit element
               editCellScope.$destroy();
@@ -15553,7 +15553,10 @@ module.filter('px', function() {
                 $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function (evt,triggerEvent) {
                   $timeout(function () {
                     $elm[0].focus();
-                    $elm[0].select();
+                    //only select text if it is not being replaced below in the cellNav viewPortKeyPress
+                    if ($scope.col.colDef.enableCellEditOnFocus || !(uiGridCtrl && uiGridCtrl.grid.api.cellNav)) {
+                      $elm[0].select();
+                    }
                   });
 
                   //set the keystroke that started the edit event
