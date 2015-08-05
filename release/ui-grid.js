@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-d609a10 - 2015-08-04
+ * ui-grid - v3.0.1-486433b - 2015-08-05
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -15556,6 +15556,9 @@ module.filter('px', function() {
                     //only select text if it is not being replaced below in the cellNav viewPortKeyPress
                     if ($scope.col.colDef.enableCellEditOnFocus || !(uiGridCtrl && uiGridCtrl.grid.api.cellNav)) {
                       $elm[0].select();
+                    }
+                    else {
+                      $elm[0].setSelectionRange($elm[0].value.length, $elm[0].value.length);
                     }
                   });
 
