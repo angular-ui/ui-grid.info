@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-7d8af94 - 2015-08-06
+ * ui-grid - v3.0.1-caf8ae5 - 2015-08-07
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3366,6 +3366,17 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
                 }
               }
             });
+
+            if (grid.options.enableFiltering) {
+              var allColumnsHaveFilteringTurnedOff = grid.options.columnDefs.every(function(col) {
+                return col.enableFiltering === false;
+              });
+
+              if (!allColumnsHaveFilteringTurnedOff) {
+                maxNumberOfFilters++;
+              }
+            }
+
             var filterHeight = maxNumberOfFilters * headerHeight;
 
             var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight + filterHeight;
