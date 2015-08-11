@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.2-7571028 - 2015-08-11
+ * ui-grid - v3.0.3-6205b8c - 2015-08-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6673,17 +6673,27 @@ angular.module('ui.grid')
    *
    */
 
-  /**
-   * @ngdoc property
-   * @name sort
-   * @propertyOf ui.grid.class:GridOptions.columnDef
-   * @description An object of sort information, attributes are:
-   *
-   * - direction: values are uiGridConstants.ASC or uiGridConstants.DESC
-   * - ignoreSort: if set to true this sort is ignored (used by tree to manipulate the sort functionality)
-   * @example
-   * <pre>  $scope.gridOptions.columnDefs = [ { field: 'field1', sort: { direction: uiGridConstants.ASC, ignoreSort: true }}] </pre>
-   */
+    /**
+  * @ngdoc property
+  * @name sort
+  * @propertyOf ui.grid.class:GridOptions.columnDef
+  * @description An object of sort information, attributes are:
+  *
+  * - direction: values are uiGridConstants.ASC or uiGridConstants.DESC
+  * - ignoreSort: if set to true this sort is ignored (used by tree to manipulate the sort functionality)
+  * - priority: says what order to sort the columns in (lower priority gets sorted first).
+  * @example
+  * <pre>
+  *   $scope.gridOptions.columnDefs = [{
+  *     field: 'field1',
+  *     sort: {
+  *       direction: uiGridConstants.ASC,
+  *       ignoreSort: true,
+  *       priority: 0
+  *      }
+  *   }];
+  * </pre>
+  */
 
 
   /**
