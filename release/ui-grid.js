@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.1-a7f10a3 - 2015-08-10
+ * ui-grid - v3.0.1-64dca05 - 2015-08-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3882,13 +3882,15 @@ angular.module('ui.grid')
      * getColumnSorting, which is an array of gridColumns
      * that have sorting on them, sorted in priority order.
      *
-     * @param {Grid} grid the grid
-     * @param {array} sortColumns an array of columns with
-     * sorts on them, in priority order
+     * @param {$scope} The scope of the controller. This is used to deregister this event when the scope is destroyed.
+     * @param {Function} callBack Will be called when the event is emited. The function passes back an array of columns with
+     * sorts on them, in priority order.
      *
      * @example
      * <pre>
-     *      gridApi.core.on.sortChanged( grid, sortColumns );
+     *      gridApi.core.on.sortChanged( $scope, function(sortColumns){
+     *        // do something
+     *      });
      * </pre>
      */
     self.api.registerEvent( 'core', 'sortChanged' );
@@ -3899,8 +3901,9 @@ angular.module('ui.grid')
      * @methodOf  ui.grid.core.api:PublicApi
      * @description The visibility of a column has changed,
      * the column itself is passed out as a parameter of the event.
-     *
-     * @param {GridCol} column the column that changed
+     * 
+     * @param {$scope} The scope of the controller. This is used to deregister this event when the scope is destroyed.
+     * @param {Function} callBack Will be called when the event is emited. The function passes back the GridCol that has changed.
      *
      * @example
      * <pre>
