@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.3-213769e - 2015-08-12
+ * ui-grid - v3.0.3-17d816c - 2015-08-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18392,13 +18392,13 @@ module.filter('px', function() {
           column.sort.direction = uiGridConstants.ASC;
         }
 
-        service.tidyPriorities( grid );
-
         column.treeAggregation = { type: uiGridGroupingConstants.aggregation.COUNT, source: 'grouping' };
         column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations()[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
         column.treeAggregationFinalizerFn = service.groupedFinalizerFn;
 
         grid.api.grouping.raise.groupingChanged(column);
+        // This indirectly calls service.tidyPriorities( grid );
+        grid.api.core.raise.sortChanged(grid, grid.getColumnSorting());
 
         grid.queueGridRefresh();
       },
