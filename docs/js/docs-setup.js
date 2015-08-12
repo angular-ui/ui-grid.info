@@ -28,7 +28,7 @@ NG_DOCS={
       "shortName": "ui.grid.autoResize",
       "type": "overview",
       "moduleName": "ui.grid.autoResize",
-      "shortDescription": "ui.grid.autoResize",
+      "shortDescription": "#ui.grid.autoResize",
       "keywords": "alert alert-warning api auto-resizing autoresize bugs class feature functionality grid hasn lot module overview ready role testing ui ui-grid"
     },
     {
@@ -37,7 +37,7 @@ NG_DOCS={
       "shortName": "ui.grid.cellNav",
       "type": "overview",
       "moduleName": "ui.grid.cellNav",
-      "shortDescription": "ui.grid.cellNav",
+      "shortDescription": "#ui.grid.cellNav",
       "keywords": "alert alert-success api auto-resizing breaking cellnav changes class deprecation feature functionality grid longer module overview role stable ui ui-grid warning"
     },
     {
@@ -182,7 +182,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.class:GridOptions",
       "shortDescription": "Definition / configuration of an individual column, which would typically be",
-      "keywords": "$scope aa accept action active add address adds aggregation aggregationhidelabel aggregationtype aggregationtypes alert algorithm allowing alongside angular angularjs api append apply applying arguments arialabel array asc assume attribute attributes auto avg backward bind binding blargh boolean box button call called cancels case casesensitive cell cellclass cellfilter cellnav cells celltemplate celltooltip cellvalue choose chosen city class clicked col colrenderindex column columndef columndefs columnfooter compatibility complex condition configuration consists constants content context control controls count currently custom data dates default defaults define defined defines definition definitions desc determine direction disablecancelfilterbutton displayed displayname displays div docs doesn don element enablecolumnmenu enablecolumnmenus enabled enablefiltering enablehiding enablesorting ends ends_with evaluate evaluates example expression expressions false feature female field field1 field2 field3 fields filter filtercellfiltered filterheadertemplate filtering filters flag flags focus footer footercellclass footercellfilter footercelltemplate format full function functionality generated getfulladdress grid gridoptions guess guessing handler hanldes header headercellclass headercellfilter headercelltemplate headers headertooltip hides hiding hovers i18n icon ignored ignoresort include individual input irrespective item items javascript label leaveopen long male manipulate manually matching max maximum maxwidth menu menuitems menus method min minimum minwidth multiple non-string normal note noterm null number numberstr object open option options outer override parameters pass passed passing percentage perform placeholder pre-populated prevents property provide provided read reader receive refer removesort removing require return returned returns row rowrenderindex rows rowsorter satisfaction scope screen search select selected selectoptions sensitive service set sets setting settings single sort sortalpha sortcellfiltered sortfn sorting sortingalgorithm sortingalgorithms source specific starts starts_with static stay string sum supply supported suppressremovesort takes template term text title tooltip translate tree true turn turned tutorial type typically ui ui-grid ui-grid-icon-info-circled uigrid uigridconstants user users valid values ve visible widgets width work xx xxx"
+      "keywords": "$scope aa accept action active add address adds aggregation aggregationhidelabel aggregationtype aggregationtypes alert algorithm allowing alongside angular angularjs api append apply applying arguments arialabel array asc assume attribute attributes auto avg backward bind binding blargh boolean box button call called cancels case casesensitive cell cellclass cellfilter cellnav cells celltemplate celltooltip cellvalue choose chosen city class clicked col colrenderindex column columndef columndefs columnfooter columns compatibility complex condition configuration consists constants content context control controls count currently custom data dates default defaults define defined defines definition definitions desc determine direction disablecancelfilterbutton displayed displayname displays div docs doesn don element enablecolumnmenu enablecolumnmenus enabled enablefiltering enablehiding enablesorting ends ends_with evaluate evaluates example expression expressions false feature female field field1 field2 field3 fields filter filtercellfiltered filterheadertemplate filtering filters flag flags focus footer footercellclass footercellfilter footercelltemplate format full function functionality generated getfulladdress grid gridoptions guess guessing handler hanldes header headercellclass headercellfilter headercelltemplate headers headertooltip hides hiding hovers i18n icon ignored ignoresort include individual input irrespective item items javascript label leaveopen long male manipulate manually matching max maximum maxwidth menu menuitems menus method min minimum minwidth multiple non-string normal note noterm null number numberstr object open option options order outer override parameters pass passed passing percentage perform placeholder pre-populated prevents priority property provide provided read reader receive refer removesort removing require return returned returns row rowrenderindex rows rowsorter satisfaction scope screen search select selected selectoptions sensitive service set sets setting settings single sort sortalpha sortcellfiltered sorted sortfn sorting sortingalgorithm sortingalgorithms source specific starts starts_with static stay string sum supply supported suppressremovesort takes template term text title tooltip translate tree true turn turned tutorial type typically ui ui-grid ui-grid-icon-info-circled uigrid uigridconstants user users valid values ve visible widgets width work xx xxx"
     },
     {
       "section": "api",
@@ -910,7 +910,7 @@ NG_DOCS={
       "shortName": "ui.grid.infiniteScroll",
       "type": "overview",
       "moduleName": "ui.grid.infiniteScroll",
-      "shortDescription": "ui.grid.infiniteScroll",
+      "shortDescription": "#ui.grid.infiniteScroll",
       "keywords": "alert alert-warning api bugs class feature functionality grid hasn infinite infinitescroll lot module overview ready role scroll testing ui ui-grid"
     },
     {
