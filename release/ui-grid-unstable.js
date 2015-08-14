@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.3-7d88c7b - 2015-08-13
+ * ui-grid - v3.0.4-24408d8 - 2015-08-14
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -21113,7 +21113,7 @@ module.filter('px', function() {
           var deregT = $scope.$watch('grid.options.totalItems + grid.options.paginationPageSize', setShowing);
 
           var deregP = $scope.$watch('grid.options.paginationCurrentPage + grid.options.paginationPageSize', function (newValues, oldValues) {
-              if (newValues === oldValues) {
+              if (newValues === oldValues || oldValues === undefined) {
                 return;
               }
 
