@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-e6bc300 - 2015-08-14
+ * ui-grid - v3.0.4-20ff45e - 2015-08-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -2675,6 +2675,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
               }
               else {
                 event.preventDefault();
+                event.stopPropagation();
                 scrollEvent.fireThrottledScrollingEvent('', scrollEvent);
               }
 
@@ -11515,7 +11516,8 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       deltaX: deltaX,
       deltaY: deltaY,
       deltaFactor: lowestDelta,
-      preventDefault: function () { event.preventDefault(); }
+      preventDefault: function () { event.preventDefault(); },
+      stopPropagation: function () { event.stopPropagation(); }
     };
 
     // Clearout lowestDelta after sometime to better
