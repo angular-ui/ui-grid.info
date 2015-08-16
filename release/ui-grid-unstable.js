@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-20ff45e - 2015-08-16
+ * ui-grid - v3.0.4-33e6c0e - 2015-08-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -15316,7 +15316,9 @@ module.filter('px', function() {
 
                 cellNavNavigateDereg = uiGridCtrl.grid.api.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
                   if ($scope.col.colDef.enableCellEditOnFocus) {
-                    if (newRowCol.row === $scope.row && newRowCol.col === $scope.col) {
+                    // Don't begin edit if the cell hasn't changed
+                    if ((!oldRowCol || newRowCol.row !== oldRowCol.row || newRowCol.col !== oldRowCol.col) &&
+                      newRowCol.row === $scope.row && newRowCol.col === $scope.col) {
                       $timeout(function () {
                         beginEdit();
                       });
