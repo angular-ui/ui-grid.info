@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-33e6c0e - 2015-08-16
+ * ui-grid - v3.0.4-f2a21ee - 2015-08-18
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1743,6 +1743,18 @@ angular.module('ui.grid')
           menuItems = menuItems.concat( $scope.grid.options.gridMenuCustomItems );
         }
       }
+
+      var clearFilters = [{
+        title: i18nService.getSafeText('gridMenu.clearAllFilters'),
+        action: function ($event) {
+          $scope.grid.clearAllFilters(undefined, true, undefined);
+        },
+        shown: function() {
+          return $scope.grid.options.enableFiltering;
+        },
+        order: 100
+      }];
+      menuItems = menuItems.concat( clearFilters );
 
       menuItems = menuItems.concat( $scope.registeredMenuItems );
 
@@ -11614,7 +11626,8 @@ module.filter('px', function() {
                   exporterSelectedAsCsv: 'Exportovat vybranné data do csv',
                   exporterAllAsPdf: 'Exportovat všechny data do pdf',
                   exporterVisibleAsPdf: 'Exportovat viditelné data do pdf',
-                  exporterSelectedAsPdf: 'Exportovat vybranné data do pdf'
+                  exporterSelectedAsPdf: 'Exportovat vybranné data do pdf',
+                clearAllFilters: 'Vyčistěte všechny filtry'
               },
               importer: {
                   noHeaders: 'Názvy sloupců se nepodařilo získat, obsahuje soubor záhlaví?',
@@ -11691,7 +11704,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          exporterSelectedAsPdf: 'Export selected data as pdf',
+          clearAllFilters: 'Clear all filters'
         },
         importer: {
           noHeaders: 'Column names were unable to be derived, does the file have a header?',
@@ -11705,6 +11719,7 @@ module.filter('px', function() {
     }]);
   }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function ($provide) {
     $provide.decorator('i18nService', ['$delegate', function ($delegate) {
@@ -11757,7 +11772,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'markierte Daten als CSV exportieren',
           exporterAllAsPdf: 'Alle Daten als PDF exportieren',
           exporterVisibleAsPdf: 'sichtbare Daten als PDF exportieren',
-          exporterSelectedAsPdf: 'markierte Daten als CSV exportieren'
+          exporterSelectedAsPdf: 'markierte Daten als CSV exportieren',
+          clearAllFilters: 'Alle filter reinigen'
         },
         importer: {
           noHeaders: 'Es konnten keine Spaltennamen ermittelt werden. Sind in der Datei Spaltendefinitionen enthalten?',
@@ -11854,7 +11870,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          exporterSelectedAsPdf: 'Export selected data as pdf',
+          clearAllFilters: 'Clear all filters'
         },
         importer: {
           noHeaders: 'Column names were unable to be derived, does the file have a header?',
@@ -11944,7 +11961,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Exportar selección como csv',
           exporterAllAsPdf: 'Exportar todo como pdf',
           exporterVisibleAsPdf: 'Exportar vista como pdf',
-          exporterSelectedAsPdf: 'Exportar selección como pdf'
+          exporterSelectedAsPdf: 'Exportar selección como pdf',
+          clearAllFilters: 'Limpiar todos los filtros'
         },
         importer: {
           noHeaders: 'No fue posible derivar los nombres de las columnas, ¿tiene encabezados el archivo?',
@@ -12031,7 +12049,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'خروجی داده\u200cهای انتخاب\u200cشده در فایل csv',
           exporterAllAsPdf: 'خروجی تمام داده\u200cها در فایل pdf',
           exporterVisibleAsPdf: 'خروجی داده\u200cهای قابل مشاهده در فایل pdf',
-          exporterSelectedAsPdf: 'خروجی داده\u200cهای انتخاب\u200cشده در فایل pdf'
+          exporterSelectedAsPdf: 'خروجی داده\u200cهای انتخاب\u200cشده در فایل pdf',
+          clearAllFilters: 'پاک کردن تمام فیلتر'
         },
         importer: {
           noHeaders: 'نام ستون قابل استخراج نیست. آیا فایل عنوان دارد؟',
@@ -12113,7 +12132,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Vie valittu tieto csv-muodossa',
           exporterAllAsPdf: 'Vie tiedot pdf-muodossa',
           exporterVisibleAsPdf: 'Vie näkyvä tieto pdf-muodossa',
-          exporterSelectedAsPdf: 'Vie valittu tieto pdf-muodossa'
+          exporterSelectedAsPdf: 'Vie valittu tieto pdf-muodossa',
+          clearAllFilters: 'Puhdista kaikki suodattimet'
         },
         importer: {
           noHeaders: 'Sarakkeen nimiä ei voitu päätellä, onko tiedostossa otsikkoriviä?',
@@ -12180,7 +12200,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Exporter les données sélectionnées en CSV',
           exporterAllAsPdf: 'Exporter toutes les données en PDF',
           exporterVisibleAsPdf: 'Exporter les données visibles en PDF',
-          exporterSelectedAsPdf: 'Exporter les données sélectionnées en PDF'
+          exporterSelectedAsPdf: 'Exporter les données sélectionnées en PDF',
+          clearAllFilters: 'Nettoyez tous les filtres'
         },
         importer: {
           noHeaders: 'Impossible de déterminer le nom des colonnes, le fichier possède-t-il une en-tête ?',
@@ -12209,6 +12230,7 @@ module.filter('px', function() {
     }]);
   }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function ($provide) {
     $provide.decorator('i18nService', ['$delegate', function ($delegate) {
@@ -12256,7 +12278,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          exporterSelectedAsPdf: 'Export selected data as pdf',
+          clearAllFilters: 'Clean all filters'
         },
         importer: {
           noHeaders: 'Column names were unable to be derived, does the file have a header?',
@@ -12270,6 +12293,7 @@ module.filter('px', function() {
     }]);
   }]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -12322,7 +12346,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Արտահանել ընտրված տվյալները CSV',
           exporterAllAsPdf: 'Արտահանել PDF',
           exporterVisibleAsPdf: 'Արտահանել երևացող տվյալները PDF',
-          exporterSelectedAsPdf: 'Արտահանել ընտրված տվյալները PDF'
+          exporterSelectedAsPdf: 'Արտահանել ընտրված տվյալները PDF',
+          clearAllFilters: 'Մաքրել բոլոր ֆիլտրերը'
         },
         importer: {
           noHeaders: 'Հնարավոր չեղավ որոշել սյան վերնագրերը։ Արդյո՞ք ֆայլը ունի վերնագրեր։',
@@ -12389,7 +12414,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Esporta i dati selezionati in CSV',
           exporterAllAsPdf: 'Esporta tutti i dati in PDF',
           exporterVisibleAsPdf: 'Esporta i dati visibili in PDF',
-          exporterSelectedAsPdf: 'Esporta i dati selezionati in PDF'
+          exporterSelectedAsPdf: 'Esporta i dati selezionati in PDF',
+          clearAllFilters: 'Pulire tutti i filtri'
         },
         importer: {
           noHeaders: 'Impossibile reperire i nomi delle colonne, sicuro che siano indicati all\'interno del file?',
@@ -12466,7 +12492,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: '選択したデータをCSV形式でエクスポート',
           exporterAllAsPdf: 'すべてのデータをPDF形式でエクスポート',
           exporterVisibleAsPdf: '表示中のデータをPDF形式でエクスポート',
-          exporterSelectedAsPdf: '選択したデータをPDF形式でエクスポート'
+          exporterSelectedAsPdf: '選択したデータをPDF形式でエクスポート',
+          clearAllFilters: 'すべてのフィルタを清掃してください'
         },
         importer: {
           noHeaders: '列名を取得できません。ファイルにヘッダが含まれていることを確認してください。',
@@ -12537,7 +12564,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'csv로 선택된 데이터 내보내기',
           exporterAllAsPdf: 'pdf로 모든 데이터 내보내기',
           exporterVisibleAsPdf: 'pdf로 보이는 데이터 내보내기',
-          exporterSelectedAsPdf: 'pdf로 선택 데이터 내보내기'
+          exporterSelectedAsPdf: 'pdf로 선택 데이터 내보내기',
+          clearAllFilters: '모든 필터를 청소'
         },
         importer: {
           noHeaders: '컬럼명이 지정되어 있지 않습니다. 파일에 헤더가 명시되어 있는지 확인해 주세요.',
@@ -12608,7 +12636,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Exporteer geselecteerde data als csv',
           exporterAllAsPdf: 'Exporteer alle data als pdf',
           exporterVisibleAsPdf: 'Exporteer zichtbare data als pdf',
-          exporterSelectedAsPdf: 'Exporteer geselecteerde data als pdf'
+          exporterSelectedAsPdf: 'Exporteer geselecteerde data als pdf',
+          clearAllFilters: 'Reinig alle filters'
         },
         importer: {
           noHeaders: 'Kolomnamen kunnen niet worden afgeleid. Heeft het bestand een header?',
@@ -12689,7 +12718,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Exportar dados selecionados como csv',
           exporterAllAsPdf: 'Exportar todos os dados como pdf',
           exporterVisibleAsPdf: 'Exportar dados visíveis como pdf',
-          exporterSelectedAsPdf: 'Exportar dados selecionados como pdf'
+          exporterSelectedAsPdf: 'Exportar dados selecionados como pdf',
+          clearAllFilters: 'Limpar todos os filtros'
         },
         importer: {
           noHeaders: 'Nomes de colunas não puderam ser derivados. O arquivo tem um cabeçalho?',
@@ -12770,7 +12800,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Exportar dados selecionados como csv',
           exporterAllAsPdf: 'Exportar todos os dados como pdf',
           exporterVisibleAsPdf: 'Exportar dados visíveis como pdf',
-          exporterSelectedAsPdf: 'Exportar dados selecionados como pdf'
+          exporterSelectedAsPdf: 'Exportar dados selecionados como pdf',
+          clearAllFilters: 'Limpar todos os filtros'
         },
         importer: {
           noHeaders: 'Nomes de colunas não puderam ser derivados. O ficheiro tem um cabeçalho?',
@@ -12793,7 +12824,7 @@ module.filter('px', function() {
           aggregate_min: 'Agr: Min',
           aggregate_avg: 'Agr: Med',
           aggregate_remove: 'Agr: Remover'
-        }        
+        }
       });
       return $delegate;
     }]);
@@ -12847,7 +12878,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Экспортировать выбранные данные в CSV',
           exporterAllAsPdf: 'Экспортировать всё в PDF',
           exporterVisibleAsPdf: 'Экспортировать видимые данные в PDF',
-          exporterSelectedAsPdf: 'Экспортировать выбранные данные в PDF'
+          exporterSelectedAsPdf: 'Экспортировать выбранные данные в PDF',
+          clearAllFilters: 'Очистите все фильтры'
         },
         importer: {
           noHeaders: 'Column names were unable to be derived, does the file have a header?',
@@ -12906,7 +12938,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Export selected data as csv',
           exporterAllAsPdf: 'Export all data as pdf',
           exporterVisibleAsPdf: 'Export visible data as pdf',
-          exporterSelectedAsPdf: 'Export selected data as pdf'
+          exporterSelectedAsPdf: 'Export selected data as pdf',
+          clearAllFilters: 'Clear all filters'
         },
         importer: {
           noHeaders: 'Column names were unable to be derived, does the file have a header?',
@@ -12973,7 +13006,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'Exportera markerad data som CSV',
           exporterAllAsPdf: 'Exportera all data som PDF',
           exporterVisibleAsPdf: 'Exportera synlig data som PDF',
-          exporterSelectedAsPdf: 'Exportera markerad data som PDF'
+          exporterSelectedAsPdf: 'Exportera markerad data som PDF',
+          clearAllFilters: 'Rengör alla filter'
         },
         importer: {
           noHeaders: 'Kolumnnamn kunde inte härledas. Har filen ett sidhuvud?',
@@ -13044,7 +13078,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: 'தேர்ந்தெடுத்த தரவுகளை கோப்பாக்கு: csv',
           exporterAllAsPdf: 'எல்லா தரவுகளையும் கோப்பாக்கு: pdf',
           exporterVisibleAsPdf: 'இருக்கும் தரவுகளை கோப்பாக்கு: pdf',
-          exporterSelectedAsPdf: 'தேர்ந்தெடுத்த தரவுகளை கோப்பாக்கு: pdf'
+          exporterSelectedAsPdf: 'தேர்ந்தெடுத்த தரவுகளை கோப்பாக்கு: pdf',
+          clearAllFilters: 'Clear all filters'
         },
         importer: {
           noHeaders: 'பத்தியின் தலைப்புகளை பெற இயலவில்லை, கோப்பிற்கு தலைப்பு உள்ளதா?',
@@ -13423,7 +13458,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: '导出已选数据到CSV',
           exporterAllAsPdf: '导出全部数据到PDF',
           exporterVisibleAsPdf: '导出可见数据到PDF',
-          exporterSelectedAsPdf: '导出已选数据到PDF'
+          exporterSelectedAsPdf: '导出已选数据到PDF',
+          clearAllFilters: '清除所有过滤器'
         },
         importer: {
           noHeaders: '无法获取列名，确定文件包含表头？',
@@ -13494,7 +13530,8 @@ module.filter('px', function() {
           exporterSelectedAsCsv: '導出已選數據到CSV',
           exporterAllAsPdf: '導出全部數據到PDF',
           exporterVisibleAsPdf: '導出可見數據到PDF',
-          exporterSelectedAsPdf: '導出已選數據到PDF'
+          exporterSelectedAsPdf: '導出已選數據到PDF',
+          clearAllFilters: '清除所有过滤器'
         },
         importer: {
           noHeaders: '無法獲取列名，確定文件包含表頭？',
