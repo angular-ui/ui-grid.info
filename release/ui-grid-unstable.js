@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-50c5344 - 2015-08-20
+ * ui-grid - v3.0.4-80230ca - 2015-08-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17427,7 +17427,7 @@ module.filter('px', function() {
 
           // IE10+
           if (navigator.msSaveBlob) {
-            return navigator.msSaveBlob(
+            return navigator.msSaveOrOpenBlob(
               new Blob(
                 [exporterOlderExcelCompatibility ? "\uFEFF" : '', csvContent],
                 { type: strMimeType } ),
