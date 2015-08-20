@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-6b8aa5a - 2015-08-20
+ * ui-grid - v3.0.4-fcbafc6 - 2015-08-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -9139,6 +9139,7 @@ angular.module('ui.grid')
              templateGetPromises.push(gridUtil.getTemplate(col[providedType])
                 .then(
                 function (template) {
+                  if ( angular.isFunction(template) ) { template = template(); }
                   var tooltipCall = ( tooltipType === 'cellTooltip' ) ? 'col.cellTooltip(row,col)' : 'col.headerTooltip(col)';
                   if ( tooltipType && col[tooltipType] === false ){
                     template = template.replace(uiGridConstants.TOOLTIP, '');
@@ -9252,6 +9253,7 @@ angular.module('ui.grid')
     }]);
 
 })();
+
 (function() {
 
 var module = angular.module('ui.grid');
