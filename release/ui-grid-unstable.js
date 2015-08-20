@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-fcbafc6 - 2015-08-20
+ * ui-grid - v3.0.4-906319a - 2015-08-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -7904,7 +7904,7 @@ angular.module('ui.grid')
 
     /**
      *  @ngdoc boolean
-     *  @name hasHScrollbar
+     *  @name hasVScrollbar
      *  @propertyOf  ui.grid.class:GridRenderContainer
      *  @description flag to signal that container has a vertical scrollbar
      */
