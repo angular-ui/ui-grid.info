@@ -20,9 +20,9 @@
     expandableRowScope: expandableScope
   }
 </pre>
-<p>rowExpandableTemplate will be template for subgrid and expandableRowHeight will be height of the subgrid, expandableRowScope can be used
-to added variables to scope of expanded grid. These variables can then be access from expandableRowTemplate. The grid api
-provided following events and methods fos subGrids:</p>
+<p>expandableRowTemplate will be the template for subgrid and expandableRowHeight will be the height of the subgrid. expandableRowScope can be used
+to add variables to the scope of expanded grid. These variables can then be accessed from expandableRowTemplate. The grid api
+provides the following events and methods for subGrids:</p>
 <pre class="prettyprint linenums">
     //rowExpandedStateChanged is fired for each row as its expanded:
     gridApi.expandable.on.rowExpandedStateChanged($scope,function(row){
@@ -32,7 +32,7 @@ provided following events and methods fos subGrids:</p>
     gridApi.expandable.collapseAllRows();
 </pre>
 <p>SubGrid nesting can be done upto multiple levels.</p>
-<p>In addition to above configuration &#39;scrollFillerClass&#39; is also available and can be used to style the scroll filler, scroll filler
+<p>In addition to the above configuration, &#39;scrollFillerClass&#39; is also available and can be used to style the scroll filler. The scroll filler
 appears when you quickly scroll through the grid.</p>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-216-expandable-grid-page"><h4 id="example_source">Source</h4>
