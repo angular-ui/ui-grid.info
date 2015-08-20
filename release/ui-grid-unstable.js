@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-906319a - 2015-08-20
+ * ui-grid - v3.0.4-50c5344 - 2015-08-20
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12866,7 +12866,7 @@ module.filter('px', function() {
           remove: 'Убрать сортировку'
         },
         column: {
-          hide: 'спрятать столбец'
+          hide: 'Спрятать столбец'
         },
         aggregation: {
           count: 'всего строк: ',
@@ -12875,6 +12875,11 @@ module.filter('px', function() {
           min: 'мин: ',
           max: 'макс: '
         },
+				pinning: {
+					pinLeft: 'Закрепить слева',
+					pinRight: 'Закрепить справа',
+					unpin: 'Открепить'
+				},
         gridMenu: {
           columns: 'Столбцы:',
           importerTitle: 'Import file',
