@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-fb709e6 - 2015-08-24
+ * ui-grid - v3.0.4-a0c5b7e - 2015-08-24
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -7548,10 +7548,10 @@ angular.module('ui.grid')
        * @name flatEntityAccess
        * @propertyOf ui.grid.class:GridOptions
        * @description Set to true if your columns are all related directly to fields in a flat object structure - i.e.
-       * each of your columns associate directly with a propery one each of the entities in your data array.
+       * each of your columns associate directly with a property on each of the entities in your data array.
        *
        * In that situation we can avoid all the logic associated with complex binding to functions or to properties of sub-objects,
-       * which can provide a significant speed improvement with large data sets, with filtering and with sorting.
+       * which can provide a significant speed improvement with large data sets when filtering or sorting.
        *
        * By default false
        */
