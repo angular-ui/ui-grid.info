@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-a0c5b7e - 2015-08-24
+ * ui-grid - v3.0.4-7643a9e - 2015-08-25
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13435,6 +13435,15 @@ module.filter('px', function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('zh-cn', {
+        headerCell: {
+          aria: {
+            defaultFilterLabel: '列过滤器',
+            removeFilter: '移除过滤器',
+            columnMenuButtonLabel: '列菜单'
+          },
+          priority: '优先级:',
+          filterLabel: "列过滤器: "
+        },
         aggregate: {
           label: '行'
         },
@@ -13458,6 +13467,7 @@ module.filter('px', function() {
         sort: {
           ascending: '升序',
           descending: '降序',
+          none: '无序',
           remove: '取消排序'
         },
         column: {
@@ -13475,7 +13485,13 @@ module.filter('px', function() {
           pinRight: '右侧固定',
           unpin: '取消固定'
         },
+        columnMenu: {
+          close: '关闭'
+        },
         gridMenu: {
+          aria: {
+            buttonLabel: '表格菜单'
+          },
           columns: '列：',
           importerTitle: '导入文件',
           exporterAllAsCsv: '导出全部数据到CSV',
@@ -13494,8 +13510,27 @@ module.filter('px', function() {
           jsonNotArray: '导入的文件不是JSON数组！'
         },
         pagination: {
+          aria: {
+            pageToFirst: '第一页',
+            pageBack: '上一页',
+            pageSelected: '当前页',
+            pageForward: '下一页',
+            pageToLast: '最后一页'
+          },
           sizes: '行每页',
-          totalItems: '行'
+          totalItems: '行',
+          through: '至',
+          of: '共'
+        },
+        grouping: {
+          group: '分组',
+          ungroup: '取消分组',
+          aggregate_count: '合计: 计数',
+          aggregate_sum: '合计: 求和',
+          aggregate_max: '合计: 最大',
+          aggregate_min: '合计: 最小',
+          aggregate_avg: '合计: 平均',
+          aggregate_remove: '合计: 移除'
         }
       });
       return $delegate;
