@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-c83a1bc - 2015-08-25
+ * ui-grid - v3.0.4-69a75da - 2015-08-25
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13748,8 +13748,8 @@ module.filter('px', function() {
        *          If the column has a cellFilter this will NOT return the filtered value.
        */
       RowCol.prototype.getIntersectionValueRaw = function(){
-        var getter = $parse(this.col.field);
-        var context = this.row.entity;
+        var getter = $parse(this.row.getEntityQualifiedColField(this.col));
+        var context = this.row;
         return getter(context);
       };
       /**
