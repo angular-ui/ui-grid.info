@@ -74,7 +74,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.cellNav",
       "shortDescription": "Public Api for cellNav feature",
-      "keywords": "api array brings cell cellnav coldef column current data empty evaluate feature finished focus focused function getcurrentselection getfocusedcell grid gridoptions instance isn null object occurred order promise public resolved returns row rowcol rowcolselectindex rowentity scrolling scrolltofocus selected selection set sets ui view visible"
+      "keywords": "api array brings cell cellnav coldef column current data empty evaluate feature finished focus focused function getcurrentselection getfocusedcell grid gridoptions gridrowcolumn instance isn null object occurred order promise public resolved returns row rowcol rowcolselectindex rowentity scrolling scrolltofocus selected selection set sets ui view visible"
     },
     {
       "section": "api",
@@ -111,15 +111,6 @@ NG_DOCS={
       "moduleName": "ui.grid.cellNav",
       "shortDescription": "returns a CellNav prototype function",
       "keywords": "api cellnav colcontainer column container function grid left leftcolcontainer object parent prototype returns rightcolcontainer rowcontainer rows ui"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.cellNav.object:RowCol",
-      "shortName": "RowCol",
-      "type": "object",
-      "moduleName": "ui.grid.cellNav",
-      "shortDescription": "A row and column pair that represents the intersection of these two entities.",
-      "keywords": "api apply cellfilter cellnav class col column data displays entities filter filtered function getintersectionvaluefiltered getintersectionvalueraw grid intersection meet object pair points represents return row rowcol ui"
     },
     {
       "section": "api",
@@ -201,6 +192,15 @@ NG_DOCS={
       "moduleName": "ui.grid",
       "shortDescription": "GridRow is the viewModel for one logical row on the grid.  A grid Row is not necessarily a one-to-one",
       "keywords": "altered api array avoid based calculations call called calling canvas change changed changes changing class clear clearrowinvisible clears clearthisrowinvisible coded col column current data determines directly doesn emits entity evaluated evaluaterowvisibility event events exists field fielda filter flag forces fromrowprocessor fromrowsprocessor function getentityqualifiedcolfield getqualifiedcolfield grid gridoptions gridrow grouping height hitting individual instance internal invisible invisiblereason item late logical lots method minus module normal object one-to-one override parent passed passing path position processor qualified queue queues raise reason recalculate reference refresh refreshes relation rendercontainers rendered returning returns row rowsprocessor rowsvisiblechanged scope set setrowinvisible sets setthisrowinvisible true ui uid uniqueid user viewmodel visibility visible won work"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.class:GridRowColumn",
+      "shortName": "GridRowColumn",
+      "type": "object",
+      "moduleName": "ui.grid",
+      "shortDescription": "A row and column pair that represents the intersection of these two entities.",
+      "keywords": "api apply cellfilter class col column data displays entities filter filtered function getintersectionvaluefiltered getintersectionvalueraw grid gridrowcolumn instantiated intersection keyword meet object pair points represents return row ui"
     },
     {
       "section": "api",

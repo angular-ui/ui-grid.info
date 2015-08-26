@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.4-69a75da - 2015-08-25
+ * ui-grid - v3.0.4-e62907c - 2015-08-26
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -8873,6 +8873,93 @@ angular.module('ui.grid')
 
 })();
 
+(function(){
+  'use strict';
+  /**
+   * @ngdoc object
+   * @name ui.grid.class:GridRowColumn
+   * @param {GridRow} row The row for this pair
+   * @param {GridColumn} column The column for this pair
+   * @description A row and column pair that represents the intersection of these two entities.
+   * Must be instantiated as a constructor using the `new` keyword.
+   */
+  angular.module('ui.grid')
+  .factory('GridRowColumn', ['$parse', '$filter',
+    function GridRowColumnFactory($parse, $filter){
+      var GridRowColumn = function GridRowColumn(row, col) {
+        if ( !(this instanceof GridRowColumn)){
+          throw "Using GridRowColumn as a function insead of as a constructor. Must be called with `new` keyword";
+        }
+
+        /**
+         * @ngdoc object
+         * @name row
+         * @propertyOf ui.grid.class:GridRowColumn
+         * @description {@link ui.grid.class:GridRow }
+         */
+        this.row = row;
+        /**
+         * @ngdoc object
+         * @name col
+         * @propertyOf ui.grid.class:GridRowColumn
+         * @description {@link ui.grid.class:GridColumn }
+         */
+        this.col = col;
+      };
+
+      /**
+       * @ngdoc function
+       * @name getIntersectionValueRaw
+       * @methodOf ui.grid.class:GridRowColumn
+       * @description Gets the intersection of where the row and column meet.
+       * @returns {String|Number|Object} The value from the grid data that this GridRowColumn points too.
+       *          If the column has a cellFilter this will NOT return the filtered value.
+       */
+      GridRowColumn.prototype.getIntersectionValueRaw = function(){
+        var getter = $parse(this.row.getEntityQualifiedColField(this.col));
+        var context = this.row;
+        return getter(context);
+      };
+      /**
+       * @ngdoc function
+       * @name getIntersectionValueFiltered
+       * @methodOf ui.grid.class:GridRowColumn
+       * @description Gets the intersection of where the row and column meet.
+       * @returns {String|Number|Object} The value from the grid data that this GridRowColumn points too.
+       *          If the column has a cellFilter this will also apply the filter to it and return the value that the filter displays.
+       */
+      GridRowColumn.prototype.getIntersectionValueFiltered = function(){
+        var value = this.getIntersectionValueRaw();
+        if (this.col.cellFilter && this.col.cellFilter !== ''){
+          var getFilterIfExists = function(filterName){
+            try {
+              return $filter(filterName);
+            } catch (e){
+              return null;
+            }
+          };
+          var filter = getFilterIfExists(this.col.cellFilter);
+          if (filter) { // Check if this is filter name or a filter string
+            value = filter(value);
+          } else { // We have the template version of a filter so we need to parse it apart
+            // Get the filter params out using a regex
+            // Test out this regex here https://regex101.com/r/rC5eR5/2
+            var re = /([^:]*):([^:]*):?([\s\S]+)?/;
+            var matches;
+            if ((matches = re.exec(this.col.cellFilter)) !== null) {
+                // View your result using the matches-variable.
+                // eg matches[0] etc.
+                value = $filter(matches[1])(value, matches[2], matches[3]);
+            }
+          }
+        }
+        return value;
+      };
+      return GridRowColumn;
+    }
+  ]);
+})();
+
 (function () {
   angular.module('ui.grid')
     .factory('ScrollEvent', ['gridUtil', function (gridUtil) {
@@ -13713,86 +13800,9 @@ module.filter('px', function() {
     }
   });
 
-  /**
-   * @ngdoc object
-   * @name ui.grid.cellNav.object:RowCol
-   * @param {GridRow} row The row for this pair
-   * @param {GridColumn} column The column for this pair
-   * @description A row and column pair that represents the intersection of these two entities.
-   */
-  module.factory('RowColFactory', ['$parse', '$filter',
-    function($parse, $filter){
-      var RowCol = function RowCol(row, col) {
-        /**
-         * @ngdoc object
-         * @name row
-         * @propertyOf ui.grid.cellNav.object:RowCol
-         * @description {@link ui.grid.class:GridRow }
-         */
-        this.row = row;
-        /**
-         * @ngdoc object
-         * @name col
-         * @propertyOf ui.grid.cellNav.object:RowCol
-         * @description {@link ui.grid.class:GridColumn }
-         */
-        this.col = col;
-      };
 
-      /**
-       * @ngdoc function
-       * @name getIntersectionValueRaw
-       * @methodOf ui.grid.cellNav.object:RowCol
-       * @description Gets the intersection of where the row and column meet.
-       * @returns {String|Number|Object} The value from the grid data that this RowCol points too.
-       *          If the column has a cellFilter this will NOT return the filtered value.
-       */
-      RowCol.prototype.getIntersectionValueRaw = function(){
-        var getter = $parse(this.row.getEntityQualifiedColField(this.col));
-        var context = this.row;
-        return getter(context);
-      };
-      /**
-       * @ngdoc function
-       * @name getIntersectionValueFiltered
-       * @methodOf ui.grid.cellNav.object:RowCol
-       * @description Gets the intersection of where the row and column meet.
-       * @returns {String|Number|Object} The value from the grid data that this RowCol points too.
-       *          If the column has a cellFilter this will also apply the filter to it and return the value that the filter displays.
-       */
-      RowCol.prototype.getIntersectionValueFiltered = function(){
-        var value = this.getIntersectionValueRaw();
-        if (this.col.cellFilter && this.col.cellFilter !== ''){
-          var getFilterIfExists = function(filterName){
-            try {
-              return $filter(filterName);
-            } catch (e){
-              return null;
-            }
-          };
-          var filter = getFilterIfExists(this.col.cellFilter);
-          if (filter) { // Check if this is filter name or a filter string
-            value = filter(value);
-          } else { // We have the template version of a filter so we need to parse it apart
-            // Get the filter params out using a regex
-            // Test out this regex here https://regex101.com/r/rC5eR5/2
-            var re = /([^:]*):([^:]*):?([\s\S]+)?/;
-            var matches;
-            if ((matches = re.exec(this.col.cellFilter)) !== null) {
-                // View your result using the matches-variable.
-                // eg matches[0] etc.
-                value = $filter(matches[1])(value, matches[2], matches[3]);
-            }
-          }
-        }
-        return value;
-      };
-      return RowCol;
-    }]);
-
-
-  module.factory('uiGridCellNavFactory', ['gridUtil', 'uiGridConstants', 'uiGridCellNavConstants', 'RowColFactory', '$q',
-    function (gridUtil, uiGridConstants, uiGridCellNavConstants, RowCol, $q) {
+  module.factory('uiGridCellNavFactory', ['gridUtil', 'uiGridConstants', 'uiGridCellNavConstants', 'GridRowColumn', '$q',
+    function (gridUtil, uiGridConstants, uiGridCellNavConstants, GridRowColumn, $q) {
       /**
        *  @ngdoc object
        *  @name ui.grid.cellNav.object:CellNav
@@ -13869,7 +13879,7 @@ module.filter('px', function() {
 
         var curRowIndex = 0;
         var curColIndex = 0;
-        return new RowCol(focusableRows[0], focusableCols[0]); //return same row
+        return new GridRowColumn(focusableRows[0], focusableCols[0]); //return same row
       };
 
       UiGridCellNav.prototype.getRowColLeft = function (curRow, curCol) {
@@ -13892,15 +13902,15 @@ module.filter('px', function() {
           //   return null;
           // }
           if (curRowIndex === 0) {
-            return new RowCol(curRow, focusableCols[nextColIndex]); //return same row
+            return new GridRowColumn(curRow, focusableCols[nextColIndex]); //return same row
           }
           else {
             //up one row and far right column
-            return new RowCol(focusableRows[curRowIndex - 1], focusableCols[nextColIndex]);
+            return new GridRowColumn(focusableRows[curRowIndex - 1], focusableCols[nextColIndex]);
           }
         }
         else {
-          return new RowCol(curRow, focusableCols[nextColIndex]);
+          return new GridRowColumn(curRow, focusableCols[nextColIndex]);
         }
       };
 
@@ -13920,15 +13930,15 @@ module.filter('px', function() {
 
         if (nextColIndex < curColIndex) {
           if (curRowIndex === focusableRows.length - 1) {
-            return new RowCol(curRow, focusableCols[nextColIndex]); //return same row
+            return new GridRowColumn(curRow, focusableCols[nextColIndex]); //return same row
           }
           else {
             //down one row and far left column
-            return new RowCol(focusableRows[curRowIndex + 1], focusableCols[nextColIndex]);
+            return new GridRowColumn(focusableRows[curRowIndex + 1], focusableCols[nextColIndex]);
           }
         }
         else {
-          return new RowCol(curRow, focusableCols[nextColIndex]);
+          return new GridRowColumn(curRow, focusableCols[nextColIndex]);
         }
       };
 
@@ -13944,11 +13954,11 @@ module.filter('px', function() {
         }
 
         if (curRowIndex === focusableRows.length - 1) {
-          return new RowCol(curRow, focusableCols[curColIndex]); //return same row
+          return new GridRowColumn(curRow, focusableCols[curColIndex]); //return same row
         }
         else {
           //down one row
-          return new RowCol(focusableRows[curRowIndex + 1], focusableCols[curColIndex]);
+          return new GridRowColumn(focusableRows[curRowIndex + 1], focusableCols[curColIndex]);
         }
       };
 
@@ -13965,11 +13975,11 @@ module.filter('px', function() {
 
         var pageSize = this.bodyContainer.minRowsToRender();
         if (curRowIndex >= focusableRows.length - pageSize) {
-          return new RowCol(focusableRows[focusableRows.length - 1], focusableCols[curColIndex]); //return last row
+          return new GridRowColumn(focusableRows[focusableRows.length - 1], focusableCols[curColIndex]); //return last row
         }
         else {
           //down one page
-          return new RowCol(focusableRows[curRowIndex + pageSize], focusableCols[curColIndex]);
+          return new GridRowColumn(focusableRows[curRowIndex + pageSize], focusableCols[curColIndex]);
         }
       };
 
@@ -13985,11 +13995,11 @@ module.filter('px', function() {
         }
 
         if (curRowIndex === 0) {
-          return new RowCol(curRow, focusableCols[curColIndex]); //return same row
+          return new GridRowColumn(curRow, focusableCols[curColIndex]); //return same row
         }
         else {
           //up one row
-          return new RowCol(focusableRows[curRowIndex - 1], focusableCols[curColIndex]);
+          return new GridRowColumn(focusableRows[curRowIndex - 1], focusableCols[curColIndex]);
         }
       };
 
@@ -14006,11 +14016,11 @@ module.filter('px', function() {
 
         var pageSize = this.bodyContainer.minRowsToRender();
         if (curRowIndex - pageSize < 0) {
-          return new RowCol(focusableRows[0], focusableCols[curColIndex]); //return first row
+          return new GridRowColumn(focusableRows[0], focusableCols[curColIndex]); //return first row
         }
         else {
           //up one page
-          return new RowCol(focusableRows[curRowIndex - pageSize], focusableCols[curColIndex]);
+          return new GridRowColumn(focusableRows[curRowIndex - pageSize], focusableCols[curColIndex]);
         }
       };
       return UiGridCellNav;
@@ -14023,8 +14033,8 @@ module.filter('px', function() {
    *  @description Services for cell navigation features. If you don't like the key maps we use,
    *  or the direction cells navigation, override with a service decorator (see angular docs)
    */
-  module.service('uiGridCellNavService', ['gridUtil', 'uiGridConstants', 'uiGridCellNavConstants', '$q', 'uiGridCellNavFactory', 'RowColFactory', 'ScrollEvent',
-    function (gridUtil, uiGridConstants, uiGridCellNavConstants, $q, UiGridCellNav, RowCol, ScrollEvent) {
+  module.service('uiGridCellNavService', ['gridUtil', 'uiGridConstants', 'uiGridCellNavConstants', '$q', 'uiGridCellNavFactory', 'GridRowColumn', 'ScrollEvent',
+    function (gridUtil, uiGridConstants, uiGridCellNavConstants, $q, UiGridCellNav, GridRowColumn, ScrollEvent) {
 
       var service = {
 
@@ -14133,7 +14143,7 @@ module.filter('px', function() {
                  * @ngdoc function
                  * @name rowColSelectIndex
                  * @methodOf  ui.grid.cellNav.api:PublicApi
-                 * @description returns the index in the order in which the RowCol was selected, returns -1 if the RowCol
+                 * @description returns the index in the order in which the GridRowColumn was selected, returns -1 if the GridRowColumn
                  * isn't selected
                  * @param {object} rowCol the rowCol to evaluate
                  */
@@ -14377,8 +14387,8 @@ module.filter('px', function() {
    </file>
    </example>
    */
-  module.directive('uiGridCellnav', ['gridUtil', 'uiGridCellNavService', 'uiGridCellNavConstants', 'uiGridConstants', 'RowColFactory', '$timeout', '$compile',
-    function (gridUtil, uiGridCellNavService, uiGridCellNavConstants, uiGridConstants, RowCol, $timeout, $compile) {
+  module.directive('uiGridCellnav', ['gridUtil', 'uiGridCellNavService', 'uiGridCellNavConstants', 'uiGridConstants', 'GridRowColumn', '$timeout', '$compile',
+    function (gridUtil, uiGridCellNavService, uiGridCellNavConstants, uiGridConstants, GridRowColumn, $timeout, $compile) {
       return {
         replace: true,
         priority: -150,
@@ -14397,8 +14407,8 @@ module.filter('px', function() {
 
               //Ensure that the object has all of the methods we expect it to
               uiGridCtrl.cellNav.makeRowCol = function (obj) {
-                if (!(obj instanceof RowCol)) {
-                  obj = new RowCol(obj.row, obj.col);
+                if (!(obj instanceof GridRowColumn)) {
+                  obj = new GridRowColumn(obj.row, obj.col);
                 }
                 return obj;
               };
@@ -14437,7 +14447,7 @@ module.filter('px', function() {
                 var rowColSelectIndex = uiGridCtrl.grid.api.cellNav.rowColSelectIndex(rowCol);
 
                 if (grid.cellNav.lastRowCol === null || rowColSelectIndex === -1) {
-                  var newRowCol = new RowCol(row, col);
+                  var newRowCol = new GridRowColumn(row, col);
 
                   grid.api.cellNav.raise.navigate(newRowCol, grid.cellNav.lastRowCol);
                   grid.cellNav.lastRowCol = newRowCol;
@@ -14769,8 +14779,8 @@ module.filter('px', function() {
    *  @restrict A
    *  @description Stacks on top of ui.grid.uiGridCell to provide cell navigation
    */
-  module.directive('uiGridCell', ['$timeout', '$document', 'uiGridCellNavService', 'gridUtil', 'uiGridCellNavConstants', 'uiGridConstants', 'RowColFactory',
-    function ($timeout, $document, uiGridCellNavService, gridUtil, uiGridCellNavConstants, uiGridConstants, RowCol) {
+  module.directive('uiGridCell', ['$timeout', '$document', 'uiGridCellNavService', 'gridUtil', 'uiGridCellNavConstants', 'uiGridConstants', 'GridRowColumn',
+    function ($timeout, $document, uiGridCellNavService, gridUtil, uiGridCellNavConstants, uiGridConstants, GridRowColumn) {
       return {
         priority: -150, // run after default uiGridCell directive and ui.grid.edit uiGridCell
         restrict: 'A',
@@ -14795,7 +14805,7 @@ module.filter('px', function() {
 
           // When a cell is clicked, broadcast a cellNav event saying that this row+col combo is now focused
           $elm.find('div').on('click', function (evt) {
-            uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col), evt.ctrlKey || evt.metaKey, evt);
+            uiGridCtrl.cellNav.broadcastCellNav(new GridRowColumn($scope.row, $scope.col), evt.ctrlKey || evt.metaKey, evt);
 
             evt.stopPropagation();
             $scope.$apply();
@@ -14833,7 +14843,7 @@ module.filter('px', function() {
 
           //You can only focus on elements with a tabindex value
           $elm.on('focus', function (evt) {
-            uiGridCtrl.cellNav.broadcastCellNav(new RowCol($scope.row, $scope.col), false, evt);
+            uiGridCtrl.cellNav.broadcastCellNav(new GridRowColumn($scope.row, $scope.col), false, evt);
             evt.stopPropagation();
             $scope.$apply();
           });

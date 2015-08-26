@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/Grid.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L13" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/Grid.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L13" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.core</code>
 </span>
 </div>
@@ -7,12 +7,12 @@
 <div class="description"><div class="ui-grid-core-api-page ui-grid-core-api-publicapi-page"><p>Public Api for the core grid features</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L277" class="view-source icon-eye-open"> </a><h3 id="methods_addrowheadercolumn">addRowHeaderColumn(column)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L277" class="view-source icon-eye-open"> </a><h3 id="methods_addrowheadercolumn">addRowHeaderColumn(column)</h3>
 <div class="addrowheadercolumn"><div class="addrowheadercolumn-page"><p>adds a row header column to the grid</p>
 </div><h5 id="methods_addrowheadercolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>column</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="addrowheadercolumn-page"><p>def</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/directives/ui-grid-menu-button.js#L61" class="view-source icon-eye-open"> </a><h3 id="methods_addtogridmenu">addToGridMenu(grid, items)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/directives/ui-grid-menu-button.js#L61" class="view-source icon-eye-open"> </a><h3 id="methods_addtogridmenu">addToGridMenu(grid, items)</h3>
 <div class="addtogridmenu"><div class="addtogridmenu-page"><p>add items to the grid menu.  Used by features
 to add their menu items if they are enabled, can also be used by
 end users to add menu items.  This method has the advantage of allowing
@@ -25,7 +25,7 @@ the added note that if you want to use remove you must also specify an <code>id<
 which is provided when you want to remove an item.  The id should be unique.</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L439" class="view-source icon-eye-open"> </a><h3 id="methods_clearallfilters">clearAllFilters(refreshRows, clearConditions, clearFlags)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L439" class="view-source icon-eye-open"> </a><h3 id="methods_clearallfilters">clearAllFilters(refreshRows, clearConditions, clearFlags)</h3>
 <div class="clearallfilters"><div class="clearallfilters-page"><p>Clears all filters and optionally refreshes the visible rows.</p>
 </div><h5 id="methods_clearallfilters_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>refreshRows</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="clearallfilters-page"><p>Defaults to true.</p>
 </div></td></tr><tr><td>clearConditions</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="clearallfilters-page"><p>Defaults to false.</p>
@@ -33,7 +33,7 @@ which is provided when you want to remove an item.  The id should be unique.</p>
 </div></td></tr></tbody></table><h5 id="methods_clearallfilters_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="clearallfilters-page"><p>If <code>refreshRows</code> is true, returns a promise of the rows refreshing.</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/GridApi.js#L84" class="view-source icon-eye-open"> </a><h3 id="methods_clearrowinvisible">clearRowInvisible(rowEntity)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/GridApi.js#L84" class="view-source icon-eye-open"> </a><h3 id="methods_clearrowinvisible">clearRowInvisible(rowEntity)</h3>
 <div class="clearrowinvisible"><div class="clearrowinvisible-page"><p>Clears any override on visibility for the row so that it returns to
 using normal filtering and other visibility calculations.<br>If the row is currently invisible then sets it to visible and calls
 both grid refresh and emits the rowsVisibleChanged event
@@ -41,7 +41,7 @@ TODO: if a filter is active then we can&#39;t just set it to visible?</p>
 </div><h5 id="methods_clearrowinvisible_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="clearrowinvisible-page"><p>gridOptions.data[] array instance</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L411" class="view-source icon-eye-open"> </a><h3 id="methods_columnvisibilitychanged">columnVisibilityChanged(scope, callBack)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L411" class="view-source icon-eye-open"> </a><h3 id="methods_columnvisibilitychanged">columnVisibilityChanged(scope, callBack)</h3>
 <div class="columnvisibilitychanged"><div class="columnvisibilitychanged-page"><p>The visibility of a column has changed,
 the column itself is passed out as a parameter of the event.</p>
 </div><h5 id="methods_columnvisibilitychanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="columnvisibilitychanged-page"><p>The scope of the controller. This is used to deregister this event when the scope is destroyed.</p>
@@ -55,20 +55,20 @@ gridApi.core.on.columnVisibilityChanged( $scope, function (column) {
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/GridApi.js#L94" class="view-source icon-eye-open"> </a><h3 id="methods_getvisiblerows">getVisibleRows(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/GridApi.js#L94" class="view-source icon-eye-open"> </a><h3 id="methods_getvisiblerows">getVisibleRows(grid)</h3>
 <div class="getvisiblerows"><div class="getvisiblerows-page"><p>Returns all visible rows</p>
 </div><h5 id="methods_getvisiblerows_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getvisiblerows-page"><p>the grid you want to get visible rows from</p>
 </div></td></tr></tbody></table><h5 id="methods_getvisiblerows_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="getvisiblerows-page"><p>an array of gridRow</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L266" class="view-source icon-eye-open"> </a><h3 id="methods_handlewindowresize">handleWindowResize()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L266" class="view-source icon-eye-open"> </a><h3 id="methods_handlewindowresize">handleWindowResize()</h3>
 <div class="handlewindowresize"><div class="handlewindowresize-page"><p>Trigger a grid resize, normally this would be picked
 up by a watch on window size, but in some circumstances it is necessary
 to call this manually</p>
 </div><h5 id="methods_handlewindowresize_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="handlewindowresize-page"><p>promise that is resolved when render completes?</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L427" class="view-source icon-eye-open"> </a><h3 id="methods_notifydatachange">notifyDataChange(type)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L427" class="view-source icon-eye-open"> </a><h3 id="methods_notifydatachange">notifyDataChange(type)</h3>
 <div class="notifydatachange"><div class="notifydatachange-page"><p>Notify the grid that a data or config change has occurred,
 where that change isn&#39;t something the grid was otherwise noticing.  This
 might be particularly relevant where you&#39;ve changed values within the data
@@ -79,7 +79,7 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN), which tells
 us which refreshes to fire.</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L232" class="view-source icon-eye-open"> </a><h3 id="methods_queuegridrefresh">queueGridRefresh()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L232" class="view-source icon-eye-open"> </a><h3 id="methods_queuegridrefresh">queueGridRefresh()</h3>
 <div class="queuegridrefresh"><div class="queuegridrefresh-page"><p>Request a refresh of the rendered grid on screen, if multiple
 calls to queueGridRefresh are made within a digest cycle only one will execute.
 The refresh method re-runs both the columnProcessors and the
@@ -88,13 +88,13 @@ the grid sizing.  In general you should prefer to use queueGridRefresh
 instead, which is basically a debounced version of refresh.</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L254" class="view-source icon-eye-open"> </a><h3 id="methods_queuerefresh">queueRefresh()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L254" class="view-source icon-eye-open"> </a><h3 id="methods_queuerefresh">queueRefresh()</h3>
 <div class="queuerefresh"><div class="queuerefresh-page"><p>Requests execution of refreshCanvas, if multiple requests are made
 during a digest cycle only one will run.  RefreshCanvas updates the grid sizing.</p>
 </div><h5 id="methods_queuerefresh_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="queuerefresh-page"><p>promise that is resolved when render completes?</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L218" class="view-source icon-eye-open"> </a><h3 id="methods_refresh">refresh()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L218" class="view-source icon-eye-open"> </a><h3 id="methods_refresh">refresh()</h3>
 <div class="refresh"><div class="refresh-page"><p>Refresh the rendered grid on screen.
 The refresh method re-runs both the columnProcessors and the
 rowProcessors, as well as calling refreshCanvas to update all
@@ -104,13 +104,13 @@ instead, which is basically a debounced version of refresh.</p>
 and columns, you should consider directly calling refreshCanvas instead.</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L243" class="view-source icon-eye-open"> </a><h3 id="methods_refreshrows">refreshRows()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L243" class="view-source icon-eye-open"> </a><h3 id="methods_refreshrows">refreshRows()</h3>
 <div class="refreshrows"><div class="refreshrows-page"><p>Runs only the rowProcessors, columns remain as they were.
 It then calls redrawInPlace and refreshCanvas, which adjust the grid sizing.</p>
 </div><h5 id="methods_refreshrows_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="refreshrows-page"><p>promise that is resolved when render completes?</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L343" class="view-source icon-eye-open"> </a><h3 id="methods_registercolumnsprocessor">registerColumnsProcessor(processorFunction, priority)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L343" class="view-source icon-eye-open"> </a><h3 id="methods_registercolumnsprocessor">registerColumnsProcessor(processorFunction, priority)</h3>
 <div class="registercolumnsprocessor"><div class="registercolumnsprocessor-page"><p>Register a &quot;columns processor&quot; function. When the columns are updated,
 the grid calls each registered &quot;columns processor&quot;, which has a chance
 to alter the set of columns as long as the count is not
@@ -123,7 +123,7 @@ for other people to inject columns processors at intermediate priorities.  Lower
 <p>At present allRowsVisible is running at 50, filter is running at 100, sort is at 200, grouping at 400, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L323" class="view-source icon-eye-open"> </a><h3 id="methods_registerrowsprocessor">registerRowsProcessor(processorFunction, priority)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L323" class="view-source icon-eye-open"> </a><h3 id="methods_registerrowsprocessor">registerRowsProcessor(processorFunction, priority)</h3>
 <div class="registerrowsprocessor"><div class="registerrowsprocessor-page"><p>Register a &quot;rows processor&quot; function. When the rows are updated,
 the grid calls each registered &quot;rows processor&quot;, which has a chance
 to alter the set of rows (sorting, etc) as long as the count is not
@@ -137,7 +137,7 @@ for other people to inject rows processors at intermediate priorities.  Lower pr
 sort is at 200, grouping and treeview at 400-410, selectable rows at 500, pagination at 900 (pagination will generally want to be last)</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/directives/ui-grid-menu-button.js#L74" class="view-source icon-eye-open"> </a><h3 id="methods_removefromgridmenu">removeFromGridMenu(grid, id)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/directives/ui-grid-menu-button.js#L74" class="view-source icon-eye-open"> </a><h3 id="methods_removefromgridmenu">removeFromGridMenu(grid, id)</h3>
 <div class="removefromgridmenu"><div class="removefromgridmenu-page"><p>Remove an item from the grid menu based on a provided id. Assumes
 that the id is unique, removes only the last instance of that id. Does nothing if
 the specified id is not found</p>
@@ -145,7 +145,7 @@ the specified id is not found</p>
 </div></td></tr><tr><td>id</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="removefromgridmenu-page"><p>the id we&#39;d like to remove from the menu</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/GridApi.js#L47" class="view-source icon-eye-open"> </a><h3 id="methods_renderingcomplete">renderingComplete(gridApi)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/GridApi.js#L47" class="view-source icon-eye-open"> </a><h3 id="methods_renderingcomplete">renderingComplete(gridApi)</h3>
 <div class="renderingcomplete"><div class="renderingcomplete-page"><p>Rendering is complete, called at the same
 time as <code>onRegisterApi</code>, but provides a way to obtain
 that same event within features without stopping end
@@ -162,7 +162,7 @@ gridApi.core.on.renderingComplete( grid );
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L302" class="view-source icon-eye-open"> </a><h3 id="methods_scrollto">scrollTo(rowEntity, colDef)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L302" class="view-source icon-eye-open"> </a><h3 id="methods_scrollto">scrollTo(rowEntity, colDef)</h3>
 <div class="scrollto"><div class="scrollto-page"><p>Scroll the grid such that the specified
 row and column is in view</p>
 </div><h5 id="methods_scrollto_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="scrollto-page"><p>gridOptions.data[] array instance to make visible</p>
@@ -170,7 +170,7 @@ row and column is in view</p>
 </div></td></tr></tbody></table><h5 id="methods_scrollto_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="scrollto-page"><p>a promise that is resolved after any scrolling is finished</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L290" class="view-source icon-eye-open"> </a><h3 id="methods_scrolltoifnecessary">scrollToIfNecessary(gridRow, gridCol)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L290" class="view-source icon-eye-open"> </a><h3 id="methods_scrolltoifnecessary">scrollToIfNecessary(gridRow, gridCol)</h3>
 <div class="scrolltoifnecessary"><div class="scrolltoifnecessary-page"><p>Scrolls the grid to make a certain row and column combo visible,
 in the case that it is not completely visible on the screen already.</p>
 </div><h5 id="methods_scrolltoifnecessary_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="scrolltoifnecessary-page"><p>row to make visible</p>
@@ -178,14 +178,14 @@ in the case that it is not completely visible on the screen already.</p>
 </div></td></tr></tbody></table><h5 id="methods_scrolltoifnecessary_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="scrolltoifnecessary-page"><p>a promise that is resolved when scrolling is complete</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/GridApi.js#L71" class="view-source icon-eye-open"> </a><h3 id="methods_setrowinvisible">setRowInvisible(rowEntity)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/GridApi.js#L71" class="view-source icon-eye-open"> </a><h3 id="methods_setrowinvisible">setRowInvisible(rowEntity)</h3>
 <div class="setrowinvisible"><div class="setrowinvisible-page"><p>Sets an override on the row to make it always invisible,
 which will override any filtering or other visibility calculations.<br>If the row is currently visible then sets it to invisible and calls
 both grid refresh and emits the rowsVisibleChanged event</p>
 </div><h5 id="methods_setrowinvisible_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="setrowinvisible-page"><p>gridOptions.data[] array instance</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L392" class="view-source icon-eye-open"> </a><h3 id="methods_sortchanged">sortChanged(scope, callBack)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L392" class="view-source icon-eye-open"> </a><h3 id="methods_sortchanged">sortChanged(scope, callBack)</h3>
 <div class="sortchanged"><div class="sortchanged-page"><p>The sort criteria on one or more columns has
 changed.  Provides as parameters the grid and the output of
 getColumnSorting, which is an array of gridColumns
@@ -202,7 +202,7 @@ gridApi.core.on.sortChanged( $scope, function(sortColumns){
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/69a75da/src/js/core/factories/Grid.js#L369" class="view-source icon-eye-open"> </a><h3 id="methods_sorthandlenulls">sortHandleNulls(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/e62907c/src/js/core/factories/Grid.js#L369" class="view-source icon-eye-open"> </a><h3 id="methods_sorthandlenulls">sortHandleNulls(a, b)</h3>
 <div class="sorthandlenulls"><div class="sorthandlenulls-page"><p>A null handling method that can be used when building custom sort
 functions</p>
 </div><h5 id="methods_sorthandlenulls_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sorthandlenulls-page"><p>sort value a</p>
