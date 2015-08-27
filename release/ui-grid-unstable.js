@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.5-820df37 - 2015-08-27
+ * ui-grid - v3.0.5-026b6d2 - 2015-08-27
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17260,7 +17260,11 @@ module.filter('px', function() {
           if ( colTypes === uiGridExporterConstants.ALL ){
             columns = grid.columns;
           } else {
-            columns = grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } );
+            var leftColumns = grid.renderContainers.left ? grid.renderContainers.left.visibleColumnCache.filter( function( column ){ return column.visible; } ) : [];
+            var bodyColumns = grid.renderContainers.body ? grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } ) : [];
+            var rightColumns = grid.renderContainers.right ? grid.renderContainers.right.visibleColumnCache.filter( function( column ){ return column.visible; } ) : [];
+
+            columns = leftColumns.concat(bodyColumns,rightColumns);
           }
 
           columns.forEach( function( gridCol, index ) {
@@ -17342,7 +17346,11 @@ module.filter('px', function() {
           if ( colTypes === uiGridExporterConstants.ALL ){
             columns = grid.columns;
           } else {
-            columns = grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } );
+            var leftColumns = grid.renderContainers.left ? grid.renderContainers.left.visibleColumnCache.filter( function( column ){ return column.visible; } ) : [];
+            var bodyColumns = grid.renderContainers.body ? grid.renderContainers.body.visibleColumnCache.filter( function( column ){ return column.visible; } ) : [];
+            var rightColumns = grid.renderContainers.right ? grid.renderContainers.right.visibleColumnCache.filter( function( column ){ return column.visible; } ) : [];
+
+            columns = leftColumns.concat(bodyColumns,rightColumns);
           }
 
           rows.forEach( function( row, index ) {
