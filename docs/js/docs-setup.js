@@ -28,7 +28,7 @@ NG_DOCS={
       "shortName": "ui.grid.autoResize",
       "type": "overview",
       "moduleName": "ui.grid.autoResize",
-      "shortDescription": "ui.grid.autoResize",
+      "shortDescription": "#ui.grid.autoResize",
       "keywords": "alert alert-warning api auto-resizing autoresize bugs class feature functionality grid hasn lot module overview ready role testing ui ui-grid"
     },
     {
@@ -37,7 +37,7 @@ NG_DOCS={
       "shortName": "ui.grid.cellNav",
       "type": "overview",
       "moduleName": "ui.grid.cellNav",
-      "shortDescription": "ui.grid.cellNav",
+      "shortDescription": "#ui.grid.cellNav",
       "keywords": "alert alert-success api auto-resizing breaking cellnav changes class deprecation feature functionality grid longer module overview role stable ui ui-grid warning"
     },
     {
@@ -910,7 +910,7 @@ NG_DOCS={
       "shortName": "ui.grid.infiniteScroll",
       "type": "overview",
       "moduleName": "ui.grid.infiniteScroll",
-      "shortDescription": "ui.grid.infiniteScroll",
+      "shortDescription": "#ui.grid.infiniteScroll",
       "keywords": "alert alert-warning api bugs class feature functionality grid hasn infinite infinitescroll lot module overview ready role scroll testing ui ui-grid"
     },
     {
@@ -956,7 +956,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.moveColumns",
       "shortDescription": "ui.grid.moveColumns",
-      "keywords": "alert alert-warning api breaking bugs capability change changes class column columns development doc-module-components enables feature grid major module movecolumns moving outstanding overview position role ui"
+      "keywords": "alert alert-warning altering api array breaking bugs cache cached capability change changes class column columndefs columns current datachangecallback defined development doc-module-components enables feature grid major method module movecolumns moving order outstanding overview position reset restore role ui updatecolumncache verifycolumnorder"
     },
     {
       "section": "api",
