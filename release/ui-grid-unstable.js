@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.5-d5e27bd - 2015-08-31
+ * ui-grid - v3.0.5-a737a79 - 2015-08-31
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11522,7 +11522,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     }
   };
   s.off.mousewheel = function (elm, fn) {
-    var $elm = angular.element(this);
+    var $elm = angular.element(elm);
 
     var cbs = $elm.data('mousewheel-callbacks');
     var handler = cbs[fn];
