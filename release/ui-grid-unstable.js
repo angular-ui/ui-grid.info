@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.5-a737a79 - 2015-08-31
+ * ui-grid - v3.0.5-b2d443e - 2015-08-31
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -19992,8 +19992,8 @@ module.filter('px', function() {
                * used if you're subsequently going to call `dataRemovedTop` or `dataRemovedBottom`
                */
               saveScrollPercentage: function() {
-                grid.infiniteScroll.prevScrolltopPercentage = grid.renderContainers.body.prevScrolltopPercentage;
-                grid.infiniteScroll.previousVisibleRows = grid.renderContainers.body.visibleRowCache.length;
+                grid.infiniteScroll.prevScrollTop = grid.renderContainers.body.prevScrollTop;
+                grid.infiniteScroll.previousVisibleRows = grid.getVisibleRowCount();
               },
 
 
@@ -20170,7 +20170,7 @@ module.filter('px', function() {
         // to be at approximately the row we're currently at
         grid.infiniteScroll.previousVisibleRows = grid.renderContainers.body.visibleRowCache.length;
         grid.infiniteScroll.direction = grid.scrollDirection;
-        delete grid.infiniteScroll.prevScrolltopPercentage;
+        delete grid.infiniteScroll.prevScrollTop;
 
         if (grid.scrollDirection === uiGridConstants.scrollDirection.UP && grid.infiniteScroll.scrollUp ) {
           grid.infiniteScroll.dataLoading = true;
@@ -20206,32 +20206,30 @@ module.filter('px', function() {
       adjustScroll: function(grid){
         var promise = $q.defer();
         $timeout(function () {
-          var newPercentage;
+          var newPercentage, viewportHeight, rowHeight, newVisibleRows, oldTop, newTop;
+
+          viewportHeight = grid.getViewportHeight() + grid.headerHeight - grid.renderContainers.body.headerHeight - grid.scrollbarHeight;
+          rowHeight = grid.options.rowHeight;
 
           if ( grid.infiniteScroll.direction === undefined ){
             // called from initialize, tweak our scroll up a little
             service.adjustInfiniteScrollPosition(grid, 0);
           }
 
-          var newVisibleRows = grid.renderContainers.body.visibleRowCache.length;
-          var oldPercentage, oldTopRow;
-          var halfViewport = grid.getViewportHeight() / grid.options.rowHeight / 2;
+          newVisibleRows = grid.getVisibleRowCount();
 
           if ( grid.infiniteScroll.direction === uiGridConstants.scrollDirection.UP ){
-            oldPercentage = grid.infiniteScroll.prevScrolltopPercentage || 0;
-            oldTopRow = oldPercentage * grid.infiniteScroll.previousVisibleRows;
-            newPercentage = ( newVisibleRows - grid.infiniteScroll.previousVisibleRows + oldTopRow + halfViewport ) / newVisibleRows;
-            service.adjustInfiniteScrollPosition(grid, newPercentage);
+            oldTop = grid.infiniteScroll.prevScrollTop || 0;
+            newTop = oldTop + (newVisibleRows - grid.infiniteScroll.previousVisibleRows)*rowHeight;
+            service.adjustInfiniteScrollPosition(grid, newTop);
             $timeout( function() {
               promise.resolve();
             });
           }
 
           if ( grid.infiniteScroll.direction === uiGridConstants.scrollDirection.DOWN ){
-            oldPercentage = grid.infiniteScroll.prevScrolltopPercentage || 1;
-            oldTopRow = oldPercentage * grid.infiniteScroll.previousVisibleRows;
-            newPercentage = ( oldTopRow - halfViewport ) / newVisibleRows;
-            service.adjustInfiniteScrollPosition(grid, newPercentage);
+            newTop = grid.infiniteScroll.prevScrollTop || (grid.infiniteScroll.previousVisibleRows*rowHeight - viewportHeight);
+            service.adjustInfiniteScrollPosition(grid, newTop);
             $timeout( function() {
               promise.resolve();
             });
@@ -20248,18 +20246,23 @@ module.filter('px', function() {
        * @methodOf ui.grid.infiniteScroll.service:uiGridInfiniteScrollService
        * @description This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection
        * @param {Grid} grid the grid we're working on
-       * @param {number} percentage the percentage through the grid that we want to scroll to
+       * @param {number} scrollTop the position through the grid that we want to scroll to
        * @returns {promise} a promise that is resolved when the scrolling finishes
        */
-      adjustInfiniteScrollPosition: function (grid, percentage) {
-        var scrollEvent = new ScrollEvent(grid, null, null, 'ui.grid.adjustInfiniteScrollPosition');
+      adjustInfiniteScrollPosition: function (grid, scrollTop) {
+        var scrollEvent = new ScrollEvent(grid, null, null, 'ui.grid.adjustInfiniteScrollPosition'),
+          visibleRows = grid.getVisibleRowCount(),
+          viewportHeight = grid.getViewportHeight() + grid.headerHeight - grid.renderContainers.body.headerHeight - grid.scrollbarHeight,
+          rowHeight = grid.options.rowHeight,
+          scrollHeight = visibleRows*rowHeight-viewportHeight;
 
         //for infinite scroll, if there are pages upwards then never allow it to be at the zero position so the up button can be active
-        if ( percentage === 0 && grid.infiniteScroll.scrollUp ) {
-          scrollEvent.y = {pixels: 1};
+        if (scrollTop === 0 && grid.infiniteScroll.scrollUp) {
+          // using pixels results in a relative scroll, hence we have to use percentage
+          scrollEvent.y = {percentage: 1/scrollHeight};
         }
         else {
-          scrollEvent.y = {percentage: percentage};
+          scrollEvent.y = {percentage: scrollTop/scrollHeight};
         }
         grid.scrollContainers('', scrollEvent);
       },
@@ -20281,17 +20284,18 @@ module.filter('px', function() {
        * @returns {promise} a promise that is resolved when the scrolling finishes
        */
       dataRemovedTop: function( grid, scrollUp, scrollDown ) {
+        var newVisibleRows, oldTop, newTop, rowHeight;
         service.setScrollDirections( grid, scrollUp, scrollDown );
 
-        var newVisibleRows = grid.renderContainers.body.visibleRowCache.length;
-        var oldScrollRow = grid.infiniteScroll.prevScrolltopPercentage * grid.infiniteScroll.previousVisibleRows;
+        newVisibleRows = grid.renderContainers.body.visibleRowCache.length;
+        oldTop = grid.infiniteScroll.prevScrollTop;
+        rowHeight = grid.options.rowHeight;
 
         // since we removed from the top, our new scroll row will be the old scroll row less the number
         // of rows removed
-        var newScrollRow = oldScrollRow - ( grid.infiniteScroll.previousVisibleRows - newVisibleRows );
-        var newScrollPercent = newScrollRow / newVisibleRows;
+        newTop = oldTop - ( grid.infiniteScroll.previousVisibleRows - newVisibleRows )*rowHeight;
 
-        return service.adjustInfiniteScrollPosition( grid, newScrollPercent );
+        return service.adjustInfiniteScrollPosition( grid, newTop );
       },
 
       /**
@@ -20309,15 +20313,12 @@ module.filter('px', function() {
        * fire infinite scroll events downward
        */
       dataRemovedBottom: function( grid, scrollUp, scrollDown ) {
+        var newTop;
         service.setScrollDirections( grid, scrollUp, scrollDown );
 
-        var newVisibleRows = grid.renderContainers.body.visibleRowCache.length;
-        var oldScrollRow = grid.infiniteScroll.prevScrolltopPercentage * grid.infiniteScroll.previousVisibleRows;
+        newTop = grid.infiniteScroll.prevScrollTop;
 
-        // since we removed from the bottom, our new scroll row will be same as the old scroll row
-        var newScrollPercent = oldScrollRow / newVisibleRows;
-
-        return service.adjustInfiniteScrollPosition( grid, newScrollPercent );
+        return service.adjustInfiniteScrollPosition( grid, newTop );
       }
     };
     return service;
