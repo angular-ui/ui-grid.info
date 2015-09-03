@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.5-bd0b3ea - 2015-09-03
+ * ui-grid - v3.0.5-b75325c - 2015-09-03
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18447,7 +18447,7 @@ module.filter('px', function() {
        */
       moveGroupColumns: function( grid, columns, rows ){
         if ( grid.options.moveGroupColumns === false){
-          return;
+          return columns;
         }
 
         columns.forEach( function(column, index){
