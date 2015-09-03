@@ -2053,7 +2053,7 @@ NG_DOCS={
       "shortName": "314 External Pagination",
       "type": "overview",
       "moduleName": "Tutorial: 314 External Pagination",
-      "shortDescription": "When pagination is enabled, the data is displayed in pages that can be browsed using using the built in ",
+      "shortDescription": "When pagination is enabled, the data is displayed in pages that can be browsed using the built in ",
       "keywords": "$http $scope allow angular app application asc break browsed built calculate call callback called case class client client-side code columndefs combined company controller core correct count css data default desc direction displayed enabled enablesorting entire exist external false fetch fetched firstrow function gender getpage grid gridapi gridoptions html implement js json length main mainctrl mentioned module newpage ng-controller ngtouch null number onregisterapi overview pagenumber pagesize pagination paginationchanged paginationoptions paginationpagesize paginationpagesizes parameters query requires rest retrieve rows selector server server-side set slice sort sortchanged sortcolumns sorting specific subset success sufficient switch total totalitems true tutorial ui ui-grid ui-grid-pagination uigridconstants update url useexternalpagination useexternalsorting utilize var variable variables width"
     },
     {
