@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.5-06f3e17 - 2015-09-04
+ * ui-grid - v3.0.6-dc43dd9 - 2015-09-08
  * Copyright (c) 2015 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -155,6 +155,9 @@
 }
 .ui-grid-header-cell .sortable {
   cursor: pointer;
+}
+.ui-grid-header-cell .ui-grid-sort-priority-number {
+  margin-left: -8px;
 }
 .ui-grid-header .ui-grid-vertical-bar {
   top: 0;
