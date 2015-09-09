@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-dc43dd9 - 2015-09-08
+ * ui-grid - v3.0.6-858b4af - 2015-09-09
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -16244,6 +16244,8 @@ module.filter('px', function() {
                * </pre>
                * @param {GridRow} row the row that was expanded
                */
+              rowExpandedBeforeStateChanged: function(scope,row){
+              },
               rowExpandedStateChanged: function (scope, row) {
               }
             }
@@ -16314,9 +16316,15 @@ module.filter('px', function() {
       },
 
       toggleRowExpansion: function (grid, row) {
+        // trigger the "before change" event. Can change row height dynamically this way.
+        grid.api.expandable.raise.rowExpandedBeforeStateChanged(row);
         row.isExpanded = !row.isExpanded;
+        if (angular.isUndefined(row.expandedRowHeight)){
+          row.expandedRowHeight = grid.options.expandableRowHeight;
+        }
+              
         if (row.isExpanded) {
-          row.height = row.grid.options.rowHeight + grid.options.expandableRowHeight;
+          row.height = row.grid.options.rowHeight + row.expandedRowHeight;
         }
         else {
           row.height = row.grid.options.rowHeight;
@@ -26594,7 +26602,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/expandableRow',
-    "<div ui-grid-expandable-row ng-if=\"expandableRow.shouldRenderExpand()\" class=\"expandableRow\" style=\"float:left; margin-top: 1px; margin-bottom: 1px\" ng-style=\"{width: (grid.renderContainers.body.getCanvasWidth()) + 'px', height: grid.options.expandableRowHeight + 'px'}\"></div>"
+    "<div ui-grid-expandable-row ng-if=\"expandableRow.shouldRenderExpand()\" class=\"expandableRow\" style=\"float:left; margin-top: 1px; margin-bottom: 1px\" ng-style=\"{width: (grid.renderContainers.body.getCanvasWidth()) + 'px', height: row.expandedRowHeight + 'px'}\"></div>"
   );
 
 
@@ -26604,7 +26612,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/expandableScrollFiller',
-    "<div ng-if=\"expandableRow.shouldRenderFiller()\" ng-class=\"{scrollFiller:true, scrollFillerClass:(colContainer.name === 'body')}\" ng-style=\"{ width: (grid.getViewportWidth()) + 'px', height: grid.options.expandableRowHeight + 2 + 'px', 'margin-left': grid.options.rowHeader.rowHeaderWidth + 'px' }\"><i class=\"ui-grid-icon-spin5 ui-grid-animate-spin\" ng-style=\"{'margin-top': ( grid.options.expandableRowHeight/2 - 5) + 'px', 'margin-left' : ((grid.getViewportWidth() - grid.options.rowHeader.rowHeaderWidth)/2 - 5) + 'px'}\"></i></div>"
+    "<div ng-if=\"expandableRow.shouldRenderFiller()\" ng-class=\"{scrollFiller:true, scrollFillerClass:(colContainer.name === 'body')}\" ng-style=\"{ width: (grid.getViewportWidth()) + 'px', height: row.expandedRowHeight + 2 + 'px', 'margin-left': grid.options.rowHeader.rowHeaderWidth + 'px' }\"><i class=\"ui-grid-icon-spin5 ui-grid-animate-spin\" ng-style=\"{'margin-top': ( row.expandedRowHeight/2 - 5) + 'px', 'margin-left' : ((grid.getViewportWidth() - grid.options.rowHeader.rowHeaderWidth)/2 - 5) + 'px'}\"></i></div>"
   );
 
 
