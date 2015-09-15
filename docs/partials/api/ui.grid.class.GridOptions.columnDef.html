@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/314f1ed/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/f596128/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.class:GridOptions</code>
 </span>
 </div>
@@ -294,6 +294,19 @@ a string, and use the <a href="#/api/ui.grid.class:RowSorter#sortalpha">sortAlph
 to return a non-string value from an angularjs filter, in which case you should define a <a href="#/api/ui.grid.class:GridOptions.columnDef#sortingalgorithm">sortingAlgorithm</a>
 for the column which hanldes the returned type. You may specify one of the <code>sortingAlgorithms</code>
 found in the <a href="#/api/ui.grid.RowSorter">rowSorter</a> service.</p>
+</div></div>
+</li>
+<li><h3 id="properties_sortdirectioncycle">sortDirectionCycle</h3>
+<div class="sortdirectioncycle"><div class="sortdirectioncycle-page"><p>(optional) An array of sort directions, specifying the order that they
+should cycle through as the user repeatedly clicks on the column heading.
+The default is <code>[null, uiGridConstants.ASC, uiGridConstants.DESC]</code>. Null
+refers to the unsorted state. This does not affect the initial sort
+direction; use the <a href="#/api/ui.grid.class:GridOptions.columnDef#sort">sort</a>
+property for that. If
+<a href="#/api/ui.grid.class:GridOptions.columnDef#suppressremovesort">suppressRemoveSort</a>
+is also set, the unsorted state will be skipped even if it is listed here.
+Each direction may not appear in the list more than once (e.g. <code>[ASC,
+DESC, DESC]</code> is not allowed), and the list may not be empty.</p>
 </div></div>
 </li>
 <li><h3 id="properties_sortingalgorithm">sortingAlgorithm</h3>

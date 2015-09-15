@@ -17,6 +17,9 @@ you change the data &quot;behind the scenes&quot; and want the sort to be recalc
 data has changed by calling <code>gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT )</code></p>
 <p>If you set a default sort, you can prevent the user from removing that sort by setting <code>suppressRemoveSort: true</code>
 for that column.  This will let the user change the direction of the sort, but take away the option to remove the sort.</p>
+<p>When clicking on a column heading the sort direction will cycle to ascending, then descending, then back to unsorted.
+You may rearrange this cycle or skip part of it by setting the
+<a href="#/api/ui.grid.class:GridOptions.columnDef#sortdirectioncycle">sortDirectionCycle</a> columnDef option.</p>
 <p>The sort algorithm is chosen based on the column type.  ui-grid will guess the type based on the data, although if you load data
 asynchronously after the columns it will often decide all your columns are string.  You can explicitly set the column type in the
 column def using <code>type=&#39;number&#39;</code>.  Valid types are documented in <a href="#/api/ui.grid.class:GridOptions.columnDef">columnDef</a>, and
