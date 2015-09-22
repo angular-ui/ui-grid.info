@@ -1941,6 +1941,15 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "299_third_party_features",
+      "shortName": "299 Third Party Features",
+      "type": "overview",
+      "moduleName": "Tutorial: 299 Third Party Features",
+      "shortDescription": "Features maintained outside UI Grid Repository",
+      "keywords": "allows create developed draggable feature features folder grid list listed maintained misc odata overview parties party pull querying repository request rows services third tutorial ui updated v3"
+    },
+    {
+      "section": "tutorial",
       "id": "301_editableOnFocus",
       "shortName": "301 Edit On Focus",
       "type": "overview",

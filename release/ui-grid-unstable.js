@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-6c9350c - 2015-09-15
+ * ui-grid - v3.0.6-4a63b99 - 2015-09-22
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6492,7 +6492,7 @@ angular.module('ui.grid')
    * @propertyOf ui.grid.class:GridColumn
    * @description Filter on this column.
    * @example
-   * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', ariaLabel: 'Filter for text, flags: { caseSensitive: false }, type: uiGridConstants.filter.SELECT, [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ] }</pre>
+   * <pre>{ term: 'text', condition: uiGridConstants.filter.STARTS_WITH, placeholder: 'type to filter...', ariaLabel: 'Filter for text', flags: { caseSensitive: false }, type: uiGridConstants.filter.SELECT, [ { value: 1, label: 'male' }, { value: 2, label: 'female' } ] }</pre>
    *
    */
 
@@ -24240,6 +24240,7 @@ module.filter('px', function() {
           });
           service.decideRaiseSelectionBatchEvent( grid, changedRows, evt );
           grid.selection.selectAll = false;
+          grid.selection.selectedCount = 0;
         },
 
         /**
