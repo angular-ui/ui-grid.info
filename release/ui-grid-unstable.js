@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-f914f98 - 2015-09-22
+ * ui-grid - v3.0.6-34f5510 - 2015-09-25
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12776,7 +12776,8 @@ module.filter('px', function() {
         },
         pagination: {
             sizes: 'items per pagina',
-            totalItems: 'items'
+            totalItems: 'items',
+            of: 'van de'
         },
         grouping: {
             group: 'Groepeer',
