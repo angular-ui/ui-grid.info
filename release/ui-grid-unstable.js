@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-9d1a0b4 - 2015-09-28
+ * ui-grid - v3.0.6-d7a666c - 2015-09-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -20247,6 +20247,12 @@ module.filter('px', function() {
           }
 
           newVisibleRows = grid.getVisibleRowCount();
+
+          // in case not enough data is loaded to enable scroller - load more data
+          var canvasHeight = rowHeight * newVisibleRows;
+          if (grid.infiniteScroll.scrollDown && (viewportHeight > canvasHeight)) {
+            grid.api.infiniteScroll.raise.needLoadMoreData();
+          }
 
           if ( grid.infiniteScroll.direction === uiGridConstants.scrollDirection.UP ){
             oldTop = grid.infiniteScroll.prevScrollTop || 0;
