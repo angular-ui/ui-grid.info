@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-79e7cf2 - 2015-09-30
+ * ui-grid - v3.0.6-62ebd37 - 2015-10-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -4582,6 +4582,7 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:Grid
    * @description creates or removes GridRow objects from the newRawData array.  Calls each registered
    * rowBuilder to further process the row
+   * @param {array} newRawData Modified set of data
    *
    * This method aims to achieve three things:
    * 1. the resulting rows array is in the same order as the newRawData, we'll call
@@ -4605,6 +4606,16 @@ angular.module('ui.grid')
    *
    * Rows are identified using the hashKey if configured.  If not configured, then rows
    * are identified using the gridOptions.rowEquality function
+   * 
+   * This method is useful when trying to select rows immediately after loading data without
+   * using a $timeout/$interval, e.g.:
+   * 
+   *   $scope.gridOptions.data =  someData;
+   *   $scope.gridApi.grid.modifyRows($scope.gridOptions.data);
+   *   $scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);
+   * 
+   * OR to persist row selection after data update (e.g. rows selected, new data loaded, want
+   * originally selected rows to be re-selected))
    */
   Grid.prototype.modifyRows = function modifyRows(newRawData) {
     var self = this;
