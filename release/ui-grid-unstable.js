@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-62ebd37 - 2015-10-01
+ * ui-grid - v3.0.6-9c256bf - 2015-10-01
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -4603,7 +4603,8 @@ angular.module('ui.grid')
    *     create newRow
    *   append to the newRows and add to newHash
    *   run the processors
-   *
+   * ```
+   * 
    * Rows are identified using the hashKey if configured.  If not configured, then rows
    * are identified using the gridOptions.rowEquality function
    * 
