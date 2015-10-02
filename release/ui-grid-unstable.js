@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-94bbb46 - 2015-10-02
+ * ui-grid - v3.0.6-5cbaf5f - 2015-10-02
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -5830,7 +5830,7 @@ angular.module('ui.grid')
       //}
 
       // The right position is the current X scroll position minus the grid width
-      var rightBound = self.renderContainers.body.prevScrollLeft + Math.ceil(self.gridWidth);
+      var rightBound = self.renderContainers.body.prevScrollLeft + Math.ceil(self.renderContainers.body.getViewportWidth());
 
       // If there's a vertical scrollbar, subtract it from the right boundary or we'll allow it to obscure cells
       //if (self.verticalScrollbarWidth) {
@@ -24175,10 +24175,11 @@ module.filter('px', function() {
             return;
           }
 
+          var selectedRows;
           if (!multiSelect && !selected) {
             service.clearSelectedRows(grid, evt);
           } else if (!multiSelect && selected) {
-            var selectedRows = service.getSelectedRows(grid);
+            selectedRows = service.getSelectedRows(grid);
             if (selectedRows.length > 1) {
               selected = false; // Enable reselect of the row
               service.clearSelectedRows(grid, evt);
@@ -24191,9 +24192,11 @@ module.filter('px', function() {
             row.setSelected(!selected);
             if (row.isSelected === true) {
               grid.selection.lastSelectedRow = row;
-            } else {
-              grid.selection.selectAll = false;
             }
+
+            selectedRows = service.getSelectedRows(grid);
+            grid.selection.selectAll = grid.rows.length === selectedRows.length;
+
             grid.api.selection.raise.rowSelectionChanged(row, evt);
           }
         },
