@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.6-fa87b42 - 2015-10-02
+ * ui-grid - v3.0.6-0da5cd4 - 2015-10-05
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -5830,7 +5830,7 @@ angular.module('ui.grid')
       //}
 
       // The right position is the current X scroll position minus the grid width
-      var rightBound = self.renderContainers.body.prevScrollLeft + Math.ceil(self.gridWidth);
+      var rightBound = self.renderContainers.body.prevScrollLeft + Math.ceil(self.renderContainers.body.getViewportWidth());
 
       // If there's a vertical scrollbar, subtract it from the right boundary or we'll allow it to obscure cells
       //if (self.verticalScrollbarWidth) {
@@ -6729,18 +6729,10 @@ angular.module('ui.grid')
   /**
    * @ngdoc property
    * @name sortingAlgorithm
-   * @propertyOf ui.grid.class:GridColumn
-   * @description Algorithm to use for sorting this column. Takes 'a' and 'b' parameters
-   * like any normal sorting function.
-   *
-   */
-
-  /**
-   * @ngdoc property
-   * @name sortingAlgorithm
    * @propertyOf ui.grid.class:GridOptions.columnDef
    * @description Algorithm to use for sorting this column. Takes 'a' and 'b' parameters
-   * like any normal sorting function.
+   * like any normal sorting function with additional 'rowA', 'rowB', and 'direction' parameters
+   * that are the row objects and the current direction of the sort respectively.
    *
    */
 
@@ -10202,7 +10194,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     if (sortCols.length === 0) {
       return rows;
     }
-    
+
     // Re-usable variables
     var col, direction;
 
@@ -10228,7 +10220,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
         direction = sortCols[idx].sort.direction;
 
         sortFn = rowSorter.getSortFn(grid, col, r);
-        
+
         var propA, propB;
 
         if ( col.sortCellFiltered ){
@@ -10239,7 +10231,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
           propB = grid.getCellValue(rowB, col);
         }
 
-        tem = sortFn(propA, propB);
+        tem = sortFn(propA, propB, rowA, rowB, direction);
 
         idx++;
       }
@@ -10251,7 +10243,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       if (tem === 0 ) {
         return rowA.entity.$$uiGridIndex - rowB.entity.$$uiGridIndex;
       }
-      
+
       // Made it this far, we don't have to worry about null & undefined
       if (direction === uiGridConstants.ASC) {
         return tem;
