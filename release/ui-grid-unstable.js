@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-e8e5653 - 2015-10-12
+ * ui-grid - v3.0.7-a9a3c0c - 2015-10-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -18935,16 +18935,24 @@ module.filter('px', function() {
           newDisplayValue = grid.options.groupingNullLabel;
         }
 
+        var getKeyAsValueForCacheMap = function(key) {
+          if (angular.isObject(key)) {
+              return JSON.stringify(key);
+          } else {
+              return key;
+          }
+        };
+
         var cacheItem = grid.grouping.oldGroupingHeaderCache;
         for ( var i = 0; i < stateIndex; i++ ){
-          if ( cacheItem && cacheItem[processingState[i].currentValue] ){
-            cacheItem = cacheItem[processingState[i].currentValue].children;
+          if ( cacheItem && cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)] ){
+            cacheItem = cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)].children;
           }
         }
 
         var headerRow;
-        if ( cacheItem && cacheItem[newValue]){
-          headerRow = cacheItem[newValue].row;
+        if ( cacheItem && cacheItem[getKeyAsValueForCacheMap(newValue)]){
+          headerRow = cacheItem[getKeyAsValueForCacheMap(newValue)].row;
           headerRow.entity = {};
         } else {
           headerRow = new GridRow( {}, null, grid );
@@ -18971,9 +18979,9 @@ module.filter('px', function() {
         // add our new header row to the cache
         cacheItem = grid.grouping.groupingHeaderCache;
         for ( i = 0; i < stateIndex; i++ ){
-          cacheItem = cacheItem[processingState[i].currentValue].children;
+          cacheItem = cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)].children;
         }
-        cacheItem[newValue] = { row: headerRow, children: {} };
+        cacheItem[getKeyAsValueForCacheMap(newValue)] = { row: headerRow, children: {} };
       },
 
 
