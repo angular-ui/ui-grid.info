@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-fe00489 - 2015-10-06
+ * ui-grid - v3.0.7-e8e5653 - 2015-10-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -11821,12 +11821,18 @@ module.filter('px', function() {
         menu:{
           text: 'Vælg kolonner:'
         },
+        sort: {
+          ascending: 'Sorter stigende',
+          descending: 'Sorter faldende',
+          none: 'Sorter ingen',
+          remove: 'Fjern sortering'
+        },
         column: {
           hide: 'Skjul kolonne'
         },
         aggregation: {
-          count: 'samlede rækker: ',
-          sum: 'smalede: ',
+          count: 'antal rækker: ',
+          sum: 'sum: ',
           avg: 'gns: ',
           min: 'min: ',
           max: 'max: '
