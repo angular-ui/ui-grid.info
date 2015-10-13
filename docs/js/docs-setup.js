@@ -24,6 +24,24 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "exporterMenuSelectedData",
+      "shortName": "exporterMenuSelectedData",
+      "type": "object",
+      "moduleName": "exporterMenuSelectedData",
+      "shortDescription": "Add export selected data as cvs/pdf menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.",
+      "keywords": "add api cvs data defaults export exporter exportermenuselecteddata grid items menu object selected true ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "exporterMenuVisibleData",
+      "shortName": "exporterMenuVisibleData",
+      "type": "object",
+      "moduleName": "exporterMenuVisibleData",
+      "shortDescription": "Add export visible data as cvs/pdf menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.",
+      "keywords": "add api cvs data defaults export exporter exportermenuvisibledata grid items menu object true ui ui-grid visible"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.autoResize",
       "shortName": "ui.grid.autoResize",
       "type": "overview",
@@ -424,8 +442,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
-      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
+      "shortDescription": "End to end test functions.",
+      "keywords": "api e2etestlibrary functions grid overview test ui"
     },
     {
       "section": "api",
@@ -433,8 +451,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.",
-      "keywords": "api e2etestlibrary functions grid overview test ui"
+      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
+      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
     },
     {
       "section": "api",
