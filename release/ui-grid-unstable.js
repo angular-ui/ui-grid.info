@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-5886ca7 - 2015-10-13
+ * ui-grid - v3.0.7-cf67586 - 2015-10-21
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -6983,7 +6983,7 @@ angular.module('ui.grid')
      * @name footerCellClass
      * @propertyOf ui.grid.class:GridOptions.columnDef
      * @description footerCellClass can be a string specifying the class to append to a cell
-     * or it can be a function(row,rowRenderIndex, col, colRenderIndex) that returns a class name
+     * or it can be a function(grid, row, col, rowRenderIndex, colRenderIndex) that returns a class name
      *
      */
     self.footerCellClass = colDef.footerCellClass;
