@@ -48,6 +48,7 @@ or boolean or date editor respectively.  If set to <code>&#39;object&#39;</code>
 <li><code>editDropdownValueLabel</code> (default: <code>&#39;value&#39;</code>) Controls the value label in the options array - if your array happens to
 contain <code>&#39;name&#39;</code> instead you can use it without having to reprocess the array</li>
 <li><code>editDropdownRowEntityOptionsArrayPath</code> can be used as an alternative to editDropdownOptionsArray when the contents of the dropdown depend on the entity backing the row.</li>
+<li><code>editDropdownOptionsFunction</code> can be used as yet another alternative to editDropdownOptionsArray when the contents can be retrieved with a function whose parameters are row entity and column definition.</li>
 <li><code>editDropdownFilter</code> (default: <code>&#39;&#39;</code>) Allows you to apply a filter to the values in the edit dropdown options, for example
 if you were using angular-translate you would set this to <code>&#39;translate&#39;</code></li>
 </ul>
@@ -109,7 +110,7 @@ $scope.gridOptions.columnDefs = [
     };
   });
 
-  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+  app.controller('MainCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
     $scope.gridOptions = {  };
 
     $scope.storeFile = function( gridRow, gridCol, files ) {
@@ -149,6 +150,22 @@ $scope.gridOptions.columnDefs = [
       { name: 'pet', displayName: 'Pet', width: '20%', editableCellTemplate: 'ui-grid/dropdownEditor',
         editDropdownRowEntityOptionsArrayPath: 'foo.bar[0].options', editDropdownIdLabel: 'value'
       },
+      { name: 'status', displayName: 'Status', width: '20%', editableCellTemplate: 'ui-grid/dropdownEditor',
+        cellFilter: 'mapStatus',
+        editDropdownOptionsFunction: function(rowEntity, colDef) {
+          var single;
+          var married = {id: 3, value: 'Married'};
+          if (rowEntity.gender === 1) {
+            single = {id: 1, value: 'Bachelor'};
+            return [single, married];
+          } else {
+            single = {id: 2, value: 'Nubile'};
+            return $timeout(function() {
+              return [single, married];
+            }, 100);
+          }
+        }
+      },
       { name: 'filename', displayName: 'File', width: '20%', editableCellTemplate: 'ui-grid/fileChooserEditor',
         editFileChooserCallback: $scope.storeFile }
     ];
@@ -186,6 +203,22 @@ $scope.gridOptions.columnDefs = [
     var genderHash = {
       1: 'male',
       2: 'female'
+    };
+
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return genderHash[input];
+      }
+    };
+  })
+  
+  .filter('mapStatus', function() {
+    var genderHash = {
+      1: 'Bachelor',
+      2: 'Nubile',
+      3: 'Married'
     };
 
     return function(input) {
