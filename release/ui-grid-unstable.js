@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-14b1f84 - 2015-10-30
+ * ui-grid - v3.0.7-dd30be4 - 2015-10-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3115,10 +3115,10 @@ angular.module('ui.grid')
           deregFunctions.push( $scope.$parent.$watch($scope.uiGrid.data, dataWatchFunction) );
           deregFunctions.push( $scope.$parent.$watch(function() {
             if ( self.grid.appScope[$scope.uiGrid.data] ){
-              return self.grid.appScope[$scope.uiGrid.data].length; 
+              return self.grid.appScope[$scope.uiGrid.data].length;
             } else {
               return undefined;
-            } 
+            }
           }, dataWatchFunction) );
         } else {
           deregFunctions.push( $scope.$parent.$watch(function() { return $scope.uiGrid.data; }, dataWatchFunction) );
@@ -3134,7 +3134,7 @@ angular.module('ui.grid')
         }
         deregFunctions.push( $scope.$parent.$watchCollection(function() { return $scope.uiGrid.columnDefs; }, columnDefsWatchFunction) );
       }
-      
+
 
       function columnDefsWatchFunction(n, o) {
         if (n && n !== o) {
@@ -3152,7 +3152,7 @@ angular.module('ui.grid')
       function dataWatchFunction(newData) {
         // gridUtil.logDebug('dataWatch fired');
         var promises = [];
-        
+
         if ( self.grid.options.fastWatch ){
           if (angular.isString($scope.uiGrid.data)) {
             newData = self.grid.appScope[$scope.uiGrid.data];
@@ -3160,7 +3160,7 @@ angular.module('ui.grid')
             newData = $scope.uiGrid.data;
           }
         }
-        
+
         if (newData) {
           // columns length is greater than the number of row header columns, which don't count because they're created automatically
           var hasColumns = self.grid.columns.length > (self.grid.rowHeaderColumns ? self.grid.rowHeaderColumns.length : 0);
@@ -3348,7 +3348,7 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
             grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
             // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
-            if (grid.gridHeight < grid.options.rowHeight && grid.options.enableMinHeightCheck) {
+            if (grid.gridHeight <= grid.options.rowHeight && grid.options.enableMinHeightCheck) {
               autoAdjustHeight();
             }
 
@@ -3362,7 +3362,7 @@ function uiGridDirective($compile, $templateCache, $timeout, $window, gridUtil, 
             var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
             var headerHeight = grid.options.showHeader ? grid.options.headerRowHeight : 0;
             var footerHeight = grid.calcFooterHeight();
-            
+
             var scrollbarHeight = 0;
             if (grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.ALWAYS) {
               scrollbarHeight = gridUtil.getScrollbarWidth();
