@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-dd30be4 - 2015-10-30
+ * ui-grid - v3.0.7-ae0c6b8 - 2015-10-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -12813,6 +12813,15 @@ module.filter('px', function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('pt-br', {
+        headerCell: {
+          aria: {
+            defaultFilterLabel: 'Filtro por coluna',
+            removeFilter: 'Remover filtro',
+            columnMenuButtonLabel: 'Menu coluna'
+          },
+          priority: 'Prioridade:',
+          filterLabel: "Filtro por coluna: "
+        },
         aggregate: {
           label: 'itens'
         },
@@ -12836,6 +12845,7 @@ module.filter('px', function() {
         sort: {
           ascending: 'Ordenar Ascendente',
           descending: 'Ordenar Descendente',
+          none: 'Nenhuma Ordem',
           remove: 'Remover Ordenação'
         },
         column: {
@@ -12853,7 +12863,13 @@ module.filter('px', function() {
           pinRight: 'Fixar Direita',
           unpin: 'Desprender'
         },
+        columnMenu: {
+          close: 'Fechar'
+        },
         gridMenu: {
+          aria: {
+            buttonLabel: 'Menu Grid'
+          },
           columns: 'Colunas:',
           importerTitle: 'Importar arquivo',
           exporterAllAsCsv: 'Exportar todos os dados como csv',
@@ -12872,8 +12888,17 @@ module.filter('px', function() {
           jsonNotArray: 'Arquivo json importado tem que conter um array. Abortando.'
         },
         pagination: {
+          aria: {
+            pageToFirst: 'Primeira página',
+            pageBack: 'Página anterior',
+            pageSelected: 'Págona Selecionada',
+            pageForward: 'Proxima',
+            pageToLast: 'Anterior'
+          },
           sizes: 'itens por página',
-          totalItems: 'itens'
+          totalItems: 'itens',
+          through: 'através dos',
+          of: 'de'
         },
         grouping: {
           group: 'Agrupar',
