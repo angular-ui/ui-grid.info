@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-2f3fc55 - 2015-10-28
+ * ui-grid - v3.0.7-14b1f84 - 2015-10-30
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -15887,7 +15887,7 @@ module.filter('px', function() {
                   if (uiGridCtrl && uiGridCtrl.grid.api.cellNav) {
                     var viewPortKeyDownUnregister = uiGridCtrl.grid.api.cellNav.on.viewPortKeyPress($scope, function (evt, rowCol) {
                       if (uiGridEditService.isStartEditKey(evt)) {
-                        ngModel.$setViewValue(String.fromCharCode(evt.keyCode), evt);
+                        ngModel.$setViewValue(String.fromCharCode( typeof evt.which === 'number' ? evt.which : evt.keyCode), evt);
                         ngModel.$render();
                       }
                       viewPortKeyDownUnregister();
