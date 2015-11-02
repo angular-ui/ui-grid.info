@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-58e83ec - 2015-11-02
+ * ui-grid - v3.0.7-2b1e9a3 - 2015-11-02
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -21440,7 +21440,7 @@ module.filter('px', function() {
           var options = uiGridCtrl.grid.options;
 
           uiGridCtrl.grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
-            adjustment.height = adjustment.height - gridUtil.elementHeight($elm);
+            adjustment.height = adjustment.height - gridUtil.elementHeight($elm, "padding");
             return adjustment;
           });
 
