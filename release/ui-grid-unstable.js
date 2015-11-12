@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-4189272 - 2015-11-12
+ * ui-grid - v3.0.7-e0cf819 - 2015-11-12
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17842,8 +17842,14 @@ module.filter('px', function() {
          * @description Checks whether current browser is IE and returns it's version if it is
         */
         isIE: function () {
-          var match = navigator.userAgent.match(/(?:MSIE |Trident\/.*; rv:)(\d+)/);
-          return match ? parseInt(match[1]) : false;
+          var match = navigator.userAgent.search(/(?:Edge|MSIE|Trident\/.*; rv:)/);
+          var isIE = false;
+
+          if (match !== -1) {
+            isIE = true;
+          }
+
+          return isIE;
         },
 
 
@@ -17973,14 +17979,24 @@ module.filter('px', function() {
           var rawFile;
           var ieVersion;
 
-          ieVersion = this.isIE();
+          ieVersion = this.isIE(); // This is now a boolean value
           var doc = pdfMake.createPdf(docDefinition);
           var blob;
 
           doc.getBuffer( function (buffer) {
             blob = new Blob([buffer]);
 
-            if (ieVersion && ieVersion < 10) {
+            // IE10+
+            if (navigator.msSaveBlob) {
+              return navigator.msSaveBlob(
+                blob, fileName
+              );
+            }
+
+            // Previously:  && ieVersion < 10
+            // ieVersion now returns a boolean for the
+            // sake of sanity. We just check `msSaveBlob` first.
+            if (ieVersion) {
               var frame = D.createElement('iframe');
               document.body.appendChild(frame);
 
@@ -17992,13 +18008,6 @@ module.filter('px', function() {
 
               document.body.removeChild(frame);
               return true;
-            }
-
-            // IE10+
-            if (navigator.msSaveBlob) {
-              return navigator.msSaveBlob(
-                blob, fileName
-              );
             }
           });
         },
