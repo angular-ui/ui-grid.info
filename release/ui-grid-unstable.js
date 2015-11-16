@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-e0cf819 - 2015-11-12
+ * ui-grid - v3.0.7-ed980e6 - 2015-11-16
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1997,7 +1997,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
     templateUrl: 'ui-grid/uiGridMenu',
     replace: false,
     link: function ($scope, $elm, $attrs, uiGridCtrl) {
-      var self = this;
       var menuMid;
       var $animate;
 
@@ -2006,7 +2005,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
       };
 
     // *** Show/Hide functions ******
-      self.showMenu = $scope.showMenu = function(event, args) {
+      $scope.showMenu = function(event, args) {
         if ( !$scope.shown ){
 
           /*
@@ -2050,7 +2049,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
       };
 
 
-      self.hideMenu = $scope.hideMenu = function(event, args) {
+      $scope.hideMenu = function(event, args) {
         if ( $scope.shown ){
           /*
            * In order to animate cleanly we animate the addition of ng-hide, then use a $timeout to
@@ -6529,16 +6528,6 @@ angular.module('ui.grid')
 
     self.updateColumnDef(colDef, true);
 
-    /**
-     * @ngdoc function
-     * @name hideColumn
-     * @methodOf ui.grid.class:GridColumn
-     * @description Hides the column by setting colDef.visible = false
-     */
-    GridColumn.prototype.hideColumn = function() {
-      this.colDef.visible = false;
-    };
-
     self.aggregationValue = undefined;
 
     // The footer cell registers to listen for the rowsRendered event, and calls this.  Needed to be
@@ -6627,6 +6616,16 @@ angular.module('ui.grid')
     };
   }
 
+  /**
+   * @ngdoc function
+   * @name hideColumn
+   * @methodOf ui.grid.class:GridColumn
+   * @description Hides the column by setting colDef.visible = false
+   */
+  GridColumn.prototype.hideColumn = function() {
+    this.colDef.visible = false;
+  };
+  
 
   /**
    * @ngdoc method
@@ -7238,15 +7237,17 @@ angular.module('ui.grid')
         }
       });
     }
+  };
 
-    // Remove this column from the grid sorting, include inside build columns so has
-    // access to self - all seems a bit dodgy but doesn't work otherwise so have left
-    // as is
-    GridColumn.prototype.unsort = function () {
-      this.sort = {};
-      self.grid.api.core.raise.sortChanged( self.grid, self.grid.getColumnSorting() );
-    };
-
+  /**
+   * @ngdoc function
+   * @name unsort
+   * @methodOf ui.grid.class:GridColumn
+   * @description Removes column from the grid sorting
+   */
+  GridColumn.prototype.unsort = function () {
+    this.sort = {};
+    this.grid.api.core.raise.sortChanged( this.grid, this.grid.getColumnSorting() );
   };
 
 
