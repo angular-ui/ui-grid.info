@@ -442,8 +442,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.",
-      "keywords": "api e2etestlibrary functions grid overview test ui"
+      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
+      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
     },
     {
       "section": "api",
@@ -451,8 +451,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
-      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
+      "shortDescription": "End to end test functions.",
+      "keywords": "api e2etestlibrary functions grid overview test ui"
     },
     {
       "section": "api",
@@ -615,6 +615,15 @@ NG_DOCS={
       "moduleName": "ui.grid.expandable",
       "shortDescription": "Options for configuring the expandable feature, these are available to be",
       "keywords": "$scope _this_ allows api application buttons class collapsing column configuring custom defaults enableexpandable enableexpandablerowheader expandable expandablerowheaderwidth expandablerowheight expandablerowtemplate expanded expanding false feature going grid gridoptions grids height html implies mandatory method modes object options pixels provide row rowheader set specific subgrid subgrids template true turn ui ui-grid width"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.expandable.api:GridRow",
+      "shortName": "GridRow",
+      "type": "object",
+      "moduleName": "ui.grid.expandable",
+      "shortDescription": "Additional properties added to GridRow when using the expandable module",
+      "keywords": "$scope additional api currently expandable expanded function grid gridrow isexpanded module object properties row rowexpandedstatechanged ui"
     },
     {
       "section": "api",
