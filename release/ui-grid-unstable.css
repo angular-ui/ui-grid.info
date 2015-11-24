@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-7c5cc6f - 2015-11-24
+ * ui-grid - v3.0.7-eec293e - 2015-11-24
  * Copyright (c) 2015 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -557,7 +557,6 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 .ui-grid-menu-button .ui-grid-menu .ui-grid-menu-mid {
   overflow: scroll;
-  max-height: 300px;
   border: 1px solid #d4d4d4;
 }
 .ui-grid-menu {
