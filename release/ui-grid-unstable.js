@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-45cd263 - 2015-11-24
+ * ui-grid - v3.0.7-7c5cc6f - 2015-11-24
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -1250,8 +1250,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
               }
               contents.addClass(classAdded);
 
-              var rightMostContainer = $scope.grid.renderContainers['right'] ? $scope.grid.renderContainers['right'] : $scope.grid.renderContainers['body'];
-              $scope.isLastCol = ( $scope.col === rightMostContainer.visibleColumnCache[ rightMostContainer.visibleColumnCache.length - 1 ] );
+              $timeout(function (){
+                var rightMostContainer = $scope.grid.renderContainers['right'] ? $scope.grid.renderContainers['right'] : $scope.grid.renderContainers['body'];
+                $scope.isLastCol = ( $scope.col === rightMostContainer.visibleColumnCache[ rightMostContainer.visibleColumnCache.length - 1 ] );
+              });
 
               // Figure out whether this column is sortable or not
               if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
@@ -11867,6 +11869,15 @@ module.filter('px', function() {
   angular.module('ui.grid').config(['$provide', function ($provide) {
     $provide.decorator('i18nService', ['$delegate', function ($delegate) {
       $delegate.add('de', {
+        headerCell: {
+          aria: {
+            defaultFilterLabel: 'Filter für Spalte',
+            removeFilter: 'Filter löschen',
+            columnMenuButtonLabel: 'Spaltenmenü'
+          },
+          priority: 'Priorität:',
+          filterLabel: "Filter für Spalte: "
+        },
         aggregate: {
           label: 'Eintrag'
         },
@@ -11890,6 +11901,7 @@ module.filter('px', function() {
         sort: {
           ascending: 'aufsteigend sortieren',
           descending: 'absteigend sortieren',
+          none: 'keine Sortierung',
           remove: 'Sortierung zurücksetzen'
         },
         column: {
@@ -11907,7 +11919,13 @@ module.filter('px', function() {
             pinRight: 'Rechts anheften',
             unpin: 'Lösen'
         },
+        columnMenu: {
+          close: 'Schließen'
+        },
         gridMenu: {
+          aria: {
+            buttonLabel: 'Tabellenmenü'
+          },
           columns: 'Spalten:',
           importerTitle: 'Datei importieren',
           exporterAllAsCsv: 'Alle Daten als CSV exportieren',
@@ -11916,7 +11934,7 @@ module.filter('px', function() {
           exporterAllAsPdf: 'Alle Daten als PDF exportieren',
           exporterVisibleAsPdf: 'sichtbare Daten als PDF exportieren',
           exporterSelectedAsPdf: 'markierte Daten als CSV exportieren',
-          clearAllFilters: 'Alle filter reinigen'
+          clearAllFilters: 'Alle Filter zurücksetzen'
         },
         importer: {
           noHeaders: 'Es konnten keine Spaltennamen ermittelt werden. Sind in der Datei Spaltendefinitionen enthalten?',
@@ -11926,9 +11944,17 @@ module.filter('px', function() {
           jsonNotArray: 'Die importierte JSON-Datei muß ein Array enthalten. Breche Import ab.'
         },
         pagination: {
-            sizes: 'Einträge pro Seite',
-            totalItems: 'Einträge',
-            of: 'von'
+          aria: {
+            pageToFirst: 'Zum Anfang',
+            pageBack: 'Seite zurück',
+            pageSelected: 'Ausgwählte Seite',
+            pageForward: 'Seite vor',
+            pageToLast: 'Zum Ende'
+          },
+          sizes: 'Einträge pro Seite',
+          totalItems: 'Einträge',
+          through: 'bis',
+          of: 'von'
         },
         grouping: {
             group: 'Gruppieren',
