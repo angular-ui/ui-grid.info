@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-7b4cbe5 - 2015-11-20
+ * ui-grid - v3.0.7-45cd263 - 2015-11-24
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -13000,7 +13000,7 @@ module.filter('px', function() {
           aria: {
             pageToFirst: 'Primeira página',
             pageBack: 'Página anterior',
-            pageSelected: 'Págona Selecionada',
+            pageSelected: 'Página Selecionada',
             pageForward: 'Proxima',
             pageToLast: 'Anterior'
           },
