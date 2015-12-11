@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-13820c0 - 2015-12-08
+ * ui-grid - v3.0.7-84829f5 - 2015-12-11
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -17162,7 +17162,7 @@ module.filter('px', function() {
    *
    * <div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
    *
-   * This module provides the ability to exporter data from the grid.
+   * This module provides the ability to export data from the grid.
    *
    * Data can be exported in a range of formats, and all data, visible
    * data, or selected rows can be exported, with all columns or visible

@@ -695,7 +695,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.exporter",
       "shortDescription": "ui.grid.exporter",
-      "keywords": "ability alert alert-success api appropriate breaking caller changes class columns data deprecation doc-module-components enable exported exporter feature formats grid gridmenu longer module overview provide provided range role rows selected stable ui visible warning"
+      "keywords": "ability alert alert-success api appropriate breaking caller changes class columns data deprecation doc-module-components enable export exported exporter feature formats grid gridmenu longer module overview provide provided range role rows selected stable ui visible warning"
     },
     {
       "section": "api",
