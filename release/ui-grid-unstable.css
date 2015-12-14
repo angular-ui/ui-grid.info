@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-d2eb7d8 - 2015-12-11
+ * ui-grid - v3.0.7-263e867 - 2015-12-14
  * Copyright (c) 2015 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -1859,7 +1859,7 @@ select[multiple].ui-grid-pager-row-count-picker select {
 .ui-grid-tree-header-row {
   font-weight: bold !important;
 }
-.ui-grid-tree-header-row .ui-grid-row-header-cell.ui-grid-disable-selection.ui-grid-cell {
+.ui-grid-tree-header-row .ui-grid-cell.ui-grid-disable-selection.ui-grid-row-header-cell {
   pointer-events: all;
 }
 
