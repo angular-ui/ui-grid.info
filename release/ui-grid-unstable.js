@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-263e867 - 2015-12-14
+ * ui-grid - v3.0.7-c32bd05 - 2015-12-15
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -21148,6 +21148,9 @@ module.filter('px', function() {
         });
       },
       redrawColumnAtPosition: function (grid, originalPosition, newPosition) {
+        if (originalPosition === newPosition) {
+          return;
+        }
 
         var columns = grid.columns;
 
