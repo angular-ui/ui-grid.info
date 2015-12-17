@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-73657d5 - 2015-12-17
+ * ui-grid - v3.0.7-a6086ea - 2015-12-17
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -25469,7 +25469,7 @@ module.filter('px', function() {
          *  all transient information on the tree (children, childCount) and recalculate it
          *
          */
-        grid.treeBase.tree = {};
+        grid.treeBase.tree = [];
 
         service.defaultGridOptions(grid.options);
 
