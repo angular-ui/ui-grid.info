@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-1dc9931 - 2015-12-29
+ * ui-grid - v3.0.7-8f53459 - 2015-12-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -14940,8 +14940,10 @@ module.filter('px', function() {
                 if (grid.cellNav.lastRowCol === null || rowColSelectIndex === -1) {
                   var newRowCol = new GridRowColumn(row, col);
 
-                  grid.api.cellNav.raise.navigate(newRowCol, grid.cellNav.lastRowCol);
-                  grid.cellNav.lastRowCol = newRowCol;
+                  if (grid.cellNav.lastRowCol === null || grid.cellNav.lastRowCol.row !== newRowCol.row || grid.cellNav.lastRowCol.col !== newRowCol.col){
+                    grid.api.cellNav.raise.navigate(newRowCol, grid.cellNav.lastRowCol);
+                    grid.cellNav.lastRowCol = newRowCol;  
+                  }
                   if (uiGridCtrl.grid.options.modifierKeysToMultiSelectCells && modifierDown) {
                     grid.cellNav.focusedCells.push(rowCol);
                   } else {
