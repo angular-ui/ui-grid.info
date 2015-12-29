@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-8f53459 - 2015-12-29
+ * ui-grid - v3.0.7-7a8c608 - 2015-12-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -10005,7 +10005,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       var strA = a.toString().toLowerCase(),
           strB = b.toString().toLowerCase();
   
-      return strA === strB ? 0 : (strA < strB ? -1 : 1);
+      return strA === strB ? 0 : strA.localeCompare(strB);
     }
   };
 
