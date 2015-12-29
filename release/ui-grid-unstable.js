@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-a6086ea - 2015-12-17
+ * ui-grid - v3.0.7-1dc9931 - 2015-12-29
  * Copyright (c) 2015 ; License: MIT 
  */
 
@@ -3164,6 +3164,8 @@ angular.module('ui.grid')
         }
       }
 
+      var mostRecentData;
+
       function dataWatchFunction(newData) {
         // gridUtil.logDebug('dataWatch fired');
         var promises = [];
@@ -3175,6 +3177,8 @@ angular.module('ui.grid')
             newData = $scope.uiGrid.data;
           }
         }
+
+        mostRecentData = newData;
 
         if (newData) {
           // columns length is greater than the number of row header columns, which don't count because they're created automatically
@@ -3204,7 +3208,8 @@ angular.module('ui.grid')
           }
 
           $q.all(promises).then(function() {
-            self.grid.modifyRows(newData)
+            // use most recent data, rather than the potentially outdated data passed into watcher handler
+            self.grid.modifyRows(mostRecentData)
               .then(function () {
                 // if (self.viewport) {
                   self.grid.redrawInPlace(true);
