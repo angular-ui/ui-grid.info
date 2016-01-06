@@ -1334,7 +1334,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.selection",
       "shortDescription": "Public Api for selection feature",
-      "keywords": "add allow api array automatically call check checkbox clearselectedrows context ctrlkey current currently data doesn entity event explicitly extra false feature filtered function getselectallstate getselectedgridrows getselectedrows grid gridoption gridoptions gridrows instance ll modifierkeystomultiselect multiple multiselect object public raised references rendered returns row rowentity rows rowsvisible screen select selectall selectallrows selectallvisiblerows selected selectedrow selection selectrow selectrowbyvisibleindex selects set setmodifierkeystomultiselect setmultiselect sets setvisible shiftkey theoretically ticked togglerowselection toggles true ui unselect unselected unselectrow unselects visible"
+      "keywords": "add allow api array automatically call check checkbox clearselectedrows context ctrlkey current currently data doesn entity event explicitly extra false feature filtered function getselectallstate getselectedcount getselectedgridrows getselectedrows grid gridoption gridoptions gridrows instance ll modifierkeystomultiselect multiple multiselect number object public raised references rendered returns row rowentity rows rowsvisible screen select selectall selectallrows selectallvisiblerows selected selectedrow selection selectrow selectrowbyvisibleindex selects set setmodifierkeystomultiselect setmultiselect sets setvisible shiftkey theoretically ticked togglerowselection toggles true ui unselect unselected unselectrow unselects visible"
     },
     {
       "section": "api",

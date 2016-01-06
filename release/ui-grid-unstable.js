@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v3.0.7-702e1b8 - 2015-12-29
- * Copyright (c) 2015 ; License: MIT 
+ * ui-grid - v3.0.7-591089a - 2016-01-06
+ * Copyright (c) 2016 ; License: MIT 
  */
 
 (function () {
@@ -24552,6 +24552,15 @@ module.filter('px', function() {
                  */
                 getSelectedGridRows: function () {
                   return service.getSelectedRows(grid);
+                },
+                /**
+                 * @ngdoc function
+                 * @name getSelectedCount
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description returns the number of rows selected
+                 */
+                getSelectedCount: function () {
+                  return grid.selection.selectedCount;
                 },
                 /**
                  * @ngdoc function
