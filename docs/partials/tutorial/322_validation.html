@@ -1,0 +1,120 @@
+<h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-322-validation-page"><div class="alert alert-warning" role="alert"><strong>Alpha</strong> This feature is in development. 
+There will almost certainly be breaking api changes, or there are major outstanding bugs.</div>
+
+<p>Feature ui.grid.validate allows validating cells after they are changed. To enable, you must include the
+<code>ui.grid.validate</code> module and you must include the <code>ui-grid-validate</code> directive on your grid element.</p>
+<p>This feature depends on ui.grid.edit.</p>
+<p>Documentation for the validation feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#/api/ui.grid.validate.api:PublicApi">publicApi</a></li>
+</ul>
+<h3 id="validators">Validators</h3>
+<p>Validation is based on validation functions defined at service level (thus valid through all the application).</p>
+<p>Some custom validators come with the feature and are:</p>
+<ul>
+<li><code>required</code>: to ensure that a field is not empty.</li>
+<li><code>minLength</code>: to ensure that the value inserted is at least X characters long.</li>
+<li><code>maxLength</code>: to ensure that the value inserted is at most X characters long.</li>
+</ul>
+<p>To define a new validator you should use the <a href="#/api/ui.grid.validate.service:uiGridValidateService#methods_setvalidator">setValidator</a> method.</p>
+<p>To add a validator to a column you just need to add a <code>validators</code> property to its <code>colDef</code> 
+object, containing a property for each validator you want to add. The name of the property 
+will set the validator and the value of the property will be treated as an argument by the validator function.</p>
+<p>When a field does not pass validation it gets a <code>invalid</code> class so you can customize it via css.</p>
+<p>The feature adds 2 templates to ui-grid:</p>
+<ul>
+<li><code>cellTitleValidator</code> wich adds the error message to the title attribute of the cell.</li>
+<li><code>cellTooltipValidator</code> wich depends on ui-bootstrap to add a tooltip.</li>
+</ul>
+<h3 id="external-factory">External Factory</h3>
+<p>In case you have an external service providing validators, you can add a function calling said service 
+by setting an external validator factory function via <a href="#/api/ui.grid.validate.service:uiGridValidateService#methods_setexternalfactoryfunction">setExternalFactoryFunction</a>.</p>
+<p>Please be advised that external validators should accept the same parameters (or at least an ordered subset) as
+our validators do (<code>newValue</code>, <code>oldValue</code>, <code>rowEntity</code>, <code>colDef</code>);</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-322-validation-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-102" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-102" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-102">
+  <div ng-controller="MainCtrl">
+    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellNav ui-grid-validate class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 600px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.validate', 'addressFormatter']);
+
+  angular.module('addressFormatter', []).filter('address', function () {
+    return function (input) {
+        return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
+    };
+  });
+
+  app.controller('MainCtrl', ['$scope', '$http', '$window', 'uiGridValidateService', function ($scope, $http, $window, uiGridValidateService) {
+    
+    uiGridValidateService.setValidator('startWith',
+      function(argument) {
+        return function(newValue, oldValue, rowEntity, colDef) {
+          if (!newValue) {
+            return true; // We should not test for existence here
+          } else {
+            return newValue.startsWith(argument);
+          }
+        };
+      },
+      function(argument) {
+        return 'You can only insert names starting with: "' + argument + '"';
+      }
+    );
+    
+    $scope.gridOptions = { enableCellEditOnFocus: true };
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id', enableCellEdit: false, width: '10%' },
+      { name: 'name', displayName: 'Name (editable)', width: '20%', 
+        validators: {required: true, startWith: 'M'}, cellTemplate: 'ui-grid/cellTitleValidator' }
+    ];
+
+
+
+   $scope.msg = {};
+
+   $scope.gridOptions.onRegisterApi = function(gridApi){
+            //set gridApi on scope
+            $scope.gridApi = gridApi;
+            gridApi.validate.on.validationFailed($scope,function(rowEntity, colDef, newValue, oldValue){
+              $window.alert('rowEntity: '+ rowEntity + '\n' +
+                            'colDef: ' + colDef + '\n' + 
+                            'newValue: ' + newValue + '\n' +
+                            'oldValue: ' + oldValue);
+            });
+          };
+
+    $http.get('/data/500_complex.json')
+      .success(function(data) {
+        $scope.gridOptions.data = data;
+      });
+  }]);
+});
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-102" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

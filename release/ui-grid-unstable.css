@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.0.7-ac1d75e - 2016-01-06
+ * ui-grid - v3.0.7-fbdaf8d - 2016-01-16
  * Copyright (c) 2016 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -1861,6 +1861,33 @@ select[multiple].ui-grid-pager-row-count-picker select {
 }
 .ui-grid-tree-header-row .ui-grid-cell.ui-grid-disable-selection.ui-grid-row-header-cell {
   pointer-events: all;
+}
+
+/* This file contains variable declarations (do not remove this line) */
+/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+/**
+* @section Grid styles
+*/
+/**
+* @section Header styles
+*/
+/** @description Colors for header gradient */
+/**
+* @section Grid body styles
+*/
+/** @description Colors used for row alternation */
+/**
+* @section Sort arrow colors
+*/
+/**
+* @section Scrollbar styles
+*/
+/**
+* @section font library path
+*/
+/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
+div.ui-grid-cell-contents.invalid {
+  border: 1px solid #fc8f8f;
 }
 
 .ui-grid-icon-plus-squared:before {

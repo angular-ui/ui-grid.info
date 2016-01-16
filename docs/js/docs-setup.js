@@ -758,7 +758,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "ui.grid.exporter",
       "shortDescription": "Services for exporter feature",
-      "keywords": "add adds addtomenu adjust align alignment allow allowing api applied appropriate array attributes base based basic blob bom browser browsers calculatepdfheaderwidths call casting cellfilters cells checks client colleagues coltypes column columns consumable content continues continuing contribute csv csv-ified csvcontent csvexport current data definition dependency determines displayname docdefinition document don download downloadfile downloadpdf downloads drawn drawnwidth export exportcolumnheaders exportdata exported exporter exporteralldatafn exporterenableexporting exporterolderexcelcompatibility exporterpdffilename exportheaders exports extra false feature field file filename format formatascsv formatfieldascsv formatrowascsv formatrowaspdf formats formatted function generate generates generation getcolumnheaders getdata grid gridwidth header headercellfilters headers heuristic https including installed isie issue items load loadalldataifneeded logic marked meaning menu native note numeric object objects open opens options pagination pass pdf pdf-able pdfexport pdfmake processing promise provided quotes ready renderaspdf renders resolved retrieves return returns row rows rowtypes select selected sends server service services set side single string string-ified strings title triggers turned type ui uigridexporterconstants user utf-16 valid values version visible width widths window"
+      "keywords": "add adds addtomenu adjust align alignment allow allowing api applied applycellfilters appropriate array attributes base based basic blob bom browser browsers calculatepdfheaderwidths call casting cellfilters cells checks client colleagues coltypes column columns consumable content continues continuing contribute csv csv-ified csvcontent csvexport current data definition dependency determines display displayname docdefinition document don download downloadfile downloadpdf downloads drawn drawnwidth export exportcolumnheaders exportdata exported exporter exporteralldatafn exporterenableexporting exporterolderexcelcompatibility exporterpdffilename exportheaders exports extra false feature field file filename format formatascsv formatfieldascsv formatrowascsv formatrowaspdf formats formatted function generate generates generation getcolumnheaders getdata grid gridwidth header headercellfilters headers heuristic https including installed isie issue items load loadalldataifneeded logic marked meaning menu native note numeric object objects open opens options pagination pass pdf pdf-able pdfexport pdfmake processing promise provided quotes raw ready renderaspdf renders resolved retrieves return returns row rows rowtypes select selected sends server service services set side single string string-ified strings title triggers turned type ui uigridexporterconstants user utf-16 valid values version visible width widths window"
     },
     {
       "section": "api",
@@ -1589,6 +1589,42 @@ NG_DOCS={
       "keywords": "api features grid service services treeview ui"
     },
     {
+      "section": "api",
+      "id": "ui.grid.validate",
+      "shortName": "ui.grid.validate",
+      "type": "overview",
+      "moduleName": "ui.grid.validate",
+      "shortDescription": "ui.grid.validate",
+      "keywords": "ability adds alert alert-warning angularjs api based breaking bugs cells change changes class considered custom design development doc-module-components editing expandable feature field grid invalid major module outstanding overview properties role ui validate validation work"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.validate.api:PublicApi",
+      "shortName": "PublicApi",
+      "type": "object",
+      "moduleName": "ui.grid.validate",
+      "shortDescription": "Public Api for validation feature",
+      "keywords": "api array attribute cell celltemplate check checks coldef column data display div error errors feature formatted function geterrormessages getformattederrors gettitleformattederrors grid gridoptions html i18n-ed inside instance invalid isinvalid javascript message messages object public returns rowentity strings template title true ui valid validate validation"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.validate.directive:uiGridValidate",
+      "shortName": "uiGridValidate",
+      "type": "directive",
+      "moduleName": "ui.grid.validate",
+      "shortDescription": "Adds validating features to the ui-grid directive.",
+      "keywords": "$scope adds angular api app bob celltemplate ceo columndefs controller data developer directive div edit enablecelledit features frank function grid html js lowly mainctrl maxlength module ng-controller title true ui ui-grid ui-grid-edit ui-grid-validate validate validating validators var"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.validate.service:uiGridValidateService",
+      "shortName": "uiGridValidateService",
+      "type": "service",
+      "moduleName": "ui.grid.validate",
+      "shortDescription": "Services for validation features",
+      "keywords": "accepts adding adds api argument array attribute basic cell celltemplate clearerror clearexternalfactory clears coldef column createdefaultvalidators data default definition display div entered entity error errors executes executing external externalfactoryfunction factories factory failing false features field form formatted function geterrormessages getformattederrors getmessage getmessagefromexternalfactory gettitleformattederrors getvalidator getvalidatorfromexternalfactory grid gridoptions higher html i18n-ed inside instance invalid isinvalid javascript link list message messagefunction messages newvalue object oldvalue pass priority promise promises proper properties properties_validatorfactories registered removes removing result retrieve retrieved retrieves return returns row rowentity service services seterror setexternalfactoryfunction setinvalid sets setvalid setvalidator stored string strings template title true ui unique user valid validate validation validator validatorfactories validatorfactory validatorfunction validatorname validators"
+    },
+    {
       "section": "tutorial",
       "id": "index",
       "shortName": "Index",
@@ -2145,6 +2181,15 @@ NG_DOCS={
       "moduleName": "Tutorial: 321 Single filter",
       "shortDescription": "Provide a single filter box that searches across multiple columns in the grid.",
       "keywords": "$http $scope adddates age angular app box cellfilter class columndefs columns company controller css data email enablefiltering entity false female field filter filtervalue foreach function gender genderhash getdate grid grid1 gridapi gridoptions height html js json main mainctrl male mapgender match matcher mixeddate module multiple ng-click ng-controller ng-model ngtouch onregisterapi overview phone provide refresh regexp registerrowsprocessor renderablerows return row searches setdate single singlefilter success today true tutorial ui ui-grid var visible width"
+    },
+    {
+      "section": "tutorial",
+      "id": "322_validation",
+      "shortName": "322 Validation",
+      "type": "overview",
+      "moduleName": "Tutorial: 322 Validation",
+      "shortDescription": "Alpha This feature is in development. ",
+      "keywords": "$http $scope $window accept add address addressformatter adds advised alert alert-warning allows angular api app application argument attribute based breaking bugs calling case cell cellnav cells celltemplate celltitlevalidator celltooltipvalidator changed changes characters city class coldef column columndefs controller css custom customize data define defined depends development directive displayname documentation edit element empty enable enablecelledit enablecelleditonfocus ensure error existence external factory false feature field filter function functions grid gridapi gridoptions height html include input insert inserted invalid js json level long main mainctrl major maxlength message method methods_setexternalfactoryfunction methods_setvalidator minlength module msg names newvalue ng-controller ngtouch object oldvalue onregisterapi ordered outstanding overview parameters pass property provided providing publicapi required return role rowentity scope service set setexternalfactoryfunction setting setvalidator starting startswith startwith street subset success templates test title tooltip treated true tutorial ui ui-bootstrap ui-grid ui-grid-cellnav ui-grid-edit ui-grid-validate uigridvalidateservice valid validate validating validation validationfailed validator validators var wich width zip"
     },
     {
       "section": "tutorial",
