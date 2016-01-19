@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-4ed0f2d - 2016-01-19
+ * ui-grid - v3.1.0-cecb7eb - 2016-01-19
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -24038,8 +24038,9 @@ module.filter('px', function() {
                 grid.api.core.raise.columnVisibilityChanged(currentCol);
               }
 
-              if ( grid.options.saveWidths ){
+              if ( grid.options.saveWidths && currentCol.width !== columnState.width){
                 currentCol.width = columnState.width;
+                currentCol.hasCustomWidth = true;
               }
 
               if ( grid.options.saveSort &&
