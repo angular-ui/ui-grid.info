@@ -680,9 +680,6 @@ fieldset[disabled] a.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button
 .open > .dropdown-toggle.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button {
   background-image: none;
 }
-.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.disabled,
-.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button[disabled],
-fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button,
 .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.disabled:hover,
 .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button[disabled]:hover,
 fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button:hover,
@@ -691,13 +688,7 @@ fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button:
 fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button:focus,
 .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.disabled.focus,
 .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button[disabled].focus,
-fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.focus,
-.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.disabled:active,
-.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button[disabled]:active,
-fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button:active,
-.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.disabled.active,
-.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button[disabled].active,
-fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.active {
+fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.focus {
   background-color: transparent;
   border-color: transparent;
 }
@@ -1378,9 +1369,6 @@ fieldset[disabled] a.ui-grid-pager-control button {
 .open > .dropdown-toggle.ui-grid-pager-control button {
   background-image: none;
 }
-.ui-grid-pager-control button.disabled,
-.ui-grid-pager-control button[disabled],
-fieldset[disabled] .ui-grid-pager-control button,
 .ui-grid-pager-control button.disabled:hover,
 .ui-grid-pager-control button[disabled]:hover,
 fieldset[disabled] .ui-grid-pager-control button:hover,
@@ -1389,13 +1377,7 @@ fieldset[disabled] .ui-grid-pager-control button:hover,
 fieldset[disabled] .ui-grid-pager-control button:focus,
 .ui-grid-pager-control button.disabled.focus,
 .ui-grid-pager-control button[disabled].focus,
-fieldset[disabled] .ui-grid-pager-control button.focus,
-.ui-grid-pager-control button.disabled:active,
-.ui-grid-pager-control button[disabled]:active,
-fieldset[disabled] .ui-grid-pager-control button:active,
-.ui-grid-pager-control button.disabled.active,
-.ui-grid-pager-control button[disabled].active,
-fieldset[disabled] .ui-grid-pager-control button.active {
+fieldset[disabled] .ui-grid-pager-control button.focus {
   background-color: #f3f3f3;
   border-color: #cccccc;
 }
@@ -1445,6 +1427,10 @@ fieldset[disabled] .ui-grid-pager-control button.active {
 }
 .ui-grid-pager-control input::-webkit-input-placeholder {
   color: #999999;
+}
+.ui-grid-pager-control input::-ms-expand {
+  border: 0;
+  background-color: transparent;
 }
 .ui-grid-pager-control input[disabled],
 .ui-grid-pager-control input[readonly],
@@ -1553,6 +1539,10 @@ select[multiple].ui-grid-pager-control input {
 }
 .ui-grid-pager-row-count-picker select::-webkit-input-placeholder {
   color: #999999;
+}
+.ui-grid-pager-row-count-picker select::-ms-expand {
+  border: 0;
+  background-color: transparent;
 }
 .ui-grid-pager-row-count-picker select[disabled],
 .ui-grid-pager-row-count-picker select[readonly],
