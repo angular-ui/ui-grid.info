@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-3a39033 - 2016-01-28
+ * ui-grid - v3.1.0-29eb6e1 - 2016-01-29
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -1058,8 +1058,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             };
             $scope.isSortPriorityVisible = function() {
               //show sort priority if column is sorted and there is at least one other sorted column
-              return $scope.col.sort.priority && $scope.grid.columns.some(function(element, index){
-                  return element.sort.priority && element !== $scope.col;
+              return $scope.col.sort.priority !== undefined && $scope.grid.columns.some(function(element, index){
+                  return element.sort.priority !== undefined && element !== $scope.col;
                 });
             };
             $scope.getSortDirectionAriaLabel = function(){
