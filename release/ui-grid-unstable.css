@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-74ef171 - 2016-01-30
+ * ui-grid - v3.1.0-d6a4030 - 2016-01-30
  * Copyright (c) 2016 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -1466,13 +1466,6 @@ select[multiple].ui-grid-pager-control input {
   height: 12px;
   margin-left: -3px;
 }
-.ui-grid-pager-control .first-bar-rtl {
-  width: 10px;
-  border-left: 2px solid #4d4d4d;
-  margin-top: -6px;
-  height: 12px;
-  margin-right: -7px;
-}
 .ui-grid-pager-control .first-triangle {
   width: 0;
   height: 0;
@@ -1501,13 +1494,6 @@ select[multiple].ui-grid-pager-control input {
   margin-top: -6px;
   height: 12px;
   margin-left: 1px;
-}
-.ui-grid-pager-control .last-bar-rtl {
-  width: 10px;
-  border-left: 2px solid #4d4d4d;
-  margin-top: -6px;
-  height: 12px;
-  margin-right: -11px;
 }
 .ui-grid-pager-row-count-picker {
   float: left;
