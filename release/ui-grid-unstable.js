@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-e588d59 - 2016-01-30
+ * ui-grid - v3.1.0-6709846 - 2016-01-30
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -10318,7 +10318,7 @@ if (typeof Function.prototype.bind !== "function") {
   };
 }
 
-function  getStyles (elem) {
+function getStyles (elem) {
   var e = elem;
   if (typeof(e.length) !== 'undefined' && e.length) {
     e = elem[0];
@@ -11472,7 +11472,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       if (timeout) {
         $timeout.cancel(timeout);
       }
-      timeout = $timeout(later, wait, false);
+      timeout = $timeout(later, wait);
       if (callNow) {
         result = func.apply(context, args);
       }
@@ -11522,7 +11522,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     function runFunc(endDate){
       lastCall = +new Date();
       func.apply(context, args);
-      $interval(function(){ queued = null; }, 0, 1, false);
+      $interval(function(){ queued = null; }, 0, 1);
     }
 
     return function(){
@@ -11535,7 +11535,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
           runFunc();
         }
         else if (options.trailing){
-          queued = $interval(runFunc, wait - sinceLast, 1, false);
+          queued = $interval(runFunc, wait - sinceLast, 1);
         }
       }
     };
