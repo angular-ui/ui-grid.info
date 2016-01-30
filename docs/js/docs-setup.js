@@ -1460,7 +1460,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.treeBase",
       "shortDescription": "GridOptions for treeBase feature, these are available to be",
-      "keywords": "aggregation aggregationfn aggregationname aggregations api apply base button children class column columndef concatenate control count create custom define defined don dynamically expand extra false feature fieldvalue finalizerfn format function functions grid gridoptions grouping header icon incremented indent indents label left level load manipulate menu native node nodes note number numvalue object overrides pixels planning pleasing precedence programatically properties rendered rendering row set showtreeexpandnochildren showtreerowheader single string sum tree treeaggregationtype treebase treecustomaggregations treeindent treerowheaderalwaysvisible treerowheaderbasewidth true types ui ui-grid undefined visually wider width"
+      "keywords": "aggregation aggregationfn aggregationname aggregations api apply base button children class column columndef concatenate control count create custom define defined don dynamically enable enableexpandall expand extra false feature fieldvalue finalizerfn format function functions grid gridoptions grouping header icon incremented indent indents label left level load manipulate menu native node nodes note number numvalue object overrides pixels planning pleasing precedence programatically properties rendered rendering row set showtreeexpandnochildren showtreerowheader single string sum top tree treeaggregationtype treebase treecustomaggregations treeindent treerowheaderalwaysvisible treerowheaderbasewidth true types ui ui-grid undefined visually wider width"
     },
     {
       "section": "api",
