@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-6709846 - 2016-01-30
+ * ui-grid - v3.1.0-47c77de - 2016-02-02
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -1058,8 +1058,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             };
             $scope.isSortPriorityVisible = function() {
               //show sort priority if column is sorted and there is at least one other sorted column
-              return $scope.col.sort.priority !== undefined && $scope.grid.columns.some(function(element, index){
-                  return element.sort.priority !== undefined && element !== $scope.col;
+              return angular.isNumber($scope.col.sort.priority) && $scope.grid.columns.some(function(element, index){
+                  return angular.isNumber(element.sort.priority) && element !== $scope.col;
                 });
             };
             $scope.getSortDirectionAriaLabel = function(){
@@ -10318,7 +10318,7 @@ if (typeof Function.prototype.bind !== "function") {
   };
 }
 
-function getStyles (elem) {
+function  getStyles (elem) {
   var e = elem;
   if (typeof(e.length) !== 'undefined' && e.length) {
     e = elem[0];
@@ -11472,7 +11472,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       if (timeout) {
         $timeout.cancel(timeout);
       }
-      timeout = $timeout(later, wait);
+      timeout = $timeout(later, wait, false);
       if (callNow) {
         result = func.apply(context, args);
       }
@@ -11522,7 +11522,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     function runFunc(endDate){
       lastCall = +new Date();
       func.apply(context, args);
-      $interval(function(){ queued = null; }, 0, 1);
+      $interval(function(){ queued = null; }, 0, 1, false);
     }
 
     return function(){
@@ -11535,7 +11535,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
           runFunc();
         }
         else if (options.trailing){
-          queued = $interval(runFunc, wait - sinceLast, 1);
+          queued = $interval(runFunc, wait - sinceLast, 1, false);
         }
       }
     };
