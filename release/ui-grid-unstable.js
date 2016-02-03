@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-47c77de - 2016-02-02
+ * ui-grid - v3.1.0-2b6ec4f - 2016-02-03
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -23828,6 +23828,7 @@ module.filter('px', function() {
           savedState.selection = service.saveSelection( grid );
           savedState.grouping = service.saveGrouping( grid );
           savedState.treeView = service.saveTreeView( grid );
+          savedState.pagination = service.savePagination( grid );
 
           return savedState;
         },
@@ -23862,6 +23863,10 @@ module.filter('px', function() {
 
           if ( state.treeView ){
             service.restoreTreeView( grid, state.treeView );
+          }
+
+          if ( state.pagination ){
+            service.restorePagination( grid, state.pagination );
           }
 
           grid.refresh();
@@ -24012,6 +24017,26 @@ module.filter('px', function() {
           }
 
           return grid.api.grouping.getGrouping( grid.options.saveGroupingExpandedStates );
+        },
+
+
+        /**
+         * @ngdoc function
+         * @name savePagination
+         * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
+         * @description Saves the pagination state, if the pagination feature is enabled
+         * @param {Grid} grid the grid whose state we'd like to save
+         * @returns {object} the pagination state ready to be saved
+         */
+        savePagination: function( grid ) {
+          if ( !grid.api.pagination || !grid.options.paginationPageSize ){
+            return {};
+          }
+
+          return {
+            paginationCurrentPage: grid.options.paginationCurrentPage,
+            paginationPageSize: grid.options.paginationPageSize
+          };
         },
 
 
@@ -24237,6 +24262,25 @@ module.filter('px', function() {
           }
 
           grid.api.treeView.setTreeView( treeViewState );
+        },
+
+        /**
+         * @ngdoc function
+         * @name restorePagination
+         * @methodOf  ui.grid.saveState.service:uiGridSaveStateService
+         * @description Restores the pagination information, if pagination is enabled.
+         * @param {Grid} grid the grid whose state we'd like to restore
+         * @param {object} pagination the pagination object to be restored
+         * @param {number} pagination.paginationCurrentPage the page number to restore
+         * @param {number} pagination.paginationPageSize the number of items displayed per page
+         */
+        restorePagination: function( grid, pagination ){
+          if ( !grid.api.pagination || !grid.options.paginationPageSize ){
+            return;
+          }
+
+          grid.options.paginationCurrentPage = pagination.paginationCurrentPage;
+          grid.options.paginationPageSize = pagination.paginationPageSize;
         },
 
         /**
