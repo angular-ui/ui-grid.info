@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-2b6ec4f - 2016-02-03
+ * ui-grid - v3.1.0-6268333 - 2016-02-04
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -16337,7 +16337,7 @@ module.filter('px', function() {
                   $timeout(function () {
                     $elm[0].focus();
                     //only select text if it is not being replaced below in the cellNav viewPortKeyPress
-                    if ($scope.col.colDef.enableCellEditOnFocus || !(uiGridCtrl && uiGridCtrl.grid.api.cellNav)) {
+                    if ($elm[0].select && $scope.col.colDef.enableCellEditOnFocus || !(uiGridCtrl && uiGridCtrl.grid.api.cellNav)) {
                       $elm[0].select();
                     }
                     else {
