@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-6268333 - 2016-02-04
+ * ui-grid - v3.1.0-83af4a2 - 2016-02-04
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -16785,7 +16785,7 @@ module.filter('px', function() {
         /**
          *  @ngdoc object
          *  @name ui.grid.expandable.api:GridRow
-         * 
+         *
          *  @description Additional properties added to GridRow when using the expandable module
          */
         /**
@@ -16871,6 +16871,43 @@ module.filter('px', function() {
                */
               toggleAllRows: function() {
                 service.toggleAllRows(grid);
+              },
+              /**
+               * @ngdoc function
+               * @name expandRow
+               * @methodOf  ui.grid.expandable.api:PublicApi
+               * @description Expand the data row
+               * @param {object} rowEntity gridOptions.data[] array instance
+               */
+              expandRow: function (rowEntity) {
+                var row = grid.getRow(rowEntity);
+                if (row !== null && !row.isExpanded) {
+                  service.toggleRowExpansion(grid, row);
+                }
+              },
+              /**
+               * @ngdoc function
+               * @name collapseRow
+               * @methodOf  ui.grid.expandable.api:PublicApi
+               * @description Collapse the data row
+               * @param {object} rowEntity gridOptions.data[] array instance
+               */
+              collapseRow: function (rowEntity) {
+                var row = grid.getRow(rowEntity);
+                if (row !== null && row.isExpanded) {
+                  service.toggleRowExpansion(grid, row);
+                }
+              },
+              /**
+               * @ngdoc function
+               * @name getExpandedRows
+               * @methodOf  ui.grid.expandable.api:PublicApi
+               * @description returns all expandedRow's entity references
+               */
+              getExpandedRows: function () {
+                return service.getExpandedRows(grid).map(function (gridRow) {
+                  return gridRow.entity;
+                });
               }
             }
           }
@@ -16900,7 +16937,7 @@ module.filter('px', function() {
         if (angular.isUndefined(row.expandedRowHeight)){
           row.expandedRowHeight = grid.options.expandableRowHeight;
         }
-              
+
         if (row.isExpanded) {
           row.height = row.grid.options.rowHeight + row.expandedRowHeight;
         }
@@ -16938,6 +16975,12 @@ module.filter('px', function() {
         else {
           service.expandAllRows(grid);
         }
+      },
+
+      getExpandedRows: function (grid) {
+        return grid.rows.filter(function (row) {
+          return row.isExpanded;
+        });
       }
     };
     return service;

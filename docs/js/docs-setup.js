@@ -632,7 +632,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.expandable",
       "shortDescription": "Public Api for expandable feature",
-      "keywords": "api collapse collapseallrows data entity expand expandable expandallrows feature grid gridapi method object public row rowentity specific subgrids toggle toggleallrows togglerowexpansion ui"
+      "keywords": "api array collapse collapseallrows collapserow data entity expand expandable expandallrows expandedrow expandrow feature function getexpandedrows grid gridapi gridoptions instance method object public references returns row rowentity specific subgrids toggle toggleallrows togglerowexpansion ui"
     },
     {
       "section": "api",
