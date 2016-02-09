@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L93" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridGroupingService</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L93" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridGroupingService</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.grouping</code>
 </span>
 </div>
@@ -7,7 +7,7 @@
 <div class="description"><div class="ui-grid-grouping-service-page ui-grid-grouping-service-uigridgroupingservice-page"><p>Services for grouping features</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L737" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(grid, column, one)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L737" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(grid, column, one)</h3>
 <div class="aggregatecolumn"><div class="aggregatecolumn-page"><p>Sets the aggregation type on a column, if the
 column is currently grouped then it removes the grouping first.</p>
 </div><h5 id="methods_aggregatecolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="aggregatecolumn-page"><p>grid object</p>
@@ -15,7 +15,7 @@ column is currently grouped then it removes the grouping first.</p>
 </div></td></tr><tr><td>one</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>of the recognised types from uiGridGroupingConstants or one of the custom aggregations from gridOptions</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L1189" class="view-source icon-eye-open"> </a><h3 id="methods_applyrowexpandedstates">applyRowExpandedStates(currentNode)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L1189" class="view-source icon-eye-open"> </a><h3 id="methods_applyrowexpandedstates">applyRowExpandedStates(currentNode)</h3>
 <div class="applyrowexpandedstates"><div class="applyrowexpandedstates-page"><p>Take a hash in the format as created by getRowExpandedStates,
 and apply it to the grid.grouping.groupHeaderCache.</p>
 <p>Takes a treeSubset, and applies to a treeSubset - so can be called
@@ -26,13 +26,13 @@ the children of that hash</p>
 of that expanded states (which hopefully matches the subset of the groupHeaderCache)</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L813" class="view-source icon-eye-open"> </a><h3 id="methods_cleargrouping">clearGrouping(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L813" class="view-source icon-eye-open"> </a><h3 id="methods_cleargrouping">clearGrouping(grid)</h3>
 <div class="cleargrouping"><div class="cleargrouping-page"><p>Clear any grouped columns and any aggregations.  Doesn&#39;t remove sorting,
 as we don&#39;t know whether that sorting was added by grouping or was there beforehand</p>
 </div><h5 id="methods_cleargrouping_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="cleargrouping-page"><p>grid object</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L1115" class="view-source icon-eye-open"> </a><h3 id="methods_finaliseprocessingstate">finaliseProcessingState(grid, processingState, stateIndex)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L1115" class="view-source icon-eye-open"> </a><h3 id="methods_finaliseprocessingstate">finaliseProcessingState(grid, processingState, stateIndex)</h3>
 <div class="finaliseprocessingstate"><div class="finaliseprocessingstate-page"><p>Set all processing states lower than the one that had a break in value to
 no longer be initialised.  Render the counts into the entity ready for display.</p>
 </div><h5 id="methods_finaliseprocessingstate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="finaliseprocessingstate-page"><p>grid object</p>
@@ -41,14 +41,14 @@ no longer be initialised.  Render the counts into the entity ready for display.<
 processing states after this need to be finalised</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L994" class="view-source icon-eye-open"> </a><h3 id="methods_getgrouping">getGrouping(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L994" class="view-source icon-eye-open"> </a><h3 id="methods_getgrouping">getGrouping(grid)</h3>
 <div class="getgrouping"><div class="getgrouping-page"><p>Get the grouping settings from the columns.  As a side effect
 this always renumbers the grouping starting at 0</p>
 </div><h5 id="methods_getgrouping_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getgrouping-page"><p>grid object</p>
 </div></td></tr></tbody></table><h5 id="methods_getgrouping_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="getgrouping-page"><p>an array of the group fields, in order of priority</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L1154" class="view-source icon-eye-open"> </a><h3 id="methods_getrowexpandedstates">getRowExpandedStates(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L1154" class="view-source icon-eye-open"> </a><h3 id="methods_getrowexpandedstates">getRowExpandedStates(grid)</h3>
 <div class="getrowexpandedstates"><div class="getrowexpandedstates-page"><p>Extract the groupHeaderCache hash, pulling out only the states.</p>
 <p>The example below shows a grid that is grouped by gender then age</p>
 <pre class="prettyprint linenums">
@@ -73,7 +73,7 @@ this always renumbers the grouping starting at 0</p>
 </div></td></tr></tbody></table><h5 id="methods_getrowexpandedstates_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-hash">hash</a></td><td><div class="getrowexpandedstates-page"><p>the expanded states as a hash</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L668" class="view-source icon-eye-open"> </a><h3 id="methods_groupcolumn">groupColumn(grid, column)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L668" class="view-source icon-eye-open"> </a><h3 id="methods_groupcolumn">groupColumn(grid, column)</h3>
 <div class="groupcolumn"><div class="groupcolumn-page"><p>Adds this column to the existing grouping, at the end of the priority order.
 If the column doesn&#39;t have a sort, adds one, by default ASC</p>
 <p>This column will move to the left of any non-group columns, the
@@ -82,7 +82,7 @@ move is handled in a columnProcessor, so gets called as part of refresh</p>
 </div></td></tr><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="groupcolumn-page"><p>the column we want to group</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L918" class="view-source icon-eye-open"> </a><h3 id="methods_grouprows">groupRows(renderableRows)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L918" class="view-source icon-eye-open"> </a><h3 id="methods_grouprows">groupRows(renderableRows)</h3>
 <div class="grouprows"><div class="grouprows-page"><p>The rowProcessor that creates the groupHeaders (i.e. does
 the actual grouping).</p>
 <p>Assumes it is always called after the sorting processor, guaranteed by the priority setting</p>
@@ -107,13 +107,13 @@ working with, the following information:</p>
 </div></td></tr></tbody></table><h5 id="methods_grouprows_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="grouprows-page"><p>the updated rows, including our new group rows</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L580" class="view-source icon-eye-open"> </a><h3 id="methods_groupedfinalizerfn">groupedFinalizerFn(the)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L580" class="view-source icon-eye-open"> </a><h3 id="methods_groupedfinalizerfn">groupedFinalizerFn(the)</h3>
 <div class="groupedfinalizerfn"><div class="groupedfinalizerfn-page"><p>Used on group columns to display the rendered value and optionally
 display the count of rows.</p>
 </div><h5 id="methods_groupedfinalizerfn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>the</td><td><a href="" class="label type-hint type-hint-aggregation">aggregation</a></td><td><div class="groupedfinalizerfn-page"><p>aggregation entity for a grouped column</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L391" class="view-source icon-eye-open"> </a><h3 id="methods_groupingcolumnbuilder">groupingColumnBuilder(colDef, col, gridOptions)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L391" class="view-source icon-eye-open"> </a><h3 id="methods_groupingcolumnbuilder">groupingColumnBuilder(colDef, col, gridOptions)</h3>
 <div class="groupingcolumnbuilder"><div class="groupingcolumnbuilder-page"><p>Sets the grouping defaults based on the columnDefs</p>
 </div><h5 id="methods_groupingcolumnbuilder_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="groupingcolumnbuilder-page"><p>columnDef we&#39;re basing on</p>
 </div></td></tr><tr><td>col</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="groupingcolumnbuilder-page"><p>the column we&#39;re to update</p>
@@ -121,14 +121,14 @@ display the count of rows.</p>
 </div></td></tr></tbody></table><h5 id="methods_groupingcolumnbuilder_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="groupingcolumnbuilder-page"><p>promise for the builder - actually we do it all inline so it&#39;s immediately resolved</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L564" class="view-source icon-eye-open"> </a><h3 id="methods_groupingcolumnprocessor">groupingColumnProcessor(columns, rows)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L564" class="view-source icon-eye-open"> </a><h3 id="methods_groupingcolumnprocessor">groupingColumnProcessor(columns, rows)</h3>
 <div class="groupingcolumnprocessor"><div class="groupingcolumnprocessor-page"><p>Moves the columns around based on which are grouped</p>
 </div><h5 id="methods_groupingcolumnprocessor_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columns</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="groupingcolumnprocessor-page"><p>the columns to consider rendering</p>
 </div></td></tr><tr><td>rows</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="groupingcolumnprocessor-page"><p>the grid rows, which we don&#39;t use but are passed to us</p>
 </div></td></tr></tbody></table><h5 id="methods_groupingcolumnprocessor_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="groupingcolumnprocessor-page"><p>updated columns array</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L967" class="view-source icon-eye-open"> </a><h3 id="methods_initialiseprocessingstate">initialiseProcessingState(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L967" class="view-source icon-eye-open"> </a><h3 id="methods_initialiseprocessingstate">initialiseProcessingState(grid)</h3>
 <div class="initialiseprocessingstate"><div class="initialiseprocessingstate-page"><p>Creates the processing state array that is used
 for groupRows.</p>
 </div><h5 id="methods_initialiseprocessingstate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="initialiseprocessingstate-page"><p>grid object</p>
@@ -136,7 +136,7 @@ for groupRows.</p>
 initialised with blank values</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L1042" class="view-source icon-eye-open"> </a><h3 id="methods_insertgroupheader">insertGroupHeader(grid, renderableRows, rowIndex, processingState, stateIndex)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L1042" class="view-source icon-eye-open"> </a><h3 id="methods_insertgroupheader">insertGroupHeader(grid, renderableRows, rowIndex, processingState, stateIndex)</h3>
 <div class="insertgroupheader"><div class="insertgroupheader-page"><p>Create a group header row, and link it to the various configuration
 items that we use.</p>
 <p>Look for the row in the oldGroupingHeaderCache, write the row into the new groupingHeaderCache.</p>
@@ -148,7 +148,7 @@ items that we use.</p>
 i.e. the column that we want to create a header for</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L609" class="view-source icon-eye-open"> </a><h3 id="methods_movegroupcolumns">moveGroupColumns(grid, columns, rows)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L609" class="view-source icon-eye-open"> </a><h3 id="methods_movegroupcolumns">moveGroupColumns(grid, columns, rows)</h3>
 <div class="movegroupcolumns"><div class="movegroupcolumns-page"><p>Moves the column order so that the grouped columns are lined up
 to the left (well, unless you&#39;re RTL, then it&#39;s the right).  By doing this in
 the columnsProcessor, we make it transient - when the column is ungrouped it&#39;ll
@@ -160,14 +160,14 @@ go back to where it was.</p>
 </div></td></tr></tbody></table><h5 id="methods_movegroupcolumns_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="movegroupcolumns-page"><p>updated columns</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L770" class="view-source icon-eye-open"> </a><h3 id="methods_setgrouping">setGrouping(grid, config)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L770" class="view-source icon-eye-open"> </a><h3 id="methods_setgrouping">setGrouping(grid, config)</h3>
 <div class="setgrouping"><div class="setgrouping-page"><p>Set the grouping based on a config object, used by the save state feature
 (more specifically, by the restore function in that feature )</p>
 </div><h5 id="methods_setgrouping_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="setgrouping-page"><p>grid object</p>
 </div></td></tr><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="setgrouping-page"><p>the config we want to set, same format as that returned by getGrouping</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L849" class="view-source icon-eye-open"> </a><h3 id="methods_tidypriorities">tidyPriorities(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L849" class="view-source icon-eye-open"> </a><h3 id="methods_tidypriorities">tidyPriorities(grid)</h3>
 <div class="tidypriorities"><div class="tidypriorities-page"><p>Renumbers groupPriority and sortPriority such that
 groupPriority is contiguous, and sortPriority either matches
 groupPriority (for group columns), and otherwise is contiguous and
@@ -175,7 +175,7 @@ higher than groupPriority.</p>
 </div><h5 id="methods_tidypriorities_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="tidypriorities-page"><p>grid object</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/97b57e1/src/features/grouping/js/grouping.js#L710" class="view-source icon-eye-open"> </a><h3 id="methods_ungroupcolumn">ungroupColumn(grid, column)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/d87c8f3/src/features/grouping/js/grouping.js#L710" class="view-source icon-eye-open"> </a><h3 id="methods_ungroupcolumn">ungroupColumn(grid, column)</h3>
 <div class="ungroupcolumn"><div class="ungroupcolumn-page"><p>Removes the groupPriority from this column.  If the
 column was previously aggregated the aggregation will come back.
 The sort will remain.</p>
