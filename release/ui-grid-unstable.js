@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.0-c28c448 - 2016-02-09
+ * ui-grid - v3.1.0-97b57e1 - 2016-02-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -12723,8 +12723,17 @@ module.filter('px', function() {
           jsonNotArray: 'インポートしたJSONファイルには配列が含まれている必要があります。処理を中止します。'
         },
         pagination: {
+          aria: {
+            pageToFirst: '最初のページ',
+            pageBack: '前のページ',
+            pageSelected: '現在のページ',
+            pageForward: '次のページ',
+            pageToLast: '最後のページ'
+          },
           sizes: '項目/ページ',
-          totalItems: '項目'
+          totalItems: '項目',
+          through: 'から',
+          of: '項目/全'
         }
       });
       return $delegate;
