@@ -614,7 +614,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.expandable",
       "shortDescription": "Options for configuring the expandable feature, these are available to be",
-      "keywords": "$scope _this_ allows api application buttons class collapsing column configuring custom defaults enableexpandable enableexpandablerowheader expandable expandablerowheaderwidth expandablerowheight expandablerowtemplate expanded expanding false feature going grid gridoptions grids height html implies mandatory method modes object options pixels provide row rowheader set specific subgrid subgrids template true turn ui ui-grid width"
+      "keywords": "$scope _this_ allows api application buttons class collapsing column configuring custom defaults enableexpandable enableexpandablerowheader expandable expandablerowheaderwidth expandablerowheight expandablerowscope expandablerowtemplate expandablescope expanded expanding false feature going grid gridoptions grids height html implies mandatory method modes object options pixels provide row rowheader scope set specific subgrid subgrids template true turn ui ui-grid variables width"
     },
     {
       "section": "api",
