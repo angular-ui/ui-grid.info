@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.1-ee48d70 - 2016-02-17
+ * ui-grid - v3.1.1-d74dd46 - 2016-02-23
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -16086,7 +16086,7 @@ module.filter('px', function() {
              *  [ {id: xxx, value: xxx} ], which will be used to populate
              *  the edit dropdown.  This can be used when the dropdown values are dependent on
              *  the backing row entity with some kind of algorithm.
-             *  If this property is set then both editDropdownOptionsArray and 
+             *  If this property is set then both editDropdownOptionsArray and
              *  editDropdownRowEntityOptionsArrayPath will be ignored.
              *  @param {object} rowEntity the options.data element that the returned array refers to
              *  @param {object} colDef the column that implements this dropdown
@@ -16282,7 +16282,10 @@ module.filter('px', function() {
               var gridCellContentsEl = angular.element($elm.children()[0]);
               //remove edit element
               editCellScope.$destroy();
-              angular.element($elm.children()[1]).remove();
+              var children = $elm.children();
+              for (var i = 1; i < children.length; i++) {
+                angular.element(children[i]).remove();
+              }
               gridCellContentsEl.removeClass('ui-grid-cell-contents-hidden');
               inEdit = false;
               registerBeginEditEvents();
@@ -18182,7 +18185,7 @@ module.filter('px', function() {
             document.body.appendChild(frame);
 
             frame.contentWindow.document.open('text/html', 'replace');
-            frame.contentWindow.document.write('sep=,' + columnSeparator + '\r\n' + csvContent);
+            frame.contentWindow.document.write('sep=' + columnSeparator + '\r\n' + csvContent);
             frame.contentWindow.document.close();
             frame.contentWindow.focus();
             frame.contentWindow.document.execCommand('SaveAs', true, fileName);
@@ -26923,7 +26926,7 @@ module.filter('px', function() {
        * @param {gridRow} row the parent we're finalising
        */
       finaliseAggregations: function( row ){
-        if ( typeof(row.treeNode.aggregations) === 'undefined' ){
+        if ( row == null || typeof(row.treeNode.aggregations) === 'undefined' ){
           return;
         }
 
