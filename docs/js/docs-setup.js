@@ -218,7 +218,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid",
       "shortDescription": "A row and column pair that represents the intersection of these two entities.",
-      "keywords": "api apply cellfilter class col column data displays entities filter filtered function getintersectionvaluefiltered getintersectionvalueraw grid gridrowcolumn instantiated intersection keyword meet object pair points represents return row ui"
+      "keywords": "api cellfilter class col column data entities filtered function getintersectionvalueraw grid gridrowcolumn instantiated intersection keyword meet object pair points represents return row ui"
     },
     {
       "section": "api",
