@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.1-68681d7 - 2016-03-11
+ * ui-grid - v3.1.1-01cdfe4 - 2016-05-27
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -2222,7 +2222,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
           };
 
           $scope.itemAction = function($event,title) {
-            gridUtil.logDebug('itemAction');
             $event.stopPropagation();
 
             if (typeof($scope.action) === 'function') {
@@ -3779,6 +3778,7 @@ angular.module('ui.grid')
      * If you only want to resize the grid, not regenerate all the rows
      * and columns, you should consider directly calling refreshCanvas instead.
      *
+     * @param {boolean} [rowsAltered] Optional flag for refreshing when the number of rows has changed
      */
     self.api.registerMethod( 'core', 'refresh', this.refresh );
 
@@ -9744,9 +9744,11 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     for (var i = 0; i < filtersLength; i++) {
       var filter = filters[i];
 
-      var ret = rowSearcher.runColumnFilter(grid, row, column, filter);
-      if (!ret) {
-        return false;
+      if ( !gridUtil.isNullOrUndefined(filter.term) && filter.term !== '' || filter.noTerm ){ 
+        var ret = rowSearcher.runColumnFilter(grid, row, column, filter);
+        if (!ret) {
+          return false;
+        }
       }
     }
 
@@ -10692,7 +10694,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       }
 
       // See if the template is itself a promise
-      if (template.hasOwnProperty('then')) {
+      if (angular.isFunction(template.then)) {
         return template.then(s.postProcessTemplate);
       }
 
@@ -11716,8 +11718,6 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
     deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
 
-    event.deltaMode = 0;
-
     // Normalise offsetX and offsetY properties
     // if ($elm[0].getBoundingClientRect ) {
     //   var boundingRect = $(elm)[0].getBoundingClientRect();
@@ -12395,6 +12395,15 @@ module.filter('px', function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
       $delegate.add('fr', {
+        headerCell: {
+          aria: {
+            defaultFilterLabel: 'Filtre de la colonne',
+            removeFilter: 'Supprimer le filtre',
+            columnMenuButtonLabel: 'Menu de la colonne'
+          },
+          priority: 'Priorité:',
+          filterLabel: "Filtre de la colonne: "
+        },
         aggregate: {
           label: 'éléments'
         },
@@ -12418,6 +12427,7 @@ module.filter('px', function() {
         sort: {
           ascending: 'Trier par ordre croissant',
           descending: 'Trier par ordre décroissant',
+          none: 'Aucun tri',
           remove: 'Enlever le tri'
         },
         column: {
@@ -12435,7 +12445,13 @@ module.filter('px', function() {
           pinRight: 'Épingler à droite',
           unpin: 'Détacher'
         },
+        columnMenu: {
+          close: 'Fermer'
+        },
         gridMenu: {
+          aria: {
+            buttonLabel: 'Menu du tableau'
+          },
           columns: 'Colonnes:',
           importerTitle: 'Importer un fichier',
           exporterAllAsCsv: 'Exporter toutes les données en CSV',
@@ -12454,19 +12470,33 @@ module.filter('px', function() {
           jsonNotArray: 'Le fichier JSON importé doit contenir un tableau, abandon.'
         },
         pagination: {
+          aria: {
+            pageToFirst: 'Aller à la première page',
+            pageBack: 'Page précédente',
+            pageSelected: 'Page sélectionnée',
+            pageForward: 'Page suivante',
+            pageToLast: 'Aller à la dernière page'
+          },
           sizes: 'éléments par page',
           totalItems: 'éléments',
+          through: 'à',
           of: 'sur'
         },
         grouping: {
           group: 'Grouper',
           ungroup: 'Dégrouper',
-          aggregate_count: 'Agg: Compte',
+          aggregate_count: 'Agg: Compter',
           aggregate_sum: 'Agg: Somme',
           aggregate_max: 'Agg: Max',
           aggregate_min: 'Agg: Min',
           aggregate_avg: 'Agg: Moy',
           aggregate_remove: 'Agg: Retirer'
+        },
+        validate: {
+          error: 'Erreur:',
+          minLength: 'La valeur doit être supérieure ou égale à THRESHOLD caractères.',
+          maxLength: 'La valeur doit être inférieure ou égale à THRESHOLD caractères.',
+          required: 'Une valeur est nécéssaire.'
         }
       });
       return $delegate;
@@ -18227,6 +18257,7 @@ module.filter('px', function() {
          * where each header is an object with name, width and maybe alignment
          * @param {array} exportData an array of rows, where each row is
          * an array of column data
+         * @param {string} separator a string that represents the separator to be used in the csv file
          * @returns {string} csv the formatted csv as a string
          */
         formatAsCsv: function (exportColumnHeaders, exportData, separator) {
@@ -20993,17 +21024,28 @@ module.filter('px', function() {
         }
 
         if (args.y) {
-          var percentage;
-          var targetPercentage = args.grid.options.infiniteScrollRowsFromEnd / args.grid.renderContainers.body.visibleRowCache.length;
-          if (args.grid.scrollDirection === uiGridConstants.scrollDirection.UP ) {
-            percentage = args.y.percentage;
-            if (percentage <= targetPercentage){
-              service.loadData(args.grid);
-            }
-          } else if (args.grid.scrollDirection === uiGridConstants.scrollDirection.DOWN) {
-            percentage = 1 - args.y.percentage;
-            if (percentage <= targetPercentage){
-              service.loadData(args.grid);
+
+          // If the user is scrolling very quickly all the way to the top/bottom, the scroll handler can get confused
+          // about the direction. First we check if they've gone all the way, and data always is loaded in this case.
+          if (args.y.percentage === 0) {
+            args.grid.scrollDirection = uiGridConstants.scrollDirection.UP;
+            service.loadData(args.grid);
+          } else if (args.y.percentage === 1) {
+            args.grid.scrollDirection = uiGridConstants.scrollDirection.DOWN;
+            service.loadData(args.grid);
+          } else { // Scroll position is somewhere in between top/bottom, so determine whether it's far enough to load more data.
+            var percentage;
+            var targetPercentage = args.grid.options.infiniteScrollRowsFromEnd / args.grid.renderContainers.body.visibleRowCache.length;
+            if (args.grid.scrollDirection === uiGridConstants.scrollDirection.UP ) {
+              percentage = args.y.percentage;
+              if (percentage <= targetPercentage){
+                service.loadData(args.grid);
+              }
+            } else if (args.grid.scrollDirection === uiGridConstants.scrollDirection.DOWN) {
+              percentage = 1 - args.y.percentage;
+              if (percentage <= targetPercentage){
+                service.loadData(args.grid);
+              }
             }
           }
         }
