@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.1.1-75b4288 - 2016-06-22
+ * ui-grid - v3.1.1-47c305e - 2016-06-24
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -9248,24 +9248,13 @@ angular.module('ui.grid')
             return rows;
           });
 
-          grid.registerColumnsProcessor(function allColumnsVisible(columns) {
+          grid.registerColumnsProcessor(function applyColumnVisibility(columns) {
             columns.forEach(function (column) {
-              column.visible = true;
+              column.visible = angular.isDefined(column.colDef.visible) ? column.colDef.visible : true;
             });
 
             return columns;
           }, 50);
-
-          grid.registerColumnsProcessor(function(renderableColumns) {
-              renderableColumns.forEach(function (column) {
-                  if (column.colDef.visible === false) {
-                      column.visible = false;
-                  }
-              });
-
-              return renderableColumns;
-          }, 50);
-
 
           grid.registerRowsProcessor(grid.searchRows, 100);
 
