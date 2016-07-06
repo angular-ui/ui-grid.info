@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-592be63 - 2016-06-30
+ * ui-grid - v3.2.1-25bd47a - 2016-07-06
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -24648,12 +24648,9 @@ module.filter('px', function() {
          * @param {bool} selected value to set
          */
         $delegate.prototype.setSelected = function(selected) {
-          this.isSelected = selected;
-          if (selected) {
-            this.grid.selection.selectedCount++;
-          }
-          else {
-            this.grid.selection.selectedCount--;
+          if (selected !== this.isSelected) {
+            this.isSelected = selected;
+            this.grid.selection.selectedCount += selected ? 1 : -1;
           }
         };
 
