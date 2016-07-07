@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-cc5c602 - 2016-07-06
+ * ui-grid - v3.2.1-575b901 - 2016-07-07
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -21486,13 +21486,14 @@ module.filter('px', function() {
         }
 
         //check columns in between move-range to make sure they are visible columns
-        var i0 = Math.min(originalPosition, newPosition);
-        for (i0; i0 < Math.max(originalPosition, newPosition);i0++) {
+        var pos = (originalPosition < newPosition) ? originalPosition + 1 : originalPosition - 1;
+        var i0 = Math.min(pos, newPosition);
+        for (i0; i0 <= Math.max(pos, newPosition); i0++) {
           if (columns[i0].visible) {
             break;
           }
         }
-        if (i0 === Math.max(originalPosition, newPosition)) {
+        if (i0 > Math.max(pos, newPosition)) {
           //no visible column found, column did not visibly move
           return;
         }
