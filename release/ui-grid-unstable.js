@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-c3d00b3 - 2016-07-08
+ * ui-grid - v3.2.1-b197b83 - 2016-07-18
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -18280,7 +18280,7 @@ module.filter('px', function() {
 
         /**
          * @ngdoc function
-         * @name formatAsCSV
+         * @name formatAsCsv
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
          * @description Formats the column headers and data as a CSV,
          * and sends that data to the user
