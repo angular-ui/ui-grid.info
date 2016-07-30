@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-5e4c1dd - 2016-07-19
+ * ui-grid - v3.2.1-84420ab - 2016-07-30
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -11879,6 +11879,19 @@ module.filter('px', function() {
           invalidCsv: 'File was unable to be processed, is it valid CSV?',
           invalidJson: 'File was unable to be processed, is it valid Json?',
           jsonNotArray: 'Imported json file must contain an array, aborting.'
+        },
+        pagination: {
+          aria: {
+            pageToFirst: 'Gå til første',
+            pageBack: 'Gå tilbage',
+            pageSelected: 'Valgte side',
+            pageForward: 'Gå frem',
+            pageToLast: 'Gå til sidste'
+          },
+          sizes: 'genstande per side',
+          totalItems: 'genstande',
+          through: 'gennem',
+          of: 'af'
         }
       });
       return $delegate;
