@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-739e578 - 2016-09-09
+ * ui-grid - v3.2.1-4d2315e - 2016-09-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -9679,10 +9679,10 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
         }
     
         if ( !gridUtil.isNullOrUndefined(filter.term) ){
-          // it is possible to have noTerm.  We don't need to copy that across, it was just a flag to avoid
-          // getting the filter ignored if the filter was a function that didn't use a term
+          // it is possible to have noTerm.
           newFilter.term = rowSearcher.stripTerm(filter);
         }
+        newFilter.noTerm = filter.noTerm;
         
         if ( filter.condition ){
           newFilter.condition = filter.condition;
