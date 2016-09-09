@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-c010e20 - 2016-09-09
+ * ui-grid - v3.2.1-1b13a29 - 2016-09-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -12645,6 +12645,19 @@ module.filter('px', function() {
           invalidCsv: 'Impossibile elaborare il file, sicuro che sia un CSV?',
           invalidJson: 'Impossibile elaborare il file, sicuro che sia un JSON valido?',
           jsonNotArray: 'Errore! Il file JSON da importare deve contenere un array.'
+        },
+        pagination: {
+          aria: {
+            pageToFirst: 'Prima',
+            pageBack: 'Indietro',
+            pageSelected: 'Pagina selezionata',
+            pageForward: 'Avanti',
+            pageToLast: 'Ultima'
+          },
+          sizes: 'elementi per pagina',
+          totalItems: 'elementi',
+          through: 'a',
+          of: 'di'
         },
         grouping: {
           group: 'Raggruppa',
