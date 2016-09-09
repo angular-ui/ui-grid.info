@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/7c11c95/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/a08a3e3/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.class:GridOptions</code>
 </span>
 </div>
@@ -15,7 +15,9 @@ in the aggregation footer, so only the value is displayed.</p>
 </li>
 <li><h3 id="properties_aggregationtype">aggregationType</h3>
 <div class="aggregationtype"><div class="aggregationtype-page"><p>The aggregation that you&#39;d like to show in the columnFooter for this
-column.  Valid values are in uiGridConstants, and currently include <code>uiGridConstants.aggregationTypes.count</code>,
+column.  Valid values are in
+<a href="#/api/ui.grid.service:uiGridConstants#properties_aggregationtypes">uiGridConstants.aggregationTypes</a>,
+and currently include <code>uiGridConstants.aggregationTypes.count</code>,
 <code>uiGridConstants.aggregationTypes.sum</code>, <code>uiGridConstants.aggregationTypes.avg</code>, <code>uiGridConstants.aggregationTypes.min</code>,
 <code>uiGridConstants.aggregationTypes.max</code>.</p>
 <p>You can also provide a function as the aggregation type, in this case your function needs to accept the full
@@ -97,7 +99,8 @@ array element.  Can be a complex expression: <code>employee.address.city</code>,
 <p>A filter consists of a condition, a term, and a placeholder:</p>
 <ul>
 <li>condition defines how rows are chosen as matching the filter term. This can be set to
-one of the constants in uiGridConstants.filter, or you can supply a custom filter function
+one of the constants in <a href="#/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter</a>,
+or you can supply a custom filter function
 that gets passed the following arguments: [searchTerm, cellValue, row, column].</li>
 <li>term: If set, the filter field will be pre-populated
 with this value.</li>
@@ -107,7 +110,8 @@ with this value.</li>
 your custom function doesn&#39;t require a term (so it can run even when the term is null)</li>
 <li>flags: only flag currently available is <code>caseSensitive</code>, set to false if you don&#39;t want
 case sensitive matching</li>
-<li>type: defaults to uiGridConstants.filter.INPUT, which gives a text box.  If set to uiGridConstants.filter.SELECT
+<li>type: defaults to <a href="#/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter.INPUT</a>,
+which gives a text box.  If set to <a href="#/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter.SELECT</a>
 then a select box will be shown with options selectOptions</li>
 <li>selectOptions: options in the format <code>[ { value: 1, label: &#39;male&#39; }]</code>.  No i18n filter is provided, you need
 to perform the i18n on the values before you provide them</li>
@@ -269,7 +273,8 @@ compatibility with 2.x name can be omitted if field is present</p>
 <li><h3 id="properties_sort">sort</h3>
 <div class="sort"><div class="sort-page"><p>An object of sort information, attributes are:</p>
 <ul>
-<li>direction: values are uiGridConstants.ASC or uiGridConstants.DESC</li>
+<li>direction: values are <a href="#/api/ui.grid.service:uiGridConstants#properties_asc">uiGridConstants.ASC</a>
+or <a href="#/api/ui.grid.service:uiGridConstants#properties_desc">uiGridConstants.DESC</a></li>
 <li>ignoreSort: if set to true this sort is ignored (used by tree to manipulate the sort functionality)</li>
 <li>priority: says what order to sort the columns in (lower priority gets sorted first).</li>
 </ul>
@@ -297,8 +302,8 @@ found in the <a href="#/api/ui.grid.RowSorter">rowSorter</a> service.</p>
 </div></div>
 </li>
 <li><h3 id="properties_sortdirectioncycle">sortDirectionCycle</h3>
-<div class="sortdirectioncycle"><div class="sortdirectioncycle-page"><p>(optional) An array of sort directions, specifying the order that they
-should cycle through as the user repeatedly clicks on the column heading.
+<div class="sortdirectioncycle"><div class="sortdirectioncycle-page"><p>(optional) An array of <a href="#/api/ui.grid.service:uiGridConstants#properties_asc">sort directions</a>,
+specifying the order that they should cycle through as the user repeatedly clicks on the column heading.
 The default is <code>[null, uiGridConstants.ASC, uiGridConstants.DESC]</code>. Null
 refers to the unsorted state. This does not affect the initial sort
 direction; use the <a href="#/api/ui.grid.class:GridOptions.columnDef#sort">sort</a>

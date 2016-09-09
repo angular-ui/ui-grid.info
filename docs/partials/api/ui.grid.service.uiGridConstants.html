@@ -1,0 +1,100 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/constants.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/a08a3e3/src/js/core/constants.js#L10" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridConstants</code>
+<div><span class="hint">object in module <code ng:non-bindable="">ui.grid</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-service-page ui-grid-service-uigridconstants-page"><p>Constants for use across many grid features</p>
+</div></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_asc">ASC</h3>
+<div class="asc"><div class="asc-page"><p>Used in <a href="#/api/ui.grid.class:GridOptions.columnDef#properties_sort">columnDef.sort</a> and
+<a href="#/api/ui.grid.class:GridOptions.columnDef#properties_sortdirectioncycle">columnDef.sortDirectionCycle</a>
+to configure the sorting direction of the column</p>
+</div></div>
+</li>
+<li><h3 id="properties_desc">DESC</h3>
+<div class="desc"><div class="desc-page"><p>Used in <a href="#/api/ui.grid.class:GridOptions.columnDef#properties_sort">columnDef.sort</a> and
+<a href="#/api/ui.grid.class:GridOptions.columnDef#properties_sortdirectioncycle">columnDef.sortDirectionCycle</a>
+to configure the sorting direction of the column</p>
+</div></div>
+</li>
+<li><h3 id="properties_aggregationtypes">aggregationTypes</h3>
+<div class="aggregationtypes"><div class="aggregationtypes-page"><p>Used in <a href="#/api/ui.grid.class:GridOptions.columnDef#properties_aggregationtype">columnDef.aggregationType</a>
+to specify the type of built-in aggregation the column should use.</p>
+<p>Available options are:</p>
+<ul>
+<li><code>uiGridConstants.aggregationTypes.sum</code> - add the values in this column to produce the aggregated value</li>
+<li><code>uiGridConstants.aggregationTypes.count</code> - count the number of rows to produce the aggregated value</li>
+<li><code>uiGridConstants.aggregationTypes.avg</code> - average the values in this column to produce the aggregated value</li>
+<li><code>uiGridConstants.aggregationTypes.min</code> - use the minimum value in this column as the aggregated value</li>
+<li><code>uiGridConstants.aggregationTypes.max</code> - use the maximum value in this column as the aggregated value</li>
+</ul>
+</div></div>
+</li>
+<li><h3 id="properties_datachange">dataChange</h3>
+<div class="datachange"><div class="datachange-page"><p>Used with <a href="#/api/ui.grid.core.api:PublicApi#methods_notifydatachange">PublicApi.notifyDataChange</a>,
+<a href="#/api/ui.grid.class:Grid#methods_calldatachangecallbacks">Grid.callDataChangeCallbacks</a>,
+and <a href="#/api/ui.grid.class:Grid#methods_registerdatachangecallback">Grid.registerDataChangeCallback</a>
+to specify the type of the event(s).</p>
+<p>Available options are:</p>
+<ul>
+<li><code>uiGridConstants.dataChange.ALL</code> - listeners fired on any of these events, fires listeners on all events.</li>
+<li><code>uiGridConstants.dataChange.EDIT</code> - fired when the data in a cell is edited</li>
+<li><code>uiGridConstants.dataChange.ROW</code> - fired when a row is added or removed</li>
+<li><code>uiGridConstants.dataChange.COLUMN</code> - fired when the column definitions are modified</li>
+<li><code>uiGridConstants.dataChange.OPTIONS</code> - fired when the grid options are modified</li>
+</ul>
+</div></div>
+</li>
+<li><h3 id="properties_filter">filter</h3>
+<div class="filter"><div class="filter-page"><p>Used in <a href="#/api/ui.grid.class:GridOptions.columnDef#properties_filter">columnDef.filter</a>
+to configure filtering on the column</p>
+<p><code>SELECT</code> and <code>INPUT</code> are used with the <code>type</code> property of the filter, the rest are used to specify
+one of the built-in conditions.</p>
+<p>Available <code>condition</code> options are:</p>
+<ul>
+<li><code>uiGridConstants.filter.STARTS_WITH</code></li>
+<li><code>uiGridConstants.filter.ENDS_WITH</code></li>
+<li><code>uiGridConstants.filter.CONTAINS</code></li>
+<li><code>uiGridConstants.filter.GREATER_THAN</code></li>
+<li><code>uiGridConstants.filter.GREATER_THAN_OR_EQUAL</code></li>
+<li><code>uiGridConstants.filter.LESS_THAN</code></li>
+<li><code>uiGridConstants.filter.LESS_THAN_OR_EQUAL</code></li>
+<li><code>uiGridConstants.filter.NOT_EQUAL</code></li>
+<li><code>uiGridConstants.filter.STARTS_WITH</code></li>
+</ul>
+<p>Available <code>type</code> options are:</p>
+<ul>
+<li><code>uiGridConstants.filter.SELECT</code> - use a dropdown box for the cell header filter field</li>
+<li><code>uiGridConstants.filter.INPUT</code> - use a text box for the cell header filter field</li>
+</ul>
+</div></div>
+</li>
+<li><h3 id="properties_scrolldirection">scrollDirection</h3>
+<div class="scrolldirection"><div class="scrolldirection-page"><p>Set on <a href="#/api/ui.grid.class:Grid#properties_scrolldirection">Grid.scrollDirection</a>,
+to indicate the direction the grid is currently scrolling in</p>
+<p>Available options are:</p>
+<ul>
+<li><code>uiGridConstants.scrollDirection.UP</code> - set when the grid is scrolling up</li>
+<li><code>uiGridConstants.scrollDirection.DOWN</code> - set when the grid is scrolling down</li>
+<li><code>uiGridConstants.scrollDirection.LEFT</code> - set when the grid is scrolling left</li>
+<li><code>uiGridConstants.scrollDirection.RIGHT</code> - set when the grid is scrolling right</li>
+<li><code>uiGridConstants.scrollDirection.NONE</code> - set when the grid is not scrolling, this is the default</li>
+</ul>
+</div></div>
+</li>
+<li><h3 id="properties_scrollbars">scrollbars</h3>
+<div class="scrollbars"><div class="scrollbars-page"><p>Used with <a href="#/api/ui.grid.class:GridOptions#properties_enablehorizontalscrollbar">GridOptions.enableHorizontalScrollbar</a>
+and <a href="#/api/ui.grid.class:GridOptions#properties_enableverticalscrollbar">GridOptions.enableVerticalScrollbar</a>
+to specify the scrollbar policy for that direction.</p>
+<p>Available options are:</p>
+<ul>
+<li><code>uiGridConstants.scrollbars.NEVER</code> - never show scrollbars in this direction</li>
+<li><code>uiGridConstants.scrollbars.ALWAYS</code> - always show scrollbars in this direction</li>
+</ul>
+</div></div>
+</li>
+</ul>
+</div>
+</div>
