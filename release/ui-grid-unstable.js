@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-1e99d93 - 2016-09-09
+ * ui-grid - v3.2.1-f3bf313 - 2016-09-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -28030,16 +28030,21 @@ module.filter('px', function() {
           };
         };
 
+        var promises = [];
+
         for (var validatorName in colDef.validators) {
           service.clearError(rowEntity, colDef, validatorName);
           var msg;
           var validatorFunction = service.getValidator(validatorName, colDef.validators[validatorName]);
           // We pass the arguments as oldValue, newValue so they are in the same order 
           // as ng-model validators (modelValue, viewValue)
-          $q.when(validatorFunction(oldValue, newValue, rowEntity, colDef))
-            .then(validateClosureFactory(rowEntity, colDef, validatorName)
-          );
+          var promise = $q
+                        .when(validatorFunction(oldValue, newValue, rowEntity, colDef))
+                        .then(validateClosureFactory(rowEntity, colDef, validatorName));
+          promises.push(promise);
         }
+        
+        return $q.all(promises);
       },
 
       /**
@@ -28251,6 +28256,7 @@ module.filter('px', function() {
     };
   }]);
 })();
+
 angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   'use strict';
 
