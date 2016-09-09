@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-a08a3e3 - 2016-09-09
+ * ui-grid - v3.2.1-a81e5d5 - 2016-09-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -21794,7 +21794,7 @@ module.filter('px', function() {
                     gridLeft += $scope.grid.renderContainers.left.header[0].getBoundingClientRect().width;
                   }
 
-                  previousMouseX = event.pageX;
+                  previousMouseX = event.pageX || (event.originalEvent ? event.originalEvent.pageX : 0);
                   totalMouseMovement = 0;
                   rightMoveLimit = gridLeft + $scope.grid.getViewportWidth();
 
@@ -21808,7 +21808,8 @@ module.filter('px', function() {
                 };
 
                 var moveFn = function( event ) {
-                  var changeValue = event.pageX - previousMouseX;
+                  var pageX = event.pageX || (event.originalEvent ? event.originalEvent.pageX : 0);
+                  var changeValue = pageX - previousMouseX;
                   if ( changeValue === 0 ){ return; }
                   //Disable text selection in Chrome during column move
                   document.onselectstart = function() { return false; };
@@ -21820,7 +21821,7 @@ module.filter('px', function() {
                   }
                   else if (elmCloned) {
                     moveElement(changeValue);
-                    previousMouseX = event.pageX;
+                    previousMouseX = pageX;
                   }
                 };
 
