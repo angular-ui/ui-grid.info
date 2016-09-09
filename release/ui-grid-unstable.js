@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-f3bf313 - 2016-09-09
+ * ui-grid - v3.2.1-739e578 - 2016-09-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -34,6 +34,7 @@
     APOS_REGEXP: /'/g,
     BRACKET_REGEXP: /^(.*)((?:\s*\[\s*\d+\s*\]\s*)|(?:\s*\[\s*"(?:[^"\\]|\\.)*"\s*\]\s*)|(?:\s*\[\s*'(?:[^'\\]|\\.)*'\s*\]\s*))(.*)$/,
     COL_CLASS_PREFIX: 'ui-grid-col',
+    ENTITY_BINDING: '$$this',
     events: {
       GRID_SCROLL: 'uiGridScroll',
       COLUMN_MENU_SHOWN: 'uiGridColMenuShown',
@@ -4632,7 +4633,11 @@ angular.module('ui.grid')
    * @param {GridColumn} col col object
    */
   Grid.prototype.getQualifiedColField = function (col) {
-    return 'row.entity.' + gridUtil.preEval(col.field);
+    var base = 'row.entity';
+    if ( col.field === uiGridConstants.ENTITY_BINDING ) {
+      return base;
+    }
+    return gridUtil.preEval(base + '.' + col.field);
   };
 
   /**
@@ -8890,7 +8895,7 @@ angular.module('ui.grid')
 (function(){
 
 angular.module('ui.grid')
-.factory('GridRow', ['gridUtil', function(gridUtil) {
+.factory('GridRow', ['gridUtil', 'uiGridConstants', function(gridUtil, uiGridConstants) {
 
    /**
    * @ngdoc function
@@ -8983,7 +8988,11 @@ angular.module('ui.grid')
      * @returns {string} resulting name that can be evaluated against a row
      */
   GridRow.prototype.getEntityQualifiedColField = function(col) {
-    return gridUtil.preEval('entity.' + col.field);
+    var base = 'entity';
+    if ( col.field === uiGridConstants.ENTITY_BINDING ) {
+      return base;
+    }
+    return gridUtil.preEval(base + '.' + col.field);
   };
   
   

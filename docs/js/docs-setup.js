@@ -2202,6 +2202,15 @@ NG_DOCS={
     },
     {
       "section": "tutorial",
+      "id": "323_more_binding",
+      "shortName": "323 More Binding examples",
+      "type": "overview",
+      "moduleName": "Tutorial: 323 More Binding examples",
+      "shortDescription": "UI-Grid can also bind be to a one-dimensional array of primitives - in this case using uiGridConstants.ENTITY_BINDING will use the entire entry in the data array as the value for the cell instead of a field therein. This is useful if the data is an array of strings, or also if a cell filter needs access to multiple fields within each row object.",
+      "keywords": "$scope access actual actualscore andrew angular app array basic bind binding calculatepercentage case cell cellfilter class column columndefs columns complexfilterctrl controller counting css data david donald edit enablecelledit enablesorting entire entity_binding entry exam examname example examples expected expectheadercellvaluematch expectheadercolumncount expectrowcount expectrowvaluesmatch false field fields filter filter-scenario floor function graph grid grid1 grid2 gridoptions gridtestutils headers height html input john johnson js main math maxfield maxscore mcdonald michaels module multiple ng-controller ngtouch object one-dimensional onedimensionctrl overview percentage primitives require resultfield return rogers row rows score sortcellfiltered spec strings theory trig true tutorial ui ui-grid ui-grid-edit uigridconstants values var visible width"
+    },
+    {
+      "section": "tutorial",
       "id": "401_AllFeatures",
       "shortName": "401 All Features",
       "type": "overview",
