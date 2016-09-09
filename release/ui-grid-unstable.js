@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-a81e5d5 - 2016-09-09
+ * ui-grid - v3.2.1-1e99d93 - 2016-09-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -9942,8 +9942,8 @@ var module = angular.module('ui.grid');
 
 /**
  * @ngdoc object
- * @name ui.grid.class:RowSorter
- * @description RowSorter provides the default sorting mechanisms,
+ * @name ui.grid.class:rowSorter
+ * @description rowSorter provides the default sorting mechanisms,
  * including guessing column types and applying appropriate sort
  * algorithms
  *
@@ -9970,7 +9970,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name guessSortFn
    * @description Assigns a sort function to use based on the itemType in the column
    * @param {string} itemType one of 'number', 'boolean', 'string', 'date', 'object'.  And
@@ -9999,7 +9999,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name handleNulls
    * @description Sorts nulls and undefined to the bottom (top when
    * descending).  Called by each of the internal sorters before
@@ -10030,7 +10030,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name basicSort
    * @description Sorts any values that provide the < method, including strings
    * or numbers.  Handles nulls and undefined through calling handleNulls
@@ -10056,7 +10056,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name sortNumber
    * @description Sorts numerical values.  Handles nulls and undefined through calling handleNulls
    * @param {object} a sort value a
@@ -10075,7 +10075,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name sortNumberStr
    * @description Sorts numerical values that are stored in a string (i.e. parses them to numbers first).
    * Handles nulls and undefined through calling handleNulls
@@ -10129,7 +10129,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name sortAlpha
    * @description Sorts string values. Handles nulls and undefined through calling handleNulls
    * @param {object} a sort value a
@@ -10151,7 +10151,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name sortDate
    * @description Sorts date values. Handles nulls and undefined through calling handleNulls.
    * Handles date strings by converting to Date object if not already an instance of Date
@@ -10180,7 +10180,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name sortBool
    * @description Sorts boolean values, true is considered larger than false.
    * Handles nulls and undefined through calling handleNulls
@@ -10209,7 +10209,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name getSortFn
    * @description Get the sort function for the column.  Looks first in
    * rowSorter.colSortFnCache using the column name, failing that it
@@ -10269,7 +10269,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
 
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name prioritySort
    * @description Used where multiple columns are present in the sort criteria,
    * we determine which column should take precedence in the sort by sorting
@@ -10322,7 +10322,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   /**
    * @ngdoc method
-   * @methodOf ui.grid.class:RowSorter
+   * @methodOf ui.grid.class:rowSorter
    * @name sort
    * @description sorts the grid
    * @param {Object} grid the grid itself

@@ -222,11 +222,11 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.class:RowSorter",
-      "shortName": "RowSorter",
+      "id": "ui.grid.class:rowSorter",
+      "shortName": "rowSorter",
       "type": "object",
       "moduleName": "ui.grid",
-      "shortDescription": "RowSorter provides the default sorting mechanisms,",
+      "shortDescription": "rowSorter provides the default sorting mechanisms,",
       "keywords": "algorithm algorithms allow api applying appropriate array assigns attempting based basicsort bit boolean bottom cache caching called calling case chosen class col colsortfncache column columns consider considered converting core criteria currently data decide default descending determine error failing false find function future getsortfn grid gridapi guess guesses guessing guesssortfn handlenulls handles including infrastructure inspect instance intensive internal itemtype larger mechanisms method multiple normal note null nulls number numbers numerical object parses passed place pointless precedence presumably priority prioritysort processor provide puts returns row rows rowsorter sense sort sortalpha sortbool sortdate sorted sorters sorthandlenulls sorting sortingalgorithm sortnumber sortnumberstr sorts stored string strings thrown true type types ui undefined unused values work"
     },
     {
