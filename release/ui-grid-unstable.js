@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-f9e773a - 2016-09-20
+ * ui-grid - v3.2.1-2e01377 - 2016-09-20
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -5068,6 +5068,7 @@ angular.module('ui.grid')
         self.renderContainers[targetContainer].visibleRowCache.push(row);
       }
     }
+    self.api.core.raise.rowsVisibleChanged(this.api);
     self.api.core.raise.rowsRendered(this.api);
   };
 
