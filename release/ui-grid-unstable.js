@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-5d17f2b - 2016-09-20
+ * ui-grid - v3.2.1-4cbacdb - 2016-09-20
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -17556,8 +17556,9 @@ module.filter('px', function() {
                       }
                     }
                   }
-                  var expandedRowElement = $compile(template)($scope);
+                  var expandedRowElement = angular.element(template);
                   $elm.append(expandedRowElement);
+                  expandedRowElement = $compile(expandedRowElement)($scope);
                   $scope.row.expandedRendered = true;
               });
             },
