@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L160" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/grouping/js/grouping.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L160" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">PublicApi</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.grouping</code>
 </span>
 </div>
@@ -7,7 +7,7 @@
 <div class="description"><div class="ui-grid-grouping-api-page ui-grid-grouping-api-publicapi-page"><p>Public Api for grouping feature</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L313" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(columnName, or, aggregationLabel)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L313" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(columnName, or, aggregationLabel)</h3>
 <div class="aggregatecolumn"><div class="aggregatecolumn-page"><p>Sets the aggregation type on a column, if the
 column is currently grouped then it removes the grouping first.
 If the aggregationDef is null then will result in the aggregation
@@ -18,12 +18,12 @@ from uiGridGroupingConstants or a custom aggregation function.</p>
 </div></td></tr><tr><td>aggregationLabel</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>(optional) The label to use for this aggregation.</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L295" class="view-source icon-eye-open"> </a><h3 id="methods_cleargrouping">clearGrouping()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L295" class="view-source icon-eye-open"> </a><h3 id="methods_cleargrouping">clearGrouping()</h3>
 <div class="cleargrouping"><div class="cleargrouping-page"><p>Clear any grouped columns and any aggregations.  Doesn&#39;t remove sorting,
 as we don&#39;t know whether that sorting was added by grouping or was there beforehand</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L214" class="view-source icon-eye-open"> </a><h3 id="methods_getgrouping">getGrouping(getExpanded)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L214" class="view-source icon-eye-open"> </a><h3 id="methods_getgrouping">getGrouping(getExpanded)</h3>
 <div class="getgrouping"><div class="getgrouping-page"><p>Get the grouping configuration for this grid,
 used by the saveState feature.  Adds expandedState to the information
 provided by the internal getGrouping, and removes any aggregations that have a source
@@ -40,7 +40,7 @@ and expandedState is a hash of the currently expanded nodes</p>
 </div></td></tr></tbody></table><h5 id="methods_getgrouping_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="getgrouping-page"><p>grouping configuration</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L264" class="view-source icon-eye-open"> </a><h3 id="methods_groupcolumn">groupColumn(columnName)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L264" class="view-source icon-eye-open"> </a><h3 id="methods_groupcolumn">groupColumn(columnName)</h3>
 <div class="groupcolumn"><div class="groupcolumn-page"><p>Adds this column to the existing grouping, at the end of the priority order.
 If the column doesn&#39;t have a sort, adds one, by default ASC</p>
 <p>This column will move to the left of any non-group columns, the
@@ -48,7 +48,7 @@ move is handled in a columnProcessor, so gets called as part of refresh</p>
 </div><h5 id="methods_groupcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="groupcolumn-page"><p>the name of the column we want to group</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L248" class="view-source icon-eye-open"> </a><h3 id="methods_setgrouping">setGrouping(config)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L248" class="view-source icon-eye-open"> </a><h3 id="methods_setgrouping">setGrouping(config)</h3>
 <div class="setgrouping"><div class="setgrouping-page"><p>Set the grouping configuration for this grid,
 used by the saveState feature, but can also be used by any
 user to specify a combined grouping and aggregation configuration</p>
@@ -56,7 +56,7 @@ user to specify a combined grouping and aggregation configuration</p>
 provided out by getGrouping</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/898245b/src/features/grouping/js/grouping.js#L282" class="view-source icon-eye-open"> </a><h3 id="methods_ungroupcolumn">ungroupColumn(columnName)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/4354165/src/features/grouping/js/grouping.js#L282" class="view-source icon-eye-open"> </a><h3 id="methods_ungroupcolumn">ungroupColumn(columnName)</h3>
 <div class="ungroupcolumn"><div class="ungroupcolumn-page"><p>Removes the groupPriority from this column.  If the
 column was previously aggregated the aggregation will come back.
 The sort will remain.</p>

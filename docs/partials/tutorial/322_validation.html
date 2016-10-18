@@ -2,7 +2,7 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-322-validation-page"><div class="alert alert-warning" role="alert"><strong>Alpha</strong> This feature is in development. 
+<div><div class="tutorial-page tutorial-322-validation-page"><div class="alert alert-warning" role="alert"><strong>Alpha</strong> This feature is in development.
 There will almost certainly be breaking api changes, or there are major outstanding bugs.</div>
 
 <p>Feature ui.grid.validate allows validating cells after they are changed. To enable, you must include the
@@ -21,8 +21,8 @@ There will almost certainly be breaking api changes, or there are major outstand
 <li><code>maxLength</code>: to ensure that the value inserted is at most X characters long.</li>
 </ul>
 <p>To define a new validator you should use the <a href="#/api/ui.grid.validate.service:uiGridValidateService#methods_setvalidator">setValidator</a> method.</p>
-<p>To add a validator to a column you just need to add a <code>validators</code> property to its <code>colDef</code> 
-object, containing a property for each validator you want to add. The name of the property 
+<p>To add a validator to a column you just need to add a <code>validators</code> property to its <code>colDef</code>
+object, containing a property for each validator you want to add. The name of the property
 will set the validator and the value of the property will be treated as an argument by the validator function.</p>
 <p>When a field does not pass validation it gets a <code>invalid</code> class so you can customize it via css.</p>
 <p>The feature adds 2 templates to ui-grid:</p>
@@ -31,10 +31,10 @@ will set the validator and the value of the property will be treated as an argum
 <li><code>cellTooltipValidator</code> wich depends on ui-bootstrap to add a tooltip.</li>
 </ul>
 <h3 id="external-factory">External Factory</h3>
-<p>In case you have an external service providing validators, you can add a function calling said service 
+<p>In case you have an external service providing validators, you can add a function calling said service
 by setting an external validator factory function via <a href="#/api/ui.grid.validate.service:uiGridValidateService#methods_setexternalfactoryfunction">setExternalFactoryFunction</a>.</p>
 <p>Please be advised that external validators should accept the same parameters (or at least an ordered subset) as
-our validators do (<code>newValue</code>, <code>oldValue</code>, <code>rowEntity</code>, <code>colDef</code>);</p>
+our validators do (<code>oldValue</code>, <code>newValue</code>, <code>rowEntity</code>, <code>colDef</code>);</p>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-322-validation-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-102" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
@@ -67,10 +67,10 @@ our validators do (<code>newValue</code>, <code>oldValue</code>, <code>rowEntity
   });
 
   app.controller('MainCtrl', ['$scope', '$http', '$window', 'uiGridValidateService', function ($scope, $http, $window, uiGridValidateService) {
-    
+
     uiGridValidateService.setValidator('startWith',
       function(argument) {
-        return function(newValue, oldValue, rowEntity, colDef) {
+        return function(oldValue, newValue, rowEntity, colDef) {
           if (!newValue) {
             return true; // We should not test for existence here
           } else {
@@ -82,12 +82,12 @@ our validators do (<code>newValue</code>, <code>oldValue</code>, <code>rowEntity
         return 'You can only insert names starting with: "' + argument + '"';
       }
     );
-    
+
     $scope.gridOptions = { enableCellEditOnFocus: true };
 
     $scope.gridOptions.columnDefs = [
       { name: 'id', enableCellEdit: false, width: '10%' },
-      { name: 'name', displayName: 'Name (editable)', width: '20%', 
+      { name: 'name', displayName: 'Name (editable)', width: '20%',
         validators: {required: true, startWith: 'M'}, cellTemplate: 'ui-grid/cellTitleValidator' }
     ];
 
@@ -100,7 +100,7 @@ our validators do (<code>newValue</code>, <code>oldValue</code>, <code>rowEntity
             $scope.gridApi = gridApi;
             gridApi.validate.on.validationFailed($scope,function(rowEntity, colDef, newValue, oldValue){
               $window.alert('rowEntity: '+ rowEntity + '\n' +
-                            'colDef: ' + colDef + '\n' + 
+                            'colDef: ' + colDef + '\n' +
                             'newValue: ' + newValue + '\n' +
                             'oldValue: ' + oldValue);
             });
