@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-c394982 - 2016-10-18
+ * ui-grid - v3.2.1-1dda0a4 - 2016-10-18
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -13306,6 +13306,12 @@ module.filter('px', function() {
           aggregate_min: 'Zbiorczo: Min',
           aggregate_avg: 'Zbiorczo: Średnia',
           aggregate_remove: 'Zbiorczo: Usuń'
+        },
+        validate: {
+          error: 'Błąd:',
+          minLength: 'Wartość powinna składać się z co najmniej THRESHOLD znaków.',
+          maxLength: 'Wartość powinna składać się z przynajmniej THRESHOLD znaków.',
+          required: 'Wartość jest wymagana.'
         }
       });
       return $delegate;
@@ -15786,6 +15792,10 @@ module.filter('px', function() {
             });
           }
 
+          // In case we created a new row, and we are the new created row by ngRepeat
+          // then this cell content might have been selected previously
+          refreshCellFocus();
+
           function preventMouseDown(evt) {
             //Prevents the foucus event from firing if the click event is already going to fire.
             //If both events fire it will cause bouncing behavior.
@@ -15800,16 +15810,27 @@ module.filter('px', function() {
           });
 
           // This event is fired for all cells.  If the cell matches, then focus is set
-          $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, function (evt, rowCol, modifierDown) {
-            var isFocused = grid.cellNav.focusedCells.some(function(focusedRowCol, index){
+          $scope.$on(uiGridCellNavConstants.CELL_NAV_EVENT, refreshCellFocus);
+
+          // Refresh cell focus when a new row id added to the grid
+          var dataChangeDereg = uiGridCtrl.grid.registerDataChangeCallback(function (grid) {
+            // Clear the focus if it's set to avoid the wrong cell getting focused during
+            // a short period of time (from now until $timeout function executed)
+            clearFocus();
+
+            $timeout(refreshCellFocus);
+          }, [uiGridConstants.dataChange.ROW]);
+
+          function refreshCellFocus() {
+            var isFocused = grid.cellNav.focusedCells.some(function (focusedRowCol, index) {
               return (focusedRowCol.row === $scope.row && focusedRowCol.col === $scope.col);
             });
-            if (isFocused){
+            if (isFocused) {
               setFocused();
             } else {
               clearFocus();
             }
-          });
+          }
 
           function setFocused() {
             if (!$scope.focused){
@@ -15832,6 +15853,8 @@ module.filter('px', function() {
           }
 
           $scope.$on('$destroy', function () {
+            dataChangeDereg();
+
             //.off withouth paramaters removes all handlers
             $elm.find('div').off();
             $elm.off();
