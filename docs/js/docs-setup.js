@@ -2197,7 +2197,7 @@ NG_DOCS={
       "shortName": "322 Validation",
       "type": "overview",
       "moduleName": "Tutorial: 322 Validation",
-      "shortDescription": "Alpha This feature is in development. ",
+      "shortDescription": "Alpha This feature is in development.",
       "keywords": "$http $scope $window accept add address addressformatter adds advised alert alert-warning allows angular api app application argument attribute based breaking bugs calling case cell cellnav cells celltemplate celltitlevalidator celltooltipvalidator changed changes characters city class coldef column columndefs controller css custom customize data define defined depends development directive displayname documentation edit element empty enable enablecelledit enablecelleditonfocus ensure error existence external factory false feature field filter function functions grid gridapi gridoptions height html include input insert inserted invalid js json level long main mainctrl major maxlength message method methods_setexternalfactoryfunction methods_setvalidator minlength module msg names newvalue ng-controller ngtouch object oldvalue onregisterapi ordered outstanding overview parameters pass property provided providing publicapi required return role rowentity scope service set setexternalfactoryfunction setting setvalidator starting startswith startwith street subset success templates test title tooltip treated true tutorial ui ui-bootstrap ui-grid ui-grid-cellnav ui-grid-edit ui-grid-validate uigridvalidateservice valid validate validating validation validationfailed validator validators var wich width zip"
     },
     {
