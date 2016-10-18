@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-eec9067 - 2016-09-21
+ * ui-grid - v3.2.1-9de1190 - 2016-10-18
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -19306,7 +19306,7 @@ module.filter('px', function() {
          *  @description shows counts on the groupHeader rows. Not that if you are using a cellFilter or a
          *  sortingAlgorithm which relies on a specific format or data type, showing counts may cause that
          *  to break, since the group header rows will always be a string with groupingShowCounts enabled.
-         *  <br/>Defaults to true except on columns of type 'date'
+         *  <br/>Defaults to true except on columns of types 'date' and 'object'
          */
         gridOptions.groupingShowCounts = gridOptions.groupingShowCounts !== false;
 
@@ -19535,7 +19535,7 @@ module.filter('px', function() {
 
         if ( typeof(aggregation.groupVal) !== 'undefined') {
           aggregation.rendered = aggregation.groupVal;
-          if ( col.grid.options.groupingShowCounts && col.colDef.type !== 'date' ){
+          if ( col.grid.options.groupingShowCounts && col.colDef.type !== 'date' && col.colDef.type !== 'object' ){
             aggregation.rendered += (' (' + aggregation.value + ')');
           }
         } else {

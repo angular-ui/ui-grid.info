@@ -794,7 +794,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.grouping",
       "shortDescription": "GridOptions for grouping feature, these are available to be",
-      "keywords": "allows api break cellfilter class column columns counts data enable enabled enablegroupheaderselection enablegrouping entire false feature format grid gridoptions group grouped groupheader grouping groupingnulllabel groupingshowcounts header label null object relies row rows selected set showing sortingalgorithm specific string true type ui ui-grid undefined"
+      "keywords": "allows api break cellfilter class column columns counts data enable enabled enablegroupheaderselection enablegrouping entire false feature format grid gridoptions group grouped groupheader grouping groupingnulllabel groupingshowcounts header label null object relies row rows selected set showing sortingalgorithm specific string true type types ui ui-grid undefined"
     },
     {
       "section": "api",
