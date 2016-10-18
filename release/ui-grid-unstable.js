@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-ace475e - 2016-10-18
+ * ui-grid - v3.2.1-d47188b - 2016-10-18
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -13212,8 +13212,8 @@ module.filter('px', function() {
       $delegate.add('pl', {
         headerCell: {
           aria: {
-            defaultFilterLabel: 'Filter dla kolumny',
-            removeFilter: 'Usuń filter',
+            defaultFilterLabel: 'Filtr dla kolumny',
+            removeFilter: 'Usuń filtr',
             columnMenuButtonLabel: 'Menu kolumny'
           },
           priority: 'Prioritet:',
@@ -13306,6 +13306,12 @@ module.filter('px', function() {
           aggregate_min: 'Zbiorczo: Min',
           aggregate_avg: 'Zbiorczo: Średnia',
           aggregate_remove: 'Zbiorczo: Usuń'
+        },
+        validate: {
+          error: 'Błąd:',
+          minLength: 'Wartość powinna składać się z co najmniej THRESHOLD znaków.',
+          maxLength: 'Wartość powinna składać się z przynajmniej THRESHOLD znaków.',
+          required: 'Wartość jest wymagana.'
         }
       });
       return $delegate;
