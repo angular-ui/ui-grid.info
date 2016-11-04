@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-1dda0a4 - 2016-10-18
+ * ui-grid - v3.2.1-4f52210 - 2016-11-04
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -1377,7 +1377,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
               });
 
               // Figure out whether this column is sortable or not
-              if (uiGridCtrl.grid.options.enableSorting && $scope.col.enableSorting) {
+              if ($scope.col.enableSorting) {
                 $scope.sortable = true;
               }
               else {
@@ -7287,7 +7287,7 @@ angular.module('ui.grid')
     //self.cursor = self.sortable ? 'pointer' : 'default';
 
     // Turn on sorting by default
-    self.enableSorting = typeof(colDef.enableSorting) !== 'undefined' ? colDef.enableSorting : true;
+    self.enableSorting = typeof(colDef.enableSorting) !== 'undefined' ? colDef.enableSorting : self.grid.options.enableSorting;
     self.sortingAlgorithm = colDef.sortingAlgorithm;
 
     /**
@@ -7966,7 +7966,8 @@ angular.module('ui.grid')
        * @propertyOf ui.grid.class:GridOptions
        * @description True by default. When enabled, this setting adds sort
        * widgets to the column headers, allowing sorting of the data for the entire grid.
-       * Sorting can then be disabled on individual columns using the columnDefs.
+       * Sorting can then be disabled / enabled on individual columns using the columnDefs,
+       * if it set, it will override GridOptions enableSorting setting.
        */
       baseOptions.enableSorting = baseOptions.enableSorting !== false;
 
@@ -8750,7 +8751,7 @@ angular.module('ui.grid')
 
       } else if (gridUtil.endsWith(column.width, "%")) {
         // percentage width, set to percentage of the viewport
-        width = parseInt(parseInt(column.width.replace(/%/g, ''), 10) / 100 * availableWidth);
+        width = parseFloat(parseInt(column.width.replace(/%/g, ''), 10) / 100 * availableWidth);
 
         if ( width > column.maxWidth ){
           width = column.maxWidth;
@@ -16982,8 +16983,8 @@ module.filter('px', function() {
    *
    */
   module.directive('uiGridEditDropdown',
-    ['uiGridConstants', 'uiGridEditConstants',
-      function (uiGridConstants, uiGridEditConstants) {
+    ['uiGridConstants', 'uiGridEditConstants', '$timeout',
+      function (uiGridConstants, uiGridEditConstants, $timeout) {
         return {
           require: ['?^uiGrid', '?^uiGridRenderContainer'],
           scope: true,
@@ -16998,7 +16999,10 @@ module.filter('px', function() {
 
                 //set focus at start of edit
                 $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
-                  $elm[0].focus();
+                  $timeout(function(){
+                    $elm[0].focus();      
+                  });
+                  
                   $elm[0].style.width = ($elm[0].parentElement.offsetWidth - 1) + 'px';
                   $elm.on('blur', function (evt) {
                     $scope.stopEdit(evt);
@@ -17146,6 +17150,169 @@ module.filter('px', function() {
         };
       }]);
 
+
+})();
+
+(function () {
+  'use strict';
+
+  /**
+   * @ngdoc overview
+   * @name ui.grid.emptyBaseLayer
+   * @description
+   *
+   * # ui.grid.emptyBaseLayer
+   *
+   * <div class="alert alert-warning" role="alert"><strong>Alpha</strong> This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.</div>
+   *
+   * This module provides the ability to have the background of the ui-grid be empty rows, this would be displayed in the case were
+   * the grid height is greater then the amount of rows displayed.
+   *
+   * <div doc-module-components="ui.grid.emptyBaseLayer"></div>
+   */
+  var module = angular.module('ui.grid.emptyBaseLayer', ['ui.grid']);
+
+
+  /**
+   *  @ngdoc service
+   *  @name ui.grid.emptyBaseLayer.service:uiGridBaseLayerService
+   *
+   *  @description Services for the empty base layer grid
+   */
+  module.service('uiGridBaseLayerService', ['gridUtil', '$compile', function (gridUtil, $compile) {
+    var service = {
+      initializeGrid: function (grid, disableEmptyBaseLayer) {
+
+        /**
+         *  @ngdoc object
+         *  @name ui.grid.emptyBaseLayer.api:GridOptions
+         *
+         *  @description GridOptions for emptyBaseLayer feature, these are available to be
+         *  set using the ui-grid {@link ui.grid.class:GridOptions gridOptions}
+         */
+        grid.baseLayer = {
+          emptyRows: []
+        };
+
+        /**
+         *  @ngdoc object
+         *  @name enableEmptyGridBaseLayer
+         *  @propertyOf  ui.grid.emptyBaseLayer.api:GridOptions
+         *  @description Enable empty base layer, which shows empty rows as background on the entire grid
+         *  <br/>Defaults to true, if the directive is used.
+         *  <br/>Set to false either by setting this attribute or passing false to the directive.
+         */
+        //default option to true unless it was explicitly set to false
+        if (grid.options.enableEmptyGridBaseLayer !== false) {
+          grid.options.enableEmptyGridBaseLayer = !disableEmptyBaseLayer;
+        }
+      },
+
+      setNumberOfEmptyRows: function(viewportHeight, grid) {
+        var rowHeight = grid.options.rowHeight,
+          rows = Math.ceil(viewportHeight / rowHeight);
+        if (rows > 0) {
+          grid.baseLayer.emptyRows = [];
+          for (var i = 0; i < rows; i++) {
+            grid.baseLayer.emptyRows.push({});
+          }
+        }
+      }
+    };
+    return service;
+  }]);
+
+  /**
+   *  @ngdoc object
+   *  @name ui.grid.emptyBaseLayer.directive:uiGridEmptyBaseLayer
+   *  @description Shows empty rows in the background of the ui-grid, these span
+   *  the full height of the ui-grid, so that there won't be blank space below the shown rows.
+   *  @example
+   *  <pre>
+   *  <div ui-grid="gridOptions" class="grid" ui-grid-empty-base-layer></div>
+   *  </pre>
+   *  Or you can enable/disable it dynamically by passing in true or false. It doesn't
+   *  the value, so it would only be set on initial render.
+   *  <pre>
+   *  <div ui-grid="gridOptions" class="grid" ui-grid-empty-base-layer="false"></div>
+   *  </pre>
+   */
+  module.directive('uiGridEmptyBaseLayer', ['gridUtil', 'uiGridBaseLayerService',
+      '$parse',
+    function (gridUtil, uiGridBaseLayerService, $parse) {
+      return {
+        require: '^uiGrid',
+        scope: false,
+        compile: function ($elm, $attrs) {
+          return {
+            pre: function ($scope, $elm, $attrs, uiGridCtrl) {
+              var disableEmptyBaseLayer = $parse($attrs.uiGridEmptyBaseLayer)($scope) === false;
+              uiGridBaseLayerService.initializeGrid(uiGridCtrl.grid, disableEmptyBaseLayer);
+            },
+            post: function ($scope, $elm, $attrs, uiGridCtrl) {
+              if (!uiGridCtrl.grid.options.enableEmptyGridBaseLayer) {
+                return;
+              }
+
+              var renderBodyContainer = uiGridCtrl.grid.renderContainers.body,
+                viewportHeight = renderBodyContainer.getViewportHeight();
+
+              function heightHasChanged() {
+                var newViewPortHeight = renderBodyContainer.getViewportHeight();
+
+                if (newViewPortHeight !== viewportHeight) {
+                  viewportHeight = newViewPortHeight;
+                  return true;
+                }
+                return false;
+              }
+
+              function getEmptyBaseLayerCss(viewportHeight) {
+                // Set ui-grid-empty-base-layer height
+                return '.grid' + uiGridCtrl.grid.id +
+                  ' .ui-grid-render-container ' +
+                  '.ui-grid-empty-base-layer-container.ui-grid-canvas ' +
+                  '{ height: ' + viewportHeight + 'px; }';
+              }
+
+              uiGridCtrl.grid.registerStyleComputation({
+                func: function() {
+                  if (heightHasChanged()) {
+                    uiGridBaseLayerService.setNumberOfEmptyRows(viewportHeight, uiGridCtrl.grid);
+                  }
+                  return getEmptyBaseLayerCss(viewportHeight);
+                }
+              });
+            }
+          };
+        }
+      };
+    }]);
+
+  /**
+   *  @ngdoc directive
+   *  @name ui.grid.emptyBaseLayer.directive:uiGridViewport
+   *  @description stacks on the uiGridViewport directive to append the empty grid base layer html elements to the
+   *  default gridRow template
+   */
+  module.directive('uiGridViewport',
+    ['$compile', 'gridUtil', '$templateCache',
+      function ($compile, gridUtil, $templateCache) {
+        return {
+          priority: -200,
+          scope: false,
+          compile: function ($elm, $attrs) {
+            var emptyBaseLayerContainer = $templateCache.get('ui-grid/emptyBaseLayerContainer');
+            $elm.prepend(emptyBaseLayerContainer);
+            return {
+              pre: function ($scope, $elm, $attrs, controllers) {
+              },
+              post: function ($scope, $elm, $attrs, controllers) {
+              }
+            };
+          }
+        };
+      }]);
 
 })();
 
@@ -19663,6 +19830,9 @@ module.filter('px', function() {
         var existingGrouping = service.getGrouping( grid );
         column.grouping.groupPriority = existingGrouping.grouping.length;
 
+        // save sort in order to restore it when column is ungrouped
+        column.previousSort = angular.copy(column.sort);
+
         // add sort if not present
         if ( !column.sort ){
           column.sort = { direction: uiGridConstants.ASC };
@@ -19705,9 +19875,15 @@ module.filter('px', function() {
         delete column.treeAggregation;
         delete column.customTreeAggregationFinalizer;
 
+        if (column.previousSort) {
+          column.sort = column.previousSort;
+          delete column.previousSort;
+        }
+
         service.tidyPriorities( grid );
 
         grid.api.grouping.raise.groupingChanged(column);
+        grid.api.core.raise.sortChanged(grid, grid.getColumnSorting());
 
         grid.queueGridRefresh();
       },
@@ -28471,6 +28647,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('ui-grid/fileChooserEditor',
     "<div><form name=\"inputForm\"><input ng-class=\"'colt' + col.uid\" ui-grid-edit-file-chooser type=\"file\" id=\"files\" name=\"files[]\" ng-model=\"MODEL_COL_FIELD\"></form></div>"
+  );
+
+
+  $templateCache.put('ui-grid/emptyBaseLayerContainer',
+    "<div class=\"ui-grid-empty-base-layer-container ui-grid-canvas\"><div class=\"ui-grid-row\" ng-repeat=\"(rowRenderIndex, row) in grid.baseLayer.emptyRows track by $index\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div><div><div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell {{ col.getColClass(false) }}\"></div></div></div></div></div>"
   );
 
 

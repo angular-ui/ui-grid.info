@@ -182,7 +182,7 @@ NG_DOCS={
       "type": "function",
       "moduleName": "ui.grid",
       "shortDescription": "Default GridOptions class.  GridOptions are defined by the application developer and overlaid",
-      "keywords": "$delegate $http $provide $resource $scope $translate action add adding adds addtogridmenu adjusted advantage aggregates aggregation aggregationcalcthrottle allow allowing allows altering alternative alternatively angular angular-translate angularjs api app application approach appscope appscopeprovider aquamarine array assign assigned associate associated attribute attributes auto-generating automatically avoid background-color backwards behaviour binding boolean bottom boxes calcuations callback called care center changes check class close col colcontainer coldef column columndef columndefs columnfooterheight columns columnvirtualizationthreshold common commonly compare compared compatibility complex conditions config configure content context controller controls converts copy core current custom customisation data dataset debounce decorator default defaults define defined developer direct directly disable disabled display displayed displayname displays div documented doesn dom dynamic element elements empty enablecolumnmenus enabled enablefiltering enablehorizontalscrollbar enableminheightcheck enablerowhashing enablesorting enableverticalscrollbar entire entities entitya entityb equality event events example examples excesscolumns excessrows exclude excludeproperties executing existing exists external extra factory false feel field1 field2 fields file filter filterchange filtering fired fires flat flatentityaccess flexible fnone follow footer footer_template footertemplate format function functions generate getrowidentity getsafetext github grid gridapi gridfootertemplate gridmenu gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoptions grids gridutil handles header header_template headers headertemplate height helps hide high hit hits horizontal horizontalscrollthreshold html i18nservice identical identifying identity ignore ignored implemented implying improvement include individual infinite infinitescrolldown infinitescrollrowsfromend infinitescrollup initialize initialized initoptions inline instantiated integer interact internal internationalization inverse issues item items json jumpy large list listen ll loading logic maintain management maxvisiblecolumncount menu menus method middle milliseconds minimum minimumcolumnsize minrowstoshow modified modify multiple mydata names needed needmoredata needmoredatatop newly nextuid ng-click ng-repeat note null number numbers object objects onregisterapi operate option options overlaid overridden parent pass per-column performance pixels place places point pointer position precompiled prefetch preserve pretty prevents process programatically promise properties properties_scrollbars property provide provided providing query refer reference removefromgridmenu render rendered renderedcolumns renderingcomplete replace request requested required resize resolve return returns row row_template rowequality rowheight rowidentity rows rowtemplate runs savescrollpercentagemethod scope scroll scrollbar scrollbars scrolldebounce scrolling scrollthreshold second selectallrows selected selection server service set sets setting settings showcolumnfooter showgridfooter showheader situation smaller smoothness sort sorter sorting source sourced speed speeding standard starting static string stripped structure style sub-objects success supported suppresses tailor takes tall template text-align throttle time title tojson top total totals track trigger true turn tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uigridconstants uniquely update updated updating usage useexternalfiltering useexternalsorting user values var vastly vertical viewport virtualization virtualizationthreshold visible wheelscrollthrottle widgets working x_"
+      "keywords": "$delegate $http $provide $resource $scope $translate action add adding adds addtogridmenu adjusted advantage aggregates aggregation aggregationcalcthrottle allow allowing allows altering alternative alternatively angular angular-translate angularjs api app application approach appscope appscopeprovider aquamarine array assign assigned associate associated attribute attributes auto-generating automatically avoid background-color backwards behaviour binding boolean bottom boxes calcuations callback called care center changes check class close col colcontainer coldef column columndef columndefs columnfooterheight columns columnvirtualizationthreshold common commonly compare compared compatibility complex conditions config configure content context controller controls converts copy core current custom customisation data dataset debounce decorator default defaults define defined developer direct directly disable disabled display displayed displayname displays div documented doesn dom dynamic element elements empty enablecolumnmenus enabled enablefiltering enablehorizontalscrollbar enableminheightcheck enablerowhashing enablesorting enableverticalscrollbar entire entities entitya entityb equality event events example examples excesscolumns excessrows exclude excludeproperties executing existing exists external extra factory false feel field1 field2 fields file filter filterchange filtering fired fires flat flatentityaccess flexible fnone follow footer footer_template footertemplate format function functions generate getrowidentity getsafetext github grid gridapi gridfootertemplate gridmenu gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoptions grids gridutil handles header header_template headers headertemplate height helps hide high hit hits horizontal horizontalscrollthreshold html i18nservice identical identifying identity ignore ignored implemented implying improvement include individual infinite infinitescrolldown infinitescrollrowsfromend infinitescrollup initialize initialized initoptions inline instantiated integer interact internal internationalization inverse issues item items json jumpy large list listen ll loading logic maintain management maxvisiblecolumncount menu menus method middle milliseconds minimum minimumcolumnsize minrowstoshow modified modify multiple mydata names needed needmoredata needmoredatatop newly nextuid ng-click ng-repeat note null number numbers object objects onregisterapi operate option options overlaid overridden override parent pass per-column performance pixels place places point pointer position precompiled prefetch preserve pretty prevents process programatically promise properties properties_scrollbars property provide provided providing query refer reference removefromgridmenu render rendered renderedcolumns renderingcomplete replace request requested required resize resolve return returns row row_template rowequality rowheight rowidentity rows rowtemplate runs savescrollpercentagemethod scope scroll scrollbar scrollbars scrolldebounce scrolling scrollthreshold second selectallrows selected selection server service set sets setting settings showcolumnfooter showgridfooter showheader situation smaller smoothness sort sorter sorting source sourced speed speeding standard starting static string stripped structure style sub-objects success supported suppresses tailor takes tall template text-align throttle time title tojson top total totals track trigger true turn tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uigridconstants uniquely update updated updating usage useexternalfiltering useexternalsorting user values var vastly vertical viewport virtualization virtualizationthreshold visible wheelscrollthrottle widgets working x_"
     },
     {
       "section": "api",
@@ -442,8 +442,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
-      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
+      "shortDescription": "End to end test functions.",
+      "keywords": "api e2etestlibrary functions grid overview test ui"
     },
     {
       "section": "api",
@@ -451,8 +451,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.",
-      "keywords": "api e2etestlibrary functions grid overview test ui"
+      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
+      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
     },
     {
       "section": "api",
@@ -597,6 +597,51 @@ NG_DOCS={
       "moduleName": "ui.grid.edit",
       "shortDescription": "Services for editing features",
       "keywords": "adds angular api column columnbuilder decorate decorator determines docs edit editcolumnbuilder editing event events evt features function grid isstarteditkey key keydown keypress load needed override promise properties resolved service services start templates true ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.emptyBaseLayer",
+      "shortName": "ui.grid.emptyBaseLayer",
+      "type": "overview",
+      "moduleName": "ui.grid.emptyBaseLayer",
+      "shortDescription": "ui.grid.emptyBaseLayer",
+      "keywords": "ability alert alert-warning amount api background breaking bugs case changes class development displayed doc-module-components empty emptybaselayer feature greater grid height major module outstanding overview role rows ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.emptyBaseLayer.api:GridOptions",
+      "shortName": "GridOptions",
+      "type": "object",
+      "moduleName": "ui.grid.emptyBaseLayer",
+      "shortDescription": "GridOptions for emptyBaseLayer feature, these are available to be",
+      "keywords": "api attribute background base class directive empty emptybaselayer enable enableemptygridbaselayer entire false feature grid gridoptions layer object passing rows set setting true ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.emptyBaseLayer.directive:uiGridEmptyBaseLayer",
+      "shortName": "uiGridEmptyBaseLayer",
+      "type": "object",
+      "moduleName": "ui.grid.emptyBaseLayer",
+      "shortDescription": "Shows empty rows in the background of the ui-grid, these span",
+      "keywords": "api background blank class directive doesn dynamically empty emptybaselayer enable false full grid gridoptions height initial object passing render rows set space span true ui ui-grid ui-grid-empty-base-layer won"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.emptyBaseLayer.directive:uiGridViewport",
+      "shortName": "uiGridViewport",
+      "type": "directive",
+      "moduleName": "ui.grid.emptyBaseLayer",
+      "shortDescription": "stacks on the uiGridViewport directive to append the empty grid base layer html elements to the",
+      "keywords": "api append base default directive elements empty emptybaselayer grid gridrow html layer stacks template ui uigridviewport"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.emptyBaseLayer.service:uiGridBaseLayerService",
+      "shortName": "uiGridBaseLayerService",
+      "type": "service",
+      "moduleName": "ui.grid.emptyBaseLayer",
+      "shortDescription": "Services for the empty base layer grid",
+      "keywords": "api base empty emptybaselayer grid layer service services ui"
     },
     {
       "section": "api",
@@ -2010,6 +2055,15 @@ NG_DOCS={
       "moduleName": "Tutorial: 217 Column Moving",
       "shortDescription": "Alpha This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.",
       "keywords": "$http $scope age alert alert-warning allows alternatively angular api app breaking bugs changes class colmovable column columndef columndefs columns controller css data default definitions development directive disable documentation dragging dropping element email enable enablecolumnmoving enabled feature function gender grid gridapi gridoptions height html include js json leftmost main mainctrl major method module move movecolumn movecolumns moving newposition ng-controller ngtouch number options outstanding overview position property provided publicapi ranging repositioned rightmost role specific success tutorial ui ui-grid ui-grid-move-columns var visible width"
+    },
+    {
+      "section": "tutorial",
+      "id": "218_empty_grid_base_layer",
+      "shortName": "218 Empty Grid Base Layer",
+      "type": "overview",
+      "moduleName": "Tutorial: 218 Empty Grid Base Layer",
+      "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
+      "keywords": "$http $scope alert alert-success angular api app autoresize base breaking btn btn-success button changes class columndefs company controller css data deprecation element empty emptybaselayer enablecolumnresizing enablesorting false feature field floor function gender getelementsbyclassname grid gridoptions height html js json layer longer main mainctrl math maxwidth minwidth module movecolumns newheight newwidth ng-click ng-controller ngtouch overview pinnedleft pinning px random randomsize resizecolumns role size stable success true tutorial type ui ui-grid ui-grid-auto-resize ui-grid-empty-base-layer ui-grid-move-columns ui-grid-pinning ui-grid-resize-columns var warning width"
     },
     {
       "section": "tutorial",
