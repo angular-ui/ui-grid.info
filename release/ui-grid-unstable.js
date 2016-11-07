@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-6f6342a - 2016-11-07
+ * ui-grid - v3.2.1-82befc1 - 2016-11-07
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -11372,7 +11372,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         e = elem[0];
       }
 
-      if (e) {
+      if (e && e !== null) {
         var styles = getStyles(e);
         return e.offsetWidth === 0 && rdisplayswap.test(styles.display) ?
                   s.swap(e, cssShow, function() {
