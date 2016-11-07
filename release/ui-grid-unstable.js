@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-b4ec525 - 2016-11-07
+ * ui-grid - v3.2.1-5b73e8a - 2016-11-07
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -1870,7 +1870,7 @@ angular.module('ui.grid')
       var clearFilters = [{
         title: i18nService.getSafeText('gridMenu.clearAllFilters'),
         action: function ($event) {
-          $scope.grid.clearAllFilters(undefined, true, undefined);
+          $scope.grid.clearAllFilters();
         },
         shown: function() {
           return $scope.grid.options.enableFiltering;
