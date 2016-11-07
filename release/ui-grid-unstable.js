@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-8c9eea9 - 2016-11-07
+ * ui-grid - v3.2.1-b4ec525 - 2016-11-07
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -17435,7 +17435,7 @@ module.filter('px', function() {
                * @ngdoc event
                * @name rowExpandedStateChanged
                * @eventOf  ui.grid.expandable.api:PublicApi
-               * @description raised when cell editing is complete
+               * @description raised when row expanded or collapsed
                * <pre>
                *      gridApi.expandable.on.rowExpandedStateChanged(scope,function(row){})
                * </pre>
