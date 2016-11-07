@@ -2072,7 +2072,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 299 Third Party Features",
       "shortDescription": "Features maintained outside UI Grid Repository",
-      "keywords": "allows create developed draggable feature features folder grid list listed maintained misc odata overview parties party pull querying repository request rows services third tutorial ui updated v3"
+      "keywords": "allows auto create data developed draggable feature features folder grid list listed maintained misc odata overview parties party pull querying repository request rows scrolls services third tutorial ui updated v3"
     },
     {
       "section": "tutorial",
