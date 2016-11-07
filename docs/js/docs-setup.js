@@ -56,7 +56,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "ui.grid.cellNav",
       "shortDescription": "#ui.grid.cellNav",
-      "keywords": "alert alert-success api auto-resizing breaking cellnav changes class deprecation feature functionality grid longer module overview role stable ui ui-grid warning"
+      "keywords": "alert alert-success api breaking cell cellnav changes class deprecation feature functionality grid longer module navigation overview role stable ui ui-grid warning"
     },
     {
       "section": "api",

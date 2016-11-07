@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-7242092 - 2016-11-07
+ * ui-grid - v3.2.1-8c9eea9 - 2016-11-07
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -14735,7 +14735,7 @@ module.filter('px', function() {
 
       <div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
 
-      This module provides auto-resizing functionality to UI-Grid.
+      This module provides cell navigation functionality to UI-Grid.
    */
   var module = angular.module('ui.grid.cellNav', ['ui.grid']);
 
