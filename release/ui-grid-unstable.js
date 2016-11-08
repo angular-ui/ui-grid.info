@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-12048f1 - 2016-11-08
+ * ui-grid - v3.2.1-ff4e251 - 2016-11-08
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -7845,10 +7845,17 @@ angular.module('ui.grid')
        * @ngdoc property
        * @name rowHeight
        * @propertyOf ui.grid.class:GridOptions
-       * @description The height of the row in pixels, defaults to 30
+       * @description The height of the row in pixels,  Can be passed as integer or string. defaults to 30.
        *
        */
-      baseOptions.rowHeight = baseOptions.rowHeight || 30;
+
+      if (typeof baseOptions.rowHeight === "string") {
+        baseOptions.rowHeight = parseInt(baseOptions.rowHeight) || 30;
+      }
+
+      else {
+        baseOptions.rowHeight = baseOptions.rowHeight || 30;
+      }
 
       /**
        * @ngdoc integer
