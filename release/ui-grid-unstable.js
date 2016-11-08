@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-3b12b5c - 2016-11-08
+ * ui-grid - v3.2.1-12048f1 - 2016-11-08
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -10337,11 +10337,11 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       }
     }
     // Only A has a priority
-    else if (a.sort.priority || a.sort.priority === undefined) {
+    else if (a.sort.priority !== undefined) {
       return -1;
     }
     // Only B has a priority
-    else if (b.sort.priority || b.sort.priority === undefined) {
+    else if (b.sort.priority !== undefined) {
       return 1;
     }
     // Neither has a priority
