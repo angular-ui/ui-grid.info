@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-ff4e251 - 2016-11-08
+ * ui-grid - v3.2.1-4543e9c - 2016-11-08
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -16867,9 +16867,20 @@ module.filter('px', function() {
                     });
                   }
 
-                  $elm.on('blur', function (evt) {
-                    $scope.stopEdit(evt);
+                  // macOS will blur the checkbox when clicked in Safari and Firefox,
+                  // to get around this, we disable the blur handler on mousedown,
+                  // and then focus the checkbox and re-enable the blur handler after $timeout
+                  $elm.on('mousedown', function(evt) {
+                    if ($elm[0].type === 'checkbox') {
+                      $elm.off('blur', $scope.stopEdit);
+                      $timeout(function() {
+                        $elm.focus();
+                        $elm.on('blur', $scope.stopEdit);
+                      });
+                    }
                   });
+
+                  $elm.on('blur', $scope.stopEdit);
                 });
 
 
@@ -17033,9 +17044,9 @@ module.filter('px', function() {
                 //set focus at start of edit
                 $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function () {
                   $timeout(function(){
-                    $elm[0].focus();      
+                    $elm[0].focus();
                   });
-                  
+
                   $elm[0].style.width = ($elm[0].parentElement.offsetWidth - 1) + 'px';
                   $elm.on('blur', function (evt) {
                     $scope.stopEdit(evt);
