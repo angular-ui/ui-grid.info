@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-29c0a36 - 2016-11-08
+ * ui-grid - v3.2.1-34a7ac6 - 2016-11-08
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -18157,6 +18157,14 @@ module.filter('px', function() {
           gridOptions.exporterOlderExcelCompatibility = gridOptions.exporterOlderExcelCompatibility === true;
           /**
            * @ngdoc object
+           * @name exporterMenuItemOrder
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description An option to determine the starting point for the menu items created by the exporter
+           * <br/>Defaults to 200
+           */
+          gridOptions.exporterMenuItemOrder = gridOptions.exporterMenuItemOrder ? gridOptions.exporterMenuItemOrder : 200;
+          /**
+           * @ngdoc object
            * @name exporterPdfDefaultStyle
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description The default style in pdfMake format
@@ -18467,7 +18475,7 @@ module.filter('px', function() {
               shown: function() {
                 return this.grid.options.exporterMenuCsv && this.grid.options.exporterMenuAllData;
               },
-              order: 200
+              order: grid.options.exporterMenuItemOrder
             },
             {
               title: i18nService.getSafeText('gridMenu.exporterVisibleAsCsv'),
@@ -18477,7 +18485,7 @@ module.filter('px', function() {
               shown: function() {
                 return this.grid.options.exporterMenuCsv && this.grid.options.exporterMenuVisibleData;
               },
-              order: 201
+              order: grid.options.exporterMenuItemOrder + 1
             },
             {
               title: i18nService.getSafeText('gridMenu.exporterSelectedAsCsv'),
@@ -18488,7 +18496,7 @@ module.filter('px', function() {
                 return this.grid.options.exporterMenuCsv && this.grid.options.exporterMenuSelectedData &&
                        ( this.grid.api.selection && this.grid.api.selection.getSelectedRows().length > 0 );
               },
-              order: 202
+              order: grid.options.exporterMenuItemOrder + 2
             },
             {
               title: i18nService.getSafeText('gridMenu.exporterAllAsPdf'),
@@ -18498,7 +18506,7 @@ module.filter('px', function() {
               shown: function() {
                 return this.grid.options.exporterMenuPdf && this.grid.options.exporterMenuAllData;
               },
-              order: 203
+              order: grid.options.exporterMenuItemOrder + 3
             },
             {
               title: i18nService.getSafeText('gridMenu.exporterVisibleAsPdf'),
@@ -18508,7 +18516,7 @@ module.filter('px', function() {
               shown: function() {
                 return this.grid.options.exporterMenuPdf && this.grid.options.exporterMenuVisibleData;
               },
-              order: 204
+              order: grid.options.exporterMenuItemOrder + 4
             },
             {
               title: i18nService.getSafeText('gridMenu.exporterSelectedAsPdf'),
@@ -18519,7 +18527,7 @@ module.filter('px', function() {
                 return this.grid.options.exporterMenuPdf && this.grid.options.exporterMenuSelectedData &&
                        ( this.grid.api.selection && this.grid.api.selection.getSelectedRows().length > 0 );
               },
-              order: 205
+              order: grid.options.exporterMenuItemOrder + 5
             }
           ]);
         },
