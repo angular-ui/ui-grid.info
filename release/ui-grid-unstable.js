@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-34a7ac6 - 2016-11-08
+ * ui-grid - v3.2.1-9849b83 - 2016-11-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -14870,7 +14870,7 @@ module.filter('px', function() {
         var nextColIndex = curColIndex === 0 ? focusableCols.length - 1 : curColIndex - 1;
 
         //get column to left
-        if (nextColIndex > curColIndex) {
+        if (nextColIndex >= curColIndex) {
           // On the first row
           // if (curRowIndex === 0 && curColIndex === 0) {
           //   return null;
@@ -14902,7 +14902,7 @@ module.filter('px', function() {
         }
         var nextColIndex = curColIndex === focusableCols.length - 1 ? 0 : curColIndex + 1;
 
-        if (nextColIndex < curColIndex) {
+        if (nextColIndex <= curColIndex) {
           if (curRowIndex === focusableRows.length - 1) {
             return new GridRowColumn(curRow, focusableCols[nextColIndex]); //return same row
           }
