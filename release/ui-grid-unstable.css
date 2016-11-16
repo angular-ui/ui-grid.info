@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-9849b83 - 2016-11-09
+ * ui-grid - v3.2.1-0ee6449 - 2016-11-16
  * Copyright (c) 2016 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -351,6 +351,9 @@ select.ui-grid-filter-select:hover {
 .ui-grid-canvas {
   position: relative;
   padding-top: 1px;
+}
+.ui-grid-row {
+  clear: both;
 }
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;
