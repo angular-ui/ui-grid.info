@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-0ee6449 - 2016-11-16
+ * ui-grid - v3.2.1-0ae4c95 - 2016-11-16
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -10441,7 +10441,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
           propB = grid.getCellValue(rowB, col);
         }
 
-        tem = sortFn(propA, propB, rowA, rowB, direction);
+        tem = sortFn(propA, propB, rowA, rowB, direction, col);
 
         idx++;
       }
