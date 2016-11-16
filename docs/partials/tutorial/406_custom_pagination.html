@@ -1,0 +1,129 @@
+<h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-406-custom-pagination-page"><p>When pagination is enabled, the data is displayed in pages that can be browsed using the built in
+pagination selector. However, you don&#39;t always have pages with the same number of rows.</p>
+<p>For custom pagination, set the <code>pageSizes</code> option and the <code>useCustomPagination</code>.
+~~ and implement the <code>gridApi.pagination.on.paginationChanged</code> callback function. The callback
+may contain code to update any pagination state variables your application may utilize, e.g. variables containing
+the <code>pageNumber</code>, <code>pageSize</code>, and <code>pageSizeList</code>. The REST call used to fetch the data from the server should be
+called from within this callback. The URL of the call should contain query parameters that will allow the server-side
+code to have sufficient information to be able to retrieve the specific subset of data that the client requires from
+the entire set.~~</p>
+<p>It should also update the <code>$scope.gridOptions.totalItems</code> variable with the total count of rows that exist (but
+were not all fetched in the REST call mentioned above since they exist in other pages of data).</p>
+<p>This will allow ui-grid to calculate the correct number of pages on the client-side.</p>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-406-custom-pagination-page"><p>This shows custom pagination.
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-111" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-111" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-111">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
+      <div ui-grid="gridOptions2" ui-grid-pagination class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 600px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pagination']);
+
+    app.controller('MainCtrl', [
+    '$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {
+
+      $scope.gridOptions1 = {
+        paginationPageSizes: null,
+        useCustomPagination: true,
+        columnDefs: [
+          { name: 'name', enableSorting: false },
+          { name: 'gender', enableSorting: false },
+          { name: 'company', enableSorting: false }
+        ]
+      };
+
+      $scope.gridOptions2 = {
+        paginationPageSizes: null,
+        useCustomPagination: true,
+        useExternalPagination : true,
+        columnDefs: [
+          { name: 'name', enableSorting: false },
+          { name: 'gender', enableSorting: false },
+          { name: 'company', enableSorting: false }
+        ],
+        onRegisterApi: function(gridApi) {
+          gridApi.pagination.on.paginationChanged($scope, function (pageNumber, pageSize) {
+            $scope.gridOptions2.data = getPage($scope.grid2data, pageNumber);
+          });
+        }
+      };
+
+      $http.get('/data/100_ASC.json')
+      .success(function (data) {
+        $scope.gridOptions1.data = data;
+        $scope.gridOptions1.paginationPageSizes = calculatePageSizes(data);
+      });
+
+      $http.get('/data/100.json')
+      .success(function (data) {
+        $scope.grid2data = data;
+        $scope.gridOptions2.totalItems = 0;//data.length;
+        $scope.gridOptions2.paginationPageSizes = calculatePageSizes(data);
+        $scope.gridOptions2.data = getPage($scope.grid2data, 1);
+      });
+
+
+      function calculatePageSizes(data) {
+        var initials = [];
+        return data.reduce(function(pageSizes, row) {
+          var initial = row.name.charAt(0);
+          var index = initials.indexOf(initial);
+          if(index < 0)
+          {
+            index = initials.length;
+            initials.push(initial);
+          }
+          pageSizes[index] = (pageSizes[index] || 0) + 1;
+          return pageSizes;
+        }, []);
+      }
+
+      function getPage(data, pageNumber)
+      {
+        var initials = [];
+        return data.reduce(function(pages, row) {
+          var initial = row.name.charAt(0);
+
+          if(!pages[initial]) pages[initial] = [];
+          pages[initial].push(row);
+
+          if(initials.indexOf(initial) < 0)
+          {
+            initials.push(initial);
+            initials.sort();
+          }
+
+          return pages;
+
+        }, {})[initials[pageNumber - 1]] || [];
+      }
+
+    }
+    ]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-111" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

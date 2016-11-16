@@ -1100,7 +1100,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.pagination",
       "shortDescription": "GridOptions for the pagination feature, these are available to be",
-      "keywords": "api array automatically bottom class client controls current custom data defaults disables empty enablepagination enablepaginationcontrols enables event false feature grid gridoptions handle implement item items number object pager pagination paginationchanged paginationcurrentpage paginationpagesize paginationpagesizes paginationtemplate paginator property server set side size sizes template total totalitems true turn ui ui-grid useexternalpagination user"
+      "keywords": "api array automatically bottom class client client-side controls current custom data defaults disables empty enablepagination enablepaginationcontrols enables event false feature firstrowindex grid gridoptions handle implement item items lastrowindex number object pager pagination paginationchanged paginationcurrentpage paginationpagesize paginationpagesizes paginationtemplate paginator property server set side size sizes template total totalitems true turn ui ui-grid usecustompagination useexternalpagination user"
     },
     {
       "section": "api",
@@ -1109,7 +1109,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.pagination",
       "shortDescription": "Public API for the pagination feature",
-      "keywords": "api current displayed feature getpage gettotalpages grid method moves nextpage number object pagination previous previouspage public requested returns seek total ui"
+      "keywords": "api current displayed feature getfirstrowindex getlastrowindex getpage gettotalpages grid method moves nextpage number object pagination previous previouspage public requested returns row seek total ui"
     },
     {
       "section": "api",
@@ -2307,6 +2307,15 @@ NG_DOCS={
       "moduleName": "Tutorial: 405 Exporting All Data With External Pagination",
       "shortDescription": "When using built in pagination, the data is fully loaded before export.",
       "keywords": "$http $scope _scope angular angularjs app asc break built case class columndefs combined company controller core css data default desc direction enablegridmenu enablesorting export exportalldatapromise exporter exporteralldatafn exporting external false firstrow fully function gender getpage grid gridapi gridoptions html js json length load loaded main mainctrl module ng-controller ngtouch null onregisterapi options overview pagesize pagination paginationchanged paginationcurrentpage paginationoptions paginationpagesize paginationpagesizes purposes return selection sense slice sort sortchanged sortcolumns sorting success switch totalitems true turn tutorial ui ui-grid ui-grid-exporter ui-grid-pagination ui-grid-selection uigridconstants url useexternalpagination useexternalsorting var width"
+    },
+    {
+      "section": "tutorial",
+      "id": "406_custom_pagination",
+      "shortName": "406 Custom Pagination",
+      "type": "overview",
+      "moduleName": "Tutorial: 406 Custom Pagination",
+      "shortDescription": "When pagination is enabled, the data is displayed in pages that can be browsed using the built in",
+      "keywords": "$http $scope allow angular app application browsed built calculate calculatepagesizes call callback called charat class client client-side code columndefs company controller correct count css custom data displayed don enabled enablesorting entire exist false fetch fetched function gender getpage grid grid2data gridapi gridoptions gridoptions1 gridoptions2 html implement indexof initial initials js json length main mainctrl mentioned module ng-controller ngtouch null number onregisterapi option overview pagenumber pagesize pagesizelist pagesizes pagination paginationchanged paginationpagesizes parameters push query reduce requires rest retrieve return row rows selector server server-side set sort specific subset success sufficient total totalitems true tutorial ui ui-grid ui-grid-pagination uigridconstants update url usecustompagination useexternalpagination utilize var variable variables width"
     },
     {
       "section": "tutorial",

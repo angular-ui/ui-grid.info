@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-a3dc3b7 - 2016-11-16
+ * ui-grid - v3.2.1-b35fca4 - 2016-11-16
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -22420,6 +22420,32 @@ module.filter('px', function() {
                 },
                 /**
                  * @ngdoc method
+                 * @name getFirstRowIndex
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Returns the index of the first row of the current page.
+                 */
+                getFirstRowIndex: function () {
+                  if (grid.options.useCustomPagination) {
+                    return grid.options.paginationPageSizes.reduce(function(result, size, index) {
+                      return index < grid.options.paginationCurrentPage - 1 ? result + size : result;
+                    }, 0);
+                  }
+                  return ((grid.options.paginationCurrentPage - 1) * grid.options.paginationPageSize);
+                },
+                /**
+                 * @ngdoc method
+                 * @name getLastRowIndex
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Returns the index of the last row of the current page.
+                 */
+                getLastRowIndex: function () {
+                  if (grid.options.useCustomPagination) {
+                    return publicApi.methods.pagination.getFirstRowIndex() + grid.options.paginationPageSizes[grid.options.paginationCurrentPage - 1];
+                  }
+                  return Math.min(grid.options.paginationCurrentPage * grid.options.paginationPageSize, grid.options.totalItems);
+                },
+                /**
+                 * @ngdoc method
                  * @name getTotalPages
                  * @methodOf ui.grid.pagination.api:PublicAPI
                  * @description Returns the total number of pages
@@ -22427,6 +22453,10 @@ module.filter('px', function() {
                 getTotalPages: function () {
                   if (!grid.options.enablePagination) {
                     return null;
+                  }
+
+                  if (grid.options.useCustomPagination) {
+                    return grid.options.paginationPageSizes.length;
                   }
 
                   return (grid.options.totalItems === 0) ? 1 : Math.ceil(grid.options.totalItems / grid.options.paginationPageSize);
@@ -22499,12 +22529,14 @@ module.filter('px', function() {
             var visibleRows = renderableRows.filter(function (row) { return row.visible; });
             grid.options.totalItems = visibleRows.length;
 
-            var firstRow = (currentPage - 1) * pageSize;
+            var firstRow = publicApi.methods.pagination.getFirstRowIndex();
+            var lastRow  = publicApi.methods.pagination.getLastRowIndex();
+
             if (firstRow > visibleRows.length) {
               currentPage = grid.options.paginationCurrentPage = 1;
               firstRow = (currentPage - 1) * pageSize;
             }
-            return visibleRows.slice(firstRow, firstRow + pageSize);
+            return visibleRows.slice(firstRow, lastRow);
           };
 
           grid.registerRowsProcessor(processPagination, 900 );
@@ -22542,6 +22574,16 @@ module.filter('px', function() {
            *              and totalItems.  Defaults to `false`
            */
           gridOptions.useExternalPagination = gridOptions.useExternalPagination === true;
+
+          /**
+           * @ngdoc property
+           * @name useCustomPagination
+           * @propertyOf ui.grid.pagination.api:GridOptions
+           * @description Disables client-side pagination. When true, handle the `paginationChanged` event and set `data`,
+           *              `firstRowIndex`, `lastRowIndex`, and `totalItems`.  Defaults to `false`.
+           */
+          gridOptions.useCustomPagination = gridOptions.useCustomPagination === true;
+
           /**
            * @ngdoc property
            * @name totalItems
@@ -22720,13 +22762,6 @@ module.filter('px', function() {
 
           $scope.$on('$destroy', dataChangeDereg);
 
-          var setShowing = function () {
-            $scope.showingLow = ((options.paginationCurrentPage - 1) * options.paginationPageSize) + 1;
-            $scope.showingHigh = Math.min(options.paginationCurrentPage * options.paginationPageSize, options.totalItems);
-          };
-
-          var deregT = $scope.$watch('grid.options.totalItems + grid.options.paginationPageSize', setShowing);
-
           var deregP = $scope.$watch('grid.options.paginationCurrentPage + grid.options.paginationPageSize', function (newValues, oldValues) {
               if (newValues === oldValues || oldValues === undefined) {
                 return;
@@ -22742,30 +22777,25 @@ module.filter('px', function() {
                 return;
               }
 
-              setShowing();
               uiGridPaginationService.onPaginationChanged($scope.grid, options.paginationCurrentPage, options.paginationPageSize);
             }
           );
 
           $scope.$on('$destroy', function() {
-            deregT();
             deregP();
           });
 
           $scope.cantPageForward = function () {
-            if (options.totalItems > 0) {
-              return options.paginationCurrentPage >= $scope.paginationApi.getTotalPages();
+            if ($scope.paginationApi.getTotalPages()) {
+              return $scope.cantPageToLast();
             } else {
               return options.data.length < 1;
             }
           };
 
           $scope.cantPageToLast = function () {
-            if (options.totalItems > 0) {
-              return $scope.cantPageForward();
-            } else {
-              return true;
-            }
+            var totalPages = $scope.paginationApi.getTotalPages();
+            return !totalPages || options.paginationCurrentPage >= totalPages;
           };
 
           $scope.cantPageBackward = function () {
@@ -28745,7 +28775,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/pagination',
-    "<div role=\"contentinfo\" class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div role=\"menubar\" class=\"ui-grid-pager-control\"><button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/</abbr> {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{showingLow}} <abbr ui-grid-one-bind-title=\"paginationThrough\">-</abbr> {{showingHigh}} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
+    "<div role=\"contentinfo\" class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div role=\"menubar\" class=\"ui-grid-pager-control\"><button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/</abbr> {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" role=\"menuitem\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title=\"paginationThrough\">-</abbr> {{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
   );
 
 
