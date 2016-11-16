@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-0ae4c95 - 2016-11-16
+ * ui-grid - v3.2.1-fbca412 - 2016-11-16
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -21361,12 +21361,11 @@ module.filter('px', function() {
                * infinite scroll events upward
                * @param {boolean} scrollDown flag that there are pages downwards, so
                * fire infinite scroll events downward
-               * @returns {promise} promise that is resolved when the scroll reset is complete
                */
               resetScroll: function( scrollUp, scrollDown ) {
                 service.setScrollDirections( grid, scrollUp, scrollDown);
 
-                return service.adjustInfiniteScrollPosition(grid, 0);
+                service.adjustInfiniteScrollPosition(grid, 0);
               },
 
 
@@ -21650,7 +21649,6 @@ module.filter('px', function() {
        * @description This function fires 'needLoadMoreData' or 'needLoadMoreDataTop' event based on scrollDirection
        * @param {Grid} grid the grid we're working on
        * @param {number} scrollTop the position through the grid that we want to scroll to
-       * @returns {promise} a promise that is resolved when the scrolling finishes
        */
       adjustInfiniteScrollPosition: function (grid, scrollTop) {
         var scrollEvent = new ScrollEvent(grid, null, null, 'ui.grid.adjustInfiniteScrollPosition'),
@@ -21684,7 +21682,6 @@ module.filter('px', function() {
        * infinite scroll events upward
        * @param {boolean} scrollDown flag that there are pages downwards, so
        * fire infinite scroll events downward
-       * @returns {promise} a promise that is resolved when the scrolling finishes
        */
       dataRemovedTop: function( grid, scrollUp, scrollDown ) {
         var newVisibleRows, oldTop, newTop, rowHeight;
@@ -21698,7 +21695,7 @@ module.filter('px', function() {
         // of rows removed
         newTop = oldTop - ( grid.infiniteScroll.previousVisibleRows - newVisibleRows )*rowHeight;
 
-        return service.adjustInfiniteScrollPosition( grid, newTop );
+        service.adjustInfiniteScrollPosition( grid, newTop );
       },
 
       /**
@@ -21721,7 +21718,7 @@ module.filter('px', function() {
 
         newTop = grid.infiniteScroll.prevScrollTop;
 
-        return service.adjustInfiniteScrollPosition( grid, newTop );
+        service.adjustInfiniteScrollPosition( grid, newTop );
       }
     };
     return service;
@@ -26014,6 +26011,11 @@ module.filter('px', function() {
             //});
 
             var selectCells = function(evt){
+              // if you click on expandable icon doesn't trigger selection
+              if (evt.target.className === "ui-grid-icon-minus-squared" || evt.target.className === "ui-grid-icon-plus-squared") {
+                return;
+              }
+
               // if we get a click, then stop listening for touchend
               $elm.off('touchend', touchEnd);
 
