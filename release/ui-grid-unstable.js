@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-fbca412 - 2016-11-16
+ * ui-grid - v3.2.1-a3dc3b7 - 2016-11-16
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -15434,8 +15434,8 @@ module.filter('px', function() {
                   var newRowCol = new GridRowColumn(row, col);
 
                   if (grid.cellNav.lastRowCol === null || grid.cellNav.lastRowCol.row !== newRowCol.row || grid.cellNav.lastRowCol.col !== newRowCol.col){
-                    grid.api.cellNav.raise.navigate(newRowCol, grid.cellNav.lastRowCol);
-                    grid.cellNav.lastRowCol = newRowCol;  
+                    grid.api.cellNav.raise.navigate(newRowCol, grid.cellNav.lastRowCol, originEvt);
+                    grid.cellNav.lastRowCol = newRowCol;
                   }
                   if (uiGridCtrl.grid.options.modifierKeysToMultiSelectCells && modifierDown) {
                     grid.cellNav.focusedCells.push(rowCol);
@@ -15499,7 +15499,7 @@ module.filter('px', function() {
 
                   // Scroll to the new cell, if it's not completely visible within the render container's viewport
                   grid.scrollToIfNecessary(rowCol.row, rowCol.col).then(function () {
-                    uiGridCtrl.cellNav.broadcastCellNav(rowCol);
+                    uiGridCtrl.cellNav.broadcastCellNav(rowCol, null, evt);
                   });
 
 
@@ -16429,13 +16429,13 @@ module.filter('px', function() {
                   }
                 });
 
-                cellNavNavigateDereg = uiGridCtrl.grid.api.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
+                cellNavNavigateDereg = uiGridCtrl.grid.api.cellNav.on.navigate($scope, function (newRowCol, oldRowCol, evt) {
                   if ($scope.col.colDef.enableCellEditOnFocus) {
                     // Don't begin edit if the cell hasn't changed
                     if ((!oldRowCol || newRowCol.row !== oldRowCol.row || newRowCol.col !== oldRowCol.col) &&
                       newRowCol.row === $scope.row && newRowCol.col === $scope.col) {
                       $timeout(function () {
-                        beginEdit();
+                        beginEdit(evt);
                       });
                     }
                   }
