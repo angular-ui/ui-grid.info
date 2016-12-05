@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-e8af48d - 2016-12-05
+ * ui-grid - v3.2.1-c8e1670 - 2016-12-05
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -3195,12 +3195,12 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 
             var styles = {};
 
-            if (index === 0 && rowContainer.currentTopRow !== 0) {
-              // The row offset-top is just the height of the rows above the current top-most row, which are no longer rendered
-              var hiddenRowWidth = (rowContainer.currentTopRow) * rowContainer.grid.options.rowHeight;
-
-              // return { 'margin-top': hiddenRowWidth + 'px' };
-              styles['margin-top'] = hiddenRowWidth + 'px';
+            if (rowContainer.currentTopRow !== 0){
+              //top offset based on hidden rows count
+              var translateY = "translateY("+ (rowContainer.currentTopRow * rowContainer.grid.options.rowHeight)  +"px)";
+              styles['transform'] = translateY;
+              styles['-webkit-transform'] = translateY;
+              styles['-ms-transform'] = translateY;
             }
 
             if (colContainer.currentFirstColumn !== 0) {
