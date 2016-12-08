@@ -1,0 +1,59 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/custom-scrolling/js/custom-scrolling.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/3c6fcb4/src/features/custom-scrolling/js/custom-scrolling.js#L394" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridCustomScrolling</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">ui.grid.customScrolling</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="ui-grid-customscrolling-directive-page ui-grid-customscrolling-directive-uigridcustomscrolling-page"><p>Updates the grid to use the gridScroller instead of the jquery scroll event</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;ui-grid-custom-scrolling&gt;
+&lt;/ui-grid-custom-scrolling&gt;</pre>
+as attribute<pre class="prettyprint linenums">&lt;div ui-grid-custom-scrolling&gt;
+   ...
+&lt;/div&gt;</pre>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="ui-grid-customscrolling-directive-page ui-grid-customscrolling-directive-uigridcustomscrolling-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-0" source-edit-css="" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-0" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-0">
+<div ng-controller="MainCtrl">
+<div ui-grid="gridOptions" class="grid" ui-grid-pinning ui-grid-custom-scrolling></div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pinning', 'ui.grid.customScrolling']);
+app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+   $scope.gridOptions = {};
+   $scope.gridOptions.columnDefs = [
+     { name:'id', width:50, enablePinning:false },
+     { name:'name', width:100, pinnedLeft:true },
+     { name:'age', width:100, pinnedRight:true  },
+     { name:'address.street', width:150  },
+     { name:'address.city', width:150 },
+     { name:'address.state', width:50 },
+     { name:'address.zip', width:50 },
+     { name:'company', width:100 },
+     { name:'email', width:100 },
+     { name:'phone', width:200 },
+     { name:'about', width:300 },
+     { name:'friends[0].name', displayName:'1st friend', width:150 },
+     { name:'friends[1].name', displayName:'2nd friend', width:150 },
+     { name:'friends[2].name', displayName:'3rd friend', width:150 },
+   ];
+   $http.get('/data/500_complex.json')
+     .success(function(data) {
+       $scope.gridOptions.data = data;
+     });
+ }]);
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-0" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

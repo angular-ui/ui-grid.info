@@ -249,6 +249,42 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.customScrolling",
+      "shortName": "ui.grid.customScrolling",
+      "type": "overview",
+      "moduleName": "ui.grid.customScrolling",
+      "shortDescription": "#ui.grid.customScrolling",
+      "keywords": "alternative api custom customscrolling devices ensure event events grid lag module native overview scroll scroller scrolling touch ui works"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.customScrolling.constant:uiGridScrollerConstants",
+      "shortName": "uiGridScrollerConstants",
+      "type": "object",
+      "moduleName": "ui.grid.customScrolling",
+      "shortDescription": "Constants for use with the  uiGridScroller",
+      "keywords": "api calculates constant constants current currently customscrolling deceleration event events grid momentum mouse mousedown mousemove mouseup object options pointer pointerdown pointermove pointerup progress scroll scrollevent scrolling scrolltype service set touchable touchend touchmove touchstart triggered type ui uigridscroller uigridscrollerconstants"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.customScrolling.directive:uiGridCustomScrolling",
+      "shortName": "uiGridCustomScrolling",
+      "type": "directive",
+      "moduleName": "ui.grid.customScrolling",
+      "shortDescription": "Updates the grid to use the gridScroller instead of the jquery scroll event",
+      "keywords": "$http $log $scope address age angular api app city class columndefs company controller customscrolling data directive displayname div ea email enablepinning event friend friends function grid gridoptions gridscroller html jquery js json mainctrl module ng-controller ngtouch phone pinnedleft pinnedright pinning scroll street success ui ui-grid ui-grid-custom-scrolling ui-grid-pinning updates var width zip"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.customScrolling.service:uiGridScroller",
+      "shortName": "uiGridScroller",
+      "type": "service",
+      "moduleName": "ui.grid.customScrolling",
+      "shortDescription": "uiGridScroller is an alternative to the native scroll event that uses touch events to ensure that grid scrolling works",
+      "keywords": "alternative amount animate animation api axis base based calcnewmove calcnewpos calculates callback called coordinate coordinates curr current customscrolling delta destination destpos destx desty devices duration ease easeclb easeres element ensure event events finishes frames function getmaxscroll grid horizontal ideal initial initializes initiated lag limit limits long momentum move moved movement native object original pointer position positions relpoint resolution scroll scrolled scrollhandler scrolling scrollpos service sets start started startpos starts supposed target time times touch track translate triggered type ui uigridscroller ultimately updated updates vertical works"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.directive:uiGrid",
       "shortName": "uiGrid",
       "type": "directive",
@@ -442,8 +478,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.",
-      "keywords": "api e2etestlibrary functions grid overview test ui"
+      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
+      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
     },
     {
       "section": "api",
@@ -451,8 +487,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
-      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
+      "shortDescription": "End to end test functions.",
+      "keywords": "api e2etestlibrary functions grid overview test ui"
     },
     {
       "section": "api",
@@ -2316,6 +2352,15 @@ NG_DOCS={
       "moduleName": "Tutorial: 406 Custom Pagination",
       "shortDescription": "When pagination is enabled, the data is displayed in pages that can be browsed using the built in",
       "keywords": "$http $scope allow angular app application browsed built calculate calculatepagesizes call callback called charat class client client-side code columndefs company controller correct count css custom data displayed don enabled enablesorting entire exist false fetch fetched function gender getpage grid grid2data gridapi gridoptions gridoptions1 gridoptions2 html implement indexof initial initials js json length main mainctrl mentioned module ng-controller ngtouch null number onregisterapi option overview pagenumber pagesize pagesizelist pagesizes pagination paginationchanged paginationpagesizes parameters push query reduce requires rest retrieve return row rows selector server server-side set sort specific subset success sufficient total totalitems true tutorial ui ui-grid ui-grid-pagination uigridconstants update url usecustompagination useexternalpagination utilize var variable variables width"
+    },
+    {
+      "section": "tutorial",
+      "id": "407_custom_scrolling",
+      "shortName": "407 Custom Scrolling",
+      "type": "overview",
+      "moduleName": "Tutorial: 407 Custom Scrolling",
+      "shortDescription": "Note It is highly recommended that you turn this feature on alongside pinning, especially",
+      "keywords": "$http $log $scope address age alert alert-info alongside angular api app city class columndefs company constant controller css custom customscrolling data default devices directive displayname documentation element email enable enablepinning ensure feature friend friends function grid gridoptions height highly html include js json lag logic main mainctrl module ng-controller ngtouch order overview phone pinnedleft pinnedright pinning plan provided recommended role scrolling service street success takes turn tutorial ui ui-grid ui-grid-custom-scrolling ui-grid-pinning uigridcustomscrolling uigridscroller uigridscrollerconstants var width works zip"
     },
     {
       "section": "tutorial",
