@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.10-ab48372 - 2016-12-05
+ * ui-grid - v3.2.1-28d582a - 2016-12-08
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -18750,7 +18750,7 @@ module.filter('px', function() {
 
         /**
          * @ngdoc function
-         * @name formatAsCSV
+         * @name formatAsCsv
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
          * @description Formats the column headers and data as a CSV,
          * and sends that data to the user
@@ -18869,7 +18869,7 @@ module.filter('px', function() {
             );
           }
 
-          if (ieVersion){
+          if (ieVersion) {
             var frame = D.createElement('iframe');
             document.body.appendChild(frame);
 
