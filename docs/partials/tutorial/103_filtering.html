@@ -57,10 +57,10 @@ columnDef option will cause filtering to be applied after the <code>cellFilters<
 <p>Refer <a href="#/tutorial/321_singleFilter">singleFilter tutorial</a>, it is possible to implement this using a rowsProcessor.</p>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-103-filtering-page"><h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-27" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-28"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-26" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-27"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-27" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-27">
+<pre class="prettyprint linenums" ng-set-text="index.html-26" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-26">
   <div ng-controller="MainCtrl">
     You can use asterisks to fuzz-match, i.e. use "*z*" as your filter to show any row where that column contains a "z".
     <br>
@@ -202,8 +202,8 @@ columnDef option will cause filtering to be applied after the <code>cellFilters<
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-28"></pre>
-<script type="text/ng-template" id="scenario.js-28">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-27"></pre>
+<script type="text/ng-template" id="scenario.js-27">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
 
   describe('first grid on the page, filtered by male by default', function() {
@@ -253,6 +253,6 @@ columnDef option will cause filtering to be applied after the <code>cellFilters<
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-27" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-26" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>

@@ -2,25 +2,30 @@
 <div><span class="hint"></span>
 </div>
 </h1>
-<div><div class="tutorial-page tutorial-407-custom-scrolling-page"><div class="alert alert-info" role="alert"><strong>Note</strong> It is highly recommended that you turn this feature on alongside pinning, especially
-if you plan on using ui-grid on devices.</div>
-
-<p>The custom scrolling feature takes over the default scrolling logic in order to ensure that grid scrolling works without a lag on devices.
-To enable, you must include the &#39;ui.grid.customScrolling&#39; module and you must include the ui-grid-custom-scrolling directive on your grid element.</p>
+<div><div class="tutorial-page tutorial-407-custom-scrolling-page"><p>The custom scrolling feature allows you to provide your own scroller function to replace default element.on(&#39;scroll&#39;) function. It is particularly
+helpful if you are facing issues with scrolling on devices or slow machines, because it allows you to use thirdparty scrollers.</p>
 <p>Documentation for the custom scrolling feature is provided in the api documentation, in particular:</p>
 <ul>
-<li><a href="#/api/ui.grid.customScrolling.constant:uiGridScrollerConstants">uiGridScrollerConstants</a></li>
-<li><a href="#/api/ui.grid.customScrolling.service:uiGridScroller">uiGridScroller</a></li>
-<li><a href="#/api/ui.grid.customScrolling.directive:uiGridCustomScrolling">uiGridCustomScrolling</a></li>
+<li><a href="#/api/ui.grid.class:GridOptions">customScroller</a></li>
 </ul>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-407-custom-scrolling-page"><h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-113" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-112" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-113" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-113">
+<pre class="prettyprint linenums" ng-set-text="index.html-112" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-112">
   <div ng-controller="MainCtrl">
-    <div ui-grid="gridOptions" class="grid" ui-grid-pinning ui-grid-custom-scrolling></div>
+    <div class="row">
+      <label class="col-sm-2">Scroll Top: </label>
+      <div class="col-sm-4">
+        {{ scroll.top }}
+      </div>
+      <label class="col-sm-2">Scroll Left: </label>
+      <div class="col-sm-4">
+        {{ scroll.left }}
+      </div>
+    </div>
+    <div ui-grid="gridOptions" class="grid"></div>
   </div>
 </script>
 </div>
@@ -36,15 +41,30 @@ To enable, you must include the &#39;ui.grid.customScrolling&#39; module and you
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pinning', 'ui.grid.customScrolling']);
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
   app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
-    $scope.gridOptions = {};
+    $scope.scroll ={
+     top: 0,
+     left: 0
+    };
+
+    $scope.gridOptions = {
+      customScroller: function myScrolling(uiGridViewport, scrollHandler) {
+        uiGridViewport.on('scroll', function myScrollingOverride(event) {
+          $scope.scroll.top = uiGridViewport[0].scrollTop;
+          $scope.scroll.left = uiGridViewport[0].scrollLeft;
+
+          // You should always pass the event to the callback since ui-grid needs it
+          scrollHandler(event);
+        });
+      }
+    };
 
     $scope.gridOptions.columnDefs = [
-      { name:'id', width:50, enablePinning:false },
-      { name:'name', width:100, pinnedLeft:true },
-      { name:'age', width:100, pinnedRight:true  },
+      { name:'id', width:50 },
+      { name:'name', width:100 },
+      { name:'age', width:100 },
       { name:'address.street', width:150  },
       { name:'address.city', width:150 },
       { name:'address.state', width:50 },
@@ -66,6 +86,6 @@ To enable, you must include the &#39;ui.grid.customScrolling&#39; module and you
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-113" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-112" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>

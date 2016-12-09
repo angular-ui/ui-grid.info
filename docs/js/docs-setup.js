@@ -182,7 +182,7 @@ NG_DOCS={
       "type": "function",
       "moduleName": "ui.grid",
       "shortDescription": "Default GridOptions class.  GridOptions are defined by the application developer and overlaid",
-      "keywords": "$delegate $http $provide $resource $scope $translate action add adding adds addtogridmenu adjusted advantage aggregates aggregation aggregationcalcthrottle allow allowing allows altering alternative alternatively angular angular-translate angularjs api app application approach appscope appscopeprovider aquamarine array assign assigned associate associated attribute attributes auto-generating automatically avoid background-color backwards behaviour binding boolean bottom boxes calcuations callback called care center changes check class close col colcontainer coldef column columndef columndefs columnfooterheight columns columnvirtualizationthreshold common commonly compare compared compatibility complex conditions config configure content context controller controls converts copy core current custom customisation data dataset debounce decorator default defaults define defined developer direct directly disable disabled display displayed displayname displays div documented doesn dom dynamic element elements empty enablecolumnmenus enabled enablefiltering enablehorizontalscrollbar enableminheightcheck enablerowhashing enablesorting enableverticalscrollbar entire entities entitya entityb equality event events example examples excesscolumns excessrows exclude excludeproperties executing existing exists external extra factory false feel field1 field2 fields file filter filterchange filtering fired fires flat flatentityaccess flexible fnone follow footer footer_template footertemplate format function functions generate getrowidentity getsafetext github grid gridapi gridfootertemplate gridmenu gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoptions grids gridutil handles header header_template headers headertemplate height helps hide high hit hits horizontal horizontalscrollthreshold html i18nservice identical identifying identity ignore ignored implemented implying improvement include individual infinite infinitescrolldown infinitescrollrowsfromend infinitescrollup initialize initialized initoptions inline instantiated integer interact internal internationalization inverse issues item items json jumpy large list listen ll loading logic maintain management maxvisiblecolumncount menu menus method middle milliseconds minimum minimumcolumnsize minrowstoshow modified modify multiple mydata names needed needmoredata needmoredatatop newly nextuid ng-click ng-repeat note null number numbers object objects onregisterapi operate option options overlaid overridden override parent pass passed per-column performance pixels place places point pointer position precompiled prefetch preserve pretty prevents process programatically promise properties properties_scrollbars property provide provided providing query refer reference removefromgridmenu render rendered renderedcolumns renderingcomplete replace request requested required resize resolve return returns row row_template rowequality rowheight rowidentity rows rowtemplate runs savescrollpercentagemethod scope scroll scrollbar scrollbars scrolldebounce scrolling scrollthreshold second selectallrows selected selection server service set sets setting settings showcolumnfooter showgridfooter showheader situation smaller smoothness sort sorter sorting source sourced speed speeding standard starting static string stripped structure style sub-objects success supported suppresses tailor takes tall template text-align throttle time title tojson top total totals track trigger true turn tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uigridconstants uniquely update updated updating usage useexternalfiltering useexternalsorting user values var vastly vertical viewport virtualization virtualizationthreshold visible wheelscrollthrottle widgets working x_"
+      "keywords": "$delegate $http $provide $resource $scope $translate action add adding adds addtogridmenu adjusted advantage aggregates aggregation aggregationcalcthrottle alert alert-info allow allowing allows altering alternative alternatively angular angular-translate angularjs api app application approach appscope appscopeprovider aquamarine array assign assigned associate associated attribute attributes auto-generating automatically avoid background-color backwards behavior behaviour binding boolean bottom boxes break calcuations callback called care center changes check class close col colcontainer coldef column columndef columndefs columnfooterheight columns columnvirtualizationthreshold common commonly compare compared compatibility complex conditions config configure content context controller controls converts copy core current custom customisation customscroller data dataset debounce decorator default defaults define defined developer direct directly disable disabled display displayed displayname displays div documented doesn dom dynamic element elements empty enablecolumnmenus enabled enablefiltering enablehorizontalscrollbar enableminheightcheck enablerowhashing enablesorting enableverticalscrollbar entire entities entitya entityb equality event events example examples excesscolumns excessrows exclude excludeproperties executing existing exists external extra factory false feel field1 field2 fields file filter filterchange filtering fired fires flat flatentityaccess flexible fnone follow footer footer_template footertemplate format function functions generate getrowidentity getsafetext github grid gridapi gridfootertemplate gridmenu gridmenucustomitems gridmenushowhidecolumns gridmenutitlefilter gridoptions grids gridutil handles header header_template headers headertemplate height helpful helps hide high hit hits horizontal horizontalscrollthreshold html i18nservice identical identifying identity ignore ignored implemented implying improvement include individual infinite infinitescrolldown infinitescrollrowsfromend infinitescrollup initialize initialized initoptions inline instantiated integer interact internal internationalization inverse issues item items json jumpy large list listen ll loading logic maintain management maxvisiblecolumncount menu menus method middle milliseconds minimum minimumcolumnsize minrowstoshow modified modify multiple mydata myscrolling myscrollingoverride names needed needmoredata needmoredatatop newly nextuid ng-click ng-repeat note null number numbers object objects onregisterapi operate option options overlaid overridden override parent party pass passed per-column performance pixels place places point pointer position precompiled prefetch preserve pretty prevents process programatically promise properties properties_scrollbars property provide provided providing query refer reference remember removefromgridmenu render rendered renderedcolumns renderingcomplete replace request requested required resize resolve return returns role row row_template rowequality rowheight rowidentity rows rowtemplate runs savescrollpercentagemethod scope scroll scrollbar scrollbars scrolldebounce scrolled scroller scrollers scrollhandler scrolling scrollthreshold second selectallrows selected selection server service set sets setting settings showcolumnfooter showgridfooter showheader situation smaller smoothness sort sorter sorting source sourced speed speeding standard starting static string stripped structure style sub-objects success supported suppresses tailor takes tall template text-align third throttle time title tojson top total totals track trigger true turn tutorial ui ui-grid ui-grid-bottom-panel ui-grid-cell ui-grid-header ui-grid-top-panel uigrid uigridconstants uigridviewport uniquely update updated updating usage useexternalfiltering useexternalsorting user values var vastly vertical viewport virtualization virtualizationthreshold visible wheelscrollthrottle widgets working x_"
     },
     {
       "section": "api",
@@ -246,42 +246,6 @@ NG_DOCS={
       "moduleName": "ui.grid.core",
       "shortDescription": "Public Api for the core grid features",
       "keywords": "$scope acting active add addrowheadercolumn adds addtogridmenu adjust advantage allowing allrowsvisible alter api array assumes based basically better building calculations call callback called calling calls case cases cell chain chance change changed circumstances classes clearallfilters clearconditions clearflags clearrowinvisible clears code coldef column columndef columnprocessors columns columnsprocessors columnvisibilitychanged combo complete completely completes config consider context controller core count criteria currently custom cycle data datachange debounced def defaults deregister described destroyed determines digest directly earlier edit emited emits enabled event execute execution false feature features field filter filtering filters finished fire flag format function functions general generally getcolumnsorting getvisiblerows grid gridapi gridcol gridcolumns gridoptions gridrow grouping handle handlewindowresize handling header headercellclasses headers higher included inject instance intermediate invisible isn item items leave left list long lower management manipulations manually menu method modified multiple mysortfn normal note noticing notify notifydatachange null nulls number object occurred onregisterapi optional optionally order output override pagination parameter parameters passed passes people picked positioned prefer priorities priority problem processor processorfunction processors promise properties_datachange provide provided public queuegridrefresh queuerefresh re-evaluated re-runs redrawinplace refresh refreshcanvas refreshes refreshing refreshrows regenerate register registercolumnsprocessor registered registerrowsprocessor relevant remain remove removefromgridmenu removes render rendered rendering renderingcomplete request requests resize resolved return returned returns room row rowentity rowprocessors rows rowsprocessors rowsvisiblechanged running runs scope screen scroll scrolling scrolls scrollto scrolltoifnecessary selectable service set setrowinvisible sets simplify size sizing sort sortchanged sortcolumns sorted sorthandlenulls sorting sorts stopping tells time timing todo treeview trigger true tutorial type ui uigridconstants unique update updated updates users values var ve version view visibility visible watch window"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.customScrolling",
-      "shortName": "ui.grid.customScrolling",
-      "type": "overview",
-      "moduleName": "ui.grid.customScrolling",
-      "shortDescription": "#ui.grid.customScrolling",
-      "keywords": "alternative api custom customscrolling devices ensure event events grid lag module native overview scroll scroller scrolling touch ui works"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.customScrolling.constant:uiGridScrollerConstants",
-      "shortName": "uiGridScrollerConstants",
-      "type": "object",
-      "moduleName": "ui.grid.customScrolling",
-      "shortDescription": "Constants for use with the  uiGridScroller",
-      "keywords": "api calculates constant constants current currently customscrolling deceleration event events grid momentum mouse mousedown mousemove mouseup object options pointer pointerdown pointermove pointerup progress scroll scrollevent scrolling scrolltype service set touchable touchend touchmove touchstart triggered type ui uigridscroller uigridscrollerconstants"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.customScrolling.directive:uiGridCustomScrolling",
-      "shortName": "uiGridCustomScrolling",
-      "type": "directive",
-      "moduleName": "ui.grid.customScrolling",
-      "shortDescription": "Updates the grid to use the gridScroller instead of the jquery scroll event",
-      "keywords": "$http $log $scope address age angular api app city class columndefs company controller customscrolling data directive displayname div ea email enablepinning event friend friends function grid gridoptions gridscroller html jquery js json mainctrl module ng-controller ngtouch phone pinnedleft pinnedright pinning scroll street success ui ui-grid ui-grid-custom-scrolling ui-grid-pinning updates var width zip"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.customScrolling.service:uiGridScroller",
-      "shortName": "uiGridScroller",
-      "type": "service",
-      "moduleName": "ui.grid.customScrolling",
-      "shortDescription": "uiGridScroller is an alternative to the native scroll event that uses touch events to ensure that grid scrolling works",
-      "keywords": "alternative amount animate animating animation api axis base based calcnewmove calcnewpos calculates callback called coordinate coordinates curr current customscrolling delta destination destpos destx desty devices duration ease easeclb easeres element ensure event events finishes frames function getmaxscroll grid horizontal ideal initial initializes initiated isanimating lag limit limits long momentum move moved movement native object original pointer position positions relpoint resolution scroll scrolled scrollhandler scrolling scrollpos service sets start started startpos starts supposed target time times touch track translate triggered type ui uigridscroller ultimately updated updates vertical works"
     },
     {
       "section": "api",
@@ -478,8 +442,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
-      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
+      "shortDescription": "End to end test functions.",
+      "keywords": "api e2etestlibrary functions grid overview test ui"
     },
     {
       "section": "api",
@@ -487,8 +451,8 @@ NG_DOCS={
       "shortName": "ui.grid.e2eTestLibrary",
       "type": "overview",
       "moduleName": "ui.grid.e2eTestLibrary",
-      "shortDescription": "End to end test functions.",
-      "keywords": "api e2etestlibrary functions grid overview test ui"
+      "shortDescription": "End to end test functions.  Whenever these are updated, it may also be necessary",
+      "keywords": "api associated e2etestlibrary functions grid overview test tutorial ui update updated"
     },
     {
       "section": "api",
@@ -2108,7 +2072,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 299 Third Party Features",
       "shortDescription": "Features maintained outside UI Grid Repository",
-      "keywords": "allows auto create data developed draggable feature features folder grid list listed maintained misc odata overview parties party pull querying repository request rows scrolls services third tutorial ui updated v3"
+      "keywords": "allows auto create custom data default developed devices draggable ensure feature features folder grid lag list listed logic maintained misc odata order overview parties party pull querying repository request rows scroller scrolling scrolls services takes third tutorial ui updated v3 works"
     },
     {
       "section": "tutorial",
@@ -2359,8 +2323,8 @@ NG_DOCS={
       "shortName": "407 Custom Scrolling",
       "type": "overview",
       "moduleName": "Tutorial: 407 Custom Scrolling",
-      "shortDescription": "Note It is highly recommended that you turn this feature on alongside pinning, especially",
-      "keywords": "$http $log $scope address age alert alert-info alongside angular api app city class columndefs company constant controller css custom customscrolling data default devices directive displayname documentation element email enable enablepinning ensure feature friend friends function grid gridoptions height highly html include js json lag logic main mainctrl module ng-controller ngtouch order overview phone pinnedleft pinnedright pinning plan provided recommended role scrolling service street success takes turn tutorial ui ui-grid ui-grid-custom-scrolling ui-grid-pinning uigridcustomscrolling uigridscroller uigridscrollerconstants var width works zip"
+      "shortDescription": "The custom scrolling feature allows you to provide your own scroller function to replace default element.on(&#39;scroll&#39;) function. It is particularly",
+      "keywords": "$http $log $scope address age allows angular api app callback city class col-sm-2 col-sm-4 columndefs company controller css custom customscroller data default devices displayname documentation element email event facing feature friend friends function grid gridoptions height helpful html issues js json left machines main mainctrl module myscrolling myscrollingoverride ng-controller ngtouch overview pass phone provide provided replace row scroll scroller scrollers scrollhandler scrolling scrollleft scrolltop slow street success thirdparty top tutorial ui ui-grid uigridviewport var width zip"
     },
     {
       "section": "tutorial",
