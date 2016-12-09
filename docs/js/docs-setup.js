@@ -281,7 +281,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "ui.grid.customScrolling",
       "shortDescription": "uiGridScroller is an alternative to the native scroll event that uses touch events to ensure that grid scrolling works",
-      "keywords": "alternative amount animate animation api axis base based calcnewmove calcnewpos calculates callback called coordinate coordinates curr current customscrolling delta destination destpos destx desty devices duration ease easeclb easeres element ensure event events finishes frames function getmaxscroll grid horizontal ideal initial initializes initiated lag limit limits long momentum move moved movement native object original pointer position positions relpoint resolution scroll scrolled scrollhandler scrolling scrollpos service sets start started startpos starts supposed target time times touch track translate triggered type ui uigridscroller ultimately updated updates vertical works"
+      "keywords": "alternative amount animate animating animation api axis base based calcnewmove calcnewpos calculates callback called coordinate coordinates curr current customscrolling delta destination destpos destx desty devices duration ease easeclb easeres element ensure event events finishes frames function getmaxscroll grid horizontal ideal initial initializes initiated isanimating lag limit limits long momentum move moved movement native object original pointer position positions relpoint resolution scroll scrolled scrollhandler scrolling scrollpos service sets start started startpos starts supposed target time times touch track translate triggered type ui uigridscroller ultimately updated updates vertical works"
     },
     {
       "section": "api",

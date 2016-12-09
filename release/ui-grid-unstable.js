@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v3.2.1-b2e4c8d - 2016-12-09
+ * ui-grid - v3.2.1-de0116e - 2016-12-09
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -15966,7 +15966,14 @@ module.filter('px', function() {
    */
   module.factory('uiGridScroller', ['$window', 'gridUtil', 'uiGridScrollerConstants',
     function($window, gridUtil, uiGridScrollerConstants) {
-      var isAnimating;
+
+      /**
+       *  @ngdoc object
+       *  @name isAnimating
+       *  @propertyOf ui.grid.customScrolling.service:uiGridScroller
+       *  @description Keeps track of whether or not the scrolling is animating.
+       */
+      uiGridScroller.isAnimating = false;
 
       /**
        *  @ngdoc object
@@ -16028,7 +16035,7 @@ module.filter('px', function() {
           startTime = (new Date()).getTime();
           startX = element[0].scrollLeft;
           startY = element[0].scrollTop;
-          isAnimating = false;
+          uiGridScroller.isAnimating = false;
         }
 
         /**
@@ -16215,7 +16222,7 @@ module.filter('px', function() {
           startY = element[0].scrollTop,
           destTime = startTime + duration;
 
-        isAnimating = true;
+        uiGridScroller.isAnimating = true;
 
         next();
 
@@ -16224,7 +16231,7 @@ module.filter('px', function() {
             relPoint, easeRes, newX, newY;
 
           if (now >= destTime) {
-            isAnimating = false;
+            uiGridScroller.isAnimating = false;
             translate(destX, destY, element);
             element.on('scroll', callback);
             return;
@@ -16241,7 +16248,7 @@ module.filter('px', function() {
 
           callback.call();
 
-          if (isAnimating) {
+          if (uiGridScroller.isAnimating && angular.isFunction(window.requestAnimationFrame)) {
             window.requestAnimationFrame(next);
           } else {
             element.on('scroll', callback);
