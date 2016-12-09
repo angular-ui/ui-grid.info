@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/services/rowSorter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L13" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rowSorter</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/services/rowSorter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L13" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rowSorter</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid</code>
 </span>
 </div>
@@ -9,7 +9,7 @@ including guessing column types and applying appropriate sort
 algorithms</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L103" class="view-source icon-eye-open"> </a><h3 id="methods_basicsort">basicSort(a, b)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L103" class="view-source icon-eye-open"> </a><h3 id="methods_basicsort">basicSort(a, b)</h3>
 <div class="basicsort"><div class="basicsort-page"><p>Sorts any values that provide the &lt; method, including strings
 or numbers.  Handles nulls and undefined through calling handleNulls</p>
 </div><h5 id="methods_basicsort_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="basicsort-page"><p>sort value a</p>
@@ -17,7 +17,7 @@ or numbers.  Handles nulls and undefined through calling handleNulls</p>
 </div></td></tr></tbody></table><h5 id="methods_basicsort_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="basicsort-page"><p>normal sort function, returns -ve, 0, +ve</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L293" class="view-source icon-eye-open"> </a><h3 id="methods_getsortfn">getSortFn(grid, col, rows)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L293" class="view-source icon-eye-open"> </a><h3 id="methods_getsortfn">getSortFn(grid, col, rows)</h3>
 <div class="getsortfn"><div class="getsortfn-page"><p>Get the sort function for the column.  Looks first in
 rowSorter.colSortFnCache using the column name, failing that it
 looks at col.sortingAlgorithm (and puts it in the cache), failing that
@@ -34,14 +34,14 @@ we might inspect the rows themselves to decide what sort of data might be there<
 </div></td></tr></tbody></table><h5 id="methods_getsortfn_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="getsortfn-page"><p>the sort function chosen for the column</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L42" class="view-source icon-eye-open"> </a><h3 id="methods_guesssortfn">guessSortFn(itemType)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L42" class="view-source icon-eye-open"> </a><h3 id="methods_guesssortfn">guessSortFn(itemType)</h3>
 <div class="guesssortfn"><div class="guesssortfn-page"><p>Assigns a sort function to use based on the itemType in the column</p>
 </div><h5 id="methods_guesssortfn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>itemType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="guesssortfn-page"><p>one of &#39;number&#39;, &#39;boolean&#39;, &#39;string&#39;, &#39;date&#39;, &#39;object&#39;.  And
 error will be thrown for any other type.</p>
 </div></td></tr></tbody></table><h5 id="methods_guesssortfn_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="guesssortfn-page"><p>a sort function that will sort that type</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L75" class="view-source icon-eye-open"> </a><h3 id="methods_handlenulls">handleNulls(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L75" class="view-source icon-eye-open"> </a><h3 id="methods_handlenulls">handleNulls(a, b)</h3>
 <div class="handlenulls"><div class="handlenulls-page"><p>Sorts nulls and undefined to the bottom (top when
 descending).  Called by each of the internal sorters before
 attempting to sort.  Note that this method is available on the core api
@@ -52,7 +52,7 @@ via gridApi.core.sortHandleNulls</p>
 a sort value that should be passed back from the sort function</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L344" class="view-source icon-eye-open"> </a><h3 id="methods_prioritysort">prioritySort(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L344" class="view-source icon-eye-open"> </a><h3 id="methods_prioritysort">prioritySort(a, b)</h3>
 <div class="prioritysort"><div class="prioritysort-page"><p>Used where multiple columns are present in the sort criteria,
 we determine which column should take precedence in the sort by sorting
 the columns based on their sort.priority</p>
@@ -61,7 +61,7 @@ the columns based on their sort.priority</p>
 </div></td></tr></tbody></table><h5 id="methods_prioritysort_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="prioritysort-page"><p>normal sort function, returns -ve, 0, +ve</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L396" class="view-source icon-eye-open"> </a><h3 id="methods_sort">sort(grid, rows, columns)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L396" class="view-source icon-eye-open"> </a><h3 id="methods_sort">sort(grid, rows, columns)</h3>
 <div class="sort"><div class="sort-page"><p>sorts the grid</p>
 </div><h5 id="methods_sort_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="sort-page"><p>the grid itself</p>
 </div></td></tr><tr><td>rows</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="sort-page"><p>the rows to be sorted</p>
@@ -70,14 +70,14 @@ for sort criteria</p>
 </div></td></tr></tbody></table><h5 id="methods_sort_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="sort-page"><p>sorted rows</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L201" class="view-source icon-eye-open"> </a><h3 id="methods_sortalpha">sortAlpha(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L201" class="view-source icon-eye-open"> </a><h3 id="methods_sortalpha">sortAlpha(a, b)</h3>
 <div class="sortalpha"><div class="sortalpha-page"><p>Sorts string values. Handles nulls and undefined through calling handleNulls</p>
 </div><h5 id="methods_sortalpha_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortalpha-page"><p>sort value a</p>
 </div></td></tr><tr><td>b</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortalpha-page"><p>sort value b</p>
 </div></td></tr></tbody></table><h5 id="methods_sortalpha_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="sortalpha-page"><p>normal sort function, returns -ve, 0, +ve</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L253" class="view-source icon-eye-open"> </a><h3 id="methods_sortbool">sortBool(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L253" class="view-source icon-eye-open"> </a><h3 id="methods_sortbool">sortBool(a, b)</h3>
 <div class="sortbool"><div class="sortbool-page"><p>Sorts boolean values, true is considered larger than false.
 Handles nulls and undefined through calling handleNulls</p>
 </div><h5 id="methods_sortbool_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortbool-page"><p>sort value a</p>
@@ -85,7 +85,7 @@ Handles nulls and undefined through calling handleNulls</p>
 </div></td></tr></tbody></table><h5 id="methods_sortbool_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="sortbool-page"><p>normal sort function, returns -ve, 0, +ve</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L224" class="view-source icon-eye-open"> </a><h3 id="methods_sortdate">sortDate(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L224" class="view-source icon-eye-open"> </a><h3 id="methods_sortdate">sortDate(a, b)</h3>
 <div class="sortdate"><div class="sortdate-page"><p>Sorts date values. Handles nulls and undefined through calling handleNulls.
 Handles date strings by converting to Date object if not already an instance of Date</p>
 </div><h5 id="methods_sortdate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortdate-page"><p>sort value a</p>
@@ -93,14 +93,14 @@ Handles date strings by converting to Date object if not already an instance of 
 </div></td></tr></tbody></table><h5 id="methods_sortdate_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="sortdate-page"><p>normal sort function, returns -ve, 0, +ve</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L128" class="view-source icon-eye-open"> </a><h3 id="methods_sortnumber">sortNumber(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L128" class="view-source icon-eye-open"> </a><h3 id="methods_sortnumber">sortNumber(a, b)</h3>
 <div class="sortnumber"><div class="sortnumber-page"><p>Sorts numerical values.  Handles nulls and undefined through calling handleNulls</p>
 </div><h5 id="methods_sortnumber_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortnumber-page"><p>sort value a</p>
 </div></td></tr><tr><td>b</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortnumber-page"><p>sort value b</p>
 </div></td></tr></tbody></table><h5 id="methods_sortnumber_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="sortnumber-page"><p>normal sort function, returns -ve, 0, +ve</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/js/core/services/rowSorter.js#L148" class="view-source icon-eye-open"> </a><h3 id="methods_sortnumberstr">sortNumberStr(a, b)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/js/core/services/rowSorter.js#L148" class="view-source icon-eye-open"> </a><h3 id="methods_sortnumberstr">sortNumberStr(a, b)</h3>
 <div class="sortnumberstr"><div class="sortnumberstr-page"><p>Sorts numerical values that are stored in a string (i.e. parses them to numbers first).
 Handles nulls and undefined through calling handleNulls</p>
 </div><h5 id="methods_sortnumberstr_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>a</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="sortnumberstr-page"><p>sort value a</p>
