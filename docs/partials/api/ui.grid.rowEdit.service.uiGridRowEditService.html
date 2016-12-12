@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/row-edit/js/gridRowEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L40" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridRowEditService</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/row-edit/js/gridRowEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L40" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridRowEditService</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.rowEdit</code>
 </span>
 </div>
@@ -7,7 +7,7 @@
 <div class="description"><div class="ui-grid-rowedit-service-page ui-grid-rowedit-service-uigridroweditservice-page"><p>Services for row editing features</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L450" class="view-source icon-eye-open"> </a><h3 id="methods_begineditcell">beginEditCell(rowEntity)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L450" class="view-source icon-eye-open"> </a><h3 id="methods_begineditcell">beginEditCell(rowEntity)</h3>
 <div class="begineditcell"><div class="begineditcell-page"><p>Receives a beginCellEdit event from the edit function,
 and cancels any rowEditSaveTimers if present, as the user is still editing
 this row.  Only the rowEntity parameter
@@ -17,7 +17,7 @@ is automatically provided by the gridApi.</p>
 editing has commenced</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L474" class="view-source icon-eye-open"> </a><h3 id="methods_canceleditcell">cancelEditCell(rowEntity)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L474" class="view-source icon-eye-open"> </a><h3 id="methods_canceleditcell">cancelEditCell(rowEntity)</h3>
 <div class="canceleditcell"><div class="canceleditcell-page"><p>Receives a cancelCellEdit event from the edit function,
 and if the row was already dirty, restarts the save timer.  If the row
 was not already dirty, then it&#39;s not dirty now either and does nothing.</p>
@@ -28,14 +28,14 @@ is automatically provided by the gridApi.</p>
 editing was cancelled</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L556" class="view-source icon-eye-open"> </a><h3 id="methods_canceltimer">cancelTimer(grid, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L556" class="view-source icon-eye-open"> </a><h3 id="methods_canceltimer">cancelTimer(grid, gridRow)</h3>
 <div class="canceltimer"><div class="canceltimer-page"><p>cancel the $interval for any timer running on this row
 then delete the timer itself</p>
 </div><h5 id="methods_canceltimer_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="canceltimer-page"><p>the grid for which we are processing</p>
 </div></td></tr><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="canceltimer-page"><p>the row for which the timer should be adjusted</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L534" class="view-source icon-eye-open"> </a><h3 id="methods_considersettimer">considerSetTimer(grid, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L534" class="view-source icon-eye-open"> </a><h3 id="methods_considersettimer">considerSetTimer(grid, gridRow)</h3>
 <div class="considersettimer"><div class="considersettimer-page"><p>Consider setting a timer on this row (if it is dirty).  if there is a timer running
 on the row and the row isn&#39;t currently saving, cancel it, using cancelTimer, then if the row is
 dirty and not currently saving then set a new timer</p>
@@ -43,7 +43,7 @@ dirty and not currently saving then set a new timer</p>
 </div></td></tr><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="considersettimer-page"><p>the row for which the timer should be adjusted</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L416" class="view-source icon-eye-open"> </a><h3 id="methods_endeditcell">endEditCell(rowEntity)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L416" class="view-source icon-eye-open"> </a><h3 id="methods_endeditcell">endEditCell(rowEntity)</h3>
 <div class="endeditcell"><div class="endeditcell-page"><p>Receives an afterCellEdit event from the edit function,
 and sets flags as appropriate.  Only the rowEntity parameter
 is processed, although other params are available.  Grid
@@ -52,7 +52,7 @@ is automatically provided by the gridApi.</p>
 was edited</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L394" class="view-source icon-eye-open"> </a><h3 id="methods_flushdirtyrows">flushDirtyRows(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L394" class="view-source icon-eye-open"> </a><h3 id="methods_flushdirtyrows">flushDirtyRows(grid)</h3>
 <div class="flushdirtyrows"><div class="flushdirtyrows-page"><p>Triggers a save event for all currently dirty rows, could
 be used where user presses a save button or navigates away from the page
 <pre class="prettyprint linenums">
@@ -64,14 +64,14 @@ of the individual save promises - i.e. it will be resolved when all
 the individual save promises have been resolved.</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L368" class="view-source icon-eye-open"> </a><h3 id="methods_isrowpresent">isRowPresent(rowArray, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L368" class="view-source icon-eye-open"> </a><h3 id="methods_isrowpresent">isRowPresent(rowArray, gridRow)</h3>
 <div class="isrowpresent"><div class="isrowpresent-page"><p>Checks whether a row is already present
 in the given array</p>
 </div><h5 id="methods_isrowpresent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowArray</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="isrowpresent-page"><p>the array in which to look for the row</p>
 </div></td></tr><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="isrowpresent-page"><p>the row that should be looked for</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L495" class="view-source icon-eye-open"> </a><h3 id="methods_navigate">navigate(newRowCol, oldRowCol)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L495" class="view-source icon-eye-open"> </a><h3 id="methods_navigate">navigate(newRowCol, oldRowCol)</h3>
 <div class="navigate"><div class="navigate-page"><p>cellNav tells us that the selected cell has changed.  If
 the new row had a timer running, then stop it similar to in a beginCellEdit
 call.  If the old row is dirty and not the same as the new row, then
@@ -80,7 +80,7 @@ start a timer on it.</p>
 </div></td></tr><tr><td>oldRowCol</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="navigate-page"><p>the row and column that was left</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L318" class="view-source icon-eye-open"> </a><h3 id="methods_processerrorpromise">processErrorPromise(grid, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L318" class="view-source icon-eye-open"> </a><h3 id="methods_processerrorpromise">processErrorPromise(grid, gridRow)</h3>
 <div class="processerrorpromise"><div class="processerrorpromise-page"><p>Returns a function that processes the failed
 resolution of a save promise</p>
 </div><h5 id="methods_processerrorpromise_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="processerrorpromise-page"><p>the grid for which the promise should be processed</p>
@@ -88,7 +88,7 @@ resolution of a save promise</p>
 </div></td></tr></tbody></table><h5 id="methods_processerrorpromise_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="processerrorpromise-page"><p>the error handling function</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L293" class="view-source icon-eye-open"> </a><h3 id="methods_processsuccesspromise">processSuccessPromise(grid, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L293" class="view-source icon-eye-open"> </a><h3 id="methods_processsuccesspromise">processSuccessPromise(grid, gridRow)</h3>
 <div class="processsuccesspromise"><div class="processsuccesspromise-page"><p>Returns a function that processes the successful
 resolution of a save promise</p>
 </div><h5 id="methods_processsuccesspromise_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="processsuccesspromise-page"><p>the grid for which the promise should be processed</p>
@@ -96,7 +96,7 @@ resolution of a save promise</p>
 </div></td></tr></tbody></table><h5 id="methods_processsuccesspromise_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="processsuccesspromise-page"><p>the success handling function</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L346" class="view-source icon-eye-open"> </a><h3 id="methods_removerow">removeRow(rowArray, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L346" class="view-source icon-eye-open"> </a><h3 id="methods_removerow">removeRow(rowArray, gridRow)</h3>
 <div class="removerow"><div class="removerow-page"><p>Removes a row from a cache of rows - either
 grid.rowEdit.errorRows or grid.rowEdit.dirtyRows.  If the row
 is not present silently does nothing.</p>
@@ -104,7 +104,7 @@ is not present silently does nothing.</p>
 </div></td></tr><tr><td>gridRow</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="removerow-page"><p>the row that should be removed</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L238" class="view-source icon-eye-open"> </a><h3 id="methods_saverow">saveRow(grid, gridRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L238" class="view-source icon-eye-open"> </a><h3 id="methods_saverow">saveRow(grid, gridRow)</h3>
 <div class="saverow"><div class="saverow-page"><p>Returns a function that saves the specified row from the grid,
 and returns a promise</p>
 </div><h5 id="methods_saverow_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="saverow-page"><p>the grid for which dirty rows should be flushed</p>
@@ -113,7 +113,7 @@ and returns a promise</p>
 in turn, when called, returns a promise relating to the save callback</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L619" class="view-source icon-eye-open"> </a><h3 id="methods_setrowsclean">setRowsClean(grid, dataRows)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L619" class="view-source icon-eye-open"> </a><h3 id="methods_setrowsclean">setRowsClean(grid, dataRows)</h3>
 <div class="setrowsclean"><div class="setrowsclean-page"><p>Sets each of the rows passed in dataRows
 to be clean, clearing the dirty flag and the error flag, and removing
 the rows from the dirty and error caches.</p>
@@ -122,7 +122,7 @@ the rows from the dirty and error caches.</p>
 should be set clean.</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L583" class="view-source icon-eye-open"> </a><h3 id="methods_setrowsdirty">setRowsDirty(grid, dataRows)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L583" class="view-source icon-eye-open"> </a><h3 id="methods_setrowsdirty">setRowsDirty(grid, dataRows)</h3>
 <div class="setrowsdirty"><div class="setrowsdirty-page"><p>Sets each of the rows passed in dataRows
 to be dirty.  note that if you have only just inserted the
 rows into your data you will need to wait for a $digest cycle
@@ -138,7 +138,7 @@ call in a $interval or $timeout
 should be set dirty.</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/8732590/src/features/row-edit/js/gridRowEdit.js#L277" class="view-source icon-eye-open"> </a><h3 id="methods_setsavepromise">setSavePromise(grid, rowEntity, savePromise)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/441613f/src/features/row-edit/js/gridRowEdit.js#L277" class="view-source icon-eye-open"> </a><h3 id="methods_setsavepromise">setSavePromise(grid, rowEntity, savePromise)</h3>
 <div class="setsavepromise"><div class="setsavepromise-page"><p>Sets the promise associated with the row save, mandatory that
 the saveRow event handler calls this method somewhere before returning.
 <pre class="prettyprint linenums">
