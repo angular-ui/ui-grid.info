@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/importer/js/importer.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L60" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridImporterService</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/importer/js/importer.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L60" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">uiGridImporterService</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.importer</code>
 </span>
 </div>
@@ -7,7 +7,7 @@
 <div class="description"><div class="ui-grid-importer-service-page ui-grid-importer-service-uigridimporterservice-page"><p>Services for importer feature</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L627" class="view-source icon-eye-open"> </a><h3 id="methods_addobjects">addObjects(grid, newObjects)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L627" class="view-source icon-eye-open"> </a><h3 id="methods_addobjects">addObjects(grid, newObjects)</h3>
 <div class="addobjects"><div class="addobjects-page"><p>Inserts our new objects into the grid data, and
 sets the rows to dirty if the rowEdit feature is being used</p>
 <p>Does this by registering a watch on dataChanges, which essentially
@@ -20,13 +20,13 @@ again next time data is added.</p>
 </div></td></tr></tbody></table><h5 id="methods_addobjects_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="addobjects-page"><p>the new object</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L328" class="view-source icon-eye-open"> </a><h3 id="methods_addtomenu">addToMenu(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L328" class="view-source icon-eye-open"> </a><h3 id="methods_addtomenu">addToMenu(grid)</h3>
 <div class="addtomenu"><div class="addtomenu-page"><p>Adds import menu item to the grid menu,
 allowing the user to request import of a file</p>
 </div><h5 id="methods_addtomenu_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="addtomenu-page"><p>the grid into which data should be imported</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L672" class="view-source icon-eye-open"> </a><h3 id="methods_alerterror">alertError(grid, headerRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L672" class="view-source icon-eye-open"> </a><h3 id="methods_alerterror">alertError(grid, headerRow)</h3>
 <div class="alerterror"><div class="alerterror-page"><p>Provides an internationalised user alert for the failure,
 and logs a console message including diagnostic content.
 Optionally, if the the <code>gridOptions.importerErrorCallback</code> routine
@@ -36,7 +36,7 @@ is defined, then calls that instead, allowing user specified error routines</p>
 the column definitions</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L502" class="view-source icon-eye-open"> </a><h3 id="methods_createcsvobjects">createCsvObjects(grid, importArray)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L502" class="view-source icon-eye-open"> </a><h3 id="methods_createcsvobjects">createCsvObjects(grid, importArray)</h3>
 <div class="createcsvobjects"><div class="createcsvobjects-page"><p>Converts an array of arrays (representing the csv file)
 into a set of objects.  Uses the provided <code>gridOptions.importerNewObject</code>
 to create the objects, and maps the header row into the individual columns
@@ -48,7 +48,7 @@ that are named based on the column.field or column.name, in that order.</p>
 </div></td></tr><tr><td>importArray</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="createcsvobjects-page"><p>the data that we want to import, as an array</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L449" class="view-source icon-eye-open"> </a><h3 id="methods_importcsvclosure">importCsvClosure(grid, importFile)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L449" class="view-source icon-eye-open"> </a><h3 id="methods_importcsvclosure">importCsvClosure(grid, importFile)</h3>
 <div class="importcsvclosure"><div class="importcsvclosure-page"><p>Creates a function that imports a csv file into the grid
 (allowing it to be used in the reader.onload event)</p>
 </div><h5 id="methods_importcsvclosure_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="importcsvclosure-page"><p>the grid that we want to import into</p>
@@ -56,7 +56,7 @@ that are named based on the column.field or column.name, in that order.</p>
 a file object</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L387" class="view-source icon-eye-open"> </a><h3 id="methods_importjson">importJson(grid, importFile)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L387" class="view-source icon-eye-open"> </a><h3 id="methods_importjson">importJson(grid, importFile)</h3>
 <div class="importjson"><div class="importjson-page"><p>Creates a function that imports a json file into the grid.
 The json data is imported into new objects of type <code>gridOptions.importerNewObject</code>,
 and if the rowEdit feature is enabled the rows are marked as dirty</p>
@@ -65,7 +65,7 @@ and if the rowEdit feature is enabled the rows are marked as dirty</p>
 a FileObject</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L355" class="view-source icon-eye-open"> </a><h3 id="methods_importthisfile">importThisFile(grid, fileObject)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L355" class="view-source icon-eye-open"> </a><h3 id="methods_importthisfile">importThisFile(grid, fileObject)</h3>
 <div class="importthisfile"><div class="importthisfile-page"><p>Imports the provided file into the grid using the file object
 provided.  Bypasses the grid menu</p>
 </div><h5 id="methods_importthisfile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="importthisfile-page"><p>the grid we&#39;re importing into</p>
@@ -73,14 +73,14 @@ provided.  Bypasses the grid menu</p>
 javascript object</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L651" class="view-source icon-eye-open"> </a><h3 id="methods_newobject">newObject(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L651" class="view-source icon-eye-open"> </a><h3 id="methods_newobject">newObject(grid)</h3>
 <div class="newobject"><div class="newobject-page"><p>Makes a new object based on <code>gridOptions.importerNewObject</code>,
 or based on an empty object if not present</p>
 </div><h5 id="methods_newobject_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="newobject-page"><p>the grid we&#39;re importing into</p>
 </div></td></tr></tbody></table><h5 id="methods_newobject_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="newobject-page"><p>the new object</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L480" class="view-source icon-eye-open"> </a><h3 id="methods_parsecsv">parseCsv(importFile)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L480" class="view-source icon-eye-open"> </a><h3 id="methods_parsecsv">parseCsv(importFile)</h3>
 <div class="parsecsv"><div class="parsecsv-page"><p>Parses a csv file into an array of arrays, with the first
 array being the headers, and the remaining arrays being the data.
 The logic for this comes from <a href="https://github.com/thetalecrafter/excel.js/blob/master/src/csv.js">https://github.com/thetalecrafter/excel.js/blob/master/src/csv.js</a>,
@@ -90,7 +90,7 @@ checker</p>
 file object</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L420" class="view-source icon-eye-open"> </a><h3 id="methods_parsejson">parseJson(grid, importFile)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L420" class="view-source icon-eye-open"> </a><h3 id="methods_parsejson">parseJson(grid, importFile)</h3>
 <div class="parsejson"><div class="parsejson-page"><p>Parses a json file, returns the parsed data.
 Displays an error if file doesn&#39;t parse</p>
 </div><h5 id="methods_parsejson_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="parsejson-page"><p>the grid that we want to import into</p>
@@ -99,7 +99,7 @@ a FileObject</p>
 </div></td></tr></tbody></table><h5 id="methods_parsejson_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="parsejson-page"><p>array of objects from the imported json</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/beba8f5/src/features/importer/js/importer.js#L542" class="view-source icon-eye-open"> </a><h3 id="methods_processheaders">processHeaders(grid, headerRow)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/41cefad/src/features/importer/js/importer.js#L542" class="view-source icon-eye-open"> </a><h3 id="methods_processheaders">processHeaders(grid, headerRow)</h3>
 <div class="processheaders"><div class="processheaders-page"><p>Determines the columns that the header row from
 a csv (or other) file represents.</p>
 </div><h5 id="methods_processheaders_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="processheaders-page"><p>the grid we&#39;re importing into</p>
