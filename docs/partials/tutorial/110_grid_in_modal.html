@@ -11,10 +11,10 @@ so the currently recommended approach is to use $interval, and to call every 500
 <p>In a sense this is similar to what the auto-resize feature does, but it only does it for a short period after modal opening.</p>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-110-grid-in-a-modal-page"><h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-152" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-153"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-36" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-37"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-152" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-152">
+<pre class="prettyprint linenums" ng-set-text="index.html-36" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-36">
   <div ng-controller="MainCtrl">
     <button id="showButton" class="btn btn-success" ng-click="showModal()">Show Modal</button>
   </div>
@@ -91,8 +91,8 @@ so the currently recommended approach is to use $interval, and to call every 500
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-153"></pre>
-<script type="text/ng-template" id="scenario.js-153">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-37"></pre>
+<script type="text/ng-template" id="scenario.js-37">
   var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
   it('click modal button, grid should show with three columns and some data', function () {
     element( by.id ( 'showButton' ) ).click();
@@ -103,6 +103,6 @@ so the currently recommended approach is to use $interval, and to call every 500
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-152" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-36" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>

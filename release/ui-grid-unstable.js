@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.0.1-138d149 - 2016-12-29
+ * ui-grid - v3.0.7-282-g527f802-5f15eab - 2016-12-30
  * Copyright (c) 2016 ; License: MIT 
  */
 
@@ -2120,8 +2120,15 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
     templateUrl: 'ui-grid/uiGridMenu',
     replace: false,
     link: function ($scope, $elm, $attrs, uiGridCtrl) {
-
       $scope.dynamicStyles = '';
+      if (uiGridCtrl && uiGridCtrl.grid && uiGridCtrl.grid.options && uiGridCtrl.grid.options.gridMenuTemplate) {
+        var gridMenuTemplate = uiGridCtrl.grid.options.gridMenuTemplate;
+        gridUtil.getTemplate(gridMenuTemplate).then(function (contents) {
+          var template = angular.element(contents);
+          var newElm = $compile(template)($scope);
+          $elm.replaceWith(newElm);
+        });
+      }
 
       var setupHeightStyle = function(gridHeight) {
         //menu appears under header row, so substract that height from it's total
@@ -2138,7 +2145,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
         setupHeightStyle(uiGridCtrl.grid.gridHeight);
         uiGridCtrl.grid.api.core.on.gridDimensionChanged($scope, function(oldGridHeight, oldGridWidth, newGridHeight, newGridWidth) {
           setupHeightStyle(newGridHeight);
-		});
+        });
       }
 
       $scope.i18n = {
@@ -8149,6 +8156,15 @@ angular.module('ui.grid')
        * </br>Refer to the custom row template tutorial for more information.
        */
       baseOptions.rowTemplate = baseOptions.rowTemplate || 'ui-grid/ui-grid-row';
+
+      /**
+      * @ngdoc string
+      * @name gridMenuTemplate
+      * @propertyOf ui.grid.class:GridOptions
+      * @description 'ui-grid/uiGridMenu' by default. When provided, this setting uses a
+      * custom grid menu template.
+      */
+      baseOptions.gridMenuTemplate = baseOptions.gridMenuTemplate || 'ui-grid/uiGridMenu';
 
       /**
        * @ngdoc object
