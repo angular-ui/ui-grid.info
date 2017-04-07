@@ -1,0 +1,63 @@
+<main class="content container-fluid" role="main">
+  <div class="row text-muted">
+    <div class="posts-header col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1">Posts</div>
+    <div class="posts-header post-search-form form-inline col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-3">
+      <!-- <input type="text" class="form-control" placeholder="Search..."> -->
+      <gcse:searchbox-only></gcse:searchbox-only>
+    </div>
+  </div>
+
+  <% page.posts.each(function(post) { %>
+  <% author = post.author || config.author %>
+  <article class="row">
+    <div class="post col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <header class="post-header">
+        <%- partial('post/meta', {post: post}) %>
+        <h2 class="post-title"><a href="<%- config.root %><%- post.path %>"><%- post.title %></a></h2>
+      </header>
+      <section class="post-excerpt">
+        <p>
+        <% if (post.excerpt){ %>
+          <%- post.excerpt %>
+        <% } else { %>
+          <%- truncate(post.content, { length: 220, separator: ' '}) %>
+        <% } %>
+        </p>
+        <p class="clearfix">
+          <% if (author) { %>
+            <em>Posted by <strong><%= author %></strong> on <%= post.date.format('MMMM Do YYYY') %></em>
+          <% } %>
+          <% if (theme.excerpt_link) { %>
+            <!-- <a class="pull-right" href="<%- config.root %><%- post.path %>" class="excerpt-link"><%= theme.excerpt_link %>...</a> -->
+          <% } %>
+        </p>
+      </section>
+    </div>
+  </article>
+
+  <br>
+  <br>
+
+  <% }); %>
+
+  <nav class="row paging" role="pagination">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <% if (page.prev) { %><a class="newer-posts" href="<%- url_for(page.prev_link) %>">← Newer Posts</a><% } %>
+      <span class="page-number">Page <%- page.current %> of <%- page.total %></span>
+      <% if (page.next) { %><a class="older-posts" href="<%- url_for(page.next_link) %>">Older Posts →</a><% } %>
+    </div>
+  </nav>
+</main>
+
+<script>
+  (function() {
+    var cx = '004704188749146898876:clrnulkgmbe';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>

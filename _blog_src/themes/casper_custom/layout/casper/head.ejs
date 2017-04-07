@@ -1,0 +1,48 @@
+<%
+  var title = page.title;
+
+  if (is_archive()){
+    title = 'Archives';
+
+    if (is_month()){
+      title += ': ' + page.year + '/' + page.month;
+    } else if (is_year()){
+      title += ': ' + page.year;
+    }
+  } else if (is_category()){
+    title = 'Category: ' + page.category;
+  } else if (is_tag()){
+    title = 'Tag: ' + page.tag;
+  }
+%>
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
+  <meta name="description" content="<%- config.subtitle %>" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="<%- config.root %>css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="<%- config.title %>">
+
+  <% if (config.rss) { %>
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="<%- config.rss %>">
+  <% } %>
+  <% if (config.feed && config.feed.type == 'atom') { %>
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<%- config.feed.path %>">
+  <% } %>
+  <% if (config.feed && config.feed.type == 'rss') { %>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="<%- config.feed.path %>">
+  <% } %>
+
+  <% if (config.cloudfrontanalytics) { %>
+  <script type="text/javascript">
+    var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+    analytics.load("uj8ix0aatc");
+  </script>
+  <% } %>
+</head>

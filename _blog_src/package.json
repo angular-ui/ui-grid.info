@@ -1,0 +1,12 @@
+{
+  "name": "ui-grid.info.blog",
+  "version": "2.8.3",
+  "private": true,
+  "dependencies": {
+    "hexo-renderer-ejs": "*",
+    "hexo-renderer-stylus": "0.1.x",
+    "hexo-renderer-marked": "0.1.x",
+    "hexo-generator-cherrypick": "https://github.com/c0bra/hexo-generator-cherrypick/tarball/0.0.1",
+    "hexo-generator-feed": "^0.2.1"
+  }
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="An AngularJS data grid" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>6 Ways to Take Control of How Your Grid Data is Displayed | UI Grid</title>
+
+  <meta name="generator" content="UI Grid">
+
+  <link rel="stylesheet" href="/docs/css/bootstrap-flatly.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/blog/css/site.css" />
+  <!-- <link rel="stylesheet" href="/blog/css/screen.css" /> -->
+  <link rel="stylesheet" href="//ui-grid.info/release/ui-grid-unstable.min.css" />
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css"> -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
+  
+</head>
+
+<body class="post-template">
+
+  <div class="navbar navbar-default navbar-static-top">
+  <div class="nav navbar-header">
+    <a href="/" class="navbar-brand">UI Grid</a>
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Learn
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a href="/docs/#/api">Docs</a>
+          </li>
+          <li>
+            <a href="/docs/#/tutorial">Tutorial</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-header navbar-right">
+    <p class="navbar-text hidden-phone">
+      <iframe class="nav-ghbtn" src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=ng-grid&type=watch&count=true"
+            allowtransparency="true" frameborder="0" scrolling="0" width="120" height="20"></iframe>
+      <iframe class="nav-ghbtn" src="http://ghbtns.com/github-btn.html?user=angular-ui&repo=ng-grid&type=fork&count=true"
+            allowtransparency="true" frameborder="0" scrolling="0" width="120" height="20"></iframe>
+    </p>
+  </div>
+</div>
+  
+
+
+
+<main class="container" role="main">
+  <article>
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+<span class="post-meta text-muted">
+    <time datetime="2015-02-27T16:55:01.000Z" itemprop="datePublished">
+        February 27th 2015
+    </time>
+    <!-- TODO: Turning off tags on posts for now, turn on later maybe? -->
+    
+</span>
+<span class="pull-right">
+  <a href="/blog/">
+    <i class="fa fa-chevron-left"></i>
+    Back to main page
+  </a>
+</span>
+
+        <h1 class="post-title">6 Ways to Take Control of How Your Grid Data is Displayed</h1>
+
+        <br>
+
+        <section class="post-content">
+          <!-- 5 ways to display data the way you want -->
+<p>Getting your data displayed just right can be a huge pain.</p>
+<p>You might just want to format some numbers, or you might want to embed something complex like a chart or custom directive.</p>
+<p>In this post outline six different methods you can use to get your data <strong>just the way you want it</strong>:</p>
+<ul>
+<li>Bindings</li>
+<li>Cell Filters</li>
+<li>Cell Templates<ul>
+<li>Links</li>
+<li>Buttons</li>
+<li>Custom directives</li>
+</ul>
+</li>
+</ul>
+<h2 id="Bindings">Bindings</h2>
+<p>UI Grid columns can be bound to any sort of Angular expression, as well as property names that would normally break an expression:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span> },</div><div class="line">  { field: <span class="string">'addresses[0]'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/*</span></div><div class="line">    Yes, you can use hyphens, plus signs, etc.</div><div class="line"></div><div class="line">    Normally something like {{ row.entity.first-name }} would</div><div class="line">    bomb but UI Grid pre-processes your bindings to make sure they work correctly.</div><div class="line">  */</div><div class="line">  { field: <span class="string">'first-name'</span> }, </div><div class="line"></div><div class="line">  <span class="comment">/* Function expressions work too */</span></div><div class="line">  { field: <span class="string">'getCurrency()'</span> },</div><div class="line">  { field: <span class="string">'transformValue(row.entity.myField)'</span> },</div><div class="line"></div><div class="line">  <span class="comment">/* Plain old functions are also an option */</span></div><div class="line">  { field: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="keyword">this</span>.address.zip; } }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<h2 id="Cell_Filters">Cell Filters</h2>
+<p>Cell filters can transform the displayed value for a column while leaving the model intact. In this plunker the amount column contains floating point values, but we only want to display the integer part. A simple cellFilter that uses <code>.toFixed()</code> will alter the displayed value the way we want.</p>
+<iframe src="http://embed.plnkr.co/BjLqXGiUI8nQFwvijduh/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<h3 id="Passing_Arguments">Passing Arguments</h3>
+<p>In the third column I am using two different fields. The column itself is bound to the same field as the second column, but on the filter I am passing the scope like so: <code>cellFilter: &#39;currencyFilter:this&#39;</code>.  Using the <code>this</code> argument on your filter will pass the scope.</p>
+<p>Then I can lookup the currency symbol I want using the currency field from the row.</p>
+<p>If you double-click a cell in the Currency column you’ll see that the raw value is still available to be edited. Cell filters only change your displayed value!</p>
+<h2 id="Cell_Templates">Cell Templates</h2>
+<p>Column definitions take a <code>cellTemplate</code> argument you can use to give your cells a custom template. You can specify it a few different ways, with a url (relative or absolute), an Angular template ID, a string/Angular element, or a promise.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'name-template.html'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: <span class="string">'myTemplateId'</span> },</div><div class="line">  { field: <span class="string">'name'</span>, cellTemplate: $.get(<span class="string">'url-to-your-template.html'</span>) }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<h3 id="Bindings_in_Cell_Templates">Bindings in Cell Templates</h3>
+<p>There are a couple options for your binding your row’s data in your template. You can access the <code>row</code> object which is in the local scope; <code>row.entity</code> will contain the reference to your object, so if you want the “name” field, you can bind like so: .</p>
+<p>If you’ve <em>already</em> defined your binding in your column definition you can use one of UI Grid’s placeholders: <code>{{ COL_FIELD }}</code>. UI Grid will automatically replace COL_FIELD with the appropriate binding. If you need to two-way bind to your row, like when you’re using the edit feature, you’ll need to use the <code>MODEL_COL_FIELD</code> placeholder.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  {</div><div class="line">    field: <span class="string">'image_url'</span>,</div><div class="line">    cellTemplate: <span class="string">'&lt;div class="ui-grid-cell-contents"&gt;&lt;img src="{{ COL_FIELD }}" /&gt;&lt;/div&gt;'</span></div><div class="line">  }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<h3 id="Links_and_Buttons">Links and Buttons</h3>
+<p>Links are simple, just use regular old HTML. Wrapping your cell in an element using the class <code>.ui-grid-cell-contents</code> will apply the proper CSS settings like padding, overflow, etc., and make sure your cell fits in its space nicely.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columnDefs = [</div><div class="line">  {</div><div class="line">    field: <span class="string">'email'</span>,</div><div class="line">    cellTemplate: <span class="string">'&lt;div class="ui-grid-cell-contents"&gt;&lt;a href="mailto:{{ COL_FIELD }}"&gt;Send E-Mail&lt;/a&gt;&lt;/div&gt;'</span></div><div class="line">  }</div><div class="line">];</div></pre></td></tr></table></figure>
+
+<p>In the plunker below I’m using a basic cellTemplate to bind both the first and last name fields into one column. On the second column I’m using a simple link like above (note: none of these emails are real).</p>
+<p>On the third one, I’m using a template that’s referenced in index.html. If you check the bottom of that file you’ll see the template inside a <code>&lt;script type=&quot;text/ng-template&quot;&gt;</code> tag. Any tags of that type will put automatically put into the template cache (<code>$templateCache</code>) by Angular, with the id you specify.</p>
+<p>Also in the third column template you can see I’m using a variable called <code>grid.appScope</code>. Anywhere in your templates, <code>grid.appScope</code> will be bound to the parent scope of your grid. I use it to bind my button to a function in my controller that will open a new window with a url to google maps with the address in it (note: most if not all of these address will not exist).</p>
+<iframe src="http://embed.plnkr.co/ciExi4w6706sbO4esU0q/" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<h3 id="Tooltips">Tooltips</h3>
+<p>Tooltips are a little bit different because they float over your content. By default the grid’s cells are set to hide any overflow, so if you just pop a tooltip in there it won’t show up and you’ll probably be very confused. If you just add some custom overflow CSS it should fix your problem.</p>
+<p>Hover over the names in the plunker below:</p>
+<iframe src="http://embed.plnkr.co/v7a1W5mFHHaG894IDLTK/" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<p>Tooltips cannot overflow beyond the constraints of the viewport, so they won’t show above the first row or below the bottom row, for example.</p>
+<h3 id="Custom_Directives">Custom Directives</h3>
+<p>You can put absolutely anything in your cell templates, just remember to use <code>.ui-grid-cell-contents</code> if you’re not applying your own custom cell CSS.</p>
+<iframe src="http://embed.plnkr.co/irskqERheTOiFql82QFC/preview" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+
+<p>Here I’ve used d3.js, nvd3.js, and angular-nvd3.js to create sparkline charts in my cells.</p>
+<h2 id="Summin’_it_up">Summin’ it up</h2>
+<p>You should be able to do the vast majority of what you want with your data using these six methods. If you have questions, suggestions, or just want to say hi, drop in to <a href="http://gitter.im/angular-ui/ng-grid" target="_blank" rel="external">our gitter channel</a>; we’d love to meet you!</p>
+
+
+          
+        </section>
+
+        <footer class="post-footer">
+          <section class="author">
+    <h4>Brian</h4>
+    <p></p>
+</section>
+          <section class="share">
+  <h4>Share this post</h4>
+  <a class="fa fa-twitter" href="http://twitter.com/share?url=http://ui-grid.info/blog/blog/6_ways_to_take_control_of_how_your_grid_data_is_displayed/"
+     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ui-grid.info/blog/blog/6_ways_to_take_control_of_how_your_grid_data_is_displayed/"
+     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://ui-grid.info/blog/blog/6_ways_to_take_control_of_how_your_grid_data_is_displayed/"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+        </footer>
+      </div>
+    </div>
+  </article>
+  <nav class="row paging" role="pagination">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <div class="col-lg-5 col-md5">
+      
+    </div>
+
+    <!-- <span class="page-number col-lg-1 col-md-1">•</span> -->
+
+    <div class="col-lg-5 col-md5">
+      
+    </div>
+  </div>
+</nav>
+  
+</main>
+
+
+  <hr>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center">
+          <li>
+            <a href="/blog/atom.xml">
+              <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/angular-ui/ng-grid">
+              <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <p class="copyright text-muted">Copyright © UI Grid <span class="copyright-date">2015</span></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementsByClassName('copyright-date')[0].innerHTML = (new Date()).getYear() + 1900;
+</script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+$(document).ready(function() {
+    $('.highlight .code pre').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+</script>
+
+<script type="text/javascript" src="/blog/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/blog/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>

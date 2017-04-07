@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<%- partial('ui-grid/head') %>
+<% if (typeof page.title == 'undefined') { %>
+<body class="home-template">
+<% } else { %>
+<body class="post-template">
+<% } %>
+  <%- partial('ui-grid/header') %>
+  <%- body %>
+  <%- partial('ui-grid/footer') %>
+  <%- partial('ui-grid/after_all') %>
+</body>
+</html>
