@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/edit/js/gridEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/cc49916/src/features/edit/js/gridEdit.js#L133" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/edit/js/gridEdit.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/c0b42e0/src/features/edit/js/gridEdit.js#L133" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.edit</code>
 </span>
 </div>
@@ -10,11 +10,11 @@ set using the ui-grid <a href="#/api/ui.grid.class:GridOptions">gridOptions</a><
 <div class="member property"><h2 id="properties">Properties</h2>
 <ul class="properties"><li><h3 id="properties_celleditablecondition">cellEditableCondition</h3>
 <div class="celleditablecondition"><div class="celleditablecondition-page"><p>If specified, either a value or function to be used by all columns before editing.
-If falsy, then editing of cell is not allowed.</p>
+If false, then editing of cell is not allowed.</p>
 </div><h4 id="properties_celleditablecondition_example">Example</h4>
 <div class="example"><div class="celleditablecondition-page"><pre class="prettyprint linenums">
-function($scope){
-  //use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
+function($scope, triggerEvent){
+  //use $scope.row.entity, $scope.col.colDef and triggerEvent to determine if editing is allowed
   return true;
 }
 </pre>

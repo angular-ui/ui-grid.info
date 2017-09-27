@@ -6,7 +6,7 @@
 csv or pdf format.  The exporter can export all data, visible data or selected data.</p>
 <p>To use the exporter you need to include the ui-grid-exporter directive on
 your grid.  If you want to export selected rows you must include the ui-grid-selection
-directive on your grid.  If you want to export as PDF you need to have installed pdfMake, 
+directive on your grid.  If you want to export as PDF you need to have installed pdfMake,
 available through:
 <pre class="prettyprint linenums">  bower install pdfmake  </pre>
 <p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>.</p>
@@ -16,36 +16,36 @@ the pdf layout to have different styles than the default.</p>
 <p>We also apply a filter to the headers (simulating internationalisation), and we reprocess the grid
 data to apply a filter to decode coded data.</p>
 <p>We also right align the gender column.</p>
-<p>We include move columns, allowing users to move columns around and see them represented in the 
+<p>We include move columns, allowing users to move columns around and see them represented in the
 resulting export.</p>
 <h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-93" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-94" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-93" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-93">
+<pre class="prettyprint linenums" ng-set-text="index.html-94" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-94">
     <div ng-controller="MainCtrl">
       <label>Which columns should we export?</label>
-      <select ng-model="export_column_type"</select>
+      <select ng-model="export_column_type">
         <option value='all'>All</option>
         <option value='visible'>Visible</option>
       </select>
       <label>Which rows should we export?</label>
-      <select ng-model="export_row_type"</select>
+      <select ng-model="export_row_type">
         <option value='all'>All</option>
         <option value='visible'>Visible</option>
         <option value='selected'>Selected</option>
       </select>
       <label>What format would you like?</label>
-      <select ng-model="export_format"</select>
+      <select ng-model="export_format">
         <option value='csv'>CSV</option>
         <option value='pdf'>PDF</option>
       </select>
       <button ng-click="export()">Export</button>
       <div class="custom-csv-link-location">
         <label>Your CSV will show below:</label>
-        <span class="ui-grid-exporter-csv-link">&nbsp</span>
+        <span class="ui-grid-exporter-csv-link">&nbsp;</span>
       </div>
-      
+
       <div ui-grid="gridOptions" ui-grid-selection ui-grid-exporter ui-grid-move-columns class="grid"></div>
     </div>
   </script>
@@ -78,12 +78,12 @@ resulting export.</p>
         exporterPdfOrientation: 'portrait',
         exporterPdfPageSize: 'LETTER',
         exporterPdfMaxGridWidth: 500,
-        exporterHeaderFilter: function( displayName ) { 
-          if( displayName === 'Name' ) { 
-            return 'Person Name'; 
-          } else { 
+        exporterHeaderFilter: function( displayName ) {
+          if( displayName === 'Name' ) {
+            return 'Person Name';
+          } else {
             return displayName;
-          } 
+          }
         },
         exporterFieldCallback: function( grid, row, col, input ) {
           if( col.name == 'gender' ){
@@ -102,11 +102,11 @@ resulting export.</p>
             return input;
           }
         },
-        onRegisterApi: function(gridApi){ 
+        onRegisterApi: function(gridApi){
           $scope.gridApi = gridApi;
         }
       };
-      
+
       $http.get('/data/100.json')
         .success(function(data) {
           data.forEach( function( row, index ) {
@@ -118,9 +118,9 @@ resulting export.</p>
           });
           $scope.gridOptions.data = data;
         });
-        
-      
-        
+
+
+
       $scope.export = function(){
         if ($scope.export_format == 'csv') {
           var myElement = angular.element(document.querySelectorAll(".custom-csv-link-location"));
@@ -130,25 +130,22 @@ resulting export.</p>
         };
       };
     }])
-    
+
     .filter('mapGender', function() {
       return function( input ) {
         switch( input ){
           case 1:
             return 'female';
-            break;
           case 2:
             return 'male';
-            break;
           default:
             return 'unknown';
-            break;
         }
       };
     });
   </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-93" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-94" ng-eval-javascript="app.js"></div>
 </div></div>
 </div>
