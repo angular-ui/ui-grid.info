@@ -41,7 +41,7 @@
     $scope.gridOptions = {};
 
     $scope.gridOptions.columnDefs = [
-      { name:'id', width:50, enablePinning:false },
+      { name:'id', width:50, enablePinning:true, hidePinLeft: false, hidePinRight: true },
       { name:'name', width:100, pinnedLeft:true },
       { name:'age', width:100, pinnedRight:true  },
       { name:'address.street', width:150  },

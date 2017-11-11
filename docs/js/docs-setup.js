@@ -1154,7 +1154,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.pinning",
       "shortDescription": "ColumnDef for pinning feature, these are available to be",
-      "keywords": "api class column columndef columndefs enable enablepinning false feature grid gridoptions individual left object pinned pinnedleft pinnedright pinning rendered set true ui ui-grid"
+      "keywords": "api class column columndef columndefs enable enablepinning false feature grid gridoptions hide hidepinleft hidepinright individual left object pin pinned pinnedleft pinnedright pinning rendered set true ui ui-grid"
     },
     {
       "section": "api",
@@ -1163,7 +1163,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.pinning",
       "shortDescription": "GridOptions for pinning feature, these are available to be",
-      "keywords": "api class enable enablepinning entire feature grid gridoptions object pinning set true ui ui-grid"
+      "keywords": "api class enable enablepinning entire false feature grid gridoptions hide hidepinleft hidepinright left object pin pinning set true ui ui-grid"
     },
     {
       "section": "api",
@@ -1523,7 +1523,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.treeBase",
       "shortDescription": "Public Api for treeBase feature",
-      "keywords": "api apply array base call children collapse collapseallrows collapsed collapserow collapserowchildren config current defined expand expandallrows expanded expandedstate expandrow expandrowchildren expands feature format function getrowchildren gettreestate grandchildren grid gridrows grouping hash identifier identity instantiations moved object persists provided public retain returned row rows savestate set settreestate todo toggle togglerowtreestate tree treebase treestate treeview ui uid won work"
+      "keywords": "ancients api apply array base call children collapse collapseallrows collapsed collapserow collapserowchildren config current defined expand expandallrows expanded expandedstate expandrow expandrowchildren expands feature format function getrowchildren gettreestate grandchildren grid gridrows grouping hash identifier identity instantiations moved object persists provided public recursive retain returned row rows savestate set settreestate todo toggle togglerowtreestate tree treebase treestate treeview true ui uid won work"
     },
     {
       "section": "api",
@@ -1577,7 +1577,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "ui.grid.treeBase",
       "shortDescription": "Services for treeBase feature",
-      "keywords": "accepted accumulate achieve addorusenode adds adjustsorting aggregate aggregates aggregation aggregationbase aggregationfn aggregations aggregationtype allexpanded api append appropriate array associated assumes based basing build buildaggregationobject builder builds built calculates call callback called calling calls cells check child children col coldef collapse collapseallrows collapsed collapserow collapserowchildren collapses collates column columndef columndefs columns computationally copy correctly create created createorupdaterowheaderwidth createrowheader creates createtree criteria current data deepest defaults derived descendents determine determines don effort empty entity events expand expandall expandallrows expanded expandrow expandrowchildren expands expensive exporting false feature filter filtering filters finalise finaliseaggregation finaliseaggregations finaliserfn finalising finalize finalizers finalizing find fixfilter flat footer format formatting full function functions getaggregations grid gridcolumn gridoptions group grouped grouping groupval header helper hierarchy holding ignored ignoresort immaterial individual inline invisible iterate label leaves level list lists manipulated match meta-data method node nodelist nodes normal object operating options order output overwrite overwrites overwriting parent parents pass passed perform performs point preserves presumably previous process processes processor promise provided putting raise recorded recursive recursively relates remembering removes renderable renderablerows rendered rendertree resolved return returns risk routines row rowexpandedstates rowheader rowprocessor rows rowsprocessor runs service services set setallnodes setcurrentstate sets setting showing showtreerowheader signature sized sort sorted sortignore sorting sorts sorttree specific stored string subset sum suppress targetstate text things toggle togglerowtreestate toggles tree treeaggregationupdateentity treebase treebasecolumnbuilder treefooteraggregationtype treenode treerowheaderalwaysvisible treerows trees true turns type ui unignore update updated updates ve visibility visible walking walks wasting whilst width works write"
+      "keywords": "accepted accumulate achieve addorusenode adds adjustsorting aggregate aggregates aggregation aggregationbase aggregationfn aggregations aggregationtype allexpanded ancients api append appropriate array associated assumes based basing build buildaggregationobject builder builds built calculates call callback called calling calls cells check child children col coldef collapse collapseallrows collapsed collapserow collapserowchildren collapses collates column columndef columndefs columns computationally copy correctly create created createorupdaterowheaderwidth createrowheader creates createtree criteria current data deepest defaults derived descendents determine determines don effort empty entity events expand expandall expandallrows expanded expandrow expandrowchildren expands expensive exporting false feature filter filtering filters finalise finaliseaggregation finaliseaggregations finaliserfn finalising finalize finalizers finalizing find fixfilter flat footer format formatting full function functions getaggregations grid gridcolumn gridoptions group grouped grouping groupval header helper hierarchy holding ignored ignoresort immaterial individual inline invisible iterate label leaves level list lists manipulated match meta-data method node nodelist nodes normal object operating options order output overwrite overwrites overwriting parent parents pass passed perform performs point preserves presumably previous process processes processor promise provided putting raise recorded recursive recursively relates remembering removes renderable renderablerows rendered rendertree resolved return returns risk routines row rowexpandedstates rowheader rowprocessor rows rowsprocessor runs service services set setallnodes setcurrentstate sets setting showing showtreerowheader signature sized sort sorted sortignore sorting sorts sorttree specific stored string subset sum suppress targetstate text things toggle togglerowtreestate toggles tree treeaggregationupdateentity treebase treebasecolumnbuilder treefooteraggregationtype treenode treerowheaderalwaysvisible treerows trees true turns type ui unignore update updated updates ve visibility visible walking walks wasting whilst width works write"
     },
     {
       "section": "api",
@@ -1937,7 +1937,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 203 Pinning",
       "shortDescription": "Stable This feature is stable. There should no longer be breaking api changes without a deprecation warning.",
-      "keywords": "$http $log $scope address age alert alert-success allows angular api app breaking changes city class column columndef columndefs company controller css data definition deprecation directive disable displayname documentation element email enable enablepinning example feature friend friends function grid gridoptions height html include js json left level longer main mainctrl module ng-controller ngtouch note overview phone pin pinnedleft pinnedright pinning provided publicapi role stable street success tutorial ui ui-grid ui-grid-pinning user var warning width zip"
+      "keywords": "$http $log $scope address age alert alert-success allows angular api app breaking changes city class column columndef columndefs company controller css data definition deprecation directive disable displayname documentation element email enable enablepinning example false feature friend friends function grid gridoptions height hide hidepinleft hidepinright html include individually js json left level longer main mainctrl module ng-controller ngtouch note option overview phone pin pinnedleft pinnedright pinning provided publicapi role setting stable street success true tutorial ui ui-grid ui-grid-pinning user var warning width zip"
     },
     {
       "section": "tutorial",
