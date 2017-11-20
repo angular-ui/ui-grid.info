@@ -11,6 +11,11 @@ your grid.  If you want to export selected rows you must include the ui-grid-sel
 directive on your grid.  If you want to export as PDF you need to have installed pdfMake,
 available through:
 <pre class="prettyprint linenums">  bower install pdfmake  </pre>
+<p>If you want to export as Excel you need to have installed Excel-Builder,
+available through:
+<pre class="prettyprint linenums">  bower install lodash
+  bower install jszip#2.6.1
+  bower install excelbuilder  </pre>
 <p>The options and API for exporter can be found at <a href="#/api/ui.grid.exporter">ui.grid.exporter</a>, and</p>
 <ul>
 <li><a href="#/api/ui.grid.exporter.api:ColumnDef">columnDef</a></li>
@@ -84,6 +89,8 @@ rather than as part of a minification of your entire javascript library.</p>
         exporterPdfPageSize: 'LETTER',
         exporterPdfMaxGridWidth: 500,
         exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        exporterExcelFilename: 'myFile.xlsx',
+        exporterExcelSheetName: 'Sheet1',
         onRegisterApi: function(gridApi){
           $scope.gridApi = gridApi;
         }

@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/exporter/js/exporter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/ac3a18b/src/features/exporter/js/exporter.js#L166" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/exporter/js/exporter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/e30596b/src/features/exporter/js/exporter.js#L182" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.exporter</code>
 </span>
 </div>
@@ -48,6 +48,15 @@ This will only work in some browsers.
 <br/>Defaults to &#39;download.csv&#39;</p>
 </div></div>
 </li>
+<li><h3 id="properties_exporterfieldapplyfilters">exporterFieldApplyFilters</h3>
+<div class="exporterfieldapplyfilters"><div class="exporterfieldapplyfilters-page"><p>Defaults to false, which leads to filters being evaluated on export           *</p>
+</div><h4 id="properties_exporterfieldapplyfilters_example">Example</h4>
+<div class="example"><div class="exporterfieldapplyfilters-page"><pre class="prettyprint linenums">
+gridOptions.exporterFieldApplyFilters = true;
+</pre>
+</div></div>
+</div>
+</li>
 <li><h3 id="properties_exporterfieldcallback">exporterFieldCallback</h3>
 <div class="exporterfieldcallback"><div class="exporterfieldcallback-page"><p>A function to call for each field before exporting it.  Allows
 massaging of raw data into a display format, for example if you have applied
@@ -58,6 +67,25 @@ gridCol and the GridRow for you to use as context in massaging the data.</p>
 </div><h5 id="properties_exporterfieldcallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="exporterfieldcallback-page"><p>you must return the massaged value ready for exporting</p>
 </div></td></tr></table><h4 id="properties_exporterfieldcallback_example">Example</h4>
 <div class="example"><div class="exporterfieldcallback-page"><pre class="prettyprint linenums">
+gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
+  if ( col.name === 'status' ){
+    value = decodeStatus( value );
+  }
+  return value;
+}
+</pre>
+</div></div>
+</div>
+</li>
+<li><h3 id="properties_exporterfieldformatcallback">exporterFieldFormatCallback</h3>
+<div class="exporterfieldformatcallback"><div class="exporterfieldformatcallback-page"><p>A function to call for each field before exporting it.  Allows
+general object to be return to modify the format of a cell in the case of
+excel exports</p>
+<p>The method is called once for each field exported, and provides the grid, the
+gridCol and the GridRow for you to use as context in massaging the data.</p>
+</div><h5 id="properties_exporterfieldformatcallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="exporterfieldformatcallback-page"><p>you must return the massaged value ready for exporting</p>
+</div></td></tr></table><h4 id="properties_exporterfieldformatcallback_example">Example</h4>
+<div class="example"><div class="exporterfieldformatcallback-page"><pre class="prettyprint linenums">
 gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
   if ( col.name === 'status' ){
     value = decodeStatus( value );
@@ -102,6 +130,10 @@ Used it on other programs will make csv content display unproperly. Setting this
 </li>
 <li><h3 id="properties_exportermenucsv">exporterMenuCsv</h3>
 <div class="exportermenucsv"><div class="exportermenucsv-page"><p>Add csv export menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.</p>
+</div></div>
+</li>
+<li><h3 id="properties_exportermenuexcel">exporterMenuExcel</h3>
+<div class="exportermenuexcel"><div class="exportermenuexcel-page"><p>Add excel export menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.</p>
 </div></div>
 </li>
 <li><h3 id="properties_exportermenuitemorder">exporterMenuItemOrder</h3>
