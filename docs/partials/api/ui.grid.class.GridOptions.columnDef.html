@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/a205c13/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/089006f/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.class:GridOptions</code>
 </span>
 </div>
@@ -16,7 +16,7 @@ in the aggregation footer, so only the value is displayed.</p>
 <li><h3 id="properties_aggregationtype">aggregationType</h3>
 <div class="aggregationtype"><div class="aggregationtype-page"><p>The aggregation that you&#39;d like to show in the columnFooter for this
 column.  Valid values are in
-<a href="#/api/ui.grid.service:uiGridConstants#properties_aggregationtypes">uiGridConstants.aggregationTypes</a>,
+<a href="#!/api/ui.grid.service:uiGridConstants#properties_aggregationtypes">uiGridConstants.aggregationTypes</a>,
 and currently include <code>uiGridConstants.aggregationTypes.count</code>,
 <code>uiGridConstants.aggregationTypes.sum</code>, <code>uiGridConstants.aggregationTypes.avg</code>, <code>uiGridConstants.aggregationTypes.min</code>,
 <code>uiGridConstants.aggregationTypes.max</code>.</p>
@@ -55,9 +55,9 @@ if it is a static string then displays that static string.</p>
 <li><h3 id="properties_defaultsort">defaultSort</h3>
 <div class="defaultsort"><div class="defaultsort-page"><p>An object of sort information, provides a hidden default ordering of the data
 when no user sorts are applied, or when a user-provided sort deems two rows to be equal.</p>
-<p>May be combined with a regular <a href="#/api/ui.grid.class:GridOptions.columnDef#properties_sort">columnDef.sort</a>
+<p>May be combined with a regular <a href="#!/api/ui.grid.class:GridOptions.columnDef#properties_sort">columnDef.sort</a>
 to explicitly sort by that column by default.</p>
-<p>Shares the same object format as <a href="#/api/ui.grid.class:GridOptions.columnDef#properties_sort">columnDef.sort</a>.</p>
+<p>Shares the same object format as <a href="#!/api/ui.grid.class:GridOptions.columnDef#properties_sort">columnDef.sort</a>.</p>
 <p>Note that a defaultSort can never take priority over an explicit sort.</p>
 </div><h4 id="properties_defaultsort_example">Example</h4>
 <div class="example"><div class="defaultsort-page"><pre class="prettyprint linenums">
@@ -119,7 +119,7 @@ array element.  Can be a complex expression: <code>employee.address.city</code>,
 <p>A filter consists of a condition, a term, and a placeholder:</p>
 <ul>
 <li>condition defines how rows are chosen as matching the filter term. This can be set to
-one of the constants in <a href="#/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter</a>,
+one of the constants in <a href="#!/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter</a>,
 or you can supply a custom filter function
 that gets passed the following arguments: [searchTerm, cellValue, row, column].</li>
 <li>term: If set, the filter field will be pre-populated
@@ -132,8 +132,8 @@ your custom function doesn&#39;t require a term (so it can run even when the ter
 your custom function requires access to the raw unmodified search term that was entered</li>
 <li>flags: only flag currently available is <code>caseSensitive</code>, set to false if you don&#39;t want
 case sensitive matching</li>
-<li>type: defaults to <a href="#/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter.INPUT</a>,
-which gives a text box.  If set to <a href="#/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter.SELECT</a>
+<li>type: defaults to <a href="#!/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter.INPUT</a>,
+which gives a text box.  If set to <a href="#!/api/ui.grid.service:uiGridConstants#properties_filter">uiGridConstants.filter.SELECT</a>
 then a select box will be shown with options selectOptions</li>
 <li>selectOptions: options in the format <code>[ { value: 1, label: &#39;male&#39; }]</code>.  No i18n filter is provided, you need
 to perform the i18n on the values before you provide them</li>
@@ -297,8 +297,8 @@ be used as a key for retrieving information such as custom sort algorithms.</p>
 <li><h3 id="properties_sort">sort</h3>
 <div class="sort"><div class="sort-page"><p>An object of sort information, attributes are:</p>
 <ul>
-<li>direction: values are <a href="#/api/ui.grid.service:uiGridConstants#properties_asc">uiGridConstants.ASC</a>
-or <a href="#/api/ui.grid.service:uiGridConstants#properties_desc">uiGridConstants.DESC</a></li>
+<li>direction: values are <a href="#!/api/ui.grid.service:uiGridConstants#properties_asc">uiGridConstants.ASC</a>
+or <a href="#!/api/ui.grid.service:uiGridConstants#properties_desc">uiGridConstants.DESC</a></li>
 <li>ignoreSort: if set to true this sort is ignored (used by tree to manipulate the sort functionality)</li>
 <li>priority: says what order to sort the columns in (lower priority gets sorted first).</li>
 </ul>
@@ -319,20 +319,20 @@ $scope.gridOptions.columnDefs = [{
 <li><h3 id="properties_sortcellfiltered">sortCellFiltered</h3>
 <div class="sortcellfiltered"><div class="sortcellfiltered-page"><p>(optional) False by default. When <code>true</code> uiGrid will apply the cellFilter before
 sorting the data. Note that when using this option uiGrid will assume that the displayed value is
-a string, and use the <a href="#/api/ui.grid.class:RowSorter#sortalpha">sortAlpha</a> <code>sortFn</code>. It is possible
-to return a non-string value from an angularjs filter, in which case you should define a <a href="#/api/ui.grid.class:GridOptions.columnDef#sortingalgorithm">sortingAlgorithm</a>
+a string, and use the <a href="#!/api/ui.grid.class:RowSorter#sortalpha">sortAlpha</a> <code>sortFn</code>. It is possible
+to return a non-string value from an angularjs filter, in which case you should define a <a href="#!/api/ui.grid.class:GridOptions.columnDef#sortingalgorithm">sortingAlgorithm</a>
 for the column which hanldes the returned type. You may specify one of the <code>sortingAlgorithms</code>
-found in the <a href="#/api/ui.grid.RowSorter">rowSorter</a> service.</p>
+found in the <a href="#!/api/ui.grid.RowSorter">rowSorter</a> service.</p>
 </div></div>
 </li>
 <li><h3 id="properties_sortdirectioncycle">sortDirectionCycle</h3>
-<div class="sortdirectioncycle"><div class="sortdirectioncycle-page"><p>(optional) An array of <a href="#/api/ui.grid.service:uiGridConstants#properties_asc">sort directions</a>,
+<div class="sortdirectioncycle"><div class="sortdirectioncycle-page"><p>(optional) An array of <a href="#!/api/ui.grid.service:uiGridConstants#properties_asc">sort directions</a>,
 specifying the order that they should cycle through as the user repeatedly clicks on the column heading.
 The default is <code>[null, uiGridConstants.ASC, uiGridConstants.DESC]</code>. Null
 refers to the unsorted state. This does not affect the initial sort
-direction; use the <a href="#/api/ui.grid.class:GridOptions.columnDef#sort">sort</a>
+direction; use the <a href="#!/api/ui.grid.class:GridOptions.columnDef#sort">sort</a>
 property for that. If
-<a href="#/api/ui.grid.class:GridOptions.columnDef#suppressremovesort">suppressRemoveSort</a>
+<a href="#!/api/ui.grid.class:GridOptions.columnDef#suppressremovesort">suppressRemoveSort</a>
 is also set, the unsorted state will be skipped even if it is listed here.
 Each direction may not appear in the list more than once (e.g. <code>[ASC,
 DESC, DESC]</code> is not allowed), and the list may not be empty.</p>

@@ -252,7 +252,7 @@ docsApp.serviceFactory.sections = function serviceFactory() {
     } else {
       page.partialUrl = 'partials/' + url.replace(':', '.') + '.html';
     }
-    page.url = (NG_DOCS.html5Mode ? '' : '#/') + url;
+    page.url = (NG_DOCS.html5Mode ? '' : '#!/') + url;
     if (!sections[page.section]) { sections[page.section] = []; }
     sections[page.section].push(page);
   });
@@ -359,7 +359,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
 
   $scope.sections = {};
   angular.forEach(NG_DOCS.sections, function(section, url) {
-    $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + url] = section;
+    $scope.sections[(NG_DOCS.html5Mode ? '' : '#!/') + url] = section;
   });
   $scope.$watch(function docsPathWatch() {return $location.path(); }, function docsPathWatchAction(path) {
 
@@ -383,7 +383,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
       var parts = path.split('/'),
         sectionId = parts[1],
         partialId = parts[2],
-        page, sectionName = $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + sectionId];
+        page, sectionName = $scope.sections[(NG_DOCS.html5Mode ? '' : '#!/') + sectionId];
 
       if (!sectionName) { return; }
 
@@ -399,7 +399,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
 
       // Update breadcrumbs
       var breadcrumb = $scope.breadcrumb = [],
-        match, sectionPath = (NG_DOCS.html5Mode ? '' : '#/') +  sectionId;
+        match, sectionPath = (NG_DOCS.html5Mode ? '' : '#!/') +  sectionId;
 
       if (partialId) {
         breadcrumb.push({ name: sectionName, url: sectionPath });
@@ -546,7 +546,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, $timeou
       if (!module) {
         module = cache[name] = {
           name: name,
-          url: (NG_DOCS.html5Mode ? '' : '#/') + section + '/' + name,
+          url: (NG_DOCS.html5Mode ? '' : '#!/') + section + '/' + name,
           globals: [],
           controllers: [],
           directives: [],

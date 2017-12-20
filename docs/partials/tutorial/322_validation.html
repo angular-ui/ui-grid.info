@@ -1,4 +1,4 @@
-<h1><code ng:non-bindable=""></code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/322_validation.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
 <div><span class="hint"></span>
 </div>
 </h1>
@@ -10,7 +10,7 @@ There will almost certainly be breaking api changes, or there are major outstand
 <p>This feature depends on ui.grid.edit.</p>
 <p>Documentation for the validation feature is provided in the api documentation, in particular:</p>
 <ul>
-<li><a href="#/api/ui.grid.validate.api:PublicApi">publicApi</a></li>
+<li><a href="#!/api/ui.grid.validate.api:PublicApi">publicApi</a></li>
 </ul>
 <h3 id="validators">Validators</h3>
 <p>Validation is based on validation functions defined at service level (thus valid through all the application).</p>
@@ -20,7 +20,7 @@ There will almost certainly be breaking api changes, or there are major outstand
 <li><code>minLength</code>: to ensure that the value inserted is at least X characters long.</li>
 <li><code>maxLength</code>: to ensure that the value inserted is at most X characters long.</li>
 </ul>
-<p>To define a new validator you should use the <a href="#/api/ui.grid.validate.service:uiGridValidateService#methods_setvalidator">setValidator</a> method.</p>
+<p>To define a new validator you should use the <a href="#!/api/ui.grid.validate.service:uiGridValidateService#methods_setvalidator">setValidator</a> method.</p>
 <p>To add a validator to a column you just need to add a <code>validators</code> property to its <code>colDef</code>
 object, containing a property for each validator you want to add. The name of the property
 will set the validator and the value of the property will be treated as an argument by the validator function.</p>
@@ -32,7 +32,7 @@ will set the validator and the value of the property will be treated as an argum
 </ul>
 <h3 id="external-factory">External Factory</h3>
 <p>In case you have an external service providing validators, you can add a function calling said service
-by setting an external validator factory function via <a href="#/api/ui.grid.validate.service:uiGridValidateService#methods_setexternalfactoryfunction">setExternalFactoryFunction</a>.</p>
+by setting an external validator factory function via <a href="#!/api/ui.grid.validate.service:uiGridValidateService#methods_setexternalfactoryfunction">setExternalFactoryFunction</a>.</p>
 <p>Please be advised that external validators should accept the same parameters (or at least an ordered subset) as
 our validators do (<code>oldValue</code>, <code>newValue</code>, <code>rowEntity</code>, <code>colDef</code>);</p>
 </div><h2 id="example">Example</h2>
