@@ -96,8 +96,8 @@ the column menu entirely using the <code>enableColumnMenu: false</code> columnDe
     };
 
     $http.get('/data/100.json')
-      .success(function(data) {
-        $scope.gridOptions.data = data;
+      .then(function(response) {
+        $scope.gridOptions.data = response.data;
       });
   }]);
 </script>

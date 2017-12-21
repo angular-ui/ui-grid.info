@@ -107,8 +107,8 @@ our validators do (<code>oldValue</code>, <code>newValue</code>, <code>rowEntity
           };
 
     $http.get('/data/500_complex.json')
-      .success(function(data) {
-        $scope.gridOptions.data = data;
+      .then(function(response) {
+        $scope.gridOptions.data = response.data;
       });
   }]);
 });

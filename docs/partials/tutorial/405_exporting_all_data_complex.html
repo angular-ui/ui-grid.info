@@ -93,10 +93,10 @@ as all the data is now present within AngularJS  </p>
 
           var _scope = $scope;
           return $http.get(url)
-          .success(function (data) {
+          .then(function (response) {
             var firstRow = (curPage - 1) * pageSize;
             $scope.gridOptions.totalItems = 100;
-            $scope.gridOptions.data = data.slice(firstRow, firstRow + pageSize)
+            $scope.gridOptions.data = response.data.slice(firstRow, firstRow + pageSize)
           });
         };
 

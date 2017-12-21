@@ -76,9 +76,9 @@ using <a href="#!/tutorial/212_infinite_scroll">infinite scroll</a>, which also 
     }
 
     $http.get('/data/100.json')
-    .success(function (data) {
-      $scope.gridOptions1.data = data;
-      $scope.gridOptions2.data = data;
+    .then(function (response) {
+      $scope.gridOptions1.data = response.data;
+      $scope.gridOptions2.data = response.data;
     });
   }]);
 </script>

@@ -54,8 +54,8 @@ you&#39;re expecting to use <code>{{</code> or <code>}}</code> to signify someth
       };
 
       $http.get('/data/100.json')
-        .success(function(data) {
-          $scope.gridOptions.data = data;
+        .then(function(response) {
+          $scope.gridOptions.data = response.data;
         });
     }]);
   </script>

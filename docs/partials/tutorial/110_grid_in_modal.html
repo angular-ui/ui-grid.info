@@ -50,8 +50,8 @@ so the currently recommended approach is to use $interval, and to call every 500
       };
 
       $http.get('/data/100.json')
-        .success(function(data) {
-          $rootScope.gridOptions.data = data;
+        .then(function(response) {
+          $rootScope.gridOptions.data = response.data;
         });
 
       $scope.showModal = function() {

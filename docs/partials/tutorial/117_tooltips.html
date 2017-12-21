@@ -69,12 +69,12 @@ data that won&#39;t be displayable within the grid row (e.g. long description fi
       };
 
       $http.get('/data/100.json')
-        .success(function(data) {
-          data.forEach( function setGender( row, index ){
-            row.gender = row.gender==='male' ? '1' : '2';
+        .then(function(response) {
+          response.data.forEach( function setGender( row, index ){
+            row.gender = row.gender === 'male' ? '1' : '2';
           });
 
-          $scope.gridOptions.data = data;
+          $scope.gridOptions.data = response.data;
         });
     }])
     .filter('mapGender', function() {

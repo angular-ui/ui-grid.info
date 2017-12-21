@@ -66,8 +66,8 @@ so there is currently no way to have more than one language per app.</p>
     };
 
     $http.get('/data/100.json')
-    .success(function(data) {
-      $scope.gridOptions.data = data;
+    .then(function(response) {
+      $scope.gridOptions.data = response.data;
     });
   }]);
 </script>
