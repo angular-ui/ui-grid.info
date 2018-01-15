@@ -46,19 +46,19 @@ while executing very complex features only when you need them.</p>
    </pre>
  </li>
  <li>
-  Add an array of data to a property on your $scope
+  Add an array of data to a property on your controller
      <pre class="prettyprint linenums">
-     $scope.myData = [
+     this.myData = [
              {
                  "firstName": "Cox",
                  "lastName": "Carney"...
      </pre>
  </li>
  <li>
- Use the ui-grid directive and specify a json object with a data property referencing your $scope.myData property.
+ Use the ui-grid directive and specify a json object with a data property referencing your $ctrl.myData property.
  <pre class="prettyprint linenums">
-     &lt;div ng-controller="MainCtrl"&gt;
-       &lt;div ui-grid="{ data: myData }" class="myGrid"&gt;&lt;/div&gt;
+     &lt;div ng-controller="MainCtrl as $ctrl"&gt;
+       &lt;div ui-grid="{ data: $ctrl.myData }" class="myGrid"&gt;&lt;/div&gt;
      &lt;/div&gt;
  </pre>
 
@@ -69,8 +69,8 @@ while executing very complex features only when you need them.</p>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-22" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-22">
-  <div ng-controller="MainCtrl">
-    <div id="grid1" ui-grid="{ data: myData }" class="grid"></div>
+  <div ng-controller="MainCtrl as $ctrl">
+    <div id="grid1" ui-grid="{ data: $ctrl.myData }" class="grid"></div>
   </div>
 </script>
 </div>
@@ -86,48 +86,49 @@ while executing very complex features only when you need them.</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+  angular.module('app', ['ngTouch', 'ui.grid'])
+    .controller('MainCtrl', MainCtrl);
 
-  app.controller('MainCtrl', ['$scope', function ($scope) {
-
-    $scope.myData = [
+  function MainCtrl() {
+    this.myData = [
       {
-          "firstName": "Cox",
-          "lastName": "Carney",
-          "company": "Enormo",
-          "employed": true
+          firstName: "Cox",
+          lastName: "Carney",
+          company: "Enormo",
+          employed: true
       },
       {
-          "firstName": "Lorraine",
-          "lastName": "Wise",
-          "company": "Comveyer",
-          "employed": false
+          firstName: "Lorraine",
+          lastName: "Wise",
+          company: "Comveyer",
+          employed: false
       },
       {
-          "firstName": "Nancy",
-          "lastName": "Waters",
-          "company": "Fuelton",
-          "employed": false
+          firstName: "Nancy",
+          lastName: "Waters",
+          company: "Fuelton",
+          employed: false
       }
-  ];
-  }]);
+    ];
+  }
 </script>
 </div>
 <div class="tab-pane" title="End to end test">
 <pre class="prettyprint linenums" ng-set-text="scenario.js-23"></pre>
 <script type="text/ng-template" id="scenario.js-23">
-  var GridObjectTest = require('../../test/e2e/gridObjectTestUtils.spec.js');
-  var grid1 = new GridObjectTest('grid1');
+  var GridObjectTest = require('../../test/e2e/gridObjectTestUtils.spec.js'),
+    grid1 = new GridObjectTest('grid1');
+
   describe('101 tutorial', function() {
-    it('grid should have three visible rows', function () {
+    it('grid should have three visible rows', function() {
       grid1.expectRowCount( 3 );
     });
 
-    it('header values should be as expected', function () {
+    it('header values should be as expected', function() {
       grid1.expectHeaderColumns( ['First Name', 'Last Name', 'Company', 'Employed'] );
     });
 
-    it('first row cell values should be as expected', function () {
+    it('first row cell values should be as expected', function() {
       // checking individual cells usually gives a better stack trace when there are errors
       grid1.expectCellValueMatch( 0, 0, 'Cox' );
       grid1.expectCellValueMatch( 0, 1, 'Carney' );
@@ -135,7 +136,7 @@ while executing very complex features only when you need them.</p>
       grid1.expectCellValueMatch( 0, 3, 'true' );
     });
 
-    it('next two row cell values should be as expected', function () {
+    it('next two row cell values should be as expected', function() {
       // checking in bulk is convenient to write, but can be less informative with errors
       grid1.expectRowValuesMatch( 1, [ 'Lorraine', 'Wise', 'Comveyer', 'false' ] );
       grid1.expectRowValuesMatch( 2, [ 'Nancy', 'Waters', 'Fuelton', 'false' ] );

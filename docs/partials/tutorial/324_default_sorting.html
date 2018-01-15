@@ -6,10 +6,10 @@
 <p>In this example there an initial sort via name, but the defaultSort on memberNo ensures that when the names are the same then the memberNo is used to sort the matching entries. If the name sort is removed then all the entries are automatically sorted by memberNo due to the defaultSort.</p>
 <p>Default sorts are intended to ensure a sensible implicit ordering to the data is retained, and therefore they do not show on columnHeaders as sorts unless the user explicitly sorts by that column.</p>
 <h3 id="source">Source</h3>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-106" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-107"></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-107" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-108"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
-<pre class="prettyprint linenums" ng-set-text="index.html-106" ng-html-wrap-loaded="app angular.js app.js"></pre>
-<script type="text/ng-template" id="index.html-106">
+<pre class="prettyprint linenums" ng-set-text="index.html-107" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-107">
     <div ng-controller="MainCtrl">
       <div id="grid1" ui-grid="gridOptions" class="grid"></div>
     </div>
@@ -54,8 +54,8 @@
   </script>
 </div>
 <div class="tab-pane" title="End to end test">
-<pre class="prettyprint linenums" ng-set-text="scenario.js-107"></pre>
-<script type="text/ng-template" id="scenario.js-107">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-108"></pre>
+<script type="text/ng-template" id="scenario.js-108">
     var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
     var GridObjectTest = require('../../test/e2e/gridObjectTestUtils.spec.js');
     var grid1 = new GridObjectTest('grid1');
@@ -96,5 +96,5 @@
   </script>
 </div>
 </div><h3 id="demo">Demo</h3>
-<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-106" ng-eval-javascript="app.js"></div>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-107" ng-eval-javascript="app.js"></div>
 </div></div>

@@ -17,14 +17,14 @@ so there is currently no way to have more than one language per app.</p>
 <p>For an example using angular-translate to translate your headers, refer to <a href="http://plnkr.co/edit/KnrKTst5dWXvlZNeIy9c?p=preview">http://plnkr.co/edit/KnrKTst5dWXvlZNeIy9c?p=preview</a></p>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-104-i18n-page"><h4 id="example_source">Source</h4>
-<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-29"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-28" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-28">
-  <div ng-controller="MainCtrl">
-    <select ng-model="lang" ng-options="l for l in langs"></select><br>
+  <div ng-controller="MainCtrl as $ctrl">
+    <select id="langDropdown" ng-model="$ctrl.lang" ng-options="l for l in $ctrl.langs"></select><br>
 
-    <div ui-i18n="{{lang}}">
+    <div ui-i18n="{{$ctrl.lang}}">
        <p>Using attribute:</p>
        <p ui-t="groupPanel.description"></p>
        <br/>
@@ -33,9 +33,8 @@ so there is currently no way to have more than one language per app.</p>
 
        <p>Click the header menu to see language.</p>
 
-       <div ui-grid="gridOptions" class="grid"></div>
+       <div id="i18nGrid" ui-grid="$ctrl.gridOptions" class="grid"></div>
     </div>
-
   </div>
 </script>
 </div>
@@ -51,13 +50,18 @@ so there is currently no way to have more than one language per app.</p>
 <div class="tab-pane" title="app.js">
 <pre class="prettyprint linenums" ng-set-text="app.js"></pre>
 <script type="text/ng-template" id="app.js">
-  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+  angular.module('app', ['ngTouch', 'ui.grid'])
+    .controller('MainCtrl', MainCtrl);
 
-  app.controller('MainCtrl', ['$scope', 'i18nService', '$http', function ($scope, i18nService, $http) {
-    $scope.langs = i18nService.getAllLangs();
-    $scope.lang = 'nl';
+  MainCtrl.$inject = ['i18nService', '$http'];
 
-    $scope.gridOptions = {
+  function MainCtrl(i18nService, $http) {
+    var vm = this;
+
+    vm.langs = i18nService.getAllLangs();
+    vm.lang = 'nl';
+
+    vm.gridOptions = {
       columnDefs: [
         { field: 'name' },
         { field: 'gender' },
@@ -66,10 +70,27 @@ so there is currently no way to have more than one language per app.</p>
     };
 
     $http.get('/data/100.json')
-    .then(function(response) {
-      $scope.gridOptions.data = response.data;
+      .then(function(response) {
+        vm.gridOptions.data = response.data;
+      });
+  }
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-29"></pre>
+<script type="text/ng-template" id="scenario.js-29">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+
+    describe('104 i18n', function() {
+      gridTestUtils.firefoxReload();
+
+      it('should default to nl for the language', function() {
+        expect(element(by.id('langDropdown')).element(by.css('option:checked')).getText()).toEqual('nl');
+      });
+      it('should have three visible columns', function() {
+        gridTestUtils.expectHeaderColumnCount( 'i18nGrid', 3 );
+      });
     });
-  }]);
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>

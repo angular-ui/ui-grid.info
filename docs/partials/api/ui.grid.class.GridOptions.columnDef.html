@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/0393186/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/9cf6450/src/js/core/factories/GridOptions.js#L131" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">columnDef</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid.class:GridOptions</code>
 </span>
 </div>
@@ -82,6 +82,12 @@ provided then one is generated using the name.</p>
 column (i.e. if gridOptions.enableColumnMenus, then you can control column menus
 using this option. If gridOptions.enableColumnMenus === false then you get no column
 menus irrespective of the value of this option ).  Defaults to true.</p>
+<p>By default column menu&#39;s trigger is hidden before mouse over, but you can always force it to be visible with CSS:</p>
+<pre class="prettyprint linenums">
+ .ui-grid-column-menu-button {
+   display: block;
+ }
+</pre>
 </div></div>
 </li>
 <li><h3 id="properties_enablecolumnmenus">enableColumnMenus</h3>

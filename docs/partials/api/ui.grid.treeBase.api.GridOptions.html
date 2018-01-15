@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/0393186/src/features/tree-base/js/tree-base.js#L440" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/tree-base/js/tree-base.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/9cf6450/src/features/tree-base/js/tree-base.js#L440" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.treeBase</code>
 </span>
 </div>
@@ -36,11 +36,11 @@ The object format is:</p>
       label: (optional) string,
       aggregationFn: function( aggregation, fieldValue, numValue, row ){...},
       finalizerFn: (optional) function( aggregation ){...}
-      },
+    },
     mean: {
       label: 'mean',
       aggregationFn: function( aggregation, fieldValue, numValue ){
-          aggregation.count = (aggregation.count || 1) + 1;
+        aggregation.count = (aggregation.count || 1) + 1;
         aggregation.sum = (aggregation.sum || 0) + numValue;
       },
       finalizerFn: function( aggregation ){
