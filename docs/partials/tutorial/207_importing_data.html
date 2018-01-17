@@ -49,8 +49,8 @@ illustrates that doing so is not mandatory).</p>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-66" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-66">
-    <div ng-controller="MainCtrl">
-      <div ui-grid="gridOptions" ui-grid-importer class="grid"></div>
+    <div ng-controller="MainCtrl as $ctrl">
+      <div ui-grid="$ctrl.gridOptions" ui-grid-importer class="grid"></div>
     </div>
   </script>
 </div>
@@ -68,19 +68,21 @@ illustrates that doing so is not mandatory).</p>
 <script type="text/ng-template" id="app.js">
     var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.importer']);
 
-    app.controller('MainCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+    app.controller('MainCtrl', function ($scope, $http, $interval) {
+      var vm = this;
+
       $scope.data = [];
-      $scope.gridOptions = {
+      vm.gridOptions = {
         enableGridMenu: true,
         data: 'data',
         importerDataAddCallback: function ( grid, newObjects ) {
           $scope.data = $scope.data.concat( newObjects );
         },
         onRegisterApi: function(gridApi){
-          $scope.gridApi = gridApi;
+          vm.gridApi = gridApi;
         }
       };
-    }]);
+    });
   </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>
