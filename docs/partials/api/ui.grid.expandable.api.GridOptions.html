@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/expandable/js/expandable.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/626622a/src/features/expandable/js/expandable.js#L113" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/expandable/js/expandable.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/bf0267c/src/features/expandable/js/expandable.js#L128" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.expandable</code>
 </span>
 </div>
@@ -8,18 +8,7 @@
 set using the ui-grid <a href="#!/api/ui.grid.class:GridOptions">gridOptions</a></p>
 </div></div>
 <div class="member property"><h2 id="properties">Properties</h2>
-<ul class="properties"><li><h3></h3>
-<div class=""><div class="docs-page"><p>Width in pixels of the expandable column. Defaults to 40</p>
-</div><h4 id="properties_example">Example</h4>
-<div class="example"><div class="docs-page"><pre class="prettyprint linenums">
-$scope.gridOptions = {
-  expandableRowHeaderWidth: 40
-}
-</pre>
-</div></div>
-</div>
-</li>
-<li><h3 id="properties_enableexpandable">enableExpandable</h3>
+<ul class="properties"><li><h3 id="properties_enableexpandable">enableExpandable</h3>
 <div class="enableexpandable"><div class="enableexpandable-page"><p>Whether or not to use expandable feature, allows you to turn off expandable on specific grids
 within your application, or in specific modes on <em>this</em> grid. Defaults to true.</p>
 </div><h4 id="properties_enableexpandable_example">Example</h4>
@@ -38,6 +27,17 @@ you&#39;re going to use a custom method for expanding and collapsing the subgrid
 <div class="example"><div class="enableexpandablerowheader-page"><pre class="prettyprint linenums">
 $scope.gridOptions = {
   enableExpandableRowHeader: false
+}
+</pre>
+</div></div>
+</div>
+</li>
+<li><h3 id="properties_expandablerowheaderwidth">expandableRowHeaderWidth</h3>
+<div class="expandablerowheaderwidth"><div class="expandablerowheaderwidth-page"><p>Width in pixels of the expandable column. Defaults to 40</p>
+</div><h4 id="properties_expandablerowheaderwidth_example">Example</h4>
+<div class="example"><div class="expandablerowheaderwidth-page"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  expandableRowHeaderWidth: 40
 }
 </pre>
 </div></div>
@@ -72,6 +72,18 @@ $scope.gridOptions = {
 <div class="example"><div class="expandablerowtemplate-page"><pre class="prettyprint linenums">
 $scope.gridOptions = {
   expandableRowTemplate: 'expandableRowTemplate.html'
+}
+</pre>
+</div></div>
+</div>
+</li>
+<li><h3 id="properties_showexpandallbutton">showExpandAllButton</h3>
+<div class="showexpandallbutton"><div class="showexpandallbutton-page"><p>Whether or not to display the expand all button, allows you to hide expand all button on specific grids
+within your application, or in specific modes on <em>this</em> grid. Defaults to true.</p>
+</div><h4 id="properties_showexpandallbutton_example">Example</h4>
+<div class="example"><div class="showexpandallbutton-page"><pre class="prettyprint linenums">
+$scope.gridOptions = {
+  showExpandAllButton: false
 }
 </pre>
 </div></div>
