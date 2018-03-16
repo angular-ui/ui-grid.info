@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.1-c73fa53 - 2018-03-16
+ * ui-grid - v4.4.1-5872805 - 2018-03-16
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -3923,11 +3923,11 @@ angular.module('ui.grid')
 
     self.scrollbarHeight = 0;
     self.scrollbarWidth = 0;
-    if (self.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.ALWAYS) {
+    if (self.options.enableHorizontalScrollbar !== uiGridConstants.scrollbars.NEVER) {
       self.scrollbarHeight = gridUtil.getScrollbarWidth();
     }
 
-    if (self.options.enableVerticalScrollbar === uiGridConstants.scrollbars.ALWAYS) {
+    if (self.options.enableVerticalScrollbar !== uiGridConstants.scrollbars.NEVER) {
       self.scrollbarWidth = gridUtil.getScrollbarWidth();
     }
 
