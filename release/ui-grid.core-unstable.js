@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.0-d5f947f - 2018-03-16
+ * ui-grid - v4.4.1-8e4ff47 - 2018-03-16
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -9050,7 +9050,14 @@ angular.module('ui.grid')
   };
 
   GridRenderContainer.prototype.needsHScrollbarPlaceholder = function () {
-    return this.grid.options.enableHorizontalScrollbar && !this.hasHScrollbar && !this.grid.disableScrolling;
+    var self = this,
+      containerBody;
+
+    if (self.name === 'left' || self.name === 'right' && !this.hasHScrollbar && !this.grid.disableScrolling) {
+      containerBody = this.grid.element[0].querySelector('.ui-grid-render-container-body .ui-grid-viewport');
+      return containerBody.scrollWidth > containerBody.offsetWidth;
+    }
+    return false;
   };
 
   GridRenderContainer.prototype.getViewportStyle = function () {
