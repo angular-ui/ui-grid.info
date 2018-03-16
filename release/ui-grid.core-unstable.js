@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.1-846f413 - 2018-03-16
+ * ui-grid - v4.4.1-8a60ab2 - 2018-03-16
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -9053,7 +9053,7 @@ angular.module('ui.grid')
     var self = this,
       containerBody;
 
-    if (self.name === 'left' || self.name === 'right' && this.hasHScrollbar && !this.grid.disableScrolling) {
+    if (self.name === 'left' || self.name === 'right' && !this.hasHScrollbar && !this.grid.disableScrolling) {
       containerBody = this.grid.element[0].querySelector('.ui-grid-render-container-body .ui-grid-viewport');
       return containerBody.scrollWidth > containerBody.offsetWidth;
     }
