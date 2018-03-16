@@ -49,6 +49,13 @@ on a page navigation request or pressing of a save button</li>
 <li><code>saveRow( rowEntity )</code>: event called when a row is ready for saving</li>
 <li><code>rowEditWaitInterval</code>: grid option that controls how long a wait will be before a save is triggered (in ms)</li>
 </ul>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.cellnav.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.row-edit.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-205-row-edit-feature-page"><p>In this example rows are saved 2 seconds after moving off, and the save is faked using a timeout of 3 seconds, so
 each save will take 3 seconds to complete.  Any row saved with a gender of &quot;male&quot; will error.</p>

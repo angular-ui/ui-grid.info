@@ -10,6 +10,13 @@ directive on your grid.  If you want to export as PDF you need to have installed
 available through:
 <pre class="prettyprint linenums">  bower install pdfmake  </pre>
 <p>The options and API for exporter can be found at <a href="#!/api/ui.grid.exporter">ui.grid.exporter</a>.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.exporter.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.move-columns.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-312-exporting-data-with-custom-ui-page"><p>In this example we provide a custom UI for calling the exporter, and we tailor
 the pdf layout to have different styles than the default.</p>

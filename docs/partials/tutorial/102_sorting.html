@@ -30,6 +30,10 @@ The sorting algorithm function takes &#39;a&#39; and &#39;b&#39; parameters like
 &#39;rowA&#39;, &#39;rowB&#39;, and &#39;direction&#39; parameters that are the row objects and the current direction of the sort respectively.</p>
 <p>By default the sorting algorithm will be applied to the row value before any <code>cellFilters</code> are applied. The <a href="#!/api/ui.grid.class:GridOptions.columnDef#sortcellfiltered">sortCellFiltered</a>
 columnDef option will cause sorting to be applied after the <code>cellFilters</code> are applied. For an example of this see the &quot;Month Joined&quot; column in the <a href="#!/tutorial/401_AllFeatures">AllFeatures tutorial</a>.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
 <h3 id="source">Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-24" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-25"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">

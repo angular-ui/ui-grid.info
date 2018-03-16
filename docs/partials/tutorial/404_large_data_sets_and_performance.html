@@ -29,6 +29,10 @@ angularJS (on every digest cycle, which can be many times per second), and watch
 The <code>fastWatch</code> gridOption watches only the data reference and it&#39;s length - in theory this means we might not notice if you replaced
 a row in the data, or replaced a column in the columnDefs.  If using fastWatch you should always do deletes and adds separately, never
 a swap.  Fastwatch cannot be dynamically toggled - you need to set it upon grid creation.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-404-large-data-sets-and-performance-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-113" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-114"></div>

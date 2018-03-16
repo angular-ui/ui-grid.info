@@ -10,14 +10,19 @@
 COL_FIELD which will be replaced with grid.getCellValue(row). This should be used for any cellTemplates that need readonly access to the field value
 <br/>
 MODEL_COL_FIELD which will be replaced with row.entity.field.  Use MODEL_COL_FIELD anytime you need ng-model=&#39;field&#39;</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-106-binding-examples-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-32" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-33"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-32" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-32">
-  <div ng-controller="MainCtrl">
-    <div id="grid1" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+  <div ng-controller="MainCtrl as $ctrl">
+    <div id="grid1" ui-grid="$ctrl.gridOptions" ui-grid-edit class="grid"></div>
   </div>
 </script>
 </div>
@@ -35,26 +40,27 @@ MODEL_COL_FIELD which will be replaced with row.entity.field.  Use MODEL_COL_FIE
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit']);
 
-  app.controller('MainCtrl', ['$scope', function ($scope) {
+  app.controller('MainCtrl', function MainCtrl() {
+    var vm = this;
 
-  $scope.gridOptions = {
-          enableSorting: true,
-          columnDefs: [
-            { name:'firstName', field: 'first-name' },
-            { name:'1stFriend', field: 'friends[0]' },
-            { name:'city', field: 'address.city'},
-            { name:'getZip', field: 'getZip()', enableCellEdit:false}
-          ],
-          data : [      {
-                             "first-name": "Cox",
-                             "friends": ["friend0"],
-                             "address": {street:"301 Dove Ave", city:"Laurel", zip:"39565"},
-                             "getZip" : function() {return this.address.zip;}
-                         }
-                     ]
-        };
-
-  }]);
+    vm.gridOptions = {
+      enableSorting: true,
+      columnDefs: [
+        { name:'firstName', field: 'first-name' },
+        { name:'1stFriend', field: 'friends[0]' },
+        { name:'city', field: 'address.city'},
+        { name:'getZip', field: 'getZip()', enableCellEdit: false}
+      ],
+      data: [
+        {
+          'first-name': 'Cox',
+          friends: ['friend0'],
+          address: {street: '301 Dove Ave', city: 'Laurel', zip: '39565'},
+          getZip: function() {return this.address.zip;}
+        }
+      ]
+    };
+  });
 </script>
 </div>
 <div class="tab-pane" title="End to end test">

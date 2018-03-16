@@ -14,6 +14,11 @@ the entire set.~~</p>
 <p>It should also update the <code>$scope.gridOptions.totalItems</code> variable with the total count of rows that exist (but
 were not all fetched in the REST call mentioned above since they exist in other pages of data).</p>
 <p>This will allow ui-grid to calculate the correct number of pages on the client-side.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.pagination.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-406-custom-pagination-page"><p>This shows custom pagination.
 <h4 id="example_source">Source</h4>

@@ -55,6 +55,10 @@ to make any columns with a filter condition have blue text.</p>
 columnDef option will cause filtering to be applied after the <code>cellFilters</code> are evaluated, as seen on the &quot;Long Date&quot; field.</p>
 <h4 id="single-filter-box">Single filter box (similar to 2.x)</h4>
 <p>Refer <a href="#!/tutorial/321_singleFilter">singleFilter tutorial</a>, it is possible to implement this using a rowsProcessor.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-103-filtering-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-26" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-27"></div>

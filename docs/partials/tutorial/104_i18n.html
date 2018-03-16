@@ -15,6 +15,15 @@ so there is currently no way to have more than one language per app.</p>
    i18nService.setCurrentLang('fr');
 </pre>
 <p>For an example using angular-translate to translate your headers, refer to <a href="http://plnkr.co/edit/KnrKTst5dWXvlZNeIy9c?p=preview">http://plnkr.co/edit/KnrKTst5dWXvlZNeIy9c?p=preview</a></p>
+<p>If you would like to get better performance out of your application, it is recommended that you take advantage of UI-Grid&#39;s multi-file
+support. By default ui-grid.base.js will contain just the english language, in order to load the other language follow the example bellow:
+<pre class="prettyprint linenums">
+   &lt;script src="/release/ui-grid.base.js"&gt;&lt;/script&gt;
+   &lt;script src="/release/i18n/ui-grid.language.[YOUR_LANGUAGE_HERE].js"&gt;&lt;/script&gt;
+
+   &lt;!-- Alternatively you can load all languages provided with you grid by loading the following --&gt;
+   &lt;script src="/release/i18n/ui-grid.language.all.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-104-i18n-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-29"></div>

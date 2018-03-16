@@ -30,19 +30,23 @@ width of the parent container, which is what the <code>auto</code> value for wid
 <li>Use the <code>autoResize</code> feature let the grid redraw itself as needed. This may cause some flickering as the check is on a 250ms cycle. <a href="http://plnkr.co/edit/fwdXMamTBrR1yKVwcohZ?p=preview">Here&#39;s is a plunker demonstrating this</a>.</li>
 </ol>
 <p>It&#39;s all up to you. And if you know a better way then please submit it in an issue or a pull request. There&#39;s always room for improvement and innovation.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-108-hidden-grids-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-34" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">
 <pre class="prettyprint linenums" ng-set-text="index.html-34" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-34">
-  <div ng-controller="MainCtrl">
-    <button type="button" class="btn btn-success" ng-click="hideGrid = !hideGrid">
-      {{ hideGrid && 'Show' || 'Hide' }} Grid
+  <div ng-controller="MainCtrl as $ctrl">
+    <button type="button" class="btn btn-success" ng-click="$ctrl.hideGrid = !$ctrl.hideGrid">
+      {{ $ctrl.hideGrid && 'Show' || 'Hide' }} Grid
     </button>
 
-    <div class="well" ng-hide="hideGrid">
-      <div ui-grid="gridOptions" class="grid"></div>
+    <div class="well" ng-hide="$ctrl.hideGrid">
+      <div ui-grid="$ctrl.gridOptions" class="grid"></div>
     </div>
   </div>
 </script>
@@ -61,16 +65,18 @@ width of the parent container, which is what the <code>auto</code> value for wid
 <script type="text/ng-template" id="app.js">
   var app = angular.module('app', ['ngTouch', 'ui.grid']);
 
-  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.hideGrid = true;
+  app.controller('MainCtrl', function ($http) {
+    var vm = this;
 
-    $scope.gridOptions = {  };
+    vm.hideGrid = true;
+
+    vm.gridOptions = {  };
 
     $http.get('/data/100.json')
       .then(function(response) {
-        $scope.gridOptions.data = response.data;
+        vm.gridOptions.data = response.data;
       });
-  }]);
+  });
 </script>
 </div>
 </div><h4 id="example_demo">Demo</h4>

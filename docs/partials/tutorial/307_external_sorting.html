@@ -7,6 +7,10 @@ your data retrieve.</p>
 <p>UI-Grid provides two functions that support this, firstly a sortChanged event that tells you when a user has
 changed their requested sort using the grid ui, and secondly a useExternalSorting property to turn off
 the grid native sorting.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-307-external-sorting-page"><p>In this example we suppress the internal sorting, and emulate an external sort by picking one of three
 json files to show - one sorted by name ASC, one sorted by name DESC, and one not sorted.  To further illustrate that this

@@ -7,6 +7,10 @@ the server as part of your data retrieve.</p>
 <p>UI-Grid provides two functions that support this, firstly a filterChanged event that tells you when a user has
 changed their requested filter using the grid ui, and secondly a useExternalFiltering property to turn off
 the grid native filtering.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-308-external-filtering-page"><p>In this example we suppress the internal filtering, and emulate an external filter by picking one of three 
 json files to show - one filtered by gender &#39;male&#39;, one filtered by gender &#39;female&#39;, and one not sorted.  </p>

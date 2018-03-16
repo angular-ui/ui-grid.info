@@ -42,6 +42,11 @@ in the grid.  You must also tell us whether you allow scrollUp or scrollDown fro
 <p>You may sometimes remove data, for example if you&#39;re keeping 10 pages of data in memory, and you start discarding data
 from the top as you add data to the bottom.  You can use the <code>dataRemovedTop</code> and <code>dataRemovedBottom</code> to tell
 us that you&#39;ve discarded data, and we&#39;ll aim to set the scroll back to where it was before you removed that data.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.infinite-scroll.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-212-infinite-scroll-page"><p>In this example we have a data set that starts at page 2 of a 5 page data set.  Each page is 100 records, so we start at
 record 200, and we can scroll up 2 pages, and scroll down 2 pages.  You should see smooth scrolling as you move up, when

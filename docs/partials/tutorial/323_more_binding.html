@@ -3,6 +3,11 @@
 </div>
 </h1>
 <div><div class="tutorial-page tutorial-323-more-binding-examples-page"><p>UI-Grid can also bind be to a one-dimensional array of primitives - in this case using <code>uiGridConstants.ENTITY_BINDING</code> will use the entire entry in the data array as the value for the cell instead of a field therein. This is useful if the data is an array of strings, or also if a cell filter needs access to multiple fields within each row object.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-323-more-binding-examples-page"><h4 id="example_source">Source</h4>
 <div source-edit="app" source-edit-deps="angular.js app.js 1d-scenario.js filter-scenario.js" source-edit-html="index.html-107" source-edit-css="main.css" source-edit-js="app.js 1d-scenario.js filter-scenario.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
@@ -35,18 +40,18 @@
 
   app.controller('OneDimensionCtrl', ['$scope', 'uiGridConstants', function ($scope, uiGridConstants) {
 
-  $scope.gridOptions = {
-          enableSorting: true,
-          columnDefs: [
-            { name:'Name', field: uiGridConstants.ENTITY_BINDING }
-          ],
-          data : [
-            "John Rogers",
-            "David Michaels",
-            "Andrew Johnson",
-            "Donald McDonald"
-          ]
-        };
+    $scope.gridOptions = {
+      enableSorting: true,
+      columnDefs: [
+        { name:'Name', field: uiGridConstants.ENTITY_BINDING }
+      ],
+      data: [
+        "John Rogers",
+        "David Michaels",
+        "Andrew Johnson",
+        "Donald McDonald"
+      ]
+    };
   }]);
 
 

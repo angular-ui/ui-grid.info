@@ -9,6 +9,10 @@ animates the initial render and the grid renders whilst the  modal is still anim
 as expected.  You can correct this by calling <code>handleWindowResize</code>.  The animation time seems to be somewhat variable,
 so the currently recommended approach is to use $interval, and to call every 500ms for the first 5s after modal opening.</p>
 <p>In a sense this is similar to what the auto-resize feature does, but it only does it for a short period after modal opening.</p>
+<p>$ctrlFor better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+     <pre class="prettyprint linenums">
+       &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+     </pre>
 <h3 id="source">Source</h3>
 <div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-37" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-38"></div>
 <div class="tabbable"><div class="tab-pane" title="index.html">

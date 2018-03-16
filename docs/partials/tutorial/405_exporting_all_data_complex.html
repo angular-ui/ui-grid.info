@@ -5,7 +5,14 @@
 <div><div class="tutorial-page tutorial-405-exporting-all-data-with-external-pagination-page"><p>When using built in pagination, the data is fully loaded before export.</p>
 <p>For external pagination, use the <code>exportAllDataPromise</code> function to load all grid data.  If you get all the
 data (for the purposes of exporting), then it makes sense to turn off external pagination and external sorting,
-as all the data is now present within AngularJS  </p>
+as all the data is now present within AngularJS.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.exporter.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.pagination.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-405-exporting-all-data-with-external-pagination-page"><p>This shows combined external pagination and sorting.
 <h4 id="example_source">Source</h4>

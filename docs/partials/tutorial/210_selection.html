@@ -40,6 +40,12 @@ ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> 
 after grid initialisation you need to call <code>gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS)</code> to enable
 the option.  In the grid below pressing the button to &quot;set selectable&quot; will set any rows that have an age &gt; 30 to not be
 selectable, and also set the age of the first row to 31.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.cellnav.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-210-selection-page"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.  The first example
 auto-selects the first row once the data is loaded.</p>

@@ -13,6 +13,13 @@ setting the rowEditWaitInterval to -1, which will suppress the auto-save, and re
 you to manually call flushDirtyRows() once the user has made a save request.</p>
 <p>In this example we also use a custom file picker to trigger the import, as well
 as the grid menu.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.importer.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.row-edit.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-311-importing-data-with-row-edit-page"><p>In this example we use the rowEdit feature to save the rows as they are created.
 As with the rowEdit tutorial, any records with a gender of &#39;male&#39; give an error,

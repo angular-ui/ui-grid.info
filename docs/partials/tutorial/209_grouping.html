@@ -6,7 +6,7 @@
 
 <div class="alert alert-warning" role="alert">
 <strong>Beta</strong> This feature is ready for testing, but it either hasn&#39;t
-seen a lot of useor has some known bugs.
+seen a lot of use or has some known bugs.
 </div>
 
 <div class="alert alert-warning" role="alert">
@@ -30,9 +30,9 @@ saved states may not reload cleanly</li>
 <li>groupingSuppressAggregationText is now handled via customTreeAggregationFinalizerText</li>
 <li>groupingRowHeaderWidth is now treeRowHeaderWidth</li>
 <li>groupingIndent is now treeIndent</li>
-<li>groupingRowHeaderAlwaysVisible is now treeRowHeaderAlwaysVisible, and default has changed to true
-**_</li>
+<li>groupingRowHeaderAlwaysVisible is now treeRowHeaderAlwaysVisible, and default has changed to true</li>
 </ul>
+<hr>
 <p>Documentation for the grouping feature is provided in the api documentation, both under
 grouping itself, and shared functions in the treeBase documentation.  In particular:</p>
 <ul>
@@ -95,6 +95,11 @@ could potentially interact with people&#39;s custom templates.</p>
 <p>Tuning the way aggregations work can be done through defining a columnsProcessor that runs with higher (later)
 priority than the groupingColumnProcessor (so higher than 400), and that looks for grouped or aggregated columns
 and changes things like the treeAggregationFn, or the customTreeAggregationFinalizerFn.  See tutorial 320 for an example.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.grouping.min.js"&gt;&lt;/script&gt;
+</pre>
 </div><h2 id="example">Example</h2>
 <div class="example"><div class="tutorial-page tutorial-209-grouping-page"><p>In this example we group by the state column then the gender column, and we count the names (a proxy for
 counting the number of rows), we find the max age for each grouping, and we calculate the average balance.  We
