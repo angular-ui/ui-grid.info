@@ -9050,7 +9050,14 @@ angular.module('ui.grid')
   };
 
   GridRenderContainer.prototype.needsHScrollbarPlaceholder = function () {
-    return this.grid.options.enableHorizontalScrollbar && !this.hasHScrollbar && !this.grid.disableScrolling;
+    var self = this,
+      containerBody;
+
+    if (self.name === 'left' || self.name === 'right' && !this.hasHScrollbar && !this.grid.disableScrolling) {
+      containerBody = this.grid.element[0].querySelector('.ui-grid-render-container-body .ui-grid-viewport');
+      return containerBody.scrollWidth > containerBody.offsetWidth;
+    }
+    return false;
   };
 
   GridRenderContainer.prototype.getViewportStyle = function () {
