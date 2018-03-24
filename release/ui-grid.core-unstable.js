@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.1-f82709e - 2018-03-16
+ * ui-grid - v4.4.4-c2824d5 - 2018-03-24
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -750,6 +750,8 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
 
 
       $scope.$on('menu-hidden', function() {
+        var menuItems = angular.element($elm[0].querySelector('.ui-grid-menu-items'))[0];
+
         $elm[0].removeAttribute('style');
 
         if ( $scope.hideThenShow ){
@@ -766,6 +768,13 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             gridUtil.focus.bySelector($document, '.ui-grid-header-cell.' + $scope.col.getColClass()+ ' .ui-grid-column-menu-button', $scope.col.grid, false);
           }
         }
+
+        if (menuItems) {
+          menuItems.onkeydown = null;
+          angular.forEach(menuItems.children, function removeHandlers(item) {
+            item.onkeydown = null;
+          });
+        }
       });
 
       $scope.$on('menu-shown', function() {
@@ -773,9 +782,10 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
           uiGridColumnMenuService.repositionMenu( $scope, $scope.col, $scope.colElementPosition, $elm, $scope.colElement );
 
           //automatically set the focus to the first button element in the now open menu.
-          gridUtil.focus.bySelector($document, '.ui-grid-menu-items .ui-grid-menu-item', true);
+          gridUtil.focus.bySelector($document, '.ui-grid-menu-items .ui-grid-menu-item:not(.ng-hide)', true);
           delete $scope.colElementPosition;
           delete $scope.columnElement;
+          addKeydownHandlersToMenu();
         });
       });
 
@@ -797,6 +807,54 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
         $scope.grid.refresh();
         $scope.hideMenu();
       };
+
+      function addKeydownHandlersToMenu() {
+        var menu = angular.element($elm[0].querySelector('.ui-grid-menu-items'))[0],
+          menuItems,
+          visibleMenuItems = [];
+
+        if (menu) {
+          menu.onkeydown = function closeMenu(event) {
+            if (event.keyCode === uiGridConstants.keymap.ESC) {
+              event.preventDefault();
+              $scope.hideMenu();
+            }
+          };
+
+          menuItems = menu.querySelectorAll('.ui-grid-menu-item:not(.ng-hide)');
+          angular.forEach(menuItems, function filterVisibleItems(item) {
+            if (item.offsetParent !== null) {
+              this.push(item);
+            }
+          }, visibleMenuItems);
+
+          if (visibleMenuItems.length) {
+            if (visibleMenuItems.length === 1) {
+              visibleMenuItems[0].onkeydown = function singleItemHandler(event) {
+                circularFocusHandler(event, true);
+              };
+            } else {
+              visibleMenuItems[0].onkeydown = function firstItemHandler(event) {
+                circularFocusHandler(event, false, event.shiftKey, visibleMenuItems.length - 1);
+              };
+              visibleMenuItems[visibleMenuItems.length - 1].onkeydown = function lastItemHandler(event) {
+                circularFocusHandler(event, false, !event.shiftKey, 0);
+              };
+            }
+          }
+        }
+
+        function circularFocusHandler(event, isSingleItem, shiftKeyStatus, index) {
+          if (event.keyCode === uiGridConstants.keymap.TAB) {
+            if (isSingleItem) {
+              event.preventDefault();
+            } else if (shiftKeyStatus) {
+              event.preventDefault();
+              visibleMenuItems[index].focus();
+            }
+          }
+        }
+      }
 
       // Since we are hiding this column the default hide action will fail so we need to focus somewhere else.
       var setFocusOnHideColumn = function(){
@@ -1687,7 +1745,7 @@ angular.module('ui.grid')
 .service('uiGridGridMenuService', [ 'gridUtil', 'i18nService', 'uiGridConstants', function( gridUtil, i18nService, uiGridConstants ) {
   /**
    *  @ngdoc service
-   *  @name ui.grid.gridMenuService
+   *  @name ui.grid.uiGridGridMenuService
    *
    *  @description Methods for working with the grid menu
    */
@@ -1695,7 +1753,7 @@ angular.module('ui.grid')
   var service = {
     /**
      * @ngdoc method
-     * @methodOf ui.grid.gridMenuService
+     * @methodOf ui.grid.uiGridGridMenuService
      * @name initialize
      * @description Sets up the gridMenu. Most importantly, sets our
      * scope onto the grid object as grid.gridMenuScope, allowing us
@@ -1761,7 +1819,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name addToGridMenu
-     * @propertyOf ui.grid.gridMenuService
+     * @propertyOf ui.grid.uiGridGridMenuService
      * @description add items to the grid menu.  Used by features
      * to add their menu items if they are enabled, can also be used by
      * end users to add menu items.  This method has the advantage of allowing
@@ -1769,7 +1827,7 @@ angular.module('ui.grid')
      * in the menu when.  (Noting that in most cases the shown and active functions
      * provide a better way to handle visibility of menu items)
      * @param {Grid} grid the grid on which we are acting
-     * @param {array} items menu items in the format as described in the tutorial, with
+     * @param {array} menuItems menu items in the format as described in the tutorial, with
      * the added note that if you want to use remove you must also specify an `id` field,
      * which is provided when you want to remove an item.  The id should be unique.
      *
@@ -1791,7 +1849,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name removeFromGridMenu
-     * @methodOf ui.grid.gridMenuService
+     * @methodOf ui.grid.uiGridGridMenuService
      * @description Remove an item from the grid menu based on a provided id.  Assumes
      * that the id is unique, removes only the last instance of that id.  Does nothing if
      * the specified id is not found.  If there is no gridMenuScope or registeredMenuItems
@@ -1845,7 +1903,7 @@ angular.module('ui.grid')
      */
     /**
      * @ngdoc method
-     * @methodOf ui.grid.gridMenuService
+     * @methodOf ui.grid.uiGridGridMenuService
      * @name getMenuItems
      * @description Decides the menu items to show in the menu.  This is a
      * combination of:
@@ -1919,7 +1977,7 @@ angular.module('ui.grid')
      */
     /**
      * @ngdoc method
-     * @methodOf ui.grid.gridMenuService
+     * @methodOf ui.grid.uiGridGridMenuService
      * @name showHideColumns
      * @description Adds two menu items for each of the columns in columnDefs.  One
      * menu item for hide, one menu item for show.  Each is visible when appropriate
@@ -1984,7 +2042,7 @@ angular.module('ui.grid')
 
     /**
      * @ngdoc method
-     * @methodOf ui.grid.gridMenuService
+     * @methodOf ui.grid.uiGridGridMenuService
      * @name setMenuItemTitle
      * @description Handles the response from gridMenuTitleFilter, adding it directly to the menu
      * item if it returns a string, otherwise waiting for the promise to resolve or reject then
@@ -2015,7 +2073,7 @@ angular.module('ui.grid')
 
     /**
      * @ngdoc method
-     * @methodOf ui.grid.gridMenuService
+     * @methodOf ui.grid.uiGridGridMenuService
      * @name toggleColumnVisibility
      * @description Toggles the visibility of an individual column.  Expects to be
      * provided a context that has on it a gridColumn, which is the column that
@@ -3562,7 +3620,7 @@ function uiGridDirective($window, gridUtil, uiGridConstants) {
             grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
             // If the grid isn't tall enough to fit a single row, it's kind of useless. Resize it to fit a minimum number of rows
-            if (grid.gridHeight <= grid.options.rowHeight && grid.options.enableMinHeightCheck) {
+            if (grid.gridHeight - grid.scrollbarHeight <= grid.options.rowHeight && grid.options.enableMinHeightCheck) {
               autoAdjustHeight();
             }
 
@@ -4913,7 +4971,7 @@ angular.module('ui.grid')
       }
     });
 
-    if (self.selection) {
+    if (self.selection && self.rows.length) {
       self.selection.selectAll = allRowsSelected;
     }
 
@@ -6986,7 +7044,8 @@ angular.module('ui.grid')
    * @ngdoc property
    * @name minWidth
    * @propertyOf ui.grid.class:GridOptions.columnDef
-   * @description sets the minimum column width.  Should be a number.
+   * @description Sets the minimum column width.  Should be a number.
+   * Defaults to gridOptions.minimumColumnSize if minWidth is not provided.
    * @example
    * <pre>  $scope.gridOptions.columnDefs = [ { field: 'field1', minWidth: 100}]; </pre>
    *
@@ -7226,12 +7285,21 @@ angular.module('ui.grid')
       }
     }
 
+    function isValidWidthValue(value) {
+      return angular.isString(value) || angular.isNumber(value);
+    }
+
     ['minWidth', 'maxWidth'].forEach(function (name) {
       var minOrMaxWidth = colDef[name];
       var parseErrorMsg = "Cannot parse column " + name + " '" + minOrMaxWidth + "' for column named '" + colDef.name + "'";
 
-      if (!angular.isString(minOrMaxWidth) && !angular.isNumber(minOrMaxWidth)) {
-        //Sets default minWidth and maxWidth values
+      // default minWidth to the minimumColumnSize
+      if (name === 'minWidth' && !isValidWidthValue(minOrMaxWidth) && angular.isDefined(self.grid.options.minimumColumnSize)) {
+        minOrMaxWidth = self.grid.options.minimumColumnSize;
+      }
+
+      if (!isValidWidthValue(minOrMaxWidth)) {
+        // Sets default minWidth and maxWidth values
         self[name] = ((name === 'minWidth') ? 30 : 9000);
       } else if (angular.isString(minOrMaxWidth)) {
         if (minOrMaxWidth.match(/^(\d+)$/)) {
@@ -7595,13 +7663,13 @@ angular.module('ui.grid')
   GridColumn.prototype.unsort = function () {
     //Decrease priority for every col where priority is higher than the removed sort's priority.
     var thisPriority = this.sort.priority;
-    
+
     this.grid.columns.forEach(function (col) {
       if (col.sort && col.sort.priority !== undefined && col.sort.priority > thisPriority) {
         col.sort.priority -= 1;
       }
     });
-    
+
     this.sort = {};
     this.grid.api.core.raise.sortChanged( this.grid, this.grid.getColumnSorting() );
   };
@@ -8184,9 +8252,11 @@ angular.module('ui.grid')
        * @ngdoc boolean
        * @name minimumColumnSize
        * @propertyOf ui.grid.class:GridOptions
-       * @description Columns can't be smaller than this, defaults to 10 pixels
+       * @description Sets the default minimum column width, in other words,
+       * it defines the default value for a column minWidth attribute if that is not otherwise specified.
+       * Should be a number. Defaults to 30 pixels.
        */
-      baseOptions.minimumColumnSize = typeof(baseOptions.minimumColumnSize) !== "undefined" ? baseOptions.minimumColumnSize : 10;
+      baseOptions.minimumColumnSize = typeof(baseOptions.minimumColumnSize) !== "undefined" ? baseOptions.minimumColumnSize : 30;
 
       /**
        * @ngdoc function
@@ -9053,12 +9123,10 @@ angular.module('ui.grid')
     var self = this,
       containerBody;
 
-    // please work
     if (self.name === 'left' || self.name === 'right' && !this.hasHScrollbar && !this.grid.disableScrolling) {
       if (self.grid.options.enableHorizontalScrollbar === uiGridConstants.scrollbars.ALWAYS) {
         return true;
       }
-
       containerBody = this.grid.element[0].querySelector('.ui-grid-render-container-body .ui-grid-viewport');
       return containerBody.scrollWidth > containerBody.offsetWidth;
     }
@@ -11051,7 +11119,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         //do nothing; not valid html
       }
 
-      s.logDebug('fetching url', template);
+      // s.logDebug('fetching url', template);
 
       // Default to trying to fetch the template as a url with $http
       return $http({ method: 'GET', url: template})
@@ -12714,7 +12782,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/pagination',
-    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/</abbr> {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title=\"paginationThrough\">-</abbr> {{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
+    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" step=\"1\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/</abbr> {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title=\"paginationThrough\">-</abbr> {{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
   );
 
 
@@ -12734,7 +12802,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/selectionRowHeader',
-    "<div class=\"ui-grid-disable-selection\"><div class=\"ui-grid-cell-contents\"><ui-grid-selection-row-header-buttons></ui-grid-selection-row-header-buttons></div></div>"
+    "<div class=\"ui-grid-cell-contents ui-grid-disable-selection\"><ui-grid-selection-row-header-buttons></ui-grid-selection-row-header-buttons></div>"
   );
 
 

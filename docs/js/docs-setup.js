@@ -806,15 +806,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "ui.grid.gridMenuService",
-      "shortName": "ui.grid.gridMenuService",
-      "type": "service",
-      "moduleName": "ui.grid",
-      "shortDescription": "Methods for working with the grid menu",
-      "keywords": "$scope acting active add adding addmenuitem adds addtogridmenu advantage allowing api appropriate array associated assumes based better cases change changed coldef column columndef columndefs columns combination context core decides default described desired directly displayname dynamically enabled expects features field find format function functions getmenuitems grid gridcol gridcolumn gridmenu gridmenucustomitems gridmenuscope gridmenuservice gridmenutitlefilter handle handles hide importantly included individual initialize instance item items ll management menu menuitem method methods note object operate options passed promise property provide provided putting recalculated reference refresh register registeredmenuitems reject remove removefromgridmenu removes resolve response result returns scope second service setmenuitemtitle sets showhidecolumns silently simplify string title toggle togglecolumnvisibility toggles tutorial typically ui unique users visibility visible waiting working"
-    },
-    {
-      "section": "api",
       "id": "ui.grid.grouping",
       "shortName": "ui.grid.grouping",
       "type": "overview",
@@ -1640,6 +1631,15 @@ NG_DOCS={
       "moduleName": "ui.grid.treeView",
       "shortDescription": "Services for treeView features",
       "keywords": "api features grid service services treeview ui"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.uiGridGridMenuService",
+      "shortName": "ui.grid.uiGridGridMenuService",
+      "type": "service",
+      "moduleName": "ui.grid",
+      "shortDescription": "Methods for working with the grid menu",
+      "keywords": "$scope acting active add adding addmenuitem adds addtogridmenu advantage allowing api appropriate array associated assumes based better cases change changed coldef column columndef columndefs columns combination context core decides default described desired directly displayname dynamically enabled expects features field find format function functions getmenuitems grid gridcol gridcolumn gridmenu gridmenucustomitems gridmenuscope gridmenutitlefilter handle handles hide importantly included individual initialize instance item items ll management menu menuitem menuitems method methods note object operate options passed promise property provide provided putting recalculated reference refresh register registeredmenuitems reject remove removefromgridmenu removes resolve response result returns scope second service setmenuitemtitle sets showhidecolumns silently simplify string title toggle togglecolumnvisibility toggles tutorial typically ui uigridgridmenuservice unique users visibility visible waiting working"
     },
     {
       "section": "api",

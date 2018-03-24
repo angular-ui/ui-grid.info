@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.1-f82709e - 2018-03-16
+ * ui-grid - v4.4.4-c2824d5 - 2018-03-24
  * Copyright (c) 2018 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -269,6 +269,7 @@
   opacity: 1;
 }
 input[type="text"].ui-grid-filter-input {
+  box-sizing: border-box;
   padding: 0 18px 0 0;
   margin: 0;
   border: 0;
@@ -474,6 +475,13 @@ select.ui-grid-filter-select:hover {
   float: left;
   width: 100%;
 }
+.ui-grid-footer-viewport,
+.ui-grid-footer-canvas {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: 100%;
+}
 .ui-grid-footer-viewport {
   overflow: hidden;
 }
@@ -508,31 +516,6 @@ select.ui-grid-filter-select:hover {
 }
 .ui-grid-footer-cell:last-child {
   border-right: 0;
-}
-input[type="text"].ui-grid-filter-input {
-  padding: 0 18px 0 0;
-  margin: 0;
-  border: 0;
-  width: 100%;
-  border: 1px solid #d4d4d4;
-  -webkit-border-top-right-radius: 0px;
-  -webkit-border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
-  -webkit-border-top-left-radius: 0;
-  -moz-border-radius-topright: 0px;
-  -moz-border-radius-bottomright: 0;
-  -moz-border-radius-bottomleft: 0;
-  -moz-border-radius-topleft: 0;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-background-clip: padding-box;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-}
-input[type="text"].ui-grid-filter-input:hover {
-  border: 1px solid #d4d4d4;
 }
 .ui-grid-menu-button {
   z-index: 2;
@@ -995,7 +978,7 @@ input[type="text"].ui-grid-filter-input:hover {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-div.ui-grid-cell input {
+.ui-grid-cell input {
   border-radius: inherit;
   padding: 0;
   width: 100%;
@@ -1004,18 +987,18 @@ div.ui-grid-cell input {
   font: inherit;
   outline: none;
 }
-div.ui-grid-cell input:focus {
+.ui-grid-cell input:focus {
   color: inherit;
   outline: none;
 }
-div.ui-grid-cell input[type="checkbox"] {
+.ui-grid-cell input[type="checkbox"] {
   margin: 9px 0 0 6px;
   width: auto;
 }
-div.ui-grid-cell input.ng-invalid {
+.ui-grid-cell input.ng-invalid {
   border: 1px solid #fc8f8f;
 }
-div.ui-grid-cell input.ng-valid {
+.ui-grid-cell input.ng-valid {
   border: 1px solid #d4d4d4;
 }
 
@@ -1271,13 +1254,13 @@ div.ui-grid-cell input.ng-valid {
   box-sizing: content-box;
 }
 .ui-grid-pager-container {
-  float: left;
+  display: inline-block;
 }
 .ui-grid-pager-control {
   margin-right: 10px;
   margin-left: 10px;
   min-width: 135px;
-  float: left;
+  display: inline-block;
 }
 .ui-grid-pager-control button {
   height: 25px;
@@ -1520,7 +1503,7 @@ select[multiple].ui-grid-pager-control input {
   margin-right: -11px;
 }
 .ui-grid-pager-row-count-picker {
-  float: left;
+  display: inline-block;
 }
 .ui-grid-pager-row-count-picker select {
   display: block;
@@ -1544,9 +1527,10 @@ select[multiple].ui-grid-pager-control input {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
-  height: 26px;
+  height: 25px;
   width: 67px;
   display: inline;
+  vertical-align: middle;
 }
 .ui-grid-pager-row-count-picker select:focus {
   border-color: #66afe9;
@@ -1751,6 +1735,12 @@ select[multiple].ui-grid-pager-row-count-picker select {
 }
 .ui-grid.column-resizing {
   cursor: col-resize;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .ui-grid.column-resizing .ui-grid-resize-overlay {
   position: absolute;
@@ -1835,6 +1825,9 @@ select[multiple].ui-grid-pager-row-count-picker select {
   cursor: default;
 }
 .ui-grid-selection-row-header-buttons {
+  display: flex;
+  align-items: center;
+  height: 100%;
   cursor: pointer;
 }
 .ui-grid-selection-row-header-buttons::before {
@@ -1935,6 +1928,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-div.ui-grid-cell-contents.invalid {
+.ui-grid-cell-contents.invalid {
   border: 1px solid #fc8f8f;
 }
