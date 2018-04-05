@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.4-c2824d5 - 2018-03-24
+ * ui-grid - v4.4.5-f33964a - 2018-04-05
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -1229,8 +1229,8 @@
    *
    */
   module.directive('uiGridEditFileChooser',
-    ['gridUtil', 'uiGridConstants', 'uiGridEditConstants','$timeout',
-      function (gridUtil, uiGridConstants, uiGridEditConstants, $timeout) {
+    ['gridUtil', 'uiGridConstants', 'uiGridEditConstants',
+      function (gridUtil, uiGridConstants, uiGridEditConstants) {
         return {
           scope: true,
           require: ['?^uiGrid', '?^uiGridRenderContainer'],
@@ -1239,7 +1239,7 @@
               pre: function ($scope, $elm, $attrs) {
 
               },
-              post: function ($scope, $elm, $attrs, controllers) {
+              post: function ($scope, $elm) {
                 function handleFileSelect(event) {
                   var target = event.srcElement || event.target;
 
@@ -1291,6 +1291,7 @@
                   } else {
                     $scope.$emit(uiGridEditConstants.events.CANCEL_CELL_EDIT);
                   }
+                  $elm[0].removeEventListener('change', handleFileSelect, false);
                 }
 
                 $elm[0].addEventListener('change', handleFileSelect, false);
@@ -1299,15 +1300,10 @@
                   $elm[0].focus();
                   $elm[0].select();
 
-                  $elm.on('blur', function (evt) {
+                  $elm.on('blur', function () {
                     $scope.$emit(uiGridEditConstants.events.END_CELL_EDIT);
+                    $elm.off();
                   });
-                });
-
-                $scope.$on('$destroy', function unbindEvents() {
-                  // unbind jquery events to prevent memory leaks
-                  $elm.off();
-                  $elm[0].removeEventListener('change', handleFileSelect, false);
                 });
               }
             };

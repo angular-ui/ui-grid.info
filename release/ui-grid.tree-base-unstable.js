@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.4-c2824d5 - 2018-03-24
+ * ui-grid - v4.4.5-f33964a - 2018-04-05
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -994,9 +994,6 @@
         }
 
         var grid = this;
-        var currentLevel = 0;
-        var currentState = uiGridTreeBaseConstants.EXPANDED;
-        var parents = [];
 
         grid.treeBase.tree = service.createTree( grid, renderableRows );
         service.updateRowHeaderWidth( grid );
@@ -1055,7 +1052,7 @@
        * @description Creates an array of rows based on the tree, exporting only
        * the visible nodes and leaves
        *
-       * @param {array} nodeList the list of nodes - can be grid.treeBase.tree, or can be node.children when
+       * @param {array} nodeList The list of nodes - can be grid.treeBase.tree, or can be node.children when
        * we're calling recursively
        * @returns {array} renderable rows
        */
@@ -1080,9 +1077,9 @@
        * @methodOf  ui.grid.treeBase.service:uiGridTreeBaseService
        * @description Creates a tree from the renderableRows
        *
-       * @param {Grid} grid the grid
-       * @param {array} renderableRows the rows we want to create a tree from
-       * @returns {object} the tree we've build
+       * @param {Grid} grid The grid
+       * @param {array} renderableRows The rows we want to create a tree from
+       * @returns {object} The tree we've build
        */
       createTree: function( grid, renderableRows ) {
         var currentLevel = -1;
@@ -1152,11 +1149,11 @@
        * @description Creates a tree node for this row.  If this row already has a treeNode
        * recorded against it, preserves the state, but otherwise overwrites the data.
        *
-       * @param {grid} grid the grid we're operating on
-       * @param {gridRow} row the row we want to set
-       * @param {array} parents an array of the parents this row should have
-       * @param {array} aggregationBase empty aggregation information
-       * @returns {undefined} updates the parents array, updates the row to have a treeNode, and updates the
+       * @param {grid} grid The grid we're operating on
+       * @param {gridRow} row The row we want to set
+       * @param {array} parents An array of the parents this row should have
+       * @param {array} aggregationBase Empty aggregation information
+       * @returns {undefined} Updates the parents array, updates the row to have a treeNode, and updates the
        * grid.treeBase.tree
        */
       addOrUseNode: function( grid, row, parents, aggregationBase ){
@@ -1190,8 +1187,8 @@
        * If any node in the hierarchy is collapsed, then return collapsed, otherwise return
        * expanded.
        *
-       * @param {array} parents an array of the parents this row should have
-       * @returns {string} the state we should be setting to any nodes we see
+       * @param {array} parents An array of the parents this row should have
+       * @returns {string} The state we should be setting to any nodes we see
        */
       setCurrentState: function( parents ){
         var currentState = uiGridTreeBaseConstants.EXPANDED;
@@ -1218,8 +1215,8 @@
        * We only sort tree nodes that are expanded - no point in wasting effort sorting collapsed
        * nodes
        *
-       * @param {Grid} grid the grid to get the aggregation information from
-       * @returns {array} the aggregation information
+       * @param {Grid} grid The grid to get the aggregation information from
+       * @returns {array} The aggregation information
        */
       sortTree: function( grid ){
         grid.columns.forEach( function( column ) {
@@ -1308,8 +1305,8 @@
        * @description Build the object which is stored on the column for holding meta-data about the aggregation.
        * This method should only be called with columns which have an aggregation.
        *
-       * @param {Column} the column which this object relates to
-       * @returns {object} {col: Column object, label: string, type: string (optional)}
+       * @param {GridColumn} column The column which this object relates to
+       * @returns {object} {col: GridColumn object, label: string, type: string (optional)}
        */
       buildAggregationObject: function( column ){
         var newAggregation = { col: column };
@@ -1484,8 +1481,8 @@
        * @methodOf  ui.grid.treeBase.service:uiGridTreeBaseService
        * @description Helper function used to finalize aggregation nodes and footer cells
        *
-       * @param {gridRow} row the parent we're finalising
-       * @param {aggregation} the aggregation object manipulated by the aggregationFn
+       * @param {gridRow} row The parent we're finalising
+       * @param {aggregation} aggregation The aggregation object manipulated by the aggregationFn
        */
       finaliseAggregation: function(row, aggregation){
         if ( aggregation.col.treeAggregationUpdateEntity && typeof(row) !== 'undefined' && typeof(row.entity[ '$$' + aggregation.col.uid ]) !== 'undefined' ){
@@ -1549,8 +1546,8 @@
        * @description Uses the tree aggregation functions and finalizers to set the
        * column footer aggregations.
        *
-       * @param {rows} visible rows. not used, but accepted to match signature of GridColumn.aggregationType
-       * @param {GridColumn} column the column we are finalizing
+       * @param {rows} rows The visible rows. not used, but accepted to match signature of GridColumn.aggregationType
+       * @param {GridColumn} column The column we are finalizing
        */
       treeFooterAggregationType: function( rows, column ) {
         service.finaliseAggregation(undefined, column.treeFooterAggregation);

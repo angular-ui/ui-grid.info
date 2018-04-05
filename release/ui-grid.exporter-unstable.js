@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.4-c2824d5 - 2018-03-24
+ * ui-grid - v4.4.5-f33964a - 2018-04-05
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -79,9 +79,8 @@
    *
    *  @description Services for exporter feature
    */
-  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
-    function ($q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService) {
-
+  module.service('uiGridExporterService', ['$filter', '$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
+    function ($filter, $q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService) {
       var service = {
 
         delay: 100,
@@ -532,7 +531,7 @@
            *   }
            * </pre>
            */
-          gridOptions.exporterFieldCallback = gridOptions.exporterFieldCallback ? gridOptions.exporterFieldCallback : function( grid, row, col, value ) { return value; };
+          gridOptions.exporterFieldCallback = gridOptions.exporterFieldCallback ? gridOptions.exporterFieldCallback : defaultExporterFieldCallback;
 
           /**
            * @ngdoc function
@@ -547,7 +546,7 @@
            *
            * @param {Grid} grid provides the grid in case you have need of it
            * @param {GridRow} row the row from which the data comes
-           * @param {GridCol} col the column from which the data comes
+           * @param {GridColumn} col the column from which the data comes
            * @param {object} value the value for your massaging
            * @returns {object} you must return the massaged value ready for exporting
            *
@@ -815,13 +814,13 @@
             columns = leftColumns.concat(bodyColumns,rightColumns);
           }
 
-          columns.forEach( function( gridCol, index ) {
-            // $$hashKey check since when grouping and sorting programmatically this ends up in export. Filtering it out
+          columns.forEach( function( gridCol ) {
+            // $$hashKey check since when grouping and sorting pragmatically this ends up in export. Filtering it out
             if ( gridCol.colDef.exporterSuppressExport !== true  && gridCol.field !== '$$hashKey' &&
                  grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ){
               var headerEntry = {
                 name: gridCol.field,
-                displayName: grid.options.exporterHeaderFilter ? ( grid.options.exporterHeaderFilterUseName ? grid.options.exporterHeaderFilter(gridCol.name) : grid.options.exporterHeaderFilter(gridCol.displayName) ) : gridCol.displayName,
+                displayName: getDisplayName(grid, gridCol),
                 width: gridCol.drawnWidth ? gridCol.drawnWidth : gridCol.width,
                 align: gridCol.colDef.align ? gridCol.colDef.align : (gridCol.colDef.type === 'number' ? 'right' : 'left')
               };
@@ -1512,7 +1511,6 @@
             docDefinition = grid.options.exporterExcelCustomFormatters( grid, workbook, docDefinition );
           }
           if ( grid.options.exporterExcelHeader ) {
-            var data = [];
             if (angular.isFunction( grid.options.exporterExcelHeader )) {
               grid.options.exporterExcelHeader(grid, workbook, sheet, docDefinition);
             } else {
@@ -1565,8 +1563,23 @@
 
       };
 
-      return service;
+      function getDisplayName(grid, gridCol) {
+        if (grid.options.exporterHeaderFilter) {
+          return grid.options.exporterHeaderFilterUseName ?
+            grid.options.exporterHeaderFilter(gridCol.name) :
+            grid.options.exporterHeaderFilter(gridCol.displayName);
+        }
 
+        return gridCol.headerCellFilter ?
+          $filter(gridCol.headerCellFilter)(gridCol.displayName) :
+          gridCol.displayName;
+      }
+
+      function defaultExporterFieldCallback(grid, row, col, value) {
+        return col.cellFilter ? $filter(col.cellFilter)(value) : value;
+      }
+
+      return service;
     }
   ]);
 

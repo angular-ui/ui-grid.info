@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.4-c2824d5 - 2018-03-24
+ * ui-grid - v4.4.5-f33964a - 2018-04-05
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -479,14 +479,14 @@
          * @description Toggles row as selected or unselected
          * @param {Grid} grid grid object
          * @param {GridRow} row row to select or deselect
-         * @param {Event} event object if resulting from event
+         * @param {Event} evt object if resulting from event
          * @param {bool} multiSelect if false, only one row at time can be selected
          * @param {bool} noUnselect if true then rows cannot be unselected
          */
         toggleRowSelection: function (grid, row, evt, multiSelect, noUnselect) {
           var selected = row.isSelected;
 
-          if (row.enableSelection === false && !selected) {
+          if (row.enableSelection === false) {
             return;
           }
 
@@ -521,8 +521,8 @@
          * @methodOf  ui.grid.selection.service:uiGridSelectionService
          * @description selects a group of rows from the last selected row using the shift key
          * @param {Grid} grid grid object
-         * @param {GridRow} clicked row
-         * @param {Event} event object if raised from an event
+         * @param {GridRow} row clicked row
+         * @param {Event} evt object if raised from an event
          * @param {bool} multiSelect if false, does nothing this is for multiSelect only
          */
         shiftSelect: function (grid, row, evt, multiSelect) {

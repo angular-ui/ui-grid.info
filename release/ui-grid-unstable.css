@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.4-c2824d5 - 2018-03-24
+ * ui-grid - v4.4.5-f33964a - 2018-04-05
  * Copyright (c) 2018 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
@@ -445,6 +445,9 @@ select.ui-grid-filter-select:hover {
   width: 10px;
   height: 10px;
 }
+.ui-grid-footer-info {
+  padding: 5px 10px;
+}
 .ui-grid-footer-panel-background {
   background-color: #f3f3f3;
 }
@@ -478,7 +481,6 @@ select.ui-grid-filter-select:hover {
 .ui-grid-footer-viewport,
 .ui-grid-footer-canvas {
   display: flex;
-  flex-direction: column;
   flex: 1 1 auto;
   height: 100%;
 }
@@ -1245,6 +1247,9 @@ select.ui-grid-filter-select:hover {
   clear: both;
 }
 .ui-grid-pager-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -1254,13 +1259,22 @@ select.ui-grid-filter-select:hover {
   box-sizing: content-box;
 }
 .ui-grid-pager-container {
-  display: inline-block;
+  float: left;
 }
 .ui-grid-pager-control {
+  padding: 5px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   margin-right: 10px;
   margin-left: 10px;
   min-width: 135px;
-  display: inline-block;
+  float: left;
+}
+.ui-grid-pager-control button,
+.ui-grid-pager-control span,
+.ui-grid-pager-control input {
+  margin-right: 4px;
 }
 .ui-grid-pager-control button {
   height: 25px;
@@ -1503,7 +1517,8 @@ select[multiple].ui-grid-pager-control input {
   margin-right: -11px;
 }
 .ui-grid-pager-row-count-picker {
-  display: inline-block;
+  float: left;
+  padding: 5px 10px;
 }
 .ui-grid-pager-row-count-picker select {
   display: block;
