@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.5-f33964a - 2018-04-05
+ * ui-grid - v4.4.5-4c63239 - 2018-04-05
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -6171,6 +6171,18 @@ angular.module('ui.grid')
       return undefined;
     }
 
+    // Only returns the scroll X position if the percentage is different from the previous
+    function getScrollX(horizScrollPixels, horizScrollLength, prevScrollleftPercentage) {
+      var horizPercentage = horizScrollPixels / horizScrollLength;
+      horizPercentage = (horizPercentage > 1) ? 1 : horizPercentage;
+
+      if (horizPercentage !== prevScrollleftPercentage) {
+        return { percentage: horizPercentage  };
+      }
+
+      return undefined;
+    }
+
     /**
      * @ngdoc method
      * @methodOf  ui.grid.class:Grid
@@ -6287,9 +6299,7 @@ angular.module('ui.grid')
           horizScrollPixels = self.renderContainers.body.prevScrollLeft - (leftBound - columnLeftEdge);
 
           // Turn the scroll position into a percentage and make it an argument for a scroll event
-          horizPercentage = horizScrollPixels / horizScrollLength;
-          horizPercentage = (horizPercentage > 1) ? 1 : horizPercentage;
-          scrollEvent.x = { percentage: horizPercentage  };
+          scrollEvent.x = getScrollX(horizScrollPixels, horizScrollLength, self.renderContainers.body.prevScrollleftPercentage);
         }
         // Otherwise if the scroll position we need to see the column is MORE than the right boundary, i.e. obscured after the right of the self...
         else if (columnRightEdge > rightBound) {
@@ -6298,9 +6308,7 @@ angular.module('ui.grid')
           horizScrollPixels = columnRightEdge - rightBound + self.renderContainers.body.prevScrollLeft;
 
           // Turn the scroll position into a percentage and make it an argument for a scroll event
-          horizPercentage = horizScrollPixels / horizScrollLength;
-          horizPercentage = (horizPercentage > 1) ? 1 : horizPercentage;
-          scrollEvent.x = { percentage: horizPercentage  };
+          scrollEvent.x = getScrollX(horizScrollPixels, horizScrollLength, self.renderContainers.body.prevScrollleftPercentage);
         }
       }
 
