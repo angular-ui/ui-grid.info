@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.5-4c63239 - 2018-04-05
+ * ui-grid - v4.4.6-bc50dfb - 2018-04-20
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -65,6 +65,8 @@
    */
   module.constant('uiGridExporterConstants', {
     featureName: 'exporter',
+    rowHeaderColName: 'treeBaseRowHeaderCol',
+    selectionRowHeaderColName: 'selectionRowHeaderCol',
     ALL: 'all',
     VISIBLE: 'visible',
     SELECTED: 'selected',
@@ -561,6 +563,18 @@
            * </pre>
            */
           gridOptions.exporterFieldFormatCallback = gridOptions.exporterFieldFormatCallback ? gridOptions.exporterFieldFormatCallback : function( grid, row, col, value ) { return null; };
+
+          /**
+           * @ngdoc object
+           * @name exporterColumnScaleFactor
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description A scaling factor to divide the drawnwidth of a column to convert to target excel column
+           * format size
+           * @example
+           * In this example we add a number to divide the drawnwidth of a column to get the excel width.
+           * <br/>Defaults to 3.5
+           */
+          gridOptions.exporterColumnScaleFactor = gridOptions.exporterColumnScaleFactor ? gridOptions.exporterColumnScaleFactor : 3.5;
 
           /**
            * @ngdoc object
@@ -1537,9 +1551,13 @@
             // The standard column width in Microsoft Excel 2000 is 8.43 characters based on fixed-width Courier font
             // Width of 10 in excel is 75 pixels
             var colWidths = [];
-            var startDataIndex = grid.treeBase ? grid.treeBase.numberLevels : (grid.enableRowSelection !== false ? 1 : 0);
+            var startDataIndex = grid.treeBase ? grid.treeBase.numberLevels : (grid.enableRowSelection ? 1 : 0);
             for (var i = startDataIndex; i < grid.columns.length; i++) {
-              colWidths.push({width: (grid.columns[i].drawnWidth / 75) * 10});
+              if (grid.columns[i].field !== uiGridExporterConstants.rowHeaderColName &&
+                grid.columns[i].field !== uiGridExporterConstants.selectionRowHeaderColName) {
+
+                colWidths.push({width: (grid.columns[i].drawnWidth / grid.options.exporterColumnScaleFactor)});
+              }
             }
             sheet.setColumns(colWidths);
 
@@ -1555,7 +1573,8 @@
             sheet.setData(sheet.data.concat(excelContent));
 
             ExcelBuilder.Builder.createFile(workbook, {type:"blob"}).then(function(result) {
-              self.downloadFile (grid.options.exporterExcelFilename, result, grid.options.exporterCsvColumnSeparator, grid.options.exporterOlderExcelCompatibility);
+              self.downloadFile (grid.options.exporterExcelFilename, result, grid.options.exporterCsvColumnSeparator,
+                grid.options.exporterOlderExcelCompatibility);
             });
 
           });
@@ -1576,7 +1595,12 @@
       }
 
       function defaultExporterFieldCallback(grid, row, col, value) {
-        return col.cellFilter ? $filter(col.cellFilter)(value) : value;
+        // fix to handle cases with 'number : 1' or 'date:MM-dd-YYYY', etc.. We needed to split the string
+        if (col.cellFilter) {
+          return $filter(col.cellFilter.split(':')[0].trim())(value);
+        } else {
+          return value;
+        }
       }
 
       return service;

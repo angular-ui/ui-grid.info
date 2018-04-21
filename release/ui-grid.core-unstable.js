@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.5-4c63239 - 2018-04-05
+ * ui-grid - v4.4.6-bc50dfb - 2018-04-20
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -1991,6 +1991,10 @@ angular.module('ui.grid')
         return showHideColumns;
       }
 
+      function isColumnVisible(colDef) {
+        return colDef.visible === true || colDef.visible === undefined;
+      }
+
       // add header for columns
       showHideColumns.push({
         title: i18nService.getSafeText('gridMenu.columns'),
@@ -2003,34 +2007,23 @@ angular.module('ui.grid')
         if ( colDef.enableHiding !== false ){
           // add hide menu item - shows an OK icon as we only show when column is already visible
           var menuItem = {
-            icon: 'ui-grid-icon-ok',
+            icon: isColumnVisible(colDef) ? 'ui-grid-icon-ok' : 'ui-grid-icon-cancel',
             action: function($event) {
               $event.stopPropagation();
-              service.toggleColumnVisibility( this.context.gridCol );
-            },
-            shown: function() {
-              return this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined;
-            },
-            context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) },
-            leaveOpen: true,
-            order: 301 + index * 2
-          };
-          service.setMenuItemTitle( menuItem, colDef, $scope.grid );
-          showHideColumns.push( menuItem );
 
-          // add show menu item - shows no icon as we only show when column is invisible
-          menuItem = {
-            icon: 'ui-grid-icon-cancel',
-            action: function($event) {
-              $event.stopPropagation();
               service.toggleColumnVisibility( this.context.gridCol );
+
+              if ($event.target && $event.target.firstChild) {
+                $event.target.firstChild.className = isColumnVisible(this.context.gridCol.colDef) ?
+                  'ui-grid-icon-ok' : 'ui-grid-icon-cancel';
+              }
             },
             shown: function() {
-              return !(this.context.gridCol.colDef.visible === true || this.context.gridCol.colDef.visible === undefined);
+              return this.context.gridCol.colDef.enableHiding !== false;
             },
             context: { gridCol: $scope.grid.getColumn(colDef.name || colDef.field) },
             leaveOpen: true,
-            order: 301 + index * 2 + 1
+            order: 301 + index
           };
           service.setMenuItemTitle( menuItem, colDef, $scope.grid );
           showHideColumns.push( menuItem );
@@ -6257,6 +6250,11 @@ angular.module('ui.grid')
           //   to get the full position we need
           scrollPixels = self.renderContainers.body.prevScrollTop - (topBound - pixelsToSeeRow);
 
+          //Since scrollIfNecessary is called multiple times when enableCellEditOnFocus is true we need to make sure the scrollbarWidth and footerHeight is accounted for to not cause a loop.
+          if (gridCol && gridCol.colDef && gridCol.colDef.enableCellEditOnFocus) {
+            scrollPixels = scrollPixels - self.footerHeight - self.scrollbarWidth;
+          }
+
           scrollEvent.y = getScrollY(scrollPixels, scrollLength, self.renderContainers.body.prevScrolltopPercentage);
         }
         // Otherwise if the scroll position we need to see the row is MORE than the bottom boundary, i.e. obscured below the bottom of the self...
@@ -6290,7 +6288,7 @@ angular.module('ui.grid')
         // Don't let the pixels required to see the column be less than zero
         columnRightEdge = (columnRightEdge < 0) ? 0 : columnRightEdge;
 
-        var horizScrollPixels, horizPercentage;
+        var horizScrollPixels;
 
         // If the scroll position we need to see the column is LESS than the left boundary, i.e. obscured before the left of the self...
         if (columnLeftEdge < leftBound) {
