@@ -20310,7 +20310,13 @@ module.filter('px', function() {
       function defaultExporterFieldCallback(grid, row, col, value) {
         // fix to handle cases with 'number : 1' or 'date:MM-dd-YYYY', etc.. We needed to split the string
         if (col.cellFilter) {
-          return $filter(col.cellFilter.split(':')[0].trim())(value);
+          var cellFilter = col.cellFilter.split(':'),
+            filter = cellFilter[0].trim();
+
+          if (cellFilter.length > 1) {
+            return $filter(filter)(value, cellFilter[1].trim());
+          }
+          return $filter(filter)(value);
         } else {
           return value;
         }
