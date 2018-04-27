@@ -1,20 +1,10 @@
 /*!
- * ui-grid - v4.4.6-bc50dfb - 2018-04-20
+ * ui-grid - v4.4.7-543b8e0 - 2018-04-27
  * Copyright (c) 2018 ; License: MIT 
  */
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:before,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:before,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
-  content: " ";
-  display: table;
+@media screen and (max-width: 767px) {
 }
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
-  clear: both;
+@media (min-width: 768px) {
 }
 .ui-grid {
   border: 1px solid #d4d4d4;
@@ -437,7 +427,7 @@ select.ui-grid-filter-select:hover {
   display: none;
 }
 .ui-grid-row .ui-grid-cell.ui-grid-row-header-cell {
-  background-color: #f0f0ee;
+  background-color: #F0F0EE;
   border-bottom: solid 1px #d4d4d4;
 }
 .ui-grid-cell-empty {
@@ -559,7 +549,7 @@ select.ui-grid-filter-select:hover {
   white-space: nowrap;
 }
 .ui-grid-menu .ui-grid-menu-inner {
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #d4d4d4;
   position: relative;
   white-space: nowrap;
@@ -576,7 +566,7 @@ select.ui-grid-filter-select:hover {
   padding: 0px;
 }
 .ui-grid-menu .ui-grid-menu-inner ul li button {
-  color: #000000;
+  color: #000;
   min-width: 100%;
   padding: 8px;
   text-align: left;
@@ -914,19 +904,9 @@ select.ui-grid-filter-select:hover {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:before,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:before,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
-  content: " ";
-  display: table;
+@media screen and (max-width: 767px) {
 }
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
-  clear: both;
+@media (min-width: 768px) {
 }
 .ui-grid-cell-focus {
   outline: 0;
@@ -1232,19 +1212,9 @@ select.ui-grid-filter-select:hover {
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:before,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:before,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
-  content: " ";
-  display: table;
+@media screen and (max-width: 767px) {
 }
-#ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
-#ui-grid-twbs #ui-grid-twbs .btn-toolbar:after,
-#ui-grid-twbs #ui-grid-twbs .btn-group-vertical > .btn-group:after {
-  clear: both;
+@media (min-width: 768px) {
 }
 .ui-grid-pager-panel {
   display: flex;
@@ -1297,9 +1267,9 @@ select.ui-grid-filter-select:hover {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #eeeeee;
+  color: #eee;
   background-color: #f3f3f3;
-  border-color: #cccccc;
+  border-color: #ccc;
 }
 .ui-grid-pager-control button:focus,
 .ui-grid-pager-control button:active:focus,
@@ -1313,7 +1283,7 @@ select.ui-grid-filter-select:hover {
 .ui-grid-pager-control button:hover,
 .ui-grid-pager-control button:focus,
 .ui-grid-pager-control button.focus {
-  color: #333333;
+  color: #333;
   text-decoration: none;
 }
 .ui-grid-pager-control button:active,
@@ -1338,19 +1308,19 @@ fieldset[disabled] a.ui-grid-pager-control button {
 }
 .ui-grid-pager-control button:focus,
 .ui-grid-pager-control button.focus {
-  color: #eeeeee;
+  color: #eee;
   background-color: #dadada;
   border-color: #8c8c8c;
 }
 .ui-grid-pager-control button:hover {
-  color: #eeeeee;
+  color: #eee;
   background-color: #dadada;
   border-color: #adadad;
 }
 .ui-grid-pager-control button:active,
 .ui-grid-pager-control button.active,
 .open > .dropdown-toggle.ui-grid-pager-control button {
-  color: #eeeeee;
+  color: #eee;
   background-color: #dadada;
   border-color: #adadad;
 }
@@ -1363,7 +1333,7 @@ fieldset[disabled] a.ui-grid-pager-control button {
 .ui-grid-pager-control button:active.focus,
 .ui-grid-pager-control button.active.focus,
 .open > .dropdown-toggle.ui-grid-pager-control button.focus {
-  color: #eeeeee;
+  color: #eee;
   background-color: #c8c8c8;
   border-color: #8c8c8c;
 }
@@ -1382,11 +1352,11 @@ fieldset[disabled] .ui-grid-pager-control button:focus,
 .ui-grid-pager-control button[disabled].focus,
 fieldset[disabled] .ui-grid-pager-control button.focus {
   background-color: #f3f3f3;
-  border-color: #cccccc;
+  border-color: #ccc;
 }
 .ui-grid-pager-control button .badge {
   color: #f3f3f3;
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 .ui-grid-pager-control input {
   display: block;
@@ -1396,9 +1366,9 @@ fieldset[disabled] .ui-grid-pager-control button.focus {
   font-size: 14px;
   line-height: 1.42857143;
   color: #555555;
-  background-color: #ffffff;
+  background-color: #fff;
   background-image: none;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -1422,14 +1392,14 @@ fieldset[disabled] .ui-grid-pager-control button.focus {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .ui-grid-pager-control input::-moz-placeholder {
-  color: #999999;
+  color: #999;
   opacity: 1;
 }
 .ui-grid-pager-control input:-ms-input-placeholder {
-  color: #999999;
+  color: #999;
 }
 .ui-grid-pager-control input::-webkit-input-placeholder {
-  color: #999999;
+  color: #999;
 }
 .ui-grid-pager-control input::-ms-expand {
   border: 0;
@@ -1528,9 +1498,9 @@ select[multiple].ui-grid-pager-control input {
   font-size: 14px;
   line-height: 1.42857143;
   color: #555555;
-  background-color: #ffffff;
+  background-color: #fff;
   background-image: none;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -1554,14 +1524,14 @@ select[multiple].ui-grid-pager-control input {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .ui-grid-pager-row-count-picker select::-moz-placeholder {
-  color: #999999;
+  color: #999;
   opacity: 1;
 }
 .ui-grid-pager-row-count-picker select:-ms-input-placeholder {
-  color: #999999;
+  color: #999;
 }
 .ui-grid-pager-row-count-picker select::-webkit-input-placeholder {
-  color: #999999;
+  color: #999;
 }
 .ui-grid-pager-row-count-picker select::-ms-expand {
   border: 0;
@@ -1795,10 +1765,10 @@ select[multiple].ui-grid-pager-row-count-picker select {
   color: #848484 !important;
 }
 .ui-grid-row-dirty .ui-grid-cell {
-  color: #610b38;
+  color: #610B38;
 }
 .ui-grid-row-error .ui-grid-cell {
-  color: #ff0000 !important;
+  color: #FF0000 !important;
 }
 
 /* This file contains variable declarations (do not remove this line) */
@@ -1828,7 +1798,7 @@ select[multiple].ui-grid-pager-row-count-picker select {
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
-  background-color: #c9dde1;
+  background-color: #C9DDE1;
 }
 .ui-grid-disable-selection {
   -webkit-touch-callout: none;

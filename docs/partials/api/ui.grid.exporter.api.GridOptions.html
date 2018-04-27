@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/exporter/js/exporter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/651f307/src/features/exporter/js/exporter.js#L183" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/src/features/exporter/js/exporter.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/543b8e0/src/features/exporter/js/exporter.js#L183" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">object in module <code ng:non-bindable="">ui.grid.exporter</code>
 </span>
 </div>
@@ -55,6 +55,56 @@ link
 <div class="exportercsvfilename"><div class="exportercsvfilename-page"><p>The default filename to use when saving the downloaded csv.
 This will only work in some browsers.
 <br/>Defaults to &#39;download.csv&#39;</p>
+</div></div>
+</li>
+<li><h3 id="properties_exporterexcelcustomformatters">exporterExcelCustomFormatters</h3>
+<div class="exporterexcelcustomformatters"><div class="exporterexcelcustomformatters-page"><p>A function to call to setup formatters and store on docDefinition.</p>
+<p>The method is called at the start and can setup all the formatters to export to excel</p>
+</div><h5 id="properties_exporterexcelcustomformatters_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-docdefinition">docDefinition</a></td><td><div class="exporterexcelcustomformatters-page"><p>Updated docDefinition with formatter styles</p>
+</div></td></tr></table><h4 id="properties_exporterexcelcustomformatters_example">Example</h4>
+<div class="example"><div class="exporterexcelcustomformatters-page"><pre class="prettyprint linenums">
+gridOptions.exporterExcelCustomFormatters = function(grid, workbook, docDefinition) {
+  const formatters = {};
+  const stylesheet = workbook.getStyleSheet();
+  const headerFormatDefn = {
+    'font': { 'size': 11, 'fontName': 'Calibri', 'bold': true },
+    'alignment': { 'wrapText': false }
+  };
+
+  formatters['header'] = headerFormatter;
+  Object.assign(docDefinition.styles , formatters);
+  grid.docDefinition = docDefinition;
+  return docDefinition;
+}
+</pre>
+</div></div>
+</div>
+</li>
+<li><h3 id="properties_exporterexcelfilename">exporterExcelFilename</h3>
+<div class="exporterexcelfilename"><div class="exporterexcelfilename-page"><p>The default filename to use when saving the downloaded excel, only used in IE (other browsers open excels in a new window)
+<br/>Defaults to &#39;download.xlsx&#39;</p>
+</div></div>
+</li>
+<li><h3 id="properties_exporterexcelheader">exporterExcelHeader</h3>
+<div class="exporterexcelheader"><div class="exporterexcelheader-page"><p>A function to write formatted header data to sheet.</p>
+<p>The method is called to provide custom header building for Excel. This data comes before the grid header</p>
+</div><h5 id="properties_exporterexcelheader_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-docdefinition">docDefinition</a></td><td><div class="exporterexcelheader-page"><p>Updated docDefinition with formatter styles</p>
+</div></td></tr></table><h4 id="properties_exporterexcelheader_example">Example</h4>
+<div class="example"><div class="exporterexcelheader-page"><pre class="prettyprint linenums">
+gridOptions.exporterExcelCustomFormatters = function (grid, workbook, sheet, docDefinition) {
+   const headerFormatter = docDefinition.styles['header'];
+   let cols = [];
+   // push data in A1 cell with metadata formatter
+   cols.push({ value: 'Summary Report', metadata: {style: headerFormatter.id} });
+   sheet.data.push(cols);
+}
+</pre>
+</div></div>
+</div>
+</li>
+<li><h3 id="properties_exporterexcelsheetname">exporterExcelSheetName</h3>
+<div class="exporterexcelsheetname"><div class="exporterexcelsheetname-page"><p>The default sheetname to use when saving the downloaded to excel
+<br/>Defaults to &#39;Sheet1&#39;</p>
 </div></div>
 </li>
 <li><h3 id="properties_exporterfieldapplyfilters">exporterFieldApplyFilters</h3>

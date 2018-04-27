@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.7 - 2018-04-21
+ * ui-grid - v4.4.7-543b8e0 - 2018-04-27
  * Copyright (c) 2018 ; License: MIT 
  */
 

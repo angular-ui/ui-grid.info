@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.6-bc50dfb - 2018-04-20
+ * ui-grid - v4.4.7-543b8e0 - 2018-04-27
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -248,8 +248,8 @@
                         service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
                       }
                     });
-                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                     grid.selection.selectAll = true;
+                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                   }
                 },
                 /**
@@ -273,8 +273,8 @@
                         service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
                       }
                     });
-                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                     grid.selection.selectAll = true;
+                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                   }
                 },
                 /**
@@ -581,9 +581,9 @@
               service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
             }
           });
-          service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
           grid.selection.selectAll = false;
           grid.selection.selectedCount = 0;
+          service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
         },
 
         /**
@@ -945,7 +945,7 @@
             };
 
             function registerRowSelectionEvents() {
-              if ($scope.grid.options.enableRowSelection && $scope.grid.options.enableFullRowSelection && !$elm.hasClass('ui-grid-row-header-cell')) {
+              if ($scope.grid.options.enableRowSelection && $scope.grid.options.enableFullRowSelection && $scope.col.colDef.name !== 'selectionRowHeaderCol') {
                 $elm.addClass('ui-grid-disable-selection');
                 $elm.on('touchstart', touchStart);
                 $elm.on('touchend', touchEnd);

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.6-bc50dfb - 2018-04-20
+ * ui-grid - v4.4.7-543b8e0 - 2018-04-27
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -6208,7 +6208,7 @@ angular.module('ui.grid')
 
       // The bottom boundary is the current Y scroll position, plus the height of the grid, but minus the header height.
       //   Basically this is the viewport height added on to the scroll position
-      var bottomBound = self.renderContainers.body.prevScrollTop + self.gridHeight - self.renderContainers.body.headerHeight - self.footerHeight -  self.scrollbarWidth;
+      var bottomBound = self.renderContainers.body.prevScrollTop + self.gridHeight - self.renderContainers.body.headerHeight - self.footerHeight -  self.scrollbarHeight;
 
       // If there's a horizontal scrollbar, remove its height from the bottom boundary, otherwise we'll be letting it obscure rows
       //if (self.horizontalScrollbarHeight) {
@@ -6245,20 +6245,20 @@ angular.module('ui.grid')
         var scrollPixels;
 
         // If the scroll position we need to see the row is LESS than the top boundary, i.e. obscured above the top of the self...
-        if (pixelsToSeeRow < topBound) {
+        if (pixelsToSeeRow < Math.floor(topBound)) {
           // Get the different between the top boundary and the required scroll position and subtract it from the current scroll position\
           //   to get the full position we need
           scrollPixels = self.renderContainers.body.prevScrollTop - (topBound - pixelsToSeeRow);
 
           //Since scrollIfNecessary is called multiple times when enableCellEditOnFocus is true we need to make sure the scrollbarWidth and footerHeight is accounted for to not cause a loop.
           if (gridCol && gridCol.colDef && gridCol.colDef.enableCellEditOnFocus) {
-            scrollPixels = scrollPixels - self.footerHeight - self.scrollbarWidth;
+            scrollPixels = scrollPixels - self.footerHeight - self.scrollbarHeight;
           }
 
           scrollEvent.y = getScrollY(scrollPixels, scrollLength, self.renderContainers.body.prevScrolltopPercentage);
         }
         // Otherwise if the scroll position we need to see the row is MORE than the bottom boundary, i.e. obscured below the bottom of the self...
-        else if (pixelsToSeeRow > bottomBound) {
+        else if (pixelsToSeeRow > Math.ceil(bottomBound)) {
           // Get the different between the bottom boundary and the required scroll position and add it to the current scroll position
           //   to get the full position we need
           scrollPixels = pixelsToSeeRow - bottomBound + self.renderContainers.body.prevScrollTop;
@@ -14082,7 +14082,8 @@ module.filter('px', function() {
           aria: {
             defaultFilterLabel: 'Filtro por coluna',
             removeFilter: 'Remover filtro',
-            columnMenuButtonLabel: 'Menu coluna'
+            columnMenuButtonLabel: 'Menu coluna',
+            column: 'Coluna'
           },
           priority: 'Prioridade:',
           filterLabel: "Filtro por coluna: "
@@ -14094,6 +14095,10 @@ module.filter('px', function() {
           description: 'Arraste e solte uma coluna aqui para agrupar por essa coluna'
         },
         search: {
+          aria: {
+            selected: 'Linha selecionada',
+            notSelected: 'Linha não está selecionada'
+          },
           placeholder: 'Procurar...',
           showingItems: 'Mostrando os Itens:',
           selectedItems: 'Items Selecionados:',
@@ -14145,6 +14150,7 @@ module.filter('px', function() {
           exporterSelectedAsPdf: 'Exportar dados selecionados como pdf',
           exporterAllAsExcel: 'Exportar todos os dados como excel',
           exporterVisibleAsExcel: 'Exportar dados visíveis como excel',
+          exporterSelectedAsExcel: 'Exportar dados selecionados como excel',
           clearAllFilters: 'Limpar todos os filtros'
         },
         importer: {
@@ -14176,6 +14182,12 @@ module.filter('px', function() {
           aggregate_min: 'Agr: Min',
           aggregate_avg: 'Agr: Med',
           aggregate_remove: 'Agr: Remover'
+        },
+        validate: {
+          error: 'Erro:',
+          minLength: 'O valor deve ter, no minimo, THRESHOLD caracteres.',
+          maxLength: 'O valor deve ter, no máximo, THRESHOLD caracteres.',
+          required: 'Um valor é necessário.'
         }
       });
       return $delegate;
@@ -14191,7 +14203,8 @@ module.filter('px', function() {
           aria: {
             defaultFilterLabel: 'Filtro por coluna',
             removeFilter: 'Remover filtro',
-            columnMenuButtonLabel: 'Menu coluna'
+            columnMenuButtonLabel: 'Menu coluna',
+            column: 'Coluna'
           },
           priority: 'Prioridade:',
           filterLabel: "Filtro por coluna: "
@@ -14203,6 +14216,10 @@ module.filter('px', function() {
           description: 'Arraste e solte uma coluna aqui para agrupar por essa coluna'
         },
         search: {
+          aria: {
+            selected: 'Linha selecionada',
+            notSelected: 'Linha não está selecionada'
+          },
           placeholder: 'Procurar...',
           showingItems: 'Mostrando os Itens:',
           selectedItems: 'Itens Selecionados:',
@@ -14252,6 +14269,9 @@ module.filter('px', function() {
           exporterAllAsPdf: 'Exportar todos os dados como pdf',
           exporterVisibleAsPdf: 'Exportar dados visíveis como pdf',
           exporterSelectedAsPdf: 'Exportar dados selecionados como pdf',
+          exporterAllAsExcel: 'Exportar todos os dados como excel',
+          exporterVisibleAsExcel: 'Exportar dados visíveis como excel',
+          exporterSelectedAsExcel: 'Exportar dados selecionados como excel',
           clearAllFilters: 'Limpar todos os filtros'
         },
         importer: {
@@ -14283,6 +14303,12 @@ module.filter('px', function() {
           aggregate_min: 'Agr: Min',
           aggregate_avg: 'Agr: Med',
           aggregate_remove: 'Agr: Remover'
+        },
+        validate: {
+          error: 'Erro:',
+          minLength: 'O valor deve ter, no minimo, THRESHOLD caracteres.',
+          maxLength: 'O valor deve ter, no máximo, THRESHOLD caracteres.',
+          required: 'Um valor é necessário.'
         }
       });
       return $delegate;
@@ -16017,7 +16043,7 @@ module.filter('px', function() {
 
             // Broadcast the navigation
             if (gridRow !== null && gridCol !== null) {
-              grid.cellNav.broadcastCellNav(rowCol);
+              grid.cellNav.broadcastCellNav(rowCol, null, null);
             }
           });
 
@@ -17196,7 +17222,7 @@ module.filter('px', function() {
                   if ($scope.col.colDef.enableCellEditOnFocus) {
                     // Don't begin edit if the cell hasn't changed
                     if (newRowCol.row === $scope.row && newRowCol.col === $scope.col &&
-                      (!evt || (evt && (evt.type === 'click' || evt.type === 'keydown')))) {
+                      (evt === null || (evt && (evt.type === 'click' || evt.type === 'keydown')))) {
                       $timeout(function() {
                         beginEdit(evt);
                       });
@@ -18961,6 +18987,24 @@ module.filter('px', function() {
           gridOptions.exporterPdfFilename = gridOptions.exporterPdfFilename ? gridOptions.exporterPdfFilename : 'download.pdf';
           /**
            * @ngdoc object
+           * @name exporterExcelFilename
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The default filename to use when saving the downloaded excel, only used in IE (other browsers open excels in a new window)
+           * <br/>Defaults to 'download.xlsx'
+           */
+          gridOptions.exporterExcelFilename = gridOptions.exporterExcelFilename ? gridOptions.exporterExcelFilename : 'download.xlsx';
+
+          /**
+           * @ngdoc object
+           * @name exporterExcelSheetName
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description The default sheetname to use when saving the downloaded to excel
+           * <br/>Defaults to 'Sheet1'
+           */
+          gridOptions.exporterExcelSheetName = gridOptions.exporterExcelSheetName ? gridOptions.exporterExcelSheetName : 'Sheet1';
+
+          /**
+           * @ngdoc object
            * @name exporterOlderExcelCompatibility
            * @propertyOf  ui.grid.exporter.api:GridOptions
            * @description Some versions of excel don't like the utf-16 BOM on the front, and it comes
@@ -19276,6 +19320,66 @@ module.filter('px', function() {
            * </pre>
            */
           gridOptions.exporterFieldFormatCallback = gridOptions.exporterFieldFormatCallback ? gridOptions.exporterFieldFormatCallback : function( grid, row, col, value ) { return null; };
+
+          /**
+           * @ngdoc function
+           * @name exporterExcelCustomFormatters
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description A function to call to setup formatters and store on docDefinition.
+           *
+           * The method is called at the start and can setup all the formatters to export to excel
+           *
+           * @param {Grid} grid provides the grid in case you have need of it
+           * @param {Workbook} row the row from which the data comes
+           * @param {docDefinition} The docDefinition that will have styles as a object to store formatters
+           * @returns {docDefinition} Updated docDefinition with formatter styles
+           *
+           * @example
+           * <pre>
+           *   gridOptions.exporterExcelCustomFormatters = function(grid, workbook, docDefinition) {
+           *     const formatters = {};
+           *     const stylesheet = workbook.getStyleSheet();
+           *     const headerFormatDefn = {
+           *       'font': { 'size': 11, 'fontName': 'Calibri', 'bold': true },
+           *       'alignment': { 'wrapText': false }
+           *     };
+           *
+           *     formatters['header'] = headerFormatter;
+           *     Object.assign(docDefinition.styles , formatters);
+           *     grid.docDefinition = docDefinition;
+           *     return docDefinition;
+           *   }
+           * </pre>
+           */
+          gridOptions.exporterExcelCustomFormatters = gridOptions.exporterExcelCustomFormatters ? gridOptions.exporterExcelCustomFormatters : function( grid, workbook, docDefinition ) { return null; };
+
+          /**
+           * @ngdoc function
+           * @name exporterExcelHeader
+           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @description A function to write formatted header data to sheet.
+           *
+           * The method is called to provide custom header building for Excel. This data comes before the grid header
+           *
+           * @param {grid} grid provides the grid in case you have need of it
+           * @param {Workbook} row the row from which the data comes
+           * @param {Sheet} the sheet to insert data
+           * @param {docDefinition} The docDefinition that will have styles as a object to store formatters
+           * @returns {docDefinition} Updated docDefinition with formatter styles
+           *
+           * @example
+           * <pre>
+           *   gridOptions.exporterExcelCustomFormatters = function (grid, workbook, sheet, docDefinition) {
+           *      const headerFormatter = docDefinition.styles['header'];
+           *      let cols = [];
+           *      // push data in A1 cell with metadata formatter
+           *      cols.push({ value: 'Summary Report', metadata: {style: headerFormatter.id} });
+           *      sheet.data.push(cols);
+           *   }
+           * </pre>
+           */
+          gridOptions.exporterExcelHeader = gridOptions.exporterExcelHeader ? gridOptions.exporterExcelHeader : function( grid, workbook, sheet, docDefinition ) { return null; };
+
 
           /**
            * @ngdoc object
@@ -20310,13 +20414,7 @@ module.filter('px', function() {
       function defaultExporterFieldCallback(grid, row, col, value) {
         // fix to handle cases with 'number : 1' or 'date:MM-dd-YYYY', etc.. We needed to split the string
         if (col.cellFilter) {
-          var cellFilter = col.cellFilter.split(':'),
-            filter = cellFilter[0].trim();
-
-          if (cellFilter.length > 1) {
-            return $filter(filter)(value, cellFilter[1].trim());
-          }
-          return $filter(filter)(value);
+          return $filter(col.cellFilter.split(':')[0].trim())(value);
         } else {
           return value;
         }
@@ -26659,8 +26757,8 @@ module.filter('px', function() {
                         service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
                       }
                     });
-                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                     grid.selection.selectAll = true;
+                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                   }
                 },
                 /**
@@ -26684,8 +26782,8 @@ module.filter('px', function() {
                         service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
                       }
                     });
-                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                     grid.selection.selectAll = true;
+                    service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
                   }
                 },
                 /**
@@ -26992,9 +27090,9 @@ module.filter('px', function() {
               service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
             }
           });
-          service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
           grid.selection.selectAll = false;
           grid.selection.selectedCount = 0;
+          service.decideRaiseSelectionBatchEvent(grid, changedRows, evt);
         },
 
         /**
@@ -27356,7 +27454,7 @@ module.filter('px', function() {
             };
 
             function registerRowSelectionEvents() {
-              if ($scope.grid.options.enableRowSelection && $scope.grid.options.enableFullRowSelection && !$elm.hasClass('ui-grid-row-header-cell')) {
+              if ($scope.grid.options.enableRowSelection && $scope.grid.options.enableFullRowSelection && $scope.col.colDef.name !== 'selectionRowHeaderCol') {
                 $elm.addClass('ui-grid-disable-selection');
                 $elm.on('touchstart', touchStart);
                 $elm.on('touchend', touchEnd);
@@ -27890,7 +27988,7 @@ module.filter('px', function() {
          *  but will make the tree row header wider
          *  <br/>Defaults to 10
          */
-        gridOptions.treeIndent = gridOptions.treeIndent || 10;
+        gridOptions.treeIndent = (gridOptions.treeIndent != null) ? gridOptions.treeIndent : 10;
 
         /**
          *  @ngdoc object
@@ -28418,11 +28516,12 @@ module.filter('px', function() {
        * @returns {array} the updated rows
        */
       treeRows: function( renderableRows ) {
-        if (renderableRows.length === 0){
+        var grid = this;
+
+        if (renderableRows.length === 0) {
+          service.updateRowHeaderWidth( grid );
           return renderableRows;
         }
-
-        var grid = this;
 
         grid.treeBase.tree = service.createTree( grid, renderableRows );
         service.updateRowHeaderWidth( grid );
@@ -29975,7 +30074,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridHeaderCell',
-    "<div role=\"columnheader\" ng-class=\"{ 'sortable': sortable, 'ui-grid-header-cell-last-col': isLastCol }\" ui-grid-one-bind-aria-labelledby-grid=\"col.uid + '-header-text ' + col.uid + '-sortdir-text'\" aria-sort=\"{{col.sort.direction == asc ? 'ascending' : ( col.sort.direction == desc ? 'descending' : (!col.sort.direction ? 'none' : 'other'))}}\"><div role=\"button\" tabindex=\"0\" ng-keydown=\"handleKeyDown($event)\" class=\"ui-grid-cell-contents ui-grid-header-cell-primary-focus\" col-index=\"renderIndex\" title=\"TOOLTIP\"><span class=\"ui-grid-header-cell-label\" ui-grid-one-bind-id-grid=\"col.uid + '-header-text'\">{{ col.displayName CUSTOM_FILTERS }}</span> <span ui-grid-one-bind-id-grid=\"col.uid + '-sortdir-text'\" ui-grid-visible=\"col.sort.direction\" aria-label=\"{{getSortDirectionAriaLabel()}}\"><i ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\" title=\"{{isSortPriorityVisible() ? i18n.headerCell.priority + ' ' + ( col.sort.priority + 1 )  : null}}\" aria-hidden=\"true\"></i> <sub ui-grid-visible=\"isSortPriorityVisible()\" class=\"ui-grid-sort-priority-number\">{{col.sort.priority + 1}}</sub></span></div><div role=\"button\" tabindex=\"0\" ui-grid-one-bind-id-grid=\"col.uid + '-menu-button'\" class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-keydown=\"headerCellArrowKeyDown($event)\" ui-grid-one-bind-aria-label=\"i18n.headerCell.aria.columnMenuButtonLabel\" aria-haspopup=\"true\"><i class=\"ui-grid-icon-angle-down\" aria-hidden=\"true\">&nbsp;</i></div><div ui-grid-filter></div></div>"
+    "<div role=\"columnheader\" ng-class=\"{ 'sortable': sortable, 'ui-grid-header-cell-last-col': isLastCol }\" ui-grid-one-bind-aria-labelledby-grid=\"col.uid + '-header-text ' + col.uid + '-sortdir-text'\" aria-sort=\"{{col.sort.direction == asc ? 'ascending' : ( col.sort.direction == desc ? 'descending' : (!col.sort.direction ? 'none' : 'other'))}}\"><div role=\"button\" tabindex=\"0\" ng-keydown=\"handleKeyDown($event)\" class=\"ui-grid-cell-contents ui-grid-header-cell-primary-focus\" col-index=\"renderIndex\" title=\"TOOLTIP\"><span class=\"ui-grid-header-cell-label\" ui-grid-one-bind-id-grid=\"col.uid + '-header-text'\">{{ col.displayName CUSTOM_FILTERS }} </span><span ui-grid-one-bind-id-grid=\"col.uid + '-sortdir-text'\" ui-grid-visible=\"col.sort.direction\" aria-label=\"{{getSortDirectionAriaLabel()}}\"><i ng-class=\"{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }\" title=\"{{isSortPriorityVisible() ? i18n.headerCell.priority + ' ' + ( col.sort.priority + 1 )  : null}}\" aria-hidden=\"true\"></i> <sub ui-grid-visible=\"isSortPriorityVisible()\" class=\"ui-grid-sort-priority-number\">{{col.sort.priority + 1}}</sub></span></div><div role=\"button\" tabindex=\"0\" ui-grid-one-bind-id-grid=\"col.uid + '-menu-button'\" class=\"ui-grid-column-menu-button\" ng-if=\"grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false\" ng-click=\"toggleMenu($event)\" ng-keydown=\"headerCellArrowKeyDown($event)\" ui-grid-one-bind-aria-label=\"i18n.headerCell.aria.columnMenuButtonLabel\" aria-haspopup=\"true\"><i class=\"ui-grid-icon-angle-down\" aria-hidden=\"true\">&nbsp;</i></div><div ui-grid-filter></div></div>"
   );
 
 
@@ -29985,12 +30084,12 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridMenuItem',
-    "<button type=\"button\" class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active': active(), 'ui-grid-sr-only': (!focus && screenReaderOnly) }\" aria-pressed=\"{{active()}}\" tabindex=\"0\" ng-focus=\"focus=true\" ng-blur=\"focus=false\"><i ng-class=\"icon\" aria-hidden=\"true\">&nbsp;</i> {{ label() }}</button>"
+    "<button type=\"button\" class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active': active(), 'ui-grid-sr-only': (!focus && screenReaderOnly) }\" aria-pressed=\"{{active()}}\" tabindex=\"0\" ng-focus=\"focus=true\" ng-blur=\"focus=false\"><i ng-class=\"icon\" aria-hidden=\"true\">&nbsp; </i>{{ label() }}</button>"
   );
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div role=\"presentation\" ui-grid-one-bind-id-grid=\"'grid-container'\" class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': colContainer.getMargin('left') + 'px', 'margin-right': colContainer.getMargin('right') + 'px' }\"><!-- All of these dom elements are replaced in place --><div ui-grid-header></div><div ui-grid-viewport></div><div ng-if=\"colContainer.needsHScrollbarPlaceholder()\" class=\"ui-grid-scrollbar-placeholder\" ng-style=\"{height:colContainer.grid.scrollbarHeight + 'px'}\"></div><ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></ui-grid-footer></div>"
+    "<div role=\"presentation\" ui-grid-one-bind-id-grid=\"containerId + '-grid-container'\" class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': colContainer.getMargin('left') + 'px', 'margin-right': colContainer.getMargin('right') + 'px' }\"><!-- All of these dom elements are replaced in place --><div ui-grid-header></div><div ui-grid-viewport></div><div ng-if=\"colContainer.needsHScrollbarPlaceholder()\" class=\"ui-grid-scrollbar-placeholder\" ng-style=\"{height:colContainer.grid.scrollbarHeight + 'px'}\"></div><ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></ui-grid-footer></div>"
   );
 
 
@@ -30055,7 +30154,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/pagination',
-    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" step=\"1\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/</abbr> {{ paginationApi.getTotalPages() }}</span> <button type=\"button\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title=\"paginationThrough\">-</abbr> {{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
+    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" step=\"1\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/ </abbr>{{ paginationApi.getTotalPages() }} </span><button type=\"button\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select><span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title=\"paginationThrough\">- </abbr>{{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
   );
 
 

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.6-bc50dfb - 2018-04-20
+ * ui-grid - v4.4.7-543b8e0 - 2018-04-27
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -461,7 +461,7 @@
          *  but will make the tree row header wider
          *  <br/>Defaults to 10
          */
-        gridOptions.treeIndent = gridOptions.treeIndent || 10;
+        gridOptions.treeIndent = (gridOptions.treeIndent != null) ? gridOptions.treeIndent : 10;
 
         /**
          *  @ngdoc object
@@ -989,11 +989,12 @@
        * @returns {array} the updated rows
        */
       treeRows: function( renderableRows ) {
-        if (renderableRows.length === 0){
+        var grid = this;
+
+        if (renderableRows.length === 0) {
+          service.updateRowHeaderWidth( grid );
           return renderableRows;
         }
-
-        var grid = this;
 
         grid.treeBase.tree = service.createTree( grid, renderableRows );
         service.updateRowHeaderWidth( grid );

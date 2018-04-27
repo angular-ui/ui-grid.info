@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.6-bc50dfb - 2018-04-20
+ * ui-grid - v4.4.7-543b8e0 - 2018-04-27
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -552,7 +552,7 @@
 
             // Broadcast the navigation
             if (gridRow !== null && gridCol !== null) {
-              grid.cellNav.broadcastCellNav(rowCol);
+              grid.cellNav.broadcastCellNav(rowCol, null, null);
             }
           });
 
