@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11 - 2018-05-17
+ * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -356,6 +356,11 @@
           avg: 'gns: ',
           min: 'min: ',
           max: 'max: '
+        },
+        pinning: {
+          pinLeft: 'Fastgør til venstre',
+          pinRight: 'Fastgør til højre',
+          unpin: 'Frigør'
         },
         gridMenu: {
           columns: 'Kolonner:',

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.7-543b8e0 - 2018-04-27
+ * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -1994,11 +1994,16 @@ angular.module('ui.grid')
       function isColumnVisible(colDef) {
         return colDef.visible === true || colDef.visible === undefined;
       }
+      
+      function getColumnIcon(colDef) {
+        return isColumnVisible(colDef) ? 'ui-grid-icon-ok' : 'ui-grid-icon-cancel';
+      }
 
       // add header for columns
       showHideColumns.push({
         title: i18nService.getSafeText('gridMenu.columns'),
-        order: 300
+        order: 300,
+        templateUrl: 'ui-grid/ui-grid-menu-header-item'
       });
 
       $scope.grid.options.gridMenuTitleFilter = $scope.grid.options.gridMenuTitleFilter ? $scope.grid.options.gridMenuTitleFilter : function( title ) { return title; };
@@ -2007,15 +2012,19 @@ angular.module('ui.grid')
         if ( colDef.enableHiding !== false ){
           // add hide menu item - shows an OK icon as we only show when column is already visible
           var menuItem = {
-            icon: isColumnVisible(colDef) ? 'ui-grid-icon-ok' : 'ui-grid-icon-cancel',
+            icon: getColumnIcon(colDef),
             action: function($event) {
               $event.stopPropagation();
 
               service.toggleColumnVisibility( this.context.gridCol );
 
               if ($event.target && $event.target.firstChild) {
-                $event.target.firstChild.className = isColumnVisible(this.context.gridCol.colDef) ?
-                  'ui-grid-icon-ok' : 'ui-grid-icon-cancel';
+                if (angular.element($event.target)[0].nodeName === 'I') {
+                  $event.target.className = getColumnIcon(this.context.gridCol.colDef);
+                }
+                else {
+                  $event.target.firstChild.className = getColumnIcon(this.context.gridCol.colDef);
+                }
               }
             },
             shown: function() {
@@ -2354,7 +2363,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 }])
 
 .directive('uiGridMenuItem', ['gridUtil', '$compile', 'i18nService', function (gridUtil, $compile, i18nService) {
-  var uiGridMenuItem = {
+  return {
     priority: 0,
     scope: {
       name: '=',
@@ -2455,8 +2464,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
       };
     }
   };
-
-  return uiGridMenuItem;
 }]);
 
 })();
@@ -11035,11 +11042,11 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       return columnName.replace(/_+/g, ' ')
         // Replace a completely all-capsed word with a first-letter-capitalized version
         .replace(/^[A-Z]+$/, function (match) {
-          return angular.lowercase(angular.uppercase(match.charAt(0)) + match.slice(1));
+          return match.toLowerCase();
         })
         // Capitalize the first letter of words
         .replace(/([\w\u00C0-\u017F]+)/g, function (match) {
-          return angular.uppercase(match.charAt(0)) + match.slice(1);
+          return match.charAt(0).toUpperCase() + match.slice(1);
         })
         // Put a space in between words that have partial capilizations (i.e. 'firstName' becomes 'First Name')
         // .replace(/([A-Z]|[A-Z]\w+)([A-Z])/g, "$1 $2");
@@ -11692,7 +11699,8 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
 
   ['width', 'height'].forEach(function (name) {
-    var capsName = angular.uppercase(name.charAt(0)) + name.substr(1);
+    var capsName = name.charAt(0).toUpperCase() + name.substr(1);
+
     s['element' + capsName] = function (elem, extra) {
       var e = elem;
       if (e && typeof(e.length) !== 'undefined' && e.length) {
@@ -11702,12 +11710,11 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       if (e && e !== null) {
         var styles = getStyles(e);
         return e.offsetWidth === 0 && rdisplayswap.test(styles.display) ?
-                  s.swap(e, cssShow, function() {
-                    return getWidthOrHeight(e, name, extra );
-                  }) :
-                  getWidthOrHeight( e, name, extra );
-      }
-      else {
+          s.swap(e, cssShow, function() {
+            return getWidthOrHeight(e, name, extra );
+          }) :
+          getWidthOrHeight( e, name, extra );
+      } else {
         return null;
       }
     };
@@ -12584,6 +12591,11 @@ module.filter('px', function() {
           avg: 'gns: ',
           min: 'min: ',
           max: 'max: '
+        },
+        pinning: {
+          pinLeft: 'Fastgør til venstre',
+          pinRight: 'Fastgør til højre',
+          unpin: 'Frigør'
         },
         gridMenu: {
           columns: 'Kolonner:',
@@ -15017,7 +15029,7 @@ module.filter('px', function() {
           if (!this._langs[lower]) {
             this._langs[lower] = {};
           }
-          angular.extend(this._langs[lower], strings);
+          angular.merge(this._langs[lower], strings);
         },
         getAllLangs: function () {
           var langs = [];
@@ -15258,6 +15270,7 @@ module.filter('px', function() {
 
 
 })();
+
 (function() {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -15458,35 +15471,31 @@ module.filter('px', function() {
       require: 'uiGrid',
       scope: false,
       link: function($scope, $elm, $attrs, uiGridCtrl) {
-        var elementWidth,
-          elementHeight;
+        var debouncedRefresh;
 
-        var updateWidth = gridUtil.throttle(function() {
-          elementWidth = gridUtil.elementWidth($elm);
-        }, 200);
+        function getDimensions() {
+          return {
+            width: gridUtil.elementWidth($elm),
+            height: gridUtil.elementHeight($elm)
+          };
+        }
 
-        var updateHeight = gridUtil.throttle(function() {
-          elementHeight = gridUtil.elementHeight($elm);
-        }, 200);
-
-        var refresh = gridUtil.throttle(function(width, height) {
-          uiGridCtrl.grid.gridWidth = width;
-          uiGridCtrl.grid.gridHeight = height;
-          uiGridCtrl.grid.refresh();
-        }, 300);
-
-        $scope.$watchGroup([
-          function() {
-            updateWidth();
-            return elementWidth;
-          },
-          function() {
-            updateHeight();
-            return elementHeight;
+        function refreshGrid(prevWidth, prevHeight, width, height) {
+          if ($elm[0].offsetParent !== null) {
+            uiGridCtrl.grid.gridWidth = width;
+            uiGridCtrl.grid.gridHeight = height;
+            uiGridCtrl.grid.queueRefresh()
+              .then(function() {
+                uiGridCtrl.grid.api.core.raise.gridDimensionChanged(prevHeight, prevWidth, height, width);
+              });
           }
-        ], function(newValues, oldValues, scope) {
+        }
+
+        debouncedRefresh = gridUtil.debounce(refreshGrid, 400);
+
+        $scope.$watchCollection(getDimensions, function(newValues, oldValues) {
           if (!angular.equals(newValues, oldValues)) {
-            refresh(newValues[0], newValues[1]);
+            debouncedRefresh(oldValues.width, oldValues.height, newValues.width, newValues.height);
           }
         });
       }
@@ -26806,7 +26815,7 @@ module.filter('px', function() {
                   return service.getSelectedRows(grid).map(function (gridRow) {
                     return gridRow.entity;
                   }).filter(function (entity) {
-                    return entity.hasOwnProperty('$$hashKey');
+                    return entity.hasOwnProperty('$$hashKey') || !angular.isObject(entity);
                   });
                 },
                 /**
@@ -27262,6 +27271,7 @@ module.filter('px', function() {
               uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect);
             }
             else if (row.groupHeader) {
+              uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect);
               for (var i = 0; i < row.treeNode.children.length; i++) {
                 uiGridSelectionService.toggleRowSelection(self, row.treeNode.children[i].row, evt, self.options.multiSelect, self.options.noUnselect);
               }
@@ -29109,6 +29119,16 @@ module.filter('px', function() {
       require: '^uiGrid',
       link: function($scope, $elm, $attrs, uiGridCtrl) {
         var self = uiGridCtrl.grid;
+        $scope.treeButtonClass = function(row) {
+          if ( ( self.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || ( row.treeNode.children && row.treeNode.children.length > 0 ) ) {
+            if (row.treeNode.state === 'expanded' ) {
+              return 'ui-grid-icon-minus-squared';
+            }
+            if (row.treeNode.state === 'collapsed' ) {
+              return 'ui-grid-icon-plus-squared';
+            }
+          }
+        };
         $scope.treeButtonClick = function(row, evt) {
           evt.stopPropagation();
           uiGridTreeBaseService.toggleRowTreeState(self, row, evt);
@@ -29134,7 +29154,14 @@ module.filter('px', function() {
       scope: false,
       link: function($scope, $elm, $attrs, uiGridCtrl) {
         var self = $scope.col.grid;
-
+        $scope.headerButtonClass = function() {
+          if (self.treeBase.numberLevels > 0 && self.treeBase.expandAll) {
+            return 'ui-grid-icon-minus-squared';
+          }
+          if (self.treeBase.numberLevels > 0 && !self.treeBase.expandAll) {
+            return 'ui-grid-icon-plus-squared';
+          }
+        };
         $scope.headerButtonClick = function(row, evt) {
           if ( self.treeBase.expandAll ){
             uiGridTreeBaseService.collapseAllRows(self, evt);
@@ -30012,6 +30039,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('ui-grid/ui-grid-menu-header-item',
+    "<li role=\"menuitem\"><div class=\"ui-grid-menu-item\" role=\"heading\" aria-level=\"2\" ng-show=\"itemShown()\"><i aria-hidden=\"true\">&nbsp; </i><span ng-bind=\"label()\"></span></div></li>"
+  );
+
+
   $templateCache.put('ui-grid/ui-grid-no-header',
     "<div class=\"ui-grid-top-panel\"></div>"
   );
@@ -30189,7 +30221,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/treeBaseExpandAllButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-icon-minus-squared': grid.treeBase.numberLevels > 0 && grid.treeBase.expandAll, 'ui-grid-icon-plus-squared': grid.treeBase.numberLevels > 0 && !grid.treeBase.expandAll}\" ng-click=\"headerButtonClick($event)\"></div>"
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"headerButtonClass()\" ng-click=\"headerButtonClick($event)\"></div>"
   );
 
 
@@ -30204,7 +30236,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/treeBaseRowHeaderButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"{'ui-grid-icon-minus-squared': ( ( grid.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || ( row.treeNode.children && row.treeNode.children.length > 0 ) ) && row.treeNode.state === 'expanded', 'ui-grid-icon-plus-squared': ( ( grid.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || ( row.treeNode.children && row.treeNode.children.length > 0 ) ) && row.treeNode.state === 'collapsed'}\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"treeButtonClass(row)\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
   );
 
 

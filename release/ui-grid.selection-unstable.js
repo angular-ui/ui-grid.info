@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.7-543b8e0 - 2018-04-27
+ * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -297,7 +297,7 @@
                   return service.getSelectedRows(grid).map(function (gridRow) {
                     return gridRow.entity;
                   }).filter(function (entity) {
-                    return entity.hasOwnProperty('$$hashKey');
+                    return entity.hasOwnProperty('$$hashKey') || !angular.isObject(entity);
                   });
                 },
                 /**
@@ -753,6 +753,7 @@
               uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect);
             }
             else if (row.groupHeader) {
+              uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect);
               for (var i = 0; i < row.treeNode.children.length; i++) {
                 uiGridSelectionService.toggleRowSelection(self, row.treeNode.children[i].row, evt, self.options.multiSelect, self.options.noUnselect);
               }

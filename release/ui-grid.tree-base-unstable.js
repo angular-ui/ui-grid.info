@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.7-543b8e0 - 2018-04-27
+ * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -1582,6 +1582,16 @@
       require: '^uiGrid',
       link: function($scope, $elm, $attrs, uiGridCtrl) {
         var self = uiGridCtrl.grid;
+        $scope.treeButtonClass = function(row) {
+          if ( ( self.options.showTreeExpandNoChildren && row.treeLevel > -1 ) || ( row.treeNode.children && row.treeNode.children.length > 0 ) ) {
+            if (row.treeNode.state === 'expanded' ) {
+              return 'ui-grid-icon-minus-squared';
+            }
+            if (row.treeNode.state === 'collapsed' ) {
+              return 'ui-grid-icon-plus-squared';
+            }
+          }
+        };
         $scope.treeButtonClick = function(row, evt) {
           evt.stopPropagation();
           uiGridTreeBaseService.toggleRowTreeState(self, row, evt);
@@ -1607,7 +1617,14 @@
       scope: false,
       link: function($scope, $elm, $attrs, uiGridCtrl) {
         var self = $scope.col.grid;
-
+        $scope.headerButtonClass = function() {
+          if (self.treeBase.numberLevels > 0 && self.treeBase.expandAll) {
+            return 'ui-grid-icon-minus-squared';
+          }
+          if (self.treeBase.numberLevels > 0 && !self.treeBase.expandAll) {
+            return 'ui-grid-icon-plus-squared';
+          }
+        };
         $scope.headerButtonClick = function(row, evt) {
           if ( self.treeBase.expandAll ){
             uiGridTreeBaseService.collapseAllRows(self, evt);
