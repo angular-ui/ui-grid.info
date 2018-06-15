@@ -7,10 +7,16 @@
 <div class="description"><div class="ui-grid-selection-api-page ui-grid-selection-api-gridrow-page"><p>GridRow prototype functions added for selection</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setselected">setSelected(selected)</h3>
+<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setfocused">setFocused(val)</h3>
+<div class="setfocused"><div class="setfocused-page"><p>Sets the isFocused property
+Changes to isFocused state should only be made via this function</p>
+</div><h5 id="methods_setfocused_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>val</td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="setfocused-page"><p>value to set</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setselected">setSelected(selected)</h3>
 <div class="setselected"><div class="setselected-page"><p>Sets the isSelected property and updates the selectedCount
 Changes to isSelected state should only be made via this function</p>
-</div><h5 id="methods_setselected_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>selected</td><td><a href="" class="label type-hint type-hint-bool">bool</a></td><td><div class="setselected-page"><p>value to set</p>
+</div><h5 id="methods_setselected_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>selected</td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="setselected-page"><p>value to set</p>
 </div></td></tr></tbody></table></div>
 </li>
 </ul>
@@ -22,8 +28,13 @@ Changes to isSelected state should only be made via this function</p>
  <br/>Defaults to true</p>
 </div></div>
 </li>
+<li><h3 id="properties_isfocused">isFocused</h3>
+<div class="isfocused"><div class="isfocused-page"><p>Focused state of row. Should be readonly. Make any changes to focused state using setFocused().
+<br/>Defaults to false</p>
+</div></div>
+</li>
 <li><h3 id="properties_isselected">isSelected</h3>
-<div class="isselected"><div class="isselected-page"><p>Selected state of row.  Should be readonly. Make any changes to selected state using setSelected().
+<div class="isselected"><div class="isselected-page"><p>Selected state of row. Should be readonly. Make any changes to selected state using setSelected().
 <br/>Defaults to false</p>
 </div></div>
 </li>

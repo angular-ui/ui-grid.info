@@ -658,7 +658,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.expandable",
       "shortDescription": "Options for configuring the expandable feature, these are available to be",
-      "keywords": "$scope _this_ allows api application button buttons class collapsing column configuring custom defaults display enableexpandable enableexpandablerowheader expand expandable expandablerowheaderwidth expandablerowheight expandablerowscope expandablerowtemplate expandablescope expanded expanding false feature going grid gridoptions grids height hide html implies mandatory method modes object options pixels provide row rowheader scope set showexpandallbutton specific subgrid subgrids template true turn ui ui-grid variables width"
+      "keywords": "$scope _this_ allows api application boolean button buttons class collapsing column configuring custom defaults display enableexpandable enableexpandablerowheader enableondblclickexpand expand expandable expandablerowheaderwidth expandablerowheight expandablerowscope expandablerowtemplate expandablescope expanded expanding false feature going grid gridoptions grids height hide html implies mandatory method modes object ondblclickexpand options pixels provide row rowheader scope set showexpandallbutton specific subgrid subgrids template true turn ui ui-grid variables width"
     },
     {
       "section": "api",
@@ -676,7 +676,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.expandable",
       "shortDescription": "Public Api for expandable feature",
-      "keywords": "api array collapse collapseallrows collapserow data entity expand expandable expandallrows expandedrow expandrow feature function getexpandedrows grid gridapi gridoptions instance method object public references returns row rowentity specific subgrids toggle toggleallrows togglerowexpansion ui"
+      "keywords": "api array collapse collapseallrows collapserow data entity event exist expand expandable expandallrows expandedrow expandrow feature function getexpandedrows grid gridapi gridoptions instance method object public references returns row rowentity specific subgrids toggle toggleallrows togglerowexpansion ui"
     },
     {
       "section": "api",
@@ -702,8 +702,8 @@ NG_DOCS={
       "shortName": "uiGridExpandableRow",
       "type": "directive",
       "moduleName": "ui.grid.expandable",
-      "shortDescription": "directive to render the expandable row template",
-      "keywords": "api directive expandable grid render row template ui"
+      "shortDescription": "directive to render the Row template on Expand",
+      "keywords": "api directive expand expandable grid render row template ui"
     },
     {
       "section": "api",
@@ -1351,7 +1351,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.selection",
       "shortDescription": "GridOptions for selection feature, these are available to be",
-      "keywords": "allow api bulk called changed checkbox class clicking column conjunction create ctrlkey custom defaults enable enablefootertotalselected enablefullrowselection enablerowheaderselection enablerowselection enableselectall enableselection enableselectionbatchevent entire evaluates event false feature fired footer grid gridapi gridoptions header isrowselectable items method modifierkeystomultiselect multiple multiselect nounselect number object option prevent property requires row rows rowselectionchanged select selectall selected selection selectionrowheader selectionrowheaderwidth selectrow separate set sets setting shiftkey showgridfooter single times top total true ui ui-grid unselect unselected width works"
+      "keywords": "allow api bulk called changed checkbox class clicking column conjunction create ctrlkey custom defaults enable enablefocusrowonrowheaderclick enablefootertotalselected enablefullrowselection enablerowheaderselection enablerowselection enableselectall enableselection enableselectionbatchevent enableselectrowonfocus entire evaluates event false feature fired focuse footer grid gridapi gridoptions header isrowselectable items method modifierkeystomultiselect multiple multiselect nounselect number object option prevent property requires row rows rowselectionchanged select selectall selected selection selectionrowheader selectionrowheaderwidth selectrow separate set sets setting shiftkey showgridfooter single times top total true ui ui-grid unselect unselected width works"
     },
     {
       "section": "api",
@@ -1360,7 +1360,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.selection",
       "shortDescription": "GridRow prototype functions added for selection",
-      "keywords": "api changes code enable enableselection example false feature function functions grid gridrow group grouping header internal isselected object property prototype readonly row rows selectable selected selectedcount selection set sets setselected settable true ui updates"
+      "keywords": "api changes code enable enableselection example false feature focused function functions grid gridrow group grouping header internal isfocused isselected object property prototype readonly row rows selectable selected selectedcount selection set setfocused sets setselected settable true ui updates val"
     },
     {
       "section": "api",
@@ -1414,7 +1414,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.selection",
       "shortDescription": "Grid properties and functions added for selection",
-      "keywords": "api count current functions grid object properties rows selected selectedcount selection ui var"
+      "keywords": "api count current focused focusedrow functions grid object properties row rows selected selectedcount selection ui var"
     },
     {
       "section": "api",
@@ -2305,7 +2305,7 @@ NG_DOCS={
       "type": "overview",
       "moduleName": "Tutorial: 405 Exporting All Data With External Pagination",
       "shortDescription": "When using built in pagination, the data is fully loaded before export.",
-      "keywords": "$http $scope _scope angular angularjs app asc better break built case choose class columndefs combined company controller core css data default desc direction enablegridmenu enablesorting example export exportalldatapromise exporter exporteralldatafn exporting external false feature files firstrow fully function gender getpage grid gridapi gridoptions html js json length load loaded main mainctrl min module ng-controller ngtouch null onregisterapi options overview pagesize pagination paginationchanged paginationcurrentpage paginationoptions paginationpagesize paginationpagesizes performance purposes response return selection sense slice sort sortchanged sortcolumns sorting specific src switch totalitems true turn tutorial ui ui-grid ui-grid-exporter ui-grid-pagination ui-grid-selection uigridconstants url useexternalpagination useexternalsorting var width"
+      "keywords": "$http $scope _scope alldata angular angularjs app asc better break built case choose class columndefs combined company controller core css data default desc direction enablegridmenu enablesorting example export exportalldatapromise exporter exporteralldatafn exporting external false feature files firstrow fully function gender getpage grid gridapi gridoptions html js json length load loaded main mainctrl min module ng-controller ngtouch null onregisterapi options overview pagesize pagination paginationchanged paginationcurrentpage paginationoptions paginationpagesize paginationpagesizes performance purposes response return selection sense slice sort sortchanged sortcolumns sorting specific src switch totalitems true turn tutorial ui ui-grid ui-grid-exporter ui-grid-pagination ui-grid-selection uigridconstants url useexternalpagination useexternalsorting var width"
     },
     {
       "section": "tutorial",

@@ -42,12 +42,13 @@
 </pre>
 </div></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_togglerowexpansion">toggleRowExpansion(rowEntity)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_togglerowexpansion">toggleRowExpansion(rowEntity, [e])</h3>
 <div class="togglerowexpansion"><div class="togglerowexpansion-page"><p>Toggle a specific row
 <pre class="prettyprint linenums">
-     gridApi.expandable.toggleRowExpansion(rowEntity);
+     gridApi.expandable.toggleRowExpansion(rowEntity, event);
 </pre>
 </div><h5 id="methods_togglerowexpansion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowEntity</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="togglerowexpansion-page"><p>the data entity for the row you want to expand</p>
+</div></td></tr><tr><td>[e]</td><td><a href="" class="label type-hint type-hint-event">Event</a></td><td><div class="togglerowexpansion-page"><p>event (if exist)</p>
 </div></td></tr></tbody></table></div>
 </li>
 </ul>
@@ -56,23 +57,37 @@
 <ul class="events"><li><h3 id="events_rowexpandedbeforestatechanged">rowExpandedBeforeStateChanged</h3>
 <div class="rowexpandedbeforestatechanged"><div class="rowexpandedbeforestatechanged-page"><p>raised when row is expanding or collapsing
 <pre class="prettyprint linenums">
-     gridApi.expandable.on.rowExpandedBeforeStateChanged(scope,function(row){})
+     gridApi.expandable.on.rowExpandedBeforeStateChanged(scope,function(row, event){})
 </pre>
 </div><div class="inline"></div>
 <div class="inline"></div>
 <h5 id="events_rowexpandedbeforestatechanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>scope</td><td><a href="" class="label type-hint type-hint-scope">scope</a></td><td><div class="rowexpandedbeforestatechanged-page"><p>the application scope</p>
 </div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="rowexpandedbeforestatechanged-page"><p>the row that was expanded</p>
+</div></td></tr><tr><td>evt</td><td><a href="" class="label type-hint type-hint-event">Event</a></td><td><div class="rowexpandedbeforestatechanged-page"><p>object if raised from an event</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="events_rowexpandedrendered">rowExpandedRendered</h3>
+<div class="rowexpandedrendered"><div class="rowexpandedrendered-page"><p>raised when expanded row is rendered
+<pre class="prettyprint linenums">
+     gridApi.expandable.on.rowExpandedRendered(scope,function(row, event){})
+</pre>
+</div><div class="inline"></div>
+<div class="inline"></div>
+<h5 id="events_rowexpandedrendered_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>scope</td><td><a href="" class="label type-hint type-hint-scope">scope</a></td><td><div class="rowexpandedrendered-page"><p>the application scope</p>
+</div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="rowexpandedrendered-page"><p>the row that was expanded</p>
+</div></td></tr><tr><td>evt</td><td><a href="" class="label type-hint type-hint-event">Event</a></td><td><div class="rowexpandedrendered-page"><p>object if raised from an event</p>
 </div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="events_rowexpandedstatechanged">rowExpandedStateChanged</h3>
 <div class="rowexpandedstatechanged"><div class="rowexpandedstatechanged-page"><p>raised when row expanded or collapsed
 <pre class="prettyprint linenums">
-     gridApi.expandable.on.rowExpandedStateChanged(scope,function(row){})
+     gridApi.expandable.on.rowExpandedStateChanged(scope,function(row, event){})
 </pre>
 </div><div class="inline"></div>
 <div class="inline"></div>
 <h5 id="events_rowexpandedstatechanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>scope</td><td><a href="" class="label type-hint type-hint-scope">scope</a></td><td><div class="rowexpandedstatechanged-page"><p>the application scope</p>
 </div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="rowexpandedstatechanged-page"><p>the row that was expanded</p>
+</div></td></tr><tr><td>evt</td><td><a href="" class="label type-hint type-hint-event">Event</a></td><td><div class="rowexpandedstatechanged-page"><p>object if raised from an event</p>
 </div></td></tr></tbody></table></div>
 </li>
 </ul>

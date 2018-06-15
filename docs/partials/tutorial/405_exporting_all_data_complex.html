@@ -58,10 +58,11 @@ as all the data is now present within AngularJS.</p>
           ],
           exporterAllDataFn: function() {
             return getPage(1, $scope.gridOptions.totalItems, paginationOptions.sort)
-            .then(function() {
+            .then(function(allData) {
               $scope.gridOptions.useExternalPagination = false;
               $scope.gridOptions.useExternalSorting = false;
               getPage = null;
+              return allData;
             });
           },
           onRegisterApi: function(gridApi) {
@@ -103,7 +104,8 @@ as all the data is now present within AngularJS.</p>
           .then(function (response) {
             var firstRow = (curPage - 1) * pageSize;
             $scope.gridOptions.totalItems = 100;
-            $scope.gridOptions.data = response.data.slice(firstRow, firstRow + pageSize)
+            $scope.gridOptions.data = response.data.slice(firstRow, firstRow + pageSize);
+            return response.data.slice(firstRow, firstRow + pageSize);
           });
         };
 
