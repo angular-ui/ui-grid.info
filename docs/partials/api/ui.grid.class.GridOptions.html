@@ -253,10 +253,6 @@ you want to tailor the existing column headers, then you should look at the
 current &#39;ui-grid-header.html&#39; template in github as your starting point.</p>
 </div></div>
 </li>
-<li><h3 id="properties_horizontalscrollthreshold">horizontalScrollThreshold</h3>
-<div class="horizontalscrollthreshold"><div class="horizontalscrollthreshold-page"><p>Defaults to 4</p>
-</div></div>
-</li>
 <li><h3 id="properties_infinitescrolldown">infiniteScrollDown</h3>
 <div class="infinitescrolldown"><div class="infinitescrolldown-page"><p>Whether you allow infinite scroll down, implying that the first page of data
 you have displayed is in the middle of your data set.  If set to true then we trigger the
@@ -330,7 +326,8 @@ or the id of a precompiled template (TBD how to use this) can be provided.
 </div></div>
 </li>
 <li><h3 id="properties_scrollthreshold">scrollThreshold</h3>
-<div class="scrollthreshold"><div class="scrollthreshold-page"><p>Defaults to 4</p>
+<div class="scrollthreshold"><div class="scrollthreshold-page"><p>Throttles the grid scrolling by the amount of rows set, which helps with smoothness of scrolling.
+Defaults to 4.</p>
 </div></div>
 </li>
 <li><h3 id="properties_showcolumnfooter">showColumnFooter</h3>

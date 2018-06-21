@@ -31,13 +31,20 @@ support. By default ui-grid.base.js will contain just the english language, in o
 <pre class="prettyprint linenums" ng-set-text="index.html-28" ng-html-wrap-loaded="app angular.js app.js"></pre>
 <script type="text/ng-template" id="index.html-28">
   <div ng-controller="MainCtrl as $ctrl">
-    <select id="langDropdown" ng-model="$ctrl.lang" ng-options="l for l in $ctrl.langs"></select><br>
+    <select id="langDropdown" ng-model="$ctrl.lang" ng-options="l for l in $ctrl.langs"></select>
+    <br />
 
     <div ui-i18n="{{$ctrl.lang}}">
-       <p>Using attribute:</p>
+       <h4 id="example_using-attribute">Using attribute:</h4>
        <p ui-t="groupPanel.description"></p>
-       <br/>
-       <p>Using Filter:</p>
+
+       <h4 id="example_using-attribute-2">Using attribute 2:</h4>
+       <p ui-translate>groupPanel.description</p>
+
+       <h4 id="example_using-filter-that-updates-with-language">Using Filter that updates with language:</h4>
+       <p>{{"groupPanel.description" | t:$ctrl.lang}}</p>
+
+       <h4 id="example_using-filter-that-does-not-update-after-load">Using Filter that does not update after load:</h4>
        <p>{{"groupPanel.description" | t}}</p>
 
        <p>Click the header menu to see language.</p>

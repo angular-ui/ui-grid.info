@@ -43,6 +43,10 @@ i18nService.add('en', {
 <div class="getcurrentlang"><div class="getcurrentlang-page"><p>returns the current language used in the application</p>
 </div></div>
 </li>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_getfallbacklang">getFallbackLang()</h3>
+<div class="getfallbacklang"><div class="getfallbacklang-page"><p>returns the fallback language used in the application</p>
+</div></div>
+</li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_getsafetext">getSafeText(path, [lang])</h3>
 <div class="getsafetext"><div class="getsafetext-page"><p>returns the text specified in the path or a Missing text if text is not found</p>
 </div><h5 id="methods_getsafetext_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>path</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="getsafetext-page"><p>property path to use for retrieving text from string map</p>
@@ -57,11 +61,22 @@ i18nService.getSafeText('sort.ascending')
 </li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setcurrentlang">setCurrentLang(lang)</h3>
 <div class="setcurrentlang"><div class="setcurrentlang-page"><p>sets the current language to use in the application
-$broadcasts the i18nConstants.UPDATE_EVENT on the $rootScope</p>
+$broadcasts and $emits the i18nConstants.UPDATE_EVENT on the $rootScope</p>
 </div><h5 id="methods_setcurrentlang_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>lang</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setcurrentlang-page"><p>to set</p>
 </div></td></tr></tbody></table><h4 id="methods_setcurrentlang_example">Example</h4>
 <div class="example"><div class="setcurrentlang-page"><pre class="prettyprint linenums">
 i18nService.setCurrentLang('fr');
+</pre>
+</div></div>
+</div>
+</li>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setfallbacklang">setFallbackLang(lang)</h3>
+<div class="setfallbacklang"><div class="setfallbacklang-page"><p>sets the fallback language to use in the application.
+The default fallback language is english.</p>
+</div><h5 id="methods_setfallbacklang_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>lang</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setfallbacklang-page"><p>to set</p>
+</div></td></tr></tbody></table><h4 id="methods_setfallbacklang_example">Example</h4>
+<div class="example"><div class="setfallbacklang-page"><pre class="prettyprint linenums">
+i18nService.setFallbackLang('en');
 </pre>
 </div></div>
 </div>
