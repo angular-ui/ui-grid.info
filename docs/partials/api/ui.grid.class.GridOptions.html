@@ -69,7 +69,7 @@ The individual options available in columnDefs are documented in the
 <a href="#!/api/ui.grid.class:GridOptions.columnDef">columnDef</a> section
 </br><em>field property can be used in place of name for backwards compatibility with 2.x</em></p>
 </div><h4 id="properties_columndefs_example">Example</h4>
-<div class="example"><div class="columndefs-page"><pre class="prettyprint linenums">var columnDefs = [{name:'field1'}, {name:'field2'}];</pre>
+<div class="example"><div class="columndefs-page"><pre class="prettyprint linenums">var columnDefs = [{name: 'field1'}, {name: 'field2'}];</pre>
 </div></div>
 </div>
 </li>
@@ -238,6 +238,16 @@ gridOptions = {
 </div></div>
 </div>
 </li>
+<li><h3 id="properties_headerrowheight">headerRowHeight</h3>
+<div class="headerrowheight"><div class="headerrowheight-page"><p>The height of the header in pixels, defaults to 30.
+Although, we recommend that you alter header height with CSS rather than using this option:</p>
+<pre class="prettyprint linenums">
+    .grid .ui-grid-header-cell {
+        height: 60px;
+    }
+</pre>
+</div></div>
+</li>
 <li><h3 id="properties_headertemplate">headerTemplate</h3>
 <div class="headertemplate"><div class="headertemplate-page"><p>Null by default. When provided, this setting uses a custom header
 template, rather than the default template. Can be set to either the name of a template file:
@@ -384,8 +394,8 @@ server sorting) to be implemented.  Defaults to false.</p>
 <p>To provide default options for all of the grids within your application, use an angular
 decorator to modify the GridOptions factory.
 <pre class="prettyprint linenums">
-app.config(function($provide){
-  $provide.decorator('GridOptions',function($delegate){
+app.config(function($provide) {
+  $provide.decorator('GridOptions',function($delegate) {
     var gridOptions;
     gridOptions = angular.copy($delegate);
     gridOptions.initialize = function(options) {

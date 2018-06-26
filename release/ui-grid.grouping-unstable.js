@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -97,13 +97,11 @@
    */
   module.service('uiGridGroupingService', ['$q', 'uiGridGroupingConstants', 'gridUtil', 'rowSorter', 'GridRow', 'gridClassFactory', 'i18nService', 'uiGridConstants', 'uiGridTreeBaseService',
   function ($q, uiGridGroupingConstants, gridUtil, rowSorter, GridRow, gridClassFactory, i18nService, uiGridConstants, uiGridTreeBaseService) {
-
     var service = {
-
       initializeGrid: function (grid, $scope) {
         uiGridTreeBaseService.initializeGrid( grid, $scope );
 
-        //add feature namespace and any properties to grid for needed
+        // add feature namespace and any properties to grid for needed
         /**
          *  @ngdoc object
          *  @name ui.grid.grouping.grid:grouping
@@ -172,7 +170,7 @@
                * @description raised whenever aggregation is changed, added or removed from a column
                *
                * <pre>
-               *      gridApi.grouping.on.aggregationChanged(scope,function(col){})
+               *      gridApi.grouping.on.aggregationChanged(scope,function(col) {})
                * </pre>
                * @param {GridColumn} col the column which on which aggregation changed. The aggregation
                * type is available as `col.treeAggregation.type`
@@ -185,7 +183,7 @@
                * @description raised whenever the grouped columns changes
                *
                * <pre>
-               *      gridApi.grouping.on.groupingChanged(scope,function(col){})
+               *      gridApi.grouping.on.groupingChanged(scope,function(col) {})
                * </pre>
                * @param {GridColumn} col the column which on which grouping changed. The new grouping is
                * available as `col.grouping`
@@ -229,11 +227,11 @@
                   delete aggregation.col;
                 });
 
-                grouping.aggregations = grouping.aggregations.filter( function( aggregation ){
+                grouping.aggregations = grouping.aggregations.filter( function( aggregation ) {
                   return !aggregation.aggregation.source || aggregation.aggregation.source !== 'grouping';
                 });
 
-                if ( getExpanded ){
+                if ( getExpanded ) {
                   grouping.rowExpandedStates = service.getRowExpandedStates( grid.grouping.groupingHeaderCache );
                 }
 
@@ -266,8 +264,9 @@
                *
                * @param {string} columnName the name of the column we want to group
                */
-              groupColumn: function( columnName ) {
+              groupColumn: function(columnName) {
                 var column = grid.getColumn(columnName);
+
                 service.groupColumn(grid, column);
               },
 
@@ -284,8 +283,9 @@
                *
                * @param {string} columnName the name of the column we want to ungroup
                */
-              ungroupColumn: function( columnName ) {
+              ungroupColumn: function(columnName) {
                 var column = grid.getColumn(columnName);
+
                 service.ungroupColumn(grid, column);
               },
 
@@ -311,15 +311,15 @@
                * being removed
                *
                * @param {string} columnName the column we want to aggregate
-               * @param {string} or {function} aggregationDef one of the recognised types
+               * @param {string|function} aggregationDef one of the recognised types
                * from uiGridGroupingConstants or a custom aggregation function.
                * @param {string} aggregationLabel (optional) The label to use for this aggregation.
                */
-              aggregateColumn: function( columnName, aggregationDef, aggregationLabel){
+              aggregateColumn: function(columnName, aggregationDef, aggregationLabel) {
                 var column = grid.getColumn(columnName);
-                service.aggregateColumn( grid, column, aggregationDef, aggregationLabel);
-              }
 
+                service.aggregateColumn(grid, column, aggregationDef, aggregationLabel);
+              }
             }
           }
         };
@@ -328,12 +328,11 @@
 
         grid.api.registerMethodsFromObject(publicApi.methods);
 
-        grid.api.core.on.sortChanged( $scope, service.tidyPriorities);
-
+        grid.api.core.on.sortChanged($scope, service.tidyPriorities);
       },
 
       defaultGridOptions: function (gridOptions) {
-        //default option to true unless it was explicitly set to false
+        // default option to true unless it was explicitly set to false
         /**
          *  @ngdoc object
          *  @name ui.grid.grouping.api:GridOptions
@@ -409,7 +408,7 @@
          *  @description Enable grouping on this column
          *  <br/>Defaults to true.
          */
-        if (colDef.enableGrouping === false){
+        if (colDef.enableGrouping === false) {
           return;
         }
 
@@ -442,15 +441,15 @@
 
         if ( typeof(col.grouping) === 'undefined' && typeof(colDef.grouping) !== 'undefined') {
           col.grouping = angular.copy(colDef.grouping);
-          if ( typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority > -1 ){
+          if ( typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority > -1 ) {
             col.treeAggregationFn = uiGridTreeBaseService.nativeAggregations()[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
             col.treeAggregationFinalizerFn = service.groupedFinalizerFn;
           }
-        } else if (typeof(col.grouping) === 'undefined'){
+        } else if (typeof(col.grouping) === 'undefined') {
           col.grouping = {};
         }
 
-        if (typeof(col.grouping) !== 'undefined' && typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority >= 0){
+        if (typeof(col.grouping) !== 'undefined' && typeof(col.grouping.groupPriority) !== 'undefined' && col.grouping.groupPriority >= 0) {
           col.suppressRemoveSort = true;
         }
 
@@ -494,7 +493,7 @@
         };
 
         // generic adder for the aggregation menus, which follow a pattern
-        var addAggregationMenu = function(type, title){
+        var addAggregationMenu = function(type, title) {
           title = title || i18nService.get().grouping['aggregate_' + type] || type;
           var menuItem = {
             name: 'ui.grid.grouping.aggregate' + type,
@@ -521,7 +520,7 @@
          *  @description Show the grouping (group and ungroup items) menu on this column
          *  <br/>Defaults to true.
          */
-        if ( col.colDef.groupingShowGroupingMenu !== false ){
+        if ( col.colDef.groupingShowGroupingMenu !== false ) {
           if (!gridUtil.arrayContainsObjectWithProperty(col.menuItems, 'name', 'ui.grid.grouping.group')) {
             col.menuItems.push(groupColumn);
           }
@@ -539,11 +538,11 @@
          *  @description Show the aggregation menu on this column
          *  <br/>Defaults to true.
          */
-        if ( col.colDef.groupingShowAggregationMenu !== false ){
-          angular.forEach(uiGridTreeBaseService.nativeAggregations(), function(aggregationDef, name){
+        if ( col.colDef.groupingShowAggregationMenu !== false ) {
+          angular.forEach(uiGridTreeBaseService.nativeAggregations(), function(aggregationDef, name) {
             addAggregationMenu(name);
           });
-          angular.forEach(gridOptions.treeCustomAggregations, function(aggregationDef, name){
+          angular.forEach(gridOptions.treeCustomAggregations, function(aggregationDef, name) {
             addAggregationMenu(name, aggregationDef.menuTitle);
           });
 
@@ -567,8 +566,6 @@
        * @returns {array} updated columns array
        */
       groupingColumnProcessor: function( columns, rows ) {
-        var grid = this;
-
         columns = service.moveGroupColumns(this, columns, rows);
         return columns;
       },
@@ -580,14 +577,14 @@
        * @description Used on group columns to display the rendered value and optionally
        * display the count of rows.
        *
-       * @param {aggregation} the aggregation entity for a grouped column
+       * @param {aggregation} aggregation The aggregation entity for a grouped column
        */
-      groupedFinalizerFn: function( aggregation ){
+      groupedFinalizerFn: function( aggregation ) {
         var col = this;
 
         if ( typeof(aggregation.groupVal) !== 'undefined') {
           aggregation.rendered = aggregation.groupVal;
-          if ( col.grid.options.groupingShowCounts && col.colDef.type !== 'date' && col.colDef.type !== 'object' ){
+          if ( col.grid.options.groupingShowCounts && col.colDef.type !== 'date' && col.colDef.type !== 'object' ) {
             aggregation.rendered += (' (' + aggregation.value + ')');
           }
         } else {
@@ -608,36 +605,38 @@
        *
        * @param {Grid} grid grid object
        * @param {array} columns the columns that we should process/move
-       * @param {array} rows the grid rows
        * @returns {array} updated columns
        */
-      moveGroupColumns: function( grid, columns, rows ){
-        if ( grid.options.moveGroupColumns === false){
+      moveGroupColumns: function( grid, columns ) {
+        if ( grid.options.moveGroupColumns === false) {
           return columns;
         }
 
-        columns.forEach( function(column, index){
+        columns.forEach(function(column, index) {
           // position used to make stable sort in moveGroupColumns
           column.groupingPosition = index;
         });
 
-        columns.sort(function(a, b){
+        columns.sort(function(a, b) {
           var a_group, b_group;
-          if (a.isRowHeader){
+
+          if (a.isRowHeader) {
             a_group = a.headerPriority;
           }
-          else if ( typeof(a.grouping) === 'undefined' || typeof(a.grouping.groupPriority) === 'undefined' || a.grouping.groupPriority < 0){
+          else if ( typeof(a.grouping) === 'undefined' || typeof(a.grouping.groupPriority) === 'undefined' || a.grouping.groupPriority < 0) {
             a_group = null;
-          } else {
+          }
+          else {
             a_group = a.grouping.groupPriority;
           }
 
-          if (b.isRowHeader){
+          if (b.isRowHeader) {
             b_group = b.headerPriority;
           }
-          else if ( typeof(b.grouping) === 'undefined' || typeof(b.grouping.groupPriority) === 'undefined' || b.grouping.groupPriority < 0){
+          else if ( typeof(b.grouping) === 'undefined' || typeof(b.grouping.groupPriority) === 'undefined' || b.grouping.groupPriority < 0) {
             b_group = null;
-          } else {
+          }
+          else {
             b_group = b.grouping.groupPriority;
           }
 
@@ -649,7 +648,7 @@
           return a.groupingPosition - b.groupingPosition;
         });
 
-        columns.forEach( function(column, index) {
+        columns.forEach( function(column) {
           delete column.groupingPosition;
         });
 
@@ -670,8 +669,8 @@
        * @param {Grid} grid grid object
        * @param {GridColumn} column the column we want to group
        */
-      groupColumn: function( grid, column){
-        if ( typeof(column.grouping) === 'undefined' ){
+      groupColumn: function( grid, column) {
+        if ( typeof(column.grouping) === 'undefined' ) {
           column.grouping = {};
         }
 
@@ -683,9 +682,9 @@
         column.previousSort = angular.copy(column.sort);
 
         // add sort if not present
-        if ( !column.sort ){
+        if ( !column.sort ) {
           column.sort = { direction: uiGridConstants.ASC };
-        } else if ( typeof(column.sort.direction) === 'undefined' || column.sort.direction === null ){
+        } else if ( typeof(column.sort.direction) === 'undefined' || column.sort.direction === null ) {
           column.sort.direction = uiGridConstants.ASC;
         }
 
@@ -715,8 +714,8 @@
        * @param {Grid} grid grid object
        * @param {GridColumn} column the column we want to ungroup
        */
-      ungroupColumn: function( grid, column){
-        if ( typeof(column.grouping) === 'undefined' ){
+      ungroupColumn: function( grid, column) {
+        if ( typeof(column.grouping) === 'undefined' ) {
           return;
         }
 
@@ -748,16 +747,16 @@
        * @param {GridColumn} column the column we want to aggregate
        * @param {string} aggregationType of the recognised types from uiGridGroupingConstants or one of the custom aggregations from gridOptions
        */
-      aggregateColumn: function( grid, column, aggregationType){
-
-        if (typeof(column.grouping) !== 'undefined' && typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0){
+      aggregateColumn: function( grid, column, aggregationType) {
+        if (typeof(column.grouping) !== 'undefined' && typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0) {
           service.ungroupColumn( grid, column );
         }
 
         var aggregationDef = {};
-        if ( typeof(grid.options.treeCustomAggregations[aggregationType]) !== 'undefined' ){
+
+        if ( typeof(grid.options.treeCustomAggregations[aggregationType]) !== 'undefined' ) {
           aggregationDef = grid.options.treeCustomAggregations[aggregationType];
-        } else if ( typeof(uiGridTreeBaseService.nativeAggregations()[aggregationType]) !== 'undefined' ){
+        } else if ( typeof(uiGridTreeBaseService.nativeAggregations()[aggregationType]) !== 'undefined' ) {
           aggregationDef = uiGridTreeBaseService.nativeAggregations()[aggregationType];
         }
 
@@ -781,15 +780,15 @@
        * @param {Grid} grid grid object
        * @param {object} config the config we want to set, same format as that returned by getGrouping
        */
-      setGrouping: function ( grid, config ){
-        if ( typeof(config) === 'undefined' ){
+      setGrouping: function ( grid, config ) {
+        if ( typeof(config) === 'undefined' ) {
           return;
         }
 
         // first remove any existing grouping
         service.clearGrouping(grid);
 
-        if ( config.grouping && config.grouping.length && config.grouping.length > 0 ){
+        if ( config.grouping && config.grouping.length && config.grouping.length > 0 ) {
           config.grouping.forEach( function( group ) {
             var col = grid.getColumn(group.colName);
 
@@ -799,7 +798,7 @@
           });
         }
 
-        if ( config.aggregations && config.aggregations.length ){
+        if ( config.aggregations && config.aggregations.length ) {
           config.aggregations.forEach( function( aggregation ) {
             var col = grid.getColumn(aggregation.colName);
 
@@ -809,7 +808,7 @@
           });
         }
 
-        if ( config.rowExpandedStates ){
+        if ( config.rowExpandedStates ) {
           service.applyRowExpandedStates( grid.grouping.groupingHeaderCache, config.rowExpandedStates );
         }
       },
@@ -827,9 +826,9 @@
       clearGrouping: function( grid ) {
         var currentGrouping = service.getGrouping(grid);
 
-        if ( currentGrouping.grouping.length > 0 ){
+        if ( currentGrouping.grouping.length > 0 ) {
           currentGrouping.grouping.forEach( function( group ) {
-            if (!group.col){
+            if (!group.col) {
               // should have a group.colName if there's no col
               group.col = grid.getColumn(group.colName);
             }
@@ -837,9 +836,9 @@
           });
         }
 
-        if ( currentGrouping.aggregations.length > 0 ){
-          currentGrouping.aggregations.forEach( function( aggregation ){
-            if (!aggregation.col){
+        if ( currentGrouping.aggregations.length > 0 ) {
+          currentGrouping.aggregations.forEach( function( aggregation ) {
+            if (!aggregation.col) {
               // should have a group.colName if there's no col
               aggregation.col = grid.getColumn(aggregation.colName);
             }
@@ -860,42 +859,43 @@
        *
        * @param {Grid} grid grid object
        */
-      tidyPriorities: function( grid ){
+      tidyPriorities: function( grid ) {
         // if we're called from sortChanged, grid is in this, not passed as param, the param can be a column or undefined
         if ( ( typeof(grid) === 'undefined' || typeof(grid.grid) !== 'undefined' ) && typeof(this.grid) !== 'undefined' ) {
           grid = this.grid;
         }
 
-        var groupArray = [];
-        var sortArray = [];
+        var groupArray = [],
+          sortArray = [];
 
-        grid.columns.forEach( function(column, index){
-          if ( typeof(column.grouping) !== 'undefined' && typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0){
+        grid.columns.forEach( function(column, index) {
+          if ( typeof(column.grouping) !== 'undefined' && typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0) {
             groupArray.push(column);
-          } else if ( typeof(column.sort) !== 'undefined' && typeof(column.sort.priority) !== 'undefined' && column.sort.priority >= 0){
+          }
+          else if ( typeof(column.sort) !== 'undefined' && typeof(column.sort.priority) !== 'undefined' && column.sort.priority >= 0) {
             sortArray.push(column);
           }
         });
 
-        groupArray.sort(function(a, b){ return a.grouping.groupPriority - b.grouping.groupPriority; });
-        groupArray.forEach( function(column, index){
+        groupArray.sort(function(a, b) { return a.grouping.groupPriority - b.grouping.groupPriority; });
+        groupArray.forEach( function(column, index) {
           column.grouping.groupPriority = index;
           column.suppressRemoveSort = true;
-          if ( typeof(column.sort) === 'undefined'){
+          if ( typeof(column.sort) === 'undefined') {
             column.sort = {};
           }
           column.sort.priority = index;
         });
 
         var i = groupArray.length;
-        sortArray.sort(function(a, b){ return a.sort.priority - b.sort.priority; });
-        sortArray.forEach( function(column, index){
+
+        sortArray.sort(function(a, b) { return a.sort.priority - b.sort.priority; });
+        sortArray.forEach(function(column) {
           column.sort.priority = i;
           column.suppressRemoveSort = column.colDef.suppressRemoveSort;
           i++;
         });
       },
-
 
       /**
        * @ngdoc function
@@ -930,7 +930,7 @@
        * @returns {array} the updated rows, including our new group rows
        */
       groupRows: function( renderableRows ) {
-        if (renderableRows.length === 0){
+        if (renderableRows.length === 0) {
           return renderableRows;
         }
 
@@ -946,7 +946,7 @@
           var fieldValue = grid.getCellValue(row, groupFieldState.col);
 
           // look for change of value - and insert a header
-          if ( !groupFieldState.initialised || rowSorter.getSortFn(grid, groupFieldState.col, renderableRows)(fieldValue, groupFieldState.currentValue) !== 0 ){
+          if ( !groupFieldState.initialised || rowSorter.getSortFn(grid, groupFieldState.col, renderableRows)(fieldValue, groupFieldState.currentValue) !== 0 ) {
             service.insertGroupHeader( grid, renderableRows, i, processingState, stateIndex );
             i++;
           }
@@ -954,10 +954,10 @@
 
         // use a for loop because it's tolerant of the array length changing whilst we go - we can
         // manipulate the iterator when we insert groupHeader rows
-        for (var i = 0; i < renderableRows.length; i++ ){
+        for (var i = 0; i < renderableRows.length; i++ ) {
           var row = renderableRows[i];
 
-          if ( row.visible ){
+          if ( row.visible ) {
             processingState.forEach( updateProcessingState );
           }
         }
@@ -978,11 +978,11 @@
        * @returns {array} an array in the format described in the groupRows method,
        * initialised with blank values
        */
-      initialiseProcessingState: function( grid ){
+      initialiseProcessingState: function( grid ) {
         var processingState = [];
         var columnSettings = service.getGrouping( grid );
 
-        columnSettings.grouping.forEach( function( groupItem, index){
+        columnSettings.grouping.forEach( function( groupItem, index) {
           processingState.push({
             fieldName: groupItem.field,
             col: groupItem.col,
@@ -1005,24 +1005,24 @@
        * @param {Grid} grid grid object
        * @returns {array} an array of the group fields, in order of priority
        */
-      getGrouping: function( grid ){
-        var groupArray = [];
-        var aggregateArray = [];
+      getGrouping: function( grid ) {
+        var groupArray = [],
+          aggregateArray = [];
 
         // get all the grouping
-        grid.columns.forEach( function(column, columnIndex){
-          if ( column.grouping ){
-            if ( typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0){
+        grid.columns.forEach(function(column) {
+          if ( column.grouping ) {
+            if ( typeof(column.grouping.groupPriority) !== 'undefined' && column.grouping.groupPriority >= 0) {
               groupArray.push({ field: column.field, col: column, groupPriority: column.grouping.groupPriority, grouping: column.grouping });
             }
           }
-          if ( column.treeAggregation && column.treeAggregation.type ){
+          if ( column.treeAggregation && column.treeAggregation.type ) {
             aggregateArray.push({ field: column.field, col: column, aggregation: column.treeAggregation });
           }
         });
 
         // sort grouping into priority order
-        groupArray.sort( function(a, b){
+        groupArray.sort( function(a, b) {
           return a.groupPriority - b.groupPriority;
         });
 
@@ -1055,32 +1055,29 @@
        */
       insertGroupHeader: function( grid, renderableRows, rowIndex, processingState, stateIndex ) {
         // set the value that caused the end of a group into the header row and the processing state
-        var fieldName = processingState[stateIndex].fieldName;
-        var col = processingState[stateIndex].col;
+        var col = processingState[stateIndex].col,
+          newValue = grid.getCellValue(renderableRows[rowIndex], col),
+          newDisplayValue = newValue;
 
-        var newValue = grid.getCellValue(renderableRows[rowIndex], col);
-        var newDisplayValue = newValue;
         if ( typeof(newValue) === 'undefined' || newValue === null ) {
           newDisplayValue = grid.options.groupingNullLabel;
         }
 
-        var getKeyAsValueForCacheMap = function(key) {
-          if (angular.isObject(key)) {
-              return JSON.stringify(key);
-          } else {
-              return key;
-          }
-        };
+        function getKeyAsValueForCacheMap(key) {
+          return angular.isObject(key) ? JSON.stringify(key) : key;
+        }
 
         var cacheItem = grid.grouping.oldGroupingHeaderCache;
-        for ( var i = 0; i < stateIndex; i++ ){
-          if ( cacheItem && cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)] ){
+
+        for ( var i = 0; i < stateIndex; i++ ) {
+          if ( cacheItem && cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)] ) {
             cacheItem = cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)].children;
           }
         }
 
         var headerRow;
-        if ( cacheItem && cacheItem[getKeyAsValueForCacheMap(newValue)]){
+
+        if ( cacheItem && cacheItem[getKeyAsValueForCacheMap(newValue)]) {
           headerRow = cacheItem[getKeyAsValueForCacheMap(newValue)].row;
           headerRow.entity = {};
         } else {
@@ -1107,7 +1104,7 @@
 
         // add our new header row to the cache
         cacheItem = grid.grouping.groupingHeaderCache;
-        for ( i = 0; i < stateIndex; i++ ){
+        for ( i = 0; i < stateIndex; i++ ) {
           cacheItem = cacheItem[getKeyAsValueForCacheMap(processingState[i].currentValue)].children;
         }
         cacheItem[getKeyAsValueForCacheMap(newValue)] = { row: headerRow, children: {} };
@@ -1125,8 +1122,8 @@
        * @param {number} stateIndex the processing state item that we were on when we triggered a new group header, all
        * processing states after this need to be finalised
        */
-      finaliseProcessingState: function( processingState, stateIndex ){
-        for ( var i = stateIndex; i < processingState.length; i++){
+      finaliseProcessingState: function( processingState, stateIndex ) {
+        for ( var i = stateIndex; i < processingState.length; i++) {
           processingState[i].initialised = false;
           processingState[i].currentRow = null;
           processingState[i].currentValue = null;
@@ -1164,16 +1161,16 @@
        * @param {object} treeChildren The tree children elements object
        * @returns {object} the expanded states as an object
        */
-      getRowExpandedStates: function(treeChildren){
-        if ( typeof(treeChildren) === 'undefined' ){
+      getRowExpandedStates: function(treeChildren) {
+        if ( typeof(treeChildren) === 'undefined' ) {
           return {};
         }
 
         var newChildren = {};
 
-        angular.forEach( treeChildren, function( value, key ){
+        angular.forEach( treeChildren, function( value, key ) {
           newChildren[key] = { state: value.row.treeNode.state };
-          if ( value.children ){
+          if ( value.children ) {
             newChildren[key].children = service.getRowExpandedStates( value.children );
           } else {
             newChildren[key].children = {};
@@ -1199,16 +1196,16 @@
        * @param {object} expandedStates can be the full expanded states, or children
        * of that expanded states (which hopefully matches the subset of the groupHeaderCache)
        */
-      applyRowExpandedStates: function( currentNode, expandedStates ){
-        if ( typeof(expandedStates) === 'undefined' ){
+      applyRowExpandedStates: function( currentNode, expandedStates ) {
+        if ( typeof(expandedStates) === 'undefined' ) {
           return;
         }
 
         angular.forEach(expandedStates, function( value, key ) {
-          if ( currentNode[key] ){
+          if ( currentNode[key] ) {
             currentNode[key].row.treeNode.state = value.state;
 
-            if (value.children && currentNode[key].children){
+            if (value.children && currentNode[key].children) {
               service.applyRowExpandedStates( currentNode[key].children, value.children );
             }
           }
@@ -1267,7 +1264,7 @@
       compile: function () {
         return {
           pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            if (uiGridCtrl.grid.options.enableGrouping !== false){
+            if (uiGridCtrl.grid.options.enableGrouping !== false) {
               uiGridGroupingService.initializeGrid(uiGridCtrl.grid, $scope);
             }
           },

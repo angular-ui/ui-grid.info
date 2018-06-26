@@ -7,13 +7,13 @@
 <div class="description"><div class="ui-grid-grouping-api-page ui-grid-grouping-api-publicapi-page"><p>Public Api for grouping feature</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(columnName, or, aggregationLabel)</h3>
+<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_aggregatecolumn">aggregateColumn(columnName, aggregationDef, aggregationLabel)</h3>
 <div class="aggregatecolumn"><div class="aggregatecolumn-page"><p>Sets the aggregation type on a column, if the
 column is currently grouped then it removes the grouping first.
 If the aggregationDef is null then will result in the aggregation
 being removed</p>
 </div><h5 id="methods_aggregatecolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>columnName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>the column we want to aggregate</p>
-</div></td></tr><tr><td>or</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>{function} aggregationDef one of the recognised types
+</div></td></tr><tr><td>aggregationDef</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="aggregatecolumn-page"><p>one of the recognised types
 from uiGridGroupingConstants or a custom aggregation function.</p>
 </div></td></tr><tr><td>aggregationLabel</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="aggregatecolumn-page"><p>(optional) The label to use for this aggregation.</p>
 </div></td></tr></tbody></table></div>
@@ -71,7 +71,7 @@ move is handled in a columnProcessor, so gets called as part of refresh</p>
 <ul class="events"><li><h3 id="events_aggregationchanged">aggregationChanged</h3>
 <div class="aggregationchanged"><div class="aggregationchanged-page"><p>raised whenever aggregation is changed, added or removed from a column</p>
 <pre class="prettyprint linenums">
-     gridApi.grouping.on.aggregationChanged(scope,function(col){})
+     gridApi.grouping.on.aggregationChanged(scope,function(col) {})
 </pre>
 </div><div class="inline"></div>
 <div class="inline"></div>
@@ -82,7 +82,7 @@ type is available as <code>col.treeAggregation.type</code></p>
 <li><h3 id="events_groupingchanged">groupingChanged</h3>
 <div class="groupingchanged"><div class="groupingchanged-page"><p>raised whenever the grouped columns changes</p>
 <pre class="prettyprint linenums">
-     gridApi.grouping.on.groupingChanged(scope,function(col){})
+     gridApi.grouping.on.groupingChanged(scope,function(col) {})
 </pre>
 </div><div class="inline"></div>
 <div class="inline"></div>

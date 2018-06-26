@@ -55,7 +55,7 @@ Debounced using scrollDebounce option setting</p>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setpropertyordefault">setPropertyOrDefault(colDef, propName, defaultValue)</h3>
 <div class="setpropertyordefault"><div class="setpropertyordefault-page"><p>Sets a property on the column using the passed in columnDef, and
 setting the defaultValue if the value cannot be found on the colDef</p>
-</div><h5 id="methods_setpropertyordefault_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-columndef">ColumnDef</a></td><td><div class="setpropertyordefault-page"><p>the column def to look in for the property value</p>
+</div><h5 id="methods_setpropertyordefault_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="setpropertyordefault-page"><p>the column def to look in for the property value</p>
 </div></td></tr><tr><td>propName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setpropertyordefault-page"><p>the property name we&#39;d like to set</p>
 </div></td></tr><tr><td>defaultValue</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="setpropertyordefault-page"><p>the value to use if the colDef doesn&#39;t provide the setting</p>
 </div></td></tr></tbody></table></div>
@@ -71,7 +71,7 @@ setting the defaultValue if the value cannot be found on the colDef</p>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_updatecolumndef">updateColumnDef(colDef, isNew)</h3>
 <div class="updatecolumndef"><div class="updatecolumndef-page"><p>Moves settings from the columnDef down onto the column,
 and sets properties as appropriate</p>
-</div><h5 id="methods_updatecolumndef_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-columndef">ColumnDef</a></td><td><div class="updatecolumndef-page"><p>the column def to look in for the property value</p>
+</div><h5 id="methods_updatecolumndef_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>colDef</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="updatecolumndef-page"><p>the column def to look in for the property value</p>
 </div></td></tr><tr><td>isNew</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="updatecolumndef-page"><p>whether the column is being newly created, if not
 we&#39;re updating an existing column, and some items such as the sort shouldn&#39;t
 be copied down</p>
@@ -88,7 +88,7 @@ provided then one is generated using the name.</p>
 <li><h3 id="properties_extrastyle">extraStyle</h3>
 <div class="extrastyle"><div class="extrastyle-page"><p>additional on this column.</p>
 </div><h4 id="properties_extrastyle_example">Example</h4>
-<div class="example"><div class="extrastyle-page"><pre class="prettyprint linenums">{extraStyle: {display:'table-cell'}}</pre>
+<div class="example"><div class="extrastyle-page"><pre class="prettyprint linenums">{extraStyle: {display: 'table-cell'}}</pre>
 </div></div>
 </div>
 </li>

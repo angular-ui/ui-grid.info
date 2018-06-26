@@ -207,7 +207,7 @@ that have sorting on them, sorted in priority order.</p>
 columns with sorts on them, in priority order.</p>
 </div></td></tr></tbody></table><h4 id="methods_sortchanged_example">Example</h4>
 <div class="example"><div class="sortchanged-page"><pre class="prettyprint linenums">
-gridApi.core.on.sortChanged( $scope, function(grid, sortColumns){
+gridApi.core.on.sortChanged( $scope, function(grid, sortColumns) {
   // do something
 });
 </pre>
@@ -225,7 +225,7 @@ a sort value that should be passed back from the sort function</p>
 <div class="example"><div class="sorthandlenulls-page"><pre class="prettyprint linenums">
 mySortFn = function(a, b) {
 var nulls = $scope.gridApi.core.sortHandleNulls(a, b);
-if ( nulls !== null ){
+if ( nulls !== null ) {
   return nulls;
 } else {
   // your code for sorting here

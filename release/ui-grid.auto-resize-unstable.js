@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -37,7 +37,7 @@
           if ($elm[0].offsetParent !== null) {
             uiGridCtrl.grid.gridWidth = width;
             uiGridCtrl.grid.gridHeight = height;
-            uiGridCtrl.grid.queueRefresh()
+            uiGridCtrl.grid.queueGridRefresh()
               .then(function() {
                 uiGridCtrl.grid.api.core.raise.gridDimensionChanged(prevHeight, prevWidth, height, width);
               });

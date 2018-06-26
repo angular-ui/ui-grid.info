@@ -12,7 +12,7 @@ to make the code easier to understand</p>
 <div class="getcolumnelementposition"><div class="getcolumnelementposition-page"><p>gets the position information needed to place the column
 menu below the column header</p>
 </div><h5 id="methods_getcolumnelementposition_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="getcolumnelementposition-page"><p>the $scope from the uiGridColumnMenu</p>
-</div></td></tr><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="getcolumnelementposition-page"><p>the column we want to position below</p>
+</div></td></tr><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="getcolumnelementposition-page"><p>the column we want to position below</p>
 </div></td></tr><tr><td>$columnElement</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="getcolumnelementposition-page"><p>the column element we want to position below</p>
 </div></td></tr></tbody></table><h5 id="methods_getcolumnelementposition_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-hash">hash</a></td><td><div class="getcolumnelementposition-page"><p>containing left, top, offset, height, width</p>
 </div></td></tr></table></div>
@@ -47,19 +47,17 @@ allow highlighting in the menu</p>
 (i.e. it&#39;s not currently visible) then we guess it&#39;s width at 100, we&#39;ll be called again
 later to fix it</p>
 </div><h5 id="methods_repositionmenu_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="repositionmenu-page"><p>the $scope from the uiGridColumnMenu</p>
-</div></td></tr><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcol">GridCol</a></td><td><div class="repositionmenu-page"><p>the column we want to position below</p>
+</div></td></tr><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="repositionmenu-page"><p>the column we want to position below</p>
 </div></td></tr><tr><td>positionData</td><td><a href="" class="label type-hint type-hint-hash">hash</a></td><td><div class="repositionmenu-page"><p>a hash containing left, top, offset, height, width</p>
 </div></td></tr><tr><td>$elm</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="repositionmenu-page"><p>the column menu element that we want to reposition</p>
 </div></td></tr><tr><td>$columnElement</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="repositionmenu-page"><p>the column element that we want to reposition underneath</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setcolmenuitemwatch">setColMenuItemWatch($scope, uiGridCtrl)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setcolmenuitemwatch">setColMenuItemWatch($scope)</h3>
 <div class="setcolmenuitemwatch"><div class="setcolmenuitemwatch-page"><p>Setup a watch on $scope.col.menuItems, and update
 menuItems based on this.  $scope.col needs to be set by the column
 before calling the menu.</p>
 </div><h5 id="methods_setcolmenuitemwatch_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="setcolmenuitemwatch-page"><p>the $scope from the uiGridColumnMenu</p>
-</div></td></tr><tr><td>uiGridCtrl</td><td><a href="" class="label type-hint type-hint-controller">controller</a></td><td><div class="setcolmenuitemwatch-page"><p>the uiGridController for the grid
-we&#39;re on</p>
 </div></td></tr></tbody></table></div>
 </li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_sortable">sortable($scope)</h3>

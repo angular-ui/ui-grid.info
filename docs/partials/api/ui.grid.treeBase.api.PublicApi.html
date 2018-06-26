@@ -76,7 +76,7 @@ provided by getTreeState</p>
 <div class="rowcollapsed"><div class="rowcollapsed-page"><p>raised whenever a row is collapsed.  Doesn&#39;t really have
 a purpose at the moment, included for symmetry</p>
 <pre class="prettyprint linenums">
-     gridApi.treeBase.on.rowCollapsed(scope,function(row){})
+     gridApi.treeBase.on.rowCollapsed(scope,function(row) {})
 </pre>
 </div><div class="inline"></div>
 <div class="inline"></div>
@@ -90,7 +90,7 @@ rendering your tree you can listen to this event, and then retrieve
 the children of this row and load them into the grid data.</p>
 <p>When the data is loaded the grid will automatically refresh to show these new rows</p>
 <pre class="prettyprint linenums">
-     gridApi.treeBase.on.rowExpanded(scope,function(row){})
+     gridApi.treeBase.on.rowExpanded(scope,function(row) {})
 </pre>
 </div><div class="inline"></div>
 <div class="inline"></div>

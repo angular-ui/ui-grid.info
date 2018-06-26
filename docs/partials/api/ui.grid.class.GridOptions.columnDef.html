@@ -307,7 +307,7 @@ be used as a key for retrieving information such as custom sort algorithms.</p>
 <li>direction: values are <a href="#!/api/ui.grid.service:uiGridConstants#properties_asc">uiGridConstants.ASC</a>
 or <a href="#!/api/ui.grid.service:uiGridConstants#properties_desc">uiGridConstants.DESC</a></li>
 <li>ignoreSort: if set to true this sort is ignored (used by tree to manipulate the sort functionality)</li>
-<li>priority: says what order to sort the columns in (lower priority gets sorted first).</li>
+<li>priority: says what order to sort the columns in (lower priority gets sorted first). Starts from 0.</li>
 </ul>
 </div><h4 id="properties_sort_example">Example</h4>
 <div class="example"><div class="sort-page"><pre class="prettyprint linenums">
@@ -395,6 +395,6 @@ a number or a percentage, or an * for auto.</p>
 </ul>
 </div>
 <h2 id="example">Example</h2>
-<div class="example"><div class="ui-grid-class-page ui-grid-class-gridoptions-columndef-page"><pre class="prettyprint linenums">{name:'field1', field: 'field1', filter: { term: 'xxx' }}</pre>
+<div class="example"><div class="ui-grid-class-page ui-grid-class-gridoptions-columndef-page"><pre class="prettyprint linenums">{name: 'field1', field: 'field1', filter: { term: 'xxx' }}</pre>
 </div></div>
 </div>

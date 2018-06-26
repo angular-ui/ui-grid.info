@@ -17,7 +17,7 @@ or the value, you can do so with this function. This function will be called aft
 the default <code>finalizerFn</code>.</p>
 </div><h4 id="properties_customtreeaggregationfinalizerfn_example">Example</h4>
 <div class="example"><div class="customtreeaggregationfinalizerfn-page"><pre class="prettyprint linenums">
-customTreeAggregationFinalizerFn = function ( aggregation ){
+customTreeAggregationFinalizerFn = function ( aggregation ) {
   aggregation.rendered = aggregation.label + aggregation.value / 100 + '%';
 }
 </pre>
@@ -34,15 +34,15 @@ totals), the row value that is to be aggregated, and that same row value convert
 a number (most aggregations work on numbers)</p>
 </div><h4 id="properties_customtreeaggregationfn_example">Example</h4>
 <div class="example"><div class="customtreeaggregationfn-page"><pre class="prettyprint linenums">
-customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
+customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ) {
   // calculates the average of the squares of the values
-  if ( typeof(aggregation.count) === 'undefined' ){
+  if ( typeof(aggregation.count) === 'undefined' ) {
     aggregation.count = 0;
   }
   aggregation.count++;
 
-  if ( !isNaN(numValue) ){
-    if ( typeof(aggregation.total) === 'undefined' ){
+  if ( !isNaN(numValue) ) {
+    if ( typeof(aggregation.total) === 'undefined' ) {
       aggregation.total = 0;
     }
     aggregation.total = aggregation.total + numValue * numValue;

@@ -1,121 +1,121 @@
 /*!
- * ui-grid - v4.6.0 - 2018-06-21
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 
-(function () {
-    angular.module('ui.grid').config(['$provide', function($provide) {
-      $provide.decorator('i18nService', ['$delegate', function($delegate) {
-        $delegate.add('ar', {
-            "headerCell": {
-              "aria": {
-                "defaultFilterLabel": "التصفيه بالعمود",
-                "removeFilter": "محو التصفيه",
-                "columnMenuButtonLabel": "قاءمه الاعمده"
-              },
-              "priority": "أولويه : ",
-              "filterLabel": "تصفيه بالاعمده :"
-            },
-            "aggregate": {
-              "label": "العناصر"
-            },
-            "groupPanel": {
-              "description": "اسحب رأس العمود هنا وأسقطه لإنشاء مجموعه"
-            },
-            "search": {
-              "placeholder": "بحث  ...",
-              "showingItems": "العناصر الظاهره :",
-              "selectedItems": "العناصر المحدده :",
-              "totalItems": "عدد العناصر :",
-              "size": "حجم الصفحه :",
-              "first": "اول صفحه",
-              "next": "الصفحه التاليه",
-              "previous": "الصفحه الصابقه",
-              "last": "الصفحه الاخيره"
-            },
-            "menu": {
-              "text": "اختيار العمود :"
-            },
-            "sort": {
-              "ascending": "ترتيب تصاعدى",
-              "descending": "ترتيب تنازلى",
-              "none": "عدم التحديد",
-              "remove": "حذف الترتيب"
-            },
-            "column": {
-              "hide": "إخفاء عمود"
-            },
-            "aggregation": {
-              "count": "عدد الصفوف: ",
-              "sum": "جمع: ",
-              "avg": "المتوسط الحسابى: ",
-              "min": "الادنى: ",
-              "max": "الاقصى: "
-            },
-            "pinning": {
-              "pinLeft": "تثبيت لليسار",
-              "pinRight": "تثبيت لليمين",
-              "unpin": "فك التثبيت"
-            },
-            "columnMenu": {
-              "close": "غلق"
-            },
-            "gridMenu": {
-              "aria": {
-                "buttonLabel": "قائمه الجدول"
-              },
-              "columns": "الاعمده:",
-              "importerTitle": "إدخال ملف",
-              "exporterAllAsCsv": "إخراج كل البيانات ك(csv)",
-              "exporterVisibleAsCsv": "إخراج كل البيانات الواضحه ك (csv)",
-              "exporterSelectedAsCsv": "إخراج كل البيانات المحدده ك (csv)",
-              "exporterAllAsPdf": "إخراج كل البيانات ك(pdf)",
-              "exporterVisibleAsPdf": "إخراج كل البيانات الواضحه ك (pdf)",
-              "exporterSelectedAsPdf": "إخراج كل البيانات المحدده ك (pdf)",
-              "clearAllFilters": "محو كل الترشيح"
-            },
-            "importer": {
-              "noHeaders": "اسماء هؤلاء الاعمده غير واضحه، هل يوجد رأس للملف؟",
-              "noObjects": "Objects were not able to be derived, was there data in the file other than headers?",
-              "invalidCsv": "الملف غير قادر على الاتمام ، هل ال (CSV) صحيح؟",
-              "invalidJson": "الملف غير قادر على الاتمام ، هل ال (JSON) صحيح؟",
-              "jsonNotArray": "Imported json file must contain an array, aborting."
-            },
-            "pagination": {
-              "aria": {
-                "pageToFirst": "الصفحه الاولى",
-                "pageBack": "الصفه السابقه",
-                "pageSelected": "الصفحه المحدده",
-                "pageForward": "الصفحه التاليه",
-                "pageToLast": "الصفحه الاخيره"
-              },
-              "sizes": "عدد العناصر فى الصفحه",
-              "totalItems": "عناصر",
-              "through": "إلى",
-              "of": "من"
-            },
-            "grouping": {
-              "group": "جمع",
-              "ungroup": "فك الجمع",
-              "aggregate_count": "جمله : العدد",
-              "aggregate_sum": "جمله : الحاصل",
-              "aggregate_max": "جمله : الاقصى",
-              "aggregate_min": "جمله : الاقل",
-              "aggregate_avg": "جمله :المتوسط ",
-              "aggregate_remove": "جمله : حذف"
-            },
-            "validate": {
-              "error": "خطأ :",
-              "minLength": "القيمه لابد ان لا تقل عن THRESHOLD حرف.",
-              "maxLength": "القيمه لابد ان لا تزيد عن THRESHOLD حرف.",
-              "required": "مطلوب قيمه"
-            }
-          });
-        return $delegate;
-      }]);
-    }]);
-  })();
-  
+(function() {
+	angular.module('ui.grid').config(['$provide', function($provide) {
+		$provide.decorator('i18nService', ['$delegate', function($delegate) {
+			$delegate.add('ar', {
+				"headerCell": {
+					"aria": {
+						"defaultFilterLabel": "التصفيه بالعمود",
+						"removeFilter": "محو التصفيه",
+						"columnMenuButtonLabel": "قاءمه الاعمده"
+					},
+					"priority": "أولويه : ",
+					"filterLabel": "تصفيه بالاعمده :"
+				},
+				"aggregate": {
+					"label": "العناصر"
+				},
+				"groupPanel": {
+					"description": "اسحب رأس العمود هنا وأسقطه لإنشاء مجموعه"
+				},
+				"search": {
+					"placeholder": "بحث  ...",
+					"showingItems": "العناصر الظاهره :",
+					"selectedItems": "العناصر المحدده :",
+					"totalItems": "عدد العناصر :",
+					"size": "حجم الصفحه :",
+					"first": "اول صفحه",
+					"next": "الصفحه التاليه",
+					"previous": "الصفحه الصابقه",
+					"last": "الصفحه الاخيره"
+				},
+				"menu": {
+					"text": "اختيار العمود :"
+				},
+				"sort": {
+					"ascending": "ترتيب تصاعدى",
+					"descending": "ترتيب تنازلى",
+					"none": "عدم التحديد",
+					"remove": "حذف الترتيب"
+				},
+				"column": {
+					"hide": "إخفاء عمود"
+				},
+				"aggregation": {
+					"count": "عدد الصفوف: ",
+					"sum": "جمع: ",
+					"avg": "المتوسط الحسابى: ",
+					"min": "الادنى: ",
+					"max": "الاقصى: "
+				},
+				"pinning": {
+					"pinLeft": "تثبيت لليسار",
+					"pinRight": "تثبيت لليمين",
+					"unpin": "فك التثبيت"
+				},
+				"columnMenu": {
+					"close": "غلق"
+				},
+				"gridMenu": {
+					"aria": {
+						"buttonLabel": "قائمه الجدول"
+					},
+					"columns": "الاعمده:",
+					"importerTitle": "إدخال ملف",
+					"exporterAllAsCsv": "إخراج كل البيانات ك(csv)",
+					"exporterVisibleAsCsv": "إخراج كل البيانات الواضحه ك (csv)",
+					"exporterSelectedAsCsv": "إخراج كل البيانات المحدده ك (csv)",
+					"exporterAllAsPdf": "إخراج كل البيانات ك(pdf)",
+					"exporterVisibleAsPdf": "إخراج كل البيانات الواضحه ك (pdf)",
+					"exporterSelectedAsPdf": "إخراج كل البيانات المحدده ك (pdf)",
+					"clearAllFilters": "محو كل الترشيح"
+				},
+				"importer": {
+					"noHeaders": "اسماء هؤلاء الاعمده غير واضحه، هل يوجد رأس للملف؟",
+					"noObjects": "Objects were not able to be derived, was there data in the file other than headers?",
+					"invalidCsv": "الملف غير قادر على الاتمام ، هل ال (CSV) صحيح؟",
+					"invalidJson": "الملف غير قادر على الاتمام ، هل ال (JSON) صحيح؟",
+					"jsonNotArray": "Imported json file must contain an array, aborting."
+				},
+				"pagination": {
+					"aria": {
+						"pageToFirst": "الصفحه الاولى",
+						"pageBack": "الصفه السابقه",
+						"pageSelected": "الصفحه المحدده",
+						"pageForward": "الصفحه التاليه",
+						"pageToLast": "الصفحه الاخيره"
+					},
+					"sizes": "عدد العناصر فى الصفحه",
+					"totalItems": "عناصر",
+					"through": "إلى",
+					"of": "من"
+				},
+				"grouping": {
+					"group": "جمع",
+					"ungroup": "فك الجمع",
+					"aggregate_count": "جمله : العدد",
+					"aggregate_sum": "جمله : الحاصل",
+					"aggregate_max": "جمله : الاقصى",
+					"aggregate_min": "جمله : الاقل",
+					"aggregate_avg": "جمله :المتوسط ",
+					"aggregate_remove": "جمله : حذف"
+				},
+				"validate": {
+					"error": "خطأ :",
+					"minLength": "القيمه لابد ان لا تقل عن THRESHOLD حرف.",
+					"maxLength": "القيمه لابد ان لا تزيد عن THRESHOLD حرف.",
+					"required": "مطلوب قيمه"
+				}
+			});
+			return $delegate;
+		}]);
+	}]);
+})();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -317,89 +317,89 @@
   }]);
 })();
 
-(function(){
-  angular.module('ui.grid').config(['$provide', function($provide) {
-    $provide.decorator('i18nService', ['$delegate', function($delegate) {
-      $delegate.add('da', {
-        aggregate:{
-          label: 'artikler'
-        },
-        groupPanel:{
-          description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
-        },
-        search:{
-          placeholder: 'Søg...',
-          showingItems: 'Viste rækker:',
-          selectedItems: 'Valgte rækker:',
-          totalItems: 'Rækker totalt:',
-          size: 'Side størrelse:',
-          first: 'Første side',
-          next: 'Næste side',
-          previous: 'Forrige side',
-          last: 'Sidste side'
-        },
-        menu:{
-          text: 'Vælg kolonner:'
-        },
-        sort: {
-          ascending: 'Sorter stigende',
-          descending: 'Sorter faldende',
-          none: 'Sorter ingen',
-          remove: 'Fjern sortering'
-        },
-        column: {
-          hide: 'Skjul kolonne'
-        },
-        aggregation: {
-          count: 'antal rækker: ',
-          sum: 'sum: ',
-          avg: 'gns: ',
-          min: 'min: ',
-          max: 'max: '
-        },
-        pinning: {
-          pinLeft: 'Fastgør til venstre',
-          pinRight: 'Fastgør til højre',
-          unpin: 'Frigør'
-        },
-        gridMenu: {
-          columns: 'Kolonner:',
-          importerTitle: 'Importer fil',
-          exporterAllAsCsv: 'Eksporter alle data som csv',
-          exporterVisibleAsCsv: 'Eksporter synlige data som csv',
-          exporterSelectedAsCsv: 'Eksporter markerede data som csv',
-          exporterAllAsPdf: 'Eksporter alle data som pdf',
-          exporterVisibleAsPdf: 'Eksporter synlige data som pdf',
-          exporterSelectedAsPdf: 'Eksporter markerede data som pdf',
-          exporterAllAsExcel: 'Eksporter alle data som excel',
-          exporterVisibleAsExcel: 'Eksporter synlige data som excel',
-          exporterSelectedAsExcel: 'Eksporter markerede data som excel',
-          clearAllFilters: 'Clear all filters'
-        },
-        importer: {
-          noHeaders: 'Column names were unable to be derived, does the file have a header?',
-          noObjects: 'Objects were not able to be derived, was there data in the file other than headers?',
-          invalidCsv: 'File was unable to be processed, is it valid CSV?',
-          invalidJson: 'File was unable to be processed, is it valid Json?',
-          jsonNotArray: 'Imported json file must contain an array, aborting.'
-        },
-        pagination: {
-          aria: {
-            pageToFirst: 'Gå til første',
-            pageBack: 'Gå tilbage',
-            pageSelected: 'Valgte side',
-            pageForward: 'Gå frem',
-            pageToLast: 'Gå til sidste'
-          },
-          sizes: 'genstande per side',
-          totalItems: 'genstande',
-          through: 'gennem',
-          of: 'af'
-        }
-      });
-      return $delegate;
-    }]);
-  }]);
+(function() {
+	angular.module('ui.grid').config(['$provide', function($provide) {
+		$provide.decorator('i18nService', ['$delegate', function($delegate) {
+			$delegate.add('da', {
+				aggregate: {
+					label: 'artikler'
+				},
+				groupPanel: {
+					description: 'Grupér rækker udfra en kolonne ved at trække dens overskift hertil.'
+				},
+				search: {
+					placeholder: 'Søg...',
+					showingItems: 'Viste rækker:',
+					selectedItems: 'Valgte rækker:',
+					totalItems: 'Rækker totalt:',
+					size: 'Side størrelse:',
+					first: 'Første side',
+					next: 'Næste side',
+					previous: 'Forrige side',
+					last: 'Sidste side'
+				},
+				menu: {
+					text: 'Vælg kolonner:'
+				},
+				sort: {
+					ascending: 'Sorter stigende',
+					descending: 'Sorter faldende',
+					none: 'Sorter ingen',
+					remove: 'Fjern sortering'
+				},
+				column: {
+					hide: 'Skjul kolonne'
+				},
+				aggregation: {
+					count: 'antal rækker: ',
+					sum: 'sum: ',
+					avg: 'gns: ',
+					min: 'min: ',
+					max: 'max: '
+				},
+				pinning: {
+					pinLeft: 'Fastgør til venstre',
+					pinRight: 'Fastgør til højre',
+					unpin: 'Frigør'
+				},
+				gridMenu: {
+					columns: 'Kolonner:',
+					importerTitle: 'Importer fil',
+					exporterAllAsCsv: 'Eksporter alle data som csv',
+					exporterVisibleAsCsv: 'Eksporter synlige data som csv',
+					exporterSelectedAsCsv: 'Eksporter markerede data som csv',
+					exporterAllAsPdf: 'Eksporter alle data som pdf',
+					exporterVisibleAsPdf: 'Eksporter synlige data som pdf',
+					exporterSelectedAsPdf: 'Eksporter markerede data som pdf',
+					exporterAllAsExcel: 'Eksporter alle data som excel',
+					exporterVisibleAsExcel: 'Eksporter synlige data som excel',
+					exporterSelectedAsExcel: 'Eksporter markerede data som excel',
+					clearAllFilters: 'Clear all filters'
+				},
+				importer: {
+					noHeaders: 'Column names were unable to be derived, does the file have a header?',
+					noObjects: 'Objects were not able to be derived, was there data in the file other than headers?',
+					invalidCsv: 'File was unable to be processed, is it valid CSV?',
+					invalidJson: 'File was unable to be processed, is it valid Json?',
+					jsonNotArray: 'Imported json file must contain an array, aborting.'
+				},
+				pagination: {
+					aria: {
+						pageToFirst: 'Gå til første',
+						pageBack: 'Gå tilbage',
+						pageSelected: 'Valgte side',
+						pageForward: 'Gå frem',
+						pageToLast: 'Gå til sidste'
+					},
+					sizes: 'genstande per side',
+					totalItems: 'genstande',
+					through: 'gennem',
+					of: 'af'
+				}
+			});
+			return $delegate;
+		}]);
+	}]);
 })();
 
 (function () {
@@ -2200,127 +2200,127 @@
   }]);
 })();
 
-(function () {
-    angular.module('ui.grid').config(['$provide', function($provide) {
-      $provide.decorator('i18nService', ['$delegate', function($delegate) {
-        $delegate.add('rs-lat', {
-          headerCell: {
-            aria: {
-              defaultFilterLabel: 'Filter za kolonu',
-              removeFilter: 'Ukloni Filter',
-              columnMenuButtonLabel: 'Meni Kolone',
-              column: 'Kolona'
-            },
-            priority: 'Prioritet:',
-            filterLabel: "Filter za kolonu: "
-          },
-          aggregate: {
-            label: 'stavke'
-          },
-          groupPanel: {       
-            description: 'Ovde prevuci zaglavlje kolone i spusti do grupe pored te kolone.'
-          },
-          search: {
-            aria: {
-              selected: 'Red odabran',
-              notSelected: 'Red nije odabran'
-            },
-            placeholder: 'Pretraga...',
-            showingItems: 'Prikazane Stavke:',
-            selectedItems: 'Odabrane Stavke:',
-            totalItems: 'Ukupno Stavki:',
-            size: 'Veličina Stranice:',
-            first: 'Prva Stranica',
-            next: 'Sledeća Stranica',
-            previous: 'Prethodna Stranica',
-            last: 'Poslednja Stranica'
-          },
-          menu: {
-            text: 'Odaberite kolonu:'
-          },
-          sort: {
-            ascending: 'Sortiraj po rastućem redosledu',
-            descending: 'Sortiraj po opadajućem redosledu',
-            none: 'Bez Sortiranja',
-            remove: 'Ukloni Sortiranje'
-          },
-          column: {
-            hide: 'Sakrij Kolonu'
-          },
-          aggregation: {
-            count: 'ukupno redova: ',
-            sum: 'ukupno: ',
-            avg: 'prosecno: ',
-            min: 'minimum: ',
-            max: 'maksimum: '
-          },
-          pinning: {
-            pinLeft: 'Zakači Levo',
-            pinRight: 'Zakači Desno',
-            unpin: 'Otkači'
-          },
-          columnMenu: {
-            close: 'Zatvori'
-          },
-          gridMenu: {
-            aria: {
-              buttonLabel: 'Rešetkasti Meni'
-            },
-            columns: 'Kolone:',
-            importerTitle: 'Importuj fajl',
-            exporterAllAsCsv: 'Eksportuj sve podatke kao csv',
-            exporterVisibleAsCsv: 'Eksportuj vidljive podatke kao csv',
-            exporterSelectedAsCsv: 'Eksportuj obeležene podatke kao csv',
-            exporterAllAsPdf: 'Eksportuj sve podatke kao pdf',
-            exporterVisibleAsPdf: 'Eksportuj vidljive podake kao pdf',
-            exporterSelectedAsPdf: 'Eksportuj odabrane podatke kao pdf',
-            exporterAllAsExcel: 'Eksportuj sve podatke kao excel',
-            exporterVisibleAsExcel: 'Eksportuj vidljive podatke kao excel',
-            exporterSelectedAsExcel: 'Eksportuj odabrane podatke kao excel',
-            clearAllFilters: 'Obriši sve filtere'
-          },
-          importer: {
-            noHeaders: 'Kolone se nisu mogle podeliti, da li fajl poseduje heder?',
-            noObjects: 'Objecti nisu mogli biti podeljeni, da li je bilo i drugih podataka sem hedera?',
-            invalidCsv: 'Fajl nije bilo moguće procesirati, da li je ispravni CSV?',
-            invalidJson: 'Fajl nije bilo moguće procesirati, da li je ispravni JSON',
-            jsonNotArray: 'Importovani json fajl mora da sadrži niz, prekidam operaciju.'
-          },
-          pagination: {
-            aria: {
-              pageToFirst: 'Prva stranica',
-              pageBack: 'Stranica pre',
-              pageSelected: 'Odabrana stranica',
-              pageForward: 'Sledeća stranica',
-              pageToLast: 'Poslednja stranica'
-            },
-            sizes: 'stavki po stranici',
-            totalItems: 'stavke',
-            through: 'kroz',
-            of: 'od'
-          },
-          grouping: {
-            group: 'Grupiši',
-            ungroup: 'Odrupiši',
-            aggregate_count: 'Agg: Broj',
-            aggregate_sum: 'Agg: Suma',
-            aggregate_max: 'Agg: Maksimum',
-            aggregate_min: 'Agg: Minimum',
-            aggregate_avg: 'Agg: Prosečna',
-            aggregate_remove: 'Agg: Ukloni'
-          },
-          validate: {
-            error: 'Greška:',
-            minLength: 'Vrednost bi trebala da bude duga bar THRESHOLD karaktera.',
-            maxLength: 'Vrednost bi trebalo da bude najviše duga THRESHOLD karaktera.',
-            required: 'Portreba je vrednost.'
-          }
-        });
-        return $delegate;
-      }]);
-    }]);
-  })();
-  
+(function() {
+	angular.module('ui.grid').config(['$provide', function($provide) {
+		$provide.decorator('i18nService', ['$delegate', function($delegate) {
+			$delegate.add('rs-lat', {
+				headerCell: {
+					aria: {
+						defaultFilterLabel: 'Filter za kolonu',
+						removeFilter: 'Ukloni Filter',
+						columnMenuButtonLabel: 'Meni Kolone',
+						column: 'Kolona'
+					},
+					priority: 'Prioritet:',
+					filterLabel: "Filter za kolonu: "
+				},
+				aggregate: {
+					label: 'stavke'
+				},
+				groupPanel: {
+					description: 'Ovde prevuci zaglavlje kolone i spusti do grupe pored te kolone.'
+				},
+				search: {
+					aria: {
+						selected: 'Red odabran',
+						notSelected: 'Red nije odabran'
+					},
+					placeholder: 'Pretraga...',
+					showingItems: 'Prikazane Stavke:',
+					selectedItems: 'Odabrane Stavke:',
+					totalItems: 'Ukupno Stavki:',
+					size: 'Veličina Stranice:',
+					first: 'Prva Stranica',
+					next: 'Sledeća Stranica',
+					previous: 'Prethodna Stranica',
+					last: 'Poslednja Stranica'
+				},
+				menu: {
+					text: 'Odaberite kolonu:'
+				},
+				sort: {
+					ascending: 'Sortiraj po rastućem redosledu',
+					descending: 'Sortiraj po opadajućem redosledu',
+					none: 'Bez Sortiranja',
+					remove: 'Ukloni Sortiranje'
+				},
+				column: {
+					hide: 'Sakrij Kolonu'
+				},
+				aggregation: {
+					count: 'ukupno redova: ',
+					sum: 'ukupno: ',
+					avg: 'prosecno: ',
+					min: 'minimum: ',
+					max: 'maksimum: '
+				},
+				pinning: {
+					pinLeft: 'Zakači Levo',
+					pinRight: 'Zakači Desno',
+					unpin: 'Otkači'
+				},
+				columnMenu: {
+					close: 'Zatvori'
+				},
+				gridMenu: {
+					aria: {
+						buttonLabel: 'Rešetkasti Meni'
+					},
+					columns: 'Kolone:',
+					importerTitle: 'Importuj fajl',
+					exporterAllAsCsv: 'Eksportuj sve podatke kao csv',
+					exporterVisibleAsCsv: 'Eksportuj vidljive podatke kao csv',
+					exporterSelectedAsCsv: 'Eksportuj obeležene podatke kao csv',
+					exporterAllAsPdf: 'Eksportuj sve podatke kao pdf',
+					exporterVisibleAsPdf: 'Eksportuj vidljive podake kao pdf',
+					exporterSelectedAsPdf: 'Eksportuj odabrane podatke kao pdf',
+					exporterAllAsExcel: 'Eksportuj sve podatke kao excel',
+					exporterVisibleAsExcel: 'Eksportuj vidljive podatke kao excel',
+					exporterSelectedAsExcel: 'Eksportuj odabrane podatke kao excel',
+					clearAllFilters: 'Obriši sve filtere'
+				},
+				importer: {
+					noHeaders: 'Kolone se nisu mogle podeliti, da li fajl poseduje heder?',
+					noObjects: 'Objecti nisu mogli biti podeljeni, da li je bilo i drugih podataka sem hedera?',
+					invalidCsv: 'Fajl nije bilo moguće procesirati, da li je ispravni CSV?',
+					invalidJson: 'Fajl nije bilo moguće procesirati, da li je ispravni JSON',
+					jsonNotArray: 'Importovani json fajl mora da sadrži niz, prekidam operaciju.'
+				},
+				pagination: {
+					aria: {
+						pageToFirst: 'Prva stranica',
+						pageBack: 'Stranica pre',
+						pageSelected: 'Odabrana stranica',
+						pageForward: 'Sledeća stranica',
+						pageToLast: 'Poslednja stranica'
+					},
+					sizes: 'stavki po stranici',
+					totalItems: 'stavke',
+					through: 'kroz',
+					of: 'od'
+				},
+				grouping: {
+					group: 'Grupiši',
+					ungroup: 'Odrupiši',
+					aggregate_count: 'Agg: Broj',
+					aggregate_sum: 'Agg: Suma',
+					aggregate_max: 'Agg: Maksimum',
+					aggregate_min: 'Agg: Minimum',
+					aggregate_avg: 'Agg: Prosečna',
+					aggregate_remove: 'Agg: Ukloni'
+				},
+				validate: {
+					error: 'Greška:',
+					minLength: 'Vrednost bi trebala da bude duga bar THRESHOLD karaktera.',
+					maxLength: 'Vrednost bi trebalo da bude najviše duga THRESHOLD karaktera.',
+					required: 'Portreba je vrednost.'
+				}
+			});
+			return $delegate;
+		}]);
+	}]);
+})();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {
@@ -2428,127 +2428,126 @@
   }]);
 })();
 
-(function () {
-  angular.module('ui.grid').config(['$provide', function($provide) {
-    $provide.decorator('i18nService', ['$delegate', function($delegate) {
-      $delegate.add('sk', {
-        headerCell: {
-          aria: {
-            defaultFilterLabel: 'Filter pre stĺpec',
-            removeFilter: 'Odstrániť filter',
-            columnMenuButtonLabel: 'Menu pre stĺpec',
-            column: 'Stĺpec'
-          },
-          priority: 'Priorita:',
-          filterLabel: "Filter pre stĺpec: "
-        },
-       aggregate: {
-          label: 'položky'             
-        },
-        groupPanel: {
-          description: 'Pretiahni sem názov stĺpca pre zoskupenie podľa toho stĺpca.'
-        },
-        search: {
-          aria: {
-            selected: 'Označený riadok',
-            notSelected: 'Neoznačený riadok'
-          },
-          placeholder: 'Hľadaj...',
-          showingItems: 'Zobrazujem položky:',
-          selectedItems: 'Vybraté položky:',
-          totalItems: 'Počet položiek:',
-          size: 'Počet:',
-          first: 'Prvá strana',
-          next: 'Ďalšia strana',
-          previous: 'Predchádzajúca strana',
-          last: 'Posledná strana'
-        },
-        menu: {
-          text: 'Vyberte stĺpce:'
-        },
-        sort: {
-          ascending: 'Zotriediť vzostupne',
-          descending: 'Zotriediť zostupne',
-          none: 'Nezotriediť',
-          remove: 'Vymazať triedenie'
-        },
-        column: {
-          hide: 'Skryť stĺpec'
-        },
-        aggregation: {
-          count: 'počet riadkov: ',
-          sum: 'spolu: ',
-          avg: 'avg: ',
-          min: 'min: ',
-          max: 'max: '
-        },
-        pinning: {
-          pinLeft: 'Pripnúť vľavo',
-          pinRight: 'Pripnúť vpravo',
-          unpin: 'Odopnúť'
-        },
-        columnMenu: {
-          close: 'Zavrieť'
-        },
-        gridMenu: {
-          aria: {
-            buttonLabel: 'Grid Menu'
-          },
-          columns: 'Stĺpce:',
-          importerTitle: 'Importovať súbor',
-          exporterAllAsCsv: 'Exportovať všetky údaje ako CSV',
-          exporterVisibleAsCsv: 'Exportovť viditeľné údaje ako CSV',
-          exporterSelectedAsCsv: 'Exportovať označené údaje ako CSV',
-          exporterAllAsPdf: 'Exportovať všetky údaje ako pdf',
-          exporterVisibleAsPdf: 'Exportovať viditeľné údaje ako pdf',
-          exporterSelectedAsPdf: 'Exportovať označené údaje ako pdf', 
-          exporterAllAsExcel: 'Exportovať všetky údaje ako excel',
-          exporterVisibleAsExcel: 'Exportovať viditeľné údaje ako excel',
-          exporterSelectedAsExcel: 'Exportovať označené údaje ako excel',
-          clearAllFilters: 'Zrušiť všetky filtre'
-        },
-        importer: {
-          noHeaders: 'Názvy stĺpcov sa nedali odvodiť, má súbor hlavičku?',               
-          noObjects: 'Objekty nebolo možné odvodiť, existovali iné údaje v súbore ako hlavičky?',
-          invalidCsv: 'Súbor sa nepodarilo spracovať, je to platný súbor CSV?',
-          invalidJson: 'Súbor nebolo možné spracovať, je to platný súbor typu Json?',
-          jsonNotArray: 'Importovaný súbor json musí obsahovať pole, ukončujem.' 
-        },
-        pagination: {
-          aria: {
-            pageToFirst: 'Strana na začiatok',
-            pageBack: 'Strana dozadu',                   
-            pageSelected: 'Označená strana',
-            pageForward: 'Strana dopredu',
-            pageToLast: 'Strana na koniec'
-          },
-          sizes: 'položky na stranu',
-          totalItems: 'položky spolu',
-          through: 'do konca',
-          of: 'z'
-        },
-        grouping: {
-          group: 'Zoskupiť',                                         
-          ungroup: 'Zrušiť zoskupenie',
-          aggregate_count: 'Agg: Počet',
+(function() {
+	angular.module('ui.grid').config(['$provide', function($provide) {
+		$provide.decorator('i18nService', ['$delegate', function($delegate) {
+			$delegate.add('sk', {
+				headerCell: {
+					aria: {
+						defaultFilterLabel: 'Filter pre stĺpec',
+						removeFilter: 'Odstrániť filter',
+						columnMenuButtonLabel: 'Menu pre stĺpec',
+						column: 'Stĺpec'
+					},
+					priority: 'Priorita:',
+					filterLabel: "Filter pre stĺpec: "
+				},
+				aggregate: {
+					label: 'položky'
+				},
+				groupPanel: {
+					description: 'Pretiahni sem názov stĺpca pre zoskupenie podľa toho stĺpca.'
+				},
+				search: {
+					aria: {
+						selected: 'Označený riadok',
+						notSelected: 'Neoznačený riadok'
+					},
+					placeholder: 'Hľadaj...',
+					showingItems: 'Zobrazujem položky:',
+					selectedItems: 'Vybraté položky:',
+					totalItems: 'Počet položiek:',
+					size: 'Počet:',
+					first: 'Prvá strana',
+					next: 'Ďalšia strana',
+					previous: 'Predchádzajúca strana',
+					last: 'Posledná strana'
+				},
+				menu: {
+					text: 'Vyberte stĺpce:'
+				},
+				sort: {
+					ascending: 'Zotriediť vzostupne',
+					descending: 'Zotriediť zostupne',
+					none: 'Nezotriediť',
+					remove: 'Vymazať triedenie'
+				},
+				column: {
+					hide: 'Skryť stĺpec'
+				},
+				aggregation: {
+					count: 'počet riadkov: ',
+					sum: 'spolu: ',
+					avg: 'avg: ',
+					min: 'min: ',
+					max: 'max: '
+				},
+				pinning: {
+					pinLeft: 'Pripnúť vľavo',
+					pinRight: 'Pripnúť vpravo',
+					unpin: 'Odopnúť'
+				},
+				columnMenu: {
+					close: 'Zavrieť'
+				},
+				gridMenu: {
+					aria: {
+						buttonLabel: 'Grid Menu'
+					},
+					columns: 'Stĺpce:',
+					importerTitle: 'Importovať súbor',
+					exporterAllAsCsv: 'Exportovať všetky údaje ako CSV',
+					exporterVisibleAsCsv: 'Exportovť viditeľné údaje ako CSV',
+					exporterSelectedAsCsv: 'Exportovať označené údaje ako CSV',
+					exporterAllAsPdf: 'Exportovať všetky údaje ako pdf',
+					exporterVisibleAsPdf: 'Exportovať viditeľné údaje ako pdf',
+					exporterSelectedAsPdf: 'Exportovať označené údaje ako pdf',
+					exporterAllAsExcel: 'Exportovať všetky údaje ako excel',
+					exporterVisibleAsExcel: 'Exportovať viditeľné údaje ako excel',
+					exporterSelectedAsExcel: 'Exportovať označené údaje ako excel',
+					clearAllFilters: 'Zrušiť všetky filtre'
+				},
+				importer: {
+					noHeaders: 'Názvy stĺpcov sa nedali odvodiť, má súbor hlavičku?',
+					noObjects: 'Objekty nebolo možné odvodiť, existovali iné údaje v súbore ako hlavičky?',
+					invalidCsv: 'Súbor sa nepodarilo spracovať, je to platný súbor CSV?',
+					invalidJson: 'Súbor nebolo možné spracovať, je to platný súbor typu Json?',
+					jsonNotArray: 'Importovaný súbor json musí obsahovať pole, ukončujem.'
+				},
+				pagination: {
+					aria: {
+						pageToFirst: 'Strana na začiatok',
+						pageBack: 'Strana dozadu',
+						pageSelected: 'Označená strana',
+						pageForward: 'Strana dopredu',
+						pageToLast: 'Strana na koniec'
+					},
+					sizes: 'položky na stranu',
+					totalItems: 'položky spolu',
+					through: 'do konca',
+					of: 'z'
+				},
+				grouping: {
+					group: 'Zoskupiť',
+					ungroup: 'Zrušiť zoskupenie',
+					aggregate_count: 'Agg: Počet',
 
-          aggregate_sum: 'Agg: Suma',
-          aggregate_max: 'Agg: Max',
-          aggregate_min: 'Agg: Min',
-          aggregate_avg: 'Agg: Avg',
-          aggregate_remove: 'Agg: Zrušiť'
-        },
-        validate: {
-          error: 'Chyba:',
-          minLength: 'Hodnota by mala mať aspoň THRESHOLD znakov dlhá.',
-          maxLength: 'Hodnota by mala byť maximálne THRESHOLD znakov dlhá.',
-          required: 'Vyžaduje sa hodnota.'
-        }
-
-      });
-      return $delegate;
-    }]);
-  }]);
+					aggregate_sum: 'Agg: Suma',
+					aggregate_max: 'Agg: Max',
+					aggregate_min: 'Agg: Min',
+					aggregate_avg: 'Agg: Avg',
+					aggregate_remove: 'Agg: Zrušiť'
+				},
+				validate: {
+					error: 'Chyba:',
+					minLength: 'Hodnota by mala mať aspoň THRESHOLD znakov dlhá.',
+					maxLength: 'Hodnota by mala byť maximálne THRESHOLD znakov dlhá.',
+					required: 'Vyžaduje sa hodnota.'
+				}
+			});
+			return $delegate;
+		}]);
+	}]);
 })();
 
 (function () {
@@ -2705,112 +2704,113 @@
   }]);
 })();
 
-(function () {
-  angular.module('ui.grid').config(['$provide', function($provide) {
-    $provide.decorator('i18nService', ['$delegate', function($delegate) {
-      $delegate.add('tr', {
-        headerCell: {
-          aria: {
-            defaultFilterLabel: 'Sütun için filtre',
-            removeFilter: 'Filtreyi Kaldır',
-            columnMenuButtonLabel: 'Sütun Menüsü'
-          },
-          priority: 'Öncelik:',
-          filterLabel: "Sütun için filtre: "
-        },
-        aggregate: {
-          label: 'kayıtlar'
-        },
-        groupPanel: {
-          description: 'Sütuna göre gruplamak için sütun başlığını buraya sürükleyin ve bırakın.'
-        },
-        search: {
-          placeholder: 'Arama...',
-          showingItems: 'Gösterilen Kayıt:',
-          selectedItems: 'Seçili Kayıt:',
-          totalItems: 'Toplam Kayıt:',
-          size: 'Sayfa Boyutu:',
-          first: 'İlk Sayfa',
-          next: 'Sonraki Sayfa',
-          previous: 'Önceki Sayfa',
-          last: 'Son Sayfa'
-        },
-        menu: {
-          text: 'Sütunları Seç:'
-        },
-        sort: {
-          ascending: 'Artan Sırada Sırala',
-          descending: 'Azalan Sırada Sırala',
-          none: 'Sıralama Yapma',
-          remove: 'Sıralamayı Kaldır'
-        },
-        column: {
-          hide: 'Sütunu Gizle'
-        },
-        aggregation: {
-          count: 'toplam satır: ',
-          sum: 'toplam: ',
-          avg: 'ort: ',
-          min: 'min: ',
-          max: 'maks: '
-        },
-        pinning: {
-          pinLeft: 'Sola Sabitle',
-          pinRight: 'Sağa Sabitle',
-          unpin: 'Sabitlemeyi Kaldır'
-        },
-        columnMenu: {
-          close: 'Kapat'
-        },
-        gridMenu: {
-          aria: {
-            buttonLabel: 'Tablo Menü'
-          },
-          columns: 'Sütunlar:',
-          importerTitle: 'Dosya içeri aktar',
-          exporterAllAsCsv: 'Bütün veriyi CSV olarak dışarı aktar',
-          exporterVisibleAsCsv: 'Görünen veriyi CSV olarak dışarı aktar',
-          exporterSelectedAsCsv: 'Seçili veriyi CSV olarak dışarı aktar',
-          exporterAllAsPdf: 'Bütün veriyi PDF olarak dışarı aktar',
-          exporterVisibleAsPdf: 'Görünen veriyi PDF olarak dışarı aktar',
-          exporterSelectedAsPdf: 'Seçili veriyi PDF olarak dışarı aktar',
-          clearAllFilters: 'Bütün filtreleri kaldır'
-        },
-        importer: {
-          noHeaders: 'Sütun isimleri üretilemiyor, dosyanın bir başlığı var mı?',
-          noObjects: 'Nesneler üretilemiyor, dosyada başlıktan başka bir veri var mı?',
-          invalidCsv: 'Dosya işlenemedi, geçerli bir CSV dosyası mı?',
-          invalidJson: 'Dosya işlenemedi, geçerli bir Json dosyası mı?',
-          jsonNotArray: 'Alınan Json dosyasında bir dizi bulunmalıdır, işlem iptal ediliyor.'
-        },
-        pagination: {
-          aria: {
-            pageToFirst: 'İlk sayfaya',
-            pageBack: 'Geri git',
-            pageSelected: 'Seçili sayfa',
-            pageForward: 'İleri git',
-            pageToLast: 'Sona git'
-          },
-          sizes: 'Sayfadaki nesne sayısı',
-          totalItems: 'kayıtlar',
-          through: '', //note(fsw) : turkish dont have this preposition 
-          of: '' //note(fsw) : turkish dont have this preposition
-        },
-        grouping: {
-          group: 'Grupla',
-          ungroup: 'Gruplama',
-          aggregate_count: 'Yekun: Sayı',
-          aggregate_sum: 'Yekun: Toplam',
-          aggregate_max: 'Yekun: Maks',
-          aggregate_min: 'Yekun: Min',
-          aggregate_avg: 'Yekun: Ort',
-          aggregate_remove: 'Yekun: Sil'
-        }
-      });
-      return $delegate;
-    }]);
-  }]);
+(function() {
+	angular.module('ui.grid').config(['$provide', function($provide) {
+		$provide.decorator('i18nService', ['$delegate', function($delegate) {
+			$delegate.add('tr', {
+				headerCell: {
+					aria: {
+						defaultFilterLabel: 'Sütun için filtre',
+						removeFilter: 'Filtreyi Kaldır',
+						columnMenuButtonLabel: 'Sütun Menüsü'
+					},
+					priority: 'Öncelik:',
+					filterLabel: "Sütun için filtre: "
+				},
+				aggregate: {
+					label: 'kayıtlar'
+				},
+				groupPanel: {
+					description: 'Sütuna göre gruplamak için sütun başlığını buraya sürükleyin ve bırakın.'
+				},
+				search: {
+					placeholder: 'Arama...',
+					showingItems: 'Gösterilen Kayıt:',
+					selectedItems: 'Seçili Kayıt:',
+					totalItems: 'Toplam Kayıt:',
+					size: 'Sayfa Boyutu:',
+					first: 'İlk Sayfa',
+					next: 'Sonraki Sayfa',
+					previous: 'Önceki Sayfa',
+					last: 'Son Sayfa'
+				},
+				menu: {
+					text: 'Sütunları Seç:'
+				},
+				sort: {
+					ascending: 'Artan Sırada Sırala',
+					descending: 'Azalan Sırada Sırala',
+					none: 'Sıralama Yapma',
+					remove: 'Sıralamayı Kaldır'
+				},
+				column: {
+					hide: 'Sütunu Gizle'
+				},
+				aggregation: {
+					count: 'toplam satır: ',
+					sum: 'toplam: ',
+					avg: 'ort: ',
+					min: 'min: ',
+					max: 'maks: '
+				},
+				pinning: {
+					pinLeft: 'Sola Sabitle',
+					pinRight: 'Sağa Sabitle',
+					unpin: 'Sabitlemeyi Kaldır'
+				},
+				columnMenu: {
+					close: 'Kapat'
+				},
+				gridMenu: {
+					aria: {
+						buttonLabel: 'Tablo Menü'
+					},
+					columns: 'Sütunlar:',
+					importerTitle: 'Dosya içeri aktar',
+					exporterAllAsCsv: 'Bütün veriyi CSV olarak dışarı aktar',
+					exporterVisibleAsCsv: 'Görünen veriyi CSV olarak dışarı aktar',
+					exporterSelectedAsCsv: 'Seçili veriyi CSV olarak dışarı aktar',
+					exporterAllAsPdf: 'Bütün veriyi PDF olarak dışarı aktar',
+					exporterVisibleAsPdf: 'Görünen veriyi PDF olarak dışarı aktar',
+					exporterSelectedAsPdf: 'Seçili veriyi PDF olarak dışarı aktar',
+					clearAllFilters: 'Bütün filtreleri kaldır'
+				},
+				importer: {
+					noHeaders: 'Sütun isimleri üretilemiyor, dosyanın bir başlığı var mı?',
+					noObjects: 'Nesneler üretilemiyor, dosyada başlıktan başka bir veri var mı?',
+					invalidCsv: 'Dosya işlenemedi, geçerli bir CSV dosyası mı?',
+					invalidJson: 'Dosya işlenemedi, geçerli bir Json dosyası mı?',
+					jsonNotArray: 'Alınan Json dosyasında bir dizi bulunmalıdır, işlem iptal ediliyor.'
+				},
+				pagination: {
+					aria: {
+						pageToFirst: 'İlk sayfaya',
+						pageBack: 'Geri git',
+						pageSelected: 'Seçili sayfa',
+						pageForward: 'İleri git',
+						pageToLast: 'Sona git'
+					},
+					sizes: 'Sayfadaki nesne sayısı',
+					totalItems: 'kayıtlar',
+					through: '', // note(fsw) : turkish dont have this preposition
+					of: '' // note(fsw) : turkish dont have this preposition
+				},
+				grouping: {
+					group: 'Grupla',
+					ungroup: 'Gruplama',
+					aggregate_count: 'Yekun: Sayı',
+					aggregate_sum: 'Yekun: Toplam',
+					aggregate_max: 'Yekun: Maks',
+					aggregate_min: 'Yekun: Min',
+					aggregate_avg: 'Yekun: Ort',
+					aggregate_remove: 'Yekun: Sil'
+				}
+			});
+			return $delegate;
+		}]);
+	}]);
 })();
+
 (function () {
   angular.module('ui.grid').config(['$provide', function($provide) {
     $provide.decorator('i18nService', ['$delegate', function($delegate) {

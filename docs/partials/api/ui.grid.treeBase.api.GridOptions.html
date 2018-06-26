@@ -34,16 +34,16 @@ The object format is:</p>
   {
     aggregationName: {
       label: (optional) string,
-      aggregationFn: function( aggregation, fieldValue, numValue, row ){...},
-      finalizerFn: (optional) function( aggregation ){...}
+      aggregationFn: function( aggregation, fieldValue, numValue, row ) {...},
+      finalizerFn: (optional) function( aggregation ) {...}
     },
     mean: {
       label: 'mean',
-      aggregationFn: function( aggregation, fieldValue, numValue ){
+      aggregationFn: function( aggregation, fieldValue, numValue ) {
         aggregation.count = (aggregation.count || 1) + 1;
         aggregation.sum = (aggregation.sum || 0) + numValue;
       },
-      finalizerFn: function( aggregation ){
+      finalizerFn: function( aggregation ) {
         aggregation.value = aggregation.sum / aggregation.count
       }
     }

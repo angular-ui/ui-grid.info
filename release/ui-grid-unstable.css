@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 @media screen and (max-width: 767px) {
@@ -71,6 +71,9 @@
   background-color: transparent;
   border: none;
   padding: 0;
+}
+.clickable {
+  cursor: pointer;
 }
 .ui-grid-top-panel-background {
   background-color: #f3f3f3;
@@ -262,7 +265,6 @@ input[type="text"].ui-grid-filter-input {
   box-sizing: border-box;
   padding: 0 18px 0 0;
   margin: 0;
-  border: 0;
   width: 100%;
   border: 1px solid #d4d4d4;
   -webkit-border-top-right-radius: 0px;
@@ -358,6 +360,11 @@ select.ui-grid-filter-select:hover {
 .ui-grid-row:last-child .ui-grid-cell {
   border-bottom-color: #d4d4d4;
   border-bottom-style: solid;
+}
+.ui-grid-row:hover > [ui-grid-row] > .ui-grid-cell:hover .ui-grid-cell,
+.ui-grid-row:nth-child(odd):hover .ui-grid-cell,
+.ui-grid-row:nth-child(even):hover .ui-grid-cell {
+  background-color: #d5eaee;
 }
 .ui-grid-no-row-overlay {
   position: absolute;
@@ -604,8 +611,8 @@ select.ui-grid-filter-select:hover {
 }
 @font-face {
   font-family: 'ui-grid';
-  src: url('ui-grid.eot');
-  src: url('ui-grid.eot#iefix') format('embedded-opentype'), url('ui-grid.woff') format('woff'), url('ui-grid.ttf') format('truetype'), url('ui-grid.svg?#ui-grid') format('svg');
+  src: url('fonts/ui-grid.eot');
+  src: url('fonts/ui-grid.eot#iefix') format('embedded-opentype'), url('fonts/ui-grid.woff') format('woff'), url('fonts/ui-grid.ttf') format('truetype'), url('fonts/ui-grid.svg?#ui-grid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1801,7 +1808,8 @@ select[multiple].ui-grid-pager-row-count-picker select {
 * @section font library path
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-.ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
+.ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell,
+.ui-grid-row.ui-grid-row-focused > [ui-grid-row] > .ui-grid-cell {
   background-color: #C9DDE1;
 }
 .ui-grid-disable-selection {

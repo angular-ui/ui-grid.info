@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -104,7 +104,7 @@
       },
 
       defaultGridOptions: function (gridOptions) {
-        //default option to true unless it was explicitly set to false
+        // default option to true unless it was explicitly set to false
         /**
          *  @ngdoc object
          *  @name ui.grid.treeView.api:GridOptions
@@ -146,19 +146,17 @@
       adjustSorting: function( renderableRows ) {
         var grid = this;
 
-        grid.columns.forEach( function( column ){
-          if ( column.sort ){
+        grid.columns.forEach( function( column ) {
+          if ( column.sort ) {
             column.sort.ignoreSort = true;
           }
         });
 
         return renderableRows;
       }
-
     };
 
     return service;
-
   }]);
 
   /**
@@ -205,7 +203,7 @@
       compile: function () {
         return {
           pre: function ($scope, $elm, $attrs, uiGridCtrl) {
-            if (uiGridCtrl.grid.options.enableTreeView !== false){
+            if (uiGridCtrl.grid.options.enableTreeView !== false) {
               uiGridTreeViewService.initializeGrid(uiGridCtrl.grid, $scope);
             }
           },

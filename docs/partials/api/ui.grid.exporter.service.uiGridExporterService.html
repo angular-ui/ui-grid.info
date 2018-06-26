@@ -41,13 +41,14 @@ uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
 uiGridExporterConstants.SELECTED</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_downloadfile">downloadFile(fileName, csvContent, exporterOlderExcelCompatibility, exporterIsExcelCompatible)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_downloadfile">downloadFile(fileName, csvContent, columnSeparator, exporterOlderExcelCompatibility, exporterIsExcelCompatible)</h3>
 <div class="downloadfile"><div class="downloadfile-page"><p>Triggers download of a csv file.  Logic provided
 by @cssensei (from his colleagues at <a href="https://github.com/ifeelgoods">https://github.com/ifeelgoods</a>) in issue #2391</p>
 </div><h5 id="methods_downloadfile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>fileName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="downloadfile-page"><p>the filename we&#39;d like our file to be
 given</p>
 </div></td></tr><tr><td>csvContent</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="downloadfile-page"><p>the csv content that we&#39;d like to
 download as a file</p>
+</div></td></tr><tr><td>columnSeparator</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="downloadfile-page"><p>The separator to be used by the columns</p>
 </div></td></tr><tr><td>exporterOlderExcelCompatibility</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="downloadfile-page"><p>whether or not we put a utf-16 BOM on the from (\uFEFF)</p>
 </div></td></tr><tr><td>exporterIsExcelCompatible</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="downloadfile-page"><p>whether or not we add separator header (&#39;sep=X&#39;)</p>
 </div></td></tr></tbody></table></div>
@@ -109,12 +110,12 @@ may be of any type</p>
 </div></td></tr></tbody></table><h5 id="methods_formatfieldasexcel_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatfieldasexcel-page"><p>a excel-ified version of the field</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_formatrowascsv">formatRowAsCsv(exporter, row)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_formatrowascsv">formatRowAsCsv(exporter, separator)</h3>
 <div class="formatrowascsv"><div class="formatrowascsv-page"><p>Renders a single field as a csv field, including
 quotes around the value</p>
 </div><h5 id="methods_formatrowascsv_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>exporter</td><td><a href="" class="label type-hint type-hint-exporterservice">exporterService</a></td><td><div class="formatrowascsv-page"><p>pass in exporter</p>
-</div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="formatrowascsv-page"><p>the row to be turned into a csv string</p>
-</div></td></tr></tbody></table><h5 id="methods_formatrowascsv_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatrowascsv-page"><p>a csv-ified version of the row</p>
+</div></td></tr><tr><td>separator</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="formatrowascsv-page"><p>the string to be used to join the row data</p>
+</div></td></tr></tbody></table><h5 id="methods_formatrowascsv_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="formatrowascsv-page"><p>A function that returns a csv-ified version of the row</p>
 </div></td></tr></table></div>
 </li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_formatrowasexcel">formatRowAsExcel(exporter, row)</h3>
@@ -160,19 +161,12 @@ uiGridExporterConstants.SELECTED</p>
 </div></td></tr><tr><td>applyCellFilters</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="getdata-page"><p>whether or not to get the display value or the raw value of the data</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_getdatasorted">getDataSorted(grid, rowTypes, colTypes, applyCellFilters)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_getdatasorted">getDataSorted(grid)</h3>
 <div class="getdatasorted"><div class="getdatasorted-page"><p>Gets rows from a node. If the node is grouped it will
 recurse down into the children to get to the raw data element
 which is a row without children (a leaf). If the grid is not
 grouped this will return just the raw rows</p>
 </div><h5 id="methods_getdatasorted_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getdatasorted-page"><p>the grid from which data should be exported</p>
-</div></td></tr><tr><td>rowTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getdatasorted-page"><p>which rows to export, valid values are
-uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p>
-</div></td></tr><tr><td>colTypes</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getdatasorted-page"><p>which columns to export, valid values are
-uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE,
-uiGridExporterConstants.SELECTED</p>
-</div></td></tr><tr><td>applyCellFilters</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="getdatasorted-page"><p>whether or not to get the display value or the raw value of the data</p>
 </div></td></tr></tbody></table><h5 id="methods_getdatasorted_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="getdatasorted-page"><p>an array of leaf nodes</p>
 </div></td></tr></table></div>
 </li>

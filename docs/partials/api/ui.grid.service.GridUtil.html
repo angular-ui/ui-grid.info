@@ -7,14 +7,14 @@
 <div class="description"><div class="ui-grid-service-page ui-grid-service-gridutil-page"><p>Grid utility functions</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_createboundedwrapper">createBoundedWrapper(Object, Method)</h3>
+<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_createboundedwrapper">createBoundedWrapper(object, method)</h3>
 <div class="createboundedwrapper"><div class="createboundedwrapper-page"><p>Binds given method to given object.</p>
 <p>By means of a wrapper, ensures that <code>method</code> is always bound to
 <code>object</code> regardless of its calling environment.
 Iow, inside <code>method</code>, <code>this</code> always points to <code>object</code>.</p>
 <p>See <a href="http://alistapart.com/article/getoutbindingsituations">http://alistapart.com/article/getoutbindingsituations</a></p>
-</div><h5 id="methods_createboundedwrapper_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>Object</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="createboundedwrapper-page"><p>to bind &#39;this&#39; to</p>
-</div></td></tr><tr><td>Method</td><td><a href="" class="label type-hint type-hint-method">method</a></td><td><div class="createboundedwrapper-page"><p>to bind</p>
+</div><h5 id="methods_createboundedwrapper_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>object</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="createboundedwrapper-page"><p>to bind &#39;this&#39; to</p>
+</div></td></tr><tr><td>method</td><td><a href="" class="label type-hint type-hint-method">method</a></td><td><div class="createboundedwrapper-page"><p>to bind</p>
 </div></td></tr></tbody></table><h5 id="methods_createboundedwrapper_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="createboundedwrapper-page"><p>The wrapper that performs the binding</p>
 </div></td></tr></table></div>
 </li>
@@ -27,7 +27,7 @@ Takes a function, decorates it to execute only 1 time after multiple calls, and 
 </div></td></tr></tbody></table><h5 id="methods_debounce_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="debounce-page"><p>A function that can be executed as debounced function</p>
 </div></td></tr></table><h4 id="methods_debounce_example">Example</h4>
 <div class="example"><div class="debounce-page"><pre class="prettyprint linenums">
-var debouncedFunc =  gridUtil.debounce(function(){alert('debounced');}, 500);
+var debouncedFunc =  gridUtil.debounce(function() {alert('debounced');}, 500);
 debouncedFunc();
 debouncedFunc();
 debouncedFunc();
@@ -43,14 +43,14 @@ debouncedFunc();
 </div></td></tr></tbody></table><h5 id="methods_denormalizescrollleft_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="denormalizescrollleft-page"><p>A normalized scrollLeft value for the current browser.</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_elementheight">elementHeight(element, [extra])</h3>
-<div class="elementheight"><h5 id="methods_elementheight_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="elementheight-page"><p>DOM element</p>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_elementheight">elementHeight(elem, [extra])</h3>
+<div class="elementheight"><h5 id="methods_elementheight_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>elem</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="elementheight-page"><p>DOM element</p>
 </div></td></tr><tr><td>[extra]</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="elementheight-page"><p>Optional modifier for calculation. Use &#39;margin&#39; to account for margins on element</p>
 </div></td></tr></tbody></table><h5 id="methods_elementheight_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="elementheight-page"><p>Element height in pixels, accounting for any borders, etc.</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_elementwidth">elementWidth(element, [extra])</h3>
-<div class="elementwidth"><h5 id="methods_elementwidth_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="elementwidth-page"><p>DOM element</p>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_elementwidth">elementWidth(elem, [extra])</h3>
+<div class="elementwidth"><h5 id="methods_elementwidth_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>elem</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="elementwidth-page"><p>DOM element</p>
 </div></td></tr><tr><td>[extra]</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="elementwidth-page"><p>Optional modifier for calculation. Use &#39;margin&#39; to account for margins on element</p>
 </div></td></tr></tbody></table><h5 id="methods_elementwidth_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="elementwidth-page"><p>Element width in pixels, accounting for any borders, etc.</p>
 </div></td></tr></table></div>
@@ -82,9 +82,9 @@ columnDefs == [
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_gettemplate">getTemplate(Either)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_gettemplate">getTemplate(template)</h3>
 <div class="gettemplate"><div class="gettemplate-page"><p>Get&#39;s template from cache / element / url</p>
-</div><h5 id="methods_gettemplate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>Either</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-element">element</a><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="gettemplate-page"><p>a string representing the template id, a string representing the template url,
+</div><h5 id="methods_gettemplate_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>template</td><td><a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-element">element</a><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="gettemplate-page"><p>Either a string representing the template id, a string representing the template url,
 an jQuery/Angualr element, or a promise that returns the template contents to use.</p>
 </div></td></tr></tbody></table><h5 id="methods_gettemplate_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="gettemplate-page"><p>a promise resolving to template contents</p>
 </div></td></tr></table><h4 id="methods_gettemplate_example">Example</h4>
@@ -205,7 +205,7 @@ gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_throttle">throttle(func, wait, params)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_throttle">throttle(func, wait, options)</h3>
 <div class="throttle"><div class="throttle-page"><p>Adapted from debounce function (above)
 Potential keys for Params Object are:
    trailing (bool) - whether to trigger after throttle time ends if called multiple times
@@ -216,11 +216,11 @@ return from that call each time you need to call throttle.  If you call throttle
 variable will get overwritten and the throttling won&#39;t work</p>
 </div><h5 id="methods_throttle_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>func</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="throttle-page"><p>function to throttle</p>
 </div></td></tr><tr><td>wait</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="throttle-page"><p>milliseconds to delay after first trigger</p>
-</div></td></tr><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="throttle-page"><p>to use in throttle.</p>
+</div></td></tr><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="throttle-page"><p>to use in throttle.</p>
 </div></td></tr></tbody></table><h5 id="methods_throttle_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="throttle-page"><p>A function that can be executed as throttled function</p>
 </div></td></tr></table><h4 id="methods_throttle_example">Example</h4>
 <div class="example"><div class="throttle-page"><pre class="prettyprint linenums">
-var throttledFunc =  gridUtil.throttle(function(){console.log('throttled');}, 500, {trailing: true});
+var throttledFunc =  gridUtil.throttle(function() {console.log('throttled');}, 500, {trailing: true});
 throttledFunc(); //=&gt; logs throttled
 throttledFunc(); //=&gt; queues attempt to log throttled for ~500ms (since trailing param is truthy)
 throttledFunc(); //=&gt; updates arguments to keep most-recent request, but does not do anything else.

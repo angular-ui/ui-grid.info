@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -133,9 +133,9 @@
 
     var service = {
 
-      initializeGrid: function (grid, $scope) {
+      initializeGrid: function (grid) {
 
-        //add feature namespace and any properties to grid for needed
+        // add feature namespace and any properties to grid for needed
         /**
          *  @ngdoc object
          *  @name ui.grid.treeBase.grid:treeBase
@@ -272,7 +272,7 @@
                * When the data is loaded the grid will automatically refresh to show these new rows
                *
                * <pre>
-               *      gridApi.treeBase.on.rowExpanded(scope,function(row){})
+               *      gridApi.treeBase.on.rowExpanded(scope,function(row) {})
                * </pre>
                * @param {gridRow} row the row that was expanded.  You can also
                * retrieve the grid from this row with row.grid
@@ -287,7 +287,7 @@
                * a purpose at the moment, included for symmetry
                *
                * <pre>
-               *      gridApi.treeBase.on.rowCollapsed(scope,function(row){})
+               *      gridApi.treeBase.on.rowCollapsed(scope,function(row) {})
                * </pre>
                * @param {gridRow} row the row that was collapsed.  You can also
                * retrieve the grid from this row with row.grid
@@ -418,8 +418,8 @@
                * @returns {Array} array of children of this row, the children
                * are all gridRows
                */
-              getRowChildren: function ( row ){
-                return row.treeNode.children.map( function( childNode ){
+              getRowChildren: function ( row ) {
+                return row.treeNode.children.map( function( childNode ) {
                   return childNode.row;
                 });
               }
@@ -434,7 +434,7 @@
 
 
       defaultGridOptions: function (gridOptions) {
-        //default option to true unless it was explicitly set to false
+        // default option to true unless it was explicitly set to false
         /**
          *  @ngdoc object
          *  @name ui.grid.treeBase.api:GridOptions
@@ -507,16 +507,16 @@
          *    {
          *      aggregationName: {
          *        label: (optional) string,
-         *        aggregationFn: function( aggregation, fieldValue, numValue, row ){...},
-         *        finalizerFn: (optional) function( aggregation ){...}
+         *        aggregationFn: function( aggregation, fieldValue, numValue, row ) {...},
+         *        finalizerFn: (optional) function( aggregation ) {...}
          *      },
          *      mean: {
          *        label: 'mean',
-         *        aggregationFn: function( aggregation, fieldValue, numValue ){
+         *        aggregationFn: function( aggregation, fieldValue, numValue ) {
          *          aggregation.count = (aggregation.count || 1) + 1;
          *          aggregation.sum = (aggregation.sum || 0) + numValue;
          *        },
-         *        finalizerFn: function( aggregation ){
+         *        finalizerFn: function( aggregation ) {
          *          aggregation.value = aggregation.sum / aggregation.count
          *        }
          *      }
@@ -571,15 +571,15 @@
          *  a number (most aggregations work on numbers)
          *  @example
          *  <pre>
-         *    customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ){
+         *    customTreeAggregationFn = function ( aggregation, fieldValue, numValue, row ) {
          *      // calculates the average of the squares of the values
-         *      if ( typeof(aggregation.count) === 'undefined' ){
+         *      if ( typeof(aggregation.count) === 'undefined' ) {
          *        aggregation.count = 0;
          *      }
          *      aggregation.count++;
          *
-         *      if ( !isNaN(numValue) ){
-         *        if ( typeof(aggregation.total) === 'undefined' ){
+         *      if ( !isNaN(numValue) ) {
+         *        if ( typeof(aggregation.total) === 'undefined' ) {
          *          aggregation.total = 0;
          *        }
          *        aggregation.total = aggregation.total + numValue * numValue;
@@ -590,7 +590,7 @@
          *  </pre>
          *  <br/>Defaults to undefined. May be overwritten by treeAggregationType, the two options should not be used together.
          */
-        if ( typeof(colDef.customTreeAggregationFn) !== 'undefined' ){
+        if ( typeof(colDef.customTreeAggregationFn) !== 'undefined' ) {
           col.treeAggregationFn = colDef.customTreeAggregationFn;
         }
 
@@ -617,13 +617,14 @@
          *  <br/>Takes precendence over a treeAggregationFn, the two options should not be used together.
          *  <br/>Defaults to undefined.
          */
-        if ( typeof(colDef.treeAggregationType) !== 'undefined' ){
+        if ( typeof(colDef.treeAggregationType) !== 'undefined' ) {
           col.treeAggregation = { type: colDef.treeAggregationType };
-          if ( typeof(gridOptions.treeCustomAggregations[colDef.treeAggregationType]) !== 'undefined' ){
+          if ( typeof(gridOptions.treeCustomAggregations[colDef.treeAggregationType]) !== 'undefined' ) {
             col.treeAggregationFn = gridOptions.treeCustomAggregations[colDef.treeAggregationType].aggregationFn;
             col.treeAggregationFinalizerFn = gridOptions.treeCustomAggregations[colDef.treeAggregationType].finalizerFn;
             col.treeAggregation.label = gridOptions.treeCustomAggregations[colDef.treeAggregationType].label;
-          } else if ( typeof(service.nativeAggregations()[colDef.treeAggregationType]) !== 'undefined' ){
+          }
+          else if ( typeof(service.nativeAggregations()[colDef.treeAggregationType]) !== 'undefined' ) {
             col.treeAggregationFn = service.nativeAggregations()[colDef.treeAggregationType].aggregationFn;
             col.treeAggregation.label = service.nativeAggregations()[colDef.treeAggregationType].label;
           }
@@ -635,8 +636,8 @@
          *  @propertyOf  ui.grid.treeBase.api:ColumnDef
          *  @description A custom label to use for this aggregation. If provided we don't use native i18n.
          */
-        if ( typeof(colDef.treeAggregationLabel) !== 'undefined' ){
-          if (typeof(col.treeAggregation) === 'undefined' ){
+        if ( typeof(colDef.treeAggregationLabel) !== 'undefined' ) {
+          if (typeof(col.treeAggregation) === 'undefined' ) {
             col.treeAggregation = {};
           }
           col.treeAggregation.label = colDef.treeAggregationLabel;
@@ -684,13 +685,13 @@
          *
          *  @example
          *  <pre>
-         *    customTreeAggregationFinalizerFn = function ( aggregation ){
+         *    customTreeAggregationFinalizerFn = function ( aggregation ) {
          *      aggregation.rendered = aggregation.label + aggregation.value / 100 + '%';
          *    }
          *  </pre>
          *  <br/>Defaults to undefined.
          */
-        if ( typeof(col.customTreeAggregationFinalizerFn) === 'undefined' ){
+        if ( typeof(col.customTreeAggregationFinalizerFn) === 'undefined' ) {
           col.customTreeAggregationFinalizerFn = colDef.customTreeAggregationFinalizerFn;
         }
 
@@ -706,7 +707,7 @@
        *
        * @param {Grid} grid grid object
        */
-      createRowHeader: function( grid ){
+      createRowHeader: function( grid ) {
         var rowHeaderColumnDef = {
           name: uiGridTreeBaseConstants.rowHeaderColName,
           displayName: '',
@@ -773,19 +774,20 @@
        * @param {string} targetState the state we want to set it to
        */
       setAllNodes: function (grid, treeNode, targetState) {
-        if ( typeof(treeNode.state) !== 'undefined' && treeNode.state !== targetState ){
+        if ( typeof(treeNode.state) !== 'undefined' && treeNode.state !== targetState ) {
           treeNode.state = targetState;
 
-          if ( targetState === uiGridTreeBaseConstants.EXPANDED ){
+          if ( targetState === uiGridTreeBaseConstants.EXPANDED ) {
             grid.api.treeBase.raise.rowExpanded(treeNode.row);
-          } else {
+          }
+          else {
             grid.api.treeBase.raise.rowCollapsed(treeNode.row);
           }
         }
 
         // set all child nodes
-        if ( treeNode.children ){
-          treeNode.children.forEach(function( childNode ){
+        if ( treeNode.children ) {
+          treeNode.children.forEach(function( childNode ) {
             service.setAllNodes(grid, childNode, targetState);
           });
         }
@@ -802,14 +804,15 @@
        * @param {Grid} grid grid object
        * @param {GridRow} row the row we want to toggle
        */
-      toggleRowTreeState: function ( grid, row ){
-        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ){
+      toggleRowTreeState: function ( grid, row ) {
+        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) {
           return;
         }
 
-        if (row.treeNode.state === uiGridTreeBaseConstants.EXPANDED){
+        if (row.treeNode.state === uiGridTreeBaseConstants.EXPANDED) {
           service.collapseRow(grid, row);
-        } else {
+        }
+        else {
           service.expandRow(grid, row, false);
         }
 
@@ -827,17 +830,17 @@
        * @param {GridRow} row the row we want to expand
        * @param {boolean} recursive true if you wish to expand the row's ancients
        */
-      expandRow: function ( grid, row, recursive ){
-        if ( recursive ){
+      expandRow: function ( grid, row, recursive ) {
+        if ( recursive ) {
           var parents = [];
-          while ( row && typeof(row.treeLevel) !== 'undefined' && row.treeLevel !== null && row.treeLevel >= 0 && row.treeNode.state !== uiGridTreeBaseConstants.EXPANDED ){
+          while ( row && typeof(row.treeLevel) !== 'undefined' && row.treeLevel !== null && row.treeLevel >= 0 && row.treeNode.state !== uiGridTreeBaseConstants.EXPANDED ) {
             parents.push(row);
             row = row.treeNode.parentRow;
           }
 
-          if ( parents.length > 0 ){
+          if ( parents.length > 0 ) {
             row = parents.pop();
-            while ( row ){
+            while ( row ) {
                 row.treeNode.state = uiGridTreeBaseConstants.EXPANDED;
                 grid.api.treeBase.raise.rowExpanded(row);
                 row = parents.pop();
@@ -846,12 +849,13 @@
             grid.treeBase.expandAll = service.allExpanded(grid.treeBase.tree);
             grid.queueGridRefresh();
           }
-        } else {
-          if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ){
+        }
+        else {
+          if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) {
             return;
           }
 
-          if ( row.treeNode.state !== uiGridTreeBaseConstants.EXPANDED ){
+          if ( row.treeNode.state !== uiGridTreeBaseConstants.EXPANDED ) {
             row.treeNode.state = uiGridTreeBaseConstants.EXPANDED;
             grid.api.treeBase.raise.rowExpanded(row);
             grid.treeBase.expandAll = service.allExpanded(grid.treeBase.tree);
@@ -870,8 +874,8 @@
        * @param {Grid} grid grid object
        * @param {GridRow} row the row we want to expand
        */
-      expandRowChildren: function ( grid, row ){
-        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ){
+      expandRowChildren: function ( grid, row ) {
+        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) {
           return;
         }
 
@@ -890,12 +894,12 @@
        * @param {Grid} grid grid object
        * @param {GridRow} row the row we want to collapse
        */
-      collapseRow: function( grid, row ){
-        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ){
+      collapseRow: function( grid, row ) {
+        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) {
           return;
         }
 
-        if ( row.treeNode.state !== uiGridTreeBaseConstants.COLLAPSED ){
+        if ( row.treeNode.state !== uiGridTreeBaseConstants.COLLAPSED ) {
           row.treeNode.state = uiGridTreeBaseConstants.COLLAPSED;
           grid.treeBase.expandAll = false;
           grid.api.treeBase.raise.rowCollapsed(row);
@@ -913,8 +917,8 @@
        * @param {Grid} grid grid object
        * @param {GridRow} row the row we want to collapse
        */
-      collapseRowChildren: function( grid, row ){
-        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ){
+      collapseRowChildren: function( grid, row ) {
+        if ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) {
           return;
         }
 
@@ -939,29 +943,31 @@
        * @param {object} tree the grid to check
        * @returns {boolean} whether or not the tree is all expanded
        */
-      allExpanded: function( tree ){
+      allExpanded: function( tree ) {
         var allExpanded = true;
-        tree.forEach( function( node ){
-          if ( !service.allExpandedInternal( node ) ){
+
+        tree.forEach(function( node ) {
+          if ( !service.allExpandedInternal( node ) ) {
             allExpanded = false;
           }
         });
         return allExpanded;
       },
 
-      allExpandedInternal: function( treeNode ){
-        if ( treeNode.children && treeNode.children.length > 0 ){
-          if ( treeNode.state === uiGridTreeBaseConstants.COLLAPSED ){
+      allExpandedInternal: function( treeNode ) {
+        if ( treeNode.children && treeNode.children.length > 0 ) {
+          if ( treeNode.state === uiGridTreeBaseConstants.COLLAPSED ) {
             return false;
           }
           var allExpanded = true;
-          treeNode.children.forEach( function( node ){
-            if ( !service.allExpandedInternal( node ) ){
+          treeNode.children.forEach( function( node ) {
+            if ( !service.allExpandedInternal( node ) ) {
               allExpanded = false;
             }
           });
           return allExpanded;
-        } else {
+        }
+        else {
           return true;
         }
       },
@@ -1022,20 +1028,21 @@
        *
        * @param {Grid} grid the grid we want to set the row header on
        */
-      updateRowHeaderWidth: function( grid ){
-        var rowHeader = grid.getColumn(uiGridTreeBaseConstants.rowHeaderColName);
+      updateRowHeaderWidth: function( grid ) {
+        var rowHeader = grid.getColumn(uiGridTreeBaseConstants.rowHeaderColName),
+          newWidth = grid.options.treeRowHeaderBaseWidth + grid.options.treeIndent * Math.max(grid.treeBase.numberLevels - 1, 0);
 
-        var newWidth = grid.options.treeRowHeaderBaseWidth + grid.options.treeIndent * Math.max(grid.treeBase.numberLevels - 1, 0);
-        if ( rowHeader && newWidth !== rowHeader.width ){
+        if ( rowHeader && newWidth !== rowHeader.width ) {
           rowHeader.width = newWidth;
           grid.queueRefresh();
         }
 
         var newVisibility = true;
-        if ( grid.options.showTreeRowHeader === false ){
+
+        if ( grid.options.showTreeRowHeader === false ) {
           newVisibility = false;
         }
-        if ( grid.options.treeRowHeaderAlwaysVisible === false && grid.treeBase.numberLevels <= 0 ){
+        if ( grid.options.treeRowHeaderAlwaysVisible === false && grid.treeBase.numberLevels <= 0 ) {
           newVisibility = false;
         }
         if ( rowHeader  && rowHeader.visible !== newVisibility ) {
@@ -1057,14 +1064,14 @@
        * we're calling recursively
        * @returns {array} renderable rows
        */
-      renderTree: function( nodeList ){
+      renderTree: function( nodeList ) {
         var renderableRows = [];
 
-        nodeList.forEach( function ( node ){
-          if ( node.row.visible ){
+        nodeList.forEach( function ( node ) {
+          if ( node.row.visible ) {
             renderableRows.push( node.row );
           }
-          if ( node.state === uiGridTreeBaseConstants.EXPANDED && node.children && node.children.length > 0 ){
+          if ( node.state === uiGridTreeBaseConstants.EXPANDED && node.children && node.children.length > 0 ) {
             renderableRows = renderableRows.concat( service.renderTree( node.children ) );
           }
         });
@@ -1083,58 +1090,61 @@
        * @returns {object} The tree we've build
        */
       createTree: function( grid, renderableRows ) {
-        var currentLevel = -1;
-        var parents = [];
-        var currentState;
+        var currentLevel = -1,
+          parents = [],
+          currentState;
+
         grid.treeBase.tree = [];
         grid.treeBase.numberLevels = 0;
+
         var aggregations = service.getAggregations( grid );
 
-        var createNode = function( row ){
-          if ( typeof(row.entity.$$treeLevel) !== 'undefined' && row.treeLevel !== row.entity.$$treeLevel ){
+        function createNode( row ) {
+          if ( typeof(row.entity.$$treeLevel) !== 'undefined' && row.treeLevel !== row.entity.$$treeLevel ) {
             row.treeLevel = row.entity.$$treeLevel;
           }
 
-          if ( row.treeLevel <= currentLevel ){
+          if ( row.treeLevel <= currentLevel ) {
             // pop any levels that aren't parents of this level, formatting the aggregation at the same time
-            while ( row.treeLevel <= currentLevel ){
+            while ( row.treeLevel <= currentLevel ) {
               var lastParent = parents.pop();
               service.finaliseAggregations( lastParent );
               currentLevel--;
             }
 
             // reset our current state based on the new parent, set to expanded if this is a level 0 node
-            if ( parents.length > 0 ){
+            if ( parents.length > 0 ) {
               currentState = service.setCurrentState(parents);
-            } else {
+            }
+            else {
               currentState = uiGridTreeBaseConstants.EXPANDED;
             }
           }
 
           // aggregate if this is a leaf node
-          if ( ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) && row.visible  ){
+          if ( ( typeof(row.treeLevel) === 'undefined' || row.treeLevel === null || row.treeLevel < 0 ) && row.visible  ) {
             service.aggregate( grid, row, parents );
           }
 
           // add this node to the tree
           service.addOrUseNode(grid, row, parents, aggregations);
 
-          if ( typeof(row.treeLevel) !== 'undefined' && row.treeLevel !== null && row.treeLevel >= 0 ){
+          if ( typeof(row.treeLevel) !== 'undefined' && row.treeLevel !== null && row.treeLevel >= 0 ) {
             parents.push(row);
             currentLevel++;
             currentState = service.setCurrentState(parents);
           }
 
           // update the tree number of levels, so we can set header width if we need to
-          if ( grid.treeBase.numberLevels < row.treeLevel + 1){
+          if ( grid.treeBase.numberLevels < row.treeLevel + 1) {
             grid.treeBase.numberLevels = row.treeLevel + 1;
           }
-        };
+        }
 
         renderableRows.forEach( createNode );
 
-        // finalise remaining aggregations
-        while ( parents.length > 0 ){
+        // finalize remaining aggregations
+        while ( parents.length > 0 ) {
           var lastParent = parents.pop();
           service.finaliseAggregations( lastParent );
         }
@@ -1157,22 +1167,22 @@
        * @returns {undefined} Updates the parents array, updates the row to have a treeNode, and updates the
        * grid.treeBase.tree
        */
-      addOrUseNode: function( grid, row, parents, aggregationBase ){
+      addOrUseNode: function( grid, row, parents, aggregationBase ) {
         var newAggregations = [];
-        aggregationBase.forEach( function(aggregation){
+        aggregationBase.forEach( function(aggregation) {
           newAggregations.push(service.buildAggregationObject(aggregation.col));
         });
 
         var newNode = { state: uiGridTreeBaseConstants.COLLAPSED, row: row, parentRow: null, aggregations: newAggregations, children: [] };
-        if ( row.treeNode ){
+        if ( row.treeNode ) {
           newNode.state = row.treeNode.state;
         }
-        if ( parents.length > 0 ){
+        if ( parents.length > 0 ) {
           newNode.parentRow = parents[parents.length - 1];
         }
         row.treeNode = newNode;
 
-        if ( parents.length === 0 ){
+        if ( parents.length === 0 ) {
           grid.treeBase.tree.push( newNode );
         } else {
           parents[parents.length - 1].treeNode.children.push( newNode );
@@ -1191,10 +1201,11 @@
        * @param {array} parents An array of the parents this row should have
        * @returns {string} The state we should be setting to any nodes we see
        */
-      setCurrentState: function( parents ){
+      setCurrentState: function( parents ) {
         var currentState = uiGridTreeBaseConstants.EXPANDED;
-        parents.forEach( function(parent){
-          if ( parent.treeNode.state === uiGridTreeBaseConstants.COLLAPSED ){
+
+        parents.forEach( function(parent) {
+          if ( parent.treeNode.state === uiGridTreeBaseConstants.COLLAPSED ) {
             currentState = uiGridTreeBaseConstants.COLLAPSED;
           }
         });
@@ -1219,9 +1230,9 @@
        * @param {Grid} grid The grid to get the aggregation information from
        * @returns {array} The aggregation information
        */
-      sortTree: function( grid ){
+      sortTree: function( grid ) {
         grid.columns.forEach( function( column ) {
-          if ( column.sort && column.sort.ignoreSort ){
+          if ( column.sort && column.sort.ignoreSort ) {
             delete column.sort.ignoreSort;
           }
         });
@@ -1229,19 +1240,19 @@
         grid.treeBase.tree = service.sortInternal( grid, grid.treeBase.tree );
       },
 
-      sortInternal: function( grid, treeList ){
-        var rows = treeList.map( function( node ){
+      sortInternal: function( grid, treeList ) {
+        var rows = treeList.map( function( node ) {
           return node.row;
         });
 
         rows = rowSorter.sort( grid, rows, grid.columns );
 
-        var treeNodes = rows.map( function( row ){
+        var treeNodes = rows.map( function( row ) {
           return row.treeNode;
         });
 
-        treeNodes.forEach( function( node ){
-          if ( node.state === uiGridTreeBaseConstants.EXPANDED && node.children && node.children.length > 0 ){
+        treeNodes.forEach( function( node ) {
+          if ( node.state === uiGridTreeBaseConstants.EXPANDED && node.children && node.children.length > 0 ) {
             node.children = service.sortInternal( grid, node.children );
           }
         });
@@ -1264,11 +1275,11 @@
        *
        * @param {Grid} grid the grid to fix filters on
        */
-      fixFilter: function( grid ){
+      fixFilter: function( grid ) {
         var parentsVisible;
 
-        grid.treeBase.tree.forEach( function( node ){
-          if ( node.children && node.children.length > 0 ){
+        grid.treeBase.tree.forEach( function( node ) {
+          if ( node.children && node.children.length > 0 ) {
             parentsVisible = node.row.visible;
             service.fixFilterInternal( node.children, parentsVisible );
           }
@@ -1276,13 +1287,13 @@
       },
 
       fixFilterInternal: function( nodes, parentsVisible) {
-        nodes.forEach( function( node ){
-          if ( node.row.visible && !parentsVisible ){
+        nodes.forEach(function( node ) {
+          if ( node.row.visible && !parentsVisible ) {
             service.setParentsVisible( node );
             parentsVisible = true;
           }
 
-          if ( node.children && node.children.length > 0 ){
+          if ( node.children && node.children.length > 0 ) {
             if ( service.fixFilterInternal( node.children, ( parentsVisible && node.row.visible ) ) ) {
               parentsVisible = true;
             }
@@ -1292,8 +1303,8 @@
         return parentsVisible;
       },
 
-      setParentsVisible: function( node ){
-        while ( node.parentRow ){
+      setParentsVisible: function( node ) {
+        while ( node.parentRow ) {
           node.parentRow.visible = true;
           node = node.parentRow.treeNode;
         }
@@ -1309,14 +1320,14 @@
        * @param {GridColumn} column The column which this object relates to
        * @returns {object} {col: GridColumn object, label: string, type: string (optional)}
        */
-      buildAggregationObject: function( column ){
+      buildAggregationObject: function( column ) {
         var newAggregation = { col: column };
 
-        if ( column.treeAggregation && column.treeAggregation.type ){
+        if ( column.treeAggregation && column.treeAggregation.type ) {
           newAggregation.type = column.treeAggregation.type;
         }
 
-        if ( column.treeAggregation && column.treeAggregation.label ){
+        if ( column.treeAggregation && column.treeAggregation.label ) {
           newAggregation.label = column.treeAggregation.label;
         }
 
@@ -1333,14 +1344,14 @@
        * @param {Grid} grid the grid to get the aggregation information from
        * @returns {array} the aggregation information
        */
-      getAggregations: function( grid ){
+      getAggregations: function( grid ) {
         var aggregateArray = [];
 
-        grid.columns.forEach( function(column){
-          if ( typeof(column.treeAggregationFn) !== 'undefined' ){
+        grid.columns.forEach( function(column) {
+          if ( typeof(column.treeAggregationFn) !== 'undefined' ) {
             aggregateArray.push( service.buildAggregationObject(column) );
 
-            if ( grid.options.showColumnFooter && typeof(column.colDef.aggregationType) === 'undefined' && column.treeAggregation ){
+            if ( grid.options.showColumnFooter && typeof(column.colDef.aggregationType) === 'undefined' && column.treeAggregation ) {
               // Add aggregation object for footer
               column.treeFooterAggregation = service.buildAggregationObject(column);
               column.aggregationType = service.treeFooterAggregationType;
@@ -1364,9 +1375,9 @@
        * @param {GridRow} row the row we want to set grouping visibility on
        * @param {array} parents the parents that we would want to aggregate onto
        */
-      aggregate: function( grid, row, parents ){
-        if ( parents.length === 0 && row.treeNode && row.treeNode.aggregations ){
-          row.treeNode.aggregations.forEach(function(aggregation){
+      aggregate: function( grid, row, parents ) {
+        if ( parents.length === 0 && row.treeNode && row.treeNode.aggregations ) {
+          row.treeNode.aggregations.forEach(function(aggregation) {
             // Calculate aggregations for footer even if there are no grouped rows
             if ( typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ) {
               var fieldValue = grid.getCellValue(row, aggregation.col);
@@ -1376,14 +1387,14 @@
           });
         }
 
-        parents.forEach( function( parent, index ){
-          if ( parent.treeNode.aggregations ){
-            parent.treeNode.aggregations.forEach( function( aggregation ){
+        parents.forEach( function( parent, index ) {
+          if ( parent.treeNode.aggregations ) {
+            parent.treeNode.aggregations.forEach( function( aggregation ) {
               var fieldValue = grid.getCellValue(row, aggregation.col);
               var numValue = Number(fieldValue);
               aggregation.col.treeAggregationFn(aggregation, fieldValue, numValue, row);
 
-              if ( index === 0 && typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ){
+              if ( index === 0 && typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ) {
                 aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
               }
             });
@@ -1394,7 +1405,7 @@
 
       // Aggregation routines - no doco needed as self evident
       nativeAggregations: function() {
-        var nativeAggregations = {
+        return {
           count: {
             label: i18nService.get().aggregation.count,
             menuTitle: i18nService.get().grouping.aggregate_count,
@@ -1438,11 +1449,11 @@
           max: {
             label: i18nService.get().aggregation.max,
             menuTitle: i18nService.get().grouping.aggregate_max,
-            aggregationFn: function( aggregation, fieldValue, numValue ){
-              if ( typeof(aggregation.value) === 'undefined' ){
+            aggregationFn: function( aggregation, fieldValue, numValue ) {
+              if ( typeof(aggregation.value) === 'undefined' ) {
                 aggregation.value = fieldValue;
               } else {
-                if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue > aggregation.value || aggregation.value === null)){
+                if ( typeof(fieldValue) !== 'undefined' && fieldValue !== null && (fieldValue > aggregation.value || aggregation.value === null)) {
                   aggregation.value = fieldValue;
                 }
               }
@@ -1452,18 +1463,18 @@
           avg: {
             label: i18nService.get().aggregation.avg,
             menuTitle: i18nService.get().grouping.aggregate_avg,
-            aggregationFn: function( aggregation, fieldValue, numValue ){
-              if ( typeof(aggregation.count) === 'undefined' ){
+            aggregationFn: function( aggregation, fieldValue, numValue ) {
+              if ( typeof(aggregation.count) === 'undefined' ) {
                 aggregation.count = 1;
               } else {
                 aggregation.count++;
               }
 
-              if ( isNaN(numValue) ){
+              if ( isNaN(numValue) ) {
                 return;
               }
 
-              if ( typeof(aggregation.value) === 'undefined' || typeof(aggregation.sum) === 'undefined' ){
+              if ( typeof(aggregation.value) === 'undefined' || typeof(aggregation.sum) === 'undefined' ) {
                 aggregation.value = numValue;
                 aggregation.sum = numValue;
               } else {
@@ -1473,7 +1484,6 @@
             }
           }
         };
-        return nativeAggregations;
       },
 
       /**
@@ -1485,18 +1495,18 @@
        * @param {gridRow} row The parent we're finalising
        * @param {aggregation} aggregation The aggregation object manipulated by the aggregationFn
        */
-      finaliseAggregation: function(row, aggregation){
-        if ( aggregation.col.treeAggregationUpdateEntity && typeof(row) !== 'undefined' && typeof(row.entity[ '$$' + aggregation.col.uid ]) !== 'undefined' ){
+      finaliseAggregation: function(row, aggregation) {
+        if ( aggregation.col.treeAggregationUpdateEntity && typeof(row) !== 'undefined' && typeof(row.entity[ '$$' + aggregation.col.uid ]) !== 'undefined' ) {
           angular.extend( aggregation, row.entity[ '$$' + aggregation.col.uid ]);
         }
 
-        if ( typeof(aggregation.col.treeAggregationFinalizerFn) === 'function' ){
+        if ( typeof(aggregation.col.treeAggregationFinalizerFn) === 'function' ) {
           aggregation.col.treeAggregationFinalizerFn( aggregation );
         }
-        if ( typeof(aggregation.col.customTreeAggregationFinalizerFn) === 'function' ){
+        if ( typeof(aggregation.col.customTreeAggregationFinalizerFn) === 'function' ) {
           aggregation.col.customTreeAggregationFinalizerFn( aggregation );
         }
-        if ( typeof(aggregation.rendered) === 'undefined' ){
+        if ( typeof(aggregation.rendered) === 'undefined' ) {
           aggregation.rendered = aggregation.label ? aggregation.label + aggregation.value : aggregation.value;
         }
       },
@@ -1519,18 +1529,19 @@
        *
        * @param {gridRow} row the parent we're finalising
        */
-      finaliseAggregations: function( row ){
-        if ( row == null || typeof(row.treeNode.aggregations) === 'undefined' ){
+      finaliseAggregations: function( row ) {
+        if ( row == null || typeof(row.treeNode.aggregations) === 'undefined' ) {
           return;
         }
 
         row.treeNode.aggregations.forEach( function( aggregation ) {
           service.finaliseAggregation(row, aggregation);
 
-          if ( aggregation.col.treeAggregationUpdateEntity ){
+          if ( aggregation.col.treeAggregationUpdateEntity ) {
             var aggregationCopy = {};
-            angular.forEach( aggregation, function( value, key ){
-              if ( aggregation.hasOwnProperty(key) && key !== 'col' ){
+
+            angular.forEach( aggregation, function( value, key ) {
+              if ( aggregation.hasOwnProperty(key) && key !== 'col' ) {
                 aggregationCopy[key] = value;
               }
             });
@@ -1552,7 +1563,7 @@
        */
       treeFooterAggregationType: function( rows, column ) {
         service.finaliseAggregation(undefined, column.treeFooterAggregation);
-        if ( typeof(column.treeFooterAggregation.value) === 'undefined' || column.treeFooterAggregation.rendered === null ){
+        if ( typeof(column.treeFooterAggregation.value) === 'undefined' || column.treeFooterAggregation.rendered === null ) {
           // The was apparently no aggregation performed (perhaps this is a grouped column
           return '';
         }
@@ -1561,7 +1572,6 @@
     };
 
     return service;
-
   }]);
 
 
@@ -1615,7 +1625,7 @@
       restrict: 'E',
       template: $templateCache.get('ui-grid/treeBaseExpandAllButtons'),
       scope: false,
-      link: function($scope, $elm, $attrs, uiGridCtrl) {
+      link: function($scope) {
         var self = $scope.col.grid;
         $scope.headerButtonClass = function() {
           if (self.treeBase.numberLevels > 0 && self.treeBase.expandAll) {
@@ -1626,7 +1636,7 @@
           }
         };
         $scope.headerButtonClick = function(row, evt) {
-          if ( self.treeBase.expandAll ){
+          if ( self.treeBase.expandAll ) {
             uiGridTreeBaseService.collapseAllRows(self, evt);
           } else {
             uiGridTreeBaseService.expandAllRows(self, evt);
@@ -1645,12 +1655,11 @@
    *  @description Stacks on top of ui.grid.uiGridViewport to set formatting on a tree header row
    */
   module.directive('uiGridViewport',
-  ['$compile', 'uiGridConstants', 'gridUtil', '$parse',
-    function ($compile, uiGridConstants, gridUtil, $parse) {
+    function () {
       return {
         priority: -200, // run after default  directive
         scope: false,
-        compile: function ($elm, $attrs) {
+        compile: function ($elm) {
           var rowRepeatDiv = angular.element($elm.children().children()[0]);
 
           var existingNgClass = rowRepeatDiv.attr("ng-class");
@@ -1671,5 +1680,5 @@
           };
         }
       };
-    }]);
+    });
 })();

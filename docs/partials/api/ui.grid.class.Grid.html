@@ -29,10 +29,10 @@ performance of the grid during initial load.</p>
 </div><h5 id="methods_buildcolumndefsfromdata_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rowBuilder</td><td><a href="" class="label type-hint type-hint-function">function(colDef, col, gridOptions</a></td><td><div class="buildcolumndefsfromdata-page"><p>function to be called</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_buildcolumns">buildColumns(options)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_buildcolumns">buildColumns(opts)</h3>
 <div class="buildcolumns"><div class="buildcolumns-page"><p>creates GridColumn objects from the columnDefinition.  Calls each registered
 columnBuilder to further process the column</p>
-</div><h5 id="methods_buildcolumns_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="buildcolumns-page"><p>An object contains options to use when building columns</p>
+</div><h5 id="methods_buildcolumns_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>opts</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="buildcolumns-page"><p>An object contains options to use when building columns</p>
 <ul>
 <li><strong>orderByColumnDefs</strong>: defaults to <strong>false</strong>. When true, <code>buildColumns</code> will reorder existing columns according to the order within the column definitions.</li>
 </ul>
@@ -216,11 +216,11 @@ uiGridConstants.dataChange values (ALL, ROW, EDIT, COLUMN, OPTIONS)</p>
 </div></td></tr></tbody></table><h5 id="methods_processrowbuilders_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="processrowbuilders-page"><p>the gridRow with all additional behavior added</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_processrowscallback">processRowsCallback(name)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_processrowscallback">processRowsCallback(grid)</h3>
 <div class="processrowscallback"><div class="processrowscallback-page"><p>calls the row processors, specifically
 intended to reset the sorting when an edit is called,
 registered as a dataChangeCallback on uiGridConstants.dataChange.EDIT</p>
-</div><h5 id="methods_processrowscallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="processrowscallback-page"><p>column name</p>
+</div><h5 id="methods_processrowscallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="processrowscallback-page"><p>The grid object.</p>
 </div></td></tr></tbody></table></div>
 </li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_queuegridrefresh">queueGridRefresh()</h3>
@@ -365,10 +365,10 @@ by this column only</p>
 <div class="updatecanvasheight"><div class="updatecanvasheight-page"><p>flags all render containers to update their canvas height</p>
 </div></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_updatefooterheightcallback">updateFooterHeightCallback(name)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_updatefooterheightcallback">updateFooterHeightCallback(grid)</h3>
 <div class="updatefooterheightcallback"><div class="updatefooterheightcallback-page"><p>recalculates the footer height,
 registered as a dataChangeCallback on uiGridConstants.dataChange.OPTIONS</p>
-</div><h5 id="methods_updatefooterheightcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>name</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="updatefooterheightcallback-page"><p>column name</p>
+</div><h5 id="methods_updatefooterheightcallback_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="updatefooterheightcallback-page"><p>The grid object.</p>
 </div></td></tr></tbody></table></div>
 </li>
 </ul>

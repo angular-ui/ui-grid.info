@@ -106,10 +106,10 @@ working with, the following information:</p>
 </div></td></tr></tbody></table><h5 id="methods_grouprows_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="grouprows-page"><p>the updated rows, including our new group rows</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_groupedfinalizerfn">groupedFinalizerFn(the)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_groupedfinalizerfn">groupedFinalizerFn(aggregation)</h3>
 <div class="groupedfinalizerfn"><div class="groupedfinalizerfn-page"><p>Used on group columns to display the rendered value and optionally
 display the count of rows.</p>
-</div><h5 id="methods_groupedfinalizerfn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>the</td><td><a href="" class="label type-hint type-hint-aggregation">aggregation</a></td><td><div class="groupedfinalizerfn-page"><p>aggregation entity for a grouped column</p>
+</div><h5 id="methods_groupedfinalizerfn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>aggregation</td><td><a href="" class="label type-hint type-hint-aggregation">aggregation</a></td><td><div class="groupedfinalizerfn-page"><p>The aggregation entity for a grouped column</p>
 </div></td></tr></tbody></table></div>
 </li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_groupingcolumnbuilder">groupingColumnBuilder(colDef, col, gridOptions)</h3>
@@ -147,7 +147,7 @@ items that we use.</p>
 i.e. the column that we want to create a header for</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_movegroupcolumns">moveGroupColumns(grid, columns, rows)</h3>
+<li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_movegroupcolumns">moveGroupColumns(grid, columns)</h3>
 <div class="movegroupcolumns"><div class="movegroupcolumns-page"><p>Moves the column order so that the grouped columns are lined up
 to the left (well, unless you&#39;re RTL, then it&#39;s the right).  By doing this in
 the columnsProcessor, we make it transient - when the column is ungrouped it&#39;ll
@@ -155,7 +155,6 @@ go back to where it was.</p>
 <p>Does nothing if the option <code>moveGroupColumns</code> is set to false.</p>
 </div><h5 id="methods_movegroupcolumns_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="movegroupcolumns-page"><p>grid object</p>
 </div></td></tr><tr><td>columns</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="movegroupcolumns-page"><p>the columns that we should process/move</p>
-</div></td></tr><tr><td>rows</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="movegroupcolumns-page"><p>the grid rows</p>
 </div></td></tr></tbody></table><h5 id="methods_movegroupcolumns_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="movegroupcolumns-page"><p>updated columns</p>
 </div></td></tr></table></div>
 </li>

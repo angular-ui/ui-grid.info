@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.4.11-18a7cbfe - 2018-06-08
+ * ui-grid - v4.6.0-8bd67215 - 2018-06-26
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -30,7 +30,7 @@
    *  @description Services for the empty base layer grid
    */
   module.service('uiGridBaseLayerService', ['gridUtil', '$compile', function (gridUtil, $compile) {
-    var service = {
+    return {
       initializeGrid: function (grid, disableEmptyBaseLayer) {
 
         /**
@@ -52,7 +52,7 @@
          *  <br/>Defaults to true, if the directive is used.
          *  <br/>Set to false either by setting this attribute or passing false to the directive.
          */
-        //default option to true unless it was explicitly set to false
+        // default option to true unless it was explicitly set to false
         if (grid.options.enableEmptyGridBaseLayer !== false) {
           grid.options.enableEmptyGridBaseLayer = !disableEmptyBaseLayer;
         }
@@ -61,6 +61,7 @@
       setNumberOfEmptyRows: function(viewportHeight, grid) {
         var rowHeight = grid.options.rowHeight,
           rows = Math.ceil(viewportHeight / rowHeight);
+
         if (rows > 0) {
           grid.baseLayer.emptyRows = [];
           for (var i = 0; i < rows; i++) {
@@ -69,7 +70,6 @@
         }
       }
     };
-    return service;
   }]);
 
   /**
@@ -93,10 +93,11 @@
       return {
         require: '^uiGrid',
         scope: false,
-        compile: function ($elm, $attrs) {
+        compile: function () {
           return {
             pre: function ($scope, $elm, $attrs, uiGridCtrl) {
               var disableEmptyBaseLayer = $parse($attrs.uiGridEmptyBaseLayer)($scope) === false;
+
               uiGridBaseLayerService.initializeGrid(uiGridCtrl.grid, disableEmptyBaseLayer);
             },
             post: function ($scope, $elm, $attrs, uiGridCtrl) {
@@ -151,7 +152,7 @@
         return {
           priority: -200,
           scope: false,
-          compile: function ($elm, $attrs) {
+          compile: function ($elm) {
             var emptyBaseLayerContainer = $templateCache.get('ui-grid/emptyBaseLayerContainer');
             $elm.prepend(emptyBaseLayerContainer);
             return {

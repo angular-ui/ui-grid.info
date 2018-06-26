@@ -126,8 +126,8 @@ gridCol and the GridRow for you to use as context in massaging the data.</p>
 </div><h5 id="properties_exporterfieldcallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="exporterfieldcallback-page"><p>you must return the massaged value ready for exporting</p>
 </div></td></tr></table><h4 id="properties_exporterfieldcallback_example">Example</h4>
 <div class="example"><div class="exporterfieldcallback-page"><pre class="prettyprint linenums">
-gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
-  if ( col.name === 'status' ){
+gridOptions.exporterFieldCallback = function ( grid, row, col, value ) {
+  if ( col.name === 'status' ) {
     value = decodeStatus( value );
   }
   return value;
@@ -145,8 +145,8 @@ gridCol and the GridRow for you to use as context in massaging the data.</p>
 </div><h5 id="properties_exporterfieldformatcallback_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="exporterfieldformatcallback-page"><p>you must return the massaged value ready for exporting</p>
 </div></td></tr></table><h4 id="properties_exporterfieldformatcallback_example">Example</h4>
 <div class="example"><div class="exporterfieldformatcallback-page"><pre class="prettyprint linenums">
-gridOptions.exporterFieldCallback = function ( grid, row, col, value ){
-  if ( col.name === 'status' ){
+gridOptions.exporterFieldCallback = function ( grid, row, col, value ) {
+  if ( col.name === 'status' ) {
     value = decodeStatus( value );
   }
   return value;
@@ -162,7 +162,7 @@ call must be synchronous, it cannot be a call that returns a promise.</p>
 <p>Behaviour can be changed to pass in <code>name</code> instead of <code>displayName</code> through use of <code>exporterHeaderFilterUseName: true</code>.</p>
 </div><h4 id="properties_exporterheaderfilter_example">Example</h4>
 <div class="example"><div class="exporterheaderfilter-page"><pre class="prettyprint linenums">
-gridOptions.exporterHeaderFilter = function( displayName ){ return 'col: ' + name; };
+gridOptions.exporterHeaderFilter = function( displayName ) { return 'col: ' + name; };
 </pre>
 OR
 <pre class="prettyprint linenums">

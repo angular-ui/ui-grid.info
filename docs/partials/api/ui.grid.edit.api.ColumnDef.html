@@ -47,7 +47,7 @@ $scope.gridOptions = {
 <div class="celleditablecondition"><div class="celleditablecondition-page"><p>If specified, either a value or function evaluated before editing cell.  If falsy, then editing of cell is not allowed.</p>
 </div><h4 id="properties_celleditablecondition_example">Example</h4>
 <div class="example"><div class="celleditablecondition-page"><pre class="prettyprint linenums">
-function($scope, triggerEvent){
+function($scope, triggerEvent) {
   //use $scope.row.entity, $scope.col.colDef and triggerEvent to determine if editing is allowed
   return true;
 }
@@ -145,13 +145,13 @@ an array of files, with each having useful information such as:</p>
 use the filename or read the file itself in.  The example function does both.</p>
 </div><h4 id="properties_editfilechoosercallback_example">Example</h4>
 <div class="example"><div class="editfilechoosercallback-page"><pre class="prettyprint linenums">
-editFileChooserCallBack: function(gridRow, gridCol, files ){
+editFileChooserCallBack: function(gridRow, gridCol, files ) {
   // ignore all but the first file, it can only choose one anyway
   // set the filename into this column
   gridRow.entity.filename = file[0].name;
 
   // read the file and set it into a hidden column, which we may do stuff with later
-  var setFile = function(fileContent){
+  var setFile = function(fileContent) {
     gridRow.entity.file = fileContent.currentTarget.result;
   };
   var reader = new FileReader();
@@ -164,7 +164,7 @@ editFileChooserCallBack: function(gridRow, gridCol, files ){
 </li>
 <li><h3 id="properties_editmodelfield">editModelField</h3>
 <div class="editmodelfield"><div class="editmodelfield-page"><p>a bindable string value that is used when binding to edit controls instead of colDef.field
-<br/> example: You have a complex property on and object like state:{abbrev:&#39;MS&#39;,name:&#39;Mississippi&#39;}.  The
+<br/> example: You have a complex property on and object like state:{abbrev: &#39;MS&#39;,name: &#39;Mississippi&#39;}.  The
 grid should display state.name in the cell and sort/filter based on the state.name property but the editor
 requires the full state object.
 <br/>colDef.field = &#39;state.name&#39;
