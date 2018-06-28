@@ -15,30 +15,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "exporterMenuAllData",
-      "shortName": "exporterMenuAllData",
+      "id": "ui.grid.api:PublicApi",
+      "shortName": "PublicApi",
       "type": "object",
-      "moduleName": "exporterMenuAllData",
-      "shortDescription": "Add export all data as cvs/pdf menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.",
-      "keywords": "add api cvs data defaults export exporter exportermenualldata grid items menu object true ui ui-grid"
-    },
-    {
-      "section": "api",
-      "id": "exporterMenuSelectedData",
-      "shortName": "exporterMenuSelectedData",
-      "type": "object",
-      "moduleName": "exporterMenuSelectedData",
-      "shortDescription": "Add export selected data as cvs/pdf menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.",
-      "keywords": "add api cvs data defaults export exporter exportermenuselecteddata grid items menu object selected true ui ui-grid"
-    },
-    {
-      "section": "api",
-      "id": "exporterMenuVisibleData",
-      "shortName": "exporterMenuVisibleData",
-      "type": "object",
-      "moduleName": "exporterMenuVisibleData",
-      "shortDescription": "Add export visible data as cvs/pdf menu items to the ui-grid grid menu, if it&#39;s present.  Defaults to true.",
-      "keywords": "add api cvs data defaults export exporter exportermenuvisibledata grid items menu object true ui ui-grid visible"
+      "moduleName": "ui.grid",
+      "shortDescription": "Public Api for the core grid features",
+      "keywords": "$scope acting active add addrowheadercolumn adds addtogridmenu adjust advantage allowing allrowsvisible alter api array assumes based basically better building calculations call callback called calling calls case cases cell chain chance change changed circumstances classes clearallfilters clearconditions clearflags clearrowinvisible clears code coldef column columndef columnprocessors columns columnsprocessors columnvisibilitychanged combo complete completely completes config consider context controller core count criteria currently custom cycle data datachange debounced def defaults definitions deregister described destroyed determines digest directly earlier edit edited emited emits enabled event events execute execution false feature features field filter filtering filters finished fire fired fires flag format function functions general generally getcolumnsorting getvisiblerows grid gridapi gridcol gridcolumns gridoptions gridrow grouping handle handlewindowresize handling header headercellclasses headers higher included inject instance intermediate invisible isn item items leave left list listeners long lower management manipulations manually menu method modified multiple mysortfn normal note noticing notify notifydatachange null nulls number object occurred onregisterapi optional optionally options order output override pagination parameter parameters passed passes people picked positioned prefer priorities priority problem processor processorfunction processors promise properties_datachange provide provided public queuegridrefresh queuerefresh re-evaluated re-runs redrawinplace refresh refreshcanvas refreshes refreshing refreshrows regenerate register registercolumnsprocessor registered registerrowsprocessor relevant remain remove removed removefromgridmenu removes render rendered rendering renderingcomplete request requests resize resolved return returned returns room row rowentity rowprocessors rows rowsprocessors rowsvisiblechanged running runs scope screen scroll scrolling scrolls scrollto scrolltoifnecessary selectable service set setrowinvisible sets simplify size sizing sort sortchanged sortcolumns sorted sorthandlenulls sorting sorts stopping tells time timing todo treeview trigger true tutorial type ui uigridconstants unique update updated updates users values var ve version view visibility visible watch window"
     },
     {
       "section": "api",
@@ -48,6 +30,15 @@ NG_DOCS={
       "moduleName": "ui.grid.autoResize",
       "shortDescription": "#ui.grid.autoResize",
       "keywords": "alert alert-warning api auto-resizing autoresize bugs class feature functionality grid hasn lot module overview ready role testing ui ui-grid"
+    },
+    {
+      "section": "api",
+      "id": "ui.grid.autoResize.directive:uiGridAutoResize",
+      "shortName": "uiGridAutoResize",
+      "type": "directive",
+      "moduleName": "ui.grid.autoResize",
+      "shortDescription": "Stacks on top of the ui-grid directive and",
+      "keywords": "adds api autoresize change content dimensions directive div grid height refreshes stacks top ui ui-grid watch width"
     },
     {
       "section": "api",
@@ -123,6 +114,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "ui.grid.cellNav.Grid:cellNav",
+      "shortName": "cellNav",
+      "type": "object",
+      "moduleName": "ui.grid.cellNav",
+      "shortDescription": "cellNav properties added to grid class",
+      "keywords": "api cellnav class grid object properties ui"
+    },
+    {
+      "section": "api",
       "id": "ui.grid.cellNav.object:CellNav",
       "shortName": "CellNav",
       "type": "object",
@@ -138,15 +138,6 @@ NG_DOCS={
       "moduleName": "ui.grid.cellNav",
       "shortDescription": "Services for cell navigation features. If you don&#39;t like the key maps we use,",
       "keywords": "add adds angular api apportionment array calc cell cellnav cellnavcolumnbuilder cells coldef column columnbuilder columns current data decoraterendercontainers decorates decorator determines direction docs don drawn event exclude features finished focus function functions getdirection getleftwidth grid gridapi gridoptions include including instance key keydown load maps method navigation needed numbered override promise properties rendercontainers resolved row rowentity scroll scrolling scrolltofocus service services set templates total totalnumbercols ui uptocol view visible width"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.cellNav:Grid.cellNav",
-      "shortName": "Grid.cellNav",
-      "type": "object",
-      "moduleName": "ui.grid.cellNav:Grid",
-      "shortDescription": "cellNav properties added to grid class",
-      "keywords": "api cellnav class grid object properties ui"
     },
     {
       "section": "api",
@@ -237,15 +228,6 @@ NG_DOCS={
       "moduleName": "ui.grid",
       "shortDescription": "Model for all scrollEvents",
       "keywords": "api calculates class core delay directive eliminate event events false fires firethrottledscrollingevent function functionname getnewscrollleft getnewscrolltop grid isn limited model mouse newscrollleft newscrolltop nodelay null object operate owns properly property raise reference require returns row scroll scrollevent scrollevents scrolleventsources scrolling set source sourcecolcontainer sourcerowcontainer string throttled trackpad ui uigridconstants values visible"
-    },
-    {
-      "section": "api",
-      "id": "ui.grid.core.api:PublicApi",
-      "shortName": "PublicApi",
-      "type": "object",
-      "moduleName": "ui.grid.core",
-      "shortDescription": "Public Api for the core grid features",
-      "keywords": "$scope acting active add addrowheadercolumn adds addtogridmenu adjust advantage allowing allrowsvisible alter api array assumes based basically better building calculations call callback called calling calls case cases cell chain chance change changed circumstances classes clearallfilters clearconditions clearflags clearrowinvisible clears code coldef column columndef columnprocessors columns columnsprocessors columnvisibilitychanged combo complete completely completes config consider context controller core count criteria currently custom cycle data datachange debounced def defaults definitions deregister described destroyed determines digest directly earlier edit edited emited emits enabled event events execute execution false feature features field filter filtering filters finished fire fired fires flag format function functions general generally getcolumnsorting getvisiblerows grid gridapi gridcol gridcolumns gridoptions gridrow grouping handle handlewindowresize handling header headercellclasses headers higher included inject instance intermediate invisible isn item items leave left list listeners long lower management manipulations manually menu method modified multiple mysortfn normal note noticing notify notifydatachange null nulls number object occurred onregisterapi optional optionally options order output override pagination parameter parameters passed passes people picked positioned prefer priorities priority problem processor processorfunction processors promise properties_datachange provide provided public queuegridrefresh queuerefresh re-evaluated re-runs redrawinplace refresh refreshcanvas refreshes refreshing refreshrows regenerate register registercolumnsprocessor registered registerrowsprocessor relevant remain remove removed removefromgridmenu removes render rendered rendering renderingcomplete request requests resize resolved return returned returns room row rowentity rowprocessors rows rowsprocessors rowsvisiblechanged running runs scope screen scroll scrolling scrolls scrollto scrolltoifnecessary selectable service set setrowinvisible sets simplify size sizing sort sortchanged sortcolumns sorted sorthandlenulls sorting sorts stopping tells time timing todo treeview trigger true tutorial type ui uigridconstants unique update updated updates users values var ve version view visibility visible watch window"
     },
     {
       "section": "api",
@@ -757,7 +739,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid.exporter",
       "shortDescription": "GridOptions for exporter feature, these are available to be",
-      "keywords": "$http $translate a1 a4 add adding adjusted alignment allowing allows angular-translate api applications applied apply array assign automatically backward behaviour black bold bom browsers building button buttons calibri call callback called calling case cell changed changes character class codes col color cols column columns compatibility complete complex const content context controls convert created csv current currentpage custom data decodes decodestatus default defaults definition deprecated determine display displayname displaynames divide docdefinition document don download downloaded drawnwidth evaluated example excel excels expense export exported exporter exporteralldatafn exporteralldatapromise exportercolumnscalefactor exportercsvcolumnseparator exportercsvfilename exporterexcelcustomformatters exporterexcelfilename exporterexcelheader exporterexcelsheetname exporterfieldapplyfilters exporterfieldcallback exporterfieldformatcallback exporterheaderfilter exporterheaderfilterusename exporterisexcelcompatible exportermenucsv exportermenuexcel exportermenuitemorder exportermenulabel exportermenupdf exporterolderexcelcompatibility exporterpdfcustomformatter exporterpdfdefaultstyle exporterpdffilename exporterpdffooter exporterpdfheader exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablelayout exporterpdftablestyle exportersuppresscolumns exportersuppressmenu exporting exports factor false feature field file filename filters fixed font fontname fontsize footer footerstyle format formatted formatter formatters front function general getstylesheet grid gridcol gridlines gridoptions gridrow handling header headerfilter headerformatdefn headerformatter https implying insert instant internationalisation items js json landscape layout leads left letter link list load margin massaged massaging match maxium menu metadata method modify ms names needed note null number numbers object open option orientation output pagecount paper pass passed pdf pdfmake pdfs point portrait programs promise proper provide provided push raw ready recognise report require return returned returns roll routine row rows saving scaled scaling selectionrowheader separator server set setting setup sheet sheet1 sheetname shouldn side simple size sizes specific start starting status store style styles stylesheet styling summary supported suppress suppressed synchronous system table tableheader tablelayout takes target text tostring true ui ui-grid unproperly updated user utf-16 valid versions wasn width window won work workbook works wraptext write xlsx"
+      "keywords": "$http $translate a1 a4 add adding adjusted alignment allowing allows angular-translate api applications applied apply array assign automatically backward behaviour black bold bom browsers building button buttons calibri call callback called calling case cell changed changes character class codes col color cols column columns compatibility complete complex const content context controls convert created csv current currentpage custom cvs data decodes decodestatus default defaults definition deprecated determine display displayname displaynames divide docdefinition document don download downloaded drawnwidth evaluated example excel excels expense export exported exporter exporteralldatafn exporteralldatapromise exportercolumnscalefactor exportercsvcolumnseparator exportercsvfilename exporterexcelcustomformatters exporterexcelfilename exporterexcelheader exporterexcelsheetname exporterfieldapplyfilters exporterfieldcallback exporterfieldformatcallback exporterheaderfilter exporterheaderfilterusename exporterisexcelcompatible exportermenualldata exportermenucsv exportermenuexcel exportermenuitemorder exportermenulabel exportermenupdf exportermenuselecteddata exportermenuvisibledata exporterolderexcelcompatibility exporterpdfcustomformatter exporterpdfdefaultstyle exporterpdffilename exporterpdffooter exporterpdfheader exporterpdfmaxgridwidth exporterpdforientation exporterpdfpagesize exporterpdftableheaderstyle exporterpdftablelayout exporterpdftablestyle exportersuppresscolumns exportersuppressmenu exporting exports factor false feature field file filename filters fixed font fontname fontsize footer footerstyle format formatted formatter formatters front function general getstylesheet grid gridcol gridlines gridoptions gridrow handling header headerfilter headerformatdefn headerformatter https implying insert instant internationalisation items js json landscape layout leads left letter link list load margin massaged massaging match maxium menu metadata method modify ms names needed note null number numbers object open option orientation output pagecount paper pass passed pdf pdfmake pdfs point portrait programs promise proper provide provided push raw ready recognise report require return returned returns roll routine row rows saving scaled scaling selected selectionrowheader separator server set setting setup sheet sheet1 sheetname shouldn side simple size sizes specific start starting status store style styles stylesheet styling summary supported suppress suppressed synchronous system table tableheader tablelayout takes target text tostring true ui ui-grid unproperly updated user utf-16 valid versions visible wasn width window won work workbook works wraptext write xlsx"
     },
     {
       "section": "api",
@@ -1441,7 +1423,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "ui.grid",
       "shortDescription": "Grid utility functions",
-      "keywords": "$interval $log $scope $timeout accessor account accounting adapted alert allow allowing angular apart api app appropriately argument arguments array attempt bind binding binds bob boolean borders bound bracket browser browsers cache calculation call called calling calls capitalized characters choose column columndefs columnname consistent console contents controller converts copied correctly create createboundedwrapper current currently data debounce debounced debouncedfunc debug decorated decorates deep definitions delay denormalize denormalizes denormalizescrollleft desired direction document dom dommousescroll elem element elementheight elementwidth ends ensures environment error evaluate event examine excludeproperties execute executed field firstname focus frank func function functions getcolumnsfromdata gettemplate grid gridutil guesses guesstype handle height html http https inconsistent inside iow item jones jquery js lastcall lastname list log log_debug_messages log_error_messages log_warn_messages logdebug logerror logged logmessage logs logwarn mainctrl margin margins matter message messages method methods milliseconds modifier module most-recent mouse mousewheel mozmousepixelscroll multiple names nested newid ng-bind ng-controller ng-model normalize normalized normalizes normalizescrollleft normalizewheelevent notation note number object optional options overwritten owns param params path performs pixels points potential preeval promise prop-erty property protractor provies queues readablecolumnname repeatedly representing request resolving return returns rtl scale scroll scrollleft service set smith special split stays string takes template tests throttle throttled throttledfunc throttling time times trailing treatment trigger true truthy type ui ui-grid uigridconstants unique updated updates upfront url utility values var variable wait warning ways wheel width won work wrapper wraps"
+      "keywords": "$interval $log $scope $timeout accessor account accounting adapted alert allow allowing angular apart api app appropriately argument arguments array attempt bind binding binds bob boolean borders bound bracket browser browsers cache calculation call called calling calls capitalized characters choose column columndefs columnname consistent console contents controller converts copied correctly create createboundedwrapper current currently data debounce debounced debouncedfunc debug decorated decorates deep definitions delay denormalize denormalizes denormalizescrollleft desired direction document dom dommousescroll elem element elementheight elementwidth ends ensures environment error evaluate event examine excludeproperties execute executed field firstname focus frank func function functions getcolumnsfromdata gettemplate grid gridutil guesses guesstype handle height html http https inconsistent inside iow item jones jquery js lastcall lastname list log log_debug_messages log_error_messages log_warn_messages logdebug logerror logged logmessage logs logwarn mainctrl margin margins matter message messages method methods milliseconds modifier module most-recent mouse mousewheel mozmousepixelscroll multiple names nested newid ng-bind ng-controller ng-model normalize normalized normalizes normalizescrollleft normalizewheelevent notation note number object optional options overwritten owns param params path performs pixels points potential preeval promise prop-erty property protractor queues readablecolumnname repeatedly representing request resolving return returns rtl scale scroll scrollleft service set smith special split stays string takes template tests throttle throttled throttledfunc throttling time times trailing treatment trigger true truthy type ui ui-grid uigridconstants unique updated updates upfront url utility values var variable wait warning ways wheel width won work wrapper wraps"
     },
     {
       "section": "api",
@@ -1449,8 +1431,8 @@ NG_DOCS={
       "shortName": "GridUtil.focus",
       "type": "object",
       "moduleName": "ui.grid.service:GridUtil",
-      "shortDescription": "Provies a set of methods to set the document focus inside the grid.",
-      "keywords": "$timeout allows api append asp automatically byelement byid byselector called canceled class click disabled document dom element elements enabled encourage ensure evaluated event events fail finds focus grid grids http imidately initialized inputs inside instance invoked method methods multiple object parent parentelement promise provided provies querried query queryselector reason request requested resolved selecting selector service set sets timeout timeouts triggered true ui unique utilized w3schools"
+      "shortDescription": "Provides a set of methods to set the document focus inside the grid.",
+      "keywords": "$timeout allows api append asp automatically byelement byid byselector called canceled class click disabled document dom element elements enabled encourage ensure evaluated event events fail finds focus grid grids http imidately initialized inputs inside instance invoked method methods multiple object parent parentelement promise provided querried query queryselector reason request requested resolved selecting selector service set sets timeout timeouts triggered true ui unique utilized w3schools"
     },
     {
       "section": "api",
@@ -1477,7 +1459,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "ui.grid",
       "shortDescription": "Constants for use across many grid features",
-      "keywords": "add aggregated aggregation aggregationtype aggregationtypes api array asc average avg box built-in calldatachangecallbacks cell circulating class column columndef condition conditions configure constants copied core count create currency currency_symbols currently data datachange default definitions desc direction dropdown edit edited enablehorizontalscrollbar enableverticalscrollbar ends_with event events features field filter filtering fired fires greater_than greater_than_or_equal grid gridoptions header https ignores indicate input left less_than less_than_or_equal list list_of_presently-circulating_currency_symbols listeners max maximum methods_calldatachangecallbacks methods_notifydatachange methods_registerdatachangecallback min minimum modified needed not_equal notifydatachange number object options org policy presently produce properties_aggregationtype properties_enablehorizontalscrollbar properties_enableverticalscrollbar properties_filter properties_scrolldirection properties_sort properties_sortdirectioncycle property publicapi regex registerdatachangecallback removed rest row rows scrollbar scrollbars scrolldirection scrolling select service set sort sortdirectioncycle sorting starts_with string sum symbols text type ui uigridconstants values when_needed wikipedia"
+      "keywords": "add aggregated aggregation aggregationtype aggregationtypes api array asc average avg box built-in calldatachangecallbacks cell circulating class column columndef condition conditions configure constants copied count create currency currency_symbols currently data datachange default definitions desc direction dropdown edit edited enablehorizontalscrollbar enableverticalscrollbar ends_with event events features field filter filtering fired fires greater_than greater_than_or_equal grid gridoptions header https ignores indicate input left less_than less_than_or_equal list list_of_presently-circulating_currency_symbols listeners max maximum methods_calldatachangecallbacks methods_notifydatachange methods_registerdatachangecallback min minimum modified needed not_equal notifydatachange number object options org policy presently produce properties_aggregationtype properties_enablehorizontalscrollbar properties_enableverticalscrollbar properties_filter properties_scrolldirection properties_sort properties_sortdirectioncycle property publicapi regex registerdatachangecallback removed rest row rows scrollbar scrollbars scrolldirection scrolling select service set sort sortdirectioncycle sorting starts_with string sum symbols text type ui uigridconstants values when_needed wikipedia"
     },
     {
       "section": "api",

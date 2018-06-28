@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-8bd67215 - 2018-06-26
+ * ui-grid - v4.6.0-9ab0a4c6 - 2018-06-28
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -208,7 +208,7 @@
      * @ngdoc object
      * @name dataChange
      * @propertyOf ui.grid.service:uiGridConstants
-     * @description Used with {@link ui.grid.core.api:PublicApi#methods_notifyDataChange PublicApi.notifyDataChange},
+     * @description Used with {@link ui.grid.api:PublicApi#methods_notifyDataChange PublicApi.notifyDataChange},
      * {@link ui.grid.class:Grid#methods_callDataChangeCallbacks Grid.callDataChangeCallbacks},
      * and {@link ui.grid.class:Grid#methods_registerDataChangeCallback Grid.registerDataChangeCallback}
      * to specify the type of the event(s).
@@ -1707,7 +1707,7 @@ angular.module('ui.grid')
       /**
        * @ngdoc function
        * @name addToGridMenu
-       * @methodOf ui.grid.core.api:PublicApi
+       * @methodOf ui.grid.api:PublicApi
        * @description add items to the grid menu.  Used by features
        * to add their menu items if they are enabled, can also be used by
        * end users to add menu items.  This method has the advantage of allowing
@@ -1725,7 +1725,7 @@ angular.module('ui.grid')
       /**
        * @ngdoc function
        * @name removeFromGridMenu
-       * @methodOf ui.grid.core.api:PublicApi
+       * @methodOf ui.grid.api:PublicApi
        * @description Remove an item from the grid menu based on a provided id. Assumes
        * that the id is unique, removes only the last instance of that id. Does nothing if
        * the specified id is not found
@@ -3703,7 +3703,7 @@ angular.module('ui.grid')
 
   /**
    * @ngdoc object
-   * @name ui.grid.core.api:PublicApi
+   * @name ui.grid.api:PublicApi
    * @description Public Api for the core grid features
    *
    */
@@ -3900,7 +3900,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name refresh
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Refresh the rendered grid on screen.
      * The refresh method re-runs both the columnProcessors and the
      * rowProcessors, as well as calling refreshCanvas to update all
@@ -3917,7 +3917,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name queueGridRefresh
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Request a refresh of the rendered grid on screen, if multiple
      * calls to queueGridRefresh are made within a digest cycle only one will execute.
      * The refresh method re-runs both the columnProcessors and the
@@ -3931,7 +3931,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name refreshRows
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Runs only the rowProcessors, columns remain as they were.
      * It then calls redrawInPlace and refreshCanvas, which adjust the grid sizing.
      * @returns {promise} promise that is resolved when render completes?
@@ -3942,7 +3942,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name queueRefresh
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Requests execution of refreshCanvas, if multiple requests are made
      * during a digest cycle only one will run.  RefreshCanvas updates the grid sizing.
      * @returns {promise} promise that is resolved when render completes?
@@ -3953,7 +3953,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name handleWindowResize
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Trigger a grid resize, normally this would be picked
      * up by a watch on window size, but in some circumstances it is necessary
      * to call this manually
@@ -3966,7 +3966,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name addRowHeaderColumn
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description adds a row header column to the grid
      * @param {object} column def
      * @param {number} order Determines order of header column on grid.  Lower order means header
@@ -3978,7 +3978,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name scrollToIfNecessary
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Scrolls the grid to make a certain row and column combo visible,
      *   in the case that it is not completely visible on the screen already.
      * @param {GridRow} gridRow row to make visible
@@ -3991,7 +3991,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name scrollTo
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Scroll the grid such that the specified
      * row and column is in view
      * @param {object} rowEntity gridOptions.data[] array instance to make visible
@@ -4003,7 +4003,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name registerRowsProcessor
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description
      * Register a "rows processor" function. When the rows are updated,
      * the grid calls each registered "rows processor", which has a chance
@@ -4024,7 +4024,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name registerColumnsProcessor
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description
      * Register a "columns processor" function. When the columns are updated,
      * the grid calls each registered "columns processor", which has a chance
@@ -4044,7 +4044,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name sortHandleNulls
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description A null handling method that can be used when building custom sort
      * functions
      * @example
@@ -4068,7 +4068,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc function
      * @name sortChanged
-     * @methodOf  ui.grid.core.api:PublicApi
+     * @methodOf  ui.grid.api:PublicApi
      * @description The sort criteria on one or more columns has
      * changed.  Provides as parameters the grid and the output of
      * getColumnSorting, which is an array of gridColumns
@@ -4090,7 +4090,7 @@ angular.module('ui.grid')
       /**
      * @ngdoc function
      * @name columnVisibilityChanged
-     * @methodOf  ui.grid.core.api:PublicApi
+     * @methodOf  ui.grid.api:PublicApi
      * @description The visibility of a column has changed,
      * the column itself is passed out as a parameter of the event.
      *
@@ -4109,7 +4109,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc method
      * @name notifyDataChange
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Notify the grid that a data or config change has occurred,
      * where that change isn't something the grid was otherwise noticing.  This
      * might be particularly relevant where you've changed values within the data
@@ -4130,7 +4130,7 @@ angular.module('ui.grid')
     /**
      * @ngdoc method
      * @name clearAllFilters
-     * @methodOf ui.grid.core.api:PublicApi
+     * @methodOf ui.grid.api:PublicApi
      * @description Clears all filters and optionally refreshes the visible rows.
      * @param {object} refreshRows Defaults to true.
      * @param {object} clearConditions Defaults to false.
@@ -6290,7 +6290,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc function
            * @name renderingComplete
-           * @methodOf  ui.grid.core.api:PublicApi
+           * @methodOf  ui.grid.api:PublicApi
            * @description Rendering is complete, called at the same
            * time as `onRegisterApi`, but provides a way to obtain
            * that same event within features without stopping end
@@ -6313,7 +6313,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name filterChanged
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised after the filter is changed.  The nature
            * of the watch expression doesn't allow notification of what changed,
            * so the receiver of this event will need to re-extract the filter
@@ -6325,7 +6325,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc function
            * @name setRowInvisible
-           * @methodOf  ui.grid.core.api:PublicApi
+           * @methodOf  ui.grid.api:PublicApi
            * @description Sets an override on the row to make it always invisible,
            * which will override any filtering or other visibility calculations.
            * If the row is currently visible then sets it to invisible and calls
@@ -6337,7 +6337,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc function
            * @name clearRowInvisible
-           * @methodOf  ui.grid.core.api:PublicApi
+           * @methodOf  ui.grid.api:PublicApi
            * @description Clears any override on visibility for the row so that it returns to
            * using normal filtering and other visibility calculations.
            * If the row is currently invisible then sets it to visible and calls
@@ -6350,7 +6350,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc function
            * @name getVisibleRows
-           * @methodOf  ui.grid.core.api:PublicApi
+           * @methodOf  ui.grid.api:PublicApi
            * @description Returns all visible rows
            * @param {Grid} grid the grid you want to get visible rows from
            * @returns {array} an array of gridRow
@@ -6360,7 +6360,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name rowsVisibleChanged
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised after the rows that are visible
            * change.  The filtering is zero-based, so it isn't possible
            * to say which rows changed (unlike in the selection feature).
@@ -6375,7 +6375,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name rowsRendered
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised after the cache of visible rows is changed.
            */
           this.registerEvent( 'core', 'rowsRendered' );
@@ -6384,7 +6384,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name scrollBegin
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised when scroll begins.  Is throttled, so won't be raised too frequently
            */
           this.registerEvent( 'core', 'scrollBegin' );
@@ -6392,7 +6392,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name scrollEnd
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised when scroll has finished.  Is throttled, so won't be raised too frequently
            */
           this.registerEvent( 'core', 'scrollEnd' );
@@ -6400,7 +6400,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name canvasHeightChanged
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised when the canvas height has changed
            * <br/>
            * arguments: oldHeight, newHeight
@@ -6410,7 +6410,7 @@ angular.module('ui.grid')
           /**
            * @ngdoc event
            * @name gridDimensionChanged
-           * @eventOf  ui.grid.core.api:PublicApi
+           * @eventOf  ui.grid.api:PublicApi
            * @description  is raised when the grid dimensions have changed (when autoResize is on)
            * <br/>
            * arguments: oldGridHeight, oldGridWidth, newGridHeight, newGridWidth
@@ -11359,14 +11359,14 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
    * @ngdoc object
    * @name focus
    * @propertyOf ui.grid.service:GridUtil
-   * @description Provies a set of methods to set the document focus inside the grid.
+   * @description Provides a set of methods to set the document focus inside the grid.
    * See {@link ui.grid.service:GridUtil.focus} for more information.
    */
 
   /**
    * @ngdoc object
    * @name ui.grid.service:GridUtil.focus
-   * @description Provies a set of methods to set the document focus inside the grid.
+   * @description Provides a set of methods to set the document focus inside the grid.
    * Timeouts are utilized to ensure that the focus is invoked after any other event has been triggered.
    * e.g. click events that need to run before the focus or
    * inputs elements that are in a disabled state but are enabled when those events

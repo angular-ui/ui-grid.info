@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-8bd67215 - 2018-06-26
+ * ui-grid - v4.6.0-9ab0a4c6 - 2018-06-28
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -422,7 +422,7 @@
           /**
            * @ngdoc object
            * @name exporterMenuAllData
-           * @porpertyOf  ui.grid.exporter.api:GridOptions
+           * @propertyOf ui.grid.exporter.api:GridOptions
            * @description Add export all data as cvs/pdf menu items to the ui-grid grid menu, if it's present.  Defaults to true.
            */
           gridOptions.exporterMenuAllData = gridOptions.exporterMenuAllData !== undefined ? gridOptions.exporterMenuAllData : true;
@@ -430,7 +430,7 @@
           /**
            * @ngdoc object
            * @name exporterMenuVisibleData
-           * @porpertyOf  ui.grid.exporter.api:GridOptions
+           * @propertyOf ui.grid.exporter.api:GridOptions
            * @description Add export visible data as cvs/pdf menu items to the ui-grid grid menu, if it's present.  Defaults to true.
            */
           gridOptions.exporterMenuVisibleData = gridOptions.exporterMenuVisibleData !== undefined ? gridOptions.exporterMenuVisibleData : true;
@@ -438,7 +438,7 @@
           /**
            * @ngdoc object
            * @name exporterMenuSelectedData
-           * @porpertyOf  ui.grid.exporter.api:GridOptions
+           * @propertyOf ui.grid.exporter.api:GridOptions
            * @description Add export selected data as cvs/pdf menu items to the ui-grid grid menu, if it's present.  Defaults to true.
            */
           gridOptions.exporterMenuSelectedData = gridOptions.exporterMenuSelectedData !== undefined ? gridOptions.exporterMenuSelectedData : true;
@@ -446,7 +446,7 @@
           /**
            * @ngdoc object
            * @name exporterMenuCsv
-           * @propertyOf  ui.grid.exporter.api:GridOptions
+           * @propertyOf ui.grid.exporter.api:GridOptions
            * @description Add csv export menu items to the ui-grid grid menu, if it's present.  Defaults to true.
            */
           gridOptions.exporterMenuCsv = gridOptions.exporterMenuCsv !== undefined ? gridOptions.exporterMenuCsv : true;

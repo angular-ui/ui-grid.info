@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-8bd67215 - 2018-06-26
+ * ui-grid - v4.6.0-9ab0a4c6 - 2018-06-28
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -1435,10 +1435,10 @@
             pageForward: '次のページ',
             pageToLast: '最後のページ'
           },
-          sizes: '項目/ページ',
-          totalItems: '項目',
+          sizes: '件/ページ',
+          totalItems: '件',
           through: 'から',
-          of: '項目/全'
+          of: '件/全'
         },
         grouping: {
           group: 'グループ化',
