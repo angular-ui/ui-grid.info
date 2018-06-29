@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-9ab0a4c6 - 2018-06-28
+ * ui-grid - v4.6.0-7fc39adb - 2018-06-29
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -19491,7 +19491,7 @@ module.filter('px', function() {
            *   }
            * </pre>
            */
-          gridOptions.exporterExcelCustomFormatters = gridOptions.exporterExcelCustomFormatters ? gridOptions.exporterExcelCustomFormatters : function( grid, workbook, docDefinition ) { return null; };
+          gridOptions.exporterExcelCustomFormatters = gridOptions.exporterExcelCustomFormatters ? gridOptions.exporterExcelCustomFormatters : function( grid, workbook, docDefinition ) { return docDefinition; };
 
           /**
            * @ngdoc function
