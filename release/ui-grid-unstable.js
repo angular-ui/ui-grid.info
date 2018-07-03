@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-7fc39adb - 2018-06-29
+ * ui-grid - v4.6.0-3207b292 - 2018-07-03
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -20536,7 +20536,13 @@ module.filter('px', function() {
       function defaultExporterFieldCallback(grid, row, col, value) {
         // fix to handle cases with 'number : 1' or 'date:MM-dd-YYYY', etc.. We needed to split the string
         if (col.cellFilter) {
-          return $filter(col.cellFilter.split(': ')[0].trim())(value);
+					var args, filter, arg1, arg2;
+					// remove space, single/double to mantein retro-compatibility
+					args = col.cellFilter.replace(/[\'\"\s]/g, "").split(':');
+					filter = args[0] ? args[0] : null;
+					arg1 = args[1] ? args[1] : null;
+					arg2 = args[2] ? args[2] : null;
+          return $filter(filter)(value, arg1, arg2);
         } else {
           return value;
         }
