@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-3207b292 - 2018-07-03
+ * ui-grid - v4.6.0-a8480a24 - 2018-07-04
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -414,6 +414,8 @@
         grid.validate = {
 
           isInvalid: service.isInvalid,
+
+          getErrorMessages: service.getErrorMessages,
 
           getFormattedErrors: service.getFormattedErrors,
 

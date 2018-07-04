@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-3207b292 - 2018-07-03
+ * ui-grid - v4.6.0-a8480a24 - 2018-07-04
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -27351,8 +27351,8 @@ module.filter('px', function() {
    </file>
    </example>
    */
-  module.directive('uiGridSelection', ['uiGridSelectionConstants', 'uiGridSelectionService', '$templateCache', 'uiGridConstants',
-    function (uiGridSelectionConstants, uiGridSelectionService, $templateCache, uiGridConstants) {
+  module.directive('uiGridSelection', ['uiGridSelectionConstants', 'uiGridSelectionService', 'uiGridConstants',
+    function (uiGridSelectionConstants, uiGridSelectionService, uiGridConstants) {
       return {
         replace: true,
         priority: 0,
@@ -27548,8 +27548,8 @@ module.filter('px', function() {
    *  @description Stacks on top of ui.grid.uiGridCell to provide selection feature
    */
   module.directive('uiGridCell',
-    ['$compile', 'uiGridConstants', 'uiGridSelectionConstants', 'gridUtil', '$parse', 'uiGridSelectionService',
-      function ($compile, uiGridConstants, uiGridSelectionConstants, gridUtil, $parse, uiGridSelectionService) {
+    ['uiGridConstants', 'uiGridSelectionService',
+      function (uiGridConstants, uiGridSelectionService) {
         return {
           priority: -200, // run after default uiGridCell directive
           restrict: 'A',
@@ -27575,17 +27575,8 @@ module.filter('px', function() {
                     $scope.grid.options.noUnselect);
                   $scope.$apply();
                 }
-
-                // uiGridCellNavService.scrollToIfNecessary(uiGridCtrl.grid, rowCol.row, rowCol.col);
               });
             }
-
-            // $elm.bind('keydown', function (evt) {
-            //  if (evt.keyCode === 32 && $scope.col.colDef.name === "selectionRowHeaderCol") {
-            //    uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt, ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect), $scope.grid.options.noUnselect);
-            //    $scope.$apply();
-            //  }
-            // });
 
             var selectCells = function (evt) {
               // if you click on expandable icon doesn't trigger selection
@@ -27683,7 +27674,7 @@ module.filter('px', function() {
         };
       }]);
 
-  module.directive('uiGridGridFooter', ['$compile', 'uiGridConstants', 'gridUtil', function ($compile, uiGridConstants, gridUtil) {
+  module.directive('uiGridGridFooter', ['$compile', 'gridUtil', function ($compile, gridUtil) {
     return {
       restrict: 'EA',
       replace: true,
@@ -30019,6 +30010,8 @@ module.filter('px', function() {
         grid.validate = {
 
           isInvalid: service.isInvalid,
+
+          getErrorMessages: service.getErrorMessages,
 
           getFormattedErrors: service.getFormattedErrors,
 
