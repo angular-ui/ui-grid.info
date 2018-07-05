@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-a8480a24 - 2018-07-04
+ * ui-grid - v4.6.0-2bc8c7b4 - 2018-07-05
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -27596,7 +27596,8 @@ module.filter('px', function() {
               }
               else if ($scope.grid.options.enableSelectRowOnFocus) {
                 uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt,
-                  false, $scope.grid.options.noUnselect);
+                  ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect),
+                  $scope.grid.options.noUnselect);
               }
               $scope.row.setFocused(!$scope.row.isFocused);
               $scope.grid.api.selection.raise.rowFocusChanged($scope.row, evt);
