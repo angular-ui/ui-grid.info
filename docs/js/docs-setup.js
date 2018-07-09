@@ -883,7 +883,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "ui.grid.i18n",
       "shortDescription": "Services for i18n",
-      "keywords": "$broadcasts $emits $rootscope add adds aggregate api application ascending cache column current currently decorate default description drag drop en english fallback fr getalllangs getcurrentlang getfallbacklang getsafetext grid group grouped grouppanel header i18n i18nconstants i18nservice items label1 label2 lang language languages loaded map maps missing names path property retrieving return returns service services set setcurrentlang setfallbacklang sets sort string stringmaps strings text translation ui update_event"
+      "keywords": "$broadcasts $rootscope add adds aggregate api application ascending cache column current currently decorate default description drag drop en english fallback fr getalllangs getcurrentlang getfallbacklang getsafetext grid group grouped grouppanel header i18n i18nconstants i18nservice items label1 label2 lang langs language languages loaded map maps missing names path property retrieving return returns service services set setcurrentlang setfallbacklang sets sort string stringmaps strings text translation ui update_event"
     },
     {
       "section": "api",

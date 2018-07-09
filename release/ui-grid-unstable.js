@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.0-2bc8c7b4 - 2018-07-05
+ * ui-grid - v4.6.1-cfec75c5 - 2018-07-09
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -2764,11 +2764,10 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 				compile: function() {
 					return {
 						pre: function prelink($scope, $elm, $attrs, controllers) {
-							var rowContainer, colContainer, gridContainerPrefix,
+							var rowContainer, colContainer,
 								uiGridCtrl = controllers[0],
 								containerCtrl = controllers[1],
-								grid = $scope.grid = uiGridCtrl.grid,
-								gridContainerId = 'grid-container';
+								grid = $scope.grid = uiGridCtrl.grid;
 
 							// Verify that the render container for this element exists
 							if (!$scope.rowContainerName) {
@@ -2787,13 +2786,10 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 
 							rowContainer = $scope.rowContainer = grid.renderContainers[$scope.rowContainerName];
 							colContainer = $scope.colContainer = grid.renderContainers[$scope.colContainerName];
-							gridContainerPrefix = $scope.containerId !== 'body' ? $scope.containerId + '-' : '';
 
-							containerCtrl.gridContainerId = gridContainerPrefix + gridContainerId;
 							containerCtrl.containerId = $scope.containerId;
 							containerCtrl.rowContainer = rowContainer;
 							containerCtrl.colContainer = colContainer;
-							containerCtrl.grid = grid;
 						},
 						post: function postlink($scope, $elm, $attrs, controllers) {
 							var uiGridCtrl = controllers[0],
@@ -2811,6 +2807,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 							// Scroll the render container viewport when the mousewheel is used
 							gridUtil.on.mousewheel($elm, function(event) {
 								var scrollEvent = new ScrollEvent(grid, rowContainer, colContainer, ScrollEvent.Sources.RenderContainerMouseWheel);
+
 								if (event.deltaY !== 0) {
 									var scrollYAmount = event.deltaY * -1 * event.deltaFactor;
 
@@ -2848,23 +2845,19 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 								}
 
 								// Let the parent container scroll if the grid is already at the top/bottom
-								if ((event.deltaY !== 0 && (scrollEvent.atTop(scrollTop) || scrollEvent.atBottom(scrollTop))) ||
-									(event.deltaX !== 0 && (scrollEvent.atLeft(scrollLeft) || scrollEvent.atRight(scrollLeft)))) {
-									// parent controller scrolls
-								}
-								else {
+								if (!((event.deltaY !== 0 && (scrollEvent.atTop(scrollTop) || scrollEvent.atBottom(scrollTop))) ||
+									(event.deltaX !== 0 && (scrollEvent.atLeft(scrollLeft) || scrollEvent.atRight(scrollLeft))))) {
 									event.preventDefault();
 									event.stopPropagation();
 									scrollEvent.fireThrottledScrollingEvent('', scrollEvent);
 								}
-
 							});
 
 							$elm.bind('$destroy', function() {
-								var eventsToUnbind = ['touchstart', 'touchmove', 'touchend', 'keydown', 'wheel', 'mousewheel',
-									'DomMouseScroll', 'MozMousePixelScroll'];
+								$elm.unbind('keydown');
 
-								eventsToUnbind.forEach(function(eventName) {
+								['touchstart', 'touchmove', 'touchend', 'keydown', 'wheel', 'mousewheel',
+									'DomMouseScroll', 'MozMousePixelScroll'].forEach(function(eventName) {
 									$elm.unbind(eventName);
 								});
 							});
@@ -2877,11 +2870,6 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 								var viewportWidth = colContainer.getViewportWidth();
 
 								var canvasHeight = rowContainer.getCanvasHeight();
-
-								// add additional height for scrollbar on left and right container
-								// if ($scope.containerId !== 'body') {
-								//   canvasHeight -= grid.scrollbarHeight;
-								// }
 
 								var viewportHeight = rowContainer.getViewportHeight();
 								// shorten the height to make room for a scrollbar placeholder
@@ -15078,8 +15066,8 @@ module.filter('px', function() {
    *
    *  @description Services for i18n
    */
-  module.service('i18nService', ['$log', 'i18nConstants', '$rootScope',
-    function ($log, i18nConstants, $rootScope) {
+  module.service('i18nService', ['$log', '$parse', 'i18nConstants', '$rootScope',
+    function ($log, $parse, i18nConstants, $rootScope) {
 
       var langCache = {
         _langs: {},
@@ -15090,7 +15078,7 @@ module.filter('px', function() {
             fallbackLang = self.getFallbackLang();
 
           if (lang !== self.fallback) {
-            return angular.merge({}, self._langs[fallbackLang],
+            return angular.extend({}, self._langs[fallbackLang],
               self._langs[lang.toLowerCase()]);
           }
 
@@ -15137,7 +15125,7 @@ module.filter('px', function() {
          * @methodOf ui.grid.i18n.service:i18nService
          * @description  Adds the languages and strings to the cache. Decorate this service to
          * add more translation strings
-         * @param {string} lang language to add
+         * @param {string} langs languages to add
          * @param {object} stringMaps of strings to add grouped by property names
          * @example
          * <pre>
@@ -15205,24 +15193,14 @@ module.filter('px', function() {
         getSafeText: function (path, lang) {
           var language = lang || service.getCurrentLang(),
             trans = langCache.get(language),
-            missing = i18nConstants.MISSING + path;
+            missing = i18nConstants.MISSING + path,
+            getter = $parse(path);
 
           if (!trans) {
             return missing;
           }
 
-          var paths = path.split('.');
-          var current = trans;
-
-          for (var i = 0; i < paths.length; ++i) {
-            if (current[paths[i]] === undefined || current[paths[i]] === null) {
-              return missing;
-            } else {
-              current = current[paths[i]];
-            }
-          }
-
-          return current;
+          return getter(trans) || missing;
         },
 
         /**
@@ -15230,7 +15208,7 @@ module.filter('px', function() {
          * @name setCurrentLang
          * @methodOf ui.grid.i18n.service:i18nService
          * @description sets the current language to use in the application
-         * $broadcasts and $emits the i18nConstants.UPDATE_EVENT on the $rootScope
+         * $broadcasts the i18nConstants.UPDATE_EVENT on the $rootScope
          * @param {string} lang to set
          * @example
          * <pre>
@@ -15241,7 +15219,6 @@ module.filter('px', function() {
           if (lang) {
             langCache.setCurrent(lang);
             $rootScope.$broadcast(i18nConstants.UPDATE_EVENT);
-            $rootScope.$emit(i18nConstants.UPDATE_EVENT);
           }
         },
 
@@ -30280,7 +30257,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridRenderContainer',
-    "<div role=\"presentation\" ui-grid-one-bind-id-grid=\"RenderContainer.gridContainerId\" class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': RenderContainer.colContainer.getMargin('left') + 'px', 'margin-right': RenderContainer.colContainer.getMargin('right') + 'px' }\"><!-- All of these dom elements are replaced in place --><div ui-grid-header></div><div ui-grid-viewport></div><div ng-if=\"RenderContainer.colContainer.needsHScrollbarPlaceholder()\" class=\"ui-grid-scrollbar-placeholder\" ng-style=\"{height: RenderContainer.colContainer.grid.scrollbarHeight + 'px'}\"></div><ui-grid-footer ng-if=\"RenderContainer.grid.options.showColumnFooter\"></ui-grid-footer></div>"
+    "<div role=\"presentation\" ui-grid-one-bind-id-grid=\"containerId + '-grid-container'\" class=\"ui-grid-render-container\" ng-style=\"{ 'margin-left': colContainer.getMargin('left') + 'px', 'margin-right': colContainer.getMargin('right') + 'px' }\"><!-- All of these dom elements are replaced in place --><div ui-grid-header></div><div ui-grid-viewport></div><div ng-if=\"colContainer.needsHScrollbarPlaceholder()\" class=\"ui-grid-scrollbar-placeholder\" ng-style=\"{height: colContainer.grid.scrollbarHeight + 'px'}\"></div><ui-grid-footer ng-if=\"grid.options.showColumnFooter\"></ui-grid-footer></div>"
   );
 
 

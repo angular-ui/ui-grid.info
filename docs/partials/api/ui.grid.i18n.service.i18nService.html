@@ -7,10 +7,10 @@
 <div class="description"><div class="ui-grid-i18n-service-page ui-grid-i18n-service-i18nservice-page"><p>Services for i18n</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_add">add(lang, stringMaps)</h3>
+<ul class="methods"><li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_add">add(langs, stringMaps)</h3>
 <div class="add"><div class="add-page"><p>Adds the languages and strings to the cache. Decorate this service to
 add more translation strings</p>
-</div><h5 id="methods_add_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>lang</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="add-page"><p>language to add</p>
+</div><h5 id="methods_add_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>langs</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="add-page"><p>languages to add</p>
 </div></td></tr><tr><td>stringMaps</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="add-page"><p>of strings to add grouped by property names</p>
 </div></td></tr></tbody></table><h4 id="methods_add_example">Example</h4>
 <div class="example"><div class="add-page"><pre class="prettyprint linenums">
@@ -61,7 +61,7 @@ i18nService.getSafeText('sort.ascending')
 </li>
 <li><a href="https://github.com/{{repo}}/blob/{{sha}}/{{file}}#L{{codeline}}" class="view-source icon-eye-open"> </a><h3 id="methods_setcurrentlang">setCurrentLang(lang)</h3>
 <div class="setcurrentlang"><div class="setcurrentlang-page"><p>sets the current language to use in the application
-$broadcasts and $emits the i18nConstants.UPDATE_EVENT on the $rootScope</p>
+$broadcasts the i18nConstants.UPDATE_EVENT on the $rootScope</p>
 </div><h5 id="methods_setcurrentlang_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>lang</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setcurrentlang-page"><p>to set</p>
 </div></td></tr></tbody></table><h4 id="methods_setcurrentlang_example">Example</h4>
 <div class="example"><div class="setcurrentlang-page"><pre class="prettyprint linenums">
