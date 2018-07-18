@@ -2613,7 +2613,10 @@ UI_DOCS={
     "jszip.min.js",
     "excel-builder.dist.js"
   ]
-}; ADS_CONFIG=undefined; VERSIONED_FILES={
+}; ADS_CONFIG={
+  "client": "ca-pub-6177019177103290",
+  "slot": "3609320072"
+}; VERSIONED_FILES={
   "default": "stable",
   "waitEval": "(function() { var ret = true; try { angular.module('ui.grid'); } catch (e) { ret = false; } return ret; })()",
   "versions": {
