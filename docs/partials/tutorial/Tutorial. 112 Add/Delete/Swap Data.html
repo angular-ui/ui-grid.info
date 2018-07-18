@@ -1,0 +1,248 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/112_swapping_data.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-112-add-delete-swap-data-page"><p>You can swap out data in the grid by simply providing a different reference.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-112-add-delete-swap-data-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-41" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-42"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-41" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-41">
+  <div ng-controller="MainCtrl">
+    <button type="button" id="swapData" class="btn btn-success" ng-click="swapData()">Swap Data</button>
+    <button type="button" id="addData" class="btn btn-success" ng-click="addData()">Add Data</button>
+    <button type="button" id="removeFirstRow" class="btn btn-success" ng-click="removeFirstRow()">Remove First Row</button>
+    <button type="button" id="reset" class="btn btn-success" ng-click="reset()">Reset</button>
+    <br>
+    <br>
+    <div id="grid1" ui-grid="gridOpts" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', function ($scope) {
+    $scope.swapData = function() {
+      if ($scope.gridOpts.data === data1) {
+        $scope.gridOpts.data = data2;
+        $scope.gridOpts.columnDefs = columnDefs2;
+      }
+      else {
+        $scope.gridOpts.data = data1;
+        $scope.gridOpts.columnDefs = columnDefs1;
+      }
+    };
+
+    $scope.addData = function() {
+      var n = $scope.gridOpts.data.length + 1;
+      $scope.gridOpts.data.push({
+                  "firstName": "New " + n,
+                  "lastName": "Person " + n,
+                  "company": "abc",
+                  "employed": true,
+                  "gender": "male"
+                });
+    };
+
+    $scope.removeFirstRow = function() {
+      //if($scope.gridOpts.data.length > 0){
+         $scope.gridOpts.data.splice(0,1);
+      //}
+    };
+
+    $scope.reset = function () {
+      data1 = angular.copy(origdata1);
+      data2 = angular.copy(origdata2);
+
+      $scope.gridOpts.data = data1;
+      $scope.gridOpts.columnDefs = columnDefs1;
+    }
+
+    var columnDefs1 = [
+      { name: 'firstName' },
+      { name: 'lastName' },
+      { name: 'company' },
+      { name: 'gender' }
+    ];
+
+    var data1 = [
+      {
+        "firstName": "Cox",
+        "lastName": "Carney",
+        "company": "Enormo",
+        "gender": "male"
+      },
+      {
+        "firstName": "Lorraine",
+        "lastName": "Wise",
+        "company": "Comveyer",
+        "gender": "female"
+      },
+      {
+        "firstName": "Nancy",
+        "lastName": "Waters",
+        "company": "Fuelton",
+        "gender": "female"
+      },
+      {
+        "firstName": "Misty",
+        "lastName": "Oneill",
+        "company": "Letpro",
+        "gender": "female"
+      }
+    ];
+
+    var origdata1 = angular.copy(data1);
+
+    var columnDefs2 = [
+      { name: 'firstName' },
+      { name: 'lastName' },
+      { name: 'company' },
+      { name: 'employed' }
+    ];
+
+    var data2 = [
+      {
+        "firstName": "Waters",
+        "lastName": "Shepherd",
+        "company": "Kongene",
+        "employed": true
+      },
+      {
+        "firstName": "Hopper",
+        "lastName": "Zamora",
+        "company": "Acium",
+        "employed": true
+      },
+      {
+        "firstName": "Marcy",
+        "lastName": "Mclean",
+        "company": "Zomboid",
+        "employed": true
+      },
+      {
+        "firstName": "Tania",
+        "lastName": "Cruz",
+        "company": "Marqet",
+        "employed": true
+      },
+      {
+        "firstName": "Kramer",
+        "lastName": "Cline",
+        "company": "Parleynet",
+        "employed": false
+      },
+      {
+        "firstName": "Bond",
+        "lastName": "Pickett",
+        "company": "Brainquil",
+        "employed": false
+      }
+    ];
+
+    var origdata2 = angular.copy(data2);
+
+    $scope.gridOpts = {
+      columnDefs: columnDefs1,
+      data: data1
+    };
+  }]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-42"></pre>
+<script type="text/ng-template" id="scenario.js-42">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  describe( '112 swapping data', function() {
+    // Reload the page before each test if on Firefox. Chrome does it automatically.
+    gridTestUtils.firefoxReload();
+
+    it('grid should have four visible columns', function () {
+      gridTestUtils.expectHeaderColumnCount( 'grid1', 4 );
+    });
+
+    it('swap data and data changes', function () {
+      gridTestUtils.expectRowCount( 'grid1', 4 );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'Carney', 'Enormo', 'male' ] );
+      gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'female' ] );
+
+      element( by.id( "swapData" ) ).click()
+        .then(function () {
+          return browser.waitForAngular();
+        })
+        .then(function () {
+          gridTestUtils.expectRowCount( 'grid1', 6 );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Waters', 'Shepherd', 'Kongene', 'true' ] );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Hopper', 'Zamora', 'Acium', 'true' ] );
+        })
+        .then(function () {
+          return element( by.id( "swapData" ) ).click();
+        })
+        .then(function () {
+          return browser.waitForAngular();
+        })
+        .then(function () {
+          gridTestUtils.expectRowCount( 'grid1', 4 );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'Carney', 'Enormo', 'male' ] );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'Lorraine', 'Wise', 'Comveyer', 'female' ] );
+        });
+    });
+
+    it('add data and data changes', function () {
+      gridTestUtils.expectRowCount( 'grid1', 4 );
+
+      element( by.id( "addData" ) ).click()
+        .then(function () {
+          return browser.waitForAngular();
+        })
+        .then(function () {
+          gridTestUtils.expectRowCount( 'grid1', 5 );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 4, [ 'New 5', 'Person 5', 'abc', 'male' ] );
+        });
+
+      element( by.id( "addData" ) ).click()
+        .then(function () {
+          return browser.waitForAngular();
+        })
+        .then(function () {
+          gridTestUtils.expectRowCount( 'grid1', 6 );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 5, [ 'New 6', 'Person 6', 'abc', 'male' ] );
+        });
+    });
+
+    it('remove data and data changes', function () {
+      gridTestUtils.expectRowCount( 'grid1', 4 );
+
+      element( by.id( "removeFirstRow" ) ).click()
+        .then(function () {
+          return browser.waitForAngular();
+        })
+        .then(function () {
+          gridTestUtils.expectRowCount( 'grid1', 3 );
+          gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Lorraine', 'Wise', 'Comveyer', 'female' ] );
+        });
+    });
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-41" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

@@ -1,0 +1,146 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/205_row_editable.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-205-row-edit-feature-page"><div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
+
+<p>The ui.grid.rowedit extends the edit feature to support callbacks for server saving of the data,
+with that data saved &quot;row at a time.&quot;  This feature attempts to give a user an experience similar
+to a spreadsheet - in that they can edit whichever fields they wish, and the feature will seek to
+save the data &quot;row at a time&quot;.  To the extent that the data doesn&#39;t generate errors, from a user
+perspective the saving is almost invisible - rows occassionally go grey (saving) and can&#39;t be edited whilst
+grey, but otherwise the user edits as if the data were local.</p>
+<p>Documentation for the rowEdit feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#!/api/ui.grid.rowEdit.api:GridOptions">gridOptions</a></li>
+<li><a href="#!/api/ui.grid.rowEdit.api:PublicApi">publicApi</a></li>
+</ul>
+<p>Each row is in one of four states at any point in time:</p>
+<ul>
+<li>clean:  No edits have been made (or no edits since the last save)</li>
+<li><code>isDirty</code>:  Edits have been made, but the data has not yet been saved, either because the
+user is still editing the row or because the timer hasn&#39;t triggered as yet</li>
+<li><code>isSaving</code>: The callback to save the row has been called and has not yet returned.  The row is
+not editable during this time, and is shown as greyed out, so as to avoid the user
+causing locking exceptions by editing the row again</li>
+<li><code>isError</code>: The save callback returned an error.  The row still has the updated data displayed,
+but will be shown in red</li>
+</ul>
+<p>The basic method of operation is that whenever a cell is edited (identified using the <code>edit.afterCellEdit</code>
+event) an <code>isDirty</code> flag is set on the row, and a <code>saveTimer</code> is set.  If another cell in the same row commences
+editing within 2 seconds (or other configurable time), then the timer will be destroyed again.  Otherwise
+upon the timer completing the row will be set to a status of <code>isSaving</code> and greyed out, and the <code>saveRow</code>
+event will be called.  The function called by this event must call <code>rowEdit.setSavePromise</code>, and the rowedit feature
+will wait on that promise.</p>
+<p>If the cellNav feature is also enabled, then a setFocus on a cell within the row is sufficient to delay
+the timer (this more easily deals with situations where only some columns are editable, and a user tabs
+or clicks to a non-editable field on the same row).</p>
+<p>If the promise is successfully resolved then the row is set back to clean.  If the promise is rejected then the
+row is set to a status of <code>isError</code>.</p>
+<p>Optionally, the calling application can request <code>flushDirtyRows</code>, which will trigger the save event for all
+currently dirty rows.  If the <code>rowEditWaitInterval</code> grid option is set to -1, then saves will never be triggered
+by timer, and only be triggered when manually called.</p>
+<p>Methods and properties are provided to operate with this regime:</p>
+<ul>
+<li><code>getDirtyRows()</code>: returns an array of gridRows of all currently dirty rows</li>
+<li><code>getErrorRows()</code>: returns an array of gridRows of all currently errored rows</li>
+<li><code>flushDirtyRows()</code>: flushes all currently dirty rows to the server, might be used
+on a page navigation request or pressing of a save button</li>
+<li><code>saveRow( rowEntity )</code>: event called when a row is ready for saving</li>
+<li><code>rowEditWaitInterval</code>: grid option that controls how long a wait will be before a save is triggered (in ms)</li>
+</ul>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.cellnav.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.row-edit.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-205-row-edit-feature-page"><p>In this example rows are saved 2 seconds after moving off, and the save is faked using a timeout of 3 seconds, so
+each save will take 3 seconds to complete.  Any row saved with a gender of &quot;male&quot; will error.</p>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-64" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-64" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-64">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 600px;
+      height: 450px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'addressFormatter']);
+
+    angular.module('addressFormatter', []).filter('address', function () {
+      return function (input) {
+          return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
+      };
+    });
+
+    app.controller('MainCtrl', ['$scope', '$http', '$q', '$interval', function ($scope, $http, $q, $interval) {
+      $scope.gridOptions = {};
+
+      $scope.gridOptions.columnDefs = [
+        { name: 'id', enableCellEdit: false },
+        { name: 'name', displayName: 'Name (editable)' },
+        { name: 'gender' },
+        { name: 'age', displayName: 'Age' , type: 'number'},
+        { name: 'registered', displayName: 'Registered' , type: 'date', cellFilter: 'date:"yyyy-MM-dd"'},
+        { name: 'address', displayName: 'Address', type: 'object', cellFilter: 'address'},
+        { name: 'address.city', displayName: 'Address (even rows editable)',
+             cellEditableCondition: function($scope){
+             return $scope.rowRenderIndex%2
+             }
+        },
+        { name: 'isActive', displayName: 'Active', type: 'boolean'}
+      ];
+
+      $scope.saveRow = function( rowEntity ) {
+        // create a fake promise - normally you'd use the promise returned by $http or $resource
+        var promise = $q.defer();
+        $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
+
+        // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
+        $interval( function() {
+          if (rowEntity.gender === 'male' ){
+            promise.reject();
+          } else {
+            promise.resolve();
+          }
+        }, 3000, 1);
+      };
+
+      $scope.gridOptions.onRegisterApi = function(gridApi){
+        //set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+      };
+
+      $http.get('/data/500_complex.json')
+      .then(function(response) {
+        var data = response.data;
+
+        for(i = 0; i < data.length; i++){
+          data[i].registered = new Date(data[i].registered);
+        }
+        $scope.gridOptions.data = data;
+      });
+    }]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-64" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

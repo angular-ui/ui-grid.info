@@ -1,0 +1,115 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/309_editable_with_cellnav.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-309-edit-feature-with-cellnav-page"><p>For the basics of editing refer <a href="#!/tutorial/201_editable">201 editable</a>, this tutorial provides an example
+of combining cellNav and edit to give a more spreadsheet-like experience.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.cellnav.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-309-edit-feature-with-cellnav-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-94" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-94" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-94">
+  <div ng-controller="MainCtrl">
+    <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+    <br>
+    <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+    <br>
+    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellNav class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 600px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav', 'addressFormatter']);
+
+  angular.module('addressFormatter', []).filter('address', function () {
+    return function (input) {
+        return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
+    };
+  });
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = { enableCellEditOnFocus: true };
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id', enableCellEdit: false, width: '10%' },
+      { name: 'name', displayName: 'Name (editable)', width: '20%' },
+      { name: 'age', displayName: 'Age' , type: 'number', width: '10%' },
+      { name: 'gender', displayName: 'Gender', editableCellTemplate: 'ui-grid/dropdownEditor', width: '20%', 
+        cellFilter: 'mapGender', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [
+        { id: 1, gender: 'male' }, 
+        { id: 2, gender: 'female' } 
+      ] }, 
+      { name: 'registered', displayName: 'Registered' , type: 'date', cellFilter: 'date:"yyyy-MM-dd"', width: '20%' },
+      { name: 'address', displayName: 'Address', type: 'object', cellFilter: 'address', width: '30%' },
+      { name: 'address.city', displayName: 'Address (even rows editable)', width: '20%',
+           cellEditableCondition: function($scope){
+           return $scope.rowRenderIndex%2
+           }
+      },
+      { name: 'isActive', displayName: 'Active', type: 'boolean', width: '10%' }
+    ];
+
+
+
+   $scope.msg = {};
+
+   $scope.gridOptions.onRegisterApi = function(gridApi){
+            //set gridApi on scope
+            $scope.gridApi = gridApi;
+            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+              $scope.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
+              $scope.$apply();
+            });
+          };
+
+    $http.get('/data/500_complex.json')
+      .then(function(response) {
+        var data = response.data;
+
+        for(i = 0; i < data.length; i++){
+          data[i].registered = new Date(data[i].registered);
+          data[i].gender = data[i].gender==='male' ? 1 : 2;
+        }
+        $scope.gridOptions.data = data;
+      });
+  }])
+
+  .filter('mapGender', function() {
+    var genderHash = {
+      1: 'male',
+      2: 'female'
+    };
+    
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return genderHash[input];
+      }
+    };
+  })
+});
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-94" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

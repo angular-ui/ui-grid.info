@@ -2,6 +2,33 @@
 
 var directive = {};
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:dropdownToggle
+ * @element button
+ * @restrict C
+ *
+ * @description
+ * Toggles a dropdown menu that follows the expect bootstrap layout.
+ *
+ * @example
+   <example module="bootstrap">
+     <file name="index.html">
+         <div class="dropdown">
+             <button id="toggleExample" class="btn btn-default dropdown-toggle" type="button">
+                 Dropdown Toggle
+                 <span class="caret" aria-hidden="true"></span>
+             </button>
+             <ul class="dropdown-menu" aria-labelledby="toggleExample">
+                 <li><a href="">Menu Item 1</a></li>
+                 <li><a href="">Menu Item 2</a></li>
+                 <li><a href="">Menu Item 3</a></li>
+                 <li><a href="">Menu Item 4</a></li>
+             </ul>
+         </div>
+     </file>
+   </example>
+ */
 directive.dropdownToggle =
           ['$document', '$location', '$window',
   function ($document,   $location,   $window) {
@@ -48,6 +75,26 @@ directive.dropdownToggle =
     };
   }];
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:syntax
+ * @restrict A
+ *
+ * @description
+ * Generates a Github, Plunkr or JSFiddle link that opens in a new tab,
+ * depending on the attributes provided.
+ *
+ * @example
+   <example module="bootstrap">
+     <file name="index.html">
+         <div syntax
+              syntax-github="https://github.com/angular-ui/grunt-uidocs-generator/"
+              syntax-plunkr="http://plnkr.co/edit/"
+              syntax-fiddle="https://jsfiddle.net/">
+         </div>
+     </file>
+   </example>
+ */
 directive.syntax = function() {
   return {
     restrict: 'A',
@@ -95,6 +142,16 @@ directive.syntax = function() {
   }
 }
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:tabbable
+ * @element ul
+ * @restrict C
+ *
+ * @description
+ * Generates bootstrap tabs and adds them inside the element with
+ * the tabbable class.
+ */
 directive.tabbable = function() {
   return {
     restrict: 'C',
@@ -132,7 +189,6 @@ directive.tabbable = function() {
               selectedTab.tabElement.addClass('active');
             }
           }
-
         }
       };
 
@@ -189,6 +245,47 @@ directive.tabbable = function() {
   };
 };
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:table
+ * @element table
+ * @restrict E
+ *
+ * @description
+ * Adds bootstrap classes to a table that has none.
+ *
+ * @example
+   <example module="bootstrap">
+     <file name="index.html">
+       <table>
+         <thead>
+           <tr>
+             <th>Hero Name</th>
+             <th>Real Name</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td>Iron Man</td>
+             <td>Tony Stark</td>
+           </tr>
+           <tr>
+             <td>Hulk</td>
+             <td>Bruce Banner</td>
+           </tr>
+           <tr>
+             <td>Spider-Man</td>
+             <td>Peter Parker</td>
+           </tr>
+           <tr>
+             <td>Captain America</td>
+             <td>Steve Rogers</td>
+           </tr>
+         </tbody>
+       </table>
+     </file>
+   </example>
+ */
 directive.table = function() {
   return {
     restrict: 'E',
@@ -200,8 +297,23 @@ directive.table = function() {
   };
 };
 
+/**
+ * @ngdoc service
+ * @name bootstrap.service:popoverElement
+ *
+ * @description
+ * Provides helper functions for {@link bootstrap.directive:popover the popover directive}
+ *
+ */
 var popoverElement = function() {
   var object = {
+    /**
+     * @ngdoc method
+     * @name init
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Attaches a popover element to the body of the page.
+     */
     init : function() {
       this.element = angular.element(
         '<div class="popover popover-incode top">' +
@@ -235,28 +347,81 @@ var popoverElement = function() {
       });
     },
 
+    /**
+     * @ngdoc method
+     * @name show
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Adds visible class to the popover element on the page and
+     * set its position.
+     */
     show : function(x,y) {
       this.element.addClass('visible');
       this.position(x || 0, y || 0);
     },
 
+    /**
+     * @ngdoc method
+     * @name hide
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Removes visible class to the popover element on the page and
+     * set its position to be out of bounds.
+     */
     hide : function() {
       this.element.removeClass('visible');
       this.position(-9999,-9999);
     },
 
+    /**
+     * @ngdoc method
+     * @name visible
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Returns whether or not the popover element is visible.
+     * @returns {boolean} true if the elements y position is greater than 0.
+     */
     visible : function() {
       return this.position().y >= 0;
     },
 
+    /**
+     * @ngdoc method
+     * @name isSituatedAt
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Returns whether or not the popover element is situated
+     * next to the element passed in.
+     * @param {DOMElement} element Element to check against.
+     * @returns {boolean} Returns true is the current element is the besideElement
+     */
     isSituatedAt : function(element) {
       return this.besideElement ? element[0] == this.besideElement[0] : false;
     },
 
+    /**
+     * @ngdoc method
+     * @name title
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Updates the title value of the popover element.
+     * @param {string} value New title for the popover element.
+     * @returns {string} The new value of the title of the popover element.
+     */
     title : function(value) {
       return this.titleElement.html(value);
     },
 
+    /**
+     * @ngdoc method
+     * @name content
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Runs the value passed in through the marked library and
+     * updates the value of the content of the popover element.
+     * @param {string} value New content for the popover element.
+     * @returns {string} The new value of the content of the popover element.
+     */
     content : function(value) {
       if(value && value.length > 0) {
         value = marked(value);
@@ -264,35 +429,70 @@ var popoverElement = function() {
       return this.contentElement.html(value);
     },
 
+    /**
+     * @ngdoc method
+     * @name positionArrow
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Adds the position class for the arrow on the popover element.
+     * @param {string} position Position class for popover arrow.
+     */
     positionArrow : function(position) {
       this.node.className = 'popover ' + position;
     },
 
+    /**
+     * @ngdoc method
+     * @name positionAway
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Sets besideElement to null and hides the popover element.
+     */
     positionAway : function() {
       this.besideElement = null;
       this.hide();
     },
 
+    /**
+     * @ngdoc method
+     * @name positionBeside
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Sets besideElement to element passed in and
+     * shows the popover element.
+     * @param {DOMElement} element Element to position the popover besides.
+     */
     positionBeside : function(element) {
       this.besideElement = element;
 
-      var elm = element[0];
-      var x = elm.offsetLeft;
-      var y = elm.offsetTop;
-      x -= 30;
-      y -= this.node.offsetHeight + 10;
-      this.show(x,y);
+      var elm = element[0],
+          x = element[0].getBoundingClientRect().left,
+          y = elm.offsetTop - 20;
+
+      this.show(x, y);
     },
 
-    position : function(x,y) {
+    /**
+     * @ngdoc method
+     * @name position
+     * @kind function
+     * @methodOf bootstrap.service:popoverElement
+     * @description Sets the top and left position of the popover element if
+     * x and y are not null. Otherwise returns the x and y coordinates of
+     * the popover element.
+     * @param {number} x Left position for the popover element.
+     * @param {number} y Top position for the popover element.
+     * @returns {object | null} The current x and y coordinates of the popover
+     * element or nothing if valid x and y coordinates are provided.
+     */
+    position : function(x, y) {
       if(x != null && y != null) {
         this.element.css('left',x + 'px');
         this.element.css('top', y + 'px');
-      }
-      else {
+      } else {
         return {
-          x : this.node.offsetLeft,
-          y : this.node.offsetTop
+          x: this.node.offsetLeft,
+          y: this.node.offsetTop
         };
       }
     }
@@ -304,6 +504,28 @@ var popoverElement = function() {
   return object;
 };
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:popover
+ * @element button
+ * @restrict A
+ *
+ * @description
+ * Opens a bootstrap popover element with the data from the tile and content tags.
+ *
+ * @example
+   <example module="bootstrap">
+     <file name="index.html">
+       <button popover
+               type="button"
+               class="btn btn-default"
+               title="Popover Title"
+               content="Popover Content">
+               Open Popover
+       </button>
+     </file>
+   </example>
+ */
 directive.popover = ['popoverElement', function(popover) {
   return {
     restrict: 'A',
@@ -316,8 +538,7 @@ directive.popover = ['popoverElement', function(popover) {
           popover.title('');
           popover.content('');
           popover.positionAway();
-        }
-        else {
+        } else {
           popover.title(attrs.title);
           popover.content(attrs.content);
           popover.positionBeside(element);
@@ -327,6 +548,16 @@ directive.popover = ['popoverElement', function(popover) {
   }
 }];
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:tabPane
+ * @requires bootstrap.directive:tabbable
+ * @element li
+ * @restrict C
+ *
+ * @description
+ * Add tabs to the tabbale element generated by tabbable directive.
+ */
 directive.tabPane = function() {
   return {
     require: '^tabbable',
@@ -337,6 +568,28 @@ directive.tabPane = function() {
   };
 };
 
+/**
+ * @ngdoc directive
+ * @name bootstrap.directive:foldout
+ * @element button
+ * @restrict A
+ *
+ * @description
+ * Makes a button open a foldout to the target of the button.
+ *
+ * @example
+   <example module="bootstrap">
+     <file name="index.html">
+         <div class="foldout-container">
+           <button foldout
+              class="btn btn-default" type="button"
+              url="/partials/api/bootstrap.html">
+              Show Foldout
+           </button>
+         </div>
+     </file>
+   </example>
+ */
 directive.foldout = ['$http', '$animate','$window', function($http, $animate, $window) {
   return {
     restrict: 'A',
@@ -356,12 +609,12 @@ directive.foldout = ['$http', '$animate','$window', function($http, $animate, $w
             container = angular.element('<div class="foldout">loading...</div>');
             $animate.enter(container, null, par);
 
-            $http.get(url, { cache : true }).success(function(html) {
+            $http.get(url, {cache: true}).then(function(response) {
               loading = false;
 
-              html = '<div class="foldout-inner">' +
-                      '<div calss="foldout-arrow"></div>' +
-                      html +
+              var html = '<div class="foldout-inner">' +
+                      '<div class="foldout-arrow"></div>' +
+                      response.data +
                      '</div>';
               container.html(html);
 
@@ -371,8 +624,7 @@ directive.foldout = ['$http', '$animate','$window', function($http, $animate, $w
                 $animate.addClass(container, 'ng-hide');
               }
             });
-          }
-          else {
+          } else {
             container.hasClass('ng-hide') ? $animate.removeClass(container, 'ng-hide') : $animate.addClass(container, 'ng-hide');
           }
         });
@@ -381,6 +633,16 @@ directive.foldout = ['$http', '$animate','$window', function($http, $animate, $w
   }
 }];
 
+/**
+ *  @ngdoc overview
+ *  @name bootstrap
+ *
+ *  @description
+ *  # bootstrap
+ *
+ *  This module provides an angular wrapper to a few of the bootstrap
+ *  components that are used by grunt-uidocs-generator.
+ */
 angular.module('bootstrap', [])
   .directive(directive)
   .factory('popoverElement', popoverElement)

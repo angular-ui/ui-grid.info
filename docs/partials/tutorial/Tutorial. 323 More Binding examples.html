@@ -1,0 +1,142 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/323_more_binding.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-323-more-binding-examples-page"><p>UI-Grid can also bind be to a one-dimensional array of primitives - in this case using <code>uiGridConstants.ENTITY_BINDING</code> will use the entire entry in the data array as the value for the cell instead of a field therein. This is useful if the data is an array of strings, or also if a cell filter needs access to multiple fields within each row object.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-323-more-binding-examples-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js 1d-scenario.js filter-scenario.js" source-edit-html="index.html-107" source-edit-css="main.css" source-edit-js="app.js 1d-scenario.js filter-scenario.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-107" ng-html-wrap-loaded="app angular.js app.js 1d-scenario.js filter-scenario.js"></pre>
+<script type="text/ng-template" id="index.html-107">
+  <div ng-controller="OneDimensionCtrl">
+    <h5 id="example_source_array-of-strings-example">Array of Strings Example</h5>
+    <div id="grid1" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+  </div>
+  <div ng-controller="ComplexFilterCtrl">
+    <h5 id="example_source_complex-cellfilter-example">Complex CellFilter Example</h5>
+    <div id="grid2" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit']);
+
+  app.controller('OneDimensionCtrl', ['$scope', 'uiGridConstants', function ($scope, uiGridConstants) {
+
+    $scope.gridOptions = {
+      enableSorting: true,
+      columnDefs: [
+        { name:'Name', field: uiGridConstants.ENTITY_BINDING }
+      ],
+      data: [
+        "John Rogers",
+        "David Michaels",
+        "Andrew Johnson",
+        "Donald McDonald"
+      ]
+    };
+  }]);
+
+
+  app.filter('calculatePercentage', function () {
+    return function (input, resultField, maxField) {
+      return Math.floor((input[resultField] * 100) / input[maxField]) + "%";
+    };
+  });
+  app.controller('ComplexFilterCtrl', ['$scope', 'uiGridConstants', function ($scope, uiGridConstants) {
+
+  $scope.gridOptions = {
+          enableSorting: true,
+          columnDefs: [
+            { name:'Exam', field: 'examName' },
+            { name:'Possible Score', field: 'maxScore' },
+            { name:'Your Score', field: 'actualScore' },
+            { name:'Percentage', field: uiGridConstants.ENTITY_BINDING, cellFilter: 'calculatePercentage:"actualScore":"maxScore"', sortCellFiltered: true, enableCellEdit: false }
+          ],
+          data : [
+            {
+              examName: 'Basic Trig',
+              maxScore: 105,
+              actualScore: 77
+            },
+            {
+              examName: 'Graph Theory',
+              maxScore: 85,
+              actualScore: 82
+            },
+            {
+              examName: 'Counting',
+              maxScore: 40,
+              actualScore: 12
+            },
+          ]
+        };
+  }]);
+</script>
+</div>
+<div class="tab-pane" title="1d-scenario.js">
+<pre class="prettyprint linenums" ng-set-text="1d-scenario.js"></pre>
+<script type="text/ng-template" id="1d-scenario.js">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  it('grid should have four visible rows and one column', function () {
+    gridTestUtils.expectRowCount( 'grid1', 4 );
+    gridTestUtils.expectHeaderColumnCount( 'grid1', 1 );
+  });
+
+  it('headers as specified', function () {
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Name' );
+  });
+
+  it('row values should be as expected', function () {
+    gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'John Rogers' ]);
+    gridTestUtils.expectRowValuesMatch( 'grid1', 1, [ 'David Michaels' ]);
+    gridTestUtils.expectRowValuesMatch( 'grid1', 2, [ 'Andrew Johnson' ]);
+    gridTestUtils.expectRowValuesMatch( 'grid1', 3, [ 'Donald McDonald' ]);
+  });
+</script>
+</div>
+<div class="tab-pane" title="filter-scenario.js">
+<pre class="prettyprint linenums" ng-set-text="filter-scenario.js"></pre>
+<script type="text/ng-template" id="filter-scenario.js">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  it('grid should have four visible rows and 4 columns', function () {
+    gridTestUtils.expectRowCount( 'grid2', 4 );
+    gridTestUtils.expectHeaderColumnCount( 'grid2', 4 );
+  });
+
+  it('headers as specified', function () {
+    gridTestUtils.expectHeaderCellValueMatch( 'grid2', 0, 'Exam' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid2', 1, 'Possible Exam' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid2', 2, 'Actual Exam' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid2', 3, 'Percentage' );
+  });
+
+  it('row values should be as expected', function () {
+    gridTestUtils.expectRowValuesMatch( 'grid2', 0, [ 'Basic Trig', '105', '77', '73%' ]);
+    gridTestUtils.expectRowValuesMatch( 'grid2', 1, [ 'Graph Theory', '85', '82', '96%' ]);
+    gridTestUtils.expectRowValuesMatch( 'grid2', 2, [ 'Counting', '40', '12', '30%' ]);
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-107" ng-eval-javascript="app.js 1d-scenario.js filter-scenario.js"></div>
+</example></p>
+</div></div>
+</div>

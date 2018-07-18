@@ -1,0 +1,247 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/201_editable.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-201-edit-feature-page"><div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
+
+<p>The ui.grid.edit feature allows inline editing of grid data.  To enable, you must include the <code>&#39;ui.grid.edit&#39;</code> module
+and you must include the <code>ui-grid-edit</code> directive on your grid element.</p>
+<p>Documentation for the edit feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#!/api/ui.grid.edit.api:ColumnDef">columnDef</a></li>
+<li><a href="#!/api/ui.grid.edit.api:GridOptions">gridOptions</a></li>
+<li><a href="#!/api/ui.grid.edit.api:PublicApi">publicApi</a></li>
+</ul>
+<p>You can use the <code>enableCellEdit</code> options in your column definitions to allow a column to be editable.</p>
+<p>Editing is invoked via double-click, f2, or start typing any non-navigable key. Cell editing ends on tab, enter or esc (cancel)
+on an input editor, and tab, left or right arrows, enter or esc for a dropdown.</p>
+<p>By default an input element is provided, with numeric, date and checkbox editors for fields specified as <code>&#39;number&#39;</code>, <code>&#39;date&#39;</code>
+and <code>&#39;boolean&#39;</code> types, for all other fields a simple text editor is provided. (A point to note about date editors is that for date editors
+to be enabled the datatype of the variable should also be &quot;Date&quot;).</p>
+<p>A dropdown editor is also available, through setting the <code>editableCellTemplate</code> on the <code>columnDef</code> to <code>&#39;ui-grid/dropdownEditor&#39;</code>.
+When using a dropdown editor you need to provide an options array through the <code>editDropdownOptionsArray</code> property on the <code>columnDef</code>.
+This array by default should be an array of <code>{id: xxx, value: xxx}</code>, although the field tags can be changed through
+using the <code>editDropdownIdLabel</code> and <code>editDropdownValueLabel</code> options.</p>
+<p>A file chooser is available, through setting the &#39;editableCellTemplate<code>on the</code>columnDef<code>to</code>&#39;ui-grid/fileChooserEditor&#39;`.  This
+file chooser will open the file chosen by the user and assign the value of that file to the model element.  In the example below
+we use the file chooser to load a file, and we display the filename in the cell.  The file is stored against the row in a hidden
+column, which we can save to our server or otherwise process.</p>
+<p>Custom edit templates should be used for any editor other than the default editors, but be aware that you will likely also
+need to provide a custom directive similar to the uiGridEditor directive so as to provide <code>BEGIN_CELL_EDIT, CANCEL_CELL_EDIT
+and END_CELL_EDIT</code> events.</p>
+<p><strong>ColumnDef Options</strong>:</p>
+<ul>
+<li><code>editModelField</code> (default: undefined) - a bindable expression to use instead of colDef.field when binding the edit control.</li>
+<li><code>editableCellTemplate</code> (default: <code>&#39;ui-grid/cellEditor&#39;</code>) - Valid html, templateCache Id,  or url that returns html
+content to be compiled when edit mode is invoked.</li>
+<li><code>enableCellEdit</code> (default: <code>false</code> for columns of type <code>&#39;object&#39;</code>, <code>true</code> for all other columns) - <code>true</code> will enable
+editing and <code>false</code> will disable it.</li>
+<li><code>cellEditableCondition</code>  (default: <code>true</code>)  Can be set to a boolean or a function that will be called with the cellScope
+and triggerEvent to determine if the cell should be invoked in edit mode.</li>
+<li><code>type</code> (default: <code>&#39;string&#39;</code>) If set to <code>&#39;number&#39;</code>, <code>&#39;boolean&#39;</code> or <code>&#39;date&#39;</code> the default editor provided for editing will be numeric
+or boolean or date editor respectively.  If set to <code>&#39;object&#39;</code> the column will not be editable by default.  Be aware that this
+<code>type</code> column is also used for other purposes within ui-grid, including the sorting logic.</li>
+<li><code>editDropdownOptionsArray</code> If a dropdown, needs to be populated with an array of values, by default those values should be
+<code>{id: xxx, value: xxx}</code>, the labels can be adjusted with the next two options</li>
+<li><code>editDropdownIdLabel</code> (default: <code>&#39;id&#39;</code>) Controls the id label in the options array - so if your array happens to contain
+ <code>&#39;code&#39;</code> instead you can use it without having to reprocess the array</li>
+<li><code>editDropdownValueLabel</code> (default: <code>&#39;value&#39;</code>) Controls the value label in the options array - if your array happens to
+contain <code>&#39;name&#39;</code> instead you can use it without having to reprocess the array</li>
+<li><code>editDropdownRowEntityOptionsArrayPath</code> can be used as an alternative to editDropdownOptionsArray when the contents of the dropdown depend on the entity backing the row.</li>
+<li><code>editDropdownOptionsFunction</code> can be used as yet another alternative to editDropdownOptionsArray when the contents can be retrieved with a function whose parameters are row entity and column definition.</li>
+<li><code>editDropdownFilter</code> (default: <code>&#39;&#39;</code>) Allows you to apply a filter to the values in the edit dropdown options, for example
+if you were using angular-translate you would set this to <code>&#39;translate&#39;</code></li>
+</ul>
+<p>The following option is available only if using cellNav feature</p>
+<ul>
+<li><code>enableCellEditOnFocus</code> - <code>true</code> to invoke editor as soon as cell has focus</li>
+</ul>
+<p><em>Note that the edit functionality uses native html5 edit widgets - the date picker, the dropdown and the input box
+itself.  If your browser does not implement these widgets, then you won&#39;t get them.  If your browser implements these
+widgets in a way that isn&#39;t ideal (for example, some browsers don&#39;t allow number fields to start with &#39;.&#39;, so you can&#39;t
+type in &#39;.5&#39;), then you need to provide a custom editor instead.  On the medium term roadmap there is intent
+to provide a bootstrap feature, which would provide directives that were compatible with angular-bootstrap directives,
+allowing use of the bootstrap datepicker and input fields</em></p>
+<pre class="prettyprint linenums">
+$scope.gridOptions.columnDefs = [
+   { name: 'name', enableCellEdit: true },
+   { name: 'age', enableCellEdit: true, type: 'number'},
+   { name: 'registered', displayName: 'Registered' , type: 'date'},
+   { name: 'address', displayName: 'Address', type: 'object'},
+   { name: 'address.city', enableCellEdit: true, displayName: 'Address (even rows editable)', cellEditableCondition: function($scope){return $scope.rowRenderIndex%2} }
+   { name: 'isActive', enableCellEdit: true, type: 'boolean'},
+]
+</pre>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-201-edit-feature-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-60" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-60" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-60">
+  <div ng-controller="MainCtrl as $ctrl">
+    <strong>Data Length:</strong> {{ $ctrl.gridOptions.data.length | number }}
+    <br>
+    <strong>Last Cell Edited:</strong> {{$ctrl.msg.lastCellEdited}}
+    <br>
+    <div ui-grid="$ctrl.gridOptions" ui-grid-edit class="grid"></div>
+    <br>
+    <div><strong>Last file uploaded:</strong></div>
+    <div>{{$ctrl.lastFile}}</div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 600px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'addressFormatter']);
+
+  angular.module('addressFormatter', []).filter('address', function () {
+    return function (input) {
+        return input.street + ', ' + input.city + ', ' + input.state + ', ' + input.zip;
+    };
+  });
+
+  app.controller('MainCtrl', function ($scope, $http, $timeout) {
+    var vm = this;
+
+    vm.gridOptions = {  };
+
+    vm.storeFile = function( gridRow, gridCol, files ) {
+      // ignore all but the first file, it can only select one anyway
+      // set the filename into this column
+      gridRow.entity.filename = files[0].name;
+
+      // read the file and set it into a hidden column, which we may do stuff with later
+      var setFile = function(fileContent){
+        gridRow.entity.file = fileContent.currentTarget.result;
+        // put it on scope so we can display it - you'd probably do something else with it
+        vm.lastFile = fileContent.currentTarget.result;
+        $scope.$apply();
+      };
+      var reader = new FileReader();
+      reader.onload = setFile;
+      reader.readAsText( files[0] );
+    };
+
+    vm.gridOptions.columnDefs = [
+      { name: 'id', enableCellEdit: false, width: '10%' },
+      { name: 'name', displayName: 'Name (editable)', width: '20%' },
+      { name: 'age', displayName: 'Age' , type: 'number', width: '10%' },
+      { name: 'gender', displayName: 'Gender', editableCellTemplate: 'ui-grid/dropdownEditor', width: '20%',
+        cellFilter: 'mapGender', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [
+        { id: 1, gender: 'male' },
+        { id: 2, gender: 'female' }
+      ] },
+      { name: 'registered', displayName: 'Registered' , type: 'date', cellFilter: 'date:"yyyy-MM-dd"', width: '20%' },
+      { name: 'address', displayName: 'Address', type: 'object', cellFilter: 'address', width: '30%' },
+      { name: 'address.city', displayName: 'Address (even rows editable)', width: '20%',
+        cellEditableCondition: function(scope){
+          return scope.rowRenderIndex%2;
+        }
+      },
+      { name: 'isActive', displayName: 'Active', type: 'boolean', width: '10%' },
+      { name: 'pet', displayName: 'Pet', width: '20%', editableCellTemplate: 'ui-grid/dropdownEditor',
+        editDropdownRowEntityOptionsArrayPath: 'foo.bar[0].options', editDropdownIdLabel: 'value'
+      },
+      { name: 'status', displayName: 'Status', width: '20%', editableCellTemplate: 'ui-grid/dropdownEditor',
+        cellFilter: 'mapStatus',
+        editDropdownOptionsFunction: function(rowEntity, colDef) {
+          var single;
+          var married = {id: 3, value: 'Married'};
+          if (rowEntity.gender === 1) {
+            single = {id: 1, value: 'Bachelor'};
+            return [single, married];
+          } else {
+            single = {id: 2, value: 'Nubile'};
+            return $timeout(function() {
+              return [single, married];
+            }, 100);
+          }
+        }
+      },
+      { name: 'filename', displayName: 'File', width: '20%', editableCellTemplate: 'ui-grid/fileChooserEditor',
+        editFileChooserCallback: vm.storeFile }
+   	];
+
+   	vm.msg = {};
+
+   	vm.gridOptions.onRegisterApi = function(gridApi) {
+    		//set gridApi on scope
+    		vm.gridApi = gridApi;
+    		gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
+    				vm.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
+    				$scope.$apply();
+      });
+    };
+
+    $http.get('/data/500_complex.json')
+      .then(function(response) {
+        var data = response.data;
+
+        for(i = 0; i < data.length; i++){
+          data[i].registered = new Date(data[i].registered);
+          data[i].gender = data[i].gender==='male' ? 1 : 2;
+          if (i % 2) {
+            data[i].pet = 'fish'
+            data[i].foo = {bar: [{baz: 2, options: [{value: 'fish'}, {value: 'hamster'}]}]}
+          }
+          else {
+            data[i].pet = 'dog'
+            data[i].foo = {bar: [{baz: 2, options: [{value: 'dog'}, {value: 'cat'}]}]}
+          }
+        }
+        vm.gridOptions.data = data;
+      });
+  })
+
+  .filter('mapGender', function() {
+    var genderHash = {
+      1: 'male',
+      2: 'female'
+    };
+
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return genderHash[input];
+      }
+    };
+  })
+  
+  .filter('mapStatus', function() {
+    var genderHash = {
+      1: 'Bachelor',
+      2: 'Nubile',
+      3: 'Married'
+    };
+
+    return function(input) {
+      if (!input){
+        return '';
+      } else {
+        return genderHash[input];
+      }
+    };
+  })
+});
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-60" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

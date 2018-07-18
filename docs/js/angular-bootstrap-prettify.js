@@ -12,7 +12,14 @@ var DEPENDENCIES = {
   'angular-cookies.js': 'http://code.angularjs.org/' + angular.version.full + '/angular-cookies.min.js'
 };
 
-
+/**
+ * @uidoc function
+ * @name bootstrapPrettify.function:escape
+ * @kind function
+ * @description Properly Escapes some special symbols for HTML.
+ * @param {string} text HTML to be added inside the pre tag
+ * @returns {DOMElement} The text passed in with its contents updated.
+ */
 function escape(text) {
   return text.
     replace(/\&/g, '&amp;').
@@ -22,8 +29,16 @@ function escape(text) {
 }
 
 /**
- * http://stackoverflow.com/questions/451486/pre-tag-loses-line-breaks-when-setting-innerhtml-in-ie
- * http://stackoverflow.com/questions/195363/inserting-a-newline-into-a-pre-tag-ie-javascript
+ * @uidoc function
+ * @name bootstrapPrettify.function:setHtmlIe8SafeWay
+ * @kind function
+ * @description
+ * Ensures that pre tag does not lose line breaks on IE8.
+ * - http://stackoverflow.com/questions/451486/pre-tag-loses-line-breaks-when-setting-innerhtml-in-ie
+ * - http://stackoverflow.com/questions/195363/inserting-a-newline-into-a-pre-tag-ie-javascript
+ * @param {DOMElement} element DOM Element to be updated
+ * @param {string} html HTML to be added inside the pre tag
+ * @returns {DOMElement} The element with its contents updated.
  */
 function setHtmlIe8SafeWay(element, html) {
   var newElement = angular.element('<pre>' + html + '</pre>');
@@ -33,7 +48,12 @@ function setHtmlIe8SafeWay(element, html) {
   return element;
 }
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:jsFiddle
+ * @requires bootstrapPrettify.service:getEmbeddedTemplate
+ * @description A directive that adds a jsFiddle window to the docs.
+ */
 directive.jsFiddle = function(getEmbeddedTemplate, escape, script) {
   return {
     terminal: true,
@@ -88,12 +108,26 @@ directive.jsFiddle = function(getEmbeddedTemplate, escape, script) {
   }
 };
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:code
+ * @restrict E
+ * @description A directive that tells Angular to not compile any directives on
+ * the code tag.
+ */
 directive.code = function() {
   return {restrict: 'E', terminal: true};
 };
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:prettyprint
+ * @requires bootstrapPrettify.service:reindentCode
+ * @element pre
+ * @terminal true
+ * @restrict C
+ * @description A directive that pretty prints code.
+ */
 directive.prettyprint = ['reindentCode', function(reindentCode) {
   return {
     restrict: 'C',
@@ -112,7 +146,14 @@ directive.prettyprint = ['reindentCode', function(reindentCode) {
   };
 }];
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:ngSetText
+ * @requires bootstrapPrettify.service:getEmbeddedTemplate
+ * @restrict CA
+ * @priority 10
+ * @description A directive that sets Text in a way that is supported by IE8.
+ */
 directive.ngSetText = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
   return {
     restrict: 'CA',
@@ -123,7 +164,13 @@ directive.ngSetText = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
   }
 }]
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:ngHtmlWrap
+ * @requires bootstrapPrettify.service:reindentCode
+ * @requires bootstrapPrettify.service:templateMerge
+ * @description A directive that wraps HTML with the expected HTML5 markup.
+ */
 directive.ngHtmlWrap = ['reindentCode', 'templateMerge', function(reindentCode, templateMerge) {
   return {
     compile: function(element, attr) {
@@ -154,7 +201,14 @@ directive.ngHtmlWrap = ['reindentCode', 'templateMerge', function(reindentCode, 
   }
 }];
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:ngSetHtml
+ * @requires bootstrapPrettify.service:getEmbeddedTemplate
+ * @restrict CA
+ * @priority 10
+ * @description A directive that sets HTML in a way that is supported by IE8.
+ */
 directive.ngSetHtml = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
   return {
     restrict: 'CA',
@@ -165,7 +219,12 @@ directive.ngSetHtml = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
   }
 }];
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:ngEvalJavascript
+ * @requires bootstrapPrettify.service:getEmbeddedTemplate
+ * @description A directive that evaluates JavaScript.
+ */
 directive.ngEvalJavascript = ['getEmbeddedTemplate', function(getEmbeddedTemplate) {
   return {
     compile: function (element, attr) {
@@ -190,7 +249,17 @@ directive.ngEvalJavascript = ['getEmbeddedTemplate', function(getEmbeddedTemplat
   };
 }];
 
-
+/**
+ * @uidoc directive
+ * @name bootstrapPrettify.directive:ngEmbedApp
+ * @requires {@link https://docs.angularjs.org/api/ng/service/$browser $browser}
+ * @requires {@link https://docs.angularjs.org/api/ng/service/$exceptionHandler $exceptionHandler}
+ * @requires {@link https://docs.angularjs.org/api/ng/service/$location $location}
+ * @requires {@link https://docs.angularjs.org/api/ng/service/$rootScope $rootScope}
+ * @requires {@link https://docs.angularjs.org/api/ng/service/$templateCache $templateCache}
+ * @description A directive that runs an embedded APP in the doc.
+ * Used for examples.
+ */
 directive.ngEmbedApp = ['$templateCache', '$browser', '$rootScope', '$location', '$sniffer', '$exceptionHandler',
                 function($templateCache,   $browser,  docsRootScope, $location,   $sniffer,   $exceptionHandler) {
   return {
@@ -267,7 +336,24 @@ directive.ngEmbedApp = ['$templateCache', '$browser', '$rootScope', '$location',
   };
 }];
 
+/**
+ * @uidoc service
+ * @name bootstrapPrettify.service:reindentCode
+ * @description A factory that returns a single function which is used to
+ * indent the code in a clean and consistent way.
+ */
 service.reindentCode = function() {
+
+  /**
+   * @uidoc method
+   * @name reindentCode
+   * @methodOf bootstrapPrettify.service:reindentCode
+   * @kind function
+   * @description Indent the text passed in a clean and consistent way.
+   * @param {string} text Text to be indented.
+   * @param {number} spaces Number of spaces to be used in the indentation.
+   * @returns {string} Properly indented text.
+   */
   return function (text, spaces) {
     if (!text) return text;
     var lines = text.split(/\r?\n/);
@@ -292,10 +378,28 @@ service.reindentCode = function() {
     }
     lines.push('');
     return lines.join('\n');
-  }
+  };
 };
 
+/**
+ * @uidoc service
+ * @name bootstrapPrettify.service:templateMerge
+ * @requires bootstrapPrettify.service:reindentCode
+ * @description A factory that returns a single function which is used to
+ * replace keys in a template with the appropiate properties.
+ */
 service.templateMerge = ['reindentCode', function(indentCode) {
+
+  /**
+   * @uidoc method
+   * @name templateMerge
+   * @methodOf bootstrapPrettify.service:templateMerge
+   * @kind function
+   * @description Replaces keys in a template with the appropiate properties.
+   * @param {string} template Template to be merged
+   * @param {object} properties Properties object to be applied to the template.
+   * @returns {string} The desired HTML template with all of the propeties replaced.
+   */
   return function(template, properties) {
     return template.replace(/\{\{(\w+)(?:\:(\d+))?\}\}/g, function(_, key, indent) {
       var value = properties[key];
@@ -309,7 +413,24 @@ service.templateMerge = ['reindentCode', function(indentCode) {
   };
 }];
 
+/**
+ * @uidoc service
+ * @name bootstrapPrettify.service:getEmbeddedTemplate
+ * @requires bootstrapPrettify.service:reindentCode
+ * @description A factory that returns a single function which is used to
+ * clean up the spacing in the sample codes in the docs.
+ */
 service.getEmbeddedTemplate = ['reindentCode', function(reindentCode) {
+
+  /**
+   * @uidoc method
+   * @name getEmbeddedTemplate
+   * @methodOf bootstrapPrettify.service:getEmbeddedTemplate
+   * @kind function
+   * @description Cleans up the spacing in the sample codes in the docs.
+   * @param {string} id An element id to reindent
+   * @returns {string} Element HTML with all spaces cleaned up.
+   */
   return function (id) {
     var element = document.getElementById(id);
 
@@ -321,5 +442,14 @@ service.getEmbeddedTemplate = ['reindentCode', function(reindentCode) {
   }
 }];
 
-
+/**
+ * @uidoc overview
+ * @name bootstrapPrettify
+ *
+ * @description
+ * # bootstrapPrettify
+ *
+ * This module provides some enhancements for grunt-uidocs-generator to work
+ * alongside bootstrap.
+ */
 angular.module('bootstrapPrettify', []).directive(directive).factory(service);

@@ -1,0 +1,91 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/111_cellClass.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-111-cellclass-page"><p>A class name or function returning a class name can be assigned to each columnDef.</p>
+<p>In this example, we will override the color and background for the first column and color the company text blue if it equals &#39;Velity&#39;.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
+<h3 id="source">Source</h3>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-39" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-40"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-39" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-39">
+    <div ng-controller="MainCtrl as $ctrl">
+      <br>
+      <div id="grid1" ui-grid="$ctrl.gridOptions" ng-if="$ctrl.gridOptions.data" class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 200px;
+    }
+    .red { color: red;  background-color: yellow !important; }
+    .blue { color: blue;  }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid']);
+
+    app.controller('MainCtrl', function MainCtrl($http) {
+      var vm = this;
+
+      vm.gridOptions = {
+        enableSorting: true,
+        columnDefs: [
+          { field: 'name', cellClass:'red' },
+          { field: 'company',
+            cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+              if (grid.getCellValue(row,col) === 'Velity') {
+                return 'blue';
+              }
+            }
+          }
+        ]
+      };
+
+      $http.get('/data/100.json')
+        .then(function(response) {
+          vm.gridOptions.data = response.data;
+        });
+    });
+  </script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-40"></pre>
+<script type="text/ng-template" id="scenario.js-40">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+    var GridObjectTest = require('../../test/e2e/gridObjectTestUtils.spec.js');
+    var grid1 = new GridObjectTest('grid1');
+
+    describe( '111 cell class', function() {
+      // Reload the page before each test if on Firefox. Chrome does it automatically.
+      gridTestUtils.firefoxReload();
+
+      it('header values should be as expected', function () {
+        grid1.expectHeaderColumnCount( 2 );
+      });
+
+      it('column one formatted color red, background yellow', function () {
+        // sort by company, 2,1 is no longer Velity so shouldn't be blue, check it's the same colour as row 1
+        grid1.clickHeaderCell( 1 )
+          .then(function () {
+            grid1.expectCellValueMatch( 2, 1, 'Acusage' );
+            expect( grid1.dataCell( 1, 1 ).getCssValue('color')).toEqual('rgba(44, 62, 80, 1)');
+            expect( grid1.dataCell( 2, 1 ).getCssValue('color')).toEqual('rgba(44, 62, 80, 1)');
+          });
+      });
+    });
+  </script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-39" ng-eval-javascript="app.js"></div>
+</div></div>

@@ -1,0 +1,115 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/314_external_pagination.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-314-external-pagination-page"><p>When pagination is enabled, the data is displayed in pages that can be browsed using the built in 
+pagination selector.</p>
+<p>For external pagination, implement the <code>gridApi.pagination.on.paginationChanged</code> callback function. The callback 
+may contain code to update any pagination state variables your application may utilize, e.g. variables containing 
+the <code>pageNumber</code> and <code>pageSize</code>. The REST call used to fetch the data from the server should be called from within 
+this callback. The URL of the call should contain query parameters that will allow the server-side code to have 
+sufficient information to be able to retrieve the specific subset of data that the client requires from the 
+entire set.</p>
+<p>It should also update the <code>$scope.gridOptions.totalItems</code> variable with the total count of rows that exist (but 
+were not all fetched in the REST call mentioned above since they exist in other pages of data).</p>
+<p>This will allow ui-grid to calculate the correct number of pages on the client-side.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.pagination.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-314-external-pagination-page"><p>This shows combined external pagination and sorting.
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-98" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-98" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-98">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 600px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pagination']);
+
+    app.controller('MainCtrl', [
+    '$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {
+
+      var paginationOptions = {
+        pageNumber: 1,
+        pageSize: 25,
+        sort: null
+      };
+
+      $scope.gridOptions = {
+        paginationPageSizes: [25, 50, 75],
+        paginationPageSize: 25,
+        useExternalPagination: true,
+        useExternalSorting: true,
+        columnDefs: [
+          { name: 'name' },
+          { name: 'gender', enableSorting: false },
+          { name: 'company', enableSorting: false }
+        ],
+        onRegisterApi: function(gridApi) {
+          $scope.gridApi = gridApi;
+          $scope.gridApi.core.on.sortChanged($scope, function(grid, sortColumns) {
+            if (sortColumns.length == 0) {
+              paginationOptions.sort = null;
+            } else {
+              paginationOptions.sort = sortColumns[0].sort.direction;
+            }
+            getPage();
+          });
+          gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+            paginationOptions.pageNumber = newPage;
+            paginationOptions.pageSize = pageSize;
+            getPage();
+          });
+        }
+      };
+
+      var getPage = function() {
+        var url;
+        switch(paginationOptions.sort) {
+          case uiGridConstants.ASC:
+            url = '/data/100_ASC.json';
+            break;
+          case uiGridConstants.DESC:
+            url = '/data/100_DESC.json';
+            break;
+          default:
+            url = '/data/100.json';
+            break;
+        }
+
+        $http.get(url)
+        .then(function (response) {
+          var data = response.data;
+
+          $scope.gridOptions.totalItems = 100;
+          var firstRow = (paginationOptions.pageNumber - 1) * paginationOptions.pageSize;
+          $scope.gridOptions.data = data.slice(firstRow, firstRow + paginationOptions.pageSize);
+        });
+      };
+
+      getPage();
+    }
+    ]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-98" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

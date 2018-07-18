@@ -1,0 +1,115 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/104_i18n.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-104-i18n-page"><p>UI-Grid provides an i18nService that you can use to change the default language, add translations, 
+or change existing translations.</p>
+<p>The easiest way to set language is to use the ui-i18n directive in a div that contains the grid.
+<pre class="prettyprint linenums">
+&lt;div ui-i18n="{{lang}}"&gt;
+</pre>
+Only one ui-i18n directive is allowed.  The current language setting is stored in the i18n service (singleton) 
+so there is currently no way to have more than one language per app.</p>
+<p>Another option is to use the i18nService and use the setCurrentLang method
+<pre class="prettyprint linenums">
+   i18nService.setCurrentLang('fr');
+</pre>
+<p>For an example using angular-translate to translate your headers, refer to <a href="http://plnkr.co/edit/KnrKTst5dWXvlZNeIy9c?p=preview">http://plnkr.co/edit/KnrKTst5dWXvlZNeIy9c?p=preview</a></p>
+<p>If you would like to get better performance out of your application, it is recommended that you take advantage of UI-Grid&#39;s multi-file
+support. By default ui-grid.base.js will contain just the english language, in order to load the other language follow the example bellow:
+<pre class="prettyprint linenums">
+   &lt;script src="/release/ui-grid.base.js"&gt;&lt;/script&gt;
+   &lt;script src="/release/i18n/ui-grid.language.[YOUR_LANGUAGE_HERE].js"&gt;&lt;/script&gt;
+
+   &lt;!-- Alternatively you can load all languages provided with you grid by loading the following --&gt;
+   &lt;script src="/release/i18n/ui-grid.language.all.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-104-i18n-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-28" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-29"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-28" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-28">
+  <div ng-controller="MainCtrl as $ctrl">
+    <select id="langDropdown" ng-model="$ctrl.lang" ng-options="l for l in $ctrl.langs"></select>
+    <br />
+
+    <div ui-i18n="{{$ctrl.lang}}">
+       <h4 id="example_using-attribute">Using attribute:</h4>
+       <p ui-t="groupPanel.description"></p>
+
+       <h4 id="example_using-attribute-2">Using attribute 2:</h4>
+       <p ui-translate>groupPanel.description</p>
+
+       <h4 id="example_using-filter-that-updates-with-language">Using Filter that updates with language:</h4>
+       <p>{{"groupPanel.description" | t:$ctrl.lang}}</p>
+
+       <h4 id="example_using-filter-that-does-not-update-after-load">Using Filter that does not update after load:</h4>
+       <p>{{"groupPanel.description" | t}}</p>
+
+       <p>Click the header menu to see language.</p>
+
+       <div id="i18nGrid" ui-grid="$ctrl.gridOptions" class="grid"></div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  angular.module('app', ['ngTouch', 'ui.grid'])
+    .controller('MainCtrl', MainCtrl);
+
+  MainCtrl.$inject = ['i18nService', '$http'];
+
+  function MainCtrl(i18nService, $http) {
+    var vm = this;
+
+    vm.langs = i18nService.getAllLangs();
+    vm.lang = 'nl';
+
+    vm.gridOptions = {
+      columnDefs: [
+        { field: 'name' },
+        { field: 'gender' },
+        { field: 'company', enableFiltering: false  }
+      ]
+    };
+
+    $http.get('/data/100.json')
+      .then(function(response) {
+        vm.gridOptions.data = response.data;
+      });
+  }
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-29"></pre>
+<script type="text/ng-template" id="scenario.js-29">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+
+    describe('104 i18n', function() {
+      gridTestUtils.firefoxReload();
+
+      it('should default to nl for the language', function() {
+        expect(element(by.id('langDropdown')).element(by.css('option:checked')).getText()).toEqual('nl');
+      });
+      it('should have three visible columns', function() {
+        gridTestUtils.expectHeaderColumnCount( 'i18nGrid', 3 );
+      });
+    });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-28" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

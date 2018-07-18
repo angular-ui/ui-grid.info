@@ -1,0 +1,101 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/404_large_data_sets_and_performance.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-404-large-data-sets-and-performance-page"><p>The grid provides a richly featured component that allows very large data sets to be displayed without overloading
+the browser.  It virtualises the rows and columns actually displayed, what this means is that it provides the illusion
+of displaying many rows and columns, whilst actually showing the browser only the visible cells plus one or two columns
+and rows either side of those currently visible.  The remainder of the grid canvas is white space, faked so as to have the
+browser correctly show scroll bars that position you in the middle of this space.</p>
+<p>In turn, this means that each time anything changes, in particular scrolling, the grid needs to determine whether it needs
+to render additional rows or columns.  Rather than adding new rows or columns to the DOM (which is computationally expensive)
+it instead shuffles which data elements the current rows and columns point to, and then adjusts the scroll to provide the illusion
+that you are smoothly scrolling the grid.  If it weren&#39;t for the fact that the values inside each of the visible cells were being
+changed rapidly, what you&#39;d actually see is the same DOM cells scrolling to the left, then jumping back to the right as another column
+comes into view, then scrolling smoothly to the left again.  </p>
+<p>As you might expect, this can be quite computationally expensive.  Additionally, some operations such as sorting and filtering, must
+work against the entire data set, not just those currently visible.</p>
+<p>A different area of complexity in the grid is the provision of complex binding methods (refer <a href="#!/tutorial/106_binding">the binding tutorial</a>).<br>These binding methods add noticable overhead to every access to a cell value.  The combination of large data sets and these
+binding methods can result in noticeable performance degradation.</p>
+<p>All of this is a rather long winded way of saying that if we turn off those complex binding methods, many parts of the grid run
+faster.</p>
+<p>So, if you have a data array that consists purely of flat objects - and each column in your grid is tied to a single field in the
+entities in that array (i.e. the way we think 90% of people use the grid), then you can turn off the support for complex binding,
+and the grid will run faster.</p>
+<p>The option for this is <code>flatEntityAccess</code>.  The below grid provides a toggle on this value so you can see the difference it makes
+with a data set of 640,000 rows. </p>
+<p>Further, the grid watches the data and the column defs to determine if anything has changed.  Watches get called very frequently in
+angularJS (on every digest cycle, which can be many times per second), and watching each row of a large data collection can be expensive.
+The <code>fastWatch</code> gridOption watches only the data reference and it&#39;s length - in theory this means we might not notice if you replaced
+a row in the data, or replaced a column in the columnDefs.  If using fastWatch you should always do deletes and adds separately, never
+a swap.  Fastwatch cannot be dynamically toggled - you need to set it upon grid creation.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-404-large-data-sets-and-performance-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-113" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-114"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-113" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-113">
+  <div ng-controller="MainCtrl">
+    <button id="toggleFlat" ng-click="toggleFlat()" class="btn btn-success" >Toggle Flat Access</button><span>  Current setting: {{gridOptions.flatEntityAccess}}</span>
+    <div id="grid1" ui-grid="gridOptions" class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 650px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid']);
+
+  app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
+    $scope.gridOptions = {  
+      enableFiltering: true,
+      flatEntityAccess: true,
+      showGridFooter: true,
+      fastWatch: true
+    };
+
+     $scope.gridOptions.columnDefs = [
+      {name:'id'},
+      {name:'name'},
+      {name:'gender'},
+      {field:'age'}
+    ];
+  
+    $http.get('/data/10000_complex.json')
+    .then(function(response) {
+      var data = response.data;
+
+      for( var i=0; i<6; i++){
+        data = data.concat(data);
+      }
+      $scope.gridOptions.data = data;
+    });
+    
+    $scope.toggleFlat = function() {
+      $scope.gridOptions.flatEntityAccess = !$scope.gridOptions.flatEntityAccess;
+    }
+  }]);
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-114"></pre>
+<script type="text/ng-template" id="scenario.js-114">
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-113" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

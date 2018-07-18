@@ -1,0 +1,249 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/209_grouping.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-209-grouping-page"><h3 id="grouping">Grouping</h3>
+
+<div class="alert alert-warning" role="alert">
+<strong>Beta</strong> This feature is ready for testing, but it either hasn't
+seen a lot of use or has some known bugs.
+</div>
+
+<div class="alert alert-warning" role="alert">
+<strong>Note:</strong> Grouping leverages the sort functionality, allowing a user to change the sort order
+or use external sort functionality and have the resulting list grouped. A column(s) that is marked as being
+grouped is always moved to the high order of the sort priority, as the data must be sorted to permit grouping.
+</div>
+
+<p>The grouping feature allows you to group rows together based on similar
+values in specific columns, providing an effect similar in some ways to an Excel pivot table.
+Columns that aren&#39;t grouped by can be aggregated, providing for example a running count
+of the number of rows in each group.</p>
+<p>_** BREAKING CHANGES IN RC22 for grouping.  Prior to RC22 grouping was a standalone feature, with RC22
+a number of things have changed as grouping and treeView move to a shared code base.  In particular:</p>
+<ul>
+<li>methods such as expandAll are now on treeBase, not on grouping</li>
+<li>aggregations move from being col.grouping.aggregation to col.treeAggregation</li>
+<li>saveState format changes, if you persisted that across instantiations your
+saved states may not reload cleanly</li>
+<li>groupLevel is now treeLevel</li>
+<li>groupingSuppressAggregationText is now handled via customTreeAggregationFinalizerText</li>
+<li>groupingRowHeaderWidth is now treeRowHeaderBaseWidth</li>
+<li>groupingIndent is now treeIndent</li>
+<li>groupingRowHeaderAlwaysVisible is now treeRowHeaderAlwaysVisible, and default has changed to true
+**_</li>
+</ul>
+<p>Documentation for the grouping feature is provided in the api documentation, both under
+grouping itself, and shared functions in the treeBase documentation.  In particular:</p>
+<ul>
+<li><a href="#!/api/ui.grid.grouping.api:ColumnDef">grouping columnDef</a> and <a href="#!/api/ui.grid.treeBase.api:ColumnDef">treeBase columnDef</a></li>
+<li><a href="#!/api/ui.grid.grouping.api:GridOptions">grouping gridOptions</a> and <a href="#!/api/ui.grid.treeBase.api:GridOptions">treeBase gridOptions</a></li>
+<li><a href="#!/api/ui.grid.grouping.api:PublicApi">grouping publicApi</a> and <a href="#!/api/ui.grid.treeBase.api:PublicApi">treeBase publicApi</a></li>
+</ul>
+<p>The tree structure itself is documented at <a href="#!/api/ui.grid.treeBase.grid:treeBase">treeBase</a>.</p>
+<p>Grouping can be set programmatically by using the columnDef option <code>grouping: { groupPriority: 0 }</code>,
+or for aggregations on a column by setting <code>treeAggregation: {type: uiGridGroupingConstants.aggregation.COUNT}</code>.</p>
+<p>Optionally (and by default) grouped columns are moved to the front of the grid, which provides a more
+visually pleasing effect.  In order to avoid creating a dependency on pinning, this is done by
+moving the columns themselves as part of the grouping feature, not through use of the pinning feature.</p>
+<p>Grouping leverages the sort functionality, allowing a user to change the sort order or use external sort
+functionality and have the resulting list grouped.  A column(s) that is marked as being grouped is always
+moved to the high order of the sort priority, as the data must be sorted to permit grouping.</p>
+<p>Any grouped column has <code>suppressRemoveSort</code> set, when a column is ungrouped then <code>suppressRemoveSort</code>
+is returned to the value in the columnDef.</p>
+<p>Grouping and aggregation should work cleanly with filtering - it should group and aggregate only the
+filtered rows.</p>
+<p>Group header rows cannot be edited, and if using the selection feature, cannot be selected.  They can,
+however, be exported.</p>
+<p>The group rowHeader by default is always visible.  If you&#39;d like the groupRowHeader only
+present when at least one column is grouped then set the <code>treeRowHeaderAlwaysVisible: false</code> gridOption.</p>
+<p>If you want to change the grouping programmatically after grid initialisation, you do this through calling the
+provided methods:</p>
+<ul>
+<li><code>groupColumn</code>: groups an individual column.  Adds it to the end of the current grouping - so you need to remove
+existing grouped columns first if you wanted this to be the only grouping.  Adds a sort ASC if there isn&#39;t one</li>
+<li><code>ungroupColumn</code>: ungroups an individual column</li>
+<li><code>aggregateColumn</code>: sets aggregation on a column, including setting the aggregation off.  Automatically removes
+any sort first.</li>
+<li><code>setGrouping</code>: sets all the grouping in one go, removing existing grouping</li>
+<li><code>getGrouping</code>: gets the grouping config for the grid</li>
+<li><code>clearGrouping</code>: clears all current grouping settings</li>
+</ul>
+<p>Grouping is still alpha, and under development, however it is included in the distribution files
+to allow people to start using it.  Notable outstandings are:</p>
+<ul>
+<li>some more unit testing</li>
+<li>enhancement: allow a limit on number of columns grouped</li>
+<li>consideration of RTL - not sure whether the indent/outdent should get reversed?</li>
+<li>special formatting for header rows in exporter?</li>
+</ul>
+<p>Options to watch out for include:</p>
+<ul>
+<li><code>treeIndent</code>: the expand buttons are indented by a number of pixels (default 10) as the grouping
+level gets deeper.  Larger values look nicer, but take up more space</li>
+<li><code>treeRowHeaderBaseWidth</code>: the base width of the grouping row header (default 30)</li>
+<li><code>customTreeAggregationFinalizerFn</code>: if your column has a cellFilter, the insertion of text (e.g. &#39;min: xxxx&#39;)
+ usually breaks the cellFilter.  You can define a custom aggregation finalizer that handles this text differently,
+ either applying the filter in code, or skipping the inclusion of the aggregation text.  This can also be used
+ to skip the showing of the counts at all</li>
+</ul>
+<p>If you would like to suppress the data in a grouped column (so it only shows in the groupHeader rows) this can
+be done by overriding the cellTemplate for any of the columns you allow grouping on as follows:</p>
+<p>   <code>cellTemplate: &#39;&lt;div ng-if=&quot;!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader &amp;&amp; col.grouping.groupPriority === row.treeLevel )&quot; class=&quot;ui-grid-cell-contents&quot; title=&quot;TOOLTIP&quot;&gt;{{COL_FIELD CUSTOM_FILTERS}}&lt;/div&gt;&#39;</code></p>
+<p>In the example below this has been done on the state column only.  This isn&#39;t included in the base code as it
+could potentially interact with people&#39;s custom templates.</p>
+<p>Tuning the way aggregations work can be done through defining a columnsProcessor that runs with higher (later)
+priority than the groupingColumnProcessor (so higher than 400), and that looks for grouped or aggregated columns
+and changes things like the treeAggregationFn, or the customTreeAggregationFinalizerFn.  See tutorial 320 for an example.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.grouping.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-209-grouping-page"><p>In this example we group by the state column then the gender column, and we count the names (a proxy for
+counting the number of rows), we find the max age for each grouping, and we calculate the average balance.  We
+suppress the aggregation text on the balance column because we want to format as currency...but that means that
+we can&#39;t easily see that it&#39;s an average.</p>
+<p>We write a function that extracts the aggregated data for states and genders (if you change the grouping then this
+function will stop working), and writes them to the console.</p>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-69" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-70"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-69" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-69">
+    <div ng-controller="MainCtrl">
+      <button id="expandAll" type="button" class="btn btn-success" ng-click="expandAll()">Expand All</button>
+      <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row</button>
+      <button id="toggleSecondRow" type="button" class="btn btn-success" ng-click="toggleRow(1)">Toggle Second Row</button>
+      <button id="changeGrouping" type="button" class="btn btn-success" ng-click="changeGrouping()">Change Grouping</button>
+      <button id="getAggregates" type="button" class="btn btn-success" ng-click="getAggregates()">Get Aggregates</button>
+      <div id="grid1" ui-grid="gridOptions" ui-grid-grouping class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 400px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.grouping' ]);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridGroupingConstants', function ($scope, $http, $interval, uiGridGroupingConstants ) {
+      $scope.gridOptions = {
+        enableFiltering: true,
+        treeRowHeaderAlwaysVisible: false,
+        columnDefs: [
+          { name: 'name', width: '30%' },
+          { name: 'gender', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }, width: '20%', cellFilter: 'mapGender' },
+          { name: 'age', treeAggregationType: uiGridGroupingConstants.aggregation.MAX, width: '20%' },
+          { name: 'company', width: '25%' },
+          { name: 'registered', width: '40%', cellFilter: 'date', type: 'date' },
+          { name: 'state', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }, width: '35%', cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
+          { name: 'balance', width: '25%', cellFilter: 'currency', treeAggregationType: uiGridGroupingConstants.aggregation.AVG, customTreeAggregationFinalizerFn: function( aggregation ) {
+            aggregation.rendered = aggregation.value;
+          } }
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+        }
+      };
+
+      $http.get('/data/500_complex.json')
+        .then(function(response) {
+          var data = response.data;
+
+          for ( var i = 0; i < data.length; i++ ){
+            var registeredDate = new Date( data[i].registered );
+            data[i].state = data[i].address.state;
+            data[i].gender = data[i].gender === 'male' ? 1: 2;
+            data[i].balance = Number( data[i].balance.slice(1).replace(/,/,'') );
+            data[i].registered = new Date( registeredDate.getFullYear(), registeredDate.getMonth(), 1 )
+          }
+          delete data[2].age;
+          $scope.gridOptions.data = data;
+        });
+
+      $scope.expandAll = function(){
+        $scope.gridApi.treeBase.expandAllRows();
+      };
+
+      $scope.toggleRow = function( rowNum ){
+        $scope.gridApi.treeBase.toggleRowTreeState($scope.gridApi.grid.renderContainers.body.visibleRowCache[rowNum]);
+      };
+
+      $scope.changeGrouping = function() {
+        $scope.gridApi.grouping.clearGrouping();
+        $scope.gridApi.grouping.groupColumn('age');
+        $scope.gridApi.grouping.aggregateColumn('state', uiGridGroupingConstants.aggregation.COUNT);
+      };
+
+      $scope.getAggregates = function() {
+        var aggregatesTree = [];
+        var gender
+
+        var recursiveExtract = function( treeChildren ) {
+          return treeChildren.map( function( node ) {
+            var newNode = {};
+            angular.forEach(node.row.entity, function( attributeCol ) {
+              if( typeof(attributeCol.groupVal) !== 'undefined' ) {
+                newNode.groupVal = attributeCol.groupVal;
+                newNode.aggVal = attributeCol.value;
+              }
+            });
+            newNode.otherAggregations = node.aggregations.map( function( aggregation ) {
+              return { colName: aggregation.col.name, value: aggregation.value, type: aggregation.type };
+            });
+            if( node.children ) {
+              newNode.children = recursiveExtract( node.children );
+            }
+            return newNode;
+          });
+        }
+
+        aggregatesTree = recursiveExtract( $scope.gridApi.grid.treeBase.tree );
+
+        console.log(aggregatesTree);
+      };
+    }])
+    .filter('mapGender', function() {
+      var genderHash = {
+        1: 'male',
+        2: 'female'
+      };
+
+      return function(input) {
+        var result;
+        var match;
+        if (!input){
+          return '';
+        } else if (result = genderHash[input]) {
+          return result;
+        } else if ( ( match = input.match(/(.+)( \(\d+\))/) ) && ( result = genderHash[match[1]] ) ) {
+          return result + match[2];
+        } else {
+          return input;
+        }
+      };
+    });
+  </script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-70"></pre>
+<script type="text/ng-template" id="scenario.js-70">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+    describe( '209 grouping', function() {
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-69" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

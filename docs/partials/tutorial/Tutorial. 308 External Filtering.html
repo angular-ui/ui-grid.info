@@ -1,0 +1,87 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/308_external_filtering.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-308-external-filtering-page"><p>Sometimes you want to filter data externally, either on the client using custom filter routines, or on 
+the server as part of your data retrieve.</p>
+<p>UI-Grid provides two functions that support this, firstly a filterChanged event that tells you when a user has
+changed their requested filter using the grid ui, and secondly a useExternalFiltering property to turn off
+the grid native filtering.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-308-external-filtering-page"><p>In this example we suppress the internal filtering, and emulate an external filter by picking one of three 
+json files to show - one filtered by gender &#39;male&#39;, one filtered by gender &#39;female&#39;, and one not sorted.  </p>
+<p>To further illustrate that this is using external sorting, the external filter routine (consisting of me manually 
+editing json files) got bored of filtering after the first 10 or so rows, and deleted all other rows in the file.</p>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-93" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-93" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-93">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 250px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngTouch', 'ui.grid']);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridConstants', function ($scope, $http, $interval, uiGridConstants) {
+
+      $scope.gridOptions = {
+        enableFiltering: true,
+        useExternalFiltering: true,
+        columnDefs: [
+          { name: 'name', enableFiltering: false },
+          { name: 'gender' },
+          { name: 'company', enableFiltering: false}
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+            $scope.gridApi.core.on.filterChanged( $scope, function() {
+              var grid = this.grid;
+              if( grid.columns[1].filters[0].term === 'male' ) {
+                $http.get('/data/100_male.json')
+                .then(function(response) {
+                  $scope.gridOptions.data = response.data;
+                });
+              } else if ( grid.columns[1].filters[0].term === 'female' ) {
+                $http.get('/data/100_female.json')
+                .then(function(response) {
+                  $scope.gridOptions.data = response.data;
+                });
+              } else {
+                $http.get('/data/100.json')
+                .then(function(response) {
+                  $scope.gridOptions.data = response.data;
+                });
+              }
+            });
+        }
+      };
+      
+      $http.get('/data/100.json')
+        .then(function(response) {
+          $scope.gridOptions.data = response.data;
+        });
+    }]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-93" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

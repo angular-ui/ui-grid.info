@@ -1,0 +1,77 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/301_editableOnFocus.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-301-edit-on-focus-page"><p>Combine ui.grid.edit with ui.grid.cellNav, you can enable editing when the cell gets focus.
+grid.options.enableCellEditOnFocus must be set to true.
+<br/>
+See api docs for both cellNav and edit for default navigation keys and how you can override.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.cellnav.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-301-edit-on-focus-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-82" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-82" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-82">
+  <div ng-controller="MainCtrl">
+    <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
+    <br>
+    <br>
+    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 450px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav']);
+
+  app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.gridOptions = {  };
+    $scope.gridOptions.enableCellEditOnFocus = true;
+
+    $scope.gridOptions.columnDefs = [
+      { name: 'id', enableCellEdit: false },
+      { name: 'age', enableCellEditOnFocus:false, displayName:'age (f2/dblClick edit)', width: 200  },
+      { name: 'address.city', enableCellEdit: true, width: 300 },
+      { name: 'name', displayName: 'Name (editOnFocus)', width: 200}
+    ];
+
+    $http.get('/data/500_complex.json')
+      .then(function(response) {
+        $scope.gridOptions.data = response.data;
+      });
+
+      $scope.currentFocused = "";
+
+      $scope.getCurrentFocus = function(){
+        var rowCol = $scope.gridApi.cellNav.getFocusedCell();
+        if(rowCol !== null) {
+            $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.name;
+        }
+      }
+
+      $scope.gridOptions.onRegisterApi = function(gridApi){
+         $scope.gridApi = gridApi;
+      };
+  }]);
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-82" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

@@ -1,0 +1,92 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/106_binding.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-106-binding-examples-page"><p>UI-Grid supports complex object binding in the colDef.field.</p>
+<p>This tutorial shows two-way binding to properties with special characters, array element, nested property, and function.</p>
+<p>Note that a function can not be edited.</p>
+<p>In your custom cellTemplates, you can use:
+<br/>
+COL_FIELD which will be replaced with grid.getCellValue(row). This should be used for any cellTemplates that need readonly access to the field value
+<br/>
+MODEL_COL_FIELD which will be replaced with row.entity.field.  Use MODEL_COL_FIELD anytime you need ng-model=&#39;field&#39;</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.edit.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-106-binding-examples-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-32" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-33"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-32" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-32">
+  <div ng-controller="MainCtrl as $ctrl">
+    <div id="grid1" ui-grid="$ctrl.gridOptions" ui-grid-edit class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 250px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit']);
+
+  app.controller('MainCtrl', function MainCtrl() {
+    var vm = this;
+
+    vm.myData = [
+      {
+        'first-name': 'Cox',
+        friends: ['friend0'],
+        address: {street: '301 Dove Ave', city: 'Laurel', zip: '39565'},
+        getZip: function() {return this.address.zip;}
+						}
+				];
+
+    vm.gridOptions = {
+      enableSorting: true,
+      columnDefs: [
+        { name:'firstName', field: 'first-name' },
+        { name:'1stFriend', field: 'friends[0]' },
+        { name:'city', field: 'address.city'},
+        { name:'getZip', field: 'getZip()', enableCellEdit: false}
+      ],
+      data: '$ctrl.myData'
+    };
+  });
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-33"></pre>
+<script type="text/ng-template" id="scenario.js-33">
+  var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  it('grid should have one visible row and four columns', function () {
+    gridTestUtils.expectRowCount( 'grid1', 1 );
+    gridTestUtils.expectHeaderColumnCount( 'grid1', 4 );
+  });
+
+  it('headers as specified', function () {
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'First Name' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, '1st Friend' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 2, 'City' );
+    gridTestUtils.expectHeaderCellValueMatch( 'grid1', 3, 'Get Zip' );
+  });
+
+  it('row values should be as expected', function () {
+    gridTestUtils.expectRowValuesMatch( 'grid1', 0, [ 'Cox', 'friend0', 'Laurel', '39565' ]);
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-32" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

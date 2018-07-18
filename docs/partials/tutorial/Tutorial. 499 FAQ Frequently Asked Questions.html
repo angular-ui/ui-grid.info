@@ -1,0 +1,53 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/499_FAQ.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-499-faq-frequently-asked-questions-page"><p>There are a number of common gotchas in using the grid, this FAQ aims to cover most of them in an easy to use format.</p>
+<h2 id="my-fonts-are-all-&quot;chinese&quot;">My fonts are all &quot;chinese&quot;?</h2>
+<p>  Refer to <a href="#!/tutorial/116_fonts_and_installation">116 Fonts and Installation</a>.  The characters are apparently Korean,
+  and in short, it means your fonts aren&#39;t installed properly.</p>
+<h2 id="one-of-my-columns-hasnt-turned-up">One of my columns hasn&#39;t turned up?</h2>
+<p>  Your column names must be unique - have you given two columns the same name?  If you want the same <code>displayName</code> you can
+  do this, and you can have two columns refer to the same <code>field</code>, but each column must have a unique name.</p>
+<h2 id="how-do-i-get-my-grid-to-be-responsive-/-take-the-full-page-height-/-automatically-set-height-/-when-i-use-ng-show-things-go-bad">How do I get my grid to be responsive / take the full page height / automatically set height / when I use ng-show things go bad?</h2>
+<p>  Refer to <a href="#!/tutorial/108_hidden_grids">108 Hidden Grids</a>.  The short answer is the grid doesn&#39;t know how high it&#39;s content is until
+  it renders, and it doesn&#39;t dynamically resize.  You need to give an explicit height or an explicit number of rows to render.</p>
+<h2 id="how-can-i-show-a-sequence-number/id-in-a-column-in-my-grid">How can I show a sequence number/id in a column in my grid?</h2>
+<p>  The question here is what you&#39;re really trying to achieve.  Do you want the actual row index, or that you want to display a sequential
+  id in all your rows?</p>
+<p>  If the latter, then you can do it by just adding a counter column to your data:</p>
+<pre><code>  $scope.myData.forEach(function(row, index){
+    row.sequence = index;
+  });</code></pre><p>  If you want to show the index of the row within the grid internals, then it depends on which internal you want. You can get
+  the index of the row within grid.rows, which would show the row as it stands in the original rows list (not filtered nor sorted),
+  or the index of the row within grid.renderContainers.body.visibleRowCache (filtered and sorted), or the render index of the
+  row within the currently displayed rows (given virtualization, this is generally a particularly useless number).</p>
+<p>  If you&#39;re OK that whenever someone sorts or filters then the numbers will change, then you could do it with a cellTemplate,
+  which would be something like:</p>
+<pre><code>  cellTemplate: &#39;&lt;div class=&quot;ui-grid-cell-contents&quot;&gt;{{grid.renderContainers.body.visibleRowCache.indexOf(row)}}&lt;/div&gt;&#39;</code></pre><h2 id="what-browsers-are-supported-by-uigrid">What browsers are supported by ui.grid</h2>
+<p>  Our current testing verifies against IE10+, Edge, Chrome, Firefox, and Safari 8+.  We expect that the functionality
+  is compatible with any HTML5 compliant and Javascript enabled browser.  Refer <a href="#!/tutorial/100_preReqs">preReqs</a>.  Note that IE9
+  compatibility is marginal - the base functions all work but performance is poor in some cases, and some behaviour is not
+  as desired.  We have limited ability to control some of this.  If using on IE9 we recommend testing your specific use cases
+  to verify all your desired functions work adequately.</p>
+<h2 id="what-angular-versions-are-supported-by-uigrid">What angular versions are supported by ui.grid</h2>
+<p>  Our current testing uses angular 1.4 - 1.7.  We intend to remain compatible with all forward versions of 1.7.
+  Refer <a href="#!/tutorial/100_preReqs">preReqs</a></p>
+<h2 id="how-can-i-wrap-text-in-a-cell">How can I wrap text in a cell?</h2>
+<p>  Refer also <a href="http://stackoverflow.com/questions/29298968/increase-width-of-column-in-ui-grid">http://stackoverflow.com/questions/29298968/increase-width-of-column-in-ui-grid</a></p>
+<p>  Firstly, to set the column width you need to use column definitions, then you can set a width in pixels or percentage on each. Refer <a href="#!/tutorial/201_editable">201 Editable</a> as an example that has column widths.</p>
+<p>  Secondly, there is the ability to add tooltips, which are one way to show longer cells that don&#39;t fit in the space available. <a href="#!/tutorial/117_tooltips">117 Tooltips</a></p>
+<p>  Thirdly, you can make the rows taller and therefore have space to wrap content within them. Be aware that all rows must be the same height, so you can&#39;t make only the rows that need it taller.</p>
+<p>  <code>gridOptions.rowHeight = 50;</code></p>
+<p>  You&#39;ll also need to set the white-space attribute on the div so that it wraps, which you can do by setting a class in the cellTemplate, and then adding a style to the css.</p>
+<p>  A plunker as an example: <a href="http://plnkr.co/edit/kyhRm08ZtIKYspDqgyRa?p=preview">http://plnkr.co/edit/kyhRm08ZtIKYspDqgyRa?p=preview</a></p>
+<h2 id="how-can-i-create-a-single-central-filter-box-similar-to-that-available-in-ng-grid-2x">How can I create a single central filter box similar to that available in ng-grid 2.x?</h2>
+<p>  In general ui-grid implements filters on a per-column basis, similar to how Excel implements them.  The
+  filter is evaluated column by column, allowing a value to match in one of a list of columns implies an
+  OR syntax, which we don&#39;t currently have.</p>
+<p>  It is possible to custom build an external central filter through use of a rowsProcessor.  The rowsProcessor
+  needs to run with high (late) priority, so it runs last.  It needs to evaluate row by row to decide
+  if each row should be visible, and appropriately set the visible flag.</p>
+<p>  This is a little tricky to build as a generic feature, but for specific use cases would be reasonably
+  simple.  Refer the <a href="#!/tutorial/321_singleFilter">single filter tutorial</a>.</p>
+</div></div>

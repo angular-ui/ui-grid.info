@@ -1,0 +1,120 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/405_exporting_all_data_complex.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-405-exporting-all-data-with-external-pagination-page"><p>When using built in pagination, the data is fully loaded before export.</p>
+<p>For external pagination, use the <code>exportAllDataPromise</code> function to load all grid data.  If you get all the
+data (for the purposes of exporting), then it makes sense to turn off external pagination and external sorting,
+as all the data is now present within AngularJS.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.exporter.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.pagination.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-405-exporting-all-data-with-external-pagination-page"><p>This shows combined external pagination and sorting.
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-115" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-115" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-115">
+    <div ng-controller="MainCtrl">
+      <div ui-grid="gridOptions" ui-grid-pagination ui-grid-selection ui-grid-exporter class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 600px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.exporter']);
+
+    app.controller('MainCtrl', [
+      '$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {
+
+        var paginationOptions = {
+          sort: null
+        };
+
+        $scope.gridOptions = {
+          paginationPageSizes: [25, 50, 75],
+          paginationPageSize: 25,
+          useExternalPagination: true,
+          useExternalSorting: true,
+          enableGridMenu: true,
+          columnDefs: [
+            { name: 'name' },
+            { name: 'gender', enableSorting: false },
+            { name: 'company', enableSorting: false }
+          ],
+          exporterAllDataFn: function() {
+            return getPage(1, $scope.gridOptions.totalItems, paginationOptions.sort)
+            .then(function(allData) {
+              $scope.gridOptions.useExternalPagination = false;
+              $scope.gridOptions.useExternalSorting = false;
+              getPage = null;
+              return allData;
+            });
+          },
+          onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
+            $scope.gridApi.core.on.sortChanged($scope, function(grid, sortColumns) {
+              if(getPage) {
+                if (sortColumns.length > 0) {
+                  paginationOptions.sort = sortColumns[0].sort.direction;
+                } else {
+                  paginationOptions.sort = null;
+                }
+                getPage(grid.options.paginationCurrentPage, grid.options.paginationPageSize, paginationOptions.sort)
+              }
+            });
+            gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+              if(getPage) {
+                getPage(newPage, pageSize, paginationOptions.sort);
+              }
+            });
+          }
+        };
+
+        var getPage = function(curPage, pageSize, sort) {
+          var url;
+          switch(sort) {
+            case uiGridConstants.ASC:
+              url = '/data/100_ASC.json';
+              break;
+            case uiGridConstants.DESC:
+              url = '/data/100_DESC.json';
+              break;
+            default:
+              url = '/data/100.json';
+              break;
+          }
+
+          var _scope = $scope;
+          return $http.get(url)
+          .then(function (response) {
+            var firstRow = (curPage - 1) * pageSize;
+            $scope.gridOptions.totalItems = 100;
+            $scope.gridOptions.data = response.data.slice(firstRow, firstRow + pageSize);
+            return response.data.slice(firstRow, firstRow + pageSize);
+          });
+        };
+
+        getPage(1, $scope.gridOptions.paginationPageSize);
+      }
+    ]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-115" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

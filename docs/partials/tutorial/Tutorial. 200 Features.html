@@ -1,0 +1,22 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/200_features.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-200-features-page"><p>The core module, ui.grid, contains only the core features needed. More complex features are separated into feature modules and must be included in your application module.</p>
+<p>You must include each feature as a dependency for your application module.
+<pre class="prettyprint linenums">
+angular.module('yourApp', ['ui.grid', 'ui.grid.feature1', 'ui.grid.feature2']);
+</pre>
+<p>Each feature directive must also be included in alongside the ui-grid directive.  This allows you to have many grids in an application and enable certain features for each grid instance.
+<pre class="prettyprint linenums">
+&lt;div ui-grid="gridOptions" class="grid" ui-grid-feature1 ui-grid-feature2&gt;&lt;/div&gt;
+</pre>
+<p>Similarly, if you are using separate files for performance, you need to load the feature files into your HTML:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.feature1.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.feature2.js"&gt;&lt;/script&gt;
+</pre>
+<p>In general the feature documentation can be found in the api section, each feature will typically have a
+<code>gridOptions</code> section, it may have a <code>columnDef</code> section, and it may have a <code>publicApi</code> section.</p>
+</div></div>

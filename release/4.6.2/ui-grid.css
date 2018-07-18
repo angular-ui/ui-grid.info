@@ -1,12 +1,10 @@
 /*!
- * ui-grid - v4.6.2 - 2018-07-09
+ * ui-grid - v4.6.2 - 2018-07-18
  * Copyright (c) 2018 ; License: MIT 
  */
 @media screen and (max-width: 767px) {
-}
-@media (min-width: 768px) {
-}
-.ui-grid {
+}@media (min-width: 768px) {
+}.ui-grid {
   border: 1px solid #d4d4d4;
   box-sizing: content-box;
   -webkit-border-radius: 0px;
@@ -635,7 +633,7 @@ select.ui-grid-filter-select:hover {
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  margin-right: 0.2em;
   text-align: center;
   /* opacity: .8; */
   /* For safety - reset parent styles, that can break glyph codes*/
@@ -645,7 +643,7 @@ select.ui-grid-filter-select:hover {
   line-height: 1em;
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
-  margin-left: .2em;
+  margin-left: 0.2em;
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
   /* Uncomment for 3D effect */
@@ -916,10 +914,8 @@ select.ui-grid-filter-select:hover {
 */
 /*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 @media screen and (max-width: 767px) {
-}
-@media (min-width: 768px) {
-}
-.ui-grid-cell-focus {
+}@media (min-width: 768px) {
+}.ui-grid-cell-focus {
   outline: 0;
   background-color: #b3c4c7;
 }
@@ -1224,10 +1220,8 @@ select.ui-grid-filter-select:hover {
     More info at: http://lesselements.com
   ---------------------------------------------------*/
 @media screen and (max-width: 767px) {
-}
-@media (min-width: 768px) {
-}
-.ui-grid-pager-panel {
+}@media (min-width: 768px) {
+}.ui-grid-pager-panel {
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -3,18 +3,6 @@ img.AngularJS-small {
   height: 25px;
 }
 
-/* this is here to avoid the display=block shuffling of ngShow */
-.breadcrumb li > * {
-  float:left;
-  margin:0 2px 0 0;
-}
-
-.breadcrumb {
-  padding-top: 6px;
-  padding-bottom: 0;
-  line-height: 18px
-}
-
 .navbar img {
   max-height: 40px;
   padding-right: 20px;
@@ -57,27 +45,12 @@ img.AngularJS-small {
   clip: auto;
 }
 
-.navbar-default .navbar-nav>.active>a,
-  .navbar-default .navbar-nav>.active>a:hover,
-  .navbar-default .navbar-nav>.active>a:focus {
-  color: #1abc9c;
-  background-color: #2c3e50;
-}
-
 .form-control {
-  /*height: 30px;*/
   margin-bottom: 10px;
 }
 
-.breadcrumb li > * {
-  float: none !important;
-  overflow: hidden !important;
-  display: inline-block;
-}
-
-/* limit container to tablet width - phone users need to scroll */
 .container-fluid {
-  min-width: 769px;
+  min-width: 305px;
 }
 
 /*control responsive navbar using ng-show, as though it is an "if" in html using 2 media sizes */
@@ -91,44 +64,19 @@ img.AngularJS-small {
   .for-lg-view-hide {
     display: none;
   }
+  .form-search {
+    margin-right: 10px;
+  }
 }
 
-/* nav-list was deprecated in the upgrade to BS3, but all doc styling uses it - so copied in css from Bootstrap Flatly 2.3.2 */
-.nav-list {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-bottom: 0;
-}
-
-.nav-list > li > a,
-.nav-list .nav-header {
-  margin-right: -15px;
-  margin-left: -15px;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-.nav-list > li > a {
-  padding: 3px 15px;
-}
-
-.nav-list > .active > a,
-.nav-list > .active > a:hover,
-.nav-list > .active > a:focus {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-  background-color: #1abc9c;
-}
-
-.nav-list [class^="icon-"],
-.nav-list [class*=" icon-"] {
-  margin-right: 2px;
+.nav-pills.nav-stacked li {
+  margin: 0;
+  padding: 2px 15px;
+  overflow: hidden;
+  line-height: 1.1em;
 }
 
 /* =============================== */
-
-.form-search {
-  margin-right: 10px;
-}
 
 .form-search .search-query {
   width: 180px;
@@ -174,6 +122,10 @@ img.AngularJS-small {
   padding-bottom: 6px;
 }
 
+.form-search > ul.nav > li.deprecate {
+  text-decoration: line-through;
+}
+
 .form-search .well {
   border-color: #d3d3d3;
   padding: 0;
@@ -182,13 +134,14 @@ img.AngularJS-small {
 
 .form-search .well .nav-header {
   text-transform: none;
-  padding: 3px 1px;
+  padding: 3px 15px;
   margin: 0;
 }
 
 .form-search .well .nav-header a {
   text-transform: none;
   color: black;
+  padding: 3px 0;
 }
 .form-search .well .nav-header a:hover {
   background-color: inherit;
@@ -203,12 +156,14 @@ img.AngularJS-small {
 }
 
 .form-search .well .guide {
-  float: right;
+  display: block;
+  text-align: right;
   padding-top: 0;
-  color: gray;
+  color: black;
 }
 
 .form-search .module .guide {
+  float: right;
   line-height: 20px;
   color: black;
   font-size: 80%;
@@ -216,31 +171,12 @@ img.AngularJS-small {
 
 .form-search > ul.nav > li > a {
   margin: 0;
-  padding: 3px 15px;
+  padding: 3px 8px;
   display: inline-block;
-}
-
-.form-control:focus {
-  border-color: #1abc9c;
-}
-
-a {
-  color: #1abc9c;
-  text-decoration: none;
-}
-
-a:hover,
-a:focus {
-  color: #1dd2af;
-  text-decoration: underline;
 }
 
 .guide {
   font-size: 80%;
-}
-
-.match > a, .nav > .match > a:hover {
-	background-color: #dbeaf4;
 }
 
 /* =============================== */

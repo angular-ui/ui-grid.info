@@ -1,0 +1,276 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/216_expandable_grid.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-216-expandable-grid-page"><div class="alert alert-warning" role="alert"><strong>Alpha</strong> This feature is in development. There will almost certainly be breaking api changes, or there are major outstanding bugs.</div>
+
+<p>The <code>ui.grid.expandable</code> module adds the subgrid feature to grid. To show the subgrid you need to provide following grid option:</p>
+<p>Documentation for the expandable feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#!/api/ui.grid.expandable.api:GridOptions">gridOptions</a></li>
+<li><a href="#!/api/ui.grid.expandable.api:PublicApi">publicApi</a></li>
+</ul>
+<pre class="prettyprint linenums">
+  $scope.gridOptions = {
+    //This is the template that will be used to render subgrid.
+    expandableRowTemplate: 'expandableRowTemplate.html',
+    //This will be the height of the subgrid
+    expandableRowHeight: 140,
+    //Variables of object expandableScope will be available in the scope of the expanded subgrid
+    expandableRowScope: expandableScope
+  }
+</pre>
+<p>expandableRowTemplate will be the template for subgrid and expandableRowHeight will be the height of the subgrid. expandableRowScope can be used
+to add variables to the scope of expanded grid. These variables can then be accessed from expandableRowTemplate. The grid api
+provides the following events and methods for subGrids:</p>
+<pre class="prettyprint linenums">
+    //rowExpandedStateChanged is fired for each row as its expanded:
+    gridApi.expandable.on.rowExpandedStateChanged($scope,function(row){
+    });
+    //Following methods can be used to expand/ collapse all rows of the grid:
+    gridApi.expandable.expandAllRows();
+    gridApi.expandable.collapseAllRows();
+</pre>
+<p>SubGrid nesting can be done upto multiple levels.</p>
+<p>In addition to the above configuration, &#39;scrollFillerClass&#39; is also available and can be used to style the scroll filler. The scroll filler
+appears when you quickly scroll through the grid.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.expandable.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.pinning.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-216-expandable-grid-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-78 expandableRowTemplate.html" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-79"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-78" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-78">
+  <div ng-controller="MainCtrl as main">
+    <div class="control-group">
+      <button id="toggleVisibility" type="button" class="btn btn-sm btn-default" ng-click="main.toggleExpandAllBtn()">Toggle Expand All Visibility</button>
+      <button type="button" class="btn btn-sm btn-default" ng-click="main.expandAllRows()">Expand All</button>
+      <button type="button" class="btn btn-sm btn-default" ng-click="main.collapseAllRows()">Collapse All</button>
+    </div>
+    <div id="grid1" ui-grid="main.gridOptions" ui-grid-pinning ui-grid-expandable class="grid"></div>
+  </div>
+  Expandable rows works with checkboxes from selection and left pins
+  <div ng-controller="SecondCtrl as second">
+     <div ui-grid="second.gridOptions" ui-grid-pinning ui-grid-expandable ui-grid-selection class="grid"></div>
+  </div>
+  Retrieve data for subGrid when expanding
+  <div ng-controller="ThirdCtrl as third">
+     <div ui-grid="third.gridOptions" ui-grid-expandable class="grid"></div>
+  </div>
+  Toggle expand subGrid control
+  <div ng-controller="FourthCtrl as fourth">
+     <div ui-grid="fourth.gridOptions" ui-grid-expandable class="grid"></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="expandableRowTemplate.html">
+<pre class="prettyprint linenums" ng-set-text="expandableRowTemplate.html"></pre>
+<script type="text/ng-template" id="expandableRowTemplate.html">
+  <div ui-grid="row.entity.subGridOptions" style="height:150px;"></div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 100%;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning']);
+
+  app.controller('MainCtrl', function MainCtrl($http, $log) {
+    var vm = this;
+
+    vm.gridOptions = {
+      expandableRowTemplate: 'expandableRowTemplate.html',
+      expandableRowHeight: 150,
+      //subGridVariable will be available in subGrid scope
+      expandableRowScope: {
+        subGridVariable: 'subGridScopeVariable'
+      }
+    };
+
+    vm.gridOptions.columnDefs = [
+      { name: 'id' },
+      { name: 'name'},
+      { name: 'age'},
+      { name: 'address.city'}
+    ];
+
+    $http.get('/data/500_complex.json')
+      .then(function(response) {
+        var data = response.data;
+
+        for(i = 0; i < data.length; i++){
+          data[i].subGridOptions = {
+            columnDefs: [{name: 'Id', field: 'id'}, {name: 'Name', field: 'name'}],
+            data: data[i].friends
+          };
+        }
+        vm.gridOptions.data = data;
+      });
+
+      vm.gridOptions.onRegisterApi = function(gridApi){
+        vm.gridApi = gridApi;
+      };
+
+      vm.expandAllRows = function() {
+        vm.gridApi.expandable.expandAllRows();
+      };
+
+      vm.collapseAllRows = function() {
+        vm.gridApi.expandable.collapseAllRows();
+      };
+
+      vm.toggleExpandAllBtn = function() {
+        vm.gridOptions.showExpandAllButton = !vm.gridOptions.showExpandAllButton;
+      };
+  });
+
+  app.controller('SecondCtrl', function SecondCtrl($http, $log) {
+				var vm = this;
+
+				vm.gridOptions = {
+						enableRowSelection: true,
+						expandableRowTemplate: 'expandableRowTemplate.html',
+						expandableRowHeight: 150
+				}
+
+				vm.gridOptions.columnDefs = [
+						{ name: 'id', pinnedLeft:true },
+						{ name: 'name'},
+						{ name: 'age'},
+						{ name: 'address.city'}
+				];
+
+				$http.get('/data/500_complex.json')
+						.then(function(response) {
+								var data = response.data;
+
+								for(i = 0; i < data.length; i++) {
+										data[i].subGridOptions = {
+												columnDefs: [{name: 'Id', field: 'id'}, {name: 'Name', field: 'name'}],
+												data: data[i].friends
+										};
+								}
+								vm.gridOptions.data = data;
+						});
+		});
+
+  app.controller('ThirdCtrl', function ThirdCtrl($scope, $http, $log) {
+				var vm = this;
+
+				vm.gridOptions = {
+						expandableRowTemplate: 'expandableRowTemplate.html',
+						expandableRowHeight: 150,
+						onRegisterApi: function (gridApi) {
+								gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
+										if (row.isExpanded) {
+												row.entity.subGridOptions = {
+														columnDefs: [
+														{ name: 'name'},
+														{ name: 'gender'},
+														{ name: 'company'}
+												]};
+
+												$http.get('/data/100.json')
+														.then(function(response) {
+																row.entity.subGridOptions.data = response.data;
+														});
+										}
+								});
+						}
+				};
+
+				vm.gridOptions.columnDefs = [
+						{ name: 'id', pinnedLeft:true },
+						{ name: 'name'},
+						{ name: 'age'},
+						{ name: 'address.city'}
+				];
+
+				$http.get('/data/500_complex.json')
+						.then(function(response) {
+								vm.gridOptions.data = response.data;
+						});
+		});
+
+  app.controller('FourthCtrl', function FourthCtrl($http, $log) {
+				var vm = this;
+
+				vm.gridOptions = {
+						enableRowSelection: true,
+						expandableRowTemplate: 'expandableRowTemplate.html',
+						expandableRowHeight: 150
+				};
+
+				vm.gridOptions.columnDefs = [
+						{ name: 'id', pinnedLeft:true },
+						{ name: 'name'},
+						{ name: 'age'},
+						{ name: 'address.city'}
+				];
+
+				$http.get('/data/500_complex.json')
+						.then(function(response) {
+								var data = response.data;
+
+								for(i = 0; i < data.length; i++) {
+										data[i].subGridOptions = {
+												columnDefs: [{name: 'Id', field: 'id'}, {name: 'Name', field: 'name'}],
+												data: data[i].friends,
+												disableRowExpandable : (i % 2 === 0)
+										};
+								}
+								vm.gridOptions.data = data;
+						});
+		});
+</script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-79"></pre>
+<script type="text/ng-template" id="scenario.js-79">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js'),
+      GridObjectTest = require('../../test/e2e/gridObjectTestUtils.spec.js'),
+      grid1 = new GridObjectTest('grid1');
+
+    describe('216 Expandable Grid', function() {
+      // Reload the page before each test if on Firefox. Chrome does it automatically.
+      gridTestUtils.firefoxReload();
+
+      it('should load the header values should be as expected', function() {
+        grid1.expectHeaderColumns(['Id', 'Name', 'Age', 'Address.City']);
+      });
+
+      describe('Toggle Expand All Visibility', function() {
+        var expandAllButton, emptyCellContent;
+
+        it('should display the expand all button by default', function() {
+          expandAllButton = element( by.css('#grid1 .ui-grid-expandable-buttons-cell .ui-grid-icon-button') );
+          expect(expandAllButton.isDisplayed()).toBe(true);
+        });
+        it('should hide the expand all button when the Toggle Expand All Visibility button is clicked', function() {
+          element( by.id('toggleVisibility') ).click();
+
+          emptyCellContent = element( by.css('#grid1 .ui-grid-expandable-buttons-cell .ui-grid-cell-empty') );
+          expect(emptyCellContent.isDisplayed()).toBe(true);
+        });
+      });
+    });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-78" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

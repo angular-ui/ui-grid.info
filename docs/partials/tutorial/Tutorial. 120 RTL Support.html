@@ -1,0 +1,71 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/120_RTL.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-120-rtl-support-page"><p>The grid supports RTL languages</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.resize-columns.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.pinning.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-120-rtl-support-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-51" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-51" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-51">
+  <div ng-controller="MainCtrl as $ctrl">
+    <div ui-grid="$ctrl.gridOptions" class="grid" dir="rtl" ui-grid-pinning ui-grid-resize-columns></div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+  .grid {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+  var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.pinning']);
+
+  app.controller('MainCtrl', function ($http) {
+    var vm = this;
+
+    vm.gridOptions = {
+      columnDefs: [
+        { name: 'field1', field: 'name', width: 200 },
+        { name: 'field2', field: 'gender', width: 200 },
+        { name: 'field3', field: 'company', width: 200 },
+        { name: 'field4', field: 'name', width: 200 },
+        { name: 'field5', field: 'gender', width: 200 },
+        { name: 'field6', field: 'company', width: 200 },
+        { name: 'field7', field: 'name', width: 200 },
+        { name: 'field8', field: 'gender', width: 200 },
+        { name: 'field9', field: 'company', width: 200 },
+        { name: 'field10', field: 'name', width: 200 },
+        { name: 'field11', field: 'gender', width: 200 },
+        { name: 'field12', field: 'company', width: 200 },
+        { name: 'field13', field: 'name', width: 200 },
+        { name: 'field14', field: 'gender', width: 200 },
+        { name: 'field15', field: 'company', width: 200 }
+      ]
+    };
+
+    $http.get('/data/100.json')
+      .then(function(response) {
+        vm.gridOptions.data = response.data;
+      });
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-51" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>

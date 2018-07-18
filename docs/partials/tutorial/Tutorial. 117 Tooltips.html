@@ -1,0 +1,106 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/117_tooltips.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-117-tooltips-page"><p>You can set a tooltip (actually, a title) to pop up when a user hovers over a cell.</p>
+<p>This tooltip can be simply the cell contents, in which case set the columnDef to have
+<code>cellTooltip: true</code>.</p>
+<p>Or it can be a function that returns a value derived from the 
+current column and row - for example:</p>
+<pre><code>  cellTooltip: function(row, col) {
+    return &#39;Name: &#39; + row.entity.name + &#39; Company: &#39; + row.entity.company;
+  }</code></pre><p>Or it can be a string, in which case that string will be displayed:</p>
+<pre><code>  cellTooltip: &#39;Custom tooltip - maybe some help text&#39;</code></pre><p>You can also set a headerTooltip in a similar manner, it defaults to showing the displayName.</p>
+<p>Note that turning on tooltips will create an extra watcher per cell, so it has an impact on overall grid
+performance, it is not recommended to turn them on for every column, rather only for the columns likely to have
+data that won&#39;t be displayable within the grid row (e.g. long description fields).</p>
+<p>Tooltips respect the cellFilter, so if you define a cellFilter it will also be used in the tooltip.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js file instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+</pre>
+<h3 id="source">Source</h3>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-49" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-50"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-49" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-49">
+    <div ng-controller="MainCtrl">
+      <br>
+      <br>
+      <div id="grid1" ui-grid="gridOptions" class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 500px;
+      height: 200px;
+    }
+    .red { color: red;  background-color: yellow !important; }
+    .blue { color: blue;  }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngAnimate', 'ngTouch', 'ui.grid']);
+
+    app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function ($scope, $http, uiGridConstants) {
+      $scope.gridOptions = {
+        enableSorting: true,
+        columnDefs: [
+          { field: 'name', cellTooltip: 'Custom string', headerTooltip: 'Custom header string' },
+          { field: 'company', cellTooltip: 
+            function( row, col ) {
+              return 'Name: ' + row.entity.name + ' Company: ' + row.entity.company;
+            }, headerTooltip: 
+            function( col ) {
+              return 'Header: ' + col.displayName;
+            }
+          },
+          { field: 'gender', cellTooltip: true, headerTooltip: true, cellFilter: 'mapGender' },
+        ],
+        onRegisterApi: function( gridApi ) {
+          $scope.gridApi = gridApi;
+          $scope.gridApi.core.on.sortChanged( $scope, function( grid, sort ) {
+            $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+          })
+        }
+      };
+
+      $http.get('/data/100.json')
+        .then(function(response) {
+          response.data.forEach( function setGender( row, index ){
+            row.gender = row.gender === 'male' ? '1' : '2';
+          });
+
+          $scope.gridOptions.data = response.data;
+        });
+    }])
+    .filter('mapGender', function() {
+      var genderHash = {
+        1: 'male',
+        2: 'female'
+      };
+
+      return function(input) {
+        if (!input){
+          return '';
+        } else {
+          return genderHash[input];
+        }
+      };
+    });
+  </script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-50"></pre>
+<script type="text/ng-template" id="scenario.js-50">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
+  </script>
+</div>
+</div><h3 id="demo">Demo</h3>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-49" ng-eval-javascript="app.js"></div>
+</div></div>

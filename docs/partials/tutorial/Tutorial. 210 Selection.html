@@ -1,0 +1,244 @@
+<a href="https://github.com/angular-ui/ui-grid/edit/master/misc/tutorial/210_selection.ngdoc" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="tutorial-page tutorial-210-selection-page"><div class="alert alert-success" role="alert"><strong>Stable</strong> This feature is stable. There should no longer be breaking api changes without a deprecation warning.</div>
+
+<p>This grid example uses the ui-grid-selection directive to row selection. To enable, you must include the &#39;ui.grid.selection&#39;
+module and you must include the ui-grid-selection directive on your grid element.</p>
+<p>Documentation for the selection feature is provided in the api documentation, in particular:</p>
+<ul>
+<li><a href="#!/api/ui.grid.selection.api:GridOptions">gridOptions</a></li>
+<li><a href="#!/api/ui.grid.selection.api:PublicApi">publicApi</a></li>
+</ul>
+<p>Uses the gridOptions.onRegisterApi callback to register the rowSelectionChanged event and log when the row is selected.
+By default the selection feature will divide selection changes into batch events and single events, there are
+two different events provided in the api.  By setting <code>enableSelectionBatchEvent: false</code> you can cause it to
+instead just call the single event in a loop - which may be useful if you&#39;re doing client rather than server
+side processing of the changes.</p>
+<p>By default the module will provide a row header with checkboxes that allow selection of individual rows.  If you set
+the <code>enableRowHeaderSelection</code> gridOption to false, then the row header is hidden and a click on the row will
+result in selection of that row.  You can see that in this tutorial for grid1 by looking at your javascript console.</p>
+<p>If you want to allow both clicking on the row, and also clicking on the rowHeader, you can set <code>enableFullRowSelection</code> to
+true.</p>
+<p>Setting the <code>multiSelect</code> gridOption to true will allow selecting multiple rows, setting to false will allow selection
+of only one row at a time.</p>
+<p>If you have <code>multiSelect: false</code>, then an additional option <code>noUnselect</code> will mean that a row is always selected.  You
+can select a different row (which will unselect the current row), but you cannot manually unselect the current row
+by clicking on it.  This means that at least one row is always selected, other than when you first open the grid.  If
+necessary you could programatically select the first row upon page open.  The second grid demonstrates this.</p>
+<p>If <code>multiSelect: true</code>, another option <code>modifierKeysToMultiSelect</code> may be used. If set to true this will allow selecting
+multiple rows only if the Ctrl-Key, Cmd-Key (Mac) or the Shift-Key is used when selecting, if set to false then it allows
+selecting multiple rows by individually clicking them.</p>
+<p>By default a selectAll box is shown at the top of the rowHeader.  If <code>multiSelect: true</code> is set then this will allow
+you to select all visible rows.  Note that the selectAll does not watch for new data, so if you are using the selectAll
+function and you add data to the grid, you need to check <code>grid.api.selection.getSelectAllState</code>, and if it is currently
+ticked, then manually call <code>grid.api.selection.selectAllVisibleRows</code> after your data has been added.</p>
+<p>The selectAll box can be disabled by setting <code>enableSelectAll</code> to false.</p>
+<p>You can set the selection row header column width by setting &#39;selectionRowHeaderWidth&#39; option.</p>
+<p>You can use an <code>isRowSelectable</code> function to determine which rows are selectable.  If you set this function in the options
+after grid initialisation you need to call <code>gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS)</code> to enable
+the option.  In the grid below pressing the button to &quot;set selectable&quot; will set any rows that have an age &gt; 30 to not be
+selectable, and also set the age of the first row to 31.</p>
+<p>For better performance with the following example, you can choose to load the ui-grid.core.js and specific feature files instead:
+<pre class="prettyprint linenums">
+  &lt;script src="/release/ui-grid.core.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.cellnav.min.js"&gt;&lt;/script&gt;
+  &lt;script src="/release/ui-grid.selection.min.js"&gt;&lt;/script&gt;
+</pre>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="tutorial-page tutorial-210-selection-page"><p>Two examples are provided, the first with rowHeaderSelection and multi-select, the second without.  The first example
+auto-selects the first row once the data is loaded.</p>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js app.js" source-edit-html="index.html-71" source-edit-css="main.css" source-edit-js="app.js" source-edit-json="" source-edit-unit="" source-edit-scenario="scenario.js-72"></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-71" ng-html-wrap-loaded="app angular.js app.js"></pre>
+<script type="text/ng-template" id="index.html-71">
+    <div ng-controller="MainCtrl">
+      <button type="button" class="btn btn-success" ng-click="toggleMultiSelect()">Toggle multiSelect</button>  <strong>MultiSelect:</strong> <span ng-bind="gridApi.grid.options.multiSelect"></span>
+      <button type="button" class="btn btn-success" ng-click="toggleRow1()">Toggle Row 0</button>
+      <br/>
+      <br/>
+      <button type="button" class="btn btn-success" ng-click="toggleModifierKeysToMultiSelect()">Toggle modifierKeysToMultiSelect</button>  <strong>ModifierKeysToMultiSelect:</strong> <span ng-bind="gridApi.grid.options.modifierKeysToMultiSelect"> </span>
+      <br/>
+      <br/>
+      <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button>
+      <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button>
+      <button type="button" class="btn btn-success" ng-click="setSelectable()">Set Selectable</button>
+      <button type="button" class="btn btn-success" ng-click="toggleFullRowSelection()">Toggle full row selection</button>
+      <br/>
+
+      <div id="grid1Selection" ui-grid="gridOptions" ui-grid-selection ui-grid-cellnav class="grid"></div>
+    </div>
+    <div ng-controller="SecondCtrl">
+      Single selection grid without rowHeader, and allowing rowSelection to be toggled on and off dynamically:
+      <br/>
+      <button type="button" class="btn btn-success" ng-click="toggleRowSelection()">Toggle rowSelection</button>  <strong>rowSelection:</strong> <span ng-bind="gridApi.grid.options.enableRowSelection"></span>
+      <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="main.css">
+<pre class="prettyprint linenums" ng-set-text="main.css"></pre>
+<style type="text/css" id="main.css">
+    .grid {
+      width: 100%;
+      height: 400px;
+    }
+  </style>
+</div>
+<div class="tab-pane" title="app.js">
+<pre class="prettyprint linenums" ng-set-text="app.js"></pre>
+<script type="text/ng-template" id="app.js">
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAria']);
+
+    app.controller('MainCtrl', ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function ($scope, $http, $log, $timeout, uiGridConstants) {
+      $scope.gridOptions = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        selectionRowHeaderWidth: 35,
+        rowHeight: 35,
+        showGridFooter:true
+      };
+
+      $scope.gridOptions.columnDefs = [
+        { name: 'id' },
+        { name: 'name'},
+        { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
+        { name: 'address.city' }
+      ];
+
+      $scope.gridOptions.multiSelect = true;
+
+      $http.get('/data/500_complex.json')
+        .then(function(response) {
+          $scope.gridOptions.data = response.data;
+          $timeout(function() {
+            if($scope.gridApi.selection.selectRow){
+              $scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);
+            }
+          });
+        });
+
+        $scope.info = {};
+
+        $scope.toggleMultiSelect = function() {
+          $scope.gridApi.selection.setMultiSelect(!$scope.gridApi.grid.options.multiSelect);
+        };
+
+        $scope.toggleModifierKeysToMultiSelect = function() {
+          $scope.gridApi.selection.setModifierKeysToMultiSelect(!$scope.gridApi.grid.options.modifierKeysToMultiSelect);
+        };
+
+        $scope.selectAll = function() {
+          $scope.gridApi.selection.selectAllRows();
+        };
+
+        $scope.clearAll = function() {
+          $scope.gridApi.selection.clearSelectedRows();
+        };
+
+        $scope.toggleRow1 = function() {
+          $scope.gridApi.selection.toggleRowSelection($scope.gridOptions.data[0]);
+        };
+
+        $scope.toggleFullRowSelection = function() {
+          $scope.gridOptions.enableFullRowSelection = !$scope.gridOptions.enableFullRowSelection;
+          $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
+        };
+
+        $scope.setSelectable = function() {
+          $scope.gridApi.selection.clearSelectedRows();
+
+          $scope.gridOptions.isRowSelectable = function(row){
+            if(row.entity.age > 30){
+              return false;
+            } else {
+              return true;
+            }
+          };
+          $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+
+          $scope.gridOptions.data[0].age = 31;
+          $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+        };
+
+        $scope.gridOptions.onRegisterApi = function(gridApi){
+          //set gridApi on scope
+          $scope.gridApi = gridApi;
+          gridApi.selection.on.rowSelectionChanged($scope,function(row){
+            var msg = 'row selected ' + row.isSelected;
+            $log.log(msg);
+          });
+
+          gridApi.selection.on.rowSelectionChangedBatch($scope,function(rows){
+            var msg = 'rows changed ' + rows.length;
+            $log.log(msg);
+          });
+        };
+    }]);
+
+    app.controller('SecondCtrl', ['$scope', '$http', '$interval', 'uiGridConstants', function ($scope, $http, $interval, uiGridConstants) {
+      $scope.gridOptions = { enableRowSelection: true, enableRowHeaderSelection: false };
+
+      $scope.gridOptions.columnDefs = [
+        { name: 'id' },
+        { name: 'name'},
+        { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false },
+        { name: 'address.city' }
+      ];
+
+      $scope.gridOptions.multiSelect = false;
+      $scope.gridOptions.modifierKeysToMultiSelect = false;
+      $scope.gridOptions.noUnselect = true;
+      $scope.gridOptions.onRegisterApi = function( gridApi ) {
+        $scope.gridApi = gridApi;
+      };
+
+      $scope.toggleRowSelection = function() {
+        $scope.gridApi.selection.clearSelectedRows();
+        $scope.gridOptions.enableRowSelection = !$scope.gridOptions.enableRowSelection;
+        $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
+      };
+
+      $http.get('/data/500_complex.json')
+        .then(function(response) {
+          $scope.gridOptions.data = response.data;
+
+          // $interval whilst we wait for the grid to digest the data we just gave it
+          $interval( function() {$scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);}, 0, 1);
+        });
+    }]);
+  </script>
+</div>
+<div class="tab-pane" title="End to end test">
+<pre class="prettyprint linenums" ng-set-text="scenario.js-72"></pre>
+<script type="text/ng-template" id="scenario.js-72">
+    var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js'),
+      GridObjectTest = require('../../test/e2e/gridObjectTestUtils.spec.js'),
+      grid1Selection = new GridObjectTest('grid1Selection');
+
+    describe('210 tutorial', function() {
+      it('should output aria text for cells that come from selection feature', function () {
+          var focuser = element(by.css('.ui-grid-focuser'));
+
+          grid1Selection.selectRow(1).then(function () {
+            return gridTestUtils.click(focuser);
+          })
+          .then(function () {
+             expect(gridTestUtils.getInnerHtml(element(by.css('.ui-grid-a11y-ariascreenreader-speakable.ui-grid-offscreen'))))
+               .toEqual('Row selected, Column  ');
+             return focuser.sendKeys(protractor.Key.ARROW_DOWN);
+          })
+          .then(function () {
+             expect(gridTestUtils.getInnerHtml(element(by.css('.ui-grid-a11y-ariascreenreader-speakable.ui-grid-offscreen'))))
+               .toEqual('Row not selected, Column  ');
+          })
+      });
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="index.html-71" ng-eval-javascript="app.js"></div>
+</div></div>
+</div>
