@@ -12,12 +12,10 @@
 
 .ui-grid-top-panel {
     position: relative;
-    // border-bottom: 1px solid @borderColor; // #D4D4D4
 
-    overflow: hidden;  // Disable so menus show up
+    overflow: hidden; // Disable so menus show up
     font-weight: bold;
 
-    // .gradient(@headerBackgroundColor, @headerGradientStart, @headerGradientStop);
     .ui-grid-top-panel-background;
 
     .border-radius(@topPanelRadius, 0, 0, @topPanelRadius);
@@ -29,30 +27,36 @@
 }
 
 .ui-grid-header-canvas {
-
   // Clearfix for floating header cells
   &:before, &:after {
     content: "";
-    display: table;
+    display: -ms-flexbox;
+    display: flex;
     line-height: 0;
   }
 
   &:after {
     clear:both;
   }
-
-  // .border-radius(@gridBorderRadius, 0, 0, @gridBorderRadius);
 }
+
 
 .ui-grid-header-cell-wrapper {
   position: relative;
-  display: table;
+  display: -ms-flexbox;
+  display: flex;
   box-sizing: border-box;
   height: 100%;
+  width: 100%;
 }
 
 .ui-grid-header-cell-row {
-  display: table-row;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .ui-grid-header-cell {
@@ -61,7 +65,6 @@
   background-color: inherit;
   border-right: @gridBorderWidth solid;
   border-color: @headerVerticalBarColor;
-  display: table-cell;
 
   &:last-child {
     border-right: 0;
@@ -84,6 +87,11 @@
     margin-left: -8px;
   }
 }
+/* Fixes IE word-wrap if needed on header cells */
+.ui-grid-header-cell > div {
+  -ms-flex-basis: 100%;
+  flex-basis: 100%;
+}
 
 // Make vertical bar in header row fill the height of the cell completely
 .ui-grid-header .ui-grid-vertical-bar {
@@ -95,8 +103,6 @@
   position: absolute;
   right: @gridBorderWidth; // So it doesn't overlay the vertical bar
   top: 0;
-  // bottom: 0;
-  // .ui-grid-top-panel-background;
 
   .ui-grid-icon-angle-down {
     vertical-align: sub;
