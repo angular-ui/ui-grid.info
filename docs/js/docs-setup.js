@@ -1975,12 +1975,12 @@ UI_DOCS={
     },
     {
       "section": "tutorial",
-      "id": "Tutorial: 112 Add/Delete/Swap Data",
-      "shortName": "112 Add/Delete/Swap Data",
+      "id": "Tutorial: 112 Add Delete Swap Data",
+      "shortName": "112 Add Delete Swap Data",
       "type": "overview",
-      "moduleName": "Tutorial: 112 Add/Delete/Swap Data",
+      "moduleName": "Tutorial: 112 Add Delete Swap Data",
       "shortDescription": "You can swap out data in the grid by simply providing a different reference.",
-      "keywords": "$scope abc acium add adddata angular app automatically better bond brainquil browser btn btn-success button carney changes choose chrome class click cline columndefs columndefs1 columndefs2 columns company comveyer controller copy core cox cruz css data data1 data2 describe element employed enormo example expectheadercolumncount expectrowcount expectrowvaluesmatch false female file firefox firefoxreload firstname fuelton function gender grid grid1 gridopts gridtestutils height hopper html js kongene kramer lastname length letpro load lorraine main mainctrl male marcy marqet mclean min misty module nancy ng-click ng-controller ngtouch oneill origdata1 origdata2 overview parleynet performance person pickett providing push reference reload remove removefirstrow require reset return row scenario shepherd simply spec splice src swap swapdata swapping tania test true tutorial type ui ui-grid var visible waitforangular waters width wise zamora zomboid",
+      "keywords": "$scope abc acium add adddata angular app automatically better bond brainquil browser btn btn-success button carney changes choose chrome class click cline columndefs columndefs1 columndefs2 columns company comveyer controller copy core cox cruz css data data1 data2 delete describe element employed enormo example expectheadercolumncount expectrowcount expectrowvaluesmatch false female file firefox firefoxreload firstname fuelton function gender grid grid1 gridopts gridtestutils height hopper html js kongene kramer lastname length letpro load lorraine main mainctrl male marcy marqet mclean min misty module nancy ng-click ng-controller ngtouch oneill origdata1 origdata2 overview parleynet performance person pickett providing push reference reload remove removefirstrow require reset return row scenario shepherd simply spec splice src swap swapdata swapping tania test true tutorial type ui ui-grid var visible waitforangular waters width wise zamora zomboid",
       "isDeprecated": false
     },
     {
