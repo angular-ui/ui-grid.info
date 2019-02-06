@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function () {
@@ -774,3 +774,17 @@
     }
   ]);
 })();
+
+angular.module('ui.grid.importer').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/importerMenuItem',
+    "<li class=\"ui-grid-menu-item\"><form><input class=\"ui-grid-importer-file-chooser\" type=\"file\" id=\"files\" name=\"files[]\"></form></li>"
+  );
+
+
+  $templateCache.put('ui-grid/importerMenuItemContainer',
+    "<div ui-grid-importer-menu-item></div>"
+  );
+
+}]);

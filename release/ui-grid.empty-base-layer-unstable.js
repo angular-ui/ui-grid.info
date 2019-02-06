@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function () {
@@ -166,3 +166,12 @@
       }]);
 
 })();
+
+angular.module('ui.grid.emptyBaseLayer').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/emptyBaseLayerContainer',
+    "<div class=\"ui-grid-empty-base-layer-container ui-grid-canvas\"><div class=\"ui-grid-row\" ng-repeat=\"(rowRenderIndex, row) in grid.baseLayer.emptyRows track by $index\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div><div><div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell {{ col.getColClass(false) }}\"></div></div></div></div></div>"
+  );
+
+}]);

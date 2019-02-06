@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function() {
@@ -559,3 +559,12 @@
     };
   }]);
 })();
+
+angular.module('ui.grid.resizeColumns').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/columnResizer',
+    "<div ui-grid-column-resizer ng-if=\"grid.options.enableColumnResizing\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\" unselectable=\"on\"></div>"
+  );
+
+}]);

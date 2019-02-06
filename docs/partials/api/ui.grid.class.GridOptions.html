@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/src/js/core/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/master/src/js/core/factories/GridOptions.js#L42" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/packages/core/src/js/factories/GridOptions.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/factories/GridOptions.js#L42" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">GridOptions</code>
 <div><span class="hint">function in module <code ng:non-bindable="">ui.grid</code>
 </span>
 </div>
@@ -12,7 +12,7 @@ developer to configure the behaviour of their ui-grid</p>
 <div class="usage"><pre class="prettyprint linenums">new GridOptions();</pre>
 </div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/src/js/core/directives/ui-grid-viewport.js#L59" class="view-source icon-eye-open"> </a><h3 id="methods_customscroller">customScroller(uiGridViewport, scrollHandler)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-viewport.js#L59" class="view-source icon-eye-open"> </a><h3 id="methods_customscroller">customScroller(uiGridViewport, scrollHandler)</h3>
 <div class="customscroller"><div class="customscroller-page"><p>(optional) uiGridViewport.on(&#39;scroll&#39;, scrollHandler) by default.
 A function that allows you to provide your own scroller function. It is particularly helpful if you want to use third party scrollers
 as this allows you to do that.</p>
@@ -33,19 +33,19 @@ the scrollHandler as the grid scrolling behavior will break without it.</div>
 </div></td></tr><tr><td>scrollHandler</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="customscroller-page"><p>Function that needs to be called when scrolling happens. (this gets passed in by the grid).</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/src/js/core/factories/GridOptions.js#L191" class="view-source icon-eye-open"> </a><h3 id="methods_getrowidentity">getRowIdentity()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/factories/GridOptions.js#L191" class="view-source icon-eye-open"> </a><h3 id="methods_getrowidentity">getRowIdentity()</h3>
 <div class="getrowidentity"><div class="getrowidentity-page"><p>This function returns the identity value uniquely identifying this row, if one is not present it does not set it.</p>
 <p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/src/js/core/factories/GridOptions.js#L455" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/factories/GridOptions.js#L466" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
 <div class="rowequality"><div class="rowequality-page"><p>By default, rows are compared using object equality.  This option can be overridden
 to compare on any data item property or function</p>
 </div><h5 id="methods_rowequality_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>entityA</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>First Data Item to compare</p>
 </div></td></tr><tr><td>entityB</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>Second Data Item to compare</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/src/js/core/factories/GridOptions.js#L179" class="view-source icon-eye-open"> </a><h3 id="methods_rowidentity">rowIdentity()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/factories/GridOptions.js#L179" class="view-source icon-eye-open"> </a><h3 id="methods_rowidentity">rowIdentity()</h3>
 <div class="rowidentity"><div class="rowidentity-page"><p>This function is used to get and, if necessary, set the value uniquely identifying this row (i.e. if an identity is not present it will set one).</p>
 <p>By default it returns the <code>$$hashKey</code> property if it exists. If it doesn&#39;t it uses gridUtil.nextUid() to generate one</p>
 </div></div>
@@ -181,6 +181,13 @@ to exclude.</p>
 <p>Defaults to [&#39;$$hashKey&#39;]</p>
 </div></div>
 </li>
+<li><h3 id="properties_filtercontainer">filterContainer</h3>
+<div class="filtercontainer"><div class="filtercontainer-page"><p>Sets the parent element for the column filter. <code>headerCell</code> places
+it in the header cell. <code>columnMenu</code> places it in the column menu.
+Can be changed for individual columns using the columnDefs.
+Defaults to <code>headerCell</code></p>
+</div></div>
+</li>
 <li><h3 id="properties_flatentityaccess">flatEntityAccess</h3>
 <div class="flatentityaccess"><div class="flatentityaccess-page"><p>Set to true if your columns are all related directly to fields in a flat object structure - i.e.
 each of your columns associate directly with a property on each of the entities in your data array.</p>
@@ -288,6 +295,20 @@ needMoreDataTop event when the user hits the top of the scrollbar.
 </li>
 <li><h3 id="properties_maxvisiblecolumncount">maxVisibleColumnCount</h3>
 <div class="maxvisiblecolumncount"><div class="maxvisiblecolumncount-page"><p>Defaults to 200</p>
+</div></div>
+</li>
+<li><h3 id="properties_menubuttontemplate">menuButtonTemplate</h3>
+<div class="menubuttontemplate"><div class="menubuttontemplate-page"><p>&#39;ui-grid/ui-grid-menu-button&#39; by default. When provided, this setting uses a custom grid menu button
+template. Can be set to either the name of a template file &#39;menuButton_template.html&#39;, inline html
+<pre class="prettyprint linenums">'&lt;div class="ui-grid-menu-button" ng-click="customToggleMenu()"&gt;&lt;div class="ui-grid-icon-container"&gt;&lt;i class="ui-grid-icon=menu"&gt;&nbsp;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;&lt;div ui-grid-menu menu-items="menuItems"&gt;&lt;/div&gt;'</pre>, or the id
+of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p>
+</div></div>
+</li>
+<li><h3 id="properties_menuitemtemplate">menuItemTemplate</h3>
+<div class="menuitemtemplate"><div class="menuitemtemplate-page"><p>&#39;ui-grid/uiGridMenuItem&#39; by default. When provided, this setting uses a custom grid menu item
+template. Can be set to either the name of a template file &#39;menuItem_template.html&#39;, inline html
+<pre class="prettyprint linenums">'&lt;li class="ui-grid-menu-item"&gt;&lt;label&gt;{{name}}&lt;/label&gt;&lt;/li&gt;'</pre>, or the id
+of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.</p>
 </div></div>
 </li>
 <li><h3 id="properties_minrowstoshow">minRowsToShow</h3>

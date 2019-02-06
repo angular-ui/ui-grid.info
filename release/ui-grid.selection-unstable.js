@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function () {
@@ -921,7 +921,9 @@
           scope: false,
           link: function ($scope, $elm, $attrs, uiGridCtrl) {
             var touchStartTime = 0,
-              touchTimeout = 300;
+              touchStartPos = {},
+              touchTimeout = 300,
+              touchPosDiff = 100;
 
             // Bind to keydown events in the render container
             if (uiGridCtrl.grid.api.cellNav) {
@@ -974,8 +976,9 @@
               }, touchTimeout);
             };
 
-            var touchStart = function () {
+            var touchStart = function (evt) {
               touchStartTime = (new Date()).getTime();
+              touchStartPos = evt.changedTouches[0];
 
               // if we get a touch event, then stop listening for click
               $elm.off('click', selectCells);
@@ -983,11 +986,17 @@
 
             var touchEnd = function (evt) {
               var touchEndTime = (new Date()).getTime();
+              var touchEndPos = evt.changedTouches[0];
               var touchTime = touchEndTime - touchStartTime;
+              var touchXDiff = Math.abs(touchStartPos.clientX - touchEndPos.clientX)
+              var touchYDiff = Math.abs(touchStartPos.clientY - touchEndPos.clientY)
 
-              if (touchTime < touchTimeout) {
+
+              if (touchXDiff < touchPosDiff && touchYDiff < touchPosDiff) {
+                if (touchTime < touchTimeout) {
                 // short touch
-                selectCells(evt);
+                  selectCells(evt);
+                }
               }
 
               // don't re-enable the click handler for a little while - some devices generate both, and it will
@@ -1070,3 +1079,32 @@
     };
   }]);
 })();
+
+angular.module('ui.grid.selection').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/gridFooterSelectedItems',
+    "<span ng-if=\"grid.selection.selectedCount !== 0 && grid.options.enableFooterTotalSelected\">({{\"search.selectedItems\" | t}} {{grid.selection.selectedCount}})</span>"
+  );
+
+
+  $templateCache.put('ui-grid/selectionHeaderCell',
+    "<div><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\" role=\"checkbox\" ng-model=\"grid.selection.selectAll\"></ui-grid-selection-select-all-buttons></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/selectionRowHeader',
+    "<div class=\"ui-grid-cell-contents ui-grid-disable-selection clickable\"><ui-grid-selection-row-header-buttons></ui-grid-selection-row-header-buttons></div>"
+  );
+
+
+  $templateCache.put('ui-grid/selectionRowHeaderButtons',
+    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" ng-click=\"selectButtonClick(row, $event)\" ng-keydown=\"selectButtonKeyDown(row, $event)\" role=\"checkbox\" ng-model=\"row.isSelected\">&nbsp;</div>"
+  );
+
+
+  $templateCache.put('ui-grid/selectionSelectAllButtons',
+    "<div role=\"button\" class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
+  );
+
+}]);

@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function () {
@@ -172,7 +172,7 @@
                * <pre>
                *      gridApi.grouping.on.aggregationChanged(scope,function(col) {})
                * </pre>
-               * @param {GridColumn} col the column which on which aggregation changed. The aggregation
+               * @param {GridColumn} col the column on which aggregation changed. The aggregation
                * type is available as `col.treeAggregation.type`
                */
               aggregationChanged: {},
@@ -185,7 +185,7 @@
                * <pre>
                *      gridApi.grouping.on.groupingChanged(scope,function(col) {})
                * </pre>
-               * @param {GridColumn} col the column which on which grouping changed. The new grouping is
+               * @param {GridColumn} col the column on which grouping changed. The new grouping is
                * available as `col.grouping`
                */
               groupingChanged: {}
@@ -689,7 +689,13 @@
         }
 
         column.treeAggregation = { type: uiGridGroupingConstants.aggregation.COUNT, source: 'grouping' };
-        column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations()[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
+
+        if ( column.colDef && angular.isFunction(column.colDef.customTreeAggregationFn) ) {
+          column.treeAggregationFn = column.colDef.customTreeAggregationFn;
+        } else {
+          column.treeAggregationFn = uiGridTreeBaseService.nativeAggregations()[uiGridGroupingConstants.aggregation.COUNT].aggregationFn;
+        }
+
         column.treeAggregationFinalizerFn = service.groupedFinalizerFn;
 
         grid.api.grouping.raise.groupingChanged(column);

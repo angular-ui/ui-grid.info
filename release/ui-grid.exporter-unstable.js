@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 /* global ExcelBuilder */
@@ -1138,7 +1138,10 @@
           if (typeof(field.value) === 'string') {
             return '"' + field.value.replace(/"/g,'""') + '"';
           }
-
+          if (typeof(field.value) === 'object' && !(field.value instanceof Date)) {
+            return '"' + JSON.stringify(field.value).replace(/"/g,'""') + '"';
+          }
+          // if field type is date, numberStr
           return JSON.stringify(field.value);
         },
 
@@ -1725,3 +1728,12 @@
     }
   ]);
 })();
+
+angular.module('ui.grid.exporter').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/csvLink',
+    "<span class=\"ui-grid-exporter-csv-link-span\"><a href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\" download=\"FILE_NAME\">LINK_LABEL</a></span>"
+  );
+
+}]);

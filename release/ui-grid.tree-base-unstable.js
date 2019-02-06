@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function () {
@@ -1100,7 +1100,7 @@
         var aggregations = service.getAggregations( grid );
 
         function createNode( row ) {
-          if ( typeof(row.entity.$$treeLevel) !== 'undefined' && row.treeLevel !== row.entity.$$treeLevel ) {
+          if ( !row.internalRow && row.treeLevel !== row.entity.$$treeLevel ) {
             row.treeLevel = row.entity.$$treeLevel;
           }
 
@@ -1376,26 +1376,34 @@
        * @param {array} parents the parents that we would want to aggregate onto
        */
       aggregate: function( grid, row, parents ) {
-        if ( parents.length === 0 && row.treeNode && row.treeNode.aggregations ) {
+        if (parents.length === 0 && row.treeNode && row.treeNode.aggregations) {
           row.treeNode.aggregations.forEach(function(aggregation) {
             // Calculate aggregations for footer even if there are no grouped rows
-            if ( typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ) {
+            if (typeof(aggregation.col.treeFooterAggregation) !== 'undefined') {
               var fieldValue = grid.getCellValue(row, aggregation.col);
               var numValue = Number(fieldValue);
-              aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
+              if (aggregation.col.treeAggregationFn) {
+                aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
+              } else {
+                aggregation.col.treeFooterAggregation.value = undefined;
+              }
             }
           });
         }
 
         parents.forEach( function( parent, index ) {
-          if ( parent.treeNode.aggregations ) {
+          if (parent.treeNode.aggregations) {
             parent.treeNode.aggregations.forEach( function( aggregation ) {
               var fieldValue = grid.getCellValue(row, aggregation.col);
               var numValue = Number(fieldValue);
               aggregation.col.treeAggregationFn(aggregation, fieldValue, numValue, row);
 
-              if ( index === 0 && typeof(aggregation.col.treeFooterAggregation) !== 'undefined' ) {
-                aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
+              if (index === 0 && typeof(aggregation.col.treeFooterAggregation) !== 'undefined') {
+                if (aggregation.col.treeAggregationFn) {
+                  aggregation.col.treeAggregationFn(aggregation.col.treeFooterAggregation, fieldValue, numValue, row);
+                } else {
+                  aggregation.col.treeFooterAggregation.value = undefined;
+                }
               }
             });
           }
@@ -1682,3 +1690,27 @@
       };
     });
 })();
+
+angular.module('ui.grid.treeBase').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('ui-grid/treeBaseExpandAllButtons',
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"headerButtonClass()\" ng-click=\"headerButtonClick($event)\"></div>"
+  );
+
+
+  $templateCache.put('ui-grid/treeBaseHeaderCell',
+    "<div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-tree-base-expand-all-buttons ng-if=\"grid.options.enableExpandAll\"></ui-grid-tree-base-expand-all-buttons></div></div>"
+  );
+
+
+  $templateCache.put('ui-grid/treeBaseRowHeader',
+    "<div class=\"ui-grid-cell-contents\"><ui-grid-tree-base-row-header-buttons></ui-grid-tree-base-row-header-buttons></div>"
+  );
+
+
+  $templateCache.put('ui-grid/treeBaseRowHeaderButtons',
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"treeButtonClass(row)\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
+  );
+
+}]);

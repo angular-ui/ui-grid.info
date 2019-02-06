@@ -1,10 +1,8 @@
 /*!
- * ui-grid - v4.6.2-8c861005 - 2018-07-18
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * Copyright (c) 2019 ; License: MIT 
  */
-@media screen and (max-width: 767px) {
-}@media (min-width: 768px) {
-}.ui-grid {
+.ui-grid {
   border: 1px solid #d4d4d4;
   box-sizing: content-box;
   -webkit-border-radius: 0px;
@@ -107,7 +105,8 @@
 .ui-grid-header-canvas:before,
 .ui-grid-header-canvas:after {
   content: "";
-  display: table;
+  display: -ms-flexbox;
+  display: flex;
   line-height: 0;
 }
 .ui-grid-header-canvas:after {
@@ -115,12 +114,19 @@
 }
 .ui-grid-header-cell-wrapper {
   position: relative;
-  display: table;
+  display: -ms-flexbox;
+  display: flex;
   box-sizing: border-box;
   height: 100%;
+  width: 100%;
 }
 .ui-grid-header-cell-row {
-  display: table-row;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .ui-grid-header-cell {
   position: relative;
@@ -128,7 +134,6 @@
   background-color: inherit;
   border-right: 1px solid;
   border-color: #d4d4d4;
-  display: table-cell;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -143,6 +148,11 @@
 }
 .ui-grid-header-cell .ui-grid-sort-priority-number {
   margin-left: -8px;
+}
+/* Fixes IE word-wrap if needed on header cells */
+.ui-grid-header-cell > div {
+  -ms-flex-basis: 100%;
+  flex-basis: 100%;
 }
 .ui-grid-header .ui-grid-vertical-bar {
   top: 0;
@@ -854,75 +864,15 @@ select.ui-grid-filter-select:hover {
     transform: rotate(359deg);
   }
 }
-/*---------------------------------------------------
-    LESS Elements 0.9
-  ---------------------------------------------------
-    A set of useful LESS mixins
-    More info at: http://lesselements.com
-  ---------------------------------------------------*/
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-@media screen and (max-width: 767px) {
-}@media (min-width: 768px) {
-}.ui-grid-cell-focus {
+.ui-grid-cell-focus {
   outline: 0;
   background-color: #b3c4c7;
 }
 .ui-grid-focuser {
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   z-index: -1;
   width: 100%;
   height: 100%;
@@ -930,8 +880,8 @@ select.ui-grid-filter-select:hover {
 .ui-grid-focuser:focus {
   border-color: #66afe9;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .ui-grid-offscreen {
   display: block;
@@ -941,32 +891,6 @@ select.ui-grid-filter-select:hover {
   clip: rect(0px, 0px, 0px, 0px);
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-cell input {
   border-radius: inherit;
   padding: 0;
@@ -991,32 +915,6 @@ select.ui-grid-filter-select:hover {
   border: 1px solid #d4d4d4;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-viewport .ui-grid-empty-base-layer-container {
   position: absolute;
   overflow: hidden;
@@ -1024,32 +922,6 @@ select.ui-grid-filter-select:hover {
   z-index: -1;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .expandableRow .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #fdfdfd;
 }
@@ -1067,116 +939,12 @@ select.ui-grid-filter-select:hover {
   border: 1px solid #d4d4d4;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-tree-header-row {
   font-weight: bold !important;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .movingColumn {
   position: absolute;
   top: 0;
@@ -1219,9 +987,7 @@ select.ui-grid-filter-select:hover {
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
-@media screen and (max-width: 767px) {
-}@media (min-width: 768px) {
-}.ui-grid-pager-panel {
+.ui-grid-pager-panel {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1261,8 +1027,8 @@ select.ui-grid-filter-select:hover {
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
+  background: #f3f3f3;
+  border: 1px solid #ccc;
   white-space: nowrap;
   padding: 6px 12px;
   font-size: 14px;
@@ -1273,136 +1039,81 @@ select.ui-grid-filter-select:hover {
   -ms-user-select: none;
   user-select: none;
   color: #eee;
-  background-color: #f3f3f3;
-  border-color: #ccc;
 }
-.ui-grid-pager-control button:focus,
-.ui-grid-pager-control button:active:focus,
-.ui-grid-pager-control button.active:focus,
-.ui-grid-pager-control button.focus,
-.ui-grid-pager-control button:active.focus,
-.ui-grid-pager-control button.active.focus {
+.ui-grid-pager-control button:hover {
+  border-color: #adadad;
+  text-decoration: none;
+}
+.ui-grid-pager-control button:focus {
+  border-color: #8c8c8c;
+  text-decoration: none;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-.ui-grid-pager-control button:hover,
-.ui-grid-pager-control button:focus,
-.ui-grid-pager-control button.focus {
-  color: #333;
-  text-decoration: none;
-}
-.ui-grid-pager-control button:active,
-.ui-grid-pager-control button.active {
+.ui-grid-pager-control button:active {
+  border-color: #adadad;
   outline: 0;
-  background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-.ui-grid-pager-control button.disabled,
-.ui-grid-pager-control button[disabled],
-fieldset[disabled] .ui-grid-pager-control button {
+.ui-grid-pager-control button:active:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.ui-grid-pager-control button:active:hover,
+.ui-grid-pager-control button:active:focus {
+  background-color: #c8c8c8;
+  border-color: #8c8c8c;
+}
+.ui-grid-pager-control button:hover,
+.ui-grid-pager-control button:focus,
+.ui-grid-pager-control button:active {
+  color: #eee;
+  background: #dadada;
+}
+.ui-grid-pager-control button[disabled] {
   cursor: not-allowed;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-a.ui-grid-pager-control button.disabled,
-fieldset[disabled] a.ui-grid-pager-control button {
-  pointer-events: none;
-}
-.ui-grid-pager-control button:focus,
-.ui-grid-pager-control button.focus {
-  color: #eee;
-  background-color: #dadada;
-  border-color: #8c8c8c;
-}
-.ui-grid-pager-control button:hover {
-  color: #eee;
-  background-color: #dadada;
-  border-color: #adadad;
-}
-.ui-grid-pager-control button:active,
-.ui-grid-pager-control button.active,
-.open > .dropdown-toggle.ui-grid-pager-control button {
-  color: #eee;
-  background-color: #dadada;
-  border-color: #adadad;
-}
-.ui-grid-pager-control button:active:hover,
-.ui-grid-pager-control button.active:hover,
-.open > .dropdown-toggle.ui-grid-pager-control button:hover,
-.ui-grid-pager-control button:active:focus,
-.ui-grid-pager-control button.active:focus,
-.open > .dropdown-toggle.ui-grid-pager-control button:focus,
-.ui-grid-pager-control button:active.focus,
-.ui-grid-pager-control button.active.focus,
-.open > .dropdown-toggle.ui-grid-pager-control button.focus {
-  color: #eee;
-  background-color: #c8c8c8;
-  border-color: #8c8c8c;
-}
-.ui-grid-pager-control button:active,
-.ui-grid-pager-control button.active,
-.open > .dropdown-toggle.ui-grid-pager-control button {
-  background-image: none;
-}
-.ui-grid-pager-control button.disabled:hover,
 .ui-grid-pager-control button[disabled]:hover,
-fieldset[disabled] .ui-grid-pager-control button:hover,
-.ui-grid-pager-control button.disabled:focus,
-.ui-grid-pager-control button[disabled]:focus,
-fieldset[disabled] .ui-grid-pager-control button:focus,
-.ui-grid-pager-control button.disabled.focus,
-.ui-grid-pager-control button[disabled].focus,
-fieldset[disabled] .ui-grid-pager-control button.focus {
+.ui-grid-pager-control button[disabled]:focus {
   background-color: #f3f3f3;
   border-color: #ccc;
 }
-.ui-grid-pager-control button .badge {
-  color: #f3f3f3;
-  background-color: #eee;
-}
 .ui-grid-pager-control input {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  height: 30px;
-  padding: 5px 10px;
-  font-size: 12px;
-  line-height: 1.5;
-  border-radius: 3px;
   display: inline;
   height: 26px;
   width: 50px;
   vertical-align: top;
+  color: #555555;
+  background: #fff;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
 }
 .ui-grid-pager-control input:focus {
   border-color: #66afe9;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
+.ui-grid-pager-control input[disabled],
+.ui-grid-pager-control input[readonly],
 .ui-grid-pager-control input::-moz-placeholder {
-  color: #999;
   opacity: 1;
 }
-.ui-grid-pager-control input:-ms-input-placeholder {
-  color: #999;
-}
+.ui-grid-pager-control input::-moz-placeholder,
+.ui-grid-pager-control input:-ms-input-placeholder,
 .ui-grid-pager-control input::-webkit-input-placeholder {
   color: #999;
 }
@@ -1411,25 +1122,11 @@ fieldset[disabled] .ui-grid-pager-control button.focus {
   background-color: transparent;
 }
 .ui-grid-pager-control input[disabled],
-.ui-grid-pager-control input[readonly],
-fieldset[disabled] .ui-grid-pager-control input {
+.ui-grid-pager-control input[readonly] {
   background-color: #eeeeee;
-  opacity: 1;
 }
-.ui-grid-pager-control input[disabled],
-fieldset[disabled] .ui-grid-pager-control input {
+.ui-grid-pager-control input[disabled] {
   cursor: not-allowed;
-}
-textarea.ui-grid-pager-control input {
-  height: auto;
-}
-select.ui-grid-pager-control input {
-  height: 30px;
-  line-height: 30px;
-}
-textarea.ui-grid-pager-control input,
-select[multiple].ui-grid-pager-control input {
-  height: auto;
 }
 .ui-grid-pager-control .ui-grid-pager-max-pages-number {
   vertical-align: bottom;
@@ -1496,23 +1193,14 @@ select[multiple].ui-grid-pager-control input {
   padding: 5px 10px;
 }
 .ui-grid-pager-row-count-picker select {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
   color: #555555;
-  background-color: #fff;
-  background-image: none;
+  background: #fff;
   border: 1px solid #ccc;
-  border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  height: 30px;
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
@@ -1525,16 +1213,16 @@ select[multiple].ui-grid-pager-control input {
 .ui-grid-pager-row-count-picker select:focus {
   border-color: #66afe9;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
+.ui-grid-pager-row-count-picker select[disabled],
+.ui-grid-pager-row-count-picker select[readonly],
 .ui-grid-pager-row-count-picker select::-moz-placeholder {
-  color: #999;
   opacity: 1;
 }
-.ui-grid-pager-row-count-picker select:-ms-input-placeholder {
-  color: #999;
-}
+.ui-grid-pager-row-count-picker select::-moz-placeholder,
+.ui-grid-pager-row-count-picker select:-ms-input-placeholder,
 .ui-grid-pager-row-count-picker select::-webkit-input-placeholder {
   color: #999;
 }
@@ -1543,25 +1231,11 @@ select[multiple].ui-grid-pager-control input {
   background-color: transparent;
 }
 .ui-grid-pager-row-count-picker select[disabled],
-.ui-grid-pager-row-count-picker select[readonly],
-fieldset[disabled] .ui-grid-pager-row-count-picker select {
+.ui-grid-pager-row-count-picker select[readonly] {
   background-color: #eeeeee;
-  opacity: 1;
 }
-.ui-grid-pager-row-count-picker select[disabled],
-fieldset[disabled] .ui-grid-pager-row-count-picker select {
+.ui-grid-pager-row-count-picker select[disabled] {
   cursor: not-allowed;
-}
-textarea.ui-grid-pager-row-count-picker select {
-  height: auto;
-}
-select.ui-grid-pager-row-count-picker select {
-  height: 30px;
-  line-height: 30px;
-}
-textarea.ui-grid-pager-row-count-picker select,
-select[multiple].ui-grid-pager-row-count-picker select {
-  height: auto;
 }
 .ui-grid-pager-row-count-picker .ui-grid-pager-row-count-label {
   margin-top: 3px;
@@ -1581,32 +1255,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
   text-decoration: none;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-pinned-container {
   position: absolute;
   display: inline;
@@ -1675,32 +1323,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
   background-color: #aeaeae;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-column-resizer {
   top: 0;
   bottom: 0;
@@ -1740,32 +1362,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
   background-color: #aeaeae;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-row-saving .ui-grid-cell {
   color: #848484 !important;
 }
@@ -1776,32 +1372,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
   color: #FF0000 !important;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
   background-color: #C9DDE1;
 }
@@ -1828,63 +1398,11 @@ select[multiple].ui-grid-pager-row-count-picker select {
   opacity: 1;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-tree-row-header-buttons.ui-grid-tree-header {
   cursor: pointer;
   opacity: 1;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-tree-header-row {
   font-weight: bold !important;
 }
@@ -1892,32 +1410,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
   pointer-events: all;
 }
 
-/* This file contains variable declarations (do not remove this line) */
-/*-- VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
-/**
-* @section Grid styles
-*/
-/**
-* @section Header styles
-*/
-/** @description Colors for header gradient */
-/**
-* @section Grid body styles
-*/
-/** @description Colors used for row alternation */
-/**
-* @section Grid Menu colors
-*/
-/**
-* @section Sort arrow colors
-*/
-/**
-* @section Scrollbar styles
-*/
-/**
-* @section font library path
-*/
-/*-- END VARIABLES (DO NOT REMOVE THESE COMMENTS) --*/
 .ui-grid-cell-contents.invalid {
   border: 1px solid #fc8f8f;
 }
