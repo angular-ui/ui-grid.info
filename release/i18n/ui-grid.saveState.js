@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.7.1 - 2019-02-07
+ * ui-grid - v4.8.0 - 2019-05-02
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -592,7 +592,7 @@
                     delete currentCol.filters[index].term;
                   }
                 });
-                grid.api.core.raise.filterChanged();
+                grid.api.core.raise.filterChanged( currentCol );
               }
 
               if ( !!grid.api.pinning && grid.options.savePinning && currentCol.renderContainer !== columnState.pinned ) {

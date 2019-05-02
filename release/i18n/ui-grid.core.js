@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.7.1 - 2019-02-07
+ * ui-grid - v4.8.0 - 2019-05-02
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -1377,7 +1377,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
                   $scope.col.filters.forEach( function(filter, i) {
                     filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
                       if (n !== o) {
-                        uiGridCtrl.grid.api.core.raise.filterChanged();
+                        uiGridCtrl.grid.api.core.raise.filterChanged( $scope.col );
                         uiGridCtrl.grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
                         uiGridCtrl.grid.queueGridRefresh();
                       }
@@ -3597,6 +3597,9 @@ function uiGridDirective($window, gridUtil, uiGridConstants) {
 
           // Resize the grid on window resize events
           function gridResize() {
+            if (!$elm.is(':visible')) {
+              return;
+            }
             grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
             grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
