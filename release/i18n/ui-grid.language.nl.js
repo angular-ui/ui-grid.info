@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.0 - 2019-05-02
+ * ui-grid - v4.8.3-3fa72bae - 2019-06-27
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -59,7 +59,7 @@
           exporterAllAsExcel: 'Exporteer alle data als excel',
           exporterVisibleAsExcel: 'Exporteer zichtbare data als excel',
           exporterSelectedAsExcel: 'Exporteer alle data als excel',
-          clearAllFilters: 'Reinig alle filters'
+          clearAllFilters: 'Alle filters wissen'
         },
         importer: {
           noHeaders: 'Kolomnamen kunnen niet worden afgeleid. Heeft het bestand een header?',

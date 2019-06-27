@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.0 - 2019-05-02
+ * ui-grid - v4.8.3-3fa72bae - 2019-06-27
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -945,6 +945,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             };
 
             $scope.$on( '$destroy', function() {
+              delete $scope.col.filterable;
               delete $scope.col.updateFilters;
             });
           },
@@ -3057,7 +3058,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
    </div>
    </doc:source>
    <doc:scenario>
-      it('should apply the right class to the element', function () {
+      xit('should apply the right class to the element', function () {
         element(by.css('.blah')).getCssValue('border-top-width')
           .then(function(c) {
             expect(c).toContain('1px');
@@ -3597,7 +3598,7 @@ function uiGridDirective($window, gridUtil, uiGridConstants) {
 
           // Resize the grid on window resize events
           function gridResize() {
-            if (!$elm.is(':visible')) {
+            if (!gridUtil.isVisible($elm)) {
               return;
             }
             grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
@@ -11221,6 +11222,10 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
     },
 
+    isVisible: function (elem) {
+      return !!( elem[0].offsetWidth || elem[0].offsetHeight || elem[0].getClientRects().length )
+    },
+
     // Thanks to http://stackoverflow.com/a/13382873/888165
     getScrollbarWidth: function() {
         var outer = document.createElement("div");
@@ -11234,6 +11239,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         var widthNoScroll = outer.offsetWidth;
         // force scrollbars
         outer.style.overflow = "scroll";
+        outer.style.position = "absolute"; // force Firefox to draw a scrollbar
 
         // add innerdiv
         var inner = document.createElement("div");

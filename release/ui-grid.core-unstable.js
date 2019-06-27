@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.6.6-25-g79f2781f-3e65421f - 2019-02-06
+ * ui-grid - v4.8.3-3fa72bae - 2019-06-27
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -945,6 +945,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             };
 
             $scope.$on( '$destroy', function() {
+              delete $scope.col.filterable;
               delete $scope.col.updateFilters;
             });
           },
@@ -1377,7 +1378,7 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
                   $scope.col.filters.forEach( function(filter, i) {
                     filterDeregisters.push($scope.$watch('col.filters[' + i + '].term', function(n, o) {
                       if (n !== o) {
-                        uiGridCtrl.grid.api.core.raise.filterChanged();
+                        uiGridCtrl.grid.api.core.raise.filterChanged( $scope.col );
                         uiGridCtrl.grid.api.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
                         uiGridCtrl.grid.queueGridRefresh();
                       }
@@ -3057,7 +3058,7 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
    </div>
    </doc:source>
    <doc:scenario>
-      it('should apply the right class to the element', function () {
+      xit('should apply the right class to the element', function () {
         element(by.css('.blah')).getCssValue('border-top-width')
           .then(function(c) {
             expect(c).toContain('1px');
@@ -3597,6 +3598,9 @@ function uiGridDirective($window, gridUtil, uiGridConstants) {
 
           // Resize the grid on window resize events
           function gridResize() {
+            if (!gridUtil.isVisible($elm)) {
+              return;
+            }
             grid.gridWidth = $scope.gridWidth = gridUtil.elementWidth($elm);
             grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
 
@@ -11218,6 +11222,10 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
 
     },
 
+    isVisible: function (elem) {
+      return !!( elem[0].offsetWidth || elem[0].offsetHeight || elem[0].getClientRects().length )
+    },
+
     // Thanks to http://stackoverflow.com/a/13382873/888165
     getScrollbarWidth: function() {
         var outer = document.createElement("div");
@@ -11231,6 +11239,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
         var widthNoScroll = outer.offsetWidth;
         // force scrollbars
         outer.style.overflow = "scroll";
+        outer.style.position = "absolute"; // force Firefox to draw a scrollbar
 
         // add innerdiv
         var inner = document.createElement("div");

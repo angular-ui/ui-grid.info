@@ -18,7 +18,7 @@ Iow, inside <code>method</code>, <code>this</code> always points to <code>object
 </div></td></tr></tbody></table><h5 id="methods_createboundedwrapper_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-function">Function</a></td><td><div class="createboundedwrapper-page"><p>The wrapper that performs the binding</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1153" class="view-source icon-eye-open"> </a><h3 id="methods_debounce">debounce(func, wait, immediate)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1158" class="view-source icon-eye-open"> </a><h3 id="methods_debounce">debounce(func, wait, immediate)</h3>
 <div class="debounce"><div class="debounce-page"><p>Copied from <a href="https://github.com/shahata/angular-debounce">https://github.com/shahata/angular-debounce</a>
 Takes a function, decorates it to execute only 1 time after multiple calls, and returns the decorated function</p>
 </div><h5 id="methods_debounce_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>func</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="debounce-page"><p>function to debounce</p>
@@ -35,7 +35,7 @@ debouncedFunc();
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1076" class="view-source icon-eye-open"> </a><h3 id="methods_denormalizescrollleft">denormalizeScrollLeft(element, scrollLeft, grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1081" class="view-source icon-eye-open"> </a><h3 id="methods_denormalizescrollleft">denormalizeScrollLeft(element, scrollLeft, grid)</h3>
 <div class="denormalizescrollleft"><div class="denormalizescrollleft-page"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method denormalizes a value for the current browser.</p>
 </div><h5 id="methods_denormalizescrollleft_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="denormalizescrollleft-page"><p>The element to normalize the <code>scrollLeft</code> value for</p>
 </div></td></tr><tr><td>scrollLeft</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="denormalizescrollleft-page"><p>The <code>scrollLeft</code> value to denormalize.</p>
@@ -109,20 +109,20 @@ GridUtil.getTemplate(url).then(function (contents) {
 </ul>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L773" class="view-source icon-eye-open"> </a><h3 id="methods_logdebug">logDebug()</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L778" class="view-source icon-eye-open"> </a><h3 id="methods_logdebug">logDebug()</h3>
 <div class="logdebug"><div class="logdebug-page"><p>wraps the $log method, allowing us to choose different
 treatment within ui-grid if we so desired.  At present we only log
 debug messages if uiGridConstants.LOG_DEBUG_MESSAGES is set to true</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L742" class="view-source icon-eye-open"> </a><h3 id="methods_logerror">logError(logMessage)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L747" class="view-source icon-eye-open"> </a><h3 id="methods_logerror">logError(logMessage)</h3>
 <div class="logerror"><div class="logerror-page"><p>wraps the $log method, allowing us to choose different
 treatment within ui-grid if we so desired.  At present we only log
 error messages if uiGridConstants.LOG_ERROR_MESSAGES is set to true</p>
 </div><h5 id="methods_logerror_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>logMessage</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="logerror-page"><p>message to be logged to the console</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L758" class="view-source icon-eye-open"> </a><h3 id="methods_logwarn">logWarn(logMessage)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L763" class="view-source icon-eye-open"> </a><h3 id="methods_logwarn">logWarn(logMessage)</h3>
 <div class="logwarn"><div class="logwarn-page"><p>wraps the $log method, allowing us to choose different
 treatment within ui-grid if we so desired.  At present we only log
 warning messages if uiGridConstants.LOG_WARN_MESSAGES is set to true</p>
@@ -141,7 +141,7 @@ var id = GridUtil.newId();
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1041" class="view-source icon-eye-open"> </a><h3 id="methods_normalizescrollleft">normalizeScrollLeft(element, grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1046" class="view-source icon-eye-open"> </a><h3 id="methods_normalizescrollleft">normalizeScrollLeft(element, grid)</h3>
 <div class="normalizescrollleft"><div class="normalizescrollleft-page"><p>Browsers currently handle RTL in different ways, resulting in inconsistent scrollLeft values. This method normalizes them</p>
 </div><h5 id="methods_normalizescrollleft_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>element</td><td><a href="" class="label type-hint type-hint-element">element</a></td><td><div class="normalizescrollleft-page"><p>The element to get the <code>scrollLeft</code> from.</p>
 </div></td></tr><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">grid</a></td><td><div class="normalizescrollleft-page"><ul>
@@ -150,7 +150,7 @@ var id = GridUtil.newId();
 </div></td></tr></tbody></table><h5 id="methods_normalizescrollleft_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="normalizescrollleft-page"><p>A normalized scrollLeft value for the current browser.</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L541" class="view-source icon-eye-open"> </a><h3 id="methods_normalizewheelevent">normalizeWheelEvent(event)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L546" class="view-source icon-eye-open"> </a><h3 id="methods_normalizewheelevent">normalizeWheelEvent(event)</h3>
 <div class="normalizewheelevent"><div class="normalizewheelevent-page"><p>Given an event from this list:</p>
 <p><code>wheel, mousewheel, DomMouseScroll, MozMousePixelScroll</code></p>
 <p>&quot;normalize&quot; it
@@ -159,7 +159,7 @@ so that it stays consistent no matter what browser it comes from (i.e. scale it 
 </div></td></tr></tbody></table><h5 id="methods_normalizewheelevent_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-event">event</a></td><td><div class="normalizewheelevent-page"><p>A normalized event</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1116" class="view-source icon-eye-open"> </a><h3 id="methods_preeval">preEval(path)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1121" class="view-source icon-eye-open"> </a><h3 id="methods_preeval">preEval(path)</h3>
 <div class="preeval"><div class="preeval-page"><p>Takes a field path and converts it to bracket notation to allow for special characters in path</p>
 </div><h5 id="methods_preeval_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>path</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="preeval-page"><p>Path to evaluate</p>
 </div></td></tr></tbody></table><h5 id="methods_preeval_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="preeval-page"><p>A path that is normalized.</p>
@@ -205,7 +205,7 @@ gridUtil.preEval('nested.deep.prop-erty') = "nested['deep']['prop-erty']"
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1212" class="view-source icon-eye-open"> </a><h3 id="methods_throttle">throttle(func, wait, options)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/ui-grid-util.js#L1217" class="view-source icon-eye-open"> </a><h3 id="methods_throttle">throttle(func, wait, options)</h3>
 <div class="throttle"><div class="throttle-page"><p>Adapted from debounce function (above)
 Potential keys for Params Object are:
    trailing (bool) - whether to trigger after throttle time ends if called multiple times

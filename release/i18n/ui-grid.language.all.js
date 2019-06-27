@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.0 - 2019-05-02
+ * ui-grid - v4.8.3-3fa72bae - 2019-06-27
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -1598,7 +1598,7 @@
           exporterAllAsExcel: 'Exporteer alle data als excel',
           exporterVisibleAsExcel: 'Exporteer zichtbare data als excel',
           exporterSelectedAsExcel: 'Exporteer alle data als excel',
-          clearAllFilters: 'Reinig alle filters'
+          clearAllFilters: 'Alle filters wissen'
         },
         importer: {
           noHeaders: 'Kolomnamen kunnen niet worden afgeleid. Heeft het bestand een header?',
@@ -2576,7 +2576,7 @@
           filterLabel: "Filter för kolumn: "
         },
         aggregate: {
-          label: 'Artiklar'
+          label: 'Poster'
         },
         groupPanel: {
           description: 'Dra en kolumnrubrik hit och släpp den för att gruppera efter den kolumnen.'
@@ -2587,9 +2587,9 @@
             notSelected: 'Rad är inte vald'
           },
           placeholder: 'Sök...',
-          showingItems: 'Visar artiklar:',
-          selectedItems: 'Valda artiklar:',
-          totalItems: 'Antal artiklar:',
+          showingItems: 'Visar:',
+          selectedItems: 'Valda:',
+          totalItems: 'Antal:',
           size: 'Sidstorlek:',
           first: 'Första sidan',
           next: 'Nästa sida',
@@ -2638,7 +2638,7 @@
           exporterAllAsExcel: 'Exportera all data till Excel',
           exporterVisibleAsExcel: 'Exportera synlig data till Excel',
           exporterSelectedAsExcel: 'Exportera markerad data till Excel',
-          clearAllFilters: 'Rengör alla filter'
+          clearAllFilters: 'Nollställ alla filter'
         },
         importer: {
           noHeaders: 'Kolumnnamn kunde inte härledas. Har filen ett sidhuvud?',
@@ -2655,8 +2655,8 @@
             pageForward: 'Gå en sida framåt',
             pageToLast: 'Gå till sista sidan'
           },
-          sizes: 'Artiklar per sida',
-          totalItems: 'Artiklar',
+          sizes: 'Poster per sida',
+          totalItems: 'Poster',
           through: 'genom',
           of: 'av'
         },

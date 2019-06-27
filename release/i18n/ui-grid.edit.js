@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.0 - 2019-05-02
+ * ui-grid - v4.8.3-3fa72bae - 2019-06-27
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -564,7 +564,7 @@
 
                 // Undbind the touchend handler, we don't need it anymore
                 $elm.off('touchend', touchEnd);
-              });
+              }).catch(angular.noop);
             }
 
             // Cancel any touchstart timeout

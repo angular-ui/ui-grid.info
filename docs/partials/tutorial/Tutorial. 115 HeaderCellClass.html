@@ -71,11 +71,11 @@ set the background and foreground color of the header if the sort direction is A
     var gridTestUtils = require('../../test/e2e/gridTestUtils.spec.js');
 
     describe( '115 header cell class', function() {
-      it('grid should have two visible columns', function () {
+      xit('grid should have two visible columns', function () {
         gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
       });
 
-      it('cell classes', function () {
+      xit('cell classes', function () {
         // blue for header 0
         expect( gridTestUtils.headerCell( 'grid1', 0 ).getCssValue('color')).toEqual('rgba(0, 0, 255, 1)');
 

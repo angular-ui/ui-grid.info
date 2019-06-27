@@ -125,7 +125,7 @@ performance.</p>
       gridTestUtils.expectHeaderColumnCount( 'grid1', 2 );
     });
 
-    it('add and remove columns from end, grid updates accordingly', function () {
+    xit('add and remove columns from end, grid updates accordingly', function () {
       element(by.id('button_add')).click();
       gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
@@ -136,7 +136,7 @@ performance.</p>
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
     });
 
-    it('add and remove columns in middle, grid updates accordingly', function () {
+    xit('add and remove columns in middle, grid updates accordingly', function () {
       element(by.id('button_splice')).click();
       gridTestUtils.expectHeaderColumnCount( 'grid1', 3 );
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Company' );
@@ -147,7 +147,7 @@ performance.</p>
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 1, 'Gender' );
     });
 
-    it('toggle column 0 visible should make column appear and disappear', function () {
+    xit('toggle column 0 visible should make column appear and disappear', function () {
       element(by.id('button_toggle_visible')).click();
       gridTestUtils.expectHeaderColumnCount( 'grid1', 1 );
       gridTestUtils.expectHeaderCellValueMatch( 'grid1', 0, 'Gender' );
