@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.1 - 2019-06-27
+ * ui-grid - v4.8.2 - 2019-10-07
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -1302,8 +1302,9 @@ function ($timeout, gridUtil, uiGridConstants, uiGridColumnMenuService, $documen
             };
 
             $scope.handleKeyDown = function(event) {
-              if (event.keyCode === 32) {
+              if (event.keyCode === 32 || event.keyCode === 13) {
                 event.preventDefault();
+                $scope.handleClick(event);
               }
             };
 
@@ -6172,8 +6173,8 @@ angular.module('ui.grid')
 
       /*-- Get the top, left, right, and bottom "scrolled" edges of the grid --*/
 
-      // The top boundary is the current Y scroll position PLUS the header height, because the header can obscure rows when the grid is scrolled downwards
-      var topBound = self.renderContainers.body.prevScrollTop + self.headerHeight;
+      // The top boundary is the current Y scroll position
+      var topBound = self.renderContainers.body.prevScrollTop;
 
       // Don't the let top boundary be less than 0
       topBound = (topBound < 0) ? 0 : topBound;
@@ -6212,7 +6213,7 @@ angular.module('ui.grid')
         // }
 
         // This is the minimum amount of pixels we need to scroll vertical in order to see this row.
-        var pixelsToSeeRow = (seekRowIndex * self.options.rowHeight + self.headerHeight);
+        var pixelsToSeeRow = (seekRowIndex * self.options.rowHeight);
 
         // Don't let the pixels required to see the row be less than zero
         pixelsToSeeRow = (pixelsToSeeRow < 0) ? 0 : pixelsToSeeRow;
@@ -6239,7 +6240,8 @@ angular.module('ui.grid')
           //   to get the full position we need
           scrollPixels = pixelsToSeeRow - bottomBound + self.renderContainers.body.prevScrollTop;
 
-          scrollEvent.y = getScrollY(scrollPixels, scrollLength,self.renderContainers.body.prevScrolltopPercentage);
+          // Scroll to full position plus the height of one row since scrollPixels points to the top pixel of the row
+          scrollEvent.y = getScrollY(scrollPixels + self.options.rowHeight, scrollLength, self.renderContainers.body.prevScrolltopPercentage);
         }
       }
 
@@ -12543,7 +12545,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid-header',
-    "<div role=\"rowgroup\" class=\"ui-grid-header\"><!-- theader --><div class=\"ui-grid-top-panel\"><div class=\"ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell-wrapper\" ng-style=\"colContainer.headerCellWrapperStyle()\"><div role=\"row\" class=\"ui-grid-header-cell-row\"><div class=\"ui-grid-header-cell ui-grid-clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.uid\" ui-grid-header-cell col=\"col\" render-index=\"$index\"></div></div></div></div></div></div></div>"
+    "<div role=\"rowgroup\" class=\"ui-grid-header\"><!-- theader --><div class=\"ui-grid-top-panel\"><div class=\"ui-grid-header-viewport\"><div class=\"ui-grid-header-canvas\"><div class=\"ui-grid-header-cell-wrapper\" ng-style=\"colContainer.headerCellWrapperStyle()\"><div role=\"row\" class=\"ui-grid-header-cell-row\"><div role=\"columnheader\" class=\"ui-grid-header-cell ui-grid-clearfix\" ng-repeat=\"col in colContainer.renderedColumns track by col.uid\" ui-grid-header-cell col=\"col\" render-index=\"$index\"></div></div></div></div></div></div></div>"
   );
 
 
