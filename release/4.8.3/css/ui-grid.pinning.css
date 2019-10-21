@@ -1,0 +1,67 @@
+.ui-grid-pinned-container {
+  position: absolute;
+  display: inline;
+  top: 0;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left {
+  float: left;
+  left: 0;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right {
+  float: right;
+  right: 0;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:last-child {
+  box-sizing: border-box;
+  border-right: 1px solid;
+  border-width: 1px;
+  border-right-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-cell:last-child {
+  box-sizing: border-box;
+  border-right: 1px solid;
+  border-width: 1px;
+  border-right-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:not(:last-child) .ui-grid-vertical-bar,
+.ui-grid-pinned-container .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
+  width: 1px;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:not(:last-child) .ui-grid-vertical-bar {
+  background-color: #d4d4d4;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
+  background-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-left .ui-grid-header-cell:last-child .ui-grid-vertical-bar {
+  right: -1px;
+  width: 1px;
+  background-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-header-cell:first-child {
+  box-sizing: border-box;
+  border-left: 1px solid;
+  border-width: 1px;
+  border-left-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-cell:first-child {
+  box-sizing: border-box;
+  border-left: 1px solid;
+  border-width: 1px;
+  border-left-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-header-cell:not(:first-child) .ui-grid-vertical-bar,
+.ui-grid-pinned-container .ui-grid-cell:not(:first-child) .ui-grid-vertical-bar {
+  width: 1px;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-header-cell:not(:first-child) .ui-grid-vertical-bar {
+  background-color: #d4d4d4;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-right .ui-grid-cell:not(:last-child) .ui-grid-vertical-bar {
+  background-color: #aeaeae;
+}
+.ui-grid-pinned-container.ui-grid-pinned-container-first .ui-grid-header-cell:first-child .ui-grid-vertical-bar {
+  left: -1px;
+  width: 1px;
+  background-color: #aeaeae;
+}

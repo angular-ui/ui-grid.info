@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.2 - 2019-10-07
+ * ui-grid - v4.8.3 - 2019-10-21
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -1562,9 +1562,8 @@
          * @ngdoc function
          * @name formatFieldAsExcel
          * @methodOf  ui.grid.exporter.service:uiGridExporterService
-         * @description Renders a single field as a csv field, including
-         * quotes around the value
-         * @param {field} field the field to be turned into a csv string,
+         * @description Renders a single field as a excel-ified field
+         * @param {field} field the field to be excel-ified,
          * may be of any type
          * @returns {string} a excel-ified version of the field
          */
@@ -1572,14 +1571,11 @@
           if (field.value == null) { // we want to catch anything null-ish, hence just == not ===
             return '';
           }
-          if (typeof(field.value) === 'number') {
+          if ((typeof(field.value) === 'number') || (typeof(field.value) === 'string')) {
             return field.value;
           }
           if (typeof(field.value) === 'boolean') {
             return (field.value ? 'TRUE' : 'FALSE') ;
-          }
-          if (typeof(field.value) === 'string') {
-            return field.value.replace(/"/g,'""');
           }
 
           return JSON.stringify(field.value);

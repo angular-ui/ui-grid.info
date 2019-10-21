@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.2 - 2019-10-07
+ * ui-grid - v4.8.3 - 2019-10-21
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -793,7 +793,7 @@
           }
 
           function selectButtonKeyDown(row, evt) {
-            if (evt.keyCode === 32) {
+            if (evt.keyCode === 32 || evt.keyCode === 13) {
               evt.preventDefault();
               selectButtonClick(row, evt);
             }
@@ -1099,12 +1099,12 @@ angular.module('ui.grid.selection').run(['$templateCache', function($templateCac
 
 
   $templateCache.put('ui-grid/selectionRowHeaderButtons',
-    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" ng-click=\"selectButtonClick(row, $event)\" ng-keydown=\"selectButtonKeyDown(row, $event)\" role=\"checkbox\" ng-model=\"row.isSelected\">&nbsp;</div>"
+    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" tabindex=\"0\" ng-click=\"selectButtonClick(row, $event)\" ng-keydown=\"selectButtonKeyDown(row, $event)\" role=\"checkbox\" ng-model=\"row.isSelected\">&nbsp;</div>"
   );
 
 
   $templateCache.put('ui-grid/selectionSelectAllButtons',
-    "<div role=\"button\" class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
+    "<div role=\"button\" tabindex=\"0\" class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
   );
 
 }]);

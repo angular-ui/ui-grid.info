@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.2 - 2019-10-07
+ * ui-grid - v4.8.3 - 2019-10-21
  * Copyright (c) 2019 ; License: MIT 
  */
 
@@ -1614,6 +1614,11 @@
           evt.stopPropagation();
           uiGridTreeBaseService.toggleRowTreeState(self, row, evt);
         };
+        $scope.treeButtonKeyDown = function (row, evt) {
+          if (evt.keyCode === 32 || evt.keyCode === 13) {
+            $scope.treeButtonClick(row, evt);
+          }
+        };
       }
     };
   }]);
@@ -1648,6 +1653,11 @@
             uiGridTreeBaseService.collapseAllRows(self, evt);
           } else {
             uiGridTreeBaseService.expandAllRows(self, evt);
+          }
+        };
+        $scope.headerButtonKeyDown = function (evt) {
+          if (evt.keyCode === 32 || evt.keyCode === 13) {
+            $scope.headerButtonClick(self, evt);
           }
         };
       }
@@ -1695,7 +1705,7 @@ angular.module('ui.grid.treeBase').run(['$templateCache', function($templateCach
   'use strict';
 
   $templateCache.put('ui-grid/treeBaseExpandAllButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"headerButtonClass()\" ng-click=\"headerButtonClick($event)\"></div>"
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" tabindex=\"0\" ng-class=\"headerButtonClass()\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
   );
 
 
@@ -1710,7 +1720,7 @@ angular.module('ui.grid.treeBase').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui-grid/treeBaseRowHeaderButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"treeButtonClass(row)\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
+    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" tabindex=\"0\" ng-keydown=\"treeButtonKeyDown(row, $event)\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"treeButtonClass(row)\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
   );
 
 }]);
