@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.8.3 - 2019-10-21
- * Copyright (c) 2019 ; License: MIT 
+ * ui-grid - v4.8.4 - 2020-09-14
+ * Copyright (c) 2020 ; License: MIT 
  */
 
 /* global ExcelBuilder */
