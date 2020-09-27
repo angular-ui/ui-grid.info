@@ -1,0 +1,1 @@
+.expandableRow .ui-grid-row:nth-child(odd) .ui-grid-cell{background-color:#fdfdfd}.expandableRow .ui-grid-row:nth-child(even) .ui-grid-cell{background-color:#f3f3f3}.ui-grid-cell.ui-grid-disable-selection.ui-grid-row-header-cell{pointer-events:none}.ui-grid-expandable-buttons-cell i{pointer-events:all}.scrollFiller{float:left;border:1px solid #d4d4d4}

@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.5 - 2020-09-14
+ * ui-grid - v4.9.0 - 2020-09-27
  * Copyright (c) 2020 ; License: MIT 
  */
 
@@ -12288,6 +12288,11 @@ module.filter('px', function() {
         }
       };
 
+      function getMissingText(path) {
+        $log.warn(i18nConstants.MISSING + path);
+        return '';
+      }
+
       var service = {
 
         /**
@@ -12364,14 +12369,13 @@ module.filter('px', function() {
         getSafeText: function (path, lang) {
           var language = lang || service.getCurrentLang(),
             trans = langCache.get(language),
-            missing = i18nConstants.MISSING + path,
             getter = $parse(path);
 
           if (!trans) {
-            return missing;
+            return getMissingText(path);
           }
 
-          return getter(trans) || missing;
+          return getter(trans) || getMissingText(path);
         },
 
         /**

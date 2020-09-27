@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.8.5 - 2020-09-14
+ * ui-grid - v4.9.0 - 2020-09-27
  * Copyright (c) 2020 ; License: MIT 
  */
 
@@ -981,6 +981,9 @@
                     }
                   });
 
+                  if ($elm[0]) {
+                    $elm[0].focus();
+                  }
                   $elm.on('blur', $scope.stopEdit);
                 });
 
