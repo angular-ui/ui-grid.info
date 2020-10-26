@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.9.0 - 2020-09-27
+ * ui-grid - v4.9.1 - 2020-10-26
  * Copyright (c) 2020 ; License: MIT 
  */
 
@@ -11776,7 +11776,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       return rtlScrollType.type;
     }
 
-    var definer = angular.element('<div dir="rtl" style="font-size: 14px; width: 1px; height: 1px; position: absolute; top: -1000px; overflow: scroll">A</div>')[0],
+    var definer = angular.element('<div dir="rtl" style="width: 1px; height: 1px; position: fixed; top: 0px; left: 0px; overflow: hidden"><div style="width: 2px"><span style="display: inline-block; width: 1px"></span><span style="display: inline-block; width: 1px"></span></div></div>')[0],
         type = 'reverse';
 
     document.body.appendChild(definer);
@@ -11785,9 +11785,16 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       type = 'default';
     }
     else {
-      definer.scrollLeft = 1;
-      if (definer.scrollLeft === 0) {
-        type = 'negative';
+      if (typeof Element !== 'undefined' && Element.prototype.scrollIntoView) {
+        definer.children[0].children[1].scrollIntoView();
+        if (definer.scrollLeft < 0) {
+          type = 'negative';
+        }
+      } else {
+        definer.scrollLeft = 1;
+        if (definer.scrollLeft === 0) {
+          type = 'negative';
+        }
       }
     }
 
