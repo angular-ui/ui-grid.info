@@ -1,0 +1,9 @@
+.ui-grid-row-saving .ui-grid-cell {
+  color: #848484 !important;
+}
+.ui-grid-row-dirty .ui-grid-cell {
+  color: #610B38;
+}
+.ui-grid-row-error .ui-grid-cell {
+  color: #FF0000 !important;
+}

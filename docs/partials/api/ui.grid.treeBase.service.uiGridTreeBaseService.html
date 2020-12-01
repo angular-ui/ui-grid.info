@@ -7,7 +7,7 @@
 <div class="description"><div class="ui-grid-treebase-service-page ui-grid-treebase-service-uigridtreebaseservice-page"><p>Services for treeBase feature</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1165" class="view-source icon-eye-open"> </a><h3 id="methods_addorusenode">addOrUseNode(grid, row, parents, aggregationBase)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1181" class="view-source icon-eye-open"> </a><h3 id="methods_addorusenode">addOrUseNode(grid, row, parents, aggregationBase)</h3>
 <div class="addorusenode"><div class="addorusenode-page"><p>Creates a tree node for this row.  If this row already has a treeNode
 recorded against it, preserves the state, but otherwise overwrites the data.</p>
 </div><h5 id="methods_addorusenode_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">grid</a></td><td><div class="addorusenode-page"><p>The grid we&#39;re operating on</p>
@@ -29,7 +29,7 @@ unignore these, and will perform a recursive sort against the tree that it build
 </div></td></tr></tbody></table><h5 id="methods_adjustsorting_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="adjustsorting-page"><p>renderableRows that we passed on through</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1373" class="view-source icon-eye-open"> </a><h3 id="methods_aggregate">aggregate(grid, row, parents)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1389" class="view-source icon-eye-open"> </a><h3 id="methods_aggregate">aggregate(grid, row, parents)</h3>
 <div class="aggregate"><div class="aggregate-page"><p>Accumulate the data from this row onto the aggregations for each parent</p>
 <p>Iterate over the parents, then iterate over the aggregations for each of those parents,
 and perform the aggregation for each individual aggregation</p>
@@ -49,7 +49,7 @@ false if this node is collapsed, or if any child node is not all expanded</p>
 </div></td></tr></tbody></table><h5 id="methods_allexpanded_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="allexpanded-page"><p>whether or not the tree is all expanded</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1318" class="view-source icon-eye-open"> </a><h3 id="methods_buildaggregationobject">buildAggregationObject(column)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1334" class="view-source icon-eye-open"> </a><h3 id="methods_buildaggregationobject">buildAggregationObject(column)</h3>
 <div class="buildaggregationobject"><div class="buildaggregationobject-page"><p>Build the object which is stored on the column for holding meta-data about the aggregation.
 This method should only be called with columns which have an aggregation.</p>
 </div><h5 id="methods_buildaggregationobject_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>column</td><td><a href="" class="label type-hint type-hint-gridcolumn">GridColumn</a></td><td><div class="buildaggregationobject-page"><p>The column which this object relates to</p>
@@ -114,13 +114,13 @@ set it to visible, otherwise set it to invisible</p>
 </div></td></tr><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">GridRow</a></td><td><div class="expandrowchildren-page"><p>the row we want to expand</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1501" class="view-source icon-eye-open"> </a><h3 id="methods_finaliseaggregation">finaliseAggregation(row, aggregation)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1517" class="view-source icon-eye-open"> </a><h3 id="methods_finaliseaggregation">finaliseAggregation(row, aggregation)</h3>
 <div class="finaliseaggregation"><div class="finaliseaggregation-page"><p>Helper function used to finalize aggregation nodes and footer cells</p>
 </div><h5 id="methods_finaliseaggregation_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">gridRow</a></td><td><div class="finaliseaggregation-page"><p>The parent we&#39;re finalising</p>
 </div></td></tr><tr><td>aggregation</td><td><a href="" class="label type-hint type-hint-aggregation">aggregation</a></td><td><div class="finaliseaggregation-page"><p>The aggregation object manipulated by the aggregationFn</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1535" class="view-source icon-eye-open"> </a><h3 id="methods_finaliseaggregations">finaliseAggregations(row)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1551" class="view-source icon-eye-open"> </a><h3 id="methods_finaliseaggregations">finaliseAggregations(row)</h3>
 <div class="finaliseaggregations"><div class="finaliseaggregations-page"><p>Format the data from the aggregation into the rendered text
 e.g. if we had label: &#39;sum: &#39; and value: 25, we&#39;d create &#39;sum: 25&#39;.</p>
 <p>As part of this we call any formatting callback routines we&#39;ve been provided.</p>
@@ -132,7 +132,7 @@ we need that information for the finaliserFn</p>
 </div><h5 id="methods_finaliseaggregations_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>row</td><td><a href="" class="label type-hint type-hint-gridrow">gridRow</a></td><td><div class="finaliseaggregations-page"><p>the parent we&#39;re finalising</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1273" class="view-source icon-eye-open"> </a><h3 id="methods_fixfilter">fixFilter(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1289" class="view-source icon-eye-open"> </a><h3 id="methods_fixfilter">fixFilter(grid)</h3>
 <div class="fixfilter"><div class="fixfilter-page"><p>After filtering has run, we need to go back through the tree
 and make sure the parent rows are always visible if any of the child rows
 are visible (filtering may make a child visible, but the parent may not
@@ -143,7 +143,7 @@ way down.</p>
 </div><h5 id="methods_fixfilter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="fixfilter-page"><p>the grid to fix filters on</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1342" class="view-source icon-eye-open"> </a><h3 id="methods_getaggregations">getAggregations(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1358" class="view-source icon-eye-open"> </a><h3 id="methods_getaggregations">getAggregations(grid)</h3>
 <div class="getaggregations"><div class="getaggregations-page"><p>Looks through the grid columns to find those with aggregations,
 and collates the aggregation information into an array, returns that array</p>
 </div><h5 id="methods_getaggregations_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="getaggregations-page"><p>the grid to get the aggregation information from</p>
@@ -167,7 +167,7 @@ all child nodes (and their descendents) of the provided node to the given state.
 </div></td></tr><tr><td>targetState</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setallnodes-page"><p>the state we want to set it to</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1199" class="view-source icon-eye-open"> </a><h3 id="methods_setcurrentstate">setCurrentState(parents)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1215" class="view-source icon-eye-open"> </a><h3 id="methods_setcurrentstate">setCurrentState(parents)</h3>
 <div class="setcurrentstate"><div class="setcurrentstate-page"><p>Looks at the parents array to determine our current state.
 If any node in the hierarchy is collapsed, then return collapsed, otherwise return
 expanded.</p>
@@ -175,7 +175,7 @@ expanded.</p>
 </div></td></tr></tbody></table><h5 id="methods_setcurrentstate_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setcurrentstate-page"><p>The state we should be setting to any nodes we see</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1228" class="view-source icon-eye-open"> </a><h3 id="methods_sorttree">sortTree(grid)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1244" class="view-source icon-eye-open"> </a><h3 id="methods_sorttree">sortTree(grid)</h3>
 <div class="sorttree"><div class="sorttree-page"><p>Performs a recursive sort on the tree nodes, sorting the
 children of each node and putting them back into the children array.</p>
 <p>Before doing this it turns back on all the sortIgnore - things that were previously
@@ -202,7 +202,7 @@ it&#39;s a parent row</p>
 </div></td></tr></tbody></table><h5 id="methods_treebasecolumnbuilder_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="treebasecolumnbuilder-page"><p>promise for the builder - actually we do it all inline so it&#39;s immediately resolved</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1567" class="view-source icon-eye-open"> </a><h3 id="methods_treefooteraggregationtype">treeFooterAggregationType(rows, column)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/tree-base/src/js/tree-base.js#L1583" class="view-source icon-eye-open"> </a><h3 id="methods_treefooteraggregationtype">treeFooterAggregationType(rows, column)</h3>
 <div class="treefooteraggregationtype"><div class="treefooteraggregationtype-page"><p>Uses the tree aggregation functions and finalizers to set the
 column footer aggregations.</p>
 </div><h5 id="methods_treefooteraggregationtype_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rows</td><td><a href="" class="label type-hint type-hint-rows">rows</a></td><td><div class="treefooteraggregationtype-page"><p>The visible rows. not used, but accepted to match signature of GridColumn.aggregationType</p>
