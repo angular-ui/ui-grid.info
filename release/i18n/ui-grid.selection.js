@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.10.0 - 2021-02-01
+ * ui-grid - v4.10.1 - 2021-05-28
  * Copyright (c) 2021 ; License: MIT 
  */
 
@@ -632,7 +632,7 @@
         clearSelectedRows: function (grid, evt) {
           var changedRows = [];
           service.getSelectedRows(grid).forEach(function (row) {
-            if (row.isSelected) {
+            if (row.isSelected && row.enableSelection !== false && grid.options.isRowSelectable(row) !== false) {
               row.setSelected(false);
               service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
             }
@@ -1104,7 +1104,7 @@ angular.module('ui.grid.selection').run(['$templateCache', function($templateCac
 
 
   $templateCache.put('ui-grid/selectionSelectAllButtons',
-    "<div role=\"button\" tabindex=\"0\" class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
+    "<div role=\"checkbox\" tabindex=\"0\" class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ui-grid-one-bind-aria-label=\"'selection.selectAll' | t\" aria-checked=\"{{grid.selection.selectAll}}\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
   );
 
 }]);
