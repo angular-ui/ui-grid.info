@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.10.1 - 2021-05-28
+ * ui-grid - v4.10.2 - 2021-06-14
  * Copyright (c) 2021 ; License: MIT 
  */
 
@@ -715,8 +715,8 @@
    </file>
    </example>
    */
-  module.directive('uiGridSelection', ['uiGridSelectionConstants', 'uiGridSelectionService', 'uiGridConstants',
-    function (uiGridSelectionConstants, uiGridSelectionService, uiGridConstants) {
+  module.directive('uiGridSelection', ['i18nService', 'uiGridSelectionConstants', 'uiGridSelectionService', 'uiGridConstants',
+    function (i18nService, uiGridSelectionConstants, uiGridSelectionService, uiGridConstants) {
       return {
         replace: true,
         priority: 0,
@@ -729,7 +729,7 @@
               if (uiGridCtrl.grid.options.enableRowHeaderSelection) {
                 var selectionRowHeaderDef = {
                   name: uiGridSelectionConstants.selectionRowHeaderColName,
-                  displayName: '',
+                  displayName: i18nService.getSafeText('selection.displayName'),
                   width: uiGridCtrl.grid.options.selectionRowHeaderWidth,
                   minWidth: 10,
                   cellTemplate: 'ui-grid/selectionRowHeader',
@@ -1099,7 +1099,7 @@ angular.module('ui.grid.selection').run(['$templateCache', function($templateCac
 
 
   $templateCache.put('ui-grid/selectionRowHeaderButtons',
-    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" tabindex=\"0\" ng-click=\"selectButtonClick(row, $event)\" ng-keydown=\"selectButtonKeyDown(row, $event)\" role=\"checkbox\" ng-model=\"row.isSelected\">&nbsp;</div>"
+    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" tabindex=\"0\" ng-click=\"selectButtonClick(row, $event)\" ng-keydown=\"selectButtonKeyDown(row, $event)\" ng-attr-aria-label=\"{{('selection.aria.row' | t) + ' ' + (row.index + 1) + ', ' + col.displayName}}\" aria-checked=\"{{row.isSelected}}\" role=\"checkbox\" ng-model=\"row.isSelected\">&nbsp;</div>"
   );
 
 

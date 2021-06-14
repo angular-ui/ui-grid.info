@@ -24,6 +24,15 @@ and currently include <code>uiGridConstants.aggregationTypes.count</code>,
 set of visible rows, and return a value that should be shown</p>
 </div></div>
 </li>
+<li><h3 id="properties_allowfloatwidth">allowFloatWidth</h3>
+<div class="allowfloatwidth"><div class="allowfloatwidth-page"><p>Allows float number in column width calculation</p>
+</div><h4 id="properties_allowfloatwidth_example">Example</h4>
+<div class="example"><div class="allowfloatwidth-page"><pre class="prettyprint linenums">  $scope.gridOptions.columnDefs = [ { field: 'field1', width: 50.5, allowFloatWidth: true},
+{ field: 'field2', width: '20%', allowFloatWidth: true},
+{ field: 'field3', width: '*', allowFloatWidth: true }]; </pre>
+</div></div>
+</div>
+</li>
 <li><h3 id="properties_cellclass">cellClass</h3>
 <div class="cellclass"><div class="cellclass-page"><p>cellClass can be a string specifying the class to append to a cell
 or it can be a function(grid, row, col, rowRenderIndex, colRenderIndex) that returns a class name</p>
