@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.10.2 - 2021-06-14
+ * ui-grid - v4.10.3 - 2021-08-01
  * Copyright (c) 2021 ; License: MIT 
  */
 
@@ -6088,13 +6088,12 @@ angular.module('ui.grid')
       var container = self.renderContainers[i],
         prevScrollTop = getPrevScrollValue(rowsAdded, container.prevScrollTop),
         prevScrollLeft = getPrevScrollValue(rowsAdded, container.prevScrollLeft),
-        prevScrolltopPercentage = rowsAdded || prevScrollTop > 0 ? null : container.prevScrolltopPercentage,
-        prevScrollleftPercentage = rowsAdded || prevScrollLeft > 0 ? null : container.prevScrollleftPercentage;
+        prevScrolltopPercentage = rowsAdded || prevScrollTop > 0 ? null : container.prevScrolltopPercentage;
 
       // gridUtil.logDebug('redrawing container', i);
 
       container.adjustRows(prevScrollTop, prevScrolltopPercentage);
-      container.adjustColumns(prevScrollLeft, prevScrollleftPercentage);
+      container.adjustColumns(prevScrollLeft);
     }
   };
 
@@ -8796,7 +8795,7 @@ angular.module('ui.grid')
       scrollLeft = (this.getCanvasWidth() - this.getViewportWidth()) * scrollPercentage;
     }
 
-    this.adjustColumns(scrollLeft, scrollPercentage);
+    this.adjustColumns(scrollLeft);
 
     this.prevScrollLeft = scrollLeft;
     this.prevScrollleftPercentage = scrollPercentage;
@@ -8853,7 +8852,7 @@ angular.module('ui.grid')
     self.prevRowScrollIndex = rowIndex;
   };
 
-  GridRenderContainer.prototype.adjustColumns = function adjustColumns(scrollLeft, scrollPercentage) {
+  GridRenderContainer.prototype.adjustColumns = function adjustColumns(scrollLeft) {
     var self = this;
 
     var minCols = self.minColumnsToRender();
@@ -8861,17 +8860,7 @@ angular.module('ui.grid')
     var columnCache = self.visibleColumnCache;
     var maxColumnIndex = columnCache.length - minCols;
 
-    // Calculate the scroll percentage according to the scrollLeft location, if no percentage was provided
-    if ((typeof(scrollPercentage) === 'undefined' || scrollPercentage === null) && scrollLeft) {
-      scrollPercentage = scrollLeft / self.getHorizontalScrollLength();
-    }
-
-    var colIndex = Math.ceil(Math.min(maxColumnIndex, maxColumnIndex * scrollPercentage));
-
-    // Define a max row index that we can't scroll past
-    if (colIndex > maxColumnIndex) {
-      colIndex = maxColumnIndex;
-    }
+    var colIndex = Math.min(maxColumnIndex, self.getLeftIndex(scrollLeft));
 
     var newRange = [];
     if (columnCache.length > self.grid.options.columnVirtualizationThreshold && self.getCanvasWidth() > self.getViewportWidth()) {
@@ -8890,6 +8879,21 @@ angular.module('ui.grid')
 
     self.prevColumnScrollIndex = colIndex;
   };
+
+  GridRenderContainer.prototype.getLeftIndex = function getLeftIndex(scrollLeft) {
+    var wholeLeftWidth = 0;
+    var index = 0
+    for (index; index < this.visibleColumnCache.length; index++) {
+      if (this.visibleColumnCache[index] && this.visibleColumnCache[index].visible) {
+        // accumulate the whole width of columns on the left side, till the point of visibility is surpassed, this is our wanted index
+        wholeLeftWidth += this.visibleColumnCache[index].drawnWidth;
+        if (wholeLeftWidth >= scrollLeft) {
+          break;
+        }
+      }
+    }
+    return index;
+  }
 
   // Method for updating the visible rows
   GridRenderContainer.prototype.updateViewableRowRange = function updateViewableRowRange(renderedRange) {
@@ -9892,7 +9896,10 @@ angular.module('ui.grid')
 var module = angular.module('ui.grid');
 
 function escapeRegExp(str) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  // based on https://github.com/sindresorhus/escape-string-regexp
+  // Escape characters with special meaning either inside or outside character sets.
+  // Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+  return str.replace(/[|\\{}()[\]^$+?*.]/g, '\\$&').replace(/-/g, '\\x2d');
 }
 
 
@@ -9967,13 +9974,10 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
 
     var term = rowSearcher.getTerm(filter);
 
-    if (/\*/.test(term)) {
-      var regexpFlags = '';
-      if (!filter.flags || !filter.flags.caseSensitive) {
-        regexpFlags += 'i';
-      }
-
-      var reText = term.replace(/(\\)?\*/g, function ($0, $1) { return $1 ? $0 : '[\\s\\S]*?'; });
+    if (/\*/.test(term)) {// this would check only start and end -> /^\*|\*$/
+      var regexpFlags = (!filter.flags || !filter.flags.caseSensitive) ? 'i' : '';
+      term = escapeRegExp(term);
+      var reText = term.replace(/\\\*/g, '.*?');// this would check only start and end -> /^\\\*|\\\*$/g
       return new RegExp('^' + reText + '$', regexpFlags);
     }
     // Otherwise default to default condition

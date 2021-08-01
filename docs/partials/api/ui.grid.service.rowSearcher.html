@@ -1,4 +1,4 @@
-<a href="https://github.com/angular-ui/ui-grid/edit/master/packages/core/src/js/services/rowSearcher.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L16" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rowSearcher</code>
+<a href="https://github.com/angular-ui/ui-grid/edit/master/packages/core/src/js/services/rowSearcher.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L19" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">rowSearcher</code>
 <div><span class="hint">service in module <code ng:non-bindable="">ui.grid</code>
 </span>
 </div>
@@ -7,14 +7,14 @@
 <div class="description"><div class="ui-grid-service-page ui-grid-service-rowsearcher-page"><p>Service for searching/filtering rows based on column value conditions.</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L30" class="view-source icon-eye-open"> </a><h3 id="methods_getterm">getTerm(filter)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L33" class="view-source icon-eye-open"> </a><h3 id="methods_getterm">getTerm(filter)</h3>
 <div class="getterm"><div class="getterm-page"><p>Get the term from a filter
 Trims leading and trailing whitespace</p>
 </div><h5 id="methods_getterm_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>filter</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="getterm-page"><p>object to use</p>
 </div></td></tr></tbody></table><h5 id="methods_getterm_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="getterm-page"><p>Parsed term</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L74" class="view-source icon-eye-open"> </a><h3 id="methods_guesscondition">guessCondition(filter)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L77" class="view-source icon-eye-open"> </a><h3 id="methods_guesscondition">guessCondition(filter)</h3>
 <div class="guesscondition"><div class="guesscondition-page"><p>Guess the condition for a filter based on its term
 <br>
 Defaults to STARTS_WITH. Uses CONTAINS for strings beginning and ending with <em>s (</em>bob<em>).
@@ -61,7 +61,7 @@ for loops everywhere else in this module...</p>
 </div></td></tr></tbody></table><h5 id="methods_setupfilters_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="setupfilters-page"><p>An array of parsed/preprocessed filters</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L51" class="view-source icon-eye-open"> </a><h3 id="methods_stripterm">stripTerm(filter)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L54" class="view-source icon-eye-open"> </a><h3 id="methods_stripterm">stripTerm(filter)</h3>
 <div class="stripterm"><div class="stripterm-page"><p>Remove leading and trailing asterisk (*) from the filter&#39;s term</p>
 </div><h5 id="methods_stripterm_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>filter</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="stripterm-page"><p>object to use</p>
 </div></td></tr></tbody></table><h5 id="methods_stripterm_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-uigridconstants">uiGridConstants.filter&lt;int&gt;</a></td><td><div class="stripterm-page"><p>Value representing the condition constant value</p>
