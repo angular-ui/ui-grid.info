@@ -38,7 +38,7 @@ the scrollHandler as the grid scrolling behavior will break without it.</div>
 <p>By default it returns the <code>$$hashKey</code> property but can be overridden to use any property or set of properties you want.</p>
 </div></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/factories/GridOptions.js#L466" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/factories/GridOptions.js#L487" class="view-source icon-eye-open"> </a><h3 id="methods_rowequality">rowEquality(entityA, entityB)</h3>
 <div class="rowequality"><div class="rowequality-page"><p>By default, rows are compared using object equality.  This option can be overridden
 to compare on any data item property or function</p>
 </div><h5 id="methods_rowequality_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>entityA</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="rowequality-page"><p>First Data Item to compare</p>
@@ -127,6 +127,13 @@ Filtering can then be disabled on individual columns using the columnDefs.</p>
 the column header, when true. The menu by default gives access to show/hide columns, but can be
 customised to show additional actions.</p>
 <p>See the <a href="#!/tutorial/121_grid_menu">Grid Menu tutorial</a> for more detailed information.</p>
+</div></div>
+</li>
+<li><h3 id="properties_enablehiding">enableHiding</h3>
+<div class="enablehiding"><div class="enablehiding-page"><p>True by default. When enabled, this setting adds ability to hide
+the column headers, allowing hiding of the column from the grid.
+Column hiding can then be disabled / enabled on individual columns using the columnDefs,
+if it set, it will override GridOptions enableHiding setting.</p>
 </div></div>
 </li>
 <li><h3 id="properties_enablehorizontalscrollbar">enableHorizontalScrollbar</h3>
@@ -374,6 +381,12 @@ The footer display Total Rows and Visible Rows (filtered rows)</p>
 <div class="showheader"><div class="showheader-page"><p>True by default. When set to false, this setting will replace the
 standard header template with &#39;<div></p>
 </div>', resulting in no header being shown.</div></div>
+</li>
+<li><h3 id="properties_suppressmultisort">suppressMultiSort</h3>
+<div class="suppressmultisort"><div class="suppressmultisort-page"><p>False by default. When enabled, this setting disables the ability
+to sort multiple columns by using the shift key or interacting with the column
+menu. Instead, each column sort will remove all other sorting.</p>
+</div></div>
 </li>
 <li><h3 id="properties_useexternalfiltering">useExternalFiltering</h3>
 <div class="useexternalfiltering"><div class="useexternalfiltering-page"><p>False by default. When enabled, this setting suppresses the internal filtering.

@@ -8,7 +8,7 @@
 to make the code easier to understand</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L214" class="view-source icon-eye-open"> </a><h3 id="methods_getcolumnelementposition">getColumnElementPosition($scope, column, $columnElement)</h3>
+<ul class="methods"><li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L222" class="view-source icon-eye-open"> </a><h3 id="methods_getcolumnelementposition">getColumnElementPosition($scope, column, $columnElement)</h3>
 <div class="getcolumnelementposition"><div class="getcolumnelementposition-page"><p>gets the position information needed to place the column
 menu below the column header</p>
 </div><h5 id="methods_getcolumnelementposition_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="getcolumnelementposition-page"><p>the $scope from the uiGridColumnMenu</p>
@@ -17,12 +17,12 @@ menu below the column header</p>
 </div></td></tr></tbody></table><h5 id="methods_getcolumnelementposition_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-hash">hash</a></td><td><div class="getcolumnelementposition-page"><p>containing left, top, offset, height, width</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L143" class="view-source icon-eye-open"> </a><h3 id="methods_getdefaultmenuitems">getDefaultMenuItems($scope)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L151" class="view-source icon-eye-open"> </a><h3 id="methods_getdefaultmenuitems">getDefaultMenuItems($scope)</h3>
 <div class="getdefaultmenuitems"><div class="getdefaultmenuitems-page"><p>returns the default menu items for a column menu</p>
 </div><h5 id="methods_getdefaultmenuitems_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="getdefaultmenuitems-page"><p>the $scope from the uiGridColumnMenu</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L130" class="view-source icon-eye-open"> </a><h3 id="methods_hideable">hideable($scope)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L133" class="view-source icon-eye-open"> </a><h3 id="methods_hideable">hideable($scope)</h3>
 <div class="hideable"><div class="hideable-page"><p>determines whether a column can be hidden, by checking the enableHiding columnDef option</p>
 </div><h5 id="methods_hideable_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="hideable-page"><p>the $scope from the uiGridColumnMenu</p>
 </div></td></tr></tbody></table></div>
@@ -35,14 +35,14 @@ the uiGridController</p>
 we&#39;re on</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L97" class="view-source icon-eye-open"> </a><h3 id="methods_isactivesort">isActiveSort($scope, direction)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L100" class="view-source icon-eye-open"> </a><h3 id="methods_isactivesort">isActiveSort($scope, direction)</h3>
 <div class="isactivesort"><div class="isactivesort-page"><p>determines whether the requested sort direction is current active, to
 allow highlighting in the menu</p>
 </div><h5 id="methods_isactivesort_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="isactivesort-page"><p>the $scope from the uiGridColumnMenu</p>
 </div></td></tr><tr><td>direction</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="isactivesort-page"><p>the direction that we&#39;d have selected for us to be active</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L248" class="view-source icon-eye-open"> </a><h3 id="methods_repositionmenu">repositionMenu($scope, column, positionData, $elm, $columnElement)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L256" class="view-source icon-eye-open"> </a><h3 id="methods_repositionmenu">repositionMenu($scope, column, positionData, $elm, $columnElement)</h3>
 <div class="repositionmenu"><div class="repositionmenu-page"><p>Reposition the menu below the new column.  If the menu has no child nodes
 (i.e. it&#39;s not currently visible) then we guess it&#39;s width at 100, we&#39;ll be called again
 later to fix it</p>
@@ -60,12 +60,12 @@ before calling the menu.</p>
 </div><h5 id="methods_setcolmenuitemwatch_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="setcolmenuitemwatch-page"><p>the $scope from the uiGridColumnMenu</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L83" class="view-source icon-eye-open"> </a><h3 id="methods_sortable">sortable($scope)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L86" class="view-source icon-eye-open"> </a><h3 id="methods_sortable">sortable($scope)</h3>
 <div class="sortable"><div class="sortable-page"><p>determines whether this column is sortable</p>
 </div><h5 id="methods_sortable_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="sortable-page"><p>the $scope from the uiGridColumnMenu</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L110" class="view-source icon-eye-open"> </a><h3 id="methods_suppressremovesort">suppressRemoveSort($scope)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/directives/ui-grid-column-menu.js#L113" class="view-source icon-eye-open"> </a><h3 id="methods_suppressremovesort">suppressRemoveSort($scope)</h3>
 <div class="suppressremovesort"><div class="suppressremovesort-page"><p>determines whether we should suppress the removeSort option</p>
 </div><h5 id="methods_suppressremovesort_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$scope</td><td><a href="" class="label type-hint type-hint-object">$scope</a></td><td><div class="suppressremovesort-page"><p>the $scope from the uiGridColumnMenu</p>
 </div></td></tr></tbody></table></div>

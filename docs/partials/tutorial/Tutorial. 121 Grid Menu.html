@@ -29,8 +29,9 @@ column headers have an internationalization filter (angular translate or i18nSer
 want them also internationalized in the grid menu.  The translate needs to return either a string,
 or a promise that will resolve to a string.  In the example below we create a fake
 internationalization function that waits 1 second then prefixes each column with &quot;col: &quot;.</p>
-<p>You can suppress the ability to show and hide columns by setting the gridOption <code>gridMenuShowHideColumns: false</code>,
-you can suppress the ability to hide individual columns by setting <code>enableHiding</code> on that columnDef to false.</p>
+<p>You can suppress the ability to show and hide columns on the grid menu button by setting the gridOption <code>gridMenuShowHideColumns: false</code>,
+you can suppress the ability to hide individual columns by setting <code>enableHiding</code> on that columnDef to false.
+you can suppress the ability to hide all columns by setting <code>enableHiding</code> on that gridOptions to false.</p>
 <p>The gridMenu button is still a bit ugly.  If you have the skills to do so we&#39;d welcome a PR that makes it pretty.
 In the meantime, you can override the height to fit with your application in your css:
 <pre class="prettyprint linenums">
