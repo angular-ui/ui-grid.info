@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.11.0 - 2021-08-12
- * Copyright (c) 2021 ; License: MIT 
+ * ui-grid - v4.11.1 - 2022-02-23
+ * Copyright (c) 2022 ; License: MIT 
  */
 
 (function () {
@@ -206,8 +206,8 @@
                  */
                 toggleRowSelection: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row != void 0 && row !== null) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, true);
                   }
                 },
                 /**
@@ -220,8 +220,8 @@
                  */
                 selectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && !row.isSelected) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row != void 0 && row !== null && !row.isSelected) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, true);
                   }
                 },
                 /**
@@ -237,8 +237,25 @@
                  */
                 selectRowByVisibleIndex: function (rowNum, evt) {
                   var row = grid.renderContainers.body.visibleRowCache[rowNum];
-                  if (row !== null && typeof (row) !== 'undefined' && !row.isSelected) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row != void 0 && row !== null && typeof (row) !== 'undefined' && !row.isSelected) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, false);
+                  }
+                },
+                /**
+                 * @ngdoc function
+                 * @name selectRowByKey
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description Select the data row
+                 * @param {boolean} isInEntity if true then key is in entity else it's directly in row
+                 * @param {Symbol} key the key to look for
+                 * @param {any} comparator the value that key should have
+                 * @param {Event} evt object if raised from an event
+                 * @param {array} lookInRows [optional] the rows to look in - if not provided then looks in grid.rows
+                */
+                selectRowByKey: function (isInEntity, key, comparator, evt, lookInRows) {
+                  var row = grid.findRowByKey(isInEntity, key, comparator, lookInRows);
+                  if (row != void 0 && row !== null && typeof (row) !== 'undefined' && !row.isSelected) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, false);
                   }
                 },
                 /**
@@ -251,8 +268,8 @@
                  */
                 unSelectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && row.isSelected) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row != void 0 && row !== null && row.isSelected) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, true);
                   }
                 },
                 /**
@@ -268,8 +285,25 @@
                  */
                 unSelectRowByVisibleIndex: function (rowNum, evt) {
                   var row = grid.renderContainers.body.visibleRowCache[rowNum];
-                  if (row !== null && typeof (row) !== 'undefined' && row.isSelected) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row != void 0 && row !== null && typeof (row) !== 'undefined' &&  row.isSelected) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, false);
+                  }
+                },
+                /**
+                 * @ngdoc function
+                 * @name unSelectRowByKey
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description Select the data row
+                 * @param {boolean} isInEntity if true then key is in entity else it's directly in row
+                 * @param {(string|number)} key the key to look for
+                 * @param {any} comparator the value that key should have
+                 * @param {Event} evt object if raised from an event
+                 * @param {array} lookInRows [optional] the rows to look in - if not provided then looks in grid.rows
+                */
+                unSelectRowByKey: function (isInEntity, key, comparator, evt, lookInRows) {
+                  var row = grid.findRowByKey(isInEntity, key, comparator, lookInRows);
+                  if (row != void 0 && row !== null && typeof (row) !== 'undefined' &&  row.isSelected) {
+                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect, false);
                   }
                 },
                 /**
@@ -331,14 +365,19 @@
                  * @ngdoc function
                  * @name getSelectedRows
                  * @methodOf  ui.grid.selection.api:PublicApi
-                 * @description returns all selectedRow's entity references
+                 * @description returns all selected Row's entity references
                  */
                 getSelectedRows: function () {
-                  return service.getSelectedRows(grid).map(function (gridRow) {
-                    return gridRow.entity;
-                  }).filter(function (entity) {
-                    return entity.hasOwnProperty('$$hashKey') || !angular.isObject(entity);
-                  });
+                  return service.mapAndFilterRowsByEntity(service.getSelectedRows(grid));
+                },
+                /**
+                 * @ngdoc function
+                 * @name getUnSelectedRows
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description returns all unselected Row's entity references
+                 */
+                getUnSelectedRows: function () {
+                  return service.mapAndFilterRowsByEntity(service.getUnSelectedRows(grid));
                 },
                 /**
                  * @ngdoc function
@@ -348,6 +387,15 @@
                  */
                 getSelectedGridRows: function () {
                   return service.getSelectedRows(grid);
+                },
+                /**
+                 * @ngdoc function
+                 * @name getSelectedGridRows
+                 * @methodOf  ui.grid.selection.api:PublicApi
+                 * @description returns all unselected Row's as gridRows
+                 */
+                getUnSelectedGridRows: function () {
+                  return service.getUnSelectedRows(grid);
                 },
                 /**
                  * @ngdoc function
@@ -536,38 +584,37 @@
          * @param {Event} evt object if resulting from event
          * @param {bool} multiSelect if false, only one row at time can be selected
          * @param {bool} noUnselect if true then rows cannot be unselected
+         * @param {bool} [canBeInvisible=true] if false, row can only be selected when it's (theoretically) visible
          */
-        toggleRowSelection: function (grid, row, evt, multiSelect, noUnselect) {
+         toggleRowSelection: function (grid, row, evt, multiSelect, noUnselect, canBeInvisible) {
           if ( row.enableSelection === false ) {
             return;
           }
 
-          var selected = row.isSelected,
-            selectedRows;
+          if (canBeInvisible === void 0) {
+            canBeInvisible = true;
+          }
+
+          var selected = row.isSelected;
 
           if (!multiSelect) {
             if (!selected) {
               service.clearSelectedRows(grid, evt);
             }
-            else {
-              selectedRows = service.getSelectedRows(grid);
-              if (selectedRows.length > 1) {
-                selected = false; // Enable reselect of the row
-                service.clearSelectedRows(grid, evt);
-              }
+            else if (service.getSelectedRows(grid).length > 1) {
+              selected = false; // Enable reselect of the row
+              service.clearSelectedRows(grid, evt);
             }
           }
 
           // only select row in this case
-          if (!(selected && noUnselect)) {
+          if (!(selected && noUnselect) && (canBeInvisible || row.visible)) {
             row.setSelected(!selected);
             if (row.isSelected === true) {
               grid.selection.lastSelectedRow = row;
             }
 
-            selectedRows = service.getSelectedRows(grid);
-            grid.selection.selectAll = grid.rows.length === selectedRows.length;
-
+            grid.selection.selectAll = grid.rows.length === service.getSelectedRows(grid).length;
             grid.api.selection.raise.rowSelectionChanged(row, evt);
           }
         },
@@ -620,6 +667,40 @@
             return row.isSelected;
           });
         },
+        /**
+         * @ngdoc function
+         * @name getUnSelectedRows
+         * @methodOf  ui.grid.selection.service:uiGridSelectionService
+         * @description Returns all the unselected rows
+         * @param {Grid} grid grid object
+         */
+        getUnSelectedRows: function (grid) {
+          return grid.rows.filter(function (row) {
+            return !row.isSelected;
+          });
+        },
+        /**
+         * @ngdoc function
+         * @name mapAndFilterRowsByEntity
+         * @methodOf  ui.grid.selection.service:uiGridSelectionService
+         * @description Filters all rows by entity and then maps them to Array.
+         */
+        mapAndFilterRowsByEntity: function(gridRows) {
+          if (typeof gridRows.reduce === 'function') { // If reduce is available it will be taken, due to better performance
+            return gridRows.reduce(function (previousVal, currentRow) {
+              if (currentRow.entity.hasOwnProperty('$$hashKey') || !angular.isObject(currentRow.entity)) {
+                previousVal.push(currentRow.entity);
+              }
+              return previousVal;
+            }, []);
+          }
+
+          return gridRows.filter(function (gridRow) { // stays as polyfill
+            return gridRow.entity.hasOwnProperty('$$hashKey') || !angular.isObject(gridRow.entity);
+          }).map(function (gridRow) {
+            return gridRow.entity;
+          });
+        },
 
         /**
          * @ngdoc function
@@ -632,7 +713,7 @@
         clearSelectedRows: function (grid, evt) {
           var changedRows = [];
           service.getSelectedRows(grid).forEach(function (row) {
-            if (row.isSelected && row.enableSelection !== false && grid.options.isRowSelectable(row) !== false) {
+            if (row.isSelected && row.enableSelection !== false) {
               row.setSelected(false);
               service.decideRaiseSelectionEvent(grid, row, changedRows, evt);
             }
@@ -807,17 +888,17 @@
             }
             else if (evt.ctrlKey || evt.metaKey) {
               uiGridSelectionService.toggleRowSelection(self, row, evt,
-                self.options.multiSelect, self.options.noUnselect);
+                self.options.multiSelect, self.options.noUnselect, false);
             }
             else if (row.groupHeader) {
-              uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect);
+              uiGridSelectionService.toggleRowSelection(self, row, evt, self.options.multiSelect, self.options.noUnselect, false);
               for (var i = 0; i < row.treeNode.children.length; i++) {
-                uiGridSelectionService.toggleRowSelection(self, row.treeNode.children[i].row, evt, self.options.multiSelect, self.options.noUnselect);
+                uiGridSelectionService.toggleRowSelection(self, row.treeNode.children[i].row, evt, self.options.multiSelect, self.options.noUnselect, false);
               }
             }
             else {
               uiGridSelectionService.toggleRowSelection(self, row, evt,
-                (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect);
+                (self.options.multiSelect && !self.options.modifierKeysToMultiSelect), self.options.noUnselect, false);
             }
             self.options.enableFocusRowOnRowHeaderClick && row.setFocused(!row.isFocused) && self.api.selection.raise.rowFocusChanged(row, evt);
           }
@@ -938,7 +1019,7 @@
                   evt.preventDefault();
                   uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt,
                     ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect),
-                    $scope.grid.options.noUnselect);
+                    $scope.grid.options.noUnselect, false);
                   $scope.$apply();
                 }
               });
@@ -958,12 +1039,12 @@
               }
               else if (evt.ctrlKey || evt.metaKey) {
                 uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt,
-                  $scope.grid.options.multiSelect, $scope.grid.options.noUnselect);
+                  $scope.grid.options.multiSelect, $scope.grid.options.noUnselect, false);
               }
               else if ($scope.grid.options.enableSelectRowOnFocus) {
                 uiGridSelectionService.toggleRowSelection($scope.grid, $scope.row, evt,
                   ($scope.grid.options.multiSelect && !$scope.grid.options.modifierKeysToMultiSelect),
-                  $scope.grid.options.noUnselect);
+                  $scope.grid.options.noUnselect, false);
               }
               $scope.row.setFocused(!$scope.row.isFocused);
               $scope.grid.api.selection.raise.rowFocusChanged($scope.row, evt);

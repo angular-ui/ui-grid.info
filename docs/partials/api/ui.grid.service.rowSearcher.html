@@ -23,7 +23,7 @@ Uses STARTS_WITH for strings ending with * (bo</em>). Uses ENDS_WITH for strings
 </div></td></tr></tbody></table><h5 id="methods_guesscondition_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-uigridconstants">uiGridConstants.filter&lt;int&gt;</a></td><td><div class="guesscondition-page"><p>Value representing the condition constant value</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L180" class="view-source icon-eye-open"> </a><h3 id="methods_runcolumnfilter">runColumnFilter(grid, row, column, filter)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L173" class="view-source icon-eye-open"> </a><h3 id="methods_runcolumnfilter">runColumnFilter(grid, row, column, filter)</h3>
 <div class="runcolumnfilter"><div class="runcolumnfilter-page"><p>Runs a single pre-parsed filter against a cell, returning true
 if the cell matches that one filter.</p>
 </div><h5 id="methods_runcolumnfilter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="runcolumnfilter-page"><p>the grid we&#39;re working against</p>
@@ -33,7 +33,7 @@ if the cell matches that one filter.</p>
 </div></td></tr></tbody></table><h5 id="methods_runcolumnfilter_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="runcolumnfilter-page"><p>true if we match (row stays visible)</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L316" class="view-source icon-eye-open"> </a><h3 id="methods_search">search(grid, rows, columns)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L298" class="view-source icon-eye-open"> </a><h3 id="methods_search">search(grid, rows, columns)</h3>
 <div class="search"><div class="search-page"><p>Run a search across the given rows and columns, marking any rows that don&#39;t
 match the stored col.filters or col.filter as invisible.</p>
 </div><h5 id="methods_search_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="search-page"><p>Grid instance to search inside</p>
@@ -41,7 +41,7 @@ match the stored col.filters or col.filter as invisible.</p>
 </div></td></tr><tr><td>columns</td><td><a href="" class="label type-hint type-hint-array">Array[GridColumn]</a></td><td><div class="search-page"><p>GridColumns with filters to process</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L285" class="view-source icon-eye-open"> </a><h3 id="methods_searchcolumn">searchColumn(grid, row, column, filters)</h3>
+<li><a href="https://github.com/angular-ui/ui-grid/blob/master/packages/core/src/js/services/rowSearcher.js#L269" class="view-source icon-eye-open"> </a><h3 id="methods_searchcolumn">searchColumn(grid, row, column, filters)</h3>
 <div class="searchcolumn"><div class="searchcolumn-page"><p>Process provided filters on provided column against a given row. If the row meets
 the conditions on all the filters, return true.</p>
 </div><h5 id="methods_searchcolumn_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>grid</td><td><a href="" class="label type-hint type-hint-grid">Grid</a></td><td><div class="searchcolumn-page"><p>Grid to search in</p>

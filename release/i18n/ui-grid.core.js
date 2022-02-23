@@ -1,6 +1,6 @@
 /*!
- * ui-grid - v4.11.0 - 2021-08-12
- * Copyright (c) 2021 ; License: MIT 
+ * ui-grid - v4.11.1 - 2022-02-23
+ * Copyright (c) 2022 ; License: MIT 
  */
 
 (function() {
@@ -3078,7 +3078,9 @@ function ($compile, $timeout, $window, $document, gridUtil, uiGridConstants, i18
 
         if (interpolateFn) {
           $scope.$watch(interpolateFn, function(value) {
-            $elm.text(value);
+            for (var i = 0; i < $elm.length; i++) {
+              $elm[i].textContent = value;
+            }
           });
         }
       }
@@ -4535,11 +4537,9 @@ angular.module('ui.grid')
    * @param {string} name column name
    */
   Grid.prototype.getColumn = function getColumn(name) {
-    var columns = this.columns.filter(function (column) {
+    return rowColumnFinder(this.columns, function (column) {
       return column.colDef.name === name;
     });
-
-    return columns.length > 0 ? columns[0] : null;
   };
 
   /**
@@ -4550,10 +4550,9 @@ angular.module('ui.grid')
    * @param {string} name column.field
    */
   Grid.prototype.getColDef = function getColDef(name) {
-    var colDefs = this.options.columnDefs.filter(function (colDef) {
+    return rowColumnFinder(this.options.columnDefs, function (colDef) {
       return colDef.name === name;
     });
-    return colDefs.length > 0 ? colDefs[0] : null;
   };
 
   /**
@@ -4922,6 +4921,25 @@ angular.module('ui.grid')
     return t;
   };
 
+  var rowColumnFinder = function(array, func) {
+    if (array && array.length) {
+      if (angular.isFunction(array.find)) {
+        return array.find(func) || null;
+      }
+
+      var result = null;
+      array.every(function (entry) {
+        if (func(entry)) {
+          result = entry;
+          return false;
+        }
+        return true;
+      });
+      return result;
+    }
+    return null;
+  }
+
   /**
    * @ngdoc function
    * @name getRow
@@ -4933,15 +4951,71 @@ angular.module('ui.grid')
    */
   Grid.prototype.getRow = function getRow(rowEntity, lookInRows) {
     var self = this;
-
-    lookInRows = typeof(lookInRows) === 'undefined' ? self.rows : lookInRows;
-
-    var rows = lookInRows.filter(function (row) {
+    lookInRows = lookInRows == void 0 ? this.rows : lookInRows;
+    return rowColumnFinder(lookInRows, function (row) {
       return self.options.rowEquality(row.entity, rowEntity);
     });
-    return rows.length > 0 ? rows[0] : null;
   };
 
+  /**
+   * @ngdoc function
+   * @name getRowsByKey
+   * @methodOf ui.grid.class:Grid
+   * @description returns the GridRows who have an key that is equal to comparator
+   * @param {boolean} isInEntity if true then key is in entity else it's directly in row
+   * @param {(string|number)} key the key to look for
+   * @param {any} comparator the value that key should have
+   * @param {array} lookInRows [optional] the rows to look in - if not provided then
+   * looks in grid.rows
+   */
+  Grid.prototype.getRowsByKey = function getRowsByKey(isInEntity, key, comparator, lookInRows) {
+    if ( key == void 0 ) {
+      return null;
+    }
+
+    lookInRows = lookInRows == void 0 ? this.rows : lookInRows;
+    var func = isInEntity ? function (row) {
+      return row.entity != void 0 && row.entity.hasOwnProperty(key) && row.entity[key] === comparator;
+    } : function (row) {
+      return row.hasOwnProperty(key) && row[key] === comparator;
+    }
+
+    return lookInRows.filter(func);
+  };
+
+  /**
+   * @ngdoc function
+   * @name findRowByKey
+   * @methodOf ui.grid.class:Grid
+   * @description returns the first GridRow which has an key that is equal to comparator
+   * @param {boolean} isInEntity if true then key is in entity else it's directly in row
+   * @param {(string|number)} key the key to look for
+   * @param {any} comparator the value that key should have
+   * @param {array} lookInRows [optional] the rows to look in - if not provided then
+   * looks in grid.rows
+   */
+  Grid.prototype.findRowByKey = function findRowByKey(isInEntity, key, comparator, lookInRows) {
+    var result = null;
+    if ( key != void 0 ) {
+      lookInRows = lookInRows == void 0 ? this.rows : lookInRows;
+      var func = isInEntity ? function (row) {
+        if ( row.entity != void 0 && row.entity.hasOwnProperty(key) && row.entity[key] === comparator ) {
+          result = row;
+          return false;
+        }
+        return true;
+      } : function (row) {
+        if ( row.hasOwnProperty(key) && row[key] === comparator ) {
+          result = row;
+          return false;
+        }
+        return true;
+      }
+
+      lookInRows.every(func);
+    }
+    return result
+  };
 
   /**
    * @ngdoc function
@@ -10036,8 +10110,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
   rowSearcher.setupFilters = function setupFilters( filters ) {
     var newFilters = [];
 
-    var filtersLength = filters.length;
-    for ( var i = 0; i < filtersLength; i++ ) {
+    for ( var i = 0; i < filters.length; i++ ) {
       var filter = filters[i];
 
       if ( filter.noTerm || !gridUtil.isNullOrUndefined(filter.term) ) {
@@ -10056,30 +10129,24 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
             newFilter.term = rowSearcher.stripTerm(filter);
           }
         }
+
         newFilter.noTerm = filter.noTerm;
-
-        if ( filter.condition ) {
-          newFilter.condition = filter.condition;
-        } else {
-          newFilter.condition = rowSearcher.guessCondition(filter);
-        }
-
+        newFilter.condition = filter.condition || rowSearcher.guessCondition(filter);
         newFilter.flags = angular.extend( { caseSensitive: false, date: false }, filter.flags );
 
-        if (newFilter.condition === uiGridConstants.filter.STARTS_WITH) {
-          newFilter.startswithRE = new RegExp('^' + newFilter.term, regexpFlags);
-        }
-
-         if (newFilter.condition === uiGridConstants.filter.ENDS_WITH) {
-          newFilter.endswithRE = new RegExp(newFilter.term + '$', regexpFlags);
-        }
-
-        if (newFilter.condition === uiGridConstants.filter.CONTAINS) {
-          newFilter.containsRE = new RegExp(newFilter.term, regexpFlags);
-        }
-
-        if (newFilter.condition === uiGridConstants.filter.EXACT) {
-          newFilter.exactRE = new RegExp('^' + newFilter.term + '$', regexpFlags);
+        switch (newFilter.condition) {
+          case uiGridConstants.filter.STARTS_WITH:
+            newFilter.startswithRE = new RegExp('^' + newFilter.term, regexpFlags);
+            break;
+          case uiGridConstants.filter.ENDS_WITH:
+            newFilter.endswithRE = new RegExp(newFilter.term + '$', regexpFlags);
+            break;
+          case uiGridConstants.filter.EXACT:
+            newFilter.exactRE = new RegExp('^' + newFilter.term + '$', regexpFlags);
+            break;
+          case uiGridConstants.filter.CONTAINS:
+            newFilter.containsRE = new RegExp(newFilter.term, regexpFlags);
+            break;
         }
 
         newFilters.push(newFilter);
@@ -10110,13 +10177,10 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     var term = filter.term;
 
     // Get the column value for this row
-    var value;
-    if ( column.filterCellFiltered ) {
-      value = grid.getCellDisplayValue(row, column);
-    } else {
-      value = grid.getCellValue(row, column);
+    var value = column.filterCellFiltered ? grid.getCellDisplayValue(row, column) : grid.getCellValue(row, column);
+    if (value == void 0) {
+      value = "";
     }
-
 
     // If the filter's condition is a RegExp, then use it
     if (filter.condition instanceof RegExp) {
@@ -10145,8 +10209,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     }
 
     if (filter.condition === uiGridConstants.filter.NOT_EQUAL) {
-      var regex = new RegExp('^' + term + '$');
-      return !regex.exec(value);
+      return !new RegExp('^' + term + '$').test(value);
     }
 
     if (typeof(value) === 'number' && typeof(term) === 'string' ) {
@@ -10165,20 +10228,15 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       term = new Date(term.replace(/\\/g, ''));
     }
 
-    if (filter.condition === uiGridConstants.filter.GREATER_THAN) {
-      return (value > term);
-    }
-
-    if (filter.condition === uiGridConstants.filter.GREATER_THAN_OR_EQUAL) {
-      return (value >= term);
-    }
-
-    if (filter.condition === uiGridConstants.filter.LESS_THAN) {
-      return (value < term);
-    }
-
-    if (filter.condition === uiGridConstants.filter.LESS_THAN_OR_EQUAL) {
-      return (value <= term);
+    switch (filter.condition) {
+      case uiGridConstants.filter.GREATER_THAN:
+        return (value > term);
+      case uiGridConstants.filter.GREATER_THAN_OR_EQUAL:
+        return (value >= term);
+      case uiGridConstants.filter.LESS_THAN:
+        return (value < term);
+      case uiGridConstants.filter.LESS_THAN_OR_EQUAL:
+        return (value <= term);
     }
 
     return true;
@@ -10212,13 +10270,11 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       return true;
     }
 
-    var filtersLength = filters.length;
-    for (var i = 0; i < filtersLength; i++) {
+    for (var i = 0; i < filters.length; i++) {
       var filter = filters[i];
 
       if ( !gridUtil.isNullOrUndefined(filter.term) && filter.term !== '' || filter.noTerm ) {
-        var ret = rowSearcher.runColumnFilter(grid, row, column, filter);
-        if (!ret) {
+        if (!rowSearcher.runColumnFilter(grid, row, column, filter)) {
           return false;
         }
       }
@@ -10258,8 +10314,6 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
     // Build list of filters to apply
     var filterData = [];
 
-    var colsLength = columns.length;
-
     var hasTerm = function( filters ) {
       var hasTerm = false;
 
@@ -10272,7 +10326,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       return hasTerm;
     };
 
-    for (var i = 0; i < colsLength; i++) {
+    for (var i = 0; i < columns.length; i++) {
       var col = columns[i];
 
       if (typeof(col.filters) !== 'undefined' && hasTerm(col.filters) ) {
@@ -10289,15 +10343,13 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
       };
 
       var foreachFilterCol = function(grid, filterData) {
-        var rowsLength = rows.length;
-        for ( var i = 0; i < rowsLength; i++) {
+        for ( var i = 0; i < rows.length; i++) {
           foreachRow(grid, rows[i], filterData.col, filterData.filters);
         }
       };
 
       // nested loop itself - foreachFilterCol, which in turn calls foreachRow
-      var filterDataLength = filterData.length;
-      for ( var j = 0; j < filterDataLength; j++) {
+      for ( var j = 0; j < filterData.length; j++) {
         foreachFilterCol( grid, filterData[j] );
       }
 
@@ -10332,17 +10384,7 @@ var module = angular.module('ui.grid');
  *
  */
 
-module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGridConstants) {
-  var currencyRegexStr =
-    '(' +
-    uiGridConstants.CURRENCY_SYMBOLS
-      .map(function (a) { return '\\' + a; }) // Escape all the currency symbols ($ at least will jack up this regex)
-      .join('|') + // Join all the symbols together with |s
-    ')?';
-
-  // /^[-+]?[£$¤¥]?[\d,.]+%?$/
-  var numberStrRegex = new RegExp('^[-+]?' + currencyRegexStr + '[\\d,.]+' + currencyRegexStr + '%?$');
-
+module.service('rowSorter', ['uiGridConstants', function (uiGridConstants) {
   var rowSorter = {
     // Cache of sorting functions. Once we create them, we don't want to keep re-doing it
     //   this takes a piece of data from the cell and tries to determine its type and what sorting
@@ -10395,17 +10437,16 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.handleNulls = function handleNulls(a, b) {
     // We want to allow zero values and false values to be evaluated in the sort function
-    if ((!a && a !== 0 && a !== false) || (!b && b !== 0 && b !== false)) {
+    if ((a == void 0) || (b == void 0)) {
       // We want to force nulls and such to the bottom when we sort... which effectively is "greater than"
-      if ((!a && a !== 0 && a !== false) && (!b && b !== 0 && b !== false)) {
+      if ((a == void 0) && (b == void 0)) {
         return 0;
       }
-      else if (!a && a !== 0 && a !== false) {
+
+      if (a == void 0) {
         return 1;
       }
-      else if (!b && b !== 0 && b !== false) {
-        return -1;
-      }
+      return -1;// b == void 0
     }
     return null;
   };
@@ -10423,17 +10464,18 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.basicSort = function basicSort(a, b) {
     var nulls = rowSorter.handleNulls(a, b);
-    if ( nulls !== null ) {
+    if (nulls !== null) {
       return nulls;
-    } else {
-      if (a === b) {
-        return 0;
-      }
-      if (a < b) {
-        return -1;
-      }
-      return 1;
     }
+
+    if (a === b) {
+      return 0;
+    }
+
+    if (a < b) {
+      return -1;
+    }
+    return 1;
   };
 
 
@@ -10448,12 +10490,16 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.sortNumber = function sortNumber(a, b) {
     var nulls = rowSorter.handleNulls(a, b);
-    if ( nulls !== null ) {
-      return nulls;
-    } else {
-      return a - b;
-    }
+    return (nulls !== null) ? nulls : a - b;
   };
+
+
+  function parseNumStr(numStr) {
+    if (/^\s*-?Infinity\s*$/.test(numStr)) { // check for positive or negative Infinity and return that
+      return parseFloat(numStr);
+    }
+    return parseFloat(numStr.replace(/[^0-9.eE-]/g, ''));
+  }
 
 
   /**
@@ -10468,45 +10514,23 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.sortNumberStr = function sortNumberStr(a, b) {
     var nulls = rowSorter.handleNulls(a, b);
-    if ( nulls !== null ) {
+    if (nulls !== null) {
       return nulls;
-    } else {
-      var numA, // The parsed number form of 'a'
-          numB, // The parsed number form of 'b'
-          badA = false,
-          badB = false;
-
-      // Try to parse 'a' to a float
-      numA = parseFloat(a.replace(/[^0-9.-]/g, ''));
-
-      // If 'a' couldn't be parsed to float, flag it as bad
-      if (isNaN(numA)) {
-          badA = true;
-      }
-
-      // Try to parse 'b' to a float
-      numB = parseFloat(b.replace(/[^0-9.-]/g, ''));
-
-      // If 'b' couldn't be parsed to float, flag it as bad
-      if (isNaN(numB)) {
-          badB = true;
-      }
-
-      // We want bad ones to get pushed to the bottom... which effectively is "greater than"
-      if (badA && badB) {
-          return 0;
-      }
-
-      if (badA) {
-          return 1;
-      }
-
-      if (badB) {
-          return -1;
-      }
-
-      return numA - numB;
     }
+
+    var numA = parseNumStr(a), // The parsed number form of 'a'
+        numB = parseNumStr(b); // The parsed number form of 'b'
+
+    // If 'a' couldn't be parsed to float, flag it as bad
+    var badA = isNaN(numA),
+        badB = isNaN(numB);
+
+    // We want bad ones to get pushed to the bottom... which effectively is "greater than"
+    if (badA || badB) {
+      return (badA && badB) ? 0 : (badA ? 1 : -1);
+    }
+
+    return numA - numB;
   };
 
 
@@ -10521,14 +10545,13 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.sortAlpha = function sortAlpha(a, b) {
     var nulls = rowSorter.handleNulls(a, b);
-    if ( nulls !== null ) {
+    if (nulls !== null) {
       return nulls;
-    } else {
-      var strA = a.toString().toLowerCase(),
-          strB = b.toString().toLowerCase();
-
-      return strA === strB ? 0 : strA.localeCompare(strB);
     }
+
+    var strA = a.toString().toLowerCase(),
+        strB = b.toString().toLowerCase();
+    return strA === strB ? 0 : strA.localeCompare(strB);
   };
 
 
@@ -10544,20 +10567,13 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.sortDate = function sortDate(a, b) {
     var nulls = rowSorter.handleNulls(a, b);
-    if ( nulls !== null ) {
+    if (nulls !== null) {
       return nulls;
-    } else {
-      if (!(a instanceof Date)) {
-        a = new Date(a);
-      }
-      if (!(b instanceof Date)) {
-        b = new Date(b);
-      }
-      var timeA = a.getTime(),
-          timeB = b.getTime();
-
-      return timeA === timeB ? 0 : (timeA < timeB ? -1 : 1);
     }
+
+    var timeA = (a instanceof Date) ? a.getTime() : new Date(a).getTime();
+    var timeB = (b instanceof Date) ? b.getTime() : new Date(b).getTime();
+    return timeA === timeB ? 0 : (timeA < timeB ? -1 : 1);
   };
 
 
@@ -10573,20 +10589,14 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    */
   rowSorter.sortBool = function sortBool(a, b) {
     var nulls = rowSorter.handleNulls(a, b);
-    if ( nulls !== null ) {
+    if (nulls !== null) {
       return nulls;
-    } else {
-      if (a && b) {
-        return 0;
-      }
-
-      if (!a && !b) {
-        return 0;
-      }
-      else {
-        return a ? 1 : -1;
-      }
     }
+
+    if ((a && b) || (!a && !b)) {
+      return 0;
+    }
+    return a ? 1 : -1;
   };
 
 
@@ -10611,43 +10621,36 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    * we might inspect the rows themselves to decide what sort of data might be there
    * @returns {function} the sort function chosen for the column
    */
-  rowSorter.getSortFn = function getSortFn(grid, col, rows) {
-    var sortFn, item;
-
+  rowSorter.getSortFn = function getSortFn(col) {
     // See if we already figured out what to use to sort the column and have it in the cache
     if (rowSorter.colSortFnCache[col.colDef.name]) {
-      sortFn = rowSorter.colSortFnCache[col.colDef.name];
+      return rowSorter.colSortFnCache[col.colDef.name];
     }
     // If the column has its OWN sorting algorithm, use that
-    else if (col.sortingAlgorithm !== undefined) {
-      sortFn = col.sortingAlgorithm;
+    if (col.sortingAlgorithm != void 0) {
       rowSorter.colSortFnCache[col.colDef.name] = col.sortingAlgorithm;
+      return col.sortingAlgorithm;
     }
     // Always default to sortAlpha when sorting after a cellFilter
-    else if ( col.sortCellFiltered && col.cellFilter ) {
-      sortFn = rowSorter.sortAlpha;
-      rowSorter.colSortFnCache[col.colDef.name] = sortFn;
+    if (col.sortCellFiltered && col.cellFilter) {
+      rowSorter.colSortFnCache[col.colDef.name] = rowSorter.sortAlpha;
+      return rowSorter.sortAlpha;
     }
+
     // Try and guess what sort function to use
-    else {
-      // Guess the sort function
-      sortFn = rowSorter.guessSortFn(col.colDef.type);
+    // Guess the sort function
+    var sortFn = rowSorter.guessSortFn(col.colDef.type);
 
-      // If we found a sort function, cache it
-      if (sortFn) {
-        rowSorter.colSortFnCache[col.colDef.name] = sortFn;
-      }
-      else {
-        // We assign the alpha sort because anything that is null/undefined will never get passed to
-        // the actual sorting function. It will get caught in our null check and returned to be sorted
-        // down to the bottom
-        sortFn = rowSorter.sortAlpha;
-      }
+    // If we found a sort function, cache it
+    if (sortFn) {
+      rowSorter.colSortFnCache[col.colDef.name] = sortFn;
+      return sortFn;
     }
-
-    return sortFn;
+    // We assign the alpha sort because anything that is null/undefined will never get passed to
+    // the actual sorting function. It will get caught in our null check and returned to be sorted
+    // down to the bottom
+    return rowSorter.sortAlpha;
   };
-
 
 
   /**
@@ -10670,26 +10673,22 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
         return -1;
       }
       // Equal
-      else if (a.sort.priority === b.sort.priority) {
+      if (a.sort.priority === b.sort.priority) {
         return 0;
       }
       // B is higher
-      else {
-        return 1;
-      }
+      return 1;
     }
     // Only A has a priority
-    else if (a.sort && a.sort.priority !== undefined) {
+    if (a.sort && a.sort.priority !== undefined) {
       return -1;
     }
     // Only B has a priority
-    else if (b.sort && b.sort.priority !== undefined) {
+    if (b.sort && b.sort.priority !== undefined) {
       return 1;
     }
     // Neither has a priority
-    else {
-      return 0;
-    }
+    return 0;
   };
 
 
@@ -10755,14 +10754,9 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     var col, direction;
 
     // put a custom index field on each row, used to make a stable sort out of unstable sorts (e.g. Chrome)
-    var setIndex = function( row, idx ) {
+    rows.forEach(function (row, idx) {
       row.entity.$$uiGridIndex = idx;
-    };
-    rows.forEach(setIndex);
-
-    // IE9-11 HACK.... the 'rows' variable would be empty where we call rowSorter.getSortFn(...) below. We have to use a separate reference
-    // var d = data.slice(0);
-    var r = rows.slice(0);
+    });
 
     // Now actually sort the data
     var rowSortFn = function (rowA, rowB) {
@@ -10775,14 +10769,12 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
         col = sortCols[idx].col;
         direction = sortCols[idx].sort.direction;
 
-        sortFn = rowSorter.getSortFn(grid, col, r);
+        sortFn = rowSorter.getSortFn(col);
 
         // Webpack's compress will hoist and combine propA, propB into one var and break sorting functionality
         // Wrapping in function prevents that unexpected behavior
         var props = getCellValues(grid, rowA, rowB, col);
-        var propA = props[0];
-        var propB = props[1];
-        tem = sortFn(propA, propB, rowA, rowB, direction, col);
+        tem = sortFn(props[0], props[1], rowA, rowB, direction, col);
 
         idx++;
       }
@@ -10796,20 +10788,15 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
       }
 
       // Made it this far, we don't have to worry about null & undefined
-      if (direction === uiGridConstants.ASC) {
-        return tem;
-      } else {
-        return 0 - tem;
-      }
+      return (direction === uiGridConstants.ASC) ? tem : 0 - tem;
     };
 
     var newRows = rows.sort(rowSortFn);
 
     // remove the custom index field on each row, used to make a stable sort out of unstable sorts (e.g. Chrome)
-    var clearIndex = function( row, idx ) {
-       delete row.entity.$$uiGridIndex;
-    };
-    rows.forEach(clearIndex);
+    rows.forEach(function (row, idx) {
+      delete row.entity.$$uiGridIndex;
+    });
 
     return newRows;
   };
