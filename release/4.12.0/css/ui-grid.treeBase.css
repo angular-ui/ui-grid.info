@@ -1,0 +1,10 @@
+/*!
+ * ui-grid - v4.12.0 - 2023-01-12
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */
+.ui-grid-tree-row-header-buttons.ui-grid-tree-header {
+  cursor: pointer;
+  opacity: 1;
+}
+
