@@ -1,7 +1,20 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 165:
+/***/ ((module) => {
+
+module.exports = "<div\n  ui-grid-column-resizer\n  ng-if=\"grid.options.enableColumnResizing\"\n  class=\"ui-grid-column-resizer\"\n  col=\"col\"\n  position=\"right\"\n  render-index=\"renderIndex\"\n  unselectable=\"on\">\n</div>"
+
+/***/ }),
+
+/***/ 305:
+/***/ (() => {
 
 (function() {
   'use strict';
@@ -563,11 +576,62 @@
   }]);
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.resizeColumns').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/columnResizer',
-    "<div ui-grid-column-resizer ng-if=\"grid.options.enableColumnResizing\" class=\"ui-grid-column-resizer\" col=\"col\" position=\"right\" render-index=\"renderIndex\" unselectable=\"on\"></div>"
-  );
-
+  $templateCache.put('ui-grid/columnResizer', __webpack_require__(165));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(305);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

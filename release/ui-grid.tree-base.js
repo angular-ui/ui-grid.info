@@ -1,7 +1,41 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 953:
+/***/ ((module) => {
+
+module.exports = "<div\n  class=\"ui-grid-tree-base-row-header-buttons\"\n  tabindex=\"0\"\n  ng-class=\"headerButtonClass()\"\n  ng-click=\"headerButtonClick($event)\"\n  ng-keydown=\"headerButtonKeyDown($event)\">\n</div>\n"
+
+/***/ }),
+
+/***/ 589:
+/***/ ((module) => {
+
+module.exports = "<div>\n  <div\n    class=\"ui-grid-cell-contents\"\n    col-index=\"renderIndex\">\n    <ui-grid-tree-base-expand-all-buttons\n            ng-if=\"grid.options.enableExpandAll\">\n    </ui-grid-tree-base-expand-all-buttons>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 825:
+/***/ ((module) => {
+
+module.exports = "<div\n  class=\"ui-grid-cell-contents\">\n  <ui-grid-tree-base-row-header-buttons>\n  </ui-grid-tree-base-row-header-buttons>\n</div>\n"
+
+/***/ }),
+
+/***/ 670:
+/***/ ((module) => {
+
+module.exports = "<div\n  class=\"ui-grid-tree-base-row-header-buttons\"\n  ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\"\n  tabindex=\"0\"\n  ng-keydown=\"treeButtonKeyDown(row, $event)\"\n  ng-click=\"treeButtonClick(row, $event)\">\n  <i\n    ng-class=\"treeButtonClass(row)\"\n    ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\">\n  </i>\n  &nbsp;\n</div>\n"
+
+/***/ }),
+
+/***/ 145:
+/***/ (() => {
 
 (function () {
   'use strict';
@@ -1717,26 +1751,65 @@
     });
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.treeBase').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/treeBaseExpandAllButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" tabindex=\"0\" ng-class=\"headerButtonClass()\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
-  );
-
-
-  $templateCache.put('ui-grid/treeBaseHeaderCell',
-    "<div><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-tree-base-expand-all-buttons ng-if=\"grid.options.enableExpandAll\"></ui-grid-tree-base-expand-all-buttons></div></div>"
-  );
-
-
-  $templateCache.put('ui-grid/treeBaseRowHeader',
-    "<div class=\"ui-grid-cell-contents\"><ui-grid-tree-base-row-header-buttons></ui-grid-tree-base-row-header-buttons></div>"
-  );
-
-
-  $templateCache.put('ui-grid/treeBaseRowHeaderButtons',
-    "<div class=\"ui-grid-tree-base-row-header-buttons\" ng-class=\"{'ui-grid-tree-base-header': row.treeLevel > -1 }\" tabindex=\"0\" ng-keydown=\"treeButtonKeyDown(row, $event)\" ng-click=\"treeButtonClick(row, $event)\"><i ng-class=\"treeButtonClass(row)\" ng-style=\"{'padding-left': grid.options.treeIndent * row.treeLevel + 'px'}\"></i> &nbsp;</div>"
-  );
-
+  $templateCache.put('ui-grid/treeBaseExpandAllButtons', __webpack_require__(953));
+  $templateCache.put('ui-grid/treeBaseHeaderCell', __webpack_require__(589));
+  $templateCache.put('ui-grid/treeBaseRowHeader', __webpack_require__(825));
+  $templateCache.put('ui-grid/treeBaseRowHeaderButtons', __webpack_require__(670));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(145);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

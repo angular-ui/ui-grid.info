@@ -1,3 +1,8 @@
+/*!
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */
 .ui-grid-row-saving .ui-grid-cell {
   color: #848484 !important;
 }
@@ -7,3 +12,4 @@
 .ui-grid-row-error .ui-grid-cell {
   color: #FF0000 !important;
 }
+

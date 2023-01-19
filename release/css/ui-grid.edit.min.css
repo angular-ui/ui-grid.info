@@ -1,1 +1,5 @@
-.ui-grid-cell input{border-radius:inherit;padding:0;width:100%;color:inherit;height:auto;font:inherit;outline:none}.ui-grid-cell input:focus{color:inherit;outline:none}.ui-grid-cell input[type="checkbox"]{margin:9px 0 0 6px;width:auto}.ui-grid-cell input.ng-invalid{border:1px solid #fc8f8f}.ui-grid-cell input.ng-valid{border:1px solid #d4d4d4}
+/*!
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */.ui-grid-cell input{border-radius:inherit;font:inherit;height:auto;padding:0;width:100%}.ui-grid-cell input,.ui-grid-cell input:focus{color:inherit;outline:none}.ui-grid-cell input[type=checkbox]{margin:9px 0 0 6px;width:auto}.ui-grid-cell input.ng-invalid{border:1px solid #fc8f8f}.ui-grid-cell input.ng-valid{border:1px solid #d4d4d4}

@@ -1,6 +1,12 @@
+/*!
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */
 .ui-grid-viewport .ui-grid-empty-base-layer-container {
   position: absolute;
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
 }
+

@@ -1,7 +1,20 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 726:
+/***/ ((module) => {
+
+module.exports = "<div class=\"ui-grid-empty-base-layer-container ui-grid-canvas\">\n  <div class=\"ui-grid-row\"\n       ng-repeat=\"(rowRenderIndex, row) in grid.baseLayer.emptyRows track by $index\"\n       ng-style=\"Viewport.rowStyle(rowRenderIndex)\">\n    <div>\n      <div>\n        <div  ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\"\n              class=\"ui-grid-cell {{ col.getColClass(false) }}\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 806:
+/***/ (() => {
 
 (function () {
   'use strict';
@@ -167,11 +180,62 @@
 
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.emptyBaseLayer').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/emptyBaseLayerContainer',
-    "<div class=\"ui-grid-empty-base-layer-container ui-grid-canvas\"><div class=\"ui-grid-row\" ng-repeat=\"(rowRenderIndex, row) in grid.baseLayer.emptyRows track by $index\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div><div><div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell {{ col.getColClass(false) }}\"></div></div></div></div></div>"
-  );
-
+  $templateCache.put('ui-grid/emptyBaseLayerContainer', __webpack_require__(726));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(806);
+__webpack_require__(561)
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

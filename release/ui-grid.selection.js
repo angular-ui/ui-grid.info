@@ -1,7 +1,48 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 331:
+/***/ ((module) => {
+
+module.exports = "<span\n  ng-if=\"grid.selection.selectedCount !== 0 && grid.options.enableFooterTotalSelected\">\n  ({{\"search.selectedItems\" | t}} {{grid.selection.selectedCount}})\n</span>\n"
+
+/***/ }),
+
+/***/ 714:
+/***/ ((module) => {
+
+module.exports = "<div>\n  <!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> -->\n  <div\n    class=\"ui-grid-cell-contents\"\n    col-index=\"renderIndex\">\n    <ui-grid-selection-select-all-buttons\n      ng-if=\"grid.options.enableSelectAll\"\n      role=\"checkbox\"\n      ng-model=\"grid.selection.selectAll\">\n    </ui-grid-selection-select-all-buttons>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 623:
+/***/ ((module) => {
+
+module.exports = "<div class=\"ui-grid-cell-contents ui-grid-disable-selection clickable\">\n  <ui-grid-selection-row-header-buttons>\n  </ui-grid-selection-row-header-buttons>\n</div>\n"
+
+/***/ }),
+
+/***/ 465:
+/***/ ((module) => {
+
+module.exports = "<div\n  class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\"\n  ng-class=\"{'ui-grid-row-selected': row.isSelected}\"\n  tabindex=\"0\"\n  ng-click=\"selectButtonClick(row, $event)\"\n  ng-keydown=\"selectButtonKeyDown(row, $event)\"\n  ng-attr-aria-label=\"{{('selection.aria.row' | t) + ' ' + (row.index + 1) + ', ' + col.displayName}}\"\n  aria-checked=\"{{row.isSelected}}\"\n  role=\"checkbox\"\n  ng-model=\"row.isSelected\">\n  &nbsp;\n</div>\n"
+
+/***/ }),
+
+/***/ 957:
+/***/ ((module) => {
+
+module.exports = "<div\n\trole=\"checkbox\"\n  tabindex=\"0\"\n  class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\"\n  ui-grid-one-bind-aria-label=\"'selection.selectAll' | t\"\n  aria-checked=\"{{grid.selection.selectAll}}\"\n  ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\"\n  ng-click=\"headerButtonClick($event)\"\n  ng-keydown=\"headerButtonKeyDown($event)\">\n</div>\n"
+
+/***/ }),
+
+/***/ 262:
+/***/ (() => {
 
 (function () {
   'use strict';
@@ -245,11 +286,13 @@
                  * @ngdoc function
                  * @name selectRowByKey
                  * @methodOf  ui.grid.selection.api:PublicApi
-                 * @description Select the data row
+                 * @description selects all GridRows who have an key that is equal to comparator
+                 * so for Example if isInEntity == false then it does this check: row[key] === comparator
+                 * if isInEntity == true then it does this check: row.entity[key] === comparator
                  * @param {boolean} isInEntity if true then key is in entity else it's directly in row
-                 * @param {Symbol} key the key to look for
+                 * @param {string | number} key the key to look for
                  * @param {any} comparator the value that key should have
-                 * @param {Event} evt object if raised from an event
+                 * @param {Event} evt [optional] object if raised from an event
                  * @param {array} lookInRows [optional] the rows to look in - if not provided then looks in grid.rows
                 */
                 selectRowByKey: function (isInEntity, key, comparator, evt, lookInRows) {
@@ -293,11 +336,13 @@
                  * @ngdoc function
                  * @name unSelectRowByKey
                  * @methodOf  ui.grid.selection.api:PublicApi
-                 * @description Select the data row
+                 * @description unselects the GridRows who have an key that is equal to comparator
+                 * so for Example if isInEntity == false then it does this check: row[key] === comparator
+                 * if isInEntity == true then it does this check: row.entity[key] === comparator
                  * @param {boolean} isInEntity if true then key is in entity else it's directly in row
-                 * @param {(string|number)} key the key to look for
+                 * @param {string | number} key the key to look for
                  * @param {any} comparator the value that key should have
-                 * @param {Event} evt object if raised from an event
+                 * @param {Event} evt [optional] object if raised from an event
                  * @param {array} lookInRows [optional] the rows to look in - if not provided then looks in grid.rows
                 */
                 unSelectRowByKey: function (isInEntity, key, comparator, evt, lookInRows) {
@@ -1161,31 +1206,66 @@
   }]);
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.selection').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/gridFooterSelectedItems',
-    "<span ng-if=\"grid.selection.selectedCount !== 0 && grid.options.enableFooterTotalSelected\">({{\"search.selectedItems\" | t}} {{grid.selection.selectedCount}})</span>"
-  );
-
-
-  $templateCache.put('ui-grid/selectionHeaderCell',
-    "<div><!-- <div class=\"ui-grid-vertical-bar\">&nbsp;</div> --><div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><ui-grid-selection-select-all-buttons ng-if=\"grid.options.enableSelectAll\" role=\"checkbox\" ng-model=\"grid.selection.selectAll\"></ui-grid-selection-select-all-buttons></div></div>"
-  );
-
-
-  $templateCache.put('ui-grid/selectionRowHeader',
-    "<div class=\"ui-grid-cell-contents ui-grid-disable-selection clickable\"><ui-grid-selection-row-header-buttons></ui-grid-selection-row-header-buttons></div>"
-  );
-
-
-  $templateCache.put('ui-grid/selectionRowHeaderButtons',
-    "<div class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok clickable\" ng-class=\"{'ui-grid-row-selected': row.isSelected}\" tabindex=\"0\" ng-click=\"selectButtonClick(row, $event)\" ng-keydown=\"selectButtonKeyDown(row, $event)\" ng-attr-aria-label=\"{{('selection.aria.row' | t) + ' ' + (row.index + 1) + ', ' + col.displayName}}\" aria-checked=\"{{row.isSelected}}\" role=\"checkbox\" ng-model=\"row.isSelected\">&nbsp;</div>"
-  );
-
-
-  $templateCache.put('ui-grid/selectionSelectAllButtons',
-    "<div role=\"checkbox\" tabindex=\"0\" class=\"ui-grid-selection-row-header-buttons ui-grid-icon-ok\" ui-grid-one-bind-aria-label=\"'selection.selectAll' | t\" aria-checked=\"{{grid.selection.selectAll}}\" ng-class=\"{'ui-grid-all-selected': grid.selection.selectAll}\" ng-click=\"headerButtonClick($event)\" ng-keydown=\"headerButtonKeyDown($event)\"></div>"
-  );
-
+  $templateCache.put('ui-grid/gridFooterSelectedItems', __webpack_require__(331));
+  $templateCache.put('ui-grid/selectionHeaderCell', __webpack_require__(714));
+  $templateCache.put('ui-grid/selectionRowHeader', __webpack_require__(623));
+  $templateCache.put('ui-grid/selectionRowHeaderButtons', __webpack_require__(465));
+  $templateCache.put('ui-grid/selectionSelectAllButtons', __webpack_require__(957));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(262);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

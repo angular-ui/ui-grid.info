@@ -1,7 +1,34 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 717:
+/***/ ((module) => {
+
+module.exports = "<div>\n  <form\n    name=\"inputForm\">\n    <input\n      type=\"INPUT_TYPE\"\n      ng-class=\"'colt' + col.uid\"\n      ui-grid-editor\n      ng-model=\"MODEL_COL_FIELD\" />\n  </form>\n</div>\n"
+
+/***/ }),
+
+/***/ 792:
+/***/ ((module) => {
+
+module.exports = "<div>\n  <form\n    name=\"inputForm\">\n    <select\n      ng-class=\"'colt' + col.uid\"\n      ui-grid-edit-dropdown\n      ng-model=\"MODEL_COL_FIELD\"\n      ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\">\n    </select>\n  </form>\n</div>\n"
+
+/***/ }),
+
+/***/ 347:
+/***/ ((module) => {
+
+module.exports = "<div>\n  <form\n    name=\"inputForm\">\n    <input\n      ng-class=\"'colt' + col.uid\"\n      ui-grid-edit-file-chooser\n      type=\"file\"\n      id=\"files\"\n      name=\"files[]\"\n      ng-model=\"MODEL_COL_FIELD\"/>\n  </form>\n</div>\n"
+
+/***/ }),
+
+/***/ 991:
+/***/ (() => {
 
 (function () {
   'use strict';
@@ -1304,21 +1331,64 @@
       }]);
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.edit').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/cellEditor',
-    "<div><form name=\"inputForm\"><input type=\"INPUT_TYPE\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
-  );
-
-
-  $templateCache.put('ui-grid/dropdownEditor',
-    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\"></select></form></div>"
-  );
-
-
-  $templateCache.put('ui-grid/fileChooserEditor',
-    "<div><form name=\"inputForm\"><input ng-class=\"'colt' + col.uid\" ui-grid-edit-file-chooser type=\"file\" id=\"files\" name=\"files[]\" ng-model=\"MODEL_COL_FIELD\"></form></div>"
-  );
-
+  $templateCache.put('ui-grid/cellEditor', __webpack_require__(717));
+  $templateCache.put('ui-grid/dropdownEditor', __webpack_require__(792));
+  $templateCache.put('ui-grid/fileChooserEditor', __webpack_require__(347));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(991);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

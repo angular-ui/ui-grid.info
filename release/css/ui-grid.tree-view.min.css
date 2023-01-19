@@ -1,1 +1,5 @@
-.ui-grid-tree-header-row{font-weight:bold !important}.ui-grid-tree-header-row .ui-grid-cell.ui-grid-disable-selection.ui-grid-row-header-cell{pointer-events:all}
+/*!
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */.ui-grid-tree-header-row{font-weight:700!important}.ui-grid-tree-header-row .ui-grid-cell.ui-grid-disable-selection.ui-grid-row-header-cell{pointer-events:all}

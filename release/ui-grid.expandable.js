@@ -1,7 +1,41 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 631:
+/***/ ((module) => {
+
+module.exports = "<div\n  ui-grid-expandable-row\n  ng-if=\"expandableRow.shouldRenderExpand()\"\n  class=\"expandableRow\"\n  style=\"float:left; margin-top: 1px; margin-bottom: 1px\"\n  ng-style=\"{width: (grid.renderContainers.body.getCanvasWidth()) + 'px', height: row.expandedRowHeight + 'px'}\">\n</div>\n"
+
+/***/ }),
+
+/***/ 845:
+/***/ ((module) => {
+
+module.exports = "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\">\n  <div class=\"ui-grid-cell-contents\">\n    <i class=\"clickable\"\n       ng-if=\"!(row.groupHeader==true || row.entity.subGridOptions.disableRowExpandable)\"\n       ng-class=\"{ 'ui-grid-icon-plus-squared' : !row.isExpanded, 'ui-grid-icon-minus-squared' : row.isExpanded }\"\n       ng-click=\"grid.api.expandable.toggleRowExpansion(row.entity, $event)\"\n       aria-expanded=\"{{!!row.isExpanded}}\">\n    </i>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 36:
+/***/ ((module) => {
+
+module.exports = "<div\n  ng-if=\"expandableRow.shouldRenderFiller()\"\n  ng-class=\"{scrollFiller: true, scrollFillerClass:(colContainer.name === 'body')}\"\n  ng-style=\"{ width: (grid.getViewportWidth()) + 'px', height: row.expandedRowHeight + 2 + 'px', 'margin-left': grid.options.rowHeader.rowHeaderWidth + 'px' }\">\n  &nbsp;\n</div>\n"
+
+/***/ }),
+
+/***/ 389:
+/***/ ((module) => {
+
+module.exports = "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\">\n  <div class=\"ui-grid-cell-contents\">\n    <span class=\"ui-grid-cell-empty\" ng-if=\"!grid.options.showExpandAllButton\"></span>\n    <button type=\"button\" class=\"ui-grid-icon-button clickable\"\n      ng-if=\"grid.options.showExpandAllButton\"\n      ng-class=\"{ 'ui-grid-icon-plus-squared' : !grid.expandable.expandedAll, 'ui-grid-icon-minus-squared' : grid.expandable.expandedAll }\"\n      ng-click=\"grid.api.expandable.toggleAllRows()\"\n      aria-expanded=\"{{grid.expandable.expandedAll}}\">\n    </button>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 693:
+/***/ (() => {
 
 (function () {
   'use strict';
@@ -625,26 +659,65 @@
 
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.expandable').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/expandableRow',
-    "<div ui-grid-expandable-row ng-if=\"expandableRow.shouldRenderExpand()\" class=\"expandableRow\" style=\"float:left; margin-top: 1px; margin-bottom: 1px\" ng-style=\"{width: (grid.renderContainers.body.getCanvasWidth()) + 'px', height: row.expandedRowHeight + 'px'}\"></div>"
-  );
-
-
-  $templateCache.put('ui-grid/expandableRowHeader',
-    "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\"><div class=\"ui-grid-cell-contents\"><i class=\"clickable\" ng-if=\"!(row.groupHeader==true || row.entity.subGridOptions.disableRowExpandable)\" ng-class=\"{ 'ui-grid-icon-plus-squared' : !row.isExpanded, 'ui-grid-icon-minus-squared' : row.isExpanded }\" ng-click=\"grid.api.expandable.toggleRowExpansion(row.entity, $event)\" aria-expanded=\"{{!!row.isExpanded}}\"></i></div></div>"
-  );
-
-
-  $templateCache.put('ui-grid/expandableScrollFiller',
-    "<div ng-if=\"expandableRow.shouldRenderFiller()\" ng-class=\"{scrollFiller: true, scrollFillerClass:(colContainer.name === 'body')}\" ng-style=\"{ width: (grid.getViewportWidth()) + 'px', height: row.expandedRowHeight + 2 + 'px', 'margin-left': grid.options.rowHeader.rowHeaderWidth + 'px' }\">&nbsp;</div>"
-  );
-
-
-  $templateCache.put('ui-grid/expandableTopRowHeader',
-    "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\"><div class=\"ui-grid-cell-contents\"><span class=\"ui-grid-cell-empty\" ng-if=\"!grid.options.showExpandAllButton\"></span> <button type=\"button\" class=\"ui-grid-icon-button clickable\" ng-if=\"grid.options.showExpandAllButton\" ng-class=\"{ 'ui-grid-icon-plus-squared' : !grid.expandable.expandedAll, 'ui-grid-icon-minus-squared' : grid.expandable.expandedAll }\" ng-click=\"grid.api.expandable.toggleAllRows()\" aria-expanded=\"{{grid.expandable.expandedAll}}\"></button></div></div>"
-  );
-
+  $templateCache.put('ui-grid/expandableRow', __webpack_require__(631));
+  $templateCache.put('ui-grid/expandableRowHeader', __webpack_require__(845));
+  $templateCache.put('ui-grid/expandableScrollFiller', __webpack_require__(36));
+  $templateCache.put('ui-grid/expandableTopRowHeader', __webpack_require__(389));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(693);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

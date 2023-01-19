@@ -1,7 +1,27 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 526:
+/***/ ((module) => {
+
+module.exports = "<div class=\"ui-grid-cell-contents\"\n     ng-class=\"{invalid:grid.validate.isInvalid(row.entity,col.colDef)}\"\n     title={{grid.validate.getTitleFormattedErrors(row.entity,col.colDef)}}>\n    {{COL_FIELD CUSTOM_FILTERS}}\n</div>"
+
+/***/ }),
+
+/***/ 174:
+/***/ ((module) => {
+
+module.exports = "<div class=\"ui-grid-cell-contents\"\n     ng-class=\"{invalid:grid.validate.isInvalid(row.entity,col.colDef)}\"\n     tooltip-html-unsafe={{grid.validate.getFormattedErrors(row.entity,col.colDef)}}\n     tooltip-enable=\"grid.validate.isInvalid(row.entity,col.colDef)\"\n     tooltip-append-to-body=\"true\"\n     tooltip-placement=\"top\"\n     title=\"TOOLTIP\">\n    {{COL_FIELD CUSTOM_FILTERS}}\n</div>"
+
+/***/ }),
+
+/***/ 820:
+/***/ (() => {
 
 (function () {
   'use strict';
@@ -573,16 +593,63 @@
   }]);
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.validate').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/cellTitleValidator',
-    "<div class=\"ui-grid-cell-contents\" ng-class=\"{invalid:grid.validate.isInvalid(row.entity,col.colDef)}\" title=\"{{grid.validate.getTitleFormattedErrors(row.entity,col.colDef)}}\">{{COL_FIELD CUSTOM_FILTERS}}</div>"
-  );
-
-
-  $templateCache.put('ui-grid/cellTooltipValidator',
-    "<div class=\"ui-grid-cell-contents\" ng-class=\"{invalid:grid.validate.isInvalid(row.entity,col.colDef)}\" tooltip-html-unsafe=\"{{grid.validate.getFormattedErrors(row.entity,col.colDef)}}\" tooltip-enable=\"grid.validate.isInvalid(row.entity,col.colDef)\" tooltip-append-to-body=\"true\" tooltip-placement=\"top\" title=\"TOOLTIP\">{{COL_FIELD CUSTOM_FILTERS}}</div>"
-  );
-
+  $templateCache.put('ui-grid/cellTitleValidator', __webpack_require__(526));
+  $templateCache.put('ui-grid/cellTooltipValidator', __webpack_require__(174));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(820);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

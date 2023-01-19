@@ -1,5 +1,5 @@
 /*!
- * ui-grid - v4.12.0-9c6a9c83 - 2023-01-19
+ * ui-grid - v4.12.1 - 2023-01-19
  *   http://ui-grid.info/
  *   Copyright (c) 2023 UI Grid Team; License: MIT
  */.ui-grid-column-resizer{bottom:0;cursor:col-resize;position:absolute;top:0;width:5px}.ui-grid-column-resizer.left{left:0}.ui-grid-column-resizer.right{right:0}.ui-grid-header-cell:last-child .ui-grid-column-resizer.right{border-right:1px solid #d4d4d4}.ui-grid[dir=rtl] .ui-grid-header-cell:last-child .ui-grid-column-resizer.right{border-right:0}.ui-grid[dir=rtl] .ui-grid-header-cell:last-child .ui-grid-column-resizer.left{border-left:1px solid #d4d4d4}.ui-grid.column-resizing{-webkit-touch-callout:none;cursor:col-resize;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui-grid.column-resizing .ui-grid-resize-overlay{background-color:#aeaeae;height:100%;position:absolute;top:0;width:1px}

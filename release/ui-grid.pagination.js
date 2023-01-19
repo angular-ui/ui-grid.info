@@ -1,7 +1,20 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 66:
+/***/ ((module) => {
+
+module.exports = "<div\n  class=\"ui-grid-pager-panel\"\n  ui-grid-pager\n  ng-show=\"grid.options.enablePaginationControls\">\n  <div\n    role=\"navigation\"\n    class=\"ui-grid-pager-container\">\n    <div\n      class=\"ui-grid-pager-control\">\n      <button\n        type=\"button\"\n        class=\"ui-grid-pager-first\"\n        ui-grid-one-bind-title=\"aria.pageToFirst\"\n        ui-grid-one-bind-aria-label=\"aria.pageToFirst\"\n        ng-click=\"pageFirstPageClick()\"\n        ng-disabled=\"cantPageBackward()\">\n        <div\n          ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\">\n          <div\n            ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\">\n          </div>\n        </div>\n      </button>\n      <button\n        type=\"button\"\n        class=\"ui-grid-pager-previous\"\n        ui-grid-one-bind-title=\"aria.pageBack\"\n        ui-grid-one-bind-aria-label=\"aria.pageBack\"\n        ng-click=\"pagePreviousPageClick()\"\n        ng-disabled=\"cantPageBackward()\">\n        <div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div>\n      </button>\n      <input\n        type=\"number\"\n        ui-grid-one-bind-title=\"aria.pageSelected\"\n        ui-grid-one-bind-aria-label=\"aria.pageSelected\"\n        class=\"ui-grid-pager-control-input\"\n        ng-model=\"grid.options.paginationCurrentPage\"\n        min=\"1\"\n        max=\"{{ paginationApi.getTotalPages() }}\"\n        step=\"1\"\n        required />\n      <span\n        class=\"ui-grid-pager-max-pages-number\"\n        ng-show=\"paginationApi.getTotalPages() > 0\">\n        <abbr\n          ui-grid-one-bind-title=\"paginationOf\">\n          /\n        </abbr>\n        {{ paginationApi.getTotalPages() }}\n      </span>\n      <button\n        type=\"button\"\n        class=\"ui-grid-pager-next\"\n        ui-grid-one-bind-title=\"aria.pageForward\"\n        ui-grid-one-bind-aria-label=\"aria.pageForward\"\n        ng-click=\"pageNextPageClick()\"\n        ng-disabled=\"cantPageForward()\">\n        <div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div>\n      </button>\n      <button\n        type=\"button\"\n        class=\"ui-grid-pager-last\"\n        ui-grid-one-bind-title=\"aria.pageToLast\"\n        ui-grid-one-bind-aria-label=\"aria.pageToLast\"\n        ng-click=\"pageLastPageClick()\"\n        ng-disabled=\"cantPageToLast()\">\n        <div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\">\n          <div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\">\n          </div>\n        </div>\n      </button>\n    </div>\n    <div\n      class=\"ui-grid-pager-row-count-picker\"\n      ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\">\n      <select\n        ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\"\n        ng-model=\"grid.options.paginationPageSize\"\n        ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select>\n      <span\n        ui-grid-one-bind-id-grid=\"'items-per-page-label'\"\n        class=\"ui-grid-pager-row-count-label\">\n        &nbsp;{{sizesLabel}}\n      </span>\n    </div>\n    <span\n      ng-if=\"grid.options.paginationPageSizes.length <= 1\"\n      class=\"ui-grid-pager-row-count-label\">\n      {{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}\n    </span>\n  </div>\n  <div\n    class=\"ui-grid-pager-count-container\">\n    <div\n      class=\"ui-grid-pager-count\">\n      <span\n        ng-show=\"grid.options.totalItems > 0\">\n        {{ 1 + paginationApi.getFirstRowIndex() }}\n        <abbr\n          ui-grid-one-bind-title=\"paginationThrough\">\n          -\n        </abbr>\n        {{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}\n      </span>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 778:
+/***/ (() => {
 
 (function() {
   'use strict';
@@ -499,11 +512,62 @@
   ]);
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.pagination').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/pagination',
-    "<div class=\"ui-grid-pager-panel\" ui-grid-pager ng-show=\"grid.options.enablePaginationControls\"><div role=\"navigation\" class=\"ui-grid-pager-container\"><div class=\"ui-grid-pager-control\"><button type=\"button\" class=\"ui-grid-pager-first\" ui-grid-one-bind-title=\"aria.pageToFirst\" ui-grid-one-bind-aria-label=\"aria.pageToFirst\" ng-click=\"pageFirstPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle' : 'first-triangle'\"><div ng-class=\"grid.isRTL() ? 'last-bar-rtl' : 'first-bar'\"></div></div></button> <button type=\"button\" class=\"ui-grid-pager-previous\" ui-grid-one-bind-title=\"aria.pageBack\" ui-grid-one-bind-aria-label=\"aria.pageBack\" ng-click=\"pagePreviousPageClick()\" ng-disabled=\"cantPageBackward()\"><div ng-class=\"grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'\"></div></button> <input type=\"number\" ui-grid-one-bind-title=\"aria.pageSelected\" ui-grid-one-bind-aria-label=\"aria.pageSelected\" class=\"ui-grid-pager-control-input\" ng-model=\"grid.options.paginationCurrentPage\" min=\"1\" max=\"{{ paginationApi.getTotalPages() }}\" step=\"1\" required> <span class=\"ui-grid-pager-max-pages-number\" ng-show=\"paginationApi.getTotalPages() > 0\"><abbr ui-grid-one-bind-title=\"paginationOf\">/ </abbr>{{ paginationApi.getTotalPages() }} </span><button type=\"button\" class=\"ui-grid-pager-next\" ui-grid-one-bind-title=\"aria.pageForward\" ui-grid-one-bind-aria-label=\"aria.pageForward\" ng-click=\"pageNextPageClick()\" ng-disabled=\"cantPageForward()\"><div ng-class=\"grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'\"></div></button> <button type=\"button\" class=\"ui-grid-pager-last\" ui-grid-one-bind-title=\"aria.pageToLast\" ui-grid-one-bind-aria-label=\"aria.pageToLast\" ng-click=\"pageLastPageClick()\" ng-disabled=\"cantPageToLast()\"><div ng-class=\"grid.isRTL() ? 'first-triangle' : 'last-triangle'\"><div ng-class=\"grid.isRTL() ? 'first-bar-rtl' : 'last-bar'\"></div></div></button></div><div class=\"ui-grid-pager-row-count-picker\" ng-if=\"grid.options.paginationPageSizes.length > 1 && !grid.options.useCustomPagination\"><select ui-grid-one-bind-aria-labelledby-grid=\"'items-per-page-label'\" ng-model=\"grid.options.paginationPageSize\" ng-options=\"o as o for o in grid.options.paginationPageSizes\"></select> <span ui-grid-one-bind-id-grid=\"'items-per-page-label'\" class=\"ui-grid-pager-row-count-label\">&nbsp;{{sizesLabel}}</span></div><span ng-if=\"grid.options.paginationPageSizes.length <= 1\" class=\"ui-grid-pager-row-count-label\">{{grid.options.paginationPageSize}}&nbsp;{{sizesLabel}}</span></div><div class=\"ui-grid-pager-count-container\"><div class=\"ui-grid-pager-count\"><span ng-show=\"grid.options.totalItems > 0\">{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title=\"paginationThrough\">- </abbr>{{ 1 + paginationApi.getLastRowIndex() }} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div></div>"
-  );
-
+  $templateCache.put('ui-grid/pagination', __webpack_require__(66));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(778);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;

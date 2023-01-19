@@ -1,3 +1,8 @@
+/*!
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */
 .movingColumn {
   position: absolute;
   top: 0;
@@ -7,3 +12,4 @@
 .movingColumn .ui-grid-icon-angle-down {
   display: none;
 }
+

@@ -1,8 +1,22 @@
 /*!
- * ui-grid - v4.11.1 - 2022-02-23
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid - v4.12.1 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
+/***/ 553:
+/***/ ((module) => {
+
+module.exports = "<span\n  class=\"ui-grid-exporter-csv-link-span\">\n  <a\n    href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\"\n    download=\"FILE_NAME\">\n    LINK_LABEL\n  </a>\n</span>\n"
+
+/***/ }),
+
+/***/ 120:
+/***/ (() => {
+
+/* global pdfMake */
 /* global ExcelBuilder */
 /* global console */
 
@@ -86,6 +100,7 @@
       var service = {
 
         delay: 100,
+        type: null,
 
         initializeGrid: function (grid) {
 
@@ -858,6 +873,7 @@
          */
         csvExport: function (grid, rowTypes, colTypes) {
           var self = this;
+          self.type = 'csv';
           this.loadAllDataIfNeeded(grid, rowTypes, colTypes).then(function() {
             var exportColumnHeaders = grid.options.showHeader ? self.getColumnHeaders(grid, colTypes) : [];
             var exportData = self.getData(grid, rowTypes, colTypes);
@@ -1087,8 +1103,8 @@
                      gridCol.colDef.exporterSuppressExport !== true && gridCol.field !== '$$hashKey' &&
                      grid.options.exporterSuppressColumns.indexOf( gridCol.name ) === -1 ) {
                   var cellValue = applyCellFilters ? grid.getCellDisplayValue( row, gridCol ) : grid.getCellValue( row, gridCol ),
-                    extractedField = { value: grid.options.exporterFieldCallback( grid, row, gridCol, cellValue ) },
-                    extension = grid.options.exporterFieldFormatCallback( grid, row, gridCol, cellValue );
+                    extractedField = { value: grid.options.exporterFieldCallback( grid, row, gridCol, cellValue, service.type ) },
+                    extension = grid.options.exporterFieldFormatCallback( grid, row, gridCol, cellValue, service.type );
 
                   if (extension) {
                     Object.assign(extractedField, extension);
@@ -1294,7 +1310,7 @@
          */
         pdfExport: function (grid, rowTypes, colTypes) {
           var self = this;
-
+          self.type = 'pdf';
           this.loadAllDataIfNeeded(grid, rowTypes, colTypes).then(function () {
             var exportColumnHeaders = self.getColumnHeaders(grid, colTypes),
               exportData = self.getData(grid, rowTypes, colTypes),
@@ -1639,6 +1655,7 @@
 
         excelExport: function (grid, rowTypes, colTypes) {
           var self = this;
+          self.type = 'excel';
           this.loadAllDataIfNeeded(grid, rowTypes, colTypes).then(function() {
             var exportColumnHeaders = grid.options.showHeader ? self.getColumnHeaders(grid, colTypes) : [];
 
@@ -1763,11 +1780,62 @@
   ]);
 })();
 
+
+/***/ }),
+
+/***/ 561:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
 angular.module('ui.grid.exporter').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('ui-grid/csvLink',
-    "<span class=\"ui-grid-exporter-csv-link-span\"><a href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\" download=\"FILE_NAME\">LINK_LABEL</a></span>"
-  );
-
+  $templateCache.put('ui-grid/csvLink', __webpack_require__(553));
 }]);
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+__webpack_require__(120);
+__webpack_require__(561);
+
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// extracted by mini-css-extract-plugin
+
+})();
+
+/******/ })()
+;
