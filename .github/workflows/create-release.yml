@@ -2,9 +2,6 @@
 
 name: Create Release
 
-env:
-    GH_TOKEN: ${{ github.token }}
-
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
@@ -26,3 +23,5 @@ jobs:
     steps:
     - name: Publish Release
       run: gh api /repos/angular-ui/ui-grid.info/releases --method POST -f tag_name='${{ github.event.inputs.release }}' -f target_commitish='gh-pages'
+      env:
+        GH_TOKEN: ${{ github.token }}
