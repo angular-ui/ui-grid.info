@@ -23,11 +23,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3.3.0
-
-    - name: Check for Tags
-      uses: digital-ai/query-tag-action@v2
-      with:
-        commit-ish: heads/gh-pages
+        
+    - name: Publish Release - test
+      run: gh release create v4.12.0
       
     - name: Publish Release
       run: gh api /repos/angular-ui/ui-grid.info/releases --method POST -f tag_name='${{ github.event.inputs.release }}' -f target_commitish='gh-pages'
