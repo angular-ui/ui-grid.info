@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Create Release
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -22,10 +22,4 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Publish Release
-      run: gh api \
-        --method POST \
-        -H "Accept:application/vnd.github+json" \
-            /repos/angular-ui/ui-grid.info/releases \
-         -f tag_name='${{ github.event.inputs.release }}' \
-         -f target_commitish='gh-pages' \
-         -f name='${{ github.event.inputs.release }}'
+      run: gh api /repos/angular-ui/ui-grid.info/releases
