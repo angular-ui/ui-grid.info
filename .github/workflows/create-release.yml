@@ -25,7 +25,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3.3.0
+      with:
+        ref: gh-pages
         
     - name: Publish Release
-      run: gh release create v${{ github.event.inputs.release }} --target gh-pages '/release/${{ github.event.inputs.release }}/*'
+      run: gh release create v${{ github.event.inputs.release }} '/release/${{ github.event.inputs.release }}/*'
       
