@@ -22,4 +22,4 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Publish Release
-      run: gh api /repos/angular-ui/ui-grid.info/releases
+      run: gh api /repos/angular-ui/ui-grid.info/releases --method POST -f tag_name='${{ github.event.inputs.release }}' -f target_commitish='gh-pages'
