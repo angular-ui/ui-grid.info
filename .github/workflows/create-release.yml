@@ -23,8 +23,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3.3.0
+      
     - name: Check for Tags
-      run: git describe --tags
+      uses: proudust/gh-describe@v1.5.3
+      
     - name: Publish Release
       run: gh api /repos/angular-ui/ui-grid.info/releases --method POST -f tag_name='${{ github.event.inputs.release }}' -f target_commitish='gh-pages'
       env:
