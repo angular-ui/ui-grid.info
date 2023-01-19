@@ -1,0 +1,5 @@
+/*!
+ * ui-grid - v4.12.0-9c6a9c83 - 2023-01-19
+ *   http://ui-grid.info/
+ *   Copyright (c) 2023 UI Grid Team; License: MIT
+ */.ui-grid-cell-focus{background-color:#b3c4c7;outline:0}.ui-grid-focuser{height:100%;left:0;position:absolute;top:0;width:100%;z-index:-1}.ui-grid-focuser:focus{border-color:#66afe9;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);outline:0}.ui-grid-offscreen{clip:rect(0,0,0,0);display:block;left:-10000px;position:absolute;top:-10000px}
