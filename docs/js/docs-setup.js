@@ -2626,7 +2626,7 @@ UI_DOCS={
         "type": "script"
       },
       {
-        "src": "/release/css/ui-grid.css",
+        "src": "/release/ui-grid.css",
         "type": "css"
       }
     ],
@@ -2636,7 +2636,7 @@ UI_DOCS={
         "type": "script"
       },
       {
-        "src": "/release/css/ui-grid-unstable.css",
+        "src": "/release/ui-grid-unstable.css",
         "type": "css"
       }
     ]
