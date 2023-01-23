@@ -35,5 +35,5 @@ jobs:
         path: ./release/${{ github.event.inputs.release }}/*
         
     - name: Publish Release
-      run: gh release create v${{ github.event.inputs.release }} ./ui-grid-${{ github.event.inputs.release }}.zip -F ./release/${{ github.event.inputs.release }}/CHANGELOG.md
+      run: gh release create v${{ github.event.inputs.release }} ./ui-grid-${{ github.event.inputs.release }}.zip
       
