@@ -29,13 +29,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3.3.0
-      with:
-        ref: gh-pages
     
     - name: Get Latest Release
       id: get_latest_release
       if: github.event.inputs.release == 'latest'
-      run: echo "release=$(git describe --abbrev=0 --always)" >> "$GITHUB_OUTPUT"
+      run: echo "release=$(git describe --abbrev=0)" >> "$GITHUB_OUTPUT"
       
     - name: Get Specified Release
       id: get_specified_release
