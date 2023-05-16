@@ -60,9 +60,9 @@ jobs:
     - name: Zip Release
       uses: TheDoctor0/zip-release@0.7.0
       with:
-        filename: ui-grid-$RELEASE.zip
-        path: ./release/$RELEASE/*
+        filename: ui-grid-${{ env.RELEASE }}.zip
+        path: ./release/${{ env.RELEASE }}/*
         
     - name: Publish Release
-      run: gh release create v$RELEASE ./ui-grid-$RELEASE.zip
+      run: gh release create v${{ env.RELEASE }} ./ui-grid-${{ env.RELEASE }}.zip
       
