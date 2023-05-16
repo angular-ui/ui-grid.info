@@ -29,6 +29,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3.3.0
+      with:
+        ref: gh-pages
     
     - name: Get Latest Release
       id: get_latest_release
@@ -39,6 +41,9 @@ jobs:
       id: get_specified_release
       if: ${{ failure() }}
       run: echo "release=${{ github.event.inputs.release }}" >> "$GITHUB_OUTPUT"
+      
+    - name: Check Release
+      run: echo release
     
   create_release:
     # The type of runner that the job will run on
