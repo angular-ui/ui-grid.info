@@ -16,11 +16,6 @@ on:
       release:
         description: 'Release Version'
         default: 'latest'
-  workflow_call:
-    outputs:
-      release:
-        description: "Release Version"
-        value: ${{ jobs.get_release.outputs.release }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -53,7 +48,7 @@ jobs:
     needs: get_release
     env:
       GH_TOKEN: ${{ github.token }}
-      RELEASE: $
+      RELEASE: ${{ jobs.get_release.outputs.release }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
