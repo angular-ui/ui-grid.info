@@ -48,7 +48,7 @@ jobs:
     needs: get_release
     env:
       GH_TOKEN: ${{ github.token }}
-      RELEASE: ${{ jobs.get_release.outputs.release }}
+      RELEASE: ${{ needs.get_release.outputs.release }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
