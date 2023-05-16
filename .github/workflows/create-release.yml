@@ -33,7 +33,7 @@ jobs:
     - name: Get Latest Release
       id: get_latest_release
       if: github.event.inputs.release == 'latest'
-      run: echo "release=$(git describe --abbrev=0)" >> "$GITHUB_OUTPUT"
+      run: echo "release=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
       
     - name: Get Specified Release
       id: get_specified_release
