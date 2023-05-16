@@ -16,6 +16,7 @@ on:
       release:
         description: 'Release Version'
         default: 'latest'
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -39,11 +40,8 @@ jobs:
       
     - name: Get Specified Release
       id: get_specified_release
-      if: ${{ failure() }}
+      if: github.event.inputs.release != 'latest'
       run: echo "release=${{ github.event.inputs.release }}" >> "$GITHUB_OUTPUT"
-      
-    - name: Check Release
-      run: echo release
     
   create_release:
     # The type of runner that the job will run on
