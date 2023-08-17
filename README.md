@@ -1,4 +1,4 @@
 ui-grid.info
 ============
 
-Website for ui-grid
+Website for AngularJS UI-Grid
