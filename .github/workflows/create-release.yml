@@ -8,8 +8,6 @@ on:
   push:
     branches:
       - gh-pages
-    tags:
-      - v*
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
