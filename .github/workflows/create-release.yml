@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
-      RELEASE: ${{ github.event.inputs.release || github.ref_name }}
+      RELEASE: ${{ github.ref_name }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
