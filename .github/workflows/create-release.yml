@@ -7,7 +7,7 @@ name: Create Release
 on:
   push:
     branches:
-      - gh-pages
+      - 'gh-pages'
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
